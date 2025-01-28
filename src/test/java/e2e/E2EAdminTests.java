@@ -24,7 +24,6 @@ public class E2EAdminTests extends E2ETests {
 		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
 				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
 		assertEquals(200, response.status());
-		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Apps")).click();
 	}
 
 	@AfterEach
