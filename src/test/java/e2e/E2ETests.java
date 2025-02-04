@@ -21,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Page;
@@ -49,16 +50,16 @@ public class E2ETests {
 	private static double slowmo = 0.0;
 	private static double timeout = 5000.0;
 	private static LaunchOptions lo = null;
-	
+
 	// Registration
 	private static boolean registered = false;
 
 	// for debugging. don't have logging yet :/
 	private static String apiStringEndpoint = null;
-	
+
 	private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 	private static String folderDateTime = LocalDateTime.now().format(dtf);
-	
+
 	@BeforeAll
 	static void launchBrowser() throws Exception {
 		if (initialize) {
@@ -68,7 +69,7 @@ public class E2ETests {
 			lo.setSlowMo(slowmo);
 
 			pingSuccessful = pingServer();
-			
+
 			Path p = Paths.get("videos");
 			if (Files.isDirectory(p)) {
 				FileUtils.cleanDirectory(p.toFile());
@@ -118,10 +119,13 @@ public class E2ETests {
 	void createContextAndPage(TestInfo ti) {
 		String name = ti.getDisplayName();
 		Path path = Paths.get("videos", folderDateTime, name);
-		context = browser.newContext(new Browser.NewContextOptions().setRecordVideoDir(path));
+		NewContextOptions co = new Browser.NewContextOptions();
+		co.setRecordVideoDir(path);
+		co.setViewportSize(1280, 720);
+		context = browser.newContext(co);
 		context.setDefaultTimeout(timeout);
 		page = context.newPage();
-		
+
 		if (!Utility.getRegistered()) {
 			nativeRegister();
 			registered = true;
@@ -192,5 +196,5 @@ public class E2ETests {
 //		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Log In").setExact(true)).click();
 //		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("")).click();
 	}
-	
+
 }
