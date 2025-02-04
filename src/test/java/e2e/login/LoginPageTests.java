@@ -13,6 +13,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
 import e2e.E2ETests;
 
@@ -22,7 +23,6 @@ public class LoginPageTests extends E2ETests {
 	void goToLoginPage() {
 		page.navigate(getUrl("/packages/client/dist/#/login"));
 	}
-	
 
 	@Test
 	void testLoginIncorrect() {
@@ -49,15 +49,19 @@ public class LoginPageTests extends E2ETests {
 		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
 				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
 		assertEquals(200, response.status());
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		page.navigate(getUrl("/packages/client/dist/#"));
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
 		page.waitForURL(getUrl("/packages/client/dist/#"));
+		assertEquals(getUrl("/packages/client/dist/#"), page.url());
 
 		// click has auto wait. so click and then check for URL
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
 				.getByRole(AriaRole.BUTTON).click();
 
-
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-		assertEquals(getUrl("/packages/client/dist/#/"), page.url());
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 		assertEquals(getUrl("/packages/client/dist/#/login"), page.url());

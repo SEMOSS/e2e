@@ -11,6 +11,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
 public class E2EAdminTests extends E2ETests {
 
@@ -24,6 +25,11 @@ public class E2EAdminTests extends E2ETests {
 		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
 				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
 		assertEquals(200, response.status());
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		page.navigate(getUrl("/packages/client/dist/#"));
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
 		page.waitForURL(getUrl("/packages/client/dist/#"));
 	}
 
