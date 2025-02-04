@@ -49,15 +49,15 @@ public class LoginPageTests extends E2ETests {
 		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
 				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
 		assertEquals(200, response.status());
-		
-		page.navigate(getUrl("/packages/client/dist/#"));
+		page.waitForURL(getUrl("/packages/client/dist/#"));
 
 		// click has auto wait. so click and then check for URL
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
 				.getByRole(AriaRole.BUTTON).click();
-		assertEquals(getUrl("/packages/client/dist/#/"), page.url());
+
 
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
+		assertEquals(getUrl("/packages/client/dist/#/"), page.url());
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 		assertEquals(getUrl("/packages/client/dist/#/login"), page.url());
