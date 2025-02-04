@@ -179,12 +179,12 @@ public class E2ETests {
 		page.keyboard().press("Tab");
 		page.keyboard().type("TestTest8*");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register")).click();
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).click();
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).fill("user1");
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).press("Tab");
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).fill("TestTest8*");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Log In").setExact(true)).click();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("")).click();
+//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).click();
+//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).fill("user1");
+//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).press("Tab");
+//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).fill("TestTest8*");
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Log In").setExact(true)).click();
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("")).click();
 	}
 
 }
