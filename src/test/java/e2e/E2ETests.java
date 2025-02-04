@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -67,6 +68,11 @@ public class E2ETests {
 			lo.setSlowMo(slowmo);
 
 			pingSuccessful = pingServer();
+			
+			Path p = Paths.get("videos");
+			if (Files.isDirectory(p)) {
+				FileUtils.cleanDirectory(p.toFile());
+			}
 			initialize = false;
 		}
 
@@ -186,5 +192,5 @@ public class E2ETests {
 //		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Log In").setExact(true)).click();
 //		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("")).click();
 	}
-
+	
 }
