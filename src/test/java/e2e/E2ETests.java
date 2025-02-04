@@ -1,5 +1,7 @@
 package e2e;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
@@ -11,7 +13,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -24,9 +29,12 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
 public class E2ETests {
 
@@ -121,7 +129,8 @@ public class E2ETests {
 		Path path = Paths.get("videos", folderDateTime, name);
 		NewContextOptions co = new Browser.NewContextOptions();
 		co.setRecordVideoDir(path);
-		co.setViewportSize(1280, 720);
+		co.setRecordVideoSize(1920, 1080);
+		co.setViewportSize(1920, 1080);
 		context = browser.newContext(co);
 		context.setDefaultTimeout(timeout);
 		page = context.newPage();
@@ -170,31 +179,74 @@ public class E2ETests {
 		page.locator("#user-id").fill("user1");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
-		page.navigate(getUrl("/#!/login"));
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Reject")).click();
+		page.navigate(getUrl("/packages/client/dist/#/login"));
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Now")).click();
-		page.getByPlaceholder("First Name").click();
-		page.getByPlaceholder("First Name").fill("user");
-		page.getByPlaceholder("First Name").press("Tab");
-		page.getByPlaceholder("Last Name").fill("one");
-		page.getByPlaceholder("Last Name").press("Tab");
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).fill("user1");
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).press("Tab");
-		page.getByPlaceholder("Email").fill("user1@deloitte.com");
-		page.getByPlaceholder("Email").press("Tab");
-		page.getByPlaceholder("Phone Number").press("Tab");
-		page.getByPlaceholder("Phone Extension").press("Tab");
-		page.getByPlaceholder("Country Code: +").press("Tab");
-		page.keyboard().type("TestTest8*");
-		page.keyboard().press("Tab");
-		page.keyboard().type("TestTest8*");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register")).click();
-//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).click();
-//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).fill("user1");
-//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).press("Tab");
-//		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).fill("TestTest8*");
-//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Log In").setExact(true)).click();
-//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("")).click();
+
+		List<Locator> inputs = page.locator("input[type='text']").all();
+		List<Locator> visible = new ArrayList<>();
+		for (Locator l : inputs) {
+			if (l.isVisible()) {
+				visible.add(l);
+			}
+		}
+
+		visible.get(0).click();
+		visible.get(0).fill("user");
+
+		visible.get(1).click();
+		visible.get(1).fill("one");
+
+		visible.get(2).click();
+		visible.get(2).fill("user1");
+
+		visible.get(3).click();
+		visible.get(3).fill("user1@deloitte.com");
+
+		List<Locator> passwords = page.locator("input[type='password']").all();
+		List<Locator> visiblePasswords = new ArrayList<>();
+		for (Locator l : passwords) {
+			if (l.isVisible()) {
+				visiblePasswords.add(l);
+			}
+		}
+		visiblePasswords.get(0).click();
+		visiblePasswords.get(0).fill("TestTest8*");
+
+		visiblePasswords.get(1).click();
+		visiblePasswords.get(1).fill("TestTest8*");
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Account")).click();
+
+		page.waitForLoadState(LoadState.LOAD);
+		page.getByRole(AriaRole.ALERT).click();
+		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
+		doLogin();
+		doLogout();
+	}
+
+	private void doLogin() {
+		page.navigate(getUrl("/packages/client/dist/#/login"));
+		page.getByLabel("Username").click();
+		page.getByLabel("Username").fill("user1");
+		page.getByLabel("Username").press("Tab");
+		page.locator("input[type=\"password\"]").fill("TestTest8*");
+		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
+				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
+		assertEquals(200, response.status());
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		page.navigate(getUrl("/packages/client/dist/#"));
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		page.waitForURL(getUrl("/packages/client/dist/#"));
+	}
+
+	private void doLogout() {
+		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
+				.getByRole(AriaRole.BUTTON).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
+
+		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
+		assertEquals(getUrl("/packages/client/dist/#/login"), page.url());
 	}
 
 }
