@@ -8,6 +8,7 @@ public class Utility {
 	public static boolean getRegistered() {
 		if (!registered) {
 			registered = true;
+			return false;
 		}
 		return registered;
 	}
