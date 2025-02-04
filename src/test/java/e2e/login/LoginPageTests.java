@@ -49,6 +49,8 @@ public class LoginPageTests extends E2ETests {
 		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
 				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
 		assertEquals(200, response.status());
+		
+		page.navigate(getUrl("/packages/client/dist/#"));
 
 		// click has auto wait. so click and then check for URL
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
