@@ -4,6 +4,7 @@ about: For describing test cases
 title: ''
 labels: ''
 assignees: ''
+type: 'Test'
 
 ---
 
