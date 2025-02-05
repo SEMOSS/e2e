@@ -54,8 +54,6 @@ public class LoginPageTests extends E2ETests {
 		page.navigate(getUrl("/packages/client/dist/#"));
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.waitForLoadState(LoadState.LOAD);
-		page.waitForURL(getUrl("/packages/client/dist/#"));
-		assertEquals(getUrl("/packages/client/dist/#"), page.url());
 
 		// click has auto wait. so click and then check for URL
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))

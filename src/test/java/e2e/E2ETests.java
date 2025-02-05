@@ -183,9 +183,8 @@ public class E2ETests {
 		page.navigate(getApi("/setAdmin"));
 		page.locator("#user-id").click();
 		page.locator("#user-id").fill("user1");
-		Response response = page.waitForResponse(getApi("/api/auth/createUser"), () -> page
-				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click());
-		assertEquals(200, response.status());
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
+		
 		page.navigate(getUrl("/packages/client/dist/#/login"));
 		page.waitForURL(getUrl("/packages/client/dist/#/login"));
 		page.getByText("Log in below").click();

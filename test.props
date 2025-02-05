@@ -8,7 +8,7 @@ API			http://semoss:8080/Monolith
 HEADLESS	true
 
 # this is in milliseconds
-SLOWMO		100.0
+SLOWMO		0.0
 
 # timeout
 TIMEOUT		10000.0
