@@ -125,8 +125,8 @@ public class E2ETests {
 
 	@BeforeEach
 	void createContextAndPage(TestInfo ti) {
-		String name = ti.getDisplayName();
-		Path path = Paths.get("videos", folderDateTime, name);
+		String className = ti.getTestClass().get().getSimpleName();
+		Path path = Paths.get("videos", folderDateTime, className);
 		NewContextOptions co = new Browser.NewContextOptions();
 		co.setRecordVideoDir(path);
 		co.setRecordVideoSize(1920, 1080);
@@ -142,7 +142,10 @@ public class E2ETests {
 	}
 
 	@AfterEach
-	void closeContext() {
+	void closeContext(TestInfo ti) {
+		page.close();
+		String name = ti.getDisplayName();
+		page.video().saveAs(Paths.get(name));
 		context.close();
 	}
 
@@ -219,8 +222,8 @@ public class E2ETests {
 		page.waitForLoadState(LoadState.LOAD);
 		page.getByRole(AriaRole.ALERT).click();
 		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
-		doLogin();
-		doLogout();
+//		doLogin();
+//		doLogout();
 	}
 
 	private void doLogin() {
