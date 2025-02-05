@@ -144,8 +144,11 @@ public class E2ETests {
 	@AfterEach
 	void closeContext(TestInfo ti) {
 		page.close();
-		String name = ti.getDisplayName();
-		page.video().saveAs(Paths.get(name));
+		// save video with easy to understand name
+		String name = ti.getDisplayName().substring(0, ti.getDisplayName().length() - 2) + ".webm";
+		String className = ti.getTestClass().get().getSimpleName();
+		Path path = Paths.get("videos", folderDateTime, className, name);
+		page.video().saveAs(path);
 		context.close();
 	}
 
