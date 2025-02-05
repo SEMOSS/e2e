@@ -142,14 +142,14 @@ public class E2ETests {
 	}
 
 	@AfterEach
-	void closeContext(TestInfo ti) {
-		page.close();
+	void closeContext(TestInfo ti) throws IOException {
 		// save video with easy to understand name
 		String name = ti.getDisplayName().substring(0, ti.getDisplayName().length() - 2) + ".webm";
 		String className = ti.getTestClass().get().getSimpleName();
 		Path path = Paths.get("videos", folderDateTime, className, name);
-		page.video().saveAs(path);
+		Path p = page.video().path();
 		context.close();
+		Files.move(p, path);
 	}
 
 	static Properties loadTestProps() throws IOException {
@@ -183,10 +183,16 @@ public class E2ETests {
 		page.navigate(getApi("/setAdmin"));
 		page.locator("#user-id").click();
 		page.locator("#user-id").fill("user1");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
+		Response response = page.waitForResponse(getApi("/api/auth/createUser"), () -> page
+				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click());
+		assertEquals(200, response.status());
 		page.navigate(getUrl("/packages/client/dist/#/login"));
+		page.waitForURL(getUrl("/packages/client/dist/#/login"));
+		page.getByText("Log in below").click();
+		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Log in below");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Now")).click();
+		page.getByText("Register below").click();
+		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Register below");
 
 		List<Locator> inputs = page.locator("input[type='text']").all();
 		List<Locator> visible = new ArrayList<>();
