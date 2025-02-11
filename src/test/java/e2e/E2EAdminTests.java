@@ -28,9 +28,6 @@ public class E2EAdminTests extends E2ETests {
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.waitForLoadState(LoadState.LOAD);
 		page.navigate(getUrl("/packages/client/dist/#"));
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForLoadState(LoadState.LOAD);
-		page.waitForURL(getUrl("/packages/client/dist/#"));
 	}
 
 	@AfterEach
