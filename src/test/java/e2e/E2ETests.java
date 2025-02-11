@@ -74,7 +74,9 @@ public class E2ETests {
 
 	@BeforeAll
 	static void launchBrowser() throws Exception {
+		LOGGER.info("Before all start");
 		if (initialize) {
+			LOGGER.info("--------------- INTIALIZING ---------------");
 			LOGGER.info("Log check");
 			LOGGER.info("INFO");
 			LOGGER.debug("DEBUG");
@@ -90,10 +92,13 @@ public class E2ETests {
 			pingSuccessful = pingServer();
 
 			Path p = Paths.get("videos");
+			LOGGER.info("Videos will be saved to: {}", p.toString());
 			if (Files.isDirectory(p)) {
+				LOGGER.info("Cleaning directory: {}", p.toString());
 				FileUtils.cleanDirectory(p.toFile());
 			}
 			initialize = false;
+			LOGGER.info("------------------ FINISHED INTIALIZING --------------------");
 		}
 
 		if (!pingSuccessful) {
@@ -103,12 +108,14 @@ public class E2ETests {
 		playwright = Playwright.create();
 
 		browser = playwright.chromium().launch(lo);
+		LOGGER.info("Before all end");
 	}
 
 	private static boolean pingServer() throws InterruptedException {
 		int i = 0;
 		boolean successful = false;
 		apiStringEndpoint = getApi("/api/config");
+		LOGGER.info("attempting to ping: {}", apiStringEndpoint);
 		while (i < 10) {
 			try {
 				HttpURLConnection conn = (HttpURLConnection) new URL(apiStringEndpoint).openConnection();
@@ -116,12 +123,14 @@ public class E2ETests {
 				conn.setConnectTimeout(1000);
 				int code = conn.getResponseCode();
 				if (code == 200) {
+					LOGGER.info("Successful ping");
 					successful = true;
 					break;
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOGGER.error("Could not ping api", e);
 			}
+			LOGGER.info("Sleeping for 500ms then pinging again.");
 
 			i++;
 			Thread.sleep(500);
@@ -131,13 +140,18 @@ public class E2ETests {
 
 	@AfterAll
 	static void closeBrowser() {
+		LOGGER.info("AFTER ALL start");
 		playwright.close();
+		LOGGER.info("AFTER ALL end");
 	}
 
 	@BeforeEach
 	void createContextAndPage(TestInfo ti) {
+		LOGGER.info("Start Test for: {}", ti);
+		LOGGER.info("Before each start");
 		String className = ti.getTestClass().get().getSimpleName();
 		Path path = Paths.get("videos", folderDateTime, className);
+		LOGGER.info("Video saved at: {}", path.toString());
 		NewContextOptions co = new Browser.NewContextOptions();
 		co.setRecordVideoDir(path);
 		co.setRecordVideoSize(1920, 1080);
@@ -145,15 +159,26 @@ public class E2ETests {
 		context = browser.newContext(co);
 		context.setDefaultTimeout(timeout);
 		page = context.newPage();
+		
+		page.onRequest(s -> {
+			LOGGER.info("Request sent: {}", s);
+		});
+		
+		page.onResponse(s -> {
+			LOGGER.info("Response received: {}", s);
+		});
 
 		if (!Utility.getRegistered()) {
+			LOGGER.info("Not registered, starting registration.");
 			nativeRegister();
 			registered = true;
 		}
+		LOGGER.info("Before each end");
 	}
 
 	@AfterEach
 	void closeContext(TestInfo ti) throws IOException {
+		LOGGER.info("After each start");
 		// save video with easy to understand name
 		String name = ti.getDisplayName().substring(0, ti.getDisplayName().length() - 2) + ".webm";
 		String className = ti.getTestClass().get().getSimpleName();
@@ -161,10 +186,15 @@ public class E2ETests {
 		Path p = page.video().path();
 		context.close();
 		Files.move(p, path);
+		LOGGER.info("Moved video to: {}", path.toString());
+		LOGGER.info("After each end");
+		LOGGER.info("End Test for: {}", ti);
+		LOGGER.info("---------------------------------------------------");
 	}
 
 	static Properties loadTestProps() throws IOException {
 		Properties props = new Properties();
+		LOGGER.info("loading test props from file");
 
 		try (InputStream is = Files.newInputStream(Paths.get("test.props"))) {
 			props.load(is);
@@ -173,6 +203,7 @@ public class E2ETests {
 			slowmo = Double.valueOf(props.get("SLOWMO").toString());
 			timeout = Double.valueOf(props.get("TIMEOUT").toString());
 			api = String.valueOf(props.get("API")).toString();
+			LOGGER.info("Props: {}", props);
 		}
 
 		return props;
@@ -191,7 +222,7 @@ public class E2ETests {
 	}
 
 	private void nativeRegister() {
-		page.navigate(getApi("/setAdmin"));
+		page.navigate(getApi("/setAdmin/"));
 		LOGGER.info("Page is: {}", page.url());
 		assertEquals("http://semoss:8080/Monolith/setAdmin/", page.url());
 		page.locator("#user-id").click();
@@ -244,6 +275,7 @@ public class E2ETests {
 		page.waitForLoadState(LoadState.LOAD);
 		page.getByRole(AriaRole.ALERT).click();
 		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
+		LOGGER.info("Account registration Done");
 //		doLogin();
 //		doLogout();
 	}
