@@ -17,7 +17,7 @@ public class E2EAdminTests extends E2ETests {
 
 	@BeforeEach
 	public void loginToAdmin() {
-		page.navigate(getUrl("https://workshop.cfg.deloitte.com/cfg-ai-demo/SemossWeb/packages/client/dist/#/login"));
+		page.navigate(getUrl("/packages/client/dist/#/login"));
 		page.getByLabel("Username").click();
 		page.getByLabel("Username").fill("user1");
 		page.getByLabel("Username").press("Tab");
