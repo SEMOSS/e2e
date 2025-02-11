@@ -35,6 +35,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Response;
+import com.microsoft.playwright.Tracing;
+import com.microsoft.playwright.Tracing.StartOptions;
+import com.microsoft.playwright.Tracing.StopOptions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
@@ -97,6 +100,14 @@ public class E2ETests {
 				LOGGER.info("Cleaning directory: {}", p.toString());
 				FileUtils.cleanDirectory(p.toFile());
 			}
+			
+			Path trace = Paths.get("traces");
+			LOGGER.info("Traces will be saved to: {}", trace);
+			if (Files.isDirectory(trace)) {
+				LOGGER.info("Cleaning directory: {}", trace.toString());
+				FileUtils.cleanDirectory(trace.toFile());
+			}
+
 			initialize = false;
 			LOGGER.info("------------------ FINISHED INTIALIZING --------------------");
 		}
@@ -152,11 +163,22 @@ public class E2ETests {
 		String className = ti.getTestClass().get().getSimpleName();
 		Path path = Paths.get("videos", folderDateTime, className);
 		LOGGER.info("Video saved at: {}", path.toString());
+		
+		// context options
 		NewContextOptions co = new Browser.NewContextOptions();
 		co.setRecordVideoDir(path);
 		co.setRecordVideoSize(1920, 1080);
 		co.setViewportSize(1920, 1080);
+		co.setIgnoreHTTPSErrors(true);
 		context = browser.newContext(co);
+		
+		// tracing
+		StartOptions so = new Tracing.StartOptions();
+		so.setScreenshots(true);
+		so.setSnapshots(true);
+		so.setSources(true);
+		context.tracing().start(so);
+
 		context.setDefaultTimeout(timeout);
 		page = context.newPage();
 
@@ -175,13 +197,21 @@ public class E2ETests {
 	void closeContext(TestInfo ti) throws IOException {
 		LOGGER.info("After each start");
 		// save video with easy to understand name
-		String name = ti.getDisplayName().substring(0, ti.getDisplayName().length() - 2) + ".webm";
+		String methodName = ti.getDisplayName().substring(0, ti.getDisplayName().length() - 2);
+		String videoName = methodName + ".webm";
 		String className = ti.getTestClass().get().getSimpleName();
-		Path path = Paths.get("videos", folderDateTime, className, name);
+		Path path = Paths.get("videos", folderDateTime, className, videoName);
 		Path p = page.video().path();
+		
+		StopOptions so = new Tracing.StopOptions();
+		String traceName = methodName + ".zip";
+		so.setPath(Paths.get("traces", className, traceName));
+		context.tracing().stop(so);
 		context.close();
 		Files.move(p, path);
 		LOGGER.info("Moved video to: {}", path.toString());
+		
+		
 		LOGGER.info("After each end");
 		LOGGER.info("End Test for: {}", ti);
 		LOGGER.info("---------------------------------------------------\n\n");
