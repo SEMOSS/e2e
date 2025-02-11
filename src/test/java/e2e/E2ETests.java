@@ -54,7 +54,7 @@ public class E2ETests {
 
 	// setup specific
 	private static boolean initialize = true;
-	private static boolean headless = true;
+	private static boolean headless = false;
 	private static double slowmo = 0.0;
 	private static double timeout = 5000.0;
 	private static LaunchOptions lo = null;

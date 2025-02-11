@@ -21,7 +21,7 @@ public class LoginPageTests extends E2ETests {
 
 	@BeforeEach
 	void goToLoginPage() {
-		page.navigate(getUrl("/packages/client/dist/#/login"));
+		page.navigate(getUrl("https://workshop.cfg.deloitte.com/cfg-ai-demo/SemossWeb/packages/client/dist/#/login"));
 	}
 
 	@Test
