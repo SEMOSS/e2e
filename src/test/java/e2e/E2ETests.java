@@ -41,7 +41,7 @@ import com.microsoft.playwright.options.LoadState;
 public class E2ETests {
 
 	private static final Logger LOGGER = LogManager.getLogger();
-	
+
 	private static boolean pingSuccessful = true;
 
 	// Shared between all tests in this class.
@@ -142,7 +142,7 @@ public class E2ETests {
 	static void closeBrowser() {
 		LOGGER.info("AFTER ALL start");
 		playwright.close();
-		LOGGER.info("AFTER ALL end");
+		LOGGER.info("AFTER ALL end\n");
 	}
 
 	@BeforeEach
@@ -159,14 +159,9 @@ public class E2ETests {
 		context = browser.newContext(co);
 		context.setDefaultTimeout(timeout);
 		page = context.newPage();
-		
-		page.onRequest(s -> {
-			LOGGER.info("Request sent: {}", s);
-		});
-		
-		page.onResponse(s -> {
-			LOGGER.info("Response received: {}", s);
-		});
+
+		page.onRequest(HttpLogger::logRequest);
+		page.onResponse(HttpLogger::logResponse);
 
 		if (!Utility.getRegistered()) {
 			LOGGER.info("Not registered, starting registration.");
@@ -189,7 +184,7 @@ public class E2ETests {
 		LOGGER.info("Moved video to: {}", path.toString());
 		LOGGER.info("After each end");
 		LOGGER.info("End Test for: {}", ti);
-		LOGGER.info("---------------------------------------------------");
+		LOGGER.info("---------------------------------------------------\n\n");
 	}
 
 	static Properties loadTestProps() throws IOException {
@@ -229,7 +224,7 @@ public class E2ETests {
 		page.locator("#user-id").fill("user1");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
 		LOGGER.info("After submitting admin: {}", page.url());
-		
+
 		page.navigate(getUrl("/packages/client/dist/#/login"));
 		page.waitForURL(getUrl("/packages/client/dist/#/login"));
 		page.getByText("Log in below").click();
