@@ -19,6 +19,8 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -38,6 +40,8 @@ import com.microsoft.playwright.options.LoadState;
 
 public class E2ETests {
 
+	private static final Logger LOGGER = LogManager.getLogger();
+	
 	private static boolean pingSuccessful = true;
 
 	// Shared between all tests in this class.
@@ -71,6 +75,13 @@ public class E2ETests {
 	@BeforeAll
 	static void launchBrowser() throws Exception {
 		if (initialize) {
+			LOGGER.info("Log check");
+			LOGGER.info("INFO");
+			LOGGER.debug("DEBUG");
+			LOGGER.warn("WARN");
+			LOGGER.error("ERROR");
+			LOGGER.fatal("FATAL");
+			LOGGER.info("Log check end");
 			loadTestProps();
 			lo = new LaunchOptions();
 			lo.setHeadless(headless);
@@ -181,9 +192,12 @@ public class E2ETests {
 
 	private void nativeRegister() {
 		page.navigate(getApi("/setAdmin"));
+		LOGGER.info("Page is: {}", page.url());
+		assertEquals("http://semoss:8080/Monolith/setAdmin/", page.url());
 		page.locator("#user-id").click();
 		page.locator("#user-id").fill("user1");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
+		LOGGER.info("After submitting admin: {}", page.url());
 		
 		page.navigate(getUrl("/packages/client/dist/#/login"));
 		page.waitForURL(getUrl("/packages/client/dist/#/login"));
