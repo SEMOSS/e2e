@@ -43,7 +43,7 @@ import com.microsoft.playwright.options.LoadState;
 
 public class E2ETests {
 
-	private static final Logger LOGGER = LogManager.getLogger();
+	private static final Logger LOGGER = LogManager.getLogger(E2ETests.class);
 
 	private static boolean pingSuccessful = true;
 
@@ -66,9 +66,6 @@ public class E2ETests {
 	private static double timeout = 5000.0;
 	private static LaunchOptions lo = null;
 
-	// Registration
-	private static boolean registered = false;
-
 	// for debugging. don't have logging yet :/
 	private static String apiStringEndpoint = null;
 
@@ -87,6 +84,7 @@ public class E2ETests {
 			LOGGER.error("ERROR");
 			LOGGER.fatal("FATAL");
 			LOGGER.info("Log check end");
+			
 			loadTestProps();
 			lo = new LaunchOptions();
 			lo.setHeadless(headless);
@@ -169,7 +167,8 @@ public class E2ETests {
 		co.setRecordVideoDir(path);
 		co.setRecordVideoSize(1920, 1080);
 		co.setViewportSize(1920, 1080);
-		co.setIgnoreHTTPSErrors(true);
+		co.setStorageStatePath(Paths.get("state.json"));
+		
 		context = browser.newContext(co);
 		
 		// tracing
@@ -188,8 +187,8 @@ public class E2ETests {
 		if (!Utility.getRegistered()) {
 			LOGGER.info("Not registered, starting registration.");
 			nativeRegister();
-			registered = true;
 		}
+		
 		LOGGER.info("Before each end");
 	}
 
