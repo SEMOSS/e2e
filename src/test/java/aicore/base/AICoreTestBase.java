@@ -14,7 +14,7 @@ import io.cucumber.java.Before;
 
 public class AICoreTestBase {
   
-	public Page page;
+	public static Page page;
 	private BrowserContext context ; 
 	private Browser browser; 
 	private Playwright playwright; 
