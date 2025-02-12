@@ -181,7 +181,10 @@ public class E2ETests {
 		context.setDefaultTimeout(timeout);
 		page = context.newPage();
 
+		// request handling
 		page.onRequest(HttpLogger::logRequest);
+		
+		// response handling
 		page.onResponse(HttpLogger::logResponse);
 
 		if (!Utility.getRegistered()) {
@@ -233,8 +236,12 @@ public class E2ETests {
 		return props;
 	}
 
-	protected String getUrlPrefix() {
+	public static String getUrlPrefix() {
 		return urlPrefix;
+	}
+	
+	public static String getApiPrefix() {
+		return api;
 	}
 
 	protected String getUrl(String ending) {
@@ -248,7 +255,7 @@ public class E2ETests {
 	private void nativeRegister() {
 		page.navigate(getApi("/setAdmin/"));
 		LOGGER.info("Page is: {}", page.url());
-		assertEquals("http://semoss:8080/Monolith/setAdmin/", page.url());
+		assertEquals(getApi("/setAdmin/"), page.url());
 		page.locator("#user-id").click();
 		page.locator("#user-id").fill("user1");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
