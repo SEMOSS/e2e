@@ -12,5 +12,13 @@ public class Utility {
 		}
 		return registered;
 	}
+	
+	public static String getUrl(String ending) {
+		return E2ETests.getUrlPrefix() + ending;
+	}
+
+	protected static String getApi(String ending) {
+		return E2ETests.getApiPrefix() + ending;
+	}
 
 }

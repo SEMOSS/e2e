@@ -13,6 +13,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import e2e.E2EAdminTests;
+import e2e.LoginUtils;
 
 public class UserManagementTests extends E2EAdminTests {
 
@@ -50,22 +51,17 @@ public class UserManagementTests extends E2EAdminTests {
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
 				.getByRole(AriaRole.BUTTON).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-		page.getByLabel("Username").click();
-		page.getByLabel("Username").click();
-		page.getByLabel("Username").fill("jshmoe");
-		page.locator("input[type=\"password\"]").click();
-		page.locator("input[type=\"password\"]").fill("TestTest9*");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click();
+
+		LoginUtils.login(page, context, "jshmoe", "TestTest9*");
+		
 		page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("SEMOSS")).click();
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Apps")).click();
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
 				.getByRole(AriaRole.BUTTON).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-		page.getByLabel("Username").click();
-		page.getByLabel("Username").fill("user1");
-		page.getByLabel("Username").press("Tab");
-		page.locator("input[type=\"password\"]").fill("TestTest8*");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click();
+
+		LoginUtils.login(page, context, "user1", "TestTest8*");
+
 		page.getByLabel("Navigate to settings").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Member Settings$"))).first()
