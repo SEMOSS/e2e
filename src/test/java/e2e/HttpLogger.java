@@ -13,6 +13,7 @@ public class HttpLogger {
 	private static final StringBuilder REQUEST_SB = new StringBuilder()
 			.append(" -------------------REQUEST--------------------").append("\n").append("Sent: {}").append("\n")
 			.append("URL: {}").append("\n").append("Method: {}").append("\n").append("Headers: {}").append("\n")
+			.append("Body: {}").append("\n")
 			.append("-------------------END REQUEST--------------------").append("\n").append("\n");
 
 	private static final String REQUEST_LOG = REQUEST_SB.toString();
@@ -26,13 +27,21 @@ public class HttpLogger {
 
 	public static void logRequest(Request s) {
 		if (s.url().contains("/Monolith/")) {
-			LOGGER.info(REQUEST_LOG, s, s.url(), s.method(), s.headers());
+			try {
+				LOGGER.info(REQUEST_LOG, s, s.url(), s.method(), s.headers(), s.postData());
+			} catch (Exception e) {
+				LOGGER.error("Couldn't log request {}", s.url(), e);
+			}
 		}
 	}
 
 	public static void logResponse(Response s) {
 		if (s.url().contains("/Monolith/")) {
-			LOGGER.info(RESPONSE_LOG, s, s.url(), s.status(), "placeholder");
+			try {
+				LOGGER.info(RESPONSE_LOG, s, s.url(), s.status(), s.text());
+			} catch (Exception e) {
+				LOGGER.error("Couldn't log response {}", s.url(), e);
+			}
 		}
 	}
 

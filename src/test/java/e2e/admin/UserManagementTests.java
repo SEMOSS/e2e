@@ -4,6 +4,8 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Locator;
@@ -13,6 +15,8 @@ import com.microsoft.playwright.options.AriaRole;
 import e2e.E2EAdminTests;
 
 public class UserManagementTests extends E2EAdminTests {
+
+	private static final Logger LOGGER = LogManager.getLogger(UserManagementTests.class);
 
 	@Test
 	void createAndDeleteUser() {
