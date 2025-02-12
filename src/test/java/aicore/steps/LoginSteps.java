@@ -19,9 +19,9 @@ public class LoginSteps {
 	private HomePage homePage;
 
 	public LoginSteps() {
-//		Page page = new AICoreTestBase().page; 
-		this.loginpage = new LoginPage(AICoreTestBase.page);
-		this.homePage = new HomePage(AICoreTestBase.page);
+		Page page = new AICoreTestBase().page; 
+		this.loginpage = new LoginPage(page);
+		this.homePage = new HomePage(page);
 	}
 
 	@Given("User is on application")

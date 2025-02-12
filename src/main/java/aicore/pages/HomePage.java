@@ -10,7 +10,6 @@ public class HomePage {
 	private static final String PAGE_TITLE_XPATH = "//a[text()='AI Core']";
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
-	private static final String OPEN_MODEL_XPATH = "(//a[@class=' css-drmees'])[2]";
 
 	public HomePage(Page page) {
 		this.page = page;
@@ -32,10 +31,6 @@ public class HomePage {
 
 	public void clickOnBIApp() {
 		page.click(BI_APP_XPATH);
-	}
-	
-	public void clickOnOpenModel() {
-		page.click(OPEN_MODEL_XPATH);
 	}
 
 }
