@@ -10,8 +10,6 @@ RUN mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args
 RUN mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 RUN mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps chromium"
 
-# RUN apt update -y && apt upgrade -y
-
 COPY src src
 COPY logs logs
 COPY target target
