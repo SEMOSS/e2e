@@ -34,9 +34,9 @@ public class AddModelToCatalogSteps {
 		openModelPage.selectOpenAi(aiModelName);
 	}
 
-	@And("User enters Catlog name as {string}")
-	public void user_enters_catlog_name_as(String catlogName) {
-		openModelPage.enterCatlogName(catlogName);
+	@And("User enters Catalog name as {string}")
+	public void user_enters_Catalog_name_as(String CatalogName) {
+		openModelPage.enterCatalogName(CatalogName);
 	}
 
 	@When("User enters open AI Key as {string}")
@@ -63,7 +63,7 @@ public class AddModelToCatalogSteps {
 	@Then("User Can see the Model title as {string}")
 	public void user_can_see_the_model_title_as(String modelTitle) {
 		String actualModelTitle = openModelPage.verifyModelTitle();
-		String expModelTitle = openModelPage.getExpectedCatlogTitle(modelTitle);
+		String expModelTitle = openModelPage.getExpectedCatalogTitle(modelTitle);
 		Assertions.assertEquals(actualModelTitle, expModelTitle);
 	}
 
@@ -82,7 +82,7 @@ public class AddModelToCatalogSteps {
 				String[] parts = fullText.split("NAME\\s+");
 				if (parts.length > 1) {
 					String actualName = parts[1].trim();
-					String expectedNameProperties = openModelPage.getExpectedCatlogTitle(modelTitle);
+					String expectedNameProperties = openModelPage.getExpectedCatalogTitle(modelTitle);
 					Assertions.assertEquals(actualName, expectedNameProperties);
 				}
 			}

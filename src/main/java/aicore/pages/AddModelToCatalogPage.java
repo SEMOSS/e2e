@@ -10,7 +10,7 @@ public class AddModelToCatalogPage {
 	private String timestamp;
 	private static final String ADD_MODEL_BUTTON_XPATH = "//button[@aria-label='Navigate to import Model']";
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
-	private static final String CATLOG_NAME_XPATH = "//label[@id=\"NAME-label\"]";
+	private static final String CATALOG_NAME_XPATH = "//label[@id=\"NAME-label\"]";
 	private static final String OPEN_AI_KEY_XPATH = "//input[@id=\"OPEN_AI_KEY\"]";
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type=\"submit\"]";
@@ -32,10 +32,10 @@ public class AddModelToCatalogPage {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
 	}
 
-	public void enterCatlogName(String catlogName) {
+	public void enterCatalogName(String CatalogName) {
 		timestamp = CommonUtils.getTimeStampName();
-		String uniqueCatalogName = catlogName + timestamp;
-		page.fill(CATLOG_NAME_XPATH, uniqueCatalogName);
+		String uniqueCatalogName = CatalogName + timestamp;
+		page.fill(CATALOG_NAME_XPATH, uniqueCatalogName);
 	}
 
 	public void enterOpenAIKey(String openAIKey) {
@@ -65,7 +65,7 @@ public class AddModelToCatalogPage {
 		page.click(SMSS_TAB_XPATH);
 	}
 
-	public String getExpectedCatlogTitle(String modelTitle) {
+	public String getExpectedCatalogTitle(String modelTitle) {
 		String expTitle = modelTitle + timestamp;
 		return expTitle;
 	}
