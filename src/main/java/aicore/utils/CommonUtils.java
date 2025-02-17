@@ -3,7 +3,7 @@ package aicore.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public final class CommonUtils {
+public class CommonUtils {
 
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 

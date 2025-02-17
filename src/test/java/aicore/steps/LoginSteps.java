@@ -25,12 +25,15 @@ public class LoginSteps {
 
 	@Given("User is on application")
 	public void user_is_on_application() throws IOException {
+
 		loginpage.navigateToLoginPage();
+
 	}
 
 	@When("User enters username and password and click on SignIn button")
 	public void user_enters_username_and_password_and_click_on_sign_in_button()
 			throws InterruptedException, IOException {
+
 		loginpage.closeCookiesPopup();
 		loginpage.loginToApplication();
 	}
