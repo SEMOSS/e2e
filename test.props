@@ -1,8 +1,10 @@
 # the url prefix of the website that you are testing
-URL_PREFIX	http://semoss:8080/SemossWeb
+URL_PREFIX	http://localhost:9091/SemossWeb
+#URL_PREFIX	http://semoss:8080/SemossWeb
 
 # api endpoint
-API			http://semoss:8080/Monolith
+API			http://localhost:9091/Monolith
+#API			http://semoss:8080/Monolith
 
 # headless means you don't see ui
 HEADLESS	true
