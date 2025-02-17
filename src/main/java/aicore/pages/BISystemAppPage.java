@@ -1,8 +1,9 @@
 package aicore.pages;
 
 import java.nio.file.Paths;
+
 import com.microsoft.playwright.Page;
-import aicore.utils.CommonUtils;
+
 import aicore.utils.ConfigUtils;
 
 public class BISystemAppPage {
@@ -39,9 +40,11 @@ public class BISystemAppPage {
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "(//input[@type='file'])[2]";
 	private static final String UPLOAD_FILE_PAGE_NEXT_BUTTON_XPATH = "//button[@class='smss-right smss-btn']//span[normalize-space(text())='Next']";
 	private static final String IMPORT_BUTTON_XPATH = "//button[@class='smss-right smss-btn']//span[normalize-space(text())='Import']";
+	private static final String DATABASE_CREATED_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 
-	public BISystemAppPage(Page page) {
+	public BISystemAppPage(Page page, String timestamp) {
 		this.page = page;
+		this.timestamp = timestamp;
 	}
 
 	public void closeWelcomePopup() {
@@ -69,7 +72,6 @@ public class BISystemAppPage {
 	}
 
 	public void enterDatabaseName(String databaseName) {
-		timestamp = CommonUtils.getTimeStampName();
 		page.fill(ENTER_DATABASE_NAME_TEXTBOX_XPATH, databaseName + " " + timestamp);
 	}
 
@@ -86,13 +88,18 @@ public class BISystemAppPage {
 	}
 
 	public void clickOnImportButton() {
-		page.click(IMPORT_BUTTON_XPATH); 
+		page.click(IMPORT_BUTTON_XPATH);
 		page.waitForTimeout(3000);
 	}
 
-	public void searchDatabaseName(String databaseName) {
-		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, databaseName + " " + timestamp);
-		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", databaseName + " " + timestamp));
+	public String verifyDBCreatedToastMessage() {
+		String dbSuccessToastMessage = page.textContent(DATABASE_CREATED_TOAST_MESSAGE_XPATH).trim();
+		return dbSuccessToastMessage;
+	}
+
+	public void searchDatabaseName(String createdDatabaseName) {
+		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, createdDatabaseName + " " + timestamp);
+		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", createdDatabaseName + " " + timestamp));
 	}
 
 	public void clickOnAddAllOption() {
@@ -124,10 +131,10 @@ public class BISystemAppPage {
 		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, "Test-1a");
 		page.click(PROJECT_SEARCH_LIST_XPATH);
 		page.click(INSIGHT_SAVE_BUTTON_XPATH);
-
 	}
 
 	public String verifySavedInsightSuccessMsg() {
+		page.waitForSelector(INSIGHT_SAVE_TOAST_MESSAGE_XPATH);
 		String successMessage = page.textContent(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).trim();
 		return successMessage;
 	}
