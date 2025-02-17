@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.base.AICoreTestBase;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
+import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -54,7 +55,7 @@ public class AddModelToCatalogSteps {
 		openModelPage.createModel();
 	}
 
-	@And("User can see toast message as {string}")
+	@And("User can see a toast message as {string}")
 	public void user_can_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
@@ -72,37 +73,41 @@ public class AddModelToCatalogSteps {
 		openModelPage.smssTab();
 	}
 
-	@Then("User can see NAME as {string} in SMSS properties")
-	public void user_can_see_name_as_in_smss_properties(String modelTitle) {
+	@Then("User can see name in {string} field as {string} in SMSS properties")
+	public void user_can_see_name_in_field_as_in_smss_properties(String field, String nameFiledValue) {
 		String fullText = openModelPage.verifyNameInSMSS();
-		if (fullText != null && !fullText.isEmpty()) {
-			fullText = fullText.replaceAll("\\u00A0", " ");
-			// Now split the text on "NAME" and get the second part (after NAME)
-			if (fullText.contains("NAME")) {
-				String[] parts = fullText.split("NAME\\s+");
-				if (parts.length > 1) {
-					String actualName = parts[1].trim();
-					String expectedNameProperties = openModelPage.getExpectedCatalogTitle(modelTitle);
-					Assertions.assertEquals(actualName, expectedNameProperties);
-				}
-			}
-		}
+		String actualModelName = CommonUtils.splitTrimValue(fullText, field);
+		String expectedNameProperties = openModelPage.getExpectedCatalogTitle(nameFiledValue);
+		Assertions.assertEquals(actualModelName, expectedNameProperties, "Model name is not matching");
 	}
 
-	@Then("User can see VAR_NAME as {string} in SMSS properties")
-	public void user_can_see_var_name_as_in_smss_properties(String variableName) {
+	@Then("User can see var name in {string} field as {string} in SMSS properties")
+	public void user_can_see_var_name_in_field_as_in_smss_properties(String field, String nameFiledValue) {
 		String fullText = openModelPage.verifyVarNameInSMSS();
-		if (fullText != null && !fullText.isEmpty()) {
-			fullText = fullText.replaceAll("\\u00A0", " ");
-			// Now split the text on "NAME" and get the second part (after NAME)
-			if (fullText.contains("VAR_NAME")) {
-				String[] parts = fullText.split("VAR_NAME\\s+");
-				if (parts.length > 1) {
-					String actualName = parts[1].trim();
-					Assertions.assertEquals(actualName, variableName);
-				}
-			}
-		}
+		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
+		Assertions.assertEquals(actualVarName, nameFiledValue, "Var name is not matching");
+	}
+
+	@When("User clicks on Edit button")
+	public void user_clicks_on_edit_button() {
+		openModelPage.clickOnEditButton();
+	}
+
+	@When("User enters tag as {string} in Edit Model Details and press enter")
+	public void user_enters_tag_as_in_edit_model_details_and_press_enter(String tagName) {
+		openModelPage.enterTagName(tagName);
+	}
+
+	@When("User clicks on Submit button")
+	public void user_clicks_on_submit_button() {
+		openModelPage.clickOnSubmit();
+	}
+
+	@Then("User can see {string} tag added")
+	public void user_can_see_tag_added(String tagNameAfterAdding) {
+		String actualTagName = openModelPage.verifyTagNameafteradding();
+		Assertions.assertEquals(actualTagName, tagNameAfterAdding, "Tag name after adding failed");
+
 	}
 
 }

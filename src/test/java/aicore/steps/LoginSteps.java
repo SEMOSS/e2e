@@ -4,11 +4,10 @@ import java.io.IOException;
 
 import org.junit.Assert;
 
-import com.microsoft.playwright.Page;
-
 import aicore.base.AICoreTestBase;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
+import aicore.utils.ConfigUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -38,13 +37,9 @@ public class LoginSteps {
 
 	@Then("User can navigate to home page")
 	public void user_can_navigate_to_home_page() throws InterruptedException {
-		homePage.closeInfoPopup();
+//		homePage.closeInfoPopup();
 		String actTitle = homePage.getPageTitle();
-		Assert.assertEquals("AI Core", actTitle);
-		//System.out.println("User is on Home page and page title is: " + actTitle);
-		// homePage.clickOnSystemApp();
-		// homePage.clickOnBIApp();
-		// bi.closeWelcomePopup();
-		// bi.clickOnCatalogOption();
+		Assert.assertEquals(ConfigUtils.getValue("applicationName"), actTitle);
+
 	}
 }
