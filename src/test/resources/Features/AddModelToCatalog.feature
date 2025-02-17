@@ -1,6 +1,6 @@
 
 Feature: Add Model to catalog
-Adding LLM to the catlog
+Adding LLM to the catalog
 
   Background: Login to the application
     Given User is on application
@@ -35,4 +35,4 @@ Adding LLM to the catlog
     And User enters tag as 'embeddings' in Edit Model Details and press enter
     And User clicks on Submit button
     Then User can see 'embeddings' tag added
-    
+ 

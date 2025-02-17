@@ -13,6 +13,8 @@ public class AddModelToCatalogPage {
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
 	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
+	private static final String CATALOG_NAME_XPATH = "//label[@id=\"NAME-label\"]";
+	private static final String OPEN_AI_KEY_XPATH = "//input[@id=\"OPEN_AI_KEY\"]";
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
