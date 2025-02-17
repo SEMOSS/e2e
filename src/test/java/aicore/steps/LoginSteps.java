@@ -18,6 +18,7 @@ public class LoginSteps {
 	private HomePage homePage;
 
 	public LoginSteps() {
+//		Page page = new AICoreTestBase().page; 
 		this.loginpage = new LoginPage(AICoreTestBase.page);
 		this.homePage = new HomePage(AICoreTestBase.page);
 	}
@@ -39,10 +40,9 @@ public class LoginSteps {
 
 	@Then("User can navigate to home page")
 	public void user_can_navigate_to_home_page() throws InterruptedException {
-
-		// homePage.closeInfoPopup();
+//		homePage.closeInfoPopup();
 		String actTitle = homePage.getPageTitle();
+		Assert.assertEquals(ConfigUtils.getValue("applicationName"), actTitle);
 
-		Assert.assertEquals(actTitle, ConfigUtils.getValue("applicationName"));
 	}
 }
