@@ -14,10 +14,12 @@ import io.cucumber.java.en.When;
 public class AddModelToCatalogSteps {
 	private HomePage homePage;
 	private AddModelToCatalogPage openModelPage;
+	protected static String timestamp;
 
 	public AddModelToCatalogSteps() {
 		this.homePage = new HomePage(AICoreTestBase.page);
-		this.openModelPage = new AddModelToCatalogPage(AICoreTestBase.page);
+		timestamp = CommonUtils.getTimeStampName();
+		this.openModelPage = new AddModelToCatalogPage(AICoreTestBase.page, timestamp);
 	}
 
 	@Given("User navigated to Open Model")
