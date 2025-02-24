@@ -1,4 +1,4 @@
-Feature: Create Vectot Database
+Feature: Create Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
 
   Background: Login to the application and Create model tagged with embeddings
