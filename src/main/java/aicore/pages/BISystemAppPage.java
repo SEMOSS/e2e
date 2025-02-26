@@ -2,6 +2,7 @@ package aicore.pages;
 
 import java.nio.file.Paths;
 
+import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.ConfigUtils;
@@ -134,7 +135,7 @@ public class BISystemAppPage {
 	}
 
 	public String verifySavedInsightSuccessMsg() {
-		page.waitForSelector(INSIGHT_SAVE_TOAST_MESSAGE_XPATH);
+		page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).waitFor(new WaitForOptions().setTimeout(10000));
 		String successMessage = page.textContent(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).trim();
 		return successMessage;
 	}

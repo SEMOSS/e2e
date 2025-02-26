@@ -11,7 +11,8 @@ public class HomePage {
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
 	private static final String OPEN_MODEL_XPATH = "(//a[@class=' css-drmees'])[2]";
-	private static final String OPENT_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
+	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
+	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
 
 	public HomePage(Page page) {
 		this.page = page;
@@ -40,7 +41,11 @@ public class HomePage {
 	}
 
 	public void clickOnOpenStorage() {
-		page.click(OPENT_STORAGE_XPATH);
+		page.click(OPEN_STORAGE_XPATH);
+	}
+
+	public void clickOnOpenVector() {
+		page.click(OPEN_VECTOR_XPATH);
 	}
 
 }
