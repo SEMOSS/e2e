@@ -77,25 +77,25 @@ public class AddStorageSteps {
 	}
 
 	@Then("User can see storage name in {string} field as {string} in SMSS properties")
-	public void user_can_see_storage_name_in_field_as_in_smss_properties(String field, String nameFiledValue) {
+	public void user_can_see_storage_name_in_field_as_in_smss_properties(String field, String name) {
 		String fullText = storagePage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
-		String expectedName = nameFiledValue + " " + timestamp;
+		String expectedName = name + " " + timestamp;
 		Assertions.assertEquals(actualName, expectedName, "Storage title is not matching");
 	}
 
 	@Then("User can see storage region in {string} field as {string} in SMSS properties")
-	public void user_can_see_storage_region_in_field_as_in_smss_properties(String field, String nameFiledValue) {
+	public void user_can_see_storage_region_in_field_as_in_smss_properties(String field, String expectedRegionName) {
 		String fullText = storagePage.verifyS3RegionFiledInSMSS();
 		String actualRegionName = CommonUtils.splitTrimValue(fullText, field);
-		Assertions.assertEquals(actualRegionName, nameFiledValue, "Region name is not matching");
+		Assertions.assertEquals(actualRegionName, expectedRegionName, "Region name is not matching");
 	}
 
 	@Then("User can see storage access key in {string} field as {string} in SMSS properties")
-	public void user_can_see_storage_access_key_in_field_as_in_smss_properties(String field, String nameFiledValue) {
+	public void user_can_see_storage_access_key_in_field_as_in_smss_properties(String field, String expectedAccessKey) {
 		String fullText = storagePage.verifyS3AccessKeyFiledInSMSS();
 		String actualAccessKey = CommonUtils.splitTrimValue(fullText, field);
-		Assertions.assertEquals(actualAccessKey, nameFiledValue, "Storage title is not matching");
+		Assertions.assertEquals(actualAccessKey, expectedAccessKey, "Storage title is not matching");
 	}
 
 }
