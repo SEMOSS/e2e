@@ -1,6 +1,6 @@
 package aicore.steps;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.Assert.assertEquals;
 
 import aicore.base.AICoreTestBase;
 import aicore.pages.BISystemAppPage;
@@ -56,7 +56,7 @@ public class BICreateInsightSteps {
 	@Then("User can see Insight created toast message as {string}")
 	public void user_can_see_insight_created_toast_message_as(String expectedMessage) {
 		String actualMessage = biApp.verifySavedInsightSuccessMsg();
-		Assertions.assertEquals(actualMessage, expectedMessage, "Insights creation failed");
+		assertEquals(actualMessage, expectedMessage, "Insights creation failed");
 	}
 
 }
