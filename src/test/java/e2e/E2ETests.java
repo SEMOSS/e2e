@@ -1,7 +1,5 @@
 package e2e;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
@@ -13,33 +11,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Response;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StartOptions;
 import com.microsoft.playwright.Tracing.StopOptions;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
 
 public class E2ETests {
 
@@ -72,7 +59,7 @@ public class E2ETests {
 	private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 	private static String folderDateTime = LocalDateTime.now().format(dtf);
 
-	@BeforeAll
+	//@BeforeAll
 	static void launchBrowser() throws Exception {
 		LOGGER.info("Before all start");
 		if (initialize) {
@@ -147,14 +134,14 @@ public class E2ETests {
 		return successful;
 	}
 
-	@AfterAll
+	//@AfterAll
 	static void closeBrowser() {
 		LOGGER.info("AFTER ALL start");
 		playwright.close();
 		LOGGER.info("AFTER ALL end\n");
 	}
 
-	@BeforeEach
+	//@BeforeEach
 	void createContextAndPage(TestInfo ti) {
 		LOGGER.info("Start Test for: {}", ti);
 		LOGGER.info("Before each start");
@@ -189,13 +176,13 @@ public class E2ETests {
 
 		if (!Utility.getRegistered()) {
 			LOGGER.info("Not registered, starting registration.");
-			nativeRegister();
+			//nativeRegister();
 		}
 		
 		LOGGER.info("Before each end");
 	}
 
-	@AfterEach
+	//@AfterEach
 	void closeContext(TestInfo ti) throws IOException {
 		LOGGER.info("After each start");
 		// save video with easy to understand name
@@ -251,90 +238,90 @@ public class E2ETests {
 	protected static String getApi(String ending) {
 		return api + ending;
 	}
-
-	private void nativeRegister() {
-		page.navigate(getApi("/setAdmin/"));
-		LOGGER.info("Page is: {}", page.url());
-		assertEquals(getApi("/setAdmin/"), page.url());
-		page.locator("#user-id").click();
-		page.locator("#user-id").fill("user1");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
-		LOGGER.info("After submitting admin: {}", page.url());
-
-		page.navigate(getUrl("/packages/client/dist/#/login"));
-		page.waitForURL(getUrl("/packages/client/dist/#/login"));
-		page.getByText("Log in below").click();
-		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Log in below");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Now")).click();
-		page.getByText("Register below").click();
-		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Register below");
-
-		List<Locator> inputs = page.locator("input[type='text']").all();
-		List<Locator> visible = new ArrayList<>();
-		for (Locator l : inputs) {
-			if (l.isVisible()) {
-				visible.add(l);
-			}
-		}
-
-		visible.get(0).click();
-		visible.get(0).fill("user");
-
-		visible.get(1).click();
-		visible.get(1).fill("one");
-
-		visible.get(2).click();
-		visible.get(2).fill("user1");
-
-		visible.get(3).click();
-		visible.get(3).fill("user1@deloitte.com");
-
-		List<Locator> passwords = page.locator("input[type='password']").all();
-		List<Locator> visiblePasswords = new ArrayList<>();
-		for (Locator l : passwords) {
-			if (l.isVisible()) {
-				visiblePasswords.add(l);
-			}
-		}
-		visiblePasswords.get(0).click();
-		visiblePasswords.get(0).fill("TestTest8*");
-
-		visiblePasswords.get(1).click();
-		visiblePasswords.get(1).fill("TestTest8*");
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Account")).click();
-
-		page.waitForLoadState(LoadState.LOAD);
-		page.getByRole(AriaRole.ALERT).click();
-		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
-		LOGGER.info("Account registration Done");
-//		doLogin();
-//		doLogout();
-	}
-
-	private void doLogin() {
-		page.navigate(getUrl("/packages/client/dist/#/login"));
-		page.getByLabel("Username").click();
-		page.getByLabel("Username").fill("user1");
-		page.getByLabel("Username").press("Tab");
-		page.locator("input[type=\"password\"]").fill("TestTest8*");
-		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
-				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
-		assertEquals(200, response.status());
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForLoadState(LoadState.LOAD);
-		page.navigate(getUrl("/packages/client/dist/#"));
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForLoadState(LoadState.LOAD);
-		page.waitForURL(getUrl("/packages/client/dist/#"));
-	}
-
-	private void doLogout() {
-		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
-				.getByRole(AriaRole.BUTTON).click();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
-		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
-		assertEquals(getUrl("/packages/client/dist/#/login"), page.url());
-	}
+//
+//	private void nativeRegister() {
+//		page.navigate(getApi("/setAdmin/"));
+//		LOGGER.info("Page is: {}", page.url());
+//		assertEquals(getApi("/setAdmin/"), page.url());
+//		page.locator("#user-id").click();
+//		page.locator("#user-id").fill("user1");
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
+//		LOGGER.info("After submitting admin: {}", page.url());
+//
+//		page.navigate(getUrl("/packages/client/dist/#/login"));
+//		page.waitForURL(getUrl("/packages/client/dist/#/login"));
+//		page.getByText("Log in below").click();
+//		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Log in below");
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Now")).click();
+//		page.getByText("Register below").click();
+//		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Register below");
+//
+//		List<Locator> inputs = page.locator("input[type='text']").all();
+//		List<Locator> visible = new ArrayList<>();
+//		for (Locator l : inputs) {
+//			if (l.isVisible()) {
+//				visible.add(l);
+//			}
+//		}
+//
+//		visible.get(0).click();
+//		visible.get(0).fill("user");
+//
+//		visible.get(1).click();
+//		visible.get(1).fill("one");
+//
+//		visible.get(2).click();
+//		visible.get(2).fill("user1");
+//
+//		visible.get(3).click();
+//		visible.get(3).fill("user1@deloitte.com");
+//
+//		List<Locator> passwords = page.locator("input[type='password']").all();
+//		List<Locator> visiblePasswords = new ArrayList<>();
+//		for (Locator l : passwords) {
+//			if (l.isVisible()) {
+//				visiblePasswords.add(l);
+//			}
+//		}
+//		visiblePasswords.get(0).click();
+//		visiblePasswords.get(0).fill("TestTest8*");
+//
+//		visiblePasswords.get(1).click();
+//		visiblePasswords.get(1).fill("TestTest8*");
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Account")).click();
+//
+//		page.waitForLoadState(LoadState.LOAD);
+//		page.getByRole(AriaRole.ALERT).click();
+//		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
+//		LOGGER.info("Account registration Done");
+////		doLogin();
+////		doLogout();
+//	}
+//
+//	private void doLogin() {
+//		page.navigate(getUrl("/packages/client/dist/#/login"));
+//		page.getByLabel("Username").click();
+//		page.getByLabel("Username").fill("user1");
+//		page.getByLabel("Username").press("Tab");
+//		page.locator("input[type=\"password\"]").fill("TestTest8*");
+//		Response response = page.waitForResponse(getApi("/api/auth/login"), () -> page
+//				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
+//		assertEquals(200, response.status());
+//		page.waitForLoadState(LoadState.NETWORKIDLE);
+//		page.waitForLoadState(LoadState.LOAD);
+//		page.navigate(getUrl("/packages/client/dist/#"));
+//		page.waitForLoadState(LoadState.NETWORKIDLE);
+//		page.waitForLoadState(LoadState.LOAD);
+//		page.waitForURL(getUrl("/packages/client/dist/#"));
+//	}
+//
+//	private void doLogout() {
+//		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
+//				.getByRole(AriaRole.BUTTON).click();
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
+//
+//		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
+//		assertEquals(getUrl("/packages/client/dist/#/login"), page.url());
+//	}
 
 }

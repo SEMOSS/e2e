@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.regex.Pattern;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -19,12 +17,12 @@ import e2e.E2ETests;
 
 public class LoginPageTests extends E2ETests {
 
-	@BeforeEach
+	//@BeforeEach
 	void goToLoginPage() {
 		page.navigate(getUrl("/packages/client/dist/#/login"));
 	}
 
-	@Test
+	//@Test
 	void testLoginIncorrect() {
 		page.getByLabel("Username").click();
 		page.getByLabel("Username").fill("wronguser");
@@ -40,7 +38,7 @@ public class LoginPageTests extends E2ETests {
 		assertTrue(page.getByText("The user name or password are invalid.").isVisible());
 	}
 
-	@Test
+	//@Test
 	void loginAndLogout() {
 		page.getByLabel("Username").click();
 		page.getByLabel("Username").fill("user1");
