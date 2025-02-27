@@ -8,6 +8,7 @@ import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.ConfigUtils;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -45,4 +46,18 @@ public class LoginSteps {
 		Assert.assertEquals(ConfigUtils.getValue("applicationName"), actTitle);
 
 	}
+
+	@When("User enters nativeUsername and nativePassword")
+	public void user_enters_native_username_and_native_password_and_click_on_sign_in_button()
+			throws InterruptedException {
+		loginpage.closeCookiesPopup();
+		loginpage.enterNativeUsernamePassword();
+
+	}
+
+	@And("User clicks on Login with native button")
+	public void click_on_sign_in_button() {
+		loginpage.loginWithNative();
+	}
+
 }

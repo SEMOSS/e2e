@@ -14,6 +14,7 @@ import io.cucumber.java.en.When;
 public class AddModelToCatalogSteps {
 	private HomePage homePage;
 	private AddModelToCatalogPage openModelPage;
+	protected static String timestamp;
 
 	public AddModelToCatalogSteps() {
 		this.homePage = new HomePage(AICoreTestManager.getPage());
