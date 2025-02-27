@@ -129,8 +129,7 @@ public class BISystemAppPage {
 
 	public void enterInsightsDetail() {
 		page.click(PROJECT_NAME_DROPDOWN_XPATH);
-		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, "Hanumant-Used for Automation");
-		page.waitForSelector(PROJECT_SEARCH_LIST_XPATH);
+		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, "Test-1a");
 		page.click(PROJECT_SEARCH_LIST_XPATH);
 		page.click(INSIGHT_SAVE_BUTTON_XPATH);
 	}

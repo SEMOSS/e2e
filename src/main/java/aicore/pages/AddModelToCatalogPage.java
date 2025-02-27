@@ -92,7 +92,7 @@ public class AddModelToCatalogPage {
 		page.getByLabel(TAG_TEXTBOX).fill("embeddings");
 		page.getByLabel(TAG_TEXTBOX).press("Enter");
 	}
-  
+
 	public void clickOnSubmit() {
 		page.click(SUBMIT_BUTTON_XPATH);
 	}
@@ -101,5 +101,4 @@ public class AddModelToCatalogPage {
 		String modelTagName = page.textContent(TAG_NAME_AFTER_ADDING_XPATH);
 		return modelTagName;
 	}
-	
 }
