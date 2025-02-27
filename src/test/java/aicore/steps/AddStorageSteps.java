@@ -2,7 +2,7 @@ package aicore.steps;
 
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestBase;
+import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
 import aicore.utils.CommonUtils;
@@ -18,9 +18,9 @@ public class AddStorageSteps {
 	private String timestamp;
 
 	public AddStorageSteps() {
-		homePage = new HomePage(AICoreTestBase.page);
+		homePage = new HomePage(AICoreTestManager.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		storagePage = new OpenStoragePage(AICoreTestBase.page, timestamp);
+		storagePage = new OpenStoragePage(AICoreTestManager.getPage(), timestamp);
 	}
 
 	@Given("User clicks on Open Storage engine")
