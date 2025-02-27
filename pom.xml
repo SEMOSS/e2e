@@ -31,6 +31,9 @@
 				<configuration>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
 					<aggregate>true</aggregate>
+					<includes>
+						<include>**/AICoreTestRunner.java</include>
+					</includes>
 				</configuration>
 			</plugin>
 		</plugins>
