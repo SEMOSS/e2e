@@ -2,7 +2,11 @@ package aicore.steps;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+
+import com.microsoft.playwright.Page;
 
 import aicore.base.AICoreTestBase;
 import aicore.pages.HomePage;
@@ -15,11 +19,17 @@ import io.cucumber.java.en.When;
 
 public class LoginSteps {
 
+	private static final Logger LOGGER = LogManager.getLogger(LoginSteps.class);
 	private LoginPage loginpage;
 	private HomePage homePage;
 
-	public LoginSteps() {
-//		Page page = new AICoreTestBase().page; 
+	public LoginSteps() throws IOException {
+		Page page = null;
+		try {
+			page = new AICoreTestBase().page; 
+		} catch(Exception e) {
+			LOGGER.error("Could not init page", e);
+		}
 		this.loginpage = new LoginPage(AICoreTestBase.page);
 		this.homePage = new HomePage(AICoreTestBase.page);
 	}
