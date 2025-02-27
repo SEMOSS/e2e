@@ -24,7 +24,7 @@ public class AddModelToCatalogPage {
 	private static final String TAG_NAME_AFTER_ADDING_XPATH = "//span[@class='MuiChip-label MuiChip-labelMedium css-9iedg7'][1]";
     private static final String TAG_TEXTBOX = "Tag";
     private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
-    
+  
 	public AddModelToCatalogPage(Page page)
 	{
 		this.page = page;
@@ -112,7 +112,6 @@ public class AddModelToCatalogPage {
 
 	public void clickOnSubmit()
 	{
-//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
 	page.click(SUBMIT_BUTTON_XPATH);
 	}
 
@@ -120,4 +119,5 @@ public class AddModelToCatalogPage {
 		String modelTagName = page.textContent(TAG_NAME_AFTER_ADDING_XPATH);
 		return modelTagName;
 	}
+	
 }

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Assert;
 
-import aicore.base.AICoreTestBase;
+import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.ConfigUtils;
@@ -19,8 +19,8 @@ public class LoginSteps {
 
 	public LoginSteps() {
 //		Page page = new AICoreTestBase().page; 
-		this.loginpage = new LoginPage(AICoreTestBase.page);
-		this.homePage = new HomePage(AICoreTestBase.page);
+		this.loginpage = new LoginPage(AICoreTestManager.getPage());
+		this.homePage = new HomePage(AICoreTestManager.getPage());
 	}
 
 	@Given("User is on application")
