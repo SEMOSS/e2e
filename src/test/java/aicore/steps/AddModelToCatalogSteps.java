@@ -2,7 +2,7 @@ package aicore.steps;
 
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestManager;
+import aicore.base.AICoreTestBase;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
@@ -17,8 +17,9 @@ public class AddModelToCatalogSteps {
 	protected static String timestamp;
 
 	public AddModelToCatalogSteps() {
-		this.homePage = new HomePage(AICoreTestManager.getPage());
-		this.openModelPage = new AddModelToCatalogPage(AICoreTestManager.getPage());
+		this.homePage = new HomePage(AICoreTestBase.page);
+		timestamp = CommonUtils.getTimeStampName();
+		this.openModelPage = new AddModelToCatalogPage(AICoreTestBase.page, timestamp);
 	}
 
 	@Given("User navigated to Open Model")
@@ -108,6 +109,7 @@ public class AddModelToCatalogSteps {
 	public void user_can_see_tag_added(String tagNameAfterAdding) {
 		String actualTagName = openModelPage.verifyTagNameafteradding();
 		Assertions.assertEquals(actualTagName, tagNameAfterAdding, "Tag name after adding failed");
+
 	}
 
 }
