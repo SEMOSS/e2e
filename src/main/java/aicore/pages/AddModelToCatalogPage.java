@@ -18,7 +18,7 @@ public class AddModelToCatalogPage {
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
-	private static final String EDIT_BUTTON_XPATH = "//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-bmsw1d']";
+	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_NAME_AFTER_ADDING_XPATH = "//span[@class='MuiChip-label MuiChip-labelMedium css-9iedg7'][1]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -63,7 +63,7 @@ public class AddModelToCatalogPage {
 		return modelTitle;
 	}
 
-	public void smssTab() {
+	public void clickOnSMSSTab() {
 		page.click(SMSS_TAB_XPATH);
 	}
 
@@ -92,7 +92,7 @@ public class AddModelToCatalogPage {
 		page.getByLabel(TAG_TEXTBOX).fill("embeddings");
 		page.getByLabel(TAG_TEXTBOX).press("Enter");
 	}
-  
+
 	public void clickOnSubmit() {
 		page.click(SUBMIT_BUTTON_XPATH);
 	}
@@ -101,5 +101,5 @@ public class AddModelToCatalogPage {
 		String modelTagName = page.textContent(TAG_NAME_AFTER_ADDING_XPATH);
 		return modelTagName;
 	}
-	
+
 }

@@ -1,6 +1,8 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class OpenVectorPage {
 
@@ -69,6 +71,11 @@ public class OpenVectorPage {
 	public String verifyVectorCreatedToastMessage() {
 		String toastMessage = page.textContent(VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
+	}
+
+	public void waitForVectorToastMessageToDisappear() {
+		page.locator(VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
 	public String verifyVectorTitle() {

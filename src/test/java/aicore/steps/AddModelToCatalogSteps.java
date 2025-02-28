@@ -18,7 +18,8 @@ public class AddModelToCatalogSteps {
 
 	public AddModelToCatalogSteps() {
 		this.homePage = new HomePage(AICoreTestManager.getPage());
-		this.openModelPage = new AddModelToCatalogPage(AICoreTestManager.getPage());
+		timestamp = CommonUtils.getTimeStampName();
+		this.openModelPage = new AddModelToCatalogPage(AICoreTestManager.getPage(), timestamp);
 	}
 
 	@Given("User navigated to Open Model")
@@ -71,7 +72,7 @@ public class AddModelToCatalogSteps {
 
 	@Then("User clicks on SMSS")
 	public void user_clicks_on_smss() {
-		openModelPage.smssTab();
+		openModelPage.clickOnSMSSTab();
 	}
 
 	@Then("User can see name in {string} field as {string} in SMSS properties")

@@ -2,7 +2,7 @@ package aicore.steps;
 
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestBase;
+import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.utils.CommonUtils;
@@ -18,9 +18,9 @@ public class AddVectorDatabaseSteps {
 	private String timestamp;
 
 	public AddVectorDatabaseSteps() {
-		homePage = new HomePage(AICoreTestBase.page);
+		homePage = new HomePage(AICoreTestManager.getPage());
 		timestamp = AddModelToCatalogSteps.timestamp;
-		vectorPage = new OpenVectorPage(AICoreTestBase.page, AddModelToCatalogSteps.timestamp);
+		vectorPage = new OpenVectorPage(AICoreTestManager.getPage(), AddModelToCatalogSteps.timestamp);
 	}
 
 	@Given("User clicks on Open Vector engine")
@@ -72,6 +72,7 @@ public class AddVectorDatabaseSteps {
 	public void user_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
 		String actualToastMessage = vectorPage.verifyVectorCreatedToastMessage();
 		Assertions.assertEquals(actualToastMessage, expectedToastMessage, "Toast message is incorrect");
+		vectorPage.waitForVectorToastMessageToDisappear();
 	}
 
 	@Then("User can see the Vector title as {string}")
