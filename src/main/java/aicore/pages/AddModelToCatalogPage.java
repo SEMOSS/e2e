@@ -210,7 +210,6 @@ public class AddModelToCatalogPage {
 	public List<String> verifyRowsPerPageDropdownOptions() {
 		page.click(ROWS_PER_PAGE_DROPDOWN_XPATH);
 		List<String> actualOptions = page.locator(ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH).allTextContents();
-		page.pause();
 		return actualOptions;
 	}
 }
