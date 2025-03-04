@@ -2,7 +2,7 @@ Feature: Model settings
   I want to use this feature file for all the scenarios related to Model settings
 
   Background: Create a model
-    Given User navigated to Open Model
+    Given User navigates to Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Catalog'

@@ -11,19 +11,19 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class AddModelToCatalogSteps {
+public class AddModelSteps {
 	private HomePage homePage;
 	private AddModelToCatalogPage openModelPage;
 	protected static String timestamp;
 
-	public AddModelToCatalogSteps() {
+	public AddModelSteps() {
 		this.homePage = new HomePage(AICoreTestManager.getPage());
 		timestamp = CommonUtils.getTimeStampName();
 		this.openModelPage = new AddModelToCatalogPage(AICoreTestManager.getPage(), timestamp);
 	}
 
-	@Given("User navigated to Open Model")
-	public void user_navigate_to_open_model() {
+	@Given("User navigates to Open Model")
+	public void user_navigates_to_open_model() {
 		homePage.clickOnOpenModel();
 	}
 

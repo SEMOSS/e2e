@@ -69,7 +69,7 @@ public class AddStorageSteps {
 		Assertions.assertEquals(actualMessage, expectedMessage, "Storage creation is failed");
 	}
 
-	@Then("User Can see the Storage title as {string}")
+	@Then("User can see the Storage title as {string}")
 	public void user_can_see_the_storage_title_as(String storageTitle) {
 		String actualTitle = storagePage.verifyStorageTitle(storageTitle);
 		String expectedTitle = storageTitle + " " + timestamp;

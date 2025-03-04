@@ -19,8 +19,8 @@ public class AddVectorDatabaseSteps {
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(AICoreTestManager.getPage());
-		timestamp = AddModelToCatalogSteps.timestamp;
-		vectorPage = new OpenVectorPage(AICoreTestManager.getPage(), AddModelToCatalogSteps.timestamp);
+		timestamp = AddModelSteps.timestamp;
+		vectorPage = new OpenVectorPage(AICoreTestManager.getPage(), AddModelSteps.timestamp);
 	}
 
 	@Given("User clicks on Open Vector engine")
