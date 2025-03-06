@@ -38,8 +38,8 @@ public class AddStorageSteps {
 		storagePage.selectStorage(storageName);
 	}
 
-	@And("User enters Catlog name as {string}")
-	public void user_enters_catlog_name_as(String catalogName) {
+	@And("User enters storage Catalog name as {string}")
+	public void user_enters_storage_catalog_name_as(String catalogName) {
 		storagePage.enterCatalogName(catalogName);
 	}
 

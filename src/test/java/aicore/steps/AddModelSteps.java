@@ -111,4 +111,41 @@ public class AddModelSteps {
 		Assertions.assertEquals(actualTagName, tagNameAfterAdding, "Tag name after adding failed");
 	}
 
+//Edit SMSS
+
+	@And("User clicks on Edit SMSS button")
+	public void user_clicks_on_edit_smss_button() {
+		openModelPage.clickOnEditSMSSButton();
+	}
+
+	@And("User can edit the value of {string} field as {string}")
+	public void user_can_edit_the_value_of_field_as(String fieldName, String newValue) throws InterruptedException {
+		openModelPage.editSMSSFieldValues(fieldName, newValue);
+	}
+
+	@And("User clicks on Update SMSS button")
+	public void user_clicks_on_update_smss_button() {
+		openModelPage.clickOnUpdateSMSSButton();
+	}
+
+	@And("User refresh the page")
+	public void user_refresh_the_page() {
+		openModelPage.pageReload();
+	}
+
+	@Then("User can see updated value in {string} field as {string}")
+	public void user_can_see_updated_value_in_field_as(String field, String newValue) {
+		String fullText = null;
+		switch (field) {
+		case "VAR_NAME":
+			fullText = openModelPage.verifyVarNameInSMSS();
+			break;
+		case "KEEP_CONVERSATION_HISTORY":
+			fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
+		default:
+			System.out.println("Invalid field name " + field);
+		}
+		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
+		Assertions.assertEquals(actualVarName, newValue, "Value is not matching for " + field + "field");
+	}
 }
