@@ -10,6 +10,8 @@ public class AddModelToCatalogPage {
 	private String timestamp;
 
 	private static final String ADD_MODEL_BUTTON_XPATH = "//button[@aria-label='Navigate to import Model']";
+	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
+	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
 	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
@@ -211,5 +213,16 @@ public class AddModelToCatalogPage {
 		page.click(ROWS_PER_PAGE_DROPDOWN_XPATH);
 		List<String> actualOptions = page.locator(ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH).allTextContents();
 		return actualOptions;
+	}
+
+	public boolean verifyGroupIsVisible(String groupName) {
+		boolean isGroupVisible = page.isVisible(MODEL_GROUP_XPATH.replace("{groupName}", groupName));
+		return isGroupVisible;
+	}
+
+	public boolean VerifyModelIsVisible(String groupName, String modelName) {
+		boolean isModelVisible = page.isVisible(
+				MODELS_UNDER_GROUP_XPATH.replace("{groupName}", groupName).replace("{modelName}", modelName));
+		return isModelVisible;
 	}
 }
