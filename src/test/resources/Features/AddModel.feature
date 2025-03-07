@@ -1,4 +1,4 @@
-Feature: Add Model to catalog
+Feature: Add Model
   Adding LLM to the catalog
 
   Background: Create a Model - GPT-3.5
