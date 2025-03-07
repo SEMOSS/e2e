@@ -5,7 +5,7 @@ Feature: Connect to Storage
     Given User clicks on Open Storage engine
     When User clicks on Add Storage button
     And User selects 'Amazon S3' storage
-    And User enters Catalog name as 'Amazon S3 Storage'
+    And User enters storage Catalog name as 'Amazon S3 Storage'
     And User enters Region as 'India'
     And User enters Access Key as 'Test123'
     And User enters Secret Key

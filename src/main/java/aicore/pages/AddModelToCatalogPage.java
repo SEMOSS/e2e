@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.microsoft.playwright.Page;
 
+import aicore.utils.CommonUtils;
+
 public class AddModelToCatalogPage {
 
 	private Page page;
@@ -23,6 +25,9 @@ public class AddModelToCatalogPage {
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
+	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
+	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
+	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	// Settings field
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 	private static final String MAKE_PUBLIC_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//p[text()='{title}']";
@@ -103,6 +108,12 @@ public class AddModelToCatalogPage {
 
 	public String verifyVarNameInSMSS() {
 		String varNameInSMSSProperties = page.textContent(VAR_NAME_SMSS_PROPERTIES_XPATH);
+		return varNameInSMSSProperties;
+	}
+
+	public String verifyKeepConversationHistoryValueInSMSS(String fieldName) {
+		String varNameInSMSSProperties = page
+				.textContent(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
 		return varNameInSMSSProperties;
 	}
 
@@ -213,6 +224,32 @@ public class AddModelToCatalogPage {
 		page.click(ROWS_PER_PAGE_DROPDOWN_XPATH);
 		List<String> actualOptions = page.locator(ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH).allTextContents();
 		return actualOptions;
+	}
+
+	public void clickOnEditSMSSButton() {
+		page.click(EDIT_SMSS_BUTTON_XPATH);
+	}
+
+	public void clickOnUpdateSMSSButton() {
+		page.click(UPDATE_SMSS_BUTTON_XPATH);
+	}
+
+	public void editSMSSFieldValues(String fieldName, String newValue) {
+		String locator = SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName);
+		String fullText = page.textContent(locator);
+		String fieldValue = CommonUtils.splitTrimValue(fullText, fieldName);
+
+		if (fieldValue != null) {
+			page.click(locator);
+			page.press(locator, "End");
+			page.locator(locator).press("Shift+Control+ArrowLeft");
+			page.keyboard().press("Backspace");
+			page.keyboard().type(newValue);
+		}
+	}
+
+	public void pageReload() {
+		page.reload();
 	}
 
 	public boolean verifyGroupIsVisible(String groupName) {
