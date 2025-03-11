@@ -29,7 +29,7 @@ For example, the Epic ticket for the **Member Settings page** feature contains s
 
 Feel free to view the current Issues for more detailed examples!
 
-## Outline Example
+## Outline Example https://github.com/SEMOSS/e2e/issues/41
 
 ### [EPIC ISSUE] Feature: Member Settings page
 #### [TASK SUB-ISSUE] Scenario 1: User List
@@ -41,3 +41,4 @@ Feel free to view the current Issues for more detailed examples!
 - **Given:** ...
 - **When:** ...
 - **Then:** ...
+
