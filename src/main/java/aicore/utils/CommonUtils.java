@@ -2,6 +2,7 @@ package aicore.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class CommonUtils {
 
@@ -25,5 +26,17 @@ public class CommonUtils {
 			}
 		}
 		return actualName;
+	}
+
+	public static void extractOverviewSectionValues(List<String> keys, List<String> keyText) {
+		for (String text : keyText) {
+			String[] splitTags = text.split("[," + System.lineSeparator() + "]+");
+			for (String tag : splitTags) {
+				if (!tag.trim().isEmpty()) {
+					keys.add(tag.trim());
+				}
+			}
+		}
+
 	}
 }
