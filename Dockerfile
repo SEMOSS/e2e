@@ -14,9 +14,8 @@ COPY src src
 COPY logs logs
 COPY target target
 COPY videos videos
-COPY test.props test.props
 COPY tester.sh tester.sh
 COPY testNRM.sh testNRM.sh
 COPY state.json state.json
 
-CMD ["mvn", "clean", "-Dtest=e2e.**", "test", "-e"]
+CMD ["mvn", "clean", "-Dtest=aicore.**", "test", "-e"]
