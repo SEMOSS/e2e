@@ -42,3 +42,7 @@ Feel free to view the current Issues for more detailed examples!
 - **When:** ...
 - **Then:** ...
 
+
+### Docker setup
+
++ Follow docker instructions found in [here](docker/README.md)

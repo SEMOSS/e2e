@@ -9,8 +9,12 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 import aicore.utils.ConfigUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AICoreTestManager {
+
+	private static final Logger LOGGER = LogManager.getLogger(AICoreTestBase.class);
 
 	private static Page page;
 	private static BrowserContext context;

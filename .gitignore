@@ -1,1 +1,11 @@
 /target/
+/videos
+scratch.txt
+logs/testlogs.log
+logs/requests.log
+/traces
+state.json
+.classpath
+.project
+/.settings
+.idea/

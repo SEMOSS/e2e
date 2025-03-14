@@ -1,6 +1,6 @@
 package aicore.steps;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.Assert.assertEquals;
 
 import aicore.base.AICoreTestManager;
 import aicore.pages.AddModelToCatalogPage;
@@ -60,14 +60,14 @@ public class AddModelSteps {
 	@And("User can see a toast message as {string}")
 	public void user_can_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
-		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
+		assertEquals(actualMessage, toastMessage, "Model creation failed");
 	}
 
 	@Then("User Can see the Model title as {string}")
 	public void user_can_see_the_model_title_as(String modelTitle) {
 		String actualModelTitle = openModelPage.verifyModelTitle();
 		String expModelTitle = openModelPage.getExpectedCatalogTitle(modelTitle);
-		Assertions.assertEquals(actualModelTitle, expModelTitle);
+		assertEquals(actualModelTitle, expModelTitle);
 	}
 
 	@Then("User clicks on SMSS")
@@ -80,14 +80,14 @@ public class AddModelSteps {
 		String fullText = openModelPage.verifyNameInSMSS();
 		String actualModelName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedNameProperties = openModelPage.getExpectedCatalogTitle(nameFiledValue);
-		Assertions.assertEquals(actualModelName, expectedNameProperties, "Model name is not matching");
+		assertEquals(actualModelName, expectedNameProperties, "Model name is not matching");
 	}
 
 	@Then("User can see var name in {string} field as {string} in SMSS properties")
 	public void user_can_see_var_name_in_field_as_in_smss_properties(String field, String nameFiledValue) {
 		String fullText = openModelPage.verifyVarNameInSMSS();
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
-		Assertions.assertEquals(actualVarName, nameFiledValue, "Var name is not matching");
+		assertEquals(actualVarName, nameFiledValue, "Var name is not matching");
 	}
 
 	@When("User clicks on Edit button")
@@ -108,7 +108,7 @@ public class AddModelSteps {
 	@Then("User can see {string} tag added")
 	public void user_can_see_tag_added(String tagNameAfterAdding) {
 		String actualTagName = openModelPage.verifyTagNameafteradding();
-		Assertions.assertEquals(actualTagName, tagNameAfterAdding, "Tag name after adding failed");
+        assertEquals(actualTagName, tagNameAfterAdding, "Tag name after adding failed");
 	}
 
 //Edit SMSS
