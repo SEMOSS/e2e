@@ -6,9 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.AICoreTestBase;
+import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.ConfigUtils;
@@ -23,15 +21,10 @@ public class LoginSteps {
 	private LoginPage loginpage;
 	private HomePage homePage;
 
-	public LoginSteps() throws IOException {
-		Page page = null;
-		try {
-			page = new AICoreTestBase().page; 
-		} catch(Exception e) {
-			LOGGER.error("Could not init page", e);
-		}
-		this.loginpage = new LoginPage(AICoreTestBase.page);
-		this.homePage = new HomePage(AICoreTestBase.page);
+	public LoginSteps() {
+//		Page page = new AICoreTestBase().page; 
+		this.loginpage = new LoginPage(AICoreTestManager.getPage());
+		this.homePage = new HomePage(AICoreTestManager.getPage());
 	}
 
 	@Given("User is on application")

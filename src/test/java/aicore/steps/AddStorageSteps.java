@@ -2,7 +2,7 @@ package aicore.steps;
 
 import static org.junit.Assert.assertEquals;
 
-import aicore.base.AICoreTestBase;
+import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
 import aicore.utils.CommonUtils;
@@ -18,9 +18,9 @@ public class AddStorageSteps {
 	private String timestamp;
 
 	public AddStorageSteps() {
-		homePage = new HomePage(AICoreTestBase.page);
+		homePage = new HomePage(AICoreTestManager.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		storagePage = new OpenStoragePage(AICoreTestBase.page, timestamp);
+		storagePage = new OpenStoragePage(AICoreTestManager.getPage(), timestamp);
 	}
 
 	@Given("User clicks on Open Storage engine")
@@ -38,8 +38,8 @@ public class AddStorageSteps {
 		storagePage.selectStorage(storageName);
 	}
 
-	@And("User enters Catlog name as {string}")
-	public void user_enters_catlog_name_as(String catalogName) {
+	@And("User enters storage Catalog name as {string}")
+	public void user_enters_storage_catalog_name_as(String catalogName) {
 		storagePage.enterCatalogName(catalogName);
 	}
 
@@ -69,7 +69,7 @@ public class AddStorageSteps {
 		assertEquals(actualMessage, expectedMessage, "Storage creation is failed");
 	}
 
-	@Then("User Can see the Storage title as {string}")
+	@Then("User can see the Storage title as {string}")
 	public void user_can_see_the_storage_title_as(String storageTitle) {
 		String actualTitle = storagePage.verifyStorageTitle(storageTitle);
 		String expectedTitle = storageTitle + " " + timestamp;

@@ -2,9 +2,7 @@ Feature: Create Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
 
   Background: Login to the application and Create model tagged with embeddings
-    Given User is on application
-    When User enters username and password and click on SignIn button
-    And User navigated to Open Model
+    Given User navigates to Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Catalog'
@@ -34,6 +32,7 @@ Feature: Create Vector Database
     And User can see content length in 'CONTENT_LENGTH' field as '<content_length>' in SMSS properties
     And User can see content overlap in 'CONTENT_OVERLAP' field as '<content_overlap>' in SMSS properties
     And User can see chunking strategy in 'CHUNKING_STRATEGY' field as '<chunking_strategy>' in SMSS properties
+    And User navigates to Open Model
 
     Examples: 
       | connection | catalog_name    | model_name | chunking_strategy | content_length | content_overlap |
