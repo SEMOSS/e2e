@@ -60,7 +60,7 @@ public class AddModelSteps {
 	@And("User can see a toast message as {string}")
 	public void user_can_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
-		assertEquals(actualMessage, toastMessage, "Model creation failed");
+		assertEquals(actualMessage, toastMessage);
 	}
 
 	@Then("User Can see the Model title as {string}")
@@ -80,14 +80,14 @@ public class AddModelSteps {
 		String fullText = openModelPage.verifyNameInSMSS();
 		String actualModelName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedNameProperties = openModelPage.getExpectedCatalogTitle(nameFiledValue);
-		assertEquals(actualModelName, expectedNameProperties, "Model name is not matching");
+		assertEquals(actualModelName, expectedNameProperties);
 	}
 
 	@Then("User can see var name in {string} field as {string} in SMSS properties")
 	public void user_can_see_var_name_in_field_as_in_smss_properties(String field, String nameFiledValue) {
 		String fullText = openModelPage.verifyVarNameInSMSS();
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
-		assertEquals(actualVarName, nameFiledValue, "Var name is not matching");
+		assertEquals(actualVarName, nameFiledValue);
 	}
 
 	@When("User clicks on Edit button")
@@ -108,7 +108,7 @@ public class AddModelSteps {
 	@Then("User can see {string} tag added")
 	public void user_can_see_tag_added(String tagNameAfterAdding) {
 		String actualTagName = openModelPage.verifyTagNameafteradding();
-        assertEquals(actualTagName, tagNameAfterAdding, "Tag name after adding failed");
+		assertEquals(actualTagName, tagNameAfterAdding);
 	}
 
 //Edit SMSS
@@ -119,7 +119,7 @@ public class AddModelSteps {
 	}
 
 	@And("User can edit the value of {string} field as {string}")
-	public void user_can_edit_the_value_of_field_as(String fieldName, String newValue) throws InterruptedException {
+	public void user_can_edit_the_value_of_field_as(String fieldName, String newValue) {
 		openModelPage.editSMSSFieldValues(fieldName, newValue);
 	}
 
@@ -146,6 +146,6 @@ public class AddModelSteps {
 			System.out.println("Invalid field name " + field);
 		}
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
-		Assertions.assertEquals(actualVarName, newValue, "Value is not matching for " + field + "field");
+		assertEquals(actualVarName, newValue);
 	}
 }

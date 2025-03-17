@@ -121,7 +121,7 @@ public class BICreateDatabaseAndInsightSteps {
 	@Then("User can see Insight created toast message as {string}")
 	public void user_can_see_insight_created_toast_message_as(String expectedMessage) {
 		String actualMessage = biApp.verifySavedInsightSuccessMsg();
-		Assertions.assertEquals(actualMessage, expectedMessage, "Insights creation failed");
+		assertEquals(actualMessage, expectedMessage, "Insights creation failed");
 	}
 
 }
