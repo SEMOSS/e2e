@@ -1,6 +1,6 @@
 package aicore.steps;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
@@ -66,14 +66,14 @@ public class AddStorageSteps {
 	@Then("User can see create storage success toast message as {string}")
 	public void user_can_see_create_storage_success_toast_message_as(String expectedMessage) {
 		String actualMessage = storagePage.verifyStorageCreatedToastMessage();
-		assertEquals(actualMessage, expectedMessage, "Storage creation is failed");
+		Assertions.assertEquals(actualMessage, expectedMessage, "Storage creation is failed");
 	}
 
 	@Then("User can see the Storage title as {string}")
 	public void user_can_see_the_storage_title_as(String storageTitle) {
 		String actualTitle = storagePage.verifyStorageTitle(storageTitle);
 		String expectedTitle = storageTitle + " " + timestamp;
-		assertEquals(actualTitle, expectedTitle, "Storage title is not matching");
+		Assertions.assertEquals(actualTitle, expectedTitle, "Storage title is not matching");
 	}
 
 	@Then("User can see storage name in {string} field as {string} in SMSS properties")
@@ -81,21 +81,21 @@ public class AddStorageSteps {
 		String fullText = storagePage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedName = name + " " + timestamp;
-		assertEquals(actualName, expectedName, "Storage title is not matching");
+		Assertions.assertEquals(actualName, expectedName, "Storage title is not matching");
 	}
 
 	@Then("User can see storage region in {string} field as {string} in SMSS properties")
 	public void user_can_see_storage_region_in_field_as_in_smss_properties(String field, String expectedRegionName) {
 		String fullText = storagePage.verifyS3RegionFiledInSMSS();
 		String actualRegionName = CommonUtils.splitTrimValue(fullText, field);
-		assertEquals(actualRegionName, expectedRegionName, "Region name is not matching");
+		Assertions.assertEquals(actualRegionName, expectedRegionName, "Region name is not matching");
 	}
 
 	@Then("User can see storage access key in {string} field as {string} in SMSS properties")
 	public void user_can_see_storage_access_key_in_field_as_in_smss_properties(String field, String expectedAccessKey) {
 		String fullText = storagePage.verifyS3AccessKeyFiledInSMSS();
 		String actualAccessKey = CommonUtils.splitTrimValue(fullText, field);
-		assertEquals(actualAccessKey, expectedAccessKey, "Storage title is not matching");
+		Assertions.assertEquals(actualAccessKey, expectedAccessKey, "Storage title is not matching");
 	}
 
 }

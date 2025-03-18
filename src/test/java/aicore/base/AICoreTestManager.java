@@ -2,6 +2,9 @@ package aicore.base;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
@@ -9,8 +12,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 import aicore.utils.ConfigUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class AICoreTestManager {
 
