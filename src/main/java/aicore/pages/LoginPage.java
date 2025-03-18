@@ -29,7 +29,9 @@ public class LoginPage {
 	}
 
 	public void closeCookiesPopup() throws InterruptedException {
-		page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
+		if (page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).isVisible()) {
+			page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
+		}
 	}
 
 	public void loginToApplication() throws InterruptedException, IOException {

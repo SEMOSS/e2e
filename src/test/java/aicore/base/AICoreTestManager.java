@@ -24,8 +24,10 @@ public class AICoreTestManager {
 
 	static {
 		try {
+			LOGGER.info("Initializing Playwright");
 			GenericSetupUtils.initialize();
 		} catch (IOException e) {
+			LOGGER.error(e);
 			throw new RuntimeException(e);
 		}
 
@@ -35,7 +37,7 @@ public class AICoreTestManager {
 			browser = playwright.chromium().launch(lp);
 			context = browser.newContext(GenericSetupUtils.getContextOptions());
 
-			if (Boolean.valueOf(ConfigUtils.getValue("use_trace"))) {
+			if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
 				context.tracing().start(GenericSetupUtils.getStartOptions());
 			}
 			page = context.newPage();
@@ -51,10 +53,13 @@ public class AICoreTestManager {
 	}
 
 	public static void launchApp() throws IOException {
-		page.navigate(ConfigUtils.getValue("baseUrl"));
+		String baseUrl = ConfigUtils.getValue("baseUrl");
+		LOGGER.info("Navigating to {}", baseUrl);
+		page.navigate(baseUrl);
 	}
 
 	public static void close() {
+		LOGGER.info("Closing Playwright");
 		page.close();
 		context.close();
 		browser.close();

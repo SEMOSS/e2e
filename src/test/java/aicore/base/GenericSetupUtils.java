@@ -24,6 +24,12 @@ public class GenericSetupUtils {
 	private static final Logger LOGGER = LogManager.getLogger(GenericSetupUtils.class);
 
 	public static void initialize() throws IOException {
+		if (RunInfo.isFirstRun()) {
+			doInit();
+		}
+	}
+
+	private static void doInit() throws IOException {
 		logCheck();
 
 		boolean useDocker = Boolean.parseBoolean(ConfigUtils.getValue("use_docker"));
