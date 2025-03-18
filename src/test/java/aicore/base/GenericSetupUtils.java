@@ -24,14 +24,17 @@ public class GenericSetupUtils {
 	private static final Logger LOGGER = LogManager.getLogger(GenericSetupUtils.class);
 
 	public static void initialize() throws IOException {
-		GenericSetupUtils.logCheck();
+		logCheck();
+
 		boolean useDocker = Boolean.parseBoolean(ConfigUtils.getValue("use_docker"));
 		boolean useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
 		boolean useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		LOGGER.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
+
 		if (useDocker) {
 			DockerUtils.startup();
 		}
+
 		if (useVideo) {
 			Path p = Paths.get("videos");
 			LOGGER.info("Videos will be saved to: {}", p.toString());
