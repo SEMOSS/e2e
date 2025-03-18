@@ -13,6 +13,7 @@ RUN mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args
 COPY src src
 COPY logs logs
 COPY target target
+COPY traces traces
 COPY videos videos
 COPY tester.sh tester.sh
 COPY testNRM.sh testNRM.sh

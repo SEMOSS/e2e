@@ -45,11 +45,19 @@ public class DockerUtils {
 		}
 	}
 
-	private static String getApi(String string) {
+	public static String getApi(String string) {
 		String api = ConfigUtils.getValue("api");
 		if (api == null) {
 			throw new RuntimeException("Cannot run if api not set. Breaking");
 		}
 		return api + string;
+	}
+
+	public static String getUrl(String string) {
+		String url = ConfigUtils.getValue("url");
+		if (url == null) {
+			throw new RuntimeException("Cannot run if url not set. Breaking");
+		}
+		return url + string;
 	}
 }

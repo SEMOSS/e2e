@@ -1,7 +1,5 @@
 package aicore.steps;
 
-import static org.junit.Assert.assertEquals;
-
 import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
@@ -10,6 +8,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddVectorDatabaseSteps {
 

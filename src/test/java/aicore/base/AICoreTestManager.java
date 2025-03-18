@@ -36,12 +36,17 @@ public class AICoreTestManager {
 			LaunchOptions lp = GenericSetupUtils.getLaunchOptions();
 			browser = playwright.chromium().launch(lp);
 			context = browser.newContext(GenericSetupUtils.getContextOptions());
+			context.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
 			if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
 				context.tracing().start(GenericSetupUtils.getStartOptions());
 			}
 			page = context.newPage();
 			GenericSetupUtils.setupLoggers(page);
+
+			if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
+				GenericSetupUtils.createUser();
+			}
 		}
 	}
 
