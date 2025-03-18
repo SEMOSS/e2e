@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 public class AICoreTestManager {
 
-	private static final Logger LOGGER = LogManager.getLogger(AICoreTestBase.class);
+	private static final Logger LOGGER = LogManager.getLogger(AICoreTestManager.class);
 
 	private static Page page;
 	private static BrowserContext context;
@@ -22,14 +22,23 @@ public class AICoreTestManager {
 	private static Playwright playwright;
 
 	static {
+		try {
+			GenericSetupUtils.initialize();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
 		if (page == null) {
 			playwright = Playwright.create();
-			LaunchOptions lp = new LaunchOptions();
-			lp.setChannel(ConfigUtils.getValue("browserType"));
-			lp.setHeadless(Boolean.parseBoolean(ConfigUtils.getValue("headless")));
+			LaunchOptions lp = GenericSetupUtils.getLaunchOptions();
 			browser = playwright.chromium().launch(lp);
-			context = browser.newContext();
+			context = browser.newContext(GenericSetupUtils.getContextOptions());
+
+			if (Boolean.valueOf(ConfigUtils.getValue("use_trace"))) {
+				context.tracing().start(GenericSetupUtils.getStartOptions());
+			}
 			page = context.newPage();
+			GenericSetupUtils.setupLoggers(page);
 		}
 	}
 

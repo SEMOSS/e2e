@@ -50,6 +50,6 @@ public class DockerUtils {
 		if (api == null) {
 			throw new RuntimeException("Cannot run if api not set. Breaking");
 		}
-		return null;
+		return api + string;
 	}
 }
