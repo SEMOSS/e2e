@@ -1,6 +1,7 @@
 
 package aicore.hooks;
 
+import aicore.base.RunInfo;
 import com.microsoft.playwright.Page;
 
 import aicore.base.AICoreTestManager;
@@ -44,7 +45,7 @@ public class LoginHooks {
 				page1.fill(PASSWORD_XPATH, ConfigUtils.getValue("ms_password"));
 				page1.click(SIGNIN_BUTTON_XPATH);
 			} else {
-				if (page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).isVisible()) {
+				if (RunInfo.isAcceptCookiesPopup()) {
 					page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
 				}
 				page.fill(NATIVE_USERNAME_XPATH, ConfigUtils.getValue("native_username"));

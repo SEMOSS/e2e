@@ -29,7 +29,7 @@ public class LoginPage {
 	}
 
 	public void closeCookiesPopup() throws InterruptedException {
-		if (page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).isVisible()) {
+		if (Boolean.parseBoolean(ConfigUtils.getValue("accept_cookies_popup"))) {
 			page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
 		}
 	}
