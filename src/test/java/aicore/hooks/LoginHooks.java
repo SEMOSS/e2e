@@ -1,5 +1,7 @@
+
 package aicore.hooks;
 
+import aicore.base.RunInfo;
 import com.microsoft.playwright.Page;
 
 import aicore.base.AICoreTestManager;
@@ -7,9 +9,12 @@ import aicore.utils.ConfigUtils;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LoginHooks {
 
+	private static final Logger LOGGER = LogManager.getLogger(LoginHooks.class);
 // Microsoft
 	private static final String INFO_POPUP_ACCEPT_BUTTON_XPATH = "//div[@class='MuiStack-root css-bcmwpg']//button";
 	private static final String MICROSOFT_LOGIN_XPATH = "(//button[@type='button'])[4]";
@@ -40,14 +45,16 @@ public class LoginHooks {
 				page1.fill(PASSWORD_XPATH, ConfigUtils.getValue("ms_password"));
 				page1.click(SIGNIN_BUTTON_XPATH);
 			} else {
-				page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
+				if (RunInfo.isAcceptCookiesPopup()) {
+					page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
+				}
 				page.fill(NATIVE_USERNAME_XPATH, ConfigUtils.getValue("native_username"));
 				page.fill(NATIVE_PASSWORD_XPATH, ConfigUtils.getValue("native_password"));
 				page.click(LOGIN_WITH_NATIVE_XPATH);
 			}
 			loggedIn = true;
 		} else {
-			System.out.println("Already Logged in. Will not re-login");
+			LOGGER.info("Already Logged in");
 		}
 	}
 

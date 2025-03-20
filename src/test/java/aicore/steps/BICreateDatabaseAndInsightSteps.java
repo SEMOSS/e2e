@@ -1,6 +1,6 @@
 package aicore.steps;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.Assert.assertEquals;
 
 import aicore.base.AICoreTestManager;
 import aicore.pages.BISystemAppPage;
@@ -77,7 +77,7 @@ public class BICreateDatabaseAndInsightSteps {
 	@Then("User can see database created success toast message as {string}")
 	public void user_can_see_database_created_success_toast_message_as(String expectedToastMessage) {
 		String actualDBCreatedMessage = biApp.verifyDBCreatedToastMessage();
-		Assertions.assertEquals(actualDBCreatedMessage, expectedToastMessage, "Database creation failed");
+		assertEquals(actualDBCreatedMessage, expectedToastMessage, "Database creation failed");
 	}
 
 	@And("User clicks on Add option")
@@ -121,7 +121,7 @@ public class BICreateDatabaseAndInsightSteps {
 	@Then("User can see Insight created toast message as {string}")
 	public void user_can_see_insight_created_toast_message_as(String expectedMessage) {
 		String actualMessage = biApp.verifySavedInsightSuccessMsg();
-		Assertions.assertEquals(actualMessage, expectedMessage, "Insights creation failed");
+		assertEquals(actualMessage, expectedMessage, "Insights creation failed");
 	}
 
 }

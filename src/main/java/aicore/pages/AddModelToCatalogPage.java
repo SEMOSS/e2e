@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.CommonUtils;
+import aicore.utils.ConfigUtils;
 
 public class AddModelToCatalogPage {
 
@@ -24,6 +26,8 @@ public class AddModelToCatalogPage {
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
 	private static final String CRAETED_MODEL_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
+	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//div[@class='MuiFormControl-root MuiTextField-root css-1t5kjpm']//input";
+	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
 	// SMSS field
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
@@ -50,6 +54,16 @@ public class AddModelToCatalogPage {
 	private static final String ADD_MEMBERS_BUTTON_XPATH = "//div[@class='css-gm8qym']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//div[@class='MuiInputBase-root MuiInputBase-colorPrimary css-1tsucmk']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li";
+	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
+	private static final String RADIO_BUTTON_XPATH = "//span[div[contains(text(),'{role}')]]/ancestor::div[contains(@class, 'MuiCardHeader-root')]//input[@type='radio']";
+	private static final String SAVE_BUTTON_XPATH = "//button[contains(@class, 'MuiButton-containedPrimary') and .//span[text()='Save']]";
+	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
+	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
+	private static final String MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'Successfully added member permissions')]";
+	private static final String MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH = "//button[@aria-label='Close']";
+	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "(//button[contains(@class, 'MuiIconButton-root')])[8]";
+	private static final String CONFIRM_BUTTON_XPATH = "//button[span[text()='Confirm']]";
+
 	// Edit model
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_TEXTBOX = "Tag";
@@ -154,6 +168,14 @@ public class AddModelToCatalogPage {
 		page.waitForSelector(modelNameWithTimestamp, new Page.WaitForSelectorOptions().setTimeout(10000));
 		boolean isModelVisible = page.isVisible(modelNameWithTimestamp);
 		return isModelVisible;
+	}
+
+	public void searchModelCatalog(String modelName) {
+		page.fill(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH, modelName + timestamp);
+	}
+
+	public void selectModelFromSearchOptions(String modelName) {
+		page.click(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp));
 	}
 
 	public void clickOnEditButton() {
@@ -382,5 +404,51 @@ public class AddModelToCatalogPage {
 		boolean isModelVisible = page.isVisible(
 				MODELS_UNDER_GROUP_XPATH.replace("{groupName}", groupName).replace("{modelName}", modelName));
 		return isModelVisible;
+	}
+
+	public void clickOnAccessControl() {
+		page.click(SETTINGS_TAB_XPATH);
+	}
+
+	public void clickOnAddMembersButton() {
+		page.click(ADD_MEMBERS_BUTTON_XPATH);
+	}
+
+	public void addMember(String role) throws InterruptedException {
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		page.fill(ADD_MEMBER_XPATH, username);
+		page.getByText(username).first().click();
+		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
+		page.click(SAVE_BUTTON_XPATH);
+		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
+		page.locator(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+
+	}
+
+	public void clickOnDeleteButton() {
+		Locator deleteButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete"));
+		deleteButton.click();
+		deleteButton.click();
+		page.waitForCondition(
+				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
+				new Page.WaitForConditionOptions().setTimeout(5000));
+	}
+
+	public boolean isDeleteSuccessful() {
+		return page.isVisible(DELETE_SUCCESS_TOAST_XPATH);
+	}
+
+	public boolean isPermissionErrorDisplayed() {
+		return page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH);
+	}
+
+	public boolean isAddMemberButtonVisible() {
+		return page.isVisible(ADD_MEMBERS_BUTTON_XPATH);
+	}
+
+	public void deleteAddedMember(String role) {
+		page.click(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
+		page.click(CONFIRM_BUTTON_XPATH);
 	}
 }

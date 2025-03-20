@@ -1,7 +1,5 @@
 package aicore.steps;
 
-import org.junit.jupiter.api.Assertions;
-
 import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
@@ -10,6 +8,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddVectorDatabaseSteps {
 
@@ -71,7 +71,7 @@ public class AddVectorDatabaseSteps {
 	@Then("User can see vector database created success toast message as {string}")
 	public void user_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
 		String actualToastMessage = vectorPage.verifyVectorCreatedToastMessage();
-		Assertions.assertEquals(actualToastMessage, expectedToastMessage, "Toast message is incorrect");
+		assertEquals(actualToastMessage, expectedToastMessage, "Toast message is incorrect");
 		vectorPage.waitForVectorToastMessageToDisappear();
 	}
 
@@ -80,7 +80,7 @@ public class AddVectorDatabaseSteps {
 		String actualVectorTitle = vectorPage.verifyVectorTitle();
 		System.out.println("act Title is : " + actualVectorTitle);
 		String expectedVectorTitle = VectorTitle + " " + timestamp;
-		Assertions.assertEquals(actualVectorTitle, expectedVectorTitle, "Vector Title is not matching with expected");
+		assertEquals(actualVectorTitle, expectedVectorTitle, "Vector Title is not matching with expected");
 	}
 
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
@@ -88,7 +88,7 @@ public class AddVectorDatabaseSteps {
 		String fullText = vectorPage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedName = name + " " + timestamp;
-		Assertions.assertEquals(actualName, expectedName, "Name is not matching");
+		assertEquals(actualName, expectedName, "Name is not matching");
 	}
 
 	@And("User can see embedder engine name in {string} field as {string} in SMSS properties")
@@ -97,7 +97,7 @@ public class AddVectorDatabaseSteps {
 		String fullText = vectorPage.verifyEmbedderEngineNameInSMSS();
 		String actualEmbedderEngineName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedEmbedderEngineName = embedderEngineName + timestamp;
-		Assertions.assertEquals(actualEmbedderEngineName, expectedEmbedderEngineName,
+		assertEquals(actualEmbedderEngineName, expectedEmbedderEngineName,
 				"Embedder Engine Name is not matching");
 	}
 
@@ -105,7 +105,7 @@ public class AddVectorDatabaseSteps {
 	public void user_can_see_content_length_in_field_as_in_smss_properties(String field, String expectedContentLength) {
 		String fullText = vectorPage.verifyContentLengthInSMSS();
 		String actualContentLength = CommonUtils.splitTrimValue(fullText, field);
-		Assertions.assertEquals(actualContentLength, expectedContentLength, "Content length is not matching");
+		assertEquals(actualContentLength, expectedContentLength, "Content length is not matching");
 	}
 
 	@And("User can see content overlap in {string} field as {string} in SMSS properties")
@@ -113,7 +113,7 @@ public class AddVectorDatabaseSteps {
 			String expectedContentOverlapValue) {
 		String fullText = vectorPage.verifyContentOverlapInSMSS();
 		String actualContentOverlapValue = CommonUtils.splitTrimValue(fullText, field);
-		Assertions.assertEquals(actualContentOverlapValue, expectedContentOverlapValue,
+		assertEquals(actualContentOverlapValue, expectedContentOverlapValue,
 				"Content overlap value is not matching");
 	}
 
@@ -133,6 +133,6 @@ public class AddVectorDatabaseSteps {
 			expectedChunkingStrategy = expectedChunkingStrategy.replace(" ", "_");
 			break;
 		}
-		Assertions.assertEquals(actualChunkingStrategy, expectedChunkingStrategy, "Chunking strategy is not matching");
+		assertEquals(actualChunkingStrategy, expectedChunkingStrategy, "Chunking strategy is not matching");
 	}
 }

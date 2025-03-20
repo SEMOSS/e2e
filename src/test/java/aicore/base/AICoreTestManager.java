@@ -2,6 +2,9 @@ package aicore.base;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
@@ -12,20 +15,38 @@ import aicore.utils.ConfigUtils;
 
 public class AICoreTestManager {
 
+	private static final Logger LOGGER = LogManager.getLogger(AICoreTestManager.class);
+
 	private static Page page;
 	private static BrowserContext context;
 	private static Browser browser;
 	private static Playwright playwright;
 
 	static {
+		try {
+			LOGGER.info("Initializing Playwright");
+			GenericSetupUtils.initialize();
+		} catch (IOException e) {
+			LOGGER.error(e);
+			throw new RuntimeException(e);
+		}
+
 		if (page == null) {
 			playwright = Playwright.create();
-			LaunchOptions lp = new LaunchOptions();
-			lp.setChannel(ConfigUtils.getValue("browserType"));
-			lp.setHeadless(Boolean.parseBoolean(ConfigUtils.getValue("headless")));
+			LaunchOptions lp = GenericSetupUtils.getLaunchOptions();
 			browser = playwright.chromium().launch(lp);
-			context = browser.newContext();
+			context = browser.newContext(GenericSetupUtils.getContextOptions());
+			context.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
+
+			if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+				context.tracing().start(GenericSetupUtils.getStartOptions());
+			}
 			page = context.newPage();
+			GenericSetupUtils.setupLoggers(page);
+
+			if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
+				GenericSetupUtils.createUser();
+			}
 		}
 	}
 
@@ -37,10 +58,13 @@ public class AICoreTestManager {
 	}
 
 	public static void launchApp() throws IOException {
-		page.navigate(ConfigUtils.getValue("baseUrl"));
+		String baseUrl = ConfigUtils.getValue("baseUrl");
+		LOGGER.info("Navigating to {}", baseUrl);
+		page.navigate(baseUrl);
 	}
 
 	public static void close() {
+		LOGGER.info("Closing Playwright");
 		page.close();
 		context.close();
 		browser.close();
