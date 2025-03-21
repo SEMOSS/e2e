@@ -15,6 +15,12 @@
 
 If you use a different linux distro, follow the docker install setup for that distro instead
 
+
+## Setting e2e workspace WSL
+
+<img width="1181" alt="image" src="https://github.com/user-attachments/assets/209b1102-0230-4072-9e63-fd8b4c0144fb" />
+
+
 ## Start service
 
 `sudo service docker start`
