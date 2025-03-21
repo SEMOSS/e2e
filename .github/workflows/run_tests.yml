@@ -1,0 +1,41 @@
+name: Run Docker Compose and Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    #runs-on: ubuntu-latest
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Build and run Docker Compose
+      run: |
+        docker compose rm -f semoss
+        docker compose up --build --exit-code-from test
+        docker compose rm -f semoss
+      env:
+        COMPOSE_DOCKER_CLI_BUILD: 1
+        DOCKER_BUILDKIT: 1
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: target/* # Adjust this path to where your test results are stored
