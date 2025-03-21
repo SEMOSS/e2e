@@ -2,7 +2,9 @@ name: Run Docker Compose and Tests
 
 on:
   workflow_dispatch:
-
+  schedule:
+    - cron: '0 9 * * *'  # This runs at 5 AM ET during Daylight Saving Time (9 AM UTC)
+ 
 jobs:
   test:
     #runs-on: ubuntu-latest
