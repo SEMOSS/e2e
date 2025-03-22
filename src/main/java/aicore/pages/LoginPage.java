@@ -39,10 +39,14 @@ public class LoginPage {
 		Page page1 = page.waitForPopup(() -> {
 			page.locator(MICROSOFT_LOGIN_XPATH).click();
 		});
-		page1.fill(USERNAME_XPATH, ConfigUtils.getValue("ms_username"));
-		page1.click(NEXT_BUTTON_XPATH);
-		page1.fill(PASSWORD_XPATH, ConfigUtils.getValue("ms_password"));
-		page1.click(SIGNIN_BUTTON_XPATH);
+		// optional test if the user adds in credentials
+		String userName = ConfigUtils.getValue("ms_username");
+		if (userName != null && !userName.isEmpty()) {
+			page1.fill(USERNAME_XPATH, userName);
+			page1.click(NEXT_BUTTON_XPATH);
+			page1.fill(PASSWORD_XPATH, ConfigUtils.getValue("ms_password"));
+			page1.click(SIGNIN_BUTTON_XPATH);
+		}
 	}
 
 	public void enterNativeUsernamePassword() {
