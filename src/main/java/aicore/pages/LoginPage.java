@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 
 public class LoginPage {
 
@@ -25,7 +26,7 @@ public class LoginPage {
 	}
 
 	public void navigateToLoginPage() throws IOException {
-		page.navigate(ConfigUtils.getValue("baseUrl"));
+		page.navigate(UrlUtils.getUrl("#/login"));
 	}
 
 	public void closeCookiesPopup() throws InterruptedException {

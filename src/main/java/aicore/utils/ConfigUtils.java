@@ -1,14 +1,13 @@
 package aicore.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class ConfigUtils {
 
@@ -20,12 +19,18 @@ public final class ConfigUtils {
 		p = new Properties();
 		FileInputStream f;
 		try {
-			//TODO: To be fixed for Continuous test Pipeline!
 			LOGGER.info("Loading properties from file");
-			Path pathToProps = Paths.get("src", "main", "resources", "config.properties");
+			Path pathToProps = Paths.get("src", "main", "resources", "local.properties");
+			if (!Files.exists(pathToProps)) {
+				pathToProps = Paths.get("src", "main", "resources", "config.properties");
+			}
+			LOGGER.info("Loading properties from file: {}", pathToProps);
 			f = new FileInputStream(pathToProps.toFile());
 			p.load(f);
 			LOGGER.info("Loaded properties from file");
+			p.entrySet().stream().forEach(entry -> {
+				LOGGER.info("Key: " + entry.getKey() + " Value: " + entry.getValue());
+			});		
 		} catch (Exception e) {
 			LOGGER.error("Could not load properties", e);
 			throw new RuntimeException(e);

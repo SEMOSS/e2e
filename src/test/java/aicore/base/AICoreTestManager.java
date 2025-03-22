@@ -12,6 +12,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 
 public class AICoreTestManager {
 
@@ -41,11 +42,15 @@ public class AICoreTestManager {
 			if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
 				context.tracing().start(GenericSetupUtils.getStartOptions());
 			}
-			page = context.newPage();
+			newPage();
 			GenericSetupUtils.setupLoggers(page);
 
 			if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
-				GenericSetupUtils.createUser();
+				if (!GenericSetupUtils.testOnDocker()) {
+					LOGGER.info("Setting up users");
+					GenericSetupUtils.createUsers();
+					LOGGER.info("Done setting up users" );
+				}
 			}
 		}
 	}
@@ -56,9 +61,14 @@ public class AICoreTestManager {
 	public static Page getPage() {
 		return page;
 	}
+	
+	public static Page newPage() {
+		page = context.newPage();
+		return page;
+	}
 
 	public static void launchApp() throws IOException {
-		String baseUrl = ConfigUtils.getValue("baseUrl");
+		String baseUrl = UrlUtils.getUrl("#/login");
 		LOGGER.info("Navigating to {}", baseUrl);
 		page.navigate(baseUrl);
 	}
