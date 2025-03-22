@@ -46,6 +46,7 @@ public class AICoreTestManager {
 			GenericSetupUtils.setupLoggers(page);
 
 			if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
+				//if testing we don't need to add default users
 				if (!GenericSetupUtils.testOnDocker()) {
 					LOGGER.info("Setting up users");
 					GenericSetupUtils.createUsers();

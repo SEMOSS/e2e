@@ -6,6 +6,7 @@ import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 
 public class BISystemAppPage {
 
@@ -50,6 +51,8 @@ public class BISystemAppPage {
 
 	public void closeWelcomePopup() {
 		page.click(WELCOME_POPUP_CLOSE_XPATH);
+		// accepting browser cookies
+		page.getByText("Accept").click();
 	}
 
 	public void clickOnAppOption() {
