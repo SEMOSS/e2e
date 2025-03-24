@@ -54,6 +54,7 @@ public class SetupHooks {
             GenericSetupUtils.createUsers(page);
         }
 
+        logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
         String adminUser = ConfigUtils.getValue("native_username");
         String adminPassword = ConfigUtils.getValue("native_password");
         GenericSetupUtils.login(page, adminUser, adminPassword);

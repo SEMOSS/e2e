@@ -16,7 +16,7 @@ import aicore.utils.UrlUtils;
 
 public class AICoreTestManager {
 
-	private static final Logger LOGGER = LogManager.getLogger(AICoreTestManager.class);
+	private static final Logger logger = LogManager.getLogger(AICoreTestManager.class);
 
 	private static Page page;
 	private static BrowserContext context;
@@ -25,10 +25,10 @@ public class AICoreTestManager {
 
 	static {
 		try {
-			LOGGER.info("Initializing Playwright");
+			logger.info("Initializing Playwright");
 			GenericSetupUtils.initialize();
 		} catch (IOException e) {
-			LOGGER.error(e);
+			logger.error(e);
 			throw new RuntimeException(e);
 		}
 
@@ -48,9 +48,9 @@ public class AICoreTestManager {
 			if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
 				//if testing we don't need to add default users
 				if (!GenericSetupUtils.testOnDocker()) {
-					LOGGER.info("Setting up users");
+					logger.info("Setting up users");
 					//GenericSetupUtils.createUsers();
-					LOGGER.info("Done setting up users" );
+					logger.info("Done setting up users" );
 				}
 			}
 		}
@@ -70,12 +70,12 @@ public class AICoreTestManager {
 
 	public static void launchApp() throws IOException {
 		String baseUrl = UrlUtils.getUrl("#/login");
-		LOGGER.info("Navigating to {}", baseUrl);
+		logger.info("Navigating to {}", baseUrl);
 		page.navigate(baseUrl);
 	}
 
 	public static void close() {
-		LOGGER.info("Closing Playwright");
+		logger.info("Closing Playwright");
 		page.close();
 		context.close();
 		browser.close();

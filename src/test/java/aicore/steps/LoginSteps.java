@@ -18,7 +18,7 @@ import io.cucumber.java.en.When;
 
 public class LoginSteps {
 
-	private static final Logger LOGGER = LogManager.getLogger(LoginSteps.class);
+	private static final Logger logger = LogManager.getLogger(LoginSteps.class);
 	private LoginPage loginpage;
 	private HomePage homePage;
 

@@ -23,7 +23,7 @@
 //
 //public class LoginHooks {
 //
-//	private static final Logger LOGGER = LogManager.getLogger(LoginHooks.class);
+//	private static final Logger logger = LogManager.getLogger(LoginHooks.class);
 //// Microsoft
 //	private static final String INFO_POPUP_ACCEPT_BUTTON_XPATH = "//div[@class='MuiStack-root css-bcmwpg']//button";
 //	private static final String MICROSOFT_LOGIN_XPATH = "(//button[@type='button'])[4]";
@@ -58,7 +58,7 @@
 //					page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
 //				}
 //
-//				LOGGER.info("login page attempt: {}", page.url());
+//				logger.info("login page attempt: {}", page.url());
 //
 ////				String adminUser = ConfigUtils.getValue("native_username");
 ////				String adminPassword = ConfigUtils.getValue("native_password");
@@ -70,7 +70,7 @@
 //			}
 //			loggedIn = true;
 //		} else {
-//			LOGGER.info("Already Logged in");
+//			logger.info("Already Logged in");
 //		}
 //	}
 //

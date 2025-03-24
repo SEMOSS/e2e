@@ -17,7 +17,7 @@ import io.cucumber.java.Scenario;
 
 public class GenericTeardownUtils {
 
-	private static final Logger LOGGER = LogManager.getLogger(GenericTeardownUtils.class);
+	private static final Logger logger = LogManager.getLogger(GenericTeardownUtils.class);
 
 	public static void saveVideo(Scenario scenario, Path p) throws IOException {
 		// TODO Auto-generated method stub

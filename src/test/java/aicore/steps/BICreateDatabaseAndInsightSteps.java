@@ -15,7 +15,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class BICreateDatabaseAndInsightSteps {
-	private static final Logger LOGGER = LogManager.getLogger(AICoreTestManager.class);
+	private static final Logger logger = LogManager.getLogger(AICoreTestManager.class);
 
 	private HomePage homePage;
 	private BISystemAppPage biApp;
@@ -84,7 +84,7 @@ public class BICreateDatabaseAndInsightSteps {
 		//TODO toast disappears quickly need a better way to validate
 //		String actualDBCreatedMessage = biApp.verifyDBCreatedToastMessage();
 //		assertEquals(actualDBCreatedMessage, expectedToastMessage, "Database creation failed");
-		LOGGER.info("the success toast is quick skippng for now");
+		logger.info("the success toast is quick skippng for now");
 	}
 
 	@And("User clicks on Add option")
