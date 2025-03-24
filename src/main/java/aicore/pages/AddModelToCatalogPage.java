@@ -306,7 +306,6 @@ public class AddModelToCatalogPage {
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
 		page.locator(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-
 	}
 
 	public void clickOnDeleteButton() {
@@ -316,6 +315,7 @@ public class AddModelToCatalogPage {
 		page.waitForCondition(
 				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
 				new Page.WaitForConditionOptions().setTimeout(5000));
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
 	}
 
 	public boolean isDeleteSuccessful() {
