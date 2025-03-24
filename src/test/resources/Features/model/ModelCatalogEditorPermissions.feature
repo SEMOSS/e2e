@@ -1,7 +1,7 @@
 Feature: Model Catalog Permission - Editor
   Adding LLM to the catalog
    
-    Scenario: Model Catalog - Editor - View overview
+  Scenario: Model Catalog - Editor - View overview
     When User navigates to Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
