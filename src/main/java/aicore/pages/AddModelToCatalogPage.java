@@ -299,14 +299,15 @@ public class AddModelToCatalogPage {
 
 	public void addMember(String role) throws InterruptedException {
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		// search is by user name first name and lastname
+		username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
-		page.getByText(username).first().click();
+		page.getByTitle("Name: "+username).click() ;
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
 		page.locator(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-
 	}
 
 	public void clickOnDeleteButton() {
@@ -316,6 +317,7 @@ public class AddModelToCatalogPage {
 		page.waitForCondition(
 				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
 				new Page.WaitForConditionOptions().setTimeout(5000));
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
 	}
 
 	public boolean isDeleteSuccessful() {

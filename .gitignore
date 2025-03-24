@@ -9,3 +9,4 @@ state.json
 .project
 /.settings
 .idea/
+src/main/resources/local.properties

@@ -1,5 +1,8 @@
 package aicore.base;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,27 +11,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
+import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StartOptions;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 import e2e.HttpLogger;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GenericSetupUtils {
 
 	private static final Logger LOGGER = LogManager.getLogger(GenericSetupUtils.class);
 	private static boolean useDocker = false;
+	private static boolean testDocker = false;
+
 
 	public static void initialize() throws IOException {
 		if (RunInfo.isFirstRun()) {
@@ -43,6 +50,9 @@ public class GenericSetupUtils {
 		boolean useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
 		boolean useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		LOGGER.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
+		
+		// if you are going to keep docker running and run tests
+		testDocker = Boolean.parseBoolean(ConfigUtils.getValue("test_docker"));
 
 		if (useDocker) {
 			DockerUtils.startup();
@@ -119,24 +129,89 @@ public class GenericSetupUtils {
 	}
 
 	// create user and login and logout
-	public static void createUser() {
-		String nativeUsername = ConfigUtils.getValue("native_username");
-		String nativePassword = ConfigUtils.getValue("native_password");
+	public static void createUsers() {
+		// setup admin user
+		String adminUser = ConfigUtils.getValue("native_username");
+		String adminPassword = ConfigUtils.getValue("native_password");
 		Page page = AICoreTestManager.getPage();
-		page.navigate(DockerUtils.getApi("/setAdmin/"));
+		setupInitialAdmin(page, adminUser);
 
+		// test admin user login
+		page = AICoreTestManager.newPage();
+		registerUser(page, adminUser, adminPassword);
+//		login(page, adminUser, adminPassword);
+//		logout(page);
+
+		
+		// add admin 2
+		page = AICoreTestManager.newPage();
+		String adminUser2 = ConfigUtils.getValue("admin_username");
+		String adminPassword2 = ConfigUtils.getValue("admin_password");
+		registerUser(page, adminUser2, adminPassword2);
+
+		
+		// add author
+		page = AICoreTestManager.newPage();
+		String authorUser = ConfigUtils.getValue("author_username");
+		String authorPassword = ConfigUtils.getValue("author_password");
+		registerUser(page, authorUser, authorPassword);
+
+		page = AICoreTestManager.newPage();
+		String editorUser = ConfigUtils.getValue("editor_username");
+		String editorPassword = ConfigUtils.getValue("editor_password");
+		registerUser(page, editorUser, editorPassword);
+
+		page = AICoreTestManager.newPage();
+		String readUser = ConfigUtils.getValue("read_username");
+		String readPassword = ConfigUtils.getValue("read_password");
+		registerUser(page, readUser, readPassword);
+	}
+
+
+	private static void logout(Page page) {
+		// going to logout
+		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
+				.getByRole(AriaRole.BUTTON).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
+
+		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
+		assertEquals(UrlUtils.getUrl("#/login"), page.url());
+	}
+
+	public static void login(Page page, String nativeUsername, String nativePassword) {
+		// going to login
+		page.navigate(UrlUtils.getUrl("#/login"));
+		page.getByLabel("Username").click();
+		page.getByLabel("Username").fill(nativeUsername);
+		page.getByLabel("Username").press("Tab");
+		page.locator("input[type=\"password\"]").fill(nativePassword);
+		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"), () -> page
+				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
+		assertEquals(200, response.status());
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		page.navigate(UrlUtils.getUrl("#"));
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		page.waitForURL(UrlUtils.getUrl("#"));
+	}
+
+	private static void setupInitialAdmin(Page page, String userName) {
+		page.navigate(UrlUtils.getApi("setAdmin/"));
 
 		LOGGER.info("Page is: {}", page.url());
-		assertEquals(DockerUtils.getApi("/setAdmin/"), page.url());
+		assertEquals(UrlUtils.getApi("setAdmin/"), page.url());
 		LOGGER.info("Going to fill initial admin.");
 		page.locator("#user-id").click();
-		page.locator("#user-id").fill(nativeUsername);
+		page.locator("#user-id").fill(userName);
 		LOGGER.info("Filled initial admin");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
 		LOGGER.info("After submitting admin: {}", page.url());
+	}
 
-		page.navigate(DockerUtils.getUrl("/packages/client/dist/#/login"));
-		page.waitForURL(DockerUtils.getUrl("/packages/client/dist/#/login"));
+	private static void registerUser(Page page, String userName, String password) {
+		page.navigate(UrlUtils.getUrl("#/login"));
+		page.waitForURL(UrlUtils.getUrl("#/login"));
 		page.getByText("Log in below").click();
 		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Log in below");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Now")).click();
@@ -152,16 +227,16 @@ public class GenericSetupUtils {
 		}
 
 		visible.get(0).click();
-		visible.get(0).fill("user");
+		visible.get(0).fill(userName);
 
 		visible.get(1).click();
-		visible.get(1).fill("one");
+		visible.get(1).fill("lastname");
 
 		visible.get(2).click();
-		visible.get(2).fill(nativeUsername);
+		visible.get(2).fill(userName);
 
 		visible.get(3).click();
-		visible.get(3).fill(nativeUsername + "@deloitte.com");
+		visible.get(3).fill(userName + "@deloitte.com");
 
 		List<Locator> passwords = page.locator("input[type='password']").all();
 		List<Locator> visiblePasswords = new ArrayList<>();
@@ -171,45 +246,24 @@ public class GenericSetupUtils {
 			}
 		}
 		visiblePasswords.get(0).click();
-		visiblePasswords.get(0).fill(nativePassword);
+		visiblePasswords.get(0).fill(password);
 
 		visiblePasswords.get(1).click();
-		visiblePasswords.get(1).fill(nativePassword);
+		visiblePasswords.get(1).fill(password);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Account")).click();
 
 		page.waitForLoadState(LoadState.LOAD);
 		page.getByRole(AriaRole.ALERT).click();
 		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
 		LOGGER.info("Account registration Done");
-
-		// going to login
-		page.navigate(DockerUtils.getUrl("/packages/client/dist/#/login"));
-		page.getByLabel("Username").click();
-		page.getByLabel("Username").fill(nativeUsername);
-		page.getByLabel("Username").press("Tab");
-		page.locator("input[type=\"password\"]").fill(nativePassword);
-		Response response = page.waitForResponse(DockerUtils.getApi("/api/auth/login"), () -> page
-				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with native")).click());
-		assertEquals(200, response.status());
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForLoadState(LoadState.LOAD);
-		page.navigate(DockerUtils.getUrl("/packages/client/dist/#"));
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForLoadState(LoadState.LOAD);
-		page.waitForURL(DockerUtils.getUrl("/packages/client/dist/#"));
-
-		// going to logout
-		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
-				.getByRole(AriaRole.BUTTON).click();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
-		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
-		assertEquals(DockerUtils.getUrl("/packages/client/dist/#/login"), page.url());
 	}
-
 
 	public static boolean useDocker() {
 		return useDocker;
+	}
+	
+	public static boolean testOnDocker() {
+		return testDocker;
 	}
 
 }

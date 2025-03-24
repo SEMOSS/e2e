@@ -3,6 +3,8 @@ package aicore.pages;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import aicore.utils.ConfigUtils;
+
 public class HomePage {
 
 	private Page page;
@@ -15,7 +17,7 @@ public class HomePage {
 	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
-	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='GovConnect.AI']//button";
+	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"+ConfigUtils.getValue("applicationName")+"']//button";
 
 	public HomePage(Page page) {
 		this.page = page;
