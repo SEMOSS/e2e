@@ -1,6 +1,7 @@
 package aicore.base;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +37,7 @@ public class AICoreTestManager {
 			LaunchOptions lp = GenericSetupUtils.getLaunchOptions();
 			browser = playwright.chromium().launch(lp);
 			context = browser.newContext(GenericSetupUtils.getContextOptions());
+			context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 			context.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
 			if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {

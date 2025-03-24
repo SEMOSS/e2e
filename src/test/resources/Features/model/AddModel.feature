@@ -38,3 +38,15 @@ Feature: Add Model
     And User clicks on Submit button
     Then User can see 'embeddings' tag added
     And User navigates to Open Model
+
+  Scenario: Validate Model Catalog ID in Usage commands
+    Given User Can see the Model title as 'Model'
+    When User copies the model catalog ID below the title using copy icon
+    And User clicks on Usage tab
+    When User copies contents using copy icon and validate model catalog Id occurences in sections:
+      | SECTIONS                              | EXPECTED_MODEL_ID_COUNT |
+      | How to use in Javascript              |                       2 |
+      | How to use in Python                  |                       1 |
+      | How to use with Langchain API         |                       1 |
+      | How to use externally with OpenAI API |                       3 |
+      | How to use in Java                    |                       1 |

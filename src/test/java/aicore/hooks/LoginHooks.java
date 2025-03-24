@@ -1,16 +1,17 @@
 
 package aicore.hooks;
 
-import aicore.base.RunInfo;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Page;
 
 import aicore.base.AICoreTestManager;
+import aicore.base.RunInfo;
 import aicore.utils.ConfigUtils;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class LoginHooks {
 
@@ -48,6 +49,7 @@ public class LoginHooks {
 				if (RunInfo.isAcceptCookiesPopup()) {
 					page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
 				}
+				page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
 				page.fill(NATIVE_USERNAME_XPATH, ConfigUtils.getValue("native_username"));
 				page.fill(NATIVE_PASSWORD_XPATH, ConfigUtils.getValue("native_password"));
 				page.click(LOGIN_WITH_NATIVE_XPATH);

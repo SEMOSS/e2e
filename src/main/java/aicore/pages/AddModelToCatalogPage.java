@@ -35,7 +35,7 @@ public class AddModelToCatalogPage {
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	// Settings field
-	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
+	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
 	private static final String MAKE_PUBLIC_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//p[text()='{title}']";
 	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[1]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
 	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//span[@class='MuiSwitch-track css-1ju1kxc']";
@@ -46,8 +46,9 @@ public class AddModelToCatalogPage {
 	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[3]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
 	private static final String DELETE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[3]//div[@class='MuiAlert-action css-1mzcepu']";
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//div[@class='css-aplv3o']//div[@class='css-163ryps']";
-	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[@class='css-1lxwves']//p[contains(@class,'MuiTypography-root MuiTypography')]";
+	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[@class='MuiStack-root css-1vxby2c']//p[contains(@class,'MuiTypography-root MuiTypography')]";
 	private static final String MEMBER_SECTION_TITLE_XPATH = "//div[@class='css-1hk1ec8']//div[@class='css-163ryps']";
+	private static final String MEMBER_SEARCH_ICON_XPATH = "//*[name()='svg'][@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBERS_SEARCHBOX_XPATH = "//div[contains(@class,'MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary')]";
 	private static final String ADD_MEMBERS_BUTTON_XPATH = "//div[@class='css-gm8qym']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//div[@class='MuiInputBase-root MuiInputBase-colorPrimary css-1tsucmk']";
@@ -67,6 +68,11 @@ public class AddModelToCatalogPage {
 	private static final String TAG_NAME_AFTER_ADDING_XPATH = "//span[@class='MuiChip-label MuiChip-labelMedium css-9iedg7'][1]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
+
+	// Usage
+	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
+	private static final String MODEL_ID_COPY_OPTION_XPATH = "//button[@aria-label='copy Model ID']";
+	private static final String USAGE_COMMAND_COPY_OPTION_XPATH = "//div[h6[text()='{commandName}']]//button[contains(@class,'MuiButtonBase-root MuiButton-root MuiButton-outlined')]";
 
 	public AddModelToCatalogPage(Page page, String timestamp) {
 		this.page = page;
@@ -143,7 +149,6 @@ public class AddModelToCatalogPage {
 
 	public void clickOnEditButton() {
 		page.click(EDIT_BUTTON_XPATH);
-		page.waitForTimeout(1000);
 	}
 
 	public void enterTagName(String tagName) {
@@ -229,6 +234,7 @@ public class AddModelToCatalogPage {
 	}
 
 	public boolean verifySearchMembersSearchBoxIsVisible() {
+		page.click(MEMBER_SEARCH_ICON_XPATH);
 		boolean isSearchMembersTextBoxVisible = page.isVisible(SEARCH_MEMBERS_SEARCHBOX_XPATH);
 		return isSearchMembersTextBoxVisible;
 	}
@@ -331,5 +337,19 @@ public class AddModelToCatalogPage {
 	public void deleteAddedMember(String role) {
 		page.click(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
 		page.click(CONFIRM_BUTTON_XPATH);
+	}
+
+	public void clickOnUsageTab() {
+		page.click(USAGE_TAB_XPATH);
+	}
+
+	public String copyModelID() {
+		page.click(MODEL_ID_COPY_OPTION_XPATH);
+		return page.evaluate("navigator.clipboard.readText()").toString().trim();
+	}
+
+	public String copyCommand(String commandName) {
+		page.click(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName));
+		return page.evaluate("navigator.clipboard.readText()").toString().trim();
 	}
 }

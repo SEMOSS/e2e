@@ -1,11 +1,15 @@
 package aicore.steps;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 
 import aicore.base.AICoreTestManager;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,6 +19,7 @@ public class AddModelSteps {
 	private HomePage homePage;
 	private AddModelToCatalogPage openModelPage;
 	protected static String timestamp;
+	private String expectedCatalogId;
 
 	public AddModelSteps() {
 		this.homePage = new HomePage(AICoreTestManager.getPage());
@@ -147,5 +152,36 @@ public class AddModelSteps {
 		}
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
 		Assertions.assertEquals(actualVarName, newValue, "Value is not matching for " + field + "field");
+	}
+
+	// Usage
+
+	@When("User copies the model catalog ID below the title using copy icon")
+	public void user_copies_the_model_catalog_id_below_the_title_using_copy_icon() {
+		expectedCatalogId = openModelPage.copyModelID();
+	}
+
+	@And("User clicks on Usage tab")
+	public void user_clicks_on_usage_tab() {
+		openModelPage.clickOnUsageTab();
+	}
+
+	@When("User copies contents using copy icon and validate model catalog Id occurences in sections:")
+	public void user_copies_contents_using_copy_icon_and_validate_model_catalog_id_occurences_in_sections(
+			DataTable table) {
+
+		final String MODEL_USAGE_COMMANDS_SECTION_NAME = "SECTIONS";
+		final String EXPECTED_MODEL_ID_COUNT = "EXPECTED_MODEL_ID_COUNT";
+
+		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
+
+		for (Map<String, String> row : rows) {
+			String sectionName = row.get(MODEL_USAGE_COMMANDS_SECTION_NAME);
+			int expectedCount = Integer.parseInt(row.get(EXPECTED_MODEL_ID_COUNT));
+			String copiedSectionContents = openModelPage.copyCommand(sectionName);
+			int countIdOccurances = CommonUtils.countIdOccurances(copiedSectionContents, expectedCatalogId);
+			Assertions.assertEquals(expectedCount, countIdOccurances,
+					"Model id not match for the section '" + sectionName + "'");
+		}
 	}
 }
