@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import com.microsoft.playwright.Page;
 
 import aicore.base.AICoreTestManager;
+import aicore.base.GenericSetupUtils;
+
 import aicore.base.RunInfo;
 import aicore.utils.ConfigUtils;
 import io.cucumber.java.AfterAll;
@@ -50,6 +52,15 @@ public class LoginHooks {
 					page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
 				}
 				page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
+
+				
+				LOGGER.info("login page attempt: {}", page.url());
+				
+//				String adminUser = ConfigUtils.getValue("native_username");
+//				String adminPassword = ConfigUtils.getValue("native_password");
+//				GenericSetupUtils.login(page, adminUser, adminPassword);
+
+
 				page.fill(NATIVE_USERNAME_XPATH, ConfigUtils.getValue("native_username"));
 				page.fill(NATIVE_PASSWORD_XPATH, ConfigUtils.getValue("native_password"));
 				page.click(LOGIN_WITH_NATIVE_XPATH);
