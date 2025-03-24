@@ -45,6 +45,7 @@ public class SetupHooks {
         context.tracing().start(startOptions);
 
         page = context.newPage();
+        page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
         GenericSetupUtils.setupLoggers(page);
 
