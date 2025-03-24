@@ -5,7 +5,7 @@ Feature: Validate Available Models and Their Groupings
     When User clicks on Add Model
     Then User can view the following models grouping
       | LLM_GROUP         | LLM_MODELS                                                                                                                                                                                           |
-      | OpenAI            | GPT-3.5, GPT-4, Text-Davinci, DALL E s                                                                                                                                                               |
+      | OpenAI            | GPT-3.5, GPT-4, Text-Davinci, DALL E                                                                                                                                                              |
       | Azure             | Azure Open AI                                                                                                                                                                                        |
       | AWS Bedrock       | Claude                                                                                                                                                                                               |
       | Google GCP        | Palm Bison, Palm Chat Bison, Palm Code Bison                                                                                                                                                         |
