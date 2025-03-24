@@ -74,7 +74,7 @@ public class AddModelToCatalogPage {
 	}
 
 	public void addModelButton() {
-		page.click(ADD_MODEL_BUTTON_XPATH);
+		page.getByLabel("Navigate to import Model").click();
 	}
 
 	public void selectOpenAi(String aiModelName) {
