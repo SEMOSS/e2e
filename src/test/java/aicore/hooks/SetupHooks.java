@@ -3,6 +3,7 @@ package aicore.hooks;
 import aicore.base.GenericSetupUtils;
 import aicore.base.RunInfo;
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 import com.microsoft.playwright.*;
 import io.cucumber.java.*;
 import org.apache.logging.log4j.LogManager;
@@ -70,6 +71,7 @@ public class SetupHooks {
 
     @After
     public void after(Scenario scenario) throws IOException {
+        page.navigate(UrlUtils.getUrl("#/"));
         GenericSetupUtils.logout(page);
         logger.info("AFTER: {}", scenario.getName());
         String scenarioName = scenario.getName();

@@ -46,3 +46,13 @@ Feel free to view the current Issues for more detailed examples!
 ### Docker setup
 
 + Follow docker instructions found in [here](docker/README.md)
+
+### Run Trace Viewer
+- To run Trace Viewer, please enable traces before running the test in config.properties or local.properties
+- After running tests with use_trace set to true. Find the zip of the test you ran in traces/features directory
+- Then from the e2e directory, run:
+
+`mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="show-trace '/path/to/zip.zip'"`
+
+- a Chromium browser should open where you can view the webpage and click through playwright commands, and view network calls
+
