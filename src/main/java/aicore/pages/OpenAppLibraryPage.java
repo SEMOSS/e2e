@@ -59,8 +59,8 @@ public class OpenAppLibraryPage {
 	}
 
 	public boolean verifyPage1IsVisible() {
-		page.waitForSelector(PAGE1_XPATH, new Page.WaitForSelectorOptions().setTimeout(20000));
-		boolean isPage1Visible = page.isVisible(PAGE1_XPATH);
+//		page.waitForSelector(PAGE1_XPATH, new Page.WaitForSelectorOptions().setTimeout(20000));
+		boolean isPage1Visible = page.locator("#page-1").isVisible();
 		return isPage1Visible;
 	}
 

@@ -1,5 +1,7 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
 
 import aicore.base.AICoreTestManager;
