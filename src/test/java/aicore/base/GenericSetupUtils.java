@@ -34,6 +34,8 @@ public class GenericSetupUtils {
 
 	private static final Logger LOGGER = LogManager.getLogger(GenericSetupUtils.class);
 	private static boolean useDocker = false;
+	private static boolean useVideo = false;
+	private static boolean useTrace = false;
 	private static boolean testDocker = false;
 
 
@@ -47,8 +49,8 @@ public class GenericSetupUtils {
 		logCheck();
 
 		useDocker = Boolean.parseBoolean(ConfigUtils.getValue("use_docker"));
-		boolean useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
-		boolean useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
+		useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
+		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		LOGGER.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
 		
 		// if you are going to keep docker running and run tests
@@ -129,46 +131,44 @@ public class GenericSetupUtils {
 	}
 
 	// create user and login and logout
-	public static void createUsers() {
+	public static void createUsers(Page page) {
 		// setup admin user
 		String adminUser = ConfigUtils.getValue("native_username");
 		String adminPassword = ConfigUtils.getValue("native_password");
-		Page page = AICoreTestManager.getPage();
 		setupInitialAdmin(page, adminUser);
 
 		// test admin user login
-		page = AICoreTestManager.newPage();
 		registerUser(page, adminUser, adminPassword);
 //		login(page, adminUser, adminPassword);
 //		logout(page);
 
 		
 		// add admin 2
-		page = AICoreTestManager.newPage();
+		//page = AICoreTestManager.newPage();
 		String adminUser2 = ConfigUtils.getValue("admin_username");
 		String adminPassword2 = ConfigUtils.getValue("admin_password");
 		registerUser(page, adminUser2, adminPassword2);
 
 		
 		// add author
-		page = AICoreTestManager.newPage();
+		//page = AICoreTestManager.newPage();
 		String authorUser = ConfigUtils.getValue("author_username");
 		String authorPassword = ConfigUtils.getValue("author_password");
 		registerUser(page, authorUser, authorPassword);
 
-		page = AICoreTestManager.newPage();
+		//page = AICoreTestManager.newPage();
 		String editorUser = ConfigUtils.getValue("editor_username");
 		String editorPassword = ConfigUtils.getValue("editor_password");
 		registerUser(page, editorUser, editorPassword);
 
-		page = AICoreTestManager.newPage();
+		//page = AICoreTestManager.newPage();
 		String readUser = ConfigUtils.getValue("read_username");
 		String readPassword = ConfigUtils.getValue("read_password");
 		registerUser(page, readUser, readPassword);
 	}
 
 
-	private static void logout(Page page) {
+	public static void logout(Page page) {
 		// going to logout
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
 				.getByRole(AriaRole.BUTTON).click();
@@ -212,6 +212,7 @@ public class GenericSetupUtils {
 	private static void registerUser(Page page, String userName, String password) {
 		page.navigate(UrlUtils.getUrl("#/login"));
 		page.waitForURL(UrlUtils.getUrl("#/login"));
+		page.reload();
 		page.getByText("Log in below").click();
 		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Log in below");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Now")).click();
@@ -266,4 +267,11 @@ public class GenericSetupUtils {
 		return testDocker;
 	}
 
+	public static boolean useVideo() {
+		return useVideo;
+	}
+
+	public static boolean useTrace() {
+		return useTrace;
+	}
 }

@@ -39,7 +39,7 @@ public class AICoreTestManager {
 			context = browser.newContext(GenericSetupUtils.getContextOptions());
 			context.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
-			if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+			if (GenericSetupUtils.useTrace()) {
 				context.tracing().start(GenericSetupUtils.getStartOptions());
 			}
 			newPage();
@@ -49,7 +49,7 @@ public class AICoreTestManager {
 				//if testing we don't need to add default users
 				if (!GenericSetupUtils.testOnDocker()) {
 					LOGGER.info("Setting up users");
-					GenericSetupUtils.createUsers();
+					//GenericSetupUtils.createUsers();
 					LOGGER.info("Done setting up users" );
 				}
 			}

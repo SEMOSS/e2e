@@ -2,6 +2,7 @@ package aicore.steps;
 
 import static org.junit.Assert.assertEquals;
 
+import aicore.hooks.SetupHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,9 +22,9 @@ public class BICreateDatabaseAndInsightSteps {
 	protected static String timestamp;
 
 	public BICreateDatabaseAndInsightSteps() {
-		homePage = new HomePage(AICoreTestManager.getPage());
+		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		biApp = new BISystemAppPage(AICoreTestManager.getPage(), timestamp);
+		biApp = new BISystemAppPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@When("User clicks on System app")
