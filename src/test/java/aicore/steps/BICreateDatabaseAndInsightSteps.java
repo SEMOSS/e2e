@@ -14,7 +14,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class BICreateDatabaseAndInsightSteps {
-	private static final Logger logger = LogManager.getLogger(AICoreTestManager.class);
+	private static final Logger logger = LogManager.getLogger(BICreateDatabaseAndInsightSteps.class);
 
 	private HomePage homePage;
 	private BISystemAppPage biApp;
