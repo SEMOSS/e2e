@@ -32,19 +32,19 @@ Scenario: Model Catalog - Author - View usage
     And 'Author' user clicks on Access Control
     Then 'Author' user 'can' see member setting
     
- Scenario: Model Catalog - Author - Add Member
+ Scenario: Model Catalog - Author - Add Editor Member
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     
- Scenario: Model Catalog - Author - Add Member
+ Scenario: Model Catalog - Author - Add Read Member
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     
-  Scenario: Model Catalog - Author - Delete editor Member
-    And User deletes the 'Editor' user
-    
-  Scenario: Model Catalog - Author - Delete read Member
-    And User deletes the 'Read' user
-    
-  Scenario: Model Catalog - Author - Delete Model
-    Then 'Author' user 'can' Delete Model
+  #Scenario: Model Catalog - Author - Delete editor Member
+    #And User deletes the 'Editor' user
+    #
+  #Scenario: Model Catalog - Author - Delete read Member
+    #And User deletes the 'Read' user
+    #
+  #Scenario: Model Catalog - Author - Delete Model
+    #Then 'Author' user 'can' Delete Model

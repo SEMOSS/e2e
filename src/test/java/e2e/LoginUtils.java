@@ -1,7 +1,7 @@
 package e2e;
 
 public class LoginUtils {
-//	private static final Logger LOGGER = LogManager.getLogger(LoginUtils.class);
+//	private static final Logger logger = LogManager.getLogger(LoginUtils.class);
 //
 //	public static void login(Page page, BrowserContext context, String username, String password) {
 //		page.navigate(Utility.getUrl("/packages/client/dist/#/login"));
@@ -15,7 +15,7 @@ public class LoginUtils {
 //		Map<String, String> newMap = new HashMap<>();
 //		newMap.put("cookie", cookie);
 //		page.setExtraHTTPHeaders(newMap);
-//		LOGGER.info("storage state: {}", context.storageState());
+//		logger.info("storage state: {}", context.storageState());
 //		page.reload();
 //	}
 

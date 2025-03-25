@@ -1,6 +1,7 @@
 package aicore.steps;
 
 import aicore.base.AICoreTestManager;
+import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.utils.CommonUtils;
@@ -18,9 +19,9 @@ public class AddVectorDatabaseSteps {
 	private String timestamp;
 
 	public AddVectorDatabaseSteps() {
-		homePage = new HomePage(AICoreTestManager.getPage());
+		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp;
-		vectorPage = new OpenVectorPage(AICoreTestManager.getPage(), AddModelSteps.timestamp);
+		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
 	}
 
 	@Given("User clicks on Open Vector engine")

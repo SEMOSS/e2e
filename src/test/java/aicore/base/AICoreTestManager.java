@@ -12,10 +12,11 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 
 public class AICoreTestManager {
 
-	private static final Logger LOGGER = LogManager.getLogger(AICoreTestManager.class);
+	private static final Logger logger = LogManager.getLogger(AICoreTestManager.class);
 
 	private static Page page;
 	private static BrowserContext context;
@@ -24,10 +25,10 @@ public class AICoreTestManager {
 
 	static {
 		try {
-			LOGGER.info("Initializing Playwright");
+			logger.info("Initializing Playwright");
 			GenericSetupUtils.initialize();
 		} catch (IOException e) {
-			LOGGER.error(e);
+			logger.error(e);
 			throw new RuntimeException(e);
 		}
 
@@ -38,14 +39,19 @@ public class AICoreTestManager {
 			context = browser.newContext(GenericSetupUtils.getContextOptions());
 			context.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
-			if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+			if (GenericSetupUtils.useTrace()) {
 				context.tracing().start(GenericSetupUtils.getStartOptions());
 			}
-			page = context.newPage();
+			newPage();
 			GenericSetupUtils.setupLoggers(page);
 
 			if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
-				GenericSetupUtils.createUser();
+				//if testing we don't need to add default users
+				if (!GenericSetupUtils.testOnDocker()) {
+					logger.info("Setting up users");
+					//GenericSetupUtils.createUsers();
+					logger.info("Done setting up users" );
+				}
 			}
 		}
 	}
@@ -56,15 +62,20 @@ public class AICoreTestManager {
 	public static Page getPage() {
 		return page;
 	}
+	
+	public static Page newPage() {
+		page = context.newPage();
+		return page;
+	}
 
 	public static void launchApp() throws IOException {
-		String baseUrl = ConfigUtils.getValue("baseUrl");
-		LOGGER.info("Navigating to {}", baseUrl);
+		String baseUrl = UrlUtils.getUrl("#/login");
+		logger.info("Navigating to {}", baseUrl);
 		page.navigate(baseUrl);
 	}
 
 	public static void close() {
-		LOGGER.info("Closing Playwright");
+		logger.info("Closing Playwright");
 		page.close();
 		context.close();
 		browser.close();

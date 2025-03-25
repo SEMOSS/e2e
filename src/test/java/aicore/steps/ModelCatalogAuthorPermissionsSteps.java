@@ -2,6 +2,7 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import aicore.hooks.SetupHooks;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.base.AICoreTestManager;
@@ -23,11 +24,11 @@ public class ModelCatalogAuthorPermissionsSteps {
 	protected static String timestamp;
 
 	public ModelCatalogAuthorPermissionsSteps() {
-		this.loginpage = new LoginPage(AICoreTestManager.getPage());
-		this.homePage = new HomePage(AICoreTestManager.getPage());
+		this.loginpage = new LoginPage(SetupHooks.getPage());
+		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		this.openModelPage = new AddModelToCatalogPage(AICoreTestManager.getPage(), timestamp);
-		this.authorPermissions = new ModelPermissionsAuthor(AICoreTestManager.getPage());
+		this.openModelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
+		this.authorPermissions = new ModelPermissionsAuthor(SetupHooks.getPage());
 	}
 
 	@When("{string} user login to the appication")

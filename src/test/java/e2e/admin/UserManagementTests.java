@@ -4,7 +4,7 @@ import e2e.E2EAdminTests;
 
 public class UserManagementTests extends E2EAdminTests {
 
-//	private static final Logger LOGGER = LogManager.getLogger(UserManagementTests.class);
+//	private static final Logger logger = LogManager.getLogger(UserManagementTests.class);
 //
 //	//@Test
 //	void createAndDeleteUser() {

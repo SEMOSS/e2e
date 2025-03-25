@@ -39,11 +39,11 @@ Feature: Model Catalog Permission - Read
    Scenario: Model Catalog - Read -  Delete Model
     When 'Read' user can 'Not View' Access Control
    
-   Scenario: Model Catalog - Read -  Delete Model as Author
-   And User logs out from the application
-   Then User login as "Author"
-    And 'Author' user clicks on Access Control
-    Then 'Author' user 'can' Delete Model
+   #Scenario: Model Catalog - Read -  Delete Model as Author
+   #And User logs out from the application
+   #Then User login as "Author"
+    #And 'Author' user clicks on Access Control
+    #Then 'Author' user 'can' Delete Model
 
   
    

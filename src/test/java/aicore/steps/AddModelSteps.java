@@ -3,9 +3,10 @@ package aicore.steps;
 import java.util.Arrays;
 import java.util.List;
 
+import aicore.hooks.SetupHooks;
+
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestManager;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
@@ -20,9 +21,9 @@ public class AddModelSteps {
 	protected static String timestamp;
 
 	public AddModelSteps() {
-		this.homePage = new HomePage(AICoreTestManager.getPage());
+		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		this.openModelPage = new AddModelToCatalogPage(AICoreTestManager.getPage(), timestamp);
+		this.openModelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@Given("User navigates to Open Model")
