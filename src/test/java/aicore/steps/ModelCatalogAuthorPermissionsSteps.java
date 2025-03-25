@@ -133,6 +133,11 @@ public class ModelCatalogAuthorPermissionsSteps {
 		openModelPage.clickOnAccessControl();
 	}
 
+	@Given("{string} user clicks on Settings")
+	public void user_clicks_on_settings(String role) {
+		openModelPage.clickOnAccessControl();
+	}
+	
 	@Then("{string} user {string} Delete Model")
 	public void userDeleteModel(String userRole, String expectedOutcome) {
 		// Perform delete action

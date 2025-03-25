@@ -138,21 +138,21 @@ public class GenericSetupUtils {
 		// test admin user login
 		registerUser(page, adminUser, adminPassword);
 
-//		String adminUser2 = ConfigUtils.getValue("admin_username");
-//		String adminPassword2 = ConfigUtils.getValue("admin_password");
-//		registerUser(page, adminUser2, adminPassword2);
-//
-//		String authorUser = ConfigUtils.getValue("author_username");
-//		String authorPassword = ConfigUtils.getValue("author_password");
-//		registerUser(page, authorUser, authorPassword);
-//
-//		String editorUser = ConfigUtils.getValue("editor_username");
-//		String editorPassword = ConfigUtils.getValue("editor_password");
-//		registerUser(page, editorUser, editorPassword);
-//
-//		String readUser = ConfigUtils.getValue("read_username");
-//		String readPassword = ConfigUtils.getValue("read_password");
-//		registerUser(page, readUser, readPassword);
+		String adminUser2 = ConfigUtils.getValue("admin_username");
+		String adminPassword2 = ConfigUtils.getValue("admin_password");
+		registerUser(page, adminUser2, adminPassword2);
+
+		String authorUser = ConfigUtils.getValue("author_username");
+		String authorPassword = ConfigUtils.getValue("author_password");
+		registerUser(page, authorUser, authorPassword);
+
+		String editorUser = ConfigUtils.getValue("editor_username");
+		String editorPassword = ConfigUtils.getValue("editor_password");
+		registerUser(page, editorUser, editorPassword);
+
+		String readUser = ConfigUtils.getValue("read_username");
+		String readPassword = ConfigUtils.getValue("read_password");
+		registerUser(page, readUser, readPassword);
 	}
 
 

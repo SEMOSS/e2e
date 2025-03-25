@@ -29,7 +29,7 @@ Scenario: Model Catalog - Author - View usage
     Then 'Author' user can 'View' Access Control
     
  Scenario: Model Catalog - Author - Member setting
-    And 'Author' user clicks on Access Control
+    And 'Author' user clicks on Settings
     Then 'Author' user 'can' see member setting
     
  Scenario: Model Catalog - Author - Add Editor Member
