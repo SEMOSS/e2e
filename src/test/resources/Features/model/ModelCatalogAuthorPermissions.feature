@@ -1,16 +1,16 @@
 Feature: Model catalog permission - Author
 Adding LLM to the catalog
  
-Scenario: Create a Model - GPT-3.5
+Background: Create a Model - GPT-3.5
     Given User navigates to Open Model
     When User clicks on Add Model
-    And User selects 'GPT-3.5' 
-    And User enters Catalog name as 'Catalog'   
+    And User selects 'GPT-3.5'
+    And User enters Catalog name as 'Model'
     And User enters open AI Key as 'Test@1234'
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
-    And User can see a toast message as 'Successfully added LLM to catalog'  
-    Then User Can see the Model title as 'Catalog'
+    And User can see a toast message as 'Successfully added LLM to catalog'
+    Then User Can see the Model title as 'Model'
           
 Scenario: Model Catalog - Author - View overview 
     Then 'Author' user can 'View' Overview   
