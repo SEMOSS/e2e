@@ -6,7 +6,6 @@ import java.util.Map;
 import aicore.hooks.SetupHooks;
 import org.assertj.core.api.SoftAssertions;
 
-import aicore.base.AICoreTestManager;
 import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.utils.CommonUtils;

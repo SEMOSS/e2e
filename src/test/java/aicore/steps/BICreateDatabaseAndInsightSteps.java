@@ -6,7 +6,6 @@ import aicore.hooks.SetupHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import aicore.base.AICoreTestManager;
 import aicore.pages.BISystemAppPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import aicore.hooks.SetupHooks;
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestManager;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
