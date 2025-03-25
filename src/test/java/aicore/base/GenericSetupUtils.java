@@ -38,8 +38,6 @@ public class GenericSetupUtils {
 	private static boolean useDocker = false;
 	private static boolean useVideo = false;
 	private static boolean useTrace = false;
-	private static boolean testDocker = false;
-
 
 	public static void initialize() throws IOException {
 		if (RunInfo.isFirstRun()) {
@@ -55,9 +53,6 @@ public class GenericSetupUtils {
 		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
 		
-		// if you are going to keep docker running and run tests
-		testDocker = Boolean.parseBoolean(ConfigUtils.getValue("test_docker"));
-
 		if (useDocker) {
 			DockerUtils.startup();
 		}
@@ -265,10 +260,6 @@ public class GenericSetupUtils {
 		return useDocker;
 	}
 	
-	public static boolean testOnDocker() {
-		return testDocker;
-	}
-
 	public static boolean useVideo() {
 		return useVideo;
 	}
