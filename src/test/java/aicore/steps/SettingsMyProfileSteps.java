@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestManager;
+import aicore.hooks.SetupHooks;
 import aicore.pages.SettingsMyProfile;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,7 +14,7 @@ public class SettingsMyProfileSteps {
 	private SettingsMyProfile settings;
 
 	public SettingsMyProfileSteps() {
-		this.settings = new SettingsMyProfile(AICoreTestManager.getPage());
+		this.settings = new SettingsMyProfile(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Settings icon")
