@@ -43,6 +43,6 @@ jobs:
     - name: Clean workspace
       if: always()
       run: |
-        /usr/bin/sudo chown -R ubuntu:ubuntu $GITHUB_WORKSPACE/e2e
+        /usr/bin/chown -R ubuntu:ubuntu $GITHUB_WORKSPACE/e2e
         find $GITHUB_WORKSPACE -mindepth 1 -delete
       
