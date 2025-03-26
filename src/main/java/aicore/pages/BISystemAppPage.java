@@ -6,7 +6,6 @@ import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.ConfigUtils;
-import aicore.utils.UrlUtils;
 
 public class BISystemAppPage {
 
