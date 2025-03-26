@@ -2,11 +2,11 @@ package aicore.steps;
 
 import java.io.IOException;
 
+import aicore.hooks.SetupHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
-import aicore.base.AICoreTestManager;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.ConfigUtils;
@@ -17,14 +17,14 @@ import io.cucumber.java.en.When;
 
 public class LoginSteps {
 
-	private static final Logger LOGGER = LogManager.getLogger(LoginSteps.class);
+	private static final Logger logger = LogManager.getLogger(LoginSteps.class);
 	private LoginPage loginpage;
 	private HomePage homePage;
 
 	public LoginSteps() {
 //		Page page = new AICoreTestBase().page; 
-		this.loginpage = new LoginPage(AICoreTestManager.getPage());
-		this.homePage = new HomePage(AICoreTestManager.getPage());
+		this.loginpage = new LoginPage(SetupHooks.getPage());
+		this.homePage = new HomePage(SetupHooks.getPage());
 	}
 
 	@Given("User is on application")

@@ -2,7 +2,7 @@ package e2e;
 
 public class E2ETests {
 //
-//	private static final Logger LOGGER = LogManager.getLogger(E2ETests.class);
+//	private static final Logger logger = LogManager.getLogger(E2ETests.class);
 //
 //	private static boolean pingSuccessful = true;
 //
@@ -33,16 +33,16 @@ public class E2ETests {
 //
 //	//@BeforeAll
 //	static void launchBrowser() throws Exception {
-//		LOGGER.info("Before all start");
+//		logger.info("Before all start");
 //		if (initialize) {
-//			LOGGER.info("--------------- INTIALIZING ---------------");
-//			LOGGER.info("Log check");
-//			LOGGER.info("INFO");
-//			LOGGER.debug("DEBUG");
-//			LOGGER.warn("WARN");
-//			LOGGER.error("ERROR");
-//			LOGGER.fatal("FATAL");
-//			LOGGER.info("Log check end");
+//			logger.info("--------------- INTIALIZING ---------------");
+//			logger.info("Log check");
+//			logger.info("INFO");
+//			logger.debug("DEBUG");
+//			logger.warn("WARN");
+//			logger.error("ERROR");
+//			logger.fatal("FATAL");
+//			logger.info("Log check end");
 //			
 //			loadTestProps();
 //			lo = new LaunchOptions();
@@ -52,21 +52,21 @@ public class E2ETests {
 //			pingSuccessful = pingServer();
 //
 //			Path p = Paths.get("videos");
-//			LOGGER.info("Videos will be saved to: {}", p.toString());
+//			logger.info("Videos will be saved to: {}", p.toString());
 //			if (Files.isDirectory(p)) {
-//				LOGGER.info("Cleaning directory: {}", p.toString());
+//				logger.info("Cleaning directory: {}", p.toString());
 //				FileUtils.cleanDirectory(p.toFile());
 //			}
 //			
 //			Path trace = Paths.get("traces");
-//			LOGGER.info("Traces will be saved to: {}", trace);
+//			logger.info("Traces will be saved to: {}", trace);
 //			if (Files.isDirectory(trace)) {
-//				LOGGER.info("Cleaning directory: {}", trace.toString());
+//				logger.info("Cleaning directory: {}", trace.toString());
 //				FileUtils.cleanDirectory(trace.toFile());
 //			}
 //
 //			initialize = false;
-//			LOGGER.info("------------------ FINISHED INTIALIZING --------------------");
+//			logger.info("------------------ FINISHED INTIALIZING --------------------");
 //		}
 //
 //		if (!pingSuccessful) {
@@ -76,14 +76,14 @@ public class E2ETests {
 //		playwright = Playwright.create();
 //
 //		browser = playwright.chromium().launch(lo);
-//		LOGGER.info("Before all end");
+//		logger.info("Before all end");
 //	}
 //
 //	private static boolean pingServer() throws InterruptedException {
 //		int i = 0;
 //		boolean successful = false;
 //		apiStringEndpoint = getApi("/api/config");
-//		LOGGER.info("attempting to ping: {}", apiStringEndpoint);
+//		logger.info("attempting to ping: {}", apiStringEndpoint);
 //		while (i < 10) {
 //			try {
 //				HttpURLConnection conn = (HttpURLConnection) new URL(apiStringEndpoint).openConnection();
@@ -91,14 +91,14 @@ public class E2ETests {
 //				conn.setConnectTimeout(1000);
 //				int code = conn.getResponseCode();
 //				if (code == 200) {
-//					LOGGER.info("Successful ping");
+//					logger.info("Successful ping");
 //					successful = true;
 //					break;
 //				}
 //			} catch (Exception e) {
-//				LOGGER.error("Could not ping api", e);
+//				logger.error("Could not ping api", e);
 //			}
-//			LOGGER.info("Sleeping for 500ms then pinging again.");
+//			logger.info("Sleeping for 500ms then pinging again.");
 //
 //			i++;
 //			Thread.sleep(500);
@@ -108,18 +108,18 @@ public class E2ETests {
 //
 //	//@AfterAll
 //	static void closeBrowser() {
-//		LOGGER.info("AFTER ALL start");
+//		logger.info("AFTER ALL start");
 //		playwright.close();
-//		LOGGER.info("AFTER ALL end\n");
+//		logger.info("AFTER ALL end\n");
 //	}
 //
 //	//@BeforeEach
 //	void createContextAndPage() {
-//		LOGGER.info("Start Test for: {}", ti);
-//		LOGGER.info("Before each start");
+//		logger.info("Start Test for: {}", ti);
+//		logger.info("Before each start");
 //		String className = ti.getTestClass().get().getSimpleName();
 //		Path path = Paths.get("videos", folderDateTime, className);
-//		LOGGER.info("Video saved at: {}", path.toString());
+//		logger.info("Video saved at: {}", path.toString());
 //		
 //		// context options
 //		NewContextOptions co = new Browser.NewContextOptions();
@@ -147,16 +147,16 @@ public class E2ETests {
 //		page.onResponse(HttpLogger::logResponse);
 //
 //		if (!Utility.getRegistered()) {
-//			LOGGER.info("Not registered, starting registration.");
+//			logger.info("Not registered, starting registration.");
 //			//nativeRegister();
 //		}
 //		
-//		LOGGER.info("Before each end");
+//		logger.info("Before each end");
 //	}
 //
 //	//@AfterEach
 //	void closeContext(TestInfo ti) throws IOException {
-//		LOGGER.info("After each start");
+//		logger.info("After each start");
 //		// save video with easy to understand name
 //		String methodName = ti.getDisplayName().substring(0, ti.getDisplayName().length() - 2);
 //		String videoName = methodName + ".webm";
@@ -170,17 +170,17 @@ public class E2ETests {
 //		context.tracing().stop(so);
 //		context.close();
 //		Files.move(p, path);
-//		LOGGER.info("Moved video to: {}", path.toString());
+//		logger.info("Moved video to: {}", path.toString());
 //		
 //		
-//		LOGGER.info("After each end");
-//		LOGGER.info("End Test for: {}", ti);
-//		LOGGER.info("---------------------------------------------------\n\n");
+//		logger.info("After each end");
+//		logger.info("End Test for: {}", ti);
+//		logger.info("---------------------------------------------------\n\n");
 //	}
 //
 //	static Properties loadTestProps() throws IOException {
 //		Properties props = new Properties();
-//		LOGGER.info("loading test props from file");
+//		logger.info("loading test props from file");
 //
 //		try (InputStream is = Files.newInputStream(Paths.get("test.props"))) {
 //			props.load(is);
@@ -189,7 +189,7 @@ public class E2ETests {
 //			slowmo = Double.valueOf(props.get("SLOWMO").toString());
 //			timeout = Double.valueOf(props.get("TIMEOUT").toString());
 //			api = String.valueOf(props.get("API")).toString();
-//			LOGGER.info("Props: {}", props);
+//			logger.info("Props: {}", props);
 //		}
 //
 //		return props;
@@ -213,12 +213,12 @@ public class E2ETests {
 //
 //	private void nativeRegister() {
 //		page.navigate(getApi("/setAdmin/"));
-//		LOGGER.info("Page is: {}", page.url());
+//		logger.info("Page is: {}", page.url());
 //		assertEquals(getApi("/setAdmin/"), page.url());
 //		page.locator("#user-id").click();
 //		page.locator("#user-id").fill("user1");
 //		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
-//		LOGGER.info("After submitting admin: {}", page.url());
+//		logger.info("After submitting admin: {}", page.url());
 //
 //		page.navigate(getUrl("/packages/client/dist/#/login"));
 //		page.waitForURL(getUrl("/packages/client/dist/#/login"));
@@ -265,7 +265,7 @@ public class E2ETests {
 //		page.waitForLoadState(LoadState.LOAD);
 //		page.getByRole(AriaRole.ALERT).click();
 //		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
-//		LOGGER.info("Account registration Done");
+//		logger.info("Account registration Done");
 ////		doLogin();
 ////		doLogout();
 //	}
