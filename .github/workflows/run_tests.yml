@@ -12,20 +12,8 @@ jobs:
     
     steps:
     
-    - name: Clean target directory
-      run: |
-        if [ -d target ]; then
-          sudo rm -rf target/*
-        fi
-
     - name: Checkout code
       uses: actions/checkout@v4
-
-    - name: Clean target directory
-      run: |
-        if [ -d target ]; then
-          sudo rm -rf target/*
-        fi
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
