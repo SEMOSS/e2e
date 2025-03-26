@@ -27,15 +27,15 @@ public class SettingsMyProfileSteps {
 		settings.clickOnMyProfileCard();
 	}
 
-	@Then("User can sees {string} link in the top right")
-	public void user_can_sees_link_in_the_top_right(String privacyCenterName) {
+	@Then("User can see {string} link in the top right")
+	public void user_can_see_link_in_the_top_right(String privacyCenterName) {
 		String actualName = settings.verifyPrivacyCenter();
 		Assertions.assertEquals(actualName, privacyCenterName, "Pivacy Center name after adding failed");
 
 	}
 
-	@Then("User can sees {string} section")
-	public void user_can_sees_section(String sectionName) {
+	@Then("User can see {string} section on profile page")
+	public void user_can_see_section(String sectionName) {
 		boolean isVisible = settings.isSectionVisible(sectionName);
 		assertTrue("Expected section not found: " + sectionName, isVisible);
 	}
