@@ -15,6 +15,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set environment variables
+      run: echo "UID=$(id -u)" >> $GITHUB_ENV && echo "GID=$(id -g)" >> $GITHUB_ENV
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
