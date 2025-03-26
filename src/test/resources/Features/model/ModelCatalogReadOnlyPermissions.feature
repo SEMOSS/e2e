@@ -32,7 +32,7 @@ Feature: Model Catalog Permission - Read
   Scenario: Model Catalog - Read -  Access Control
     Then 'Read' user can 'Not View' Access Control  
     
-  Scenario: Model Catalog - Editor - Member setting
+  Scenario: Model Catalog - Read - Member setting
    When 'Read' user can 'Not View' Access Control 
    Then 'Read' user 'can not' see member setting
 
