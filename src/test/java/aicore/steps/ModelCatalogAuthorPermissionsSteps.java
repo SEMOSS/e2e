@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import aicore.hooks.SetupHooks;
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestManager;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
@@ -134,6 +133,11 @@ public class ModelCatalogAuthorPermissionsSteps {
 		openModelPage.clickOnAccessControl();
 	}
 
+	@Given("{string} user clicks on Settings")
+	public void user_clicks_on_settings(String role) {
+		openModelPage.clickOnAccessControl();
+	}
+	
 	@Then("{string} user {string} Delete Model")
 	public void userDeleteModel(String userRole, String expectedOutcome) {
 		// Perform delete action

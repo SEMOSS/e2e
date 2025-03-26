@@ -6,7 +6,6 @@ import aicore.hooks.SetupHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import aicore.base.AICoreTestManager;
 import aicore.pages.BISystemAppPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
@@ -15,7 +14,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class BICreateDatabaseAndInsightSteps {
-	private static final Logger logger = LogManager.getLogger(AICoreTestManager.class);
+	private static final Logger logger = LogManager.getLogger(BICreateDatabaseAndInsightSteps.class);
 
 	private HomePage homePage;
 	private BISystemAppPage biApp;

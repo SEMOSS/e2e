@@ -1,6 +1,5 @@
 package aicore.steps;
 
-import aicore.base.AICoreTestManager;
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;

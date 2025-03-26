@@ -38,8 +38,6 @@ public class GenericSetupUtils {
 	private static boolean useDocker = false;
 	private static boolean useVideo = false;
 	private static boolean useTrace = false;
-	private static boolean testDocker = false;
-
 
 	public static void initialize() throws IOException {
 		if (RunInfo.isFirstRun()) {
@@ -55,9 +53,6 @@ public class GenericSetupUtils {
 		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
 		
-		// if you are going to keep docker running and run tests
-		testDocker = Boolean.parseBoolean(ConfigUtils.getValue("test_docker"));
-
 		if (useDocker) {
 			DockerUtils.startup();
 		}
@@ -143,21 +138,21 @@ public class GenericSetupUtils {
 		// test admin user login
 		registerUser(page, adminUser, adminPassword);
 
-//		String adminUser2 = ConfigUtils.getValue("admin_username");
-//		String adminPassword2 = ConfigUtils.getValue("admin_password");
-//		registerUser(page, adminUser2, adminPassword2);
-//
-//		String authorUser = ConfigUtils.getValue("author_username");
-//		String authorPassword = ConfigUtils.getValue("author_password");
-//		registerUser(page, authorUser, authorPassword);
-//
-//		String editorUser = ConfigUtils.getValue("editor_username");
-//		String editorPassword = ConfigUtils.getValue("editor_password");
-//		registerUser(page, editorUser, editorPassword);
-//
-//		String readUser = ConfigUtils.getValue("read_username");
-//		String readPassword = ConfigUtils.getValue("read_password");
-//		registerUser(page, readUser, readPassword);
+		String adminUser2 = ConfigUtils.getValue("admin_username");
+		String adminPassword2 = ConfigUtils.getValue("admin_password");
+		registerUser(page, adminUser2, adminPassword2);
+
+		String authorUser = ConfigUtils.getValue("author_username");
+		String authorPassword = ConfigUtils.getValue("author_password");
+		registerUser(page, authorUser, authorPassword);
+
+		String editorUser = ConfigUtils.getValue("editor_username");
+		String editorPassword = ConfigUtils.getValue("editor_password");
+		registerUser(page, editorUser, editorPassword);
+
+		String readUser = ConfigUtils.getValue("read_username");
+		String readPassword = ConfigUtils.getValue("read_password");
+		registerUser(page, readUser, readPassword);
 	}
 
 
@@ -265,10 +260,6 @@ public class GenericSetupUtils {
 		return useDocker;
 	}
 	
-	public static boolean testOnDocker() {
-		return testDocker;
-	}
-
 	public static boolean useVideo() {
 		return useVideo;
 	}
