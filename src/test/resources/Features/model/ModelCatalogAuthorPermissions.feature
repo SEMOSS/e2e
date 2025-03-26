@@ -33,10 +33,12 @@ Adding LLM to the catalog
     Then 'Author' user 'can' see member setting
     
   Scenario: Model Catalog - Author - Add Editor Member
+    And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     
   Scenario: Model Catalog - Author - Add Read Member
+    And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     
