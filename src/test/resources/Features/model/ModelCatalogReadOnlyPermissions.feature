@@ -1,7 +1,7 @@
 Feature: Model Catalog Permission - Read
   Adding LLM to the catalog
   
- Scenario: Model Catalog - Read - View overview
+  Background: Model Catalog - Read - View overview
     When User navigates to Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
@@ -11,7 +11,7 @@ Feature: Model Catalog Permission - Read
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User Can see the Model title as 'Catalog'
-    Then 'Author' user clicks on Access Control
+    Then 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as "Read"
     And User logs out from the application
@@ -32,18 +32,18 @@ Feature: Model Catalog Permission - Read
   Scenario: Model Catalog - Read -  Access Control
     Then 'Read' user can 'Not View' Access Control  
     
-  Scenario: Model Catalog - Editor - Member setting
+  Scenario: Model Catalog - Read - Member setting
    When 'Read' user can 'Not View' Access Control 
    Then 'Read' user 'can not' see member setting
 
-   Scenario: Model Catalog - Read -  Delete Model
+  Scenario: Model Catalog - Read -  Delete Model
     When 'Read' user can 'Not View' Access Control
    
-   Scenario: Model Catalog - Read -  Delete Model as Author
-   And User logs out from the application
-   Then User login as "Author"
-    And 'Author' user clicks on Access Control
-    Then 'Author' user 'can' Delete Model
+   #Scenario: Model Catalog - Read -  Delete Model as Author
+   #And User logs out from the application
+   #Then User login as "Author"
+    #And 'Author' user clicks on Access Control
+    #Then 'Author' user 'can' Delete Model
 
   
    

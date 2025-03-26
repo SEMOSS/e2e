@@ -2,9 +2,9 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import aicore.hooks.SetupHooks;
 import org.junit.jupiter.api.Assertions;
 
-import aicore.base.AICoreTestManager;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
@@ -23,11 +23,11 @@ public class ModelCatalogAuthorPermissionsSteps {
 	protected static String timestamp;
 
 	public ModelCatalogAuthorPermissionsSteps() {
-		this.loginpage = new LoginPage(AICoreTestManager.getPage());
-		this.homePage = new HomePage(AICoreTestManager.getPage());
+		this.loginpage = new LoginPage(SetupHooks.getPage());
+		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		this.openModelPage = new AddModelToCatalogPage(AICoreTestManager.getPage(), timestamp);
-		this.authorPermissions = new ModelPermissionsAuthor(AICoreTestManager.getPage());
+		this.openModelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
+		this.authorPermissions = new ModelPermissionsAuthor(SetupHooks.getPage());
 	}
 
 	@When("{string} user login to the appication")
@@ -133,6 +133,11 @@ public class ModelCatalogAuthorPermissionsSteps {
 		openModelPage.clickOnAccessControl();
 	}
 
+	@Given("{string} user clicks on Settings")
+	public void user_clicks_on_settings(String role) {
+		openModelPage.clickOnAccessControl();
+	}
+	
 	@Then("{string} user {string} Delete Model")
 	public void userDeleteModel(String userRole, String expectedOutcome) {
 		// Perform delete action

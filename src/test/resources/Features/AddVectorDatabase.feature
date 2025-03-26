@@ -14,7 +14,7 @@ Feature: Create Vector Database
     And User enters tag as 'embeddings' in Edit Model Details and press enter
     And User clicks on Submit button
 
-  Scenario Outline: Add and validate FAISS Vector database
+  Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
     Given User clicks on Open Vector engine
     When User clicks on Add Vector button
     And User selects '<connection>' connection

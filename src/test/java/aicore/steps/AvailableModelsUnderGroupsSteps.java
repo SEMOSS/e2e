@@ -3,9 +3,9 @@ package aicore.steps;
 import java.util.List;
 import java.util.Map;
 
+import aicore.hooks.SetupHooks;
 import org.assertj.core.api.SoftAssertions;
 
-import aicore.base.AICoreTestManager;
 import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.utils.CommonUtils;
@@ -18,7 +18,7 @@ public class AvailableModelsUnderGroupsSteps {
 
 	public AvailableModelsUnderGroupsSteps() {
 		timestamp = CommonUtils.getTimeStampName();
-		modelPage = new AddModelToCatalogPage(AICoreTestManager.getPage(), timestamp);
+		modelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
 		softAssert = SoftAssertionHooks.getSoftAssertions();
 	}
 
