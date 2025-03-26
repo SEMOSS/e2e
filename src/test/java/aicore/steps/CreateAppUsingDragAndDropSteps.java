@@ -3,7 +3,7 @@ package aicore.steps;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import aicore.base.AICoreTestManager;
+import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.OpenAppLibraryPage;
 import aicore.utils.CommonUtils;
@@ -18,9 +18,9 @@ public class CreateAppUsingDragAndDropSteps {
 	private static String timestamp;
 
 	public CreateAppUsingDragAndDropSteps() {
-		homePage = new HomePage(AICoreTestManager.getPage());
+		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		openAppLibraryPage = new OpenAppLibraryPage(AICoreTestManager.getPage(), timestamp);
+		openAppLibraryPage = new OpenAppLibraryPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@Given("User navigates to Open App Library")

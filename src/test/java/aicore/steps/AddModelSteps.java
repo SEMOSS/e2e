@@ -1,8 +1,10 @@
 package aicore.steps;
 
-import aicore.hooks.SetupHooks;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
 
+import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
