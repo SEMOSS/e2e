@@ -9,6 +9,35 @@ Use codegen to help write tests.
 mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen http://localhost:9090/semoss-ui/packages/client/dist/#/"
 ```
 
+## For testers using local SEMOSS setup
+Remember to update environment to latest changes
+```
+git pull Monolith
+git pull Semoss
+```
+
+```
+git pull semoss-ui
+pnpm install
+pnpm run dev:client
+```
+
+
+## For testers using docker setup
+```
+docker pull semoss/docker:latest
+```
+
+stop container
+```
+docker compose rm -f semoss
+```
+
+start container
+```
+docker compose up semoss
+```
+
 # Testing Tickets - Contributor's Guide
 
 If you have recently implemented a new functionality or page that will require e2e testing, you can help the testing team by either emailing them an outline of the relevant Features and Scenarios or creating the Epic and Task tickets yourself here in the e2e repo using the guidelines below. 
