@@ -35,7 +35,7 @@ public class AddModelToCatalogPage {
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	// Settings field
-	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
+	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";	
 	private static final String MAKE_PUBLIC_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//p[text()='{title}']";
 	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[1]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
 	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//span[@class='MuiSwitch-track css-1ju1kxc']";
@@ -73,7 +73,7 @@ public class AddModelToCatalogPage {
 	}
 
 	public void addModelButton() {
-		page.click(ADD_MODEL_BUTTON_XPATH);
+		page.getByLabel("Navigate to import Model").click();
 	}
 
 	public void selectOpenAi(String aiModelName) {
@@ -296,14 +296,15 @@ public class AddModelToCatalogPage {
 
 	public void addMember(String role) throws InterruptedException {
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		// search is by user name first name and lastname
+		username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
-		page.getByText(username).first().click();
+		page.getByTitle("Name: "+username).click() ;
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
 		page.locator(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-
 	}
 
 	public void clickOnDeleteButton() {

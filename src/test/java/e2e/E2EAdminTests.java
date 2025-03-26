@@ -2,7 +2,7 @@ package e2e;
 
 public class E2EAdminTests extends E2ETests {
 	
-//	private static final Logger LOGGER = LogManager.getLogger(E2EAdminTests.class);
+//	private static final Logger logger = LogManager.getLogger(E2EAdminTests.class);
 //
 //	@BeforeEach
 //	public void loginToAdmin() {

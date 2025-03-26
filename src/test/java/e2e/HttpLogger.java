@@ -8,7 +8,7 @@ import com.microsoft.playwright.Response;
 
 public class HttpLogger {
 
-	private static final Logger LOGGER = LogManager.getLogger(HttpLogger.class);
+	private static final Logger logger = LogManager.getLogger(HttpLogger.class);
 
 	private static final StringBuilder REQUEST_SB = new StringBuilder()
 			.append(" -------------------REQUEST--------------------").append("\n").append("Sent: {}").append("\n")
@@ -29,9 +29,9 @@ public class HttpLogger {
 	public static void logRequest(Request s) {
 		if (s.url().contains("/Monolith/")) {
 			try {
-				LOGGER.info(REQUEST_LOG, s, s.url(), s.method(), s.allHeaders(), s.postData());
+				logger.info(REQUEST_LOG, s, s.url(), s.method(), s.allHeaders(), s.postData());
 			} catch (Exception e) {
-				LOGGER.error("Couldn't log request {}\n{}", s.url(), e.getMessage());
+				logger.error("Couldn't log request {}\n{}", s.url(), e.getMessage());
 			}
 		}
 	}
@@ -39,7 +39,7 @@ public class HttpLogger {
 	public static void logResponse(Response s) {
 		if (s.url().contains("/Monolith/")) {
 			if (s.url().contains("milkyway.jpg")) {
-				LOGGER.info("Milkway.jpg {}", s.status());
+				logger.info("Milkway.jpg {}", s.status());
 			} else {
 				logReasonableResponse(s);
 			}
@@ -49,14 +49,14 @@ public class HttpLogger {
 	private static void logReasonableResponse(Response s) {
 		try {
 			if (s.ok()) {
-				LOGGER.info(RESPONSE_LOG, s, s.url(), s.status(), s.allHeaders(), s.text());
+				logger.info(RESPONSE_LOG, s, s.url(), s.status(), s.allHeaders(), s.text());
 			} else if (s.status() == 302) {
-				LOGGER.warn(RESPONSE_LOG, s, s.url(), s.status(), s.allHeaders(), s.statusText());
+				logger.warn(RESPONSE_LOG, s, s.url(), s.status(), s.allHeaders(), s.statusText());
 			} else {
-				LOGGER.error(RESPONSE_LOG, s, s.url(), s.status(), s.allHeaders(), s.statusText());
+				logger.error(RESPONSE_LOG, s, s.url(), s.status(), s.allHeaders(), s.statusText());
 			}
 		} catch (Exception e) {
-			LOGGER.error("Couldn't log response {}\n{}", s.url(), e.getMessage());
+			logger.error("Couldn't log response {}\n{}", s.url(), e.getMessage());
 		}
 	}
 

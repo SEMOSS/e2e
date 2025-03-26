@@ -1,18 +1,17 @@
 package aicore.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public final class ConfigUtils {
 
-	private static final Logger LOGGER = LogManager.getLogger(ConfigUtils.class);
+	private static final Logger logger = LogManager.getLogger(ConfigUtils.class);
 
 	private static Properties p;
 
@@ -20,14 +19,20 @@ public final class ConfigUtils {
 		p = new Properties();
 		FileInputStream f;
 		try {
-			//TODO: To be fixed for Continuous test Pipeline!
-			LOGGER.info("Loading properties from file");
-			Path pathToProps = Paths.get("src", "main", "resources", "config.properties");
+			logger.info("Loading properties from file");
+			Path pathToProps = Paths.get("src", "main", "resources", "local.properties");
+			if (!Files.exists(pathToProps)) {
+				pathToProps = Paths.get("src", "main", "resources", "config.properties");
+			}
+			logger.info("Loading properties from file: {}", pathToProps);
 			f = new FileInputStream(pathToProps.toFile());
 			p.load(f);
-			LOGGER.info("Loaded properties from file");
+			logger.info("Loaded properties from file");
+			p.entrySet().stream().forEach(entry -> {
+				logger.info("Key: " + entry.getKey() + " Value: " + entry.getValue());
+			});		
 		} catch (Exception e) {
-			LOGGER.error("Could not load properties", e);
+			logger.error("Could not load properties", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -36,11 +41,11 @@ public final class ConfigUtils {
 	}
 
 	public static String getValue(String key) {
-		LOGGER.info("Getting value for key: {}", key);
+		logger.info("Getting value for key: {}", key);
 		String value = p.getProperty(key);
-		LOGGER.info("KEY: {} VALUE: {}", key, value);
+		logger.info("KEY: {} VALUE: {}", key, value);
 		if(value==null || value.trim().length()==0) {
-			LOGGER.error("Value of key is empty: {}", key);
+			logger.error("Value of key is empty: {}", key);
 			System.err.println("Property '"+key+"' is undefined in config.properties!");
 		}
 		return value;
