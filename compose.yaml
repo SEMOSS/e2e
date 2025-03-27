@@ -22,6 +22,7 @@ services:
     working_dir: /workspace
     networks:
       - tnet
+    user: "${UID}:${GID}"  # Run the container as the current user
 
 networks:
   tnet:
