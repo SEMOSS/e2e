@@ -2,7 +2,7 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import aicore.base.AICoreTestManager;
+import aicore.hooks.SetupHooks;
 import aicore.pages.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,8 +14,8 @@ public class MemberSettingSteps {
 	private SettingPage settingPage;
 
 	public MemberSettingSteps() {
-		this.homePage = new HomePage(AICoreTestManager.getPage());
-		this.settingPage = new SettingPage(AICoreTestManager.getPage());
+		this.homePage = new HomePage(SetupHooks.getPage());
+		this.settingPage = new SettingPage(SetupHooks.getPage());
 	}
 
 	@Given("User navigates to Open Setting page")

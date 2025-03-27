@@ -55,9 +55,43 @@ public class SetupHooks {
         }
 
         logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
-        String adminUser = ConfigUtils.getValue("native_username");
-        String adminPassword = ConfigUtils.getValue("native_password");
-        GenericSetupUtils.login(page, adminUser, adminPassword);
+        String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
+
+        // Use switch to handle different sourceTagNames
+        switch (sourceTagName) {
+            case "@MSUser":
+            	page.navigate("https://workshop.cfg.deloitte.com/cfg-ai-demo/SemossWeb/packages/client/dist/#/login");
+            	page.waitForTimeout(1000);
+            	page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
+            	Page page1 = page.waitForPopup(() -> {
+					page.locator("//span[(text()='Deloitte Login')]").click();
+				});
+            	
+            	page1.fill("//input[@type='email']", ConfigUtils.getValue("ms_username"));
+            	page1.click("#idSIButton9");
+            	page1.fill("//input[@type='password']", ConfigUtils.getValue("ms_password"));
+            	page1.click("//input[@data-report-event='Signin_Submit']");
+                break;
+
+            case "@NativeAdmin":
+                // Native User Flow
+                String localAdminUser = ConfigUtils.getValue("admin_username");
+                String localAdminPassword = ConfigUtils.getValue("admin_password");
+                GenericSetupUtils.login(page, localAdminUser, localAdminPassword);
+                break;
+
+            case "@NativeAuthor":
+            	 String nativeUser = ConfigUtils.getValue("native_username");
+                 String nativePassword = ConfigUtils.getValue("native_password");
+                 GenericSetupUtils.login(page, nativeUser, nativePassword);
+                break;
+
+            default:
+            	 String adminUser = ConfigUtils.getValue("native_username");
+               String adminPassword = ConfigUtils.getValue("native_password");
+               GenericSetupUtils.login(page, adminUser, adminPassword);
+                break;
+        }
     }
 
     @BeforeStep
