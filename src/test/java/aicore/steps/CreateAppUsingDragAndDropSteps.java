@@ -91,8 +91,8 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.clickOnEditButton();
 	}
 
-	@And("User clicks on Blocks")
-	public void user_clicks_on_blocks() {
+	@And("User clicks on Blocks if it is not selected by default")
+	public void user_clicks_on_blocks_if_it_is_not_selected_by_default() {
 		openAppLibraryPage.clickOnBlocksOption();
 	}
 

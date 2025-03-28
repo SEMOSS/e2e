@@ -16,6 +16,6 @@ Feature: Create new app
     When User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
-    And User clicks on Blocks
+    And User clicks on Blocks if it is not selected by default
     And User drags Heading 1 block and drop on the page
     Then User can see 'Hello world' on the page
