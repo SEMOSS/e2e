@@ -1,5 +1,7 @@
 package aicore.steps;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -12,6 +14,8 @@ public class MemberSettingSteps {
 
 	private HomePage homePage;
 	private SettingPage settingPage;
+	private static final Logger logger = LogManager.getLogger(MemberSettingSteps.class);
+
 
 	public MemberSettingSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -29,7 +33,7 @@ public class MemberSettingSteps {
 		if (settingPage.checkAdminButton()) {
 			settingPage.clickOnAdminButton();
 		} else {
-			System.out.println("Admin button is not visible");
+			logger.info("Admin button is not visible");
 		}
 
 	}
@@ -53,8 +57,8 @@ public class MemberSettingSteps {
 
 	}
 
-	@Then("User sees a count of users on Member setting page")
-	public void user_sees_a_count_of_users_on_Member_setting_page() {
+	@Then("User sees atleast one count of users on Member setting page")
+	public void user_sees_atleast_one_count_of_users_on_Member_setting_page() {
 		int countOfUser = settingPage.checkCountOfUsers();
 		Assertions.assertTrue(countOfUser > 0);
 	}

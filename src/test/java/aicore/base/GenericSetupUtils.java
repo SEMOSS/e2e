@@ -193,6 +193,27 @@ public class GenericSetupUtils {
 		}
 	}
 
+	public static void loginWithMSuser(Page page, String Username, String Password) {
+		page.navigate(UrlUtils.getUrl("#/login"));
+		page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
+		Page page1 = page.waitForPopup(() -> {
+			page.locator("//span[(text()='Deloitte Login')]").click();
+		});
+		page1.locator("//input[@type='email']").fill(Username);
+		page1.locator("#idSIButton9").click();
+		page1.locator("input[type=\"password\"]").fill(Password);
+		page1.locator("//input[@data-report-event='Signin_Submit']").click();
+		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		String waitingForUrl = UrlUtils.getUrl("#");
+		try {
+			page.waitForURL(waitingForUrl);
+		} catch (Throwable t) {
+			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", waitingForUrl, page.url());
+		}
+	}
+	
 	private static void setupInitialAdmin(Page page, String userName) {
 		page.navigate(UrlUtils.getApi("setAdmin/"));
 

@@ -59,48 +59,40 @@ public class SetupHooks {
 
 		// Use switch to handle different sourceTagNames
 		switch (sourceTagName) {
-		case "@MSUser":
-			page.navigate("https://workshop.cfg.deloitte.com/cfg-ai-demo/SemossWeb/packages/client/dist/#/login");
-			page.waitForTimeout(1000);
-			page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
-			Page page1 = page.waitForPopup(() -> {
-				page.locator("//span[(text()='Deloitte Login')]").click();
-			});
-			page1.fill("//input[@type='email']", ConfigUtils.getValue("ms_username"));
-			page1.click("#idSIButton9");
-			page1.fill("//input[@type='password']", ConfigUtils.getValue("ms_password"));
-			page1.click("//input[@data-report-event='Signin_Submit']");
+		case "@LoginWithMS":
+			String MsUsername = ConfigUtils.getValue("ms_username");
+			String MsPassword = ConfigUtils.getValue("ms_password");
+			GenericSetupUtils.loginWithMSuser(page, MsUsername, MsPassword);
 			break;
 
-		case "@NativeAdmin":
-			// Native User Flow
-			String localAdminUser = ConfigUtils.getValue("admin_username");
-			String localAdminPassword = ConfigUtils.getValue("admin_password");
-			GenericSetupUtils.login(page, localAdminUser, localAdminPassword);
+		case "@LoginWithAdmin":
+			String adminUser = ConfigUtils.getValue("admin_username");
+			String adminPassword = ConfigUtils.getValue("admin_password");
+			GenericSetupUtils.login(page, adminUser, adminPassword);
 			break;
 
-		case "@NativeAuthor":
-			String nativeUser = ConfigUtils.getValue("native_username");
-			String nativePassword = ConfigUtils.getValue("native_password");
-			GenericSetupUtils.login(page, nativeUser, nativePassword);
+		case "@LoginWithAuthor":
+			String authorUser = ConfigUtils.getValue("author_username");
+			String authorPassword = ConfigUtils.getValue("author_password");
+			GenericSetupUtils.login(page, authorUser, authorPassword);
 			break;
 
-		case "@NativeEditor":
+		case "@LoginWithEditor":
 			String nativeEditorUser = ConfigUtils.getValue("editor_username");
 			String nativeEditorPassword = ConfigUtils.getValue("editor_password");
 			GenericSetupUtils.login(page, nativeEditorUser, nativeEditorPassword);
 			break;
 
-		case "@NativeRead":
+		case "@LoginWithReadOnly":
 			String nativeReadUser = ConfigUtils.getValue("read_username");
 			String nativeReadPassword = ConfigUtils.getValue("read_password");
 			GenericSetupUtils.login(page, nativeReadUser, nativeReadPassword);
 			break;
 
 		default:
-			String adminUser = ConfigUtils.getValue("native_username");
-			String adminPassword = ConfigUtils.getValue("native_password");
-			GenericSetupUtils.login(page, adminUser, adminPassword);
+			String nativeUser = ConfigUtils.getValue("native_username");
+			String nativePassword = ConfigUtils.getValue("native_password");
+			GenericSetupUtils.login(page, nativeUser, nativePassword);
 			break;
 		}
 	}
