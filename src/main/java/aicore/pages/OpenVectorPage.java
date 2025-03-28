@@ -107,5 +107,4 @@ public class OpenVectorPage {
 		String name = page.textContent(CHUNKING_STRATEGY_SMSS_PROPERTIES_XPATH).trim();
 		return name;
 	}
-
 }
