@@ -1,5 +1,5 @@
 Feature: View Member Settings for Admin User
-
+@NativeAdmin
  Scenario: View Member Settings
     Given User navigates to Open Setting page
     When User enable admin mode

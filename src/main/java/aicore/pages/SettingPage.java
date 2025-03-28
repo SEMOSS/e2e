@@ -18,35 +18,35 @@ public class SettingPage {
 	}
 
 	public boolean checkAdminButton() {
-		return page.isVisible(ADMIN_ON_OFF_BUTTON_XPATH);
+		return page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible();
 	}
 
 	public void clickOnAdminButton() {
-		page.click(ADMIN_ON_OFF_BUTTON_XPATH);
+		page.locator(ADMIN_ON_OFF_BUTTON_XPATH).click();
 	}
 
 	public void checkCardVisible(String cardName) {
 
-		page.isVisible(CARD_XPATH.replace("{cardName}", cardName));
+		page.locator(CARD_XPATH.replace("{cardName}", cardName)).isVisible();
 
 	}
 
 	public void clickOnCard(String cardName) {
-		page.click(CARD_XPATH.replace("{cardName}", cardName));
+		page.locator(CARD_XPATH.replace("{cardName}", cardName)).click();
 	}
 
 	public void checkAddUserButton() {
-		page.isVisible(ADD_MEMBER_XPATH);
+		page.locator(ADD_MEMBER_XPATH).isVisible();
 
 	}
 
 	public void checkAdminOnButton() {
-		page.isVisible(ADMIN_ON_BUTTON_XPATH);
+		page.locator(ADMIN_ON_BUTTON_XPATH).isVisible();
 	}
 
 	public int checkCountOfUsers() {
-		page.isVisible(MEMBER_COUNT_XPATH);
-		String countOfUser = page.textContent(MEMBER_COUNT_XPATH);
+		page.locator(MEMBER_COUNT_XPATH).isVisible();
+		String countOfUser = page.locator(MEMBER_COUNT_XPATH).textContent();
 		String[] numberOfUser = CommonUtils.splitStringBySpace(countOfUser);
 		int totalUser = Integer.parseInt(numberOfUser[0]);
 		return totalUser;

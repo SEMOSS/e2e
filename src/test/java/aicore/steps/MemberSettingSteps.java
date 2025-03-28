@@ -1,6 +1,6 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.*;
@@ -56,7 +56,7 @@ public class MemberSettingSteps {
 	@Then("User sees a count of users on Member setting page")
 	public void user_sees_a_count_of_users_on_Member_setting_page() {
 		int countOfUser = settingPage.checkCountOfUsers();
-		assertTrue(countOfUser > 0);
+		Assertions.assertTrue(countOfUser > 0);
 	}
 
 }

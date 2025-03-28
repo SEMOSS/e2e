@@ -59,11 +59,11 @@ public class HomePage {
 	}
 
 	public void checkOnOpenSetting() {
-		page.isVisible(OPEN_SETTING_XPATH);
+		page.locator(OPEN_SETTING_XPATH).isVisible();
 	}
 
 	public void clickOnOpenSetting() {
-		page.click(OPEN_SETTING_XPATH);
+		page.locator(OPEN_SETTING_XPATH).click();
 	}
 
 }
