@@ -70,7 +70,7 @@ public class AddModelSteps {
 
 	@Then("User Can see the Model title as {string}")
 	public void user_can_see_the_model_title_as(String modelTitle) {
-		String actualModelTitle = openModelPage.verifyModelTitle();
+		String actualModelTitle = openModelPage.verifyModelTitle(modelTitle);
 		String expModelTitle = openModelPage.getExpectedCatalogTitle(modelTitle);
 		Assertions.assertEquals(actualModelTitle, expModelTitle);
 	}

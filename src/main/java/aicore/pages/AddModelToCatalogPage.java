@@ -23,7 +23,7 @@ public class AddModelToCatalogPage {
 	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
-	private static final String MODEL_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
+	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	private static final String CRAETED_MODEL_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
 	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//div[@class='MuiFormControl-root MuiTextField-root css-1t5kjpm']//input";
 	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
@@ -35,7 +35,7 @@ public class AddModelToCatalogPage {
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	// Settings field
-	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";	
+	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
 	private static final String MAKE_PUBLIC_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//p[text()='{title}']";
 	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[1]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
 	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//span[@class='MuiSwitch-track css-1ju1kxc']";
@@ -46,7 +46,7 @@ public class AddModelToCatalogPage {
 	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[3]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
 	private static final String DELETE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[3]//div[@class='MuiAlert-action css-1mzcepu']";
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//div[@class='css-aplv3o']//div[@class='css-163ryps']";
-	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[@class='MuiStack-root css-1vxby2c']//p[contains(@class,'MuiTypography-root MuiTypography')]";
+	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h6[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
 	private static final String MEMBER_SECTION_TITLE_XPATH = "//div[@class='css-1hk1ec8']//div[@class='css-163ryps']";
 	private static final String MEMBER_SEARCH_ICON_XPATH = "//*[name()='svg'][@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBERS_SEARCHBOX_XPATH = "//div[contains(@class,'MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary')]";
@@ -104,13 +104,15 @@ public class AddModelToCatalogPage {
 	}
 
 	public String modelCreationToastMessage() {
-		String toastMessage = page.textContent(MODEL_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		Locator toastMessage = page.getByRole(AriaRole.ALERT)
+				.filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE));
+		return toastMessage.textContent().trim();
 	}
 
-	public String verifyModelTitle() {
-		String modelTitle = page.textContent(CRAETED_MODEL_XPATH).trim();
-		return modelTitle;
+	public String verifyModelTitle(String modelTitle) {
+		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
+				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
+		return actualmodelTitle.textContent().trim();
 	}
 
 	public void clickOnSMSSTab() {
@@ -305,7 +307,7 @@ public class AddModelToCatalogPage {
 		// search is by user name first name and lastname
 		username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
-		page.getByTitle("Name: "+username).click() ;
+		page.getByTitle("Name: " + username).click();
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
@@ -346,12 +348,15 @@ public class AddModelToCatalogPage {
 	}
 
 	public String copyModelID() {
+		page.locator(MODEL_ID_COPY_OPTION_XPATH).isVisible();
+		page.locator(MODEL_ID_COPY_OPTION_XPATH).click();
 		page.click(MODEL_ID_COPY_OPTION_XPATH);
 		return page.evaluate("navigator.clipboard.readText()").toString().trim();
 	}
 
 	public String copyCommand(String commandName) {
-		page.click(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName));
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).isVisible();
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).click();
 		return page.evaluate("navigator.clipboard.readText()").toString().trim();
 	}
 }
