@@ -16,7 +16,9 @@ public class HomePage {
 	private static final String OPEN_MODEL_XPATH = "(//a[@data-testid='Model-icon'])";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
-	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"+ConfigUtils.getValue("applicationName")+"']//button";
+	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
+			+ ConfigUtils.getValue("applicationName") + "']//button";
+	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
 
 	public HomePage(Page page) {
 		this.page = page;
@@ -55,5 +57,9 @@ public class HomePage {
 	public void logOutAsCurrentUser() {
 		page.click(USER_PROFILE_ICON_XPATH);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
+	}
+
+	public void clickOnOpenSettings() {
+		page.click(OPEN_SETTINGS_XPATH);
 	}
 }
