@@ -3,10 +3,9 @@ package aicore.steps;
 import java.util.Arrays;
 import java.util.List;
 
-import aicore.hooks.SetupHooks;
-
 import org.junit.jupiter.api.Assertions;
 
+import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
@@ -70,7 +69,7 @@ public class AddModelSteps {
 
 	@Then("User Can see the Model title as {string}")
 	public void user_can_see_the_model_title_as(String modelTitle) {
-		String actualModelTitle = openModelPage.verifyModelTitle();
+		String actualModelTitle = openModelPage.verifyModelTitle(modelTitle);
 		String expModelTitle = openModelPage.getExpectedCatalogTitle(modelTitle);
 		Assertions.assertEquals(actualModelTitle, expModelTitle);
 	}

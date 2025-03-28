@@ -16,7 +16,6 @@ public class AddModelToCatalogPage {
 	private Page page;
 	private String timestamp;
 
-	private static final String ADD_MODEL_BUTTON_XPATH = "//button[@aria-label='Navigate to import Model']";
 	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
 	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
@@ -24,9 +23,8 @@ public class AddModelToCatalogPage {
 	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
-	private static final String MODEL_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
-	private static final String CRAETED_MODEL_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
-	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//div[@class='MuiFormControl-root MuiTextField-root css-1t5kjpm']//input";
+	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
+	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
 	// SMSS field
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
@@ -67,9 +65,7 @@ public class AddModelToCatalogPage {
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
-	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "//div[@class='MuiAlert-message css-1xsto0d']";
-	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//div[@class='MuiFormControl-root MuiTextField-root css-1t5kjpm']//input";
-	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
+	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String DETAILS_TEXTBOX_XPATH = "//textarea[@class='inputarea monaco-mouse-cursor-text']";
 	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
 	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
@@ -77,7 +73,7 @@ public class AddModelToCatalogPage {
 	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "(//input[@aria-autocomplete='list'])[4]";
 	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
-	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[@class='MuiStack-root css-1k38wm5']";
+	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
 	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Tag')]]/following-sibling::div";
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Domain')]]/following-sibling::div";
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data classification')]]/following-sibling::div";
@@ -114,18 +110,21 @@ public class AddModelToCatalogPage {
 	}
 
 	public String modelCreationToastMessage() {
-		String toastMessage = page.textContent(MODEL_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		Locator toastMessage = page.getByRole(AriaRole.ALERT)
+				.filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE));
+		return toastMessage.textContent().trim();
 	}
 
 	public void waitForModelCreationToastMessageDisappear() {
-		page.locator(MODEL_TOAST_MESSAGE_XPATH)
+		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE))
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		;
 	}
 
-	public String verifyModelTitle() {
-		String modelTitle = page.textContent(CRAETED_MODEL_XPATH).trim();
-		return modelTitle;
+	public String verifyModelTitle(String modelTitle) {
+		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
+				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
+		return actualmodelTitle.textContent().trim();
 	}
 
 	public void clickOnSMSSTab() {
@@ -155,11 +154,13 @@ public class AddModelToCatalogPage {
 //Edit model
 
 	public void searchModelCatalog(String modelName) {
-		page.fill(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH, modelName + timestamp);
+		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).fill(modelName + timestamp);
 	}
 
 	public void selectModelFromSearchOptions(String modelName) {
-		page.click(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp));
+		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp))).isVisible();
+		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp)).click();
 	}
 
 	public boolean verifyModelIsDisplayedOnCatalogPage(String modelName) {
@@ -167,14 +168,6 @@ public class AddModelToCatalogPage {
 		page.waitForSelector(modelNameWithTimestamp, new Page.WaitForSelectorOptions().setTimeout(10000));
 		boolean isModelVisible = page.isVisible(modelNameWithTimestamp);
 		return isModelVisible;
-	}
-
-	public void searchModelCatalog(String modelName) {
-		page.fill(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH, modelName + timestamp);
-	}
-
-	public void selectModelFromSearchOptions(String modelName) {
-		page.click(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp));
 	}
 
 	public void clickOnEditButton() {
@@ -219,8 +212,9 @@ public class AddModelToCatalogPage {
 	}
 
 	public String verifyEditSuccessfullToastMessage() {
-		String toastMessage = page.textContent(EDIT_SUCCESS_TOAST_MESSAGE).trim();
-		return toastMessage;
+		Locator toastMessage = page.getByRole(AriaRole.ALERT)
+				.filter(new Locator.FilterOptions().setHasText(EDIT_SUCCESS_TOAST_MESSAGE));
+		return toastMessage.textContent().trim();
 	}
 
 	public void waitForEditSuccessToastMessageToDisappear() {
@@ -418,7 +412,7 @@ public class AddModelToCatalogPage {
 		// search is by user name first name and lastname
 		username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
-		page.getByTitle("Name: "+username).click() ;
+		page.getByTitle("Name: " + username).click();
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
