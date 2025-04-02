@@ -15,7 +15,7 @@ import io.cucumber.java.en.When;
 public class CreateAppUsingDragAndDropSteps {
 	private HomePage homePage;
 	private OpenAppLibraryPage openAppLibraryPage;
-	private static String timestamp;
+	protected static String timestamp;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
