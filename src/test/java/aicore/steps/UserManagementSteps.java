@@ -1,7 +1,5 @@
 package aicore.steps;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -10,7 +8,6 @@ import aicore.pages.UserManagementPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
 public class UserManagementSteps {
 
@@ -23,17 +20,17 @@ public class UserManagementSteps {
 	}
 
 	@Given("User logs as Admin user in AI CORE application")
-	public void user_is_on_application_with_admin() throws IOException {
+	public void user_logs_as_admin_user_in_ai_core_application() {
 		homePage.checkOnOpenSetting();
 	}
 
-	@When("User navigates to the settings")
-	public void user_clicks_on_setting_button() throws IOException {
+	@And("User navigates to the settings")
+	public void user_navigates_to_the_settings() {
 		homePage.clickOnOpenSetting();
 	}
 
 	@And("User enables admin mode")
-	public void user_is_on_seting_page() throws IOException {
+	public void user_enables_admin_mode() {
 		if (userpage.checkAdminButton()) {
 			userpage.clickAdminButton();
 		} else {
@@ -42,7 +39,7 @@ public class UserManagementSteps {
 	}
 
 	@And("User clicks Member Settings")
-	public void user_select_member_setting_tile() throws IOException {
+	public void user_clicks_member_settings() {
 		if (userpage.checkMemberSettingPageTile()) {
 			userpage.clickMemberSettingPageTile();
 		} else {
@@ -50,64 +47,9 @@ public class UserManagementSteps {
 		}
 	}
 
-	@And("User should see Admin on")
-	public void user_can_see_Admin_on() throws IOException {
-		userpage.checkAdminOnButton();
-	}
-
 	@Then("User sees the Add User button")
-	public void user_can_see_Add_user_button() throws IOException {
+	public void user_sees_the_add_user_button() {
 		userpage.checkAddMemberButton();
-	}
-
-	@And("User clicks on Add User button")
-	public void user_click_on_AddUser_button() throws IOException {
-		userpage.clickAddUserButton();
-	}
-
-	@And("User clicks on Type dropdown")
-	public void user_click_on_Type_dropdown() throws IOException {
-		userpage.clickTypeDropdown();
-	}
-
-	@And("User selects {string} value from Type dropdown")
-	public void user_click_on_Native_value_from_dropdown(String dropdown) throws IOException {
-		userpage.clickNativeDropdownValue();
-	}
-
-	@And("User fills UserId value in UserId field")
-	public void user_fills_userId(String UserId) throws IOException, InterruptedException {
-		userpage.fillUserId(UserId);
-	}
-
-	@And("User fills Username value in Username field")
-	public void user_fills_username(String Username) throws IOException, InterruptedException {
-		userpage.fillUsername(Username);
-	}
-
-	@And("User fills Name value in Name field")
-	public void user_fills_name(String Name) throws IOException, InterruptedException {
-		userpage.fillName(Name);
-	}
-
-	@And("User fills Email value in Email field")
-	public void user_fills_email(String Email) throws IOException, InterruptedException {
-		userpage.fillEmail(Email);
-	}
-
-	@And("User fills Phone Number in Phone Number field")
-	public void user_fills_phone_number(String Number) throws IOException, InterruptedException {
-		userpage.fillPhoneNumber(Number);
-	}
-
-	@And("User fills {string} in Extension field")
-	public void user_fills_extension(String Extension) throws IOException, InterruptedException {
-		userpage.fillExtension(Extension);
-	}
-
-	@And("User clicks on Save Button")
-	public void user_clicks_save_button() throws IOException, InterruptedException {
-		userpage.clickSaveButton();
 	}
 
 	@And("User adds {int} members and can see toast message as {string} for all added members")
