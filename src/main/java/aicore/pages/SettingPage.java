@@ -1,5 +1,6 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.CommonUtils;
@@ -9,9 +10,17 @@ public class SettingPage {
 	private Page page;
 	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
 	private static final String CARD_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[text()='{cardName}']";
-	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin on']";
+	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin On']";
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
 	private static final String MEMBER_COUNT_XPATH = "//div[@class='css-1lxwves']//span";
+	private static final String ROWS_PER_PAGE_XPATH = "//div[(@aria-haspopup='listbox')]";
+	private static final String ROWS_FILTER_UNIT_VALUE_XPATH = "//li[@data-value='{unitValue}']";
+	private static final String TOTAL_ROWS_XPATH = "//tbody[contains(@class, 'MuiTableBody-root')]/tr";
+	private static final String NEXT_PAGE_XPATH = "//button[contains(@title,'Go to next page')]";
+	private static final String PREVIOUS_PAGE_XPATH = "//button[contains(@title,'Go to previous page')]";
+	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
+	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
+	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
 
 	public SettingPage(Page page) {
 		this.page = page;
@@ -53,4 +62,62 @@ public class SettingPage {
 
 	}
 
+	public int countOfPages() {
+		int userCount = checkCountOfUsers();
+		String rowsCount = page.textContent(ROWS_PER_PAGE_XPATH);
+		int numberOfRows = Integer.parseInt(rowsCount);
+		int totalpages = (int) Math.ceil((double) userCount / numberOfRows);
+		return totalpages;
+	}
+
+	public void checkForwardButton() {
+		for (int i = 1; i < countOfPages(); i++) {
+			page.isVisible(NEXT_PAGE_XPATH);
+			page.isEnabled(NEXT_PAGE_XPATH);
+			page.click(NEXT_PAGE_XPATH);
+		}
+	}
+
+	public void checkBackwardButton() {
+		for (int i = 1; i < countOfPages(); i++) {
+			page.isVisible(PREVIOUS_PAGE_XPATH);
+			page.isEnabled(PREVIOUS_PAGE_XPATH);
+			page.click(PREVIOUS_PAGE_XPATH);
+		}
+	}
+
+	public int checkRecordsOnPage() {
+		int rowsCount = page.locator(TOTAL_ROWS_XPATH).count();
+		return rowsCount;
+
+	}
+
+	public void clickNumberOfRows(String rowsPerPageValue) {
+		page.click(ROWS_PER_PAGE_XPATH);
+		page.isVisible(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue));
+		page.click(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue));
+
+	}
+
+	public void clickOnSearchButton() {
+		page.isVisible(SEARCH_BUTTON_XPATH);
+		page.click(SEARCH_BUTTON_XPATH);
+
+	}
+
+	public void clickOnSearchBar() {
+		page.isVisible(SEARCH_BAR_XPATH);
+		page.click(SEARCH_BAR_XPATH);
+
+	}
+
+	public void enterUsername(String username) {
+		page.keyboard().type(username, new Keyboard.TypeOptions().setDelay(200));
+		page.waitForTimeout(1500);
+	}
+
+	public String checkUsername(String username) {
+		return page.textContent(USERLIST_XPATH.replace("{userName}", username));
+
+	}
 }

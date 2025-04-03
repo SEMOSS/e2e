@@ -16,7 +16,6 @@ public class MemberSettingSteps {
 	private SettingPage settingPage;
 	private static final Logger logger = LogManager.getLogger(MemberSettingSteps.class);
 
-
 	public MemberSettingSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		this.settingPage = new SettingPage(SetupHooks.getPage());
@@ -61,6 +60,68 @@ public class MemberSettingSteps {
 	public void user_sees_atleast_one_count_of_users_on_Member_setting_page() {
 		int countOfUser = settingPage.checkCountOfUsers();
 		Assertions.assertTrue(countOfUser > 0);
+	}
+
+	@When("User sees Member count equal or greater than {string}")
+	public void user_sees_member_count_equal_or_greater_than(String membercount) {
+		int countOfUser = settingPage.checkCountOfUsers();
+		int countMember = Integer.parseInt(membercount);
+		Assertions.assertTrue(countOfUser > countMember,
+				"The number should be greater than 29, but was " + countOfUser);
+	}
+
+	@Then("User select {string} in Rows per page filter")
+	public void user_select_in_Rows_per_page_filter(String RowsNumber) {
+		settingPage.clickNumberOfRows(RowsNumber);
+	}
+
+	@Then("User sees the {string} rows in the page")
+	public void user_sees_the_rows_in_the_page(String totalRecords) {
+		int totalRecordOnPage = settingPage.checkRecordsOnPage();
+		int countMember = Integer.parseInt(totalRecords);
+		Assertions.assertTrue(totalRecordOnPage == countMember);
+	}
+
+	@Then("User clicks on the Right pagination arrow to navigate to next page")
+	public void user_clicks_on_the_right_button_to_navigate_to_next_page() {
+		settingPage.checkForwardButton();
+	}
+
+	@Then("User clicks on the Left pagination arrow to navigate to previous page")
+	public void user_clicks_on_the_left_button_to_navigate_to_previous_page() {
+		settingPage.checkBackwardButton();
+	}
+
+	@When("User clicks on search button")
+	public void user_clicks_on_search_button() {
+		settingPage.clickOnSearchButton();
+	}
+
+	@Then("User clicks on search input bar")
+	public void user_clicks_on_search_input_bar() {
+		settingPage.clickOnSearchBar();
+
+	}
+
+	@Then("User enters the {string}")
+	public void user_enters_the_username(String username) {
+		settingPage.enterUsername(username);
+
+	}
+
+	@Then("User sees the {string} in the searched user list")
+	public void user_sees_the_username_in_the_searched_user_list(String username) {
+		String expectedUserName = settingPage.checkUsername(username);
+		Assertions.assertEquals(expectedUserName, username);
+
+	}
+
+	@Then("User sees the count of user as {string} in searched result")
+	public void user_sees_the_count_of_user_as_in_searched_result(String count) {
+		int countOfUser = settingPage.checkCountOfUsers();
+		int countOfMember = Integer.parseInt(count);
+		Assertions.assertTrue(countOfUser == countOfMember, "The number should be 1, but was " + countOfUser);
+
 	}
 
 }
