@@ -86,7 +86,7 @@ public class SettingPage {
 
 	public void checkBackwardButton() {
 		for (int i = 1; i < countOfPages(); i++) {
-			page.locator(ADD_MEMBER_EMAIL_XPATH).isVisible();
+			page.locator(PREVIOUS_PAGE_XPATH).isVisible();
 			page.locator(PREVIOUS_PAGE_XPATH).isEnabled();
 			page.locator(PREVIOUS_PAGE_XPATH).click();
 		}
