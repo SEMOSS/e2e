@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.*;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -15,7 +16,7 @@ public class MemberSettingSteps {
 	private HomePage homePage;
 	private SettingPage settingPage;
 	private static final Logger logger = LogManager.getLogger(MemberSettingSteps.class);
-
+	int NumberOfUser = 0;
 
 	public MemberSettingSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -61,6 +62,100 @@ public class MemberSettingSteps {
 	public void user_sees_atleast_one_count_of_users_on_Member_setting_page() {
 		int countOfUser = settingPage.checkCountOfUsers();
 		Assertions.assertTrue(countOfUser > 0);
+	}
+
+	@When("User sees Member count equal or greater than {string}")
+	public void user_sees_member_count_equal_or_greater_than(String membercount) {
+		int countOfUser = settingPage.checkCountOfUsers();
+		int countMember = Integer.parseInt(membercount);
+		Assertions.assertTrue(countOfUser > countMember,
+				"The number should be greater than 29, but was " + countOfUser);
+	}
+
+	@Then("User select {string} in Rows per page filter")
+	public void user_select_in_Rows_per_page_filter(String RowsNumber) {
+		settingPage.clickNumberOfRows(RowsNumber);
+	}
+
+	@Then("User sees the {string} rows in the page")
+	public void user_sees_the_rows_in_the_page(String totalRecords) {
+		int totalRecordOnPage = settingPage.checkRecordsOnPage();
+		int countMember = Integer.parseInt(totalRecords);
+		Assertions.assertTrue(totalRecordOnPage == countMember);
+	}
+
+	@Then("User clicks on the Right pagination arrow to navigate to next page")
+	public void user_clicks_on_the_right_button_to_navigate_to_next_page() {
+		settingPage.checkForwardButton();
+	}
+
+	@Then("User clicks on the Left pagination arrow to navigate to previous page")
+	public void user_clicks_on_the_left_button_to_navigate_to_previous_page() {
+		settingPage.checkBackwardButton();
+	}
+
+	@When("User clicks on search button")
+	public void user_clicks_on_search_button() {
+		settingPage.clickOnSearchButton();
+		settingPage.clickOnSearchBox();
+
+	}
+
+	@Then("User searchs for user having username {string}")
+	public void user_searchs_for_user_having_username(String username) {
+		settingPage.enterUsername(username);
+
+	}
+
+	@Then("User sees the {string} in the searched user list")
+	public void user_sees_the_username_in_the_searched_user_list(String username) {
+		String expectedUserName = settingPage.checkUsername(username);
+		Assertions.assertEquals(expectedUserName, username);
+
+	}
+
+	@Then("User sees the count of user as {string} in searched result")
+	public void user_sees_the_count_of_user_as_in_searched_result(String count) {
+		int countOfUser = settingPage.checkCountOfUsers();
+		int countOfMember = Integer.parseInt(count);
+		Assertions.assertTrue(countOfUser == countOfMember, "The number should be 1, but was " + countOfUser);
+
+	}
+
+	@And("User sees a count of member")
+	public void User_sees_a_count_of_member() {
+		int initialCount = settingPage.checkCountOfUsers();
+		this.NumberOfUser = initialCount;
+	}
+
+	@Given("User adds {int} member and can see toast message as {string}")
+	public void user_adds_member(Integer usercount, String toastMessage) throws InterruptedException {
+		for (int i = 1; i <= usercount; i++) {
+			settingPage.clickAddUserButton();
+			settingPage.clickTypeDropdown();
+			settingPage.clickNativeDropdownValue();
+			settingPage.fillUserId("UserId" + i);
+			settingPage.fillName("Name" + i);
+			settingPage.fillEmail("UserEmail" + i + "@testautomation.com");
+			if (i <= 9) {
+				settingPage.fillPhoneNumber("100000000" + i);
+			} else if (i > 9 && i < 100) {
+				settingPage.fillPhoneNumber("10000000" + i);
+			} else if (i >= 100) {
+				settingPage.fillPhoneNumber("1000000" + i);
+			}
+			settingPage.clickSaveButton();
+			String actualMessage = settingPage.userCreationToastMessage();
+			Assertions.assertEquals(actualMessage, toastMessage, "User creation failed");
+
+		}
+
+	}
+
+	@And("User sees the updated count of members increase by {int}")
+	public void user_sees_the_updated_count_of_members_increase_by(int addedNumberOfUser) {
+		int updatedCountOfUser = settingPage.checkCountOfUsers();
+		Assertions.assertTrue(updatedCountOfUser - this.NumberOfUser == addedNumberOfUser);
 	}
 
 }
