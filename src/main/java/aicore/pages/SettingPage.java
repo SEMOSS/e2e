@@ -31,9 +31,7 @@ public class SettingPage {
 	}
 
 	public void checkCardVisible(String cardName) {
-
 		page.locator(CARD_XPATH.replace("{cardName}", cardName)).isVisible();
-
 	}
 
 	public void clickOnCard(String cardName) {
@@ -49,7 +47,6 @@ public class SettingPage {
 		page.locator(ADMIN_ON_BUTTON_XPATH).isVisible();
 	}
 
-
 	public int checkCountOfUsers() {
 		page.locator(MEMBER_COUNT_XPATH).isVisible();
 		String countOfUser = page.locator(MEMBER_COUNT_XPATH).textContent();
@@ -58,9 +55,10 @@ public class SettingPage {
 		return totalUser;
 
 	}
+
 	public int countOfPages() {
 		int userCount = checkCountOfUsers();
-		String rowsCount = page.textContent(ROWS_PER_PAGE_XPATH);
+		String rowsCount = page.locator(ROWS_PER_PAGE_XPATH).textContent();
 		int numberOfRows = Integer.parseInt(rowsCount);
 		int totalpages = (int) Math.ceil((double) userCount / numberOfRows);
 		return totalpages;
@@ -68,33 +66,29 @@ public class SettingPage {
 
 	public void checkForwardButton() {
 		for (int i = 1; i < countOfPages(); i++) {
-			page.isVisible(NEXT_PAGE_XPATH);
-			page.isEnabled(NEXT_PAGE_XPATH);
-			page.click(NEXT_PAGE_XPATH);
+			page.locator(NEXT_PAGE_XPATH).isVisible();
+			page.locator(NEXT_PAGE_XPATH).isEnabled();
+			page.locator(NEXT_PAGE_XPATH).click();
 		}
 	}
 
 	public void checkBackwardButton() {
 		for (int i = 1; i < countOfPages(); i++) {
-			page.isVisible(PREVIOUS_PAGE_XPATH);
-			page.isEnabled(PREVIOUS_PAGE_XPATH);
-			page.click(PREVIOUS_PAGE_XPATH);
+			page.locator(PREVIOUS_PAGE_XPATH).isVisible();
+			page.locator(PREVIOUS_PAGE_XPATH).isVisible();
+			page.locator(PREVIOUS_PAGE_XPATH).click();
+			;
 		}
 	}
-
-	
 
 	public int checkRecordsOnPage() {
 		int rowsCount = page.locator(TOTAL_ROWS_XPATH).count();
 		return rowsCount;
-
 	}
 
 	public void clickNumberOfRows(String rowsPerPageValue) {
-		page.click(ROWS_PER_PAGE_XPATH);
-		page.isVisible(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue));
-		page.click(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue));
-
-
-}
+		page.locator(ROWS_PER_PAGE_XPATH).click();
+		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).isVisible();
+		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).click();
+	}
 }

@@ -16,7 +16,6 @@ public class MemberSettingSteps {
 	private SettingPage settingPage;
 	private static final Logger logger = LogManager.getLogger(MemberSettingSteps.class);
 
-
 	public MemberSettingSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		this.settingPage = new SettingPage(SetupHooks.getPage());
@@ -62,11 +61,13 @@ public class MemberSettingSteps {
 		int countOfUser = settingPage.checkCountOfUsers();
 		Assertions.assertTrue(countOfUser > 0);
 	}
+
 	@When("User sees Member count equal or greater than {string}")
 	public void user_sees_member_count_equal_or_greater_than(String membercount) {
 		int countOfUser = settingPage.checkCountOfUsers();
 		int countMember = Integer.parseInt(membercount);
-		Assertions.assertTrue(countOfUser > countMember, "The number should be greater than 29, but was " + countOfUser);
+		Assertions.assertTrue(countOfUser > countMember,
+				"The number should be greater than 29, but was " + countOfUser);
 	}
 
 	@Then("User select {string} in Rows per page filter")
