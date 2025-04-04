@@ -64,7 +64,7 @@ public class SettingPage {
 
 	public int countOfPages() {
 		int userCount = checkCountOfUsers();
-		String rowsCount = page.textContent(ROWS_PER_PAGE_XPATH);
+		String rowsCount = page.locator(ROWS_PER_PAGE_XPATH).textContent();
 		int numberOfRows = Integer.parseInt(rowsCount);
 		int totalpages = (int) Math.ceil((double) userCount / numberOfRows);
 		return totalpages;
@@ -72,17 +72,17 @@ public class SettingPage {
 
 	public void checkForwardButton() {
 		for (int i = 1; i < countOfPages(); i++) {
-			page.isVisible(NEXT_PAGE_XPATH);
-			page.isEnabled(NEXT_PAGE_XPATH);
-			page.click(NEXT_PAGE_XPATH);
+			page.locator(NEXT_PAGE_XPATH).isVisible();
+			page.locator(NEXT_PAGE_XPATH).isEnabled();
+			page.locator(NEXT_PAGE_XPATH).click();
 		}
 	}
 
 	public void checkBackwardButton() {
 		for (int i = 1; i < countOfPages(); i++) {
-			page.isVisible(PREVIOUS_PAGE_XPATH);
-			page.isEnabled(PREVIOUS_PAGE_XPATH);
-			page.click(PREVIOUS_PAGE_XPATH);
+			page.locator(PREVIOUS_PAGE_XPATH).isVisible();
+			page.locator(PREVIOUS_PAGE_XPATH).isEnabled();
+			page.locator(PREVIOUS_PAGE_XPATH).click();
 		}
 	}
 
@@ -93,21 +93,21 @@ public class SettingPage {
 	}
 
 	public void clickNumberOfRows(String rowsPerPageValue) {
-		page.click(ROWS_PER_PAGE_XPATH);
-		page.isVisible(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue));
-		page.click(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue));
+		page.locator(ROWS_PER_PAGE_XPATH).click();
+		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).isVisible();
+		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).click();
 
 	}
 
 	public void clickOnSearchButton() {
-		page.isVisible(SEARCH_BUTTON_XPATH);
-		page.click(SEARCH_BUTTON_XPATH);
+		page.locator(SEARCH_BUTTON_XPATH).isVisible();
+		page.locator(SEARCH_BUTTON_XPATH).click();
 
 	}
 
-	public void clickOnSearchBar() {
-		page.isVisible(SEARCH_BAR_XPATH);
-		page.click(SEARCH_BAR_XPATH);
+	public void clickOnSearchBox() {
+		page.locator(SEARCH_BAR_XPATH).isVisible();
+		page.locator(SEARCH_BAR_XPATH).click();
 
 	}
 
@@ -117,7 +117,7 @@ public class SettingPage {
 	}
 
 	public String checkUsername(String username) {
-		return page.textContent(USERLIST_XPATH.replace("{userName}", username));
+		return page.locator(USERLIST_XPATH.replace("{userName}", username)).textContent();
 
 	}
 }

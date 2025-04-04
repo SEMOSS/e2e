@@ -95,19 +95,14 @@ public class MemberSettingSteps {
 	@When("User clicks on search button")
 	public void user_clicks_on_search_button() {
 		settingPage.clickOnSearchButton();
+		settingPage.clickOnSearchBox();
 	}
 
-	@Then("User clicks on search input bar")
-	public void user_clicks_on_search_input_bar() {
-		settingPage.clickOnSearchBar();
-
-	}
-
-	@Then("User enters the {string}")
-	public void user_enters_the_username(String username) {
-		settingPage.enterUsername(username);
-
-	}
+	@Then("User searchs for user having username {string}")
+ 	public void user_searchs_for_user_having_username(String username) {
+ 		settingPage.enterUsername(username);
+ 
+ 	}
 
 	@Then("User sees the {string} in the searched user list")
 	public void user_sees_the_username_in_the_searched_user_list(String username) {

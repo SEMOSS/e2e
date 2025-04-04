@@ -33,7 +33,6 @@ Background: User is on member setting page
  Scenario: Validate Search Functionality 
   Given User sees atleast one count of users on Member setting page
   When User clicks on search button 
-  Then User clicks on search input bar 
-  And User enters the 'testuser'
+  Then User searchs for user having username 'testuser' 
   And User sees the 'testuser' in the searched user list 
   And User sees the count of user as '1' in searched result 
