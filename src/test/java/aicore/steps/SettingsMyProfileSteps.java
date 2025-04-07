@@ -130,4 +130,18 @@ public class SettingsMyProfileSteps {
 		Assertions.assertEquals(actualMessage, toastMessage, "Key Deletion failed");
 	}
 
+	@Then("User can see generated key name as {string}")
+	public void user_can_see_generated_key_name_as(String keyName) {
+		String actualKeyName = settings.validateGeneratedKey(keyName);
+		String expKeyTitle = settings.getExpectedAccessKeyTitle(keyName);
+		Assertions.assertEquals(actualKeyName, expKeyTitle);
+	}
+
+	@Then("User can see generated key description as {string}")
+	public void user_can_see_generated_key_description_as(String description) {
+		String actualDescription = settings.validateDescriptionName(description);
+		String expDescription = settings.getExpectedDescriptionName(description);
+		Assertions.assertEquals(actualDescription, expDescription);
+  }
+  
 }

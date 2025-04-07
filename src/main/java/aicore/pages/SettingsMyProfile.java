@@ -17,6 +17,9 @@ public class SettingsMyProfile {
 	private static final String CANCEL_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root') and .//span[normalize-space()='Close']]";
 	private static final String DELETE_BUTTON_XPATH = "//td[text()='{KeyName}']/following-sibling::td//button[@title='Delete']";
 	private static final String DELETE_KEY_TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
+	private static final String CANCEL_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root') and .//span[normalize-space()='Close']]";
+	private static final String GENERATED_KEY_XPATH = "//td[contains(text(),'{keyName}')]";
+	private static final String GENERATED_DESCRIPTION_XPATH = "//td[text()='{description}']";
 
 	public SettingsMyProfile(Page page, String timestamp) {
 		this.page = page;
@@ -53,8 +56,10 @@ public class SettingsMyProfile {
 	}
 
 	public void enterDescription(String description) {
+		String uniqueDescription = description + timestamp;
 		page.click(DESCRIPTION_FIELD_BUTTON_XPATH);
-		page.fill(DESCRIPTION_FIELD_BUTTON_XPATH, description);
+		page.fill(DESCRIPTION_FIELD_BUTTON_XPATH, uniqueDescription);
+
 	}
 
 	public void clickGenerateButton() {
@@ -91,4 +96,31 @@ public class SettingsMyProfile {
 		String toastMessage = page.textContent(DELETE_KEY_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
 	}
+
+	public void clickOnCancelButton() {
+		page.click(CANCEL_BUTTON_XPATH);
+	}
+
+	public String getExpectedAccessKeyTitle(String keyName) {
+		String expTitle = keyName + timestamp;
+		return expTitle;
+	}
+
+	public String validateGeneratedKey(String keyName) {
+		String generatedKeyName = page.textContent(GENERATED_KEY_XPATH.replace("{keyName}", keyName + timestamp))
+				.trim();
+		return generatedKeyName;
+	}
+
+	public String validateDescriptionName(String description) {
+		String generatedDescription = page
+				.textContent(GENERATED_DESCRIPTION_XPATH.replace("{description}", description + timestamp)).trim();
+		return generatedDescription;
+	}
+
+	public String getExpectedDescriptionName(String description) {
+		String expDescription = description + timestamp;
+		return expDescription;
+	}
+
 }
