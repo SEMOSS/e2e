@@ -92,10 +92,10 @@ public class BISystemAppPage {
 
 	public void clickOnImportButton() {
 		page.click(IMPORT_BUTTON_XPATH);
-		page.waitForTimeout(3000);
 	}
 
 	public String verifyDBCreatedToastMessage() {
+		page.locator(DATABASE_CREATED_TOAST_MESSAGE_XPATH).isVisible();
 		String dbSuccessToastMessage = page.textContent(DATABASE_CREATED_TOAST_MESSAGE_XPATH).trim();
 		return dbSuccessToastMessage;
 	}
@@ -125,14 +125,14 @@ public class BISystemAppPage {
 		page.click(SAVE_WORKSPACE_BUTTON_XPATH);
 	}
 
-	public void enterInsightName() {
-		page.fill(INSIGHT_NAME_TEXTBOX_ID, "Test(Automation) " + timestamp);
+	public void enterInsightName(String insightName) {
+		page.fill(INSIGHT_NAME_TEXTBOX_ID, insightName + timestamp);
 	}
 
-	public void enterInsightsDetail() {
+	public void selectProjectName(String projectName) {
 		page.click(PROJECT_NAME_DROPDOWN_XPATH);
-		//TODO we need to add an existing project to search for
-		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, "Hanumant-Used for Automation");
+		// TODO we need to add an existing project to search for
+		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, projectName + " " + timestamp);
 		page.waitForSelector(PROJECT_SEARCH_LIST_XPATH);
 		page.click(PROJECT_SEARCH_LIST_XPATH);
 		page.click(INSIGHT_SAVE_BUTTON_XPATH);

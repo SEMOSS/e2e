@@ -27,6 +27,28 @@ import io.cucumber.java.BeforeAll;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Tracing;
+
+import aicore.base.GenericSetupUtils;
+import aicore.base.RunInfo;
+import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
+import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
+import io.cucumber.java.BeforeStep;
+import io.cucumber.java.Scenario;
+
+
 public class SetupHooks {
 
 	private static final Logger logger = LogManager.getLogger(SetupHooks.class);
@@ -70,9 +92,47 @@ public class SetupHooks {
 		}
 
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
-		String adminUser = ConfigUtils.getValue("native_username");
-		String adminPassword = ConfigUtils.getValue("native_password");
-		GenericSetupUtils.login(page, adminUser, adminPassword);
+
+		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
+
+		// Use switch to handle different sourceTagNames
+		switch (sourceTagName) {
+		case "@LoginWithMS":
+			String MsUsername = ConfigUtils.getValue("ms_username");
+			String MsPassword = ConfigUtils.getValue("ms_password");
+			GenericSetupUtils.loginWithMSuser(page, MsUsername, MsPassword);
+			break;
+
+		case "@LoginWithAdmin":
+			String adminUser = ConfigUtils.getValue("admin_username");
+			String adminPassword = ConfigUtils.getValue("admin_password");
+			GenericSetupUtils.login(page, adminUser, adminPassword);
+			break;
+
+		case "@LoginWithAuthor":
+			String authorUser = ConfigUtils.getValue("author_username");
+			String authorPassword = ConfigUtils.getValue("author_password");
+			GenericSetupUtils.login(page, authorUser, authorPassword);
+			break;
+
+		case "@LoginWithEditor":
+			String nativeEditorUser = ConfigUtils.getValue("editor_username");
+			String nativeEditorPassword = ConfigUtils.getValue("editor_password");
+			GenericSetupUtils.login(page, nativeEditorUser, nativeEditorPassword);
+			break;
+
+		case "@LoginWithReadOnly":
+			String nativeReadUser = ConfigUtils.getValue("read_username");
+			String nativeReadPassword = ConfigUtils.getValue("read_password");
+			GenericSetupUtils.login(page, nativeReadUser, nativeReadPassword);
+			break;
+
+		default:
+			String nativeUser = ConfigUtils.getValue("native_username");
+			String nativePassword = ConfigUtils.getValue("native_password");
+			GenericSetupUtils.login(page, nativeUser, nativePassword);
+			break;
+		}
 	}
 
 	@BeforeStep
@@ -128,4 +188,5 @@ public class SetupHooks {
 	public static Page getPage() {
 		return page;
 	}
+
 }

@@ -171,8 +171,10 @@ public class GenericSetupUtils {
 		page.getByLabel("Username").fill(nativeUsername);
 		page.getByLabel("Username").press("Tab");
 		page.locator("input[type=\"password\"]").fill(nativePassword);
+
 		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
 				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
+
 		assertEquals(200, response.status());
 
 		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
@@ -180,6 +182,27 @@ public class GenericSetupUtils {
 		newMap.put("cookie", cookie);
 		page.setExtraHTTPHeaders(newMap);
 		page.reload();
+		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForLoadState(LoadState.LOAD);
+		String waitingForUrl = UrlUtils.getUrl("#");
+		try {
+			page.waitForURL(waitingForUrl);
+		} catch (Throwable t) {
+			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", waitingForUrl, page.url());
+		}
+	}
+
+	public static void loginWithMSuser(Page page, String Username, String Password) {
+		page.navigate(UrlUtils.getUrl("#/login"));
+		page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
+		Page page1 = page.waitForPopup(() -> {
+			page.locator("//span[(text()='Deloitte Login')]").click();
+		});
+		page1.locator("//input[@type='email']").fill(Username);
+		page1.locator("#idSIButton9").click();
+		page1.locator("input[type=\"password\"]").fill(Password);
+		page1.locator("//input[@data-report-event='Signin_Submit']").click();
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.waitForLoadState(LoadState.LOAD);
