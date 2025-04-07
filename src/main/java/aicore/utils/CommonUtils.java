@@ -26,4 +26,11 @@ public class CommonUtils {
 		}
 		return actualName;
 	}
+
+	public static String[] splitStringBySpace(String input) {
+		if (input != null && !input.isEmpty()) {
+			return input.trim().split("\\s+"); // Split by one or more spaces
+		}
+		return new String[0]; // Return an empty array if the string is null or empty
+	}
 }
