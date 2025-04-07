@@ -2,10 +2,11 @@ package aicore.steps;
 
 import static org.junit.Assert.assertEquals;
 
-import aicore.hooks.SetupHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
 
+import aicore.hooks.SetupHooks;
 import aicore.pages.BISystemAppPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
@@ -23,10 +24,10 @@ public class BICreateDatabaseAndInsightSteps {
 	public BICreateDatabaseAndInsightSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		biApp = new BISystemAppPage(SetupHooks.getPage(), timestamp);
+		biApp = new BISystemAppPage(SetupHooks.getPage(), CreateAppUsingDragAndDropSteps.timestamp);
 	}
 
-	@When("User clicks on System app")
+	@And("User clicks on System app")
 	public void user_clicks_on_system_app() {
 		homePage.clickOnSystemApp();
 	}
@@ -80,9 +81,9 @@ public class BICreateDatabaseAndInsightSteps {
 
 	@Then("User can see database created success toast message as {string}")
 	public void user_can_see_database_created_success_toast_message_as(String expectedToastMessage) {
-		//TODO toast disappears quickly need a better way to validate
-//		String actualDBCreatedMessage = biApp.verifyDBCreatedToastMessage();
-//		assertEquals(actualDBCreatedMessage, expectedToastMessage, "Database creation failed");
+		// TODO toast disappears quickly need a better way to validate
+		String actualDBCreatedMessage = biApp.verifyDBCreatedToastMessage();
+		Assertions.assertEquals(expectedToastMessage, actualDBCreatedMessage, "Database creation failed");
 		logger.info("the success toast is quick skippng for now");
 	}
 
@@ -118,10 +119,11 @@ public class BICreateDatabaseAndInsightSteps {
 		biApp.clickOnWorkspaceSaveButton();
 	}
 
-	@And("User fill the all information and clicks on Save button")
-	public void user_fill_the_all_information_and_clicks_on_save_button() {
-		biApp.enterInsightName();
-		biApp.enterInsightsDetail();
+	@And("User enters {string} as the insight name, selects the {string} project, and clicks the Save button")
+	public void user_enters_as_the_insight_name_selects_the_project_and_clicks_the_save_button(String insightName,
+			String projectName) {
+		biApp.enterInsightName(insightName);
+		biApp.selectProjectName(projectName);
 	}
 
 	@Then("User can see Insight created toast message as {string}")

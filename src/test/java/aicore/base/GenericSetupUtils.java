@@ -171,8 +171,10 @@ public class GenericSetupUtils {
 		page.getByLabel("Username").fill(nativeUsername);
 		page.getByLabel("Username").press("Tab");
 		page.locator("input[type=\"password\"]").fill(nativePassword);
+
 		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
 				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
+
 		assertEquals(200, response.status());
 
 		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
