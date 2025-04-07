@@ -24,6 +24,7 @@ public class AddModelToCatalogPage {
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
+	private static final String CRAETED_MODEL_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
 	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
 	// SMSS field
@@ -45,7 +46,7 @@ public class AddModelToCatalogPage {
 	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[3]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
 	private static final String DELETE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[3]//div[@class='MuiAlert-action css-1mzcepu']";
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//div[@class='css-aplv3o']//div[@class='css-163ryps']";
-	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h6[contains(text(),'Pending Requests')]]/following-sibling::div//p";
+	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h6[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
 	private static final String MEMBER_SECTION_TITLE_XPATH = "//div[@class='css-1hk1ec8']//div[@class='css-163ryps']";
 	private static final String MEMBER_SEARCH_ICON_XPATH = "//*[name()='svg'][@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBERS_SEARCHBOX_XPATH = "//div[contains(@class,'MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary')]";
@@ -78,6 +79,11 @@ public class AddModelToCatalogPage {
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Domain')]]/following-sibling::div";
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data classification')]]/following-sibling::div";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
+
+	// Usage
+	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
+	private static final String MODEL_ID_COPY_OPTION_XPATH = "//button[@aria-label='copy Model ID']";
+	private static final String USAGE_COMMAND_COPY_OPTION_XPATH = "//div[h6[text()='{commandName}']]//button[contains(@class,'MuiButtonBase-root MuiButton-root MuiButton-outlined')]";
 
 	public AddModelToCatalogPage(Page page, String timestamp) {
 		this.page = page;
@@ -446,5 +452,22 @@ public class AddModelToCatalogPage {
 	public void deleteAddedMember(String role) {
 		page.click(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
 		page.click(CONFIRM_BUTTON_XPATH);
+	}
+
+	public void clickOnUsageTab() {
+		page.click(USAGE_TAB_XPATH);
+	}
+
+	public String copyModelID() {
+		page.locator(MODEL_ID_COPY_OPTION_XPATH).isVisible();
+		page.locator(MODEL_ID_COPY_OPTION_XPATH).click();
+		page.click(MODEL_ID_COPY_OPTION_XPATH);
+		return page.evaluate("navigator.clipboard.readText()").toString().trim();
+	}
+
+	public String copyCommand(String commandName) {
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).isVisible();
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).click();
+		return page.evaluate("navigator.clipboard.readText()").toString().trim();
 	}
 }
