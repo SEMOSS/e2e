@@ -31,6 +31,7 @@ public class CommonUtils {
 		return actualName;
 	}
 
+
 	public static List<String> getAppliedStyles(Locator element) {
 		List<String> appliedStyles = new ArrayList<>();
 
@@ -70,6 +71,14 @@ public class CommonUtils {
 		int b = Integer.parseInt(hex.substring(4, 6), 16);
 
 		return r + ", " + g + ", " + b;
+	}
+
+
+	public static String[] splitStringBySpace(String input) {
+		if (input != null && !input.isEmpty()) {
+			return input.trim().split("\\s+"); // Split by one or more spaces
+		}
+		return new String[0]; // Return an empty array if the string is null or empty
 	}
 
 }
