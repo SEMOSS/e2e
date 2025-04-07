@@ -6,27 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Tracing;
-
-import aicore.base.GenericSetupUtils;
-import aicore.base.RunInfo;
-import aicore.utils.ConfigUtils;
-import aicore.utils.UrlUtils;
-import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.AfterStep;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeAll;
-import io.cucumber.java.BeforeStep;
-import io.cucumber.java.Scenario;
-
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -59,21 +39,32 @@ public class SetupHooks {
 	private static Playwright playwright;
 
 	private static int step = 0;
+	private static int scenarioNumber = 0;
+	private static String feature = null;
 
 	@BeforeAll
 	public static void beforeAll() throws IOException {
 		// logger.info("BEFORE ALL: {}", scenario.getName());
 		GenericSetupUtils.initialize();
+		scenarioNumber = 0;
 
 		playwright = Playwright.create();
 		browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+
 	}
 
 	@Before
 	public void before(Scenario scenario) {
 		logger.info("BEFORE: {}", scenario.getName());
+		if (scenarioNumber == 0) {
+			setupFirstScenarioOfFeature(scenario);
+		}
+		feature = FilenameUtils.getBaseName(scenario.getUri().toString());
+		scenarioNumber++;
 		step = 0;
+	}
 
+	private static void setupFirstScenarioOfFeature(Scenario scenario) {
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions();
 		context = browser.newContext(newContextOptions);
 
@@ -147,14 +138,25 @@ public class SetupHooks {
 
 	@After
 	public void after(Scenario scenario) throws IOException {
+		logger.info("AFTER: {}", scenario.getName());
+	}
+
+
+
+	@AfterAll
+	public static void afterAll() throws IOException {
+		logger.info("AFTER ALL");
+		logoutAndSave();
+		playwright.close();
+	}
+
+	private static void logoutAndSave() throws IOException {
 		page.navigate(UrlUtils.getUrl("#/"));
 		GenericSetupUtils.logout(page);
-		logger.info("AFTER: {}", scenario.getName());
-		String scenarioName = scenario.getName();
 
 		if (GenericSetupUtils.useTrace()) {
 			Tracing.StopOptions so = new Tracing.StopOptions();
-			String filename = scenarioName + ".zip";
+			String filename = feature + ".zip";
 			Path dir = Paths.get("traces", "features");
 			if (!Files.exists(dir)) {
 				Files.createDirectories(dir);
@@ -168,7 +170,7 @@ public class SetupHooks {
 
 		if (GenericSetupUtils.useVideo()) {
 			Path og = page.video().path();
-			Path newPath = Paths.get("videos", "features", scenarioName + ".webm");
+			Path newPath = Paths.get("videos", "features", feature + ".webm");
 			Path newDir = Paths.get("videos", "features");
 			if (!Files.exists(newDir)) {
 				Files.createDirectories(newDir);
@@ -177,12 +179,6 @@ public class SetupHooks {
 		}
 
 		page.close();
-	}
-
-	@AfterAll
-	public static void afterAll() {
-		logger.info("AFTER ALL");
-		playwright.close();
 	}
 
 	public static Page getPage() {
