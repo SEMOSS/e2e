@@ -3,6 +3,7 @@ package aicore.pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.BoundingBox;
 
 import aicore.utils.ConfigUtils;
@@ -27,6 +28,13 @@ public class OpenAppLibraryPage {
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
+	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
+	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
+	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text' and @value='Insert text']";
+	private static final String FONT_LIST_XPATH = "//p[text()='Font']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
+	private static final String COLOR_BOX_XPATH = "//input[@type='color']";
+	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl + s)";
 
 	public OpenAppLibraryPage(Page page, String timestamp) {
 		this.page = page;
@@ -98,9 +106,7 @@ public class OpenAppLibraryPage {
 		}
 	}
 
-	public void dragHeading1BlockAndDropOnPage() {
-		page.locator(HEADING_1_BLOCK_XPATH).isVisible();
-		page.locator(HEADING_1_BLOCK_XPATH).hover();
+	public void blockDropPosition() {
 		page.mouse().down();
 		BoundingBox targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH).boundingBox();
 		double dropX = targetBox.x + (targetBox.width / 2); // Center X position
@@ -109,8 +115,94 @@ public class OpenAppLibraryPage {
 		page.mouse().up();
 	}
 
+	public void mouseHoverOnHeading1Block() {
+		page.locator(HEADING_1_BLOCK_XPATH).isVisible();
+		page.locator(HEADING_1_BLOCK_XPATH).hover();
+	}
+
+	public void mouseHoverOnLinkBlock() {
+		page.locator(LINK_BLOCK_XPATH).isVisible();
+		page.locator(LINK_BLOCK_XPATH).hover();
+	}
+
 	public String verifyHeadingBlockTextMessage() {
 		String headingBlockTextMessage = page.locator(HEADING_BLOCK_HELLO_WORLD_XPATH).textContent().trim();
 		return headingBlockTextMessage;
 	}
+
+	public void clickOnBlockSettingsOption() {
+		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
+		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+			blockSettingsOption.click();
+		}
+	}
+
+	public void enterDestination(String destination) {
+		page.locator(DESTINATION_TEXTBOX_XPATH).fill(destination);
+	}
+
+	public void enterLinkText(String linkText) {
+		page.locator(TEXT_TEXTBOX_XPATH).fill(linkText);
+	}
+
+	public void selectTextStyle(String textStyles) {
+		String[] textStyle = textStyles.split(", ");
+		for (String style : textStyle) {
+			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim())).click();
+		}
+	}
+
+	public void selectLinkTextFont(String fontName) {
+		page.locator(FONT_LIST_XPATH).click();
+		page.locator(FONT_LIST_XPATH).fill(fontName);
+		page.locator(FONT_LIST_XPATH).press("ArrowDown");
+		page.locator(FONT_LIST_XPATH).press("Enter");
+	}
+
+	public void selectLinkTextColor(String hexColor) {
+		page.locator(COLOR_BOX_XPATH).fill(hexColor);
+	}
+
+	public void selectTextAlign(String textAlign) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(textAlign)).click();
+	}
+
+	public void clickOnSaveAppButton() {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME)).click();
+	}
+
+	public Locator linkLocator(String linkText) {
+		return page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(linkText));
+	}
+
+	public String getLinkText(String linkText) {
+		return linkLocator(linkText).textContent().trim();
+	}
+
+	public String getLinkFont(String linkText) {
+		return linkLocator(linkText).evaluate("el => el.style.fontFamily || getComputedStyle(el).fontFamily").toString()
+				.replaceAll("^\"|\"$", "");
+	}
+
+	public String getLinkStyle(String linkText) {
+		return linkLocator(linkText).evaluate("el => el.style.fontWeight").toString();
+	}
+
+	public String getLinkColor(String linkText) {
+		return linkLocator(linkText).evaluate("el => getComputedStyle(el).color").toString().trim();
+	}
+
+	public String getLinkTextAlign(String linkText) {
+		return linkLocator(linkText).evaluate("el => getComputedStyle(el).textAlign").toString();
+	}
+
+	public void clickOnLink(String linkText) {
+		linkLocator(linkText).click();
+	}
+
+	public String getDestinationUrl(String url) {
+		page.waitForURL(url);
+		return page.url();
+	}
+
 }

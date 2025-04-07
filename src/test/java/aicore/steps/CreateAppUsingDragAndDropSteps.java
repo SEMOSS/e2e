@@ -3,6 +3,13 @@ package aicore.steps;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+
+import com.microsoft.playwright.Locator;
+
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.OpenAppLibraryPage;
@@ -16,6 +23,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private HomePage homePage;
 	private OpenAppLibraryPage openAppLibraryPage;
 	protected static String timestamp;
+	private String linkText;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -96,14 +104,113 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.clickOnBlocksOption();
 	}
 
-	@And("User drags Heading {int} block and drop on the page")
-	public void user_drags_heading_block_and_drop_on_the_page(Integer int1) {
-		openAppLibraryPage.dragHeading1BlockAndDropOnPage();
+	@When("User drags the {string} block and drops it on the page")
+	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
+		switch (blockName) {
+		case "Heading 1":
+			openAppLibraryPage.mouseHoverOnHeading1Block();
+			break;
+		case "Link":
+			openAppLibraryPage.mouseHoverOnLinkBlock();
+			break;
+		default:
+			System.out.println("Invalid block name");
+		}
+		openAppLibraryPage.blockDropPosition();
 	}
 
 	@Then("User can see {string} on the page")
 	public void user_can_see_on_the_page(String expectedHeadingBlockTextMessage) {
 		String actualHeadingBlockTextMessage = openAppLibraryPage.verifyHeadingBlockTextMessage();
 		assertEquals(expectedHeadingBlockTextMessage, actualHeadingBlockTextMessage);
+	}
+
+	@And("User clicks on the Block Settings option")
+	public void user_clicks_on_the_block_settings_option() {
+		openAppLibraryPage.clickOnBlockSettingsOption();
+	}
+
+	@And("User enters {string} as the destination")
+	public void user_enters_as_the_destination(String destination) {
+		openAppLibraryPage.enterDestination(destination);
+	}
+
+	@And("User enters {string} as the text")
+	public void user_enters_as_the_text(String linkText) {
+		openAppLibraryPage.enterLinkText(linkText);
+	}
+
+	@And("User selects the {string} styles")
+	public void user_selects_the_styles(String textStyles) {
+		openAppLibraryPage.selectTextStyle(textStyles);
+	}
+
+	@And("User selects {string} from the font list")
+	public void user_selects_from_the_font_list(String fontName) {
+		openAppLibraryPage.selectLinkTextFont(fontName);
+	}
+
+	@And("User selects {string} as the HEX color value")
+	public void user_selects_as_the_rgb_color_values(String hexColor) {
+		openAppLibraryPage.selectLinkTextColor(hexColor);
+	}
+
+	@And("User selects {string} as the text alignment")
+	public void user_selects_as_the_text_alignment(String textAlign) {
+		openAppLibraryPage.selectTextAlign(textAlign);
+	}
+
+	@And("User clicks on the Save App icon")
+	public void user_clicks_on_the_save_app_icon() {
+		openAppLibraryPage.clickOnSaveAppButton();
+	}
+
+	@Then("User should see {string} as the link name")
+	public void user_should_see_as_the_link_name(String text) {
+		this.linkText = text;
+		String actualLinkText = openAppLibraryPage.getLinkText(linkText);
+		Assertions.assertEquals(linkText, actualLinkText, "Mismatch between the expected and actual link text");
+	}
+
+	@And("User should see the link name displayed in {string} styles")
+	public void user_should_see_the_link_name_displayed_in_styles(String linkStyles) {
+		Locator linkLocator = openAppLibraryPage.linkLocator(linkText);
+		List<String> appliedLinkStyles = Arrays.asList(linkStyles.split(", "));
+		List<String> actualAppliedLinkStyles = CommonUtils.getAppliedStyles(linkLocator);
+		Assertions.assertEquals(appliedLinkStyles, actualAppliedLinkStyles,
+				"Mismatch between the expected and actual link styles");
+	}
+
+	@And("User should see the link name displayed in {string} font")
+	public void user_should_see_the_link_name_displayed_in_font(String expectedLinkFont) {
+		String actualLinkFont = openAppLibraryPage.getLinkFont(linkText);
+		Assertions.assertEquals(expectedLinkFont, actualLinkFont, "Mismatch between the expected and actual link font");
+	}
+
+	@And("User should see the link name displayed in {string} HEX color value")
+	public void user_should_see_the_link_name_displayed_in_hex_color_value(String hexLinkColor) {
+		String actualLinkColor = openAppLibraryPage.getLinkColor(linkText);
+		String expectedLinkColor = CommonUtils.hexToRGBConversion(hexLinkColor);
+		Assertions.assertEquals("rgb(" + expectedLinkColor + ")", actualLinkColor,
+				"Mismatch between the expected and actual link color");
+	}
+
+	@And("User should see the link name aligned to the {string}")
+	public void user_should_see_the_link_name_aligned_to_the(String linkAlign) {
+		String actualLinkAlign = openAppLibraryPage.getLinkTextAlign(linkText);
+		String expectedLinkAlign = linkAlign.toLowerCase();
+		Assertions.assertEquals(expectedLinkAlign, actualLinkAlign,
+				"Mismatch between the expected and actual link align");
+	}
+
+	@When("User clicks on the link")
+	public void user_clicks_on_the_link() {
+		openAppLibraryPage.clickOnLink(linkText);
+	}
+
+	@Then("User should be navigated to {string}")
+	public void user_should_be_navigated_to(String expectedUrl) {
+		String actualUrl = openAppLibraryPage.getDestinationUrl(expectedUrl);
+		Assertions.assertEquals(expectedUrl, actualUrl, "Mismatch between the expected and actual link destination");
 	}
 }
