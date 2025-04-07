@@ -54,6 +54,7 @@ public class SetupHooks {
 
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions();
 		context = browser.newContext(newContextOptions);
+
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 		Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
 		context.tracing().start(startOptions);
@@ -68,9 +69,47 @@ public class SetupHooks {
 		}
 
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
-		String adminUser = ConfigUtils.getValue("native_username");
-		String adminPassword = ConfigUtils.getValue("native_password");
-		GenericSetupUtils.login(page, adminUser, adminPassword);
+
+		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
+
+		// Use switch to handle different sourceTagNames
+		switch (sourceTagName) {
+		case "@LoginWithMS":
+			String MsUsername = ConfigUtils.getValue("ms_username");
+			String MsPassword = ConfigUtils.getValue("ms_password");
+			GenericSetupUtils.loginWithMSuser(page, MsUsername, MsPassword);
+			break;
+
+		case "@LoginWithAdmin":
+			String adminUser = ConfigUtils.getValue("admin_username");
+			String adminPassword = ConfigUtils.getValue("admin_password");
+			GenericSetupUtils.login(page, adminUser, adminPassword);
+			break;
+
+		case "@LoginWithAuthor":
+			String authorUser = ConfigUtils.getValue("author_username");
+			String authorPassword = ConfigUtils.getValue("author_password");
+			GenericSetupUtils.login(page, authorUser, authorPassword);
+			break;
+
+		case "@LoginWithEditor":
+			String nativeEditorUser = ConfigUtils.getValue("editor_username");
+			String nativeEditorPassword = ConfigUtils.getValue("editor_password");
+			GenericSetupUtils.login(page, nativeEditorUser, nativeEditorPassword);
+			break;
+
+		case "@LoginWithReadOnly":
+			String nativeReadUser = ConfigUtils.getValue("read_username");
+			String nativeReadPassword = ConfigUtils.getValue("read_password");
+			GenericSetupUtils.login(page, nativeReadUser, nativeReadPassword);
+			break;
+
+		default:
+			String nativeUser = ConfigUtils.getValue("native_username");
+			String nativePassword = ConfigUtils.getValue("native_password");
+			GenericSetupUtils.login(page, nativeUser, nativePassword);
+			break;
+		}
 	}
 
 	@BeforeStep

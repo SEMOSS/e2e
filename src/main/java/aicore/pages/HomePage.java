@@ -71,4 +71,5 @@ public class HomePage {
 	public void clickOnOpenSetting() {
 		page.locator(OPEN_SETTING_XPATH).click();
 	}
+
 }
