@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.microsoft.playwright.Locator;
 
-
 public class CommonUtils {
 
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
@@ -34,7 +33,6 @@ public class CommonUtils {
 		}
 		return actualName;
 	}
-
 
 	public static int countIdOccurances(String section, String id) {
 		String pattern = "\\b" + Pattern.quote(id) + "\\b";
