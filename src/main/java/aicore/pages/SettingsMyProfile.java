@@ -17,7 +17,6 @@ public class SettingsMyProfile {
 	private static final String CANCEL_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root') and .//span[normalize-space()='Close']]";
 	private static final String DELETE_BUTTON_XPATH = "//td[text()='{KeyName}']/following-sibling::td//button[@title='Delete']";
 	private static final String DELETE_KEY_TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
-	private static final String CANCEL_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root') and .//span[normalize-space()='Close']]";
 	private static final String GENERATED_KEY_XPATH = "//td[contains(text(),'{keyName}')]";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//td[text()='{description}']";
 
@@ -95,10 +94,6 @@ public class SettingsMyProfile {
 	public String deleteKeyToastMessage() {
 		String toastMessage = page.textContent(DELETE_KEY_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
-	}
-
-	public void clickOnCancelButton() {
-		page.click(CANCEL_BUTTON_XPATH);
 	}
 
 	public String getExpectedAccessKeyTitle(String keyName) {

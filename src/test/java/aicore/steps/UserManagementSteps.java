@@ -39,14 +39,14 @@ public class UserManagementSteps {
 		userpage.clickAdminButton();
 	}
 
-	@When("User clicks on {string} Card")
-	public void user_clicks_on_card(String cardName) {
+	@When("User Management clicks on {string} Card")
+	public void user_management_clicks_on_card(String cardName) {
 		settingpage.checkCardVisible(cardName);
 		settingpage.clickOnCard(cardName);
 
 	}
 
-	@Then("User sees the Add User button")
+	@Then("User Management sees the Add User button")
 	public void user_sees_the_add_user_button() {
 		userpage.checkAddMemberButton();
 	}

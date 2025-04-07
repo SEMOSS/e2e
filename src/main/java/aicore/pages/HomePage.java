@@ -66,13 +66,16 @@ public class HomePage {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 	}
 
+	public void clickOnOpenSettings() {
+		page.locator(OPEN_SETTINGS_XPATH).click();
+	}
 
 	public void checkOnOpenSetting() {
-		page.locator(OPEN_SETTING_XPATH).isVisible();
+		page.locator(OPEN_SETTINGS_XPATH).isVisible();
 	}
 
 	public void clickOnOpenSetting() {
-		page.locator(OPEN_SETTING_XPATH).click();
+		page.locator(OPEN_SETTINGS_XPATH).click();
 	}
 
 }

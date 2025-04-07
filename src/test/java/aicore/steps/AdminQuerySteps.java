@@ -25,19 +25,19 @@ public class AdminQuerySteps {
 		adminQuery = new SettingsAdminQueryPage(SetupHooks.getPage());
 	}
 
-	@Given("User navigates to Open Setting page")
-	public void user_navigates_to_open_setting_page() {
+	@Given("Admin User navigates to Open Setting page")
+	public void admin_user_navigates_to_open_setting_page() {
 		homePage.clickOnOpenSettings();
 	}
 
-	@When("User enable admin mode")
-	public void user_enable_admin_mode() {
+	@When("Admin User enable admin mode")
+	public void admin_user_enable_admin_mode() {
 		settingPage.checkAdminButton();
 		settingPage.clickOnAdminButton();
 	}
 
-	@And("User clicks on {string} Card")
-	public void user_clicks_on_card(String cardName) {
+	@And("Admin User clicks on {string} Card")
+	public void admin_user_clicks_on_card(String cardName) {
 		settingPage.checkCardVisible(cardName);
 		settingPage.clickOnCard(cardName);
 	}
