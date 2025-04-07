@@ -13,10 +13,12 @@ public class HomePage {
 	private static final String PAGE_TITLE_XPATH = "//a[@class='css-jnxb8i']";
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
-	private static final String OPEN_MODEL_XPATH = "(//a[@data-testid='Model-icon'])";
+	private static final String OPEN_APP_LIBRARY_XPATH = "//a[@data-tour='nav-app-library']";
+	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
-	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"+ ConfigUtils.getValue("applicationName") + "']//button";
+	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
+			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String OPEN_SETTING_XPATH = "//a[@aria-label='Navigate to settings']";
 
 	public HomePage(Page page) {
@@ -51,6 +53,10 @@ public class HomePage {
 
 	public void clickOnOpenVector() {
 		page.click(OPEN_VECTOR_XPATH);
+	}
+
+	public void clickOnOpenAppLibrary() {
+		page.click(OPEN_APP_LIBRARY_XPATH);
 	}
 
 	public void logOutAsCurrentUser() {

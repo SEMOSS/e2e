@@ -52,7 +52,7 @@ public class GenericSetupUtils {
 		useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
 		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
-		
+
 		if (useDocker) {
 			DockerUtils.startup();
 		}
@@ -103,14 +103,13 @@ public class GenericSetupUtils {
 			co.setRecordVideoSize(1920, 1080);
 			co.setViewportSize(1920, 1080);
 		}
-		
+
 		if (Boolean.parseBoolean(ConfigUtils.getValue("use_state"))) {
 			co.setStorageStatePath(Paths.get("state.json"));
 		}
 		return co;
 	}
-	
-	
+
 	public static StartOptions getStartOptions() {
 		StartOptions so = new Tracing.StartOptions();
 		so.setScreenshots(true);
@@ -122,7 +121,7 @@ public class GenericSetupUtils {
 	public static void setupLoggers(Page page) {
 		// request handling
 		page.onRequest(HttpLogger::logRequest);
-		
+
 		// response handling
 		page.onResponse(HttpLogger::logResponse);
 
@@ -155,7 +154,6 @@ public class GenericSetupUtils {
 		registerUser(page, readUser, readPassword);
 	}
 
-
 	public static void logout(Page page) {
 		// going to logout
 		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
@@ -173,8 +171,10 @@ public class GenericSetupUtils {
 		page.getByLabel("Username").fill(nativeUsername);
 		page.getByLabel("Username").press("Tab");
 		page.locator("input[type=\"password\"]").fill(nativePassword);
-		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"), () -> page
-				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
+
+		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
+				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
+
 		assertEquals(200, response.status());
 
 		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
@@ -280,7 +280,7 @@ public class GenericSetupUtils {
 	public static boolean useDocker() {
 		return useDocker;
 	}
-	
+
 	public static boolean useVideo() {
 		return useVideo;
 	}

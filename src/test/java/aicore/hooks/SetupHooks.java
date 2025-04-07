@@ -1,18 +1,31 @@
 package aicore.hooks;
 
-import aicore.base.GenericSetupUtils;
-import aicore.base.RunInfo;
-import aicore.utils.ConfigUtils;
-import aicore.utils.UrlUtils;
-import com.microsoft.playwright.*;
-import io.cucumber.java.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Tracing;
+
+import aicore.base.GenericSetupUtils;
+import aicore.base.RunInfo;
+import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
+import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
+import io.cucumber.java.BeforeStep;
+import io.cucumber.java.Scenario;
 
 public class SetupHooks {
 
@@ -42,6 +55,7 @@ public class SetupHooks {
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions();
 		context = browser.newContext(newContextOptions);
 
+		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 		Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
 		context.tracing().start(startOptions);
 
@@ -55,6 +69,7 @@ public class SetupHooks {
 		}
 
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
+
 		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
 
 		// Use switch to handle different sourceTagNames

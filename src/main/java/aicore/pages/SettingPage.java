@@ -26,9 +26,7 @@ public class SettingPage {
 	}
 
 	public void checkCardVisible(String cardName) {
-
 		page.locator(CARD_XPATH.replace("{cardName}", cardName)).isVisible();
-
 	}
 
 	public void clickOnCard(String cardName) {
