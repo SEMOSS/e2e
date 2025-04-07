@@ -1,8 +1,10 @@
 package aicore.steps;
 
-import aicore.hooks.SetupHooks;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
 
+import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
@@ -119,7 +121,7 @@ public class AddModelSteps {
 	}
 
 	@And("User can edit the value of {string} field as {string}")
-	public void user_can_edit_the_value_of_field_as(String fieldName, String newValue) throws InterruptedException {
+	public void user_can_edit_the_value_of_field_as(String fieldName, String newValue) {
 		openModelPage.editSMSSFieldValues(fieldName, newValue);
 	}
 
@@ -146,6 +148,6 @@ public class AddModelSteps {
 			System.out.println("Invalid field name " + field);
 		}
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
-		Assertions.assertEquals(actualVarName, newValue, "Value is not matching for " + field + "field");
+		assertEquals(actualVarName, newValue);
 	}
 }
