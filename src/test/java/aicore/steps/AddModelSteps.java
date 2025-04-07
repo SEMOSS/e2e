@@ -1,12 +1,10 @@
 package aicore.steps;
 
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -70,6 +68,7 @@ public class AddModelSteps {
 	public void user_can_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
+		openModelPage.waitForModelCreationToastMessageDisappear();
 	}
 
 	@Then("User Can see the Model title as {string}")
@@ -104,20 +103,126 @@ public class AddModelSteps {
 		openModelPage.clickOnEditButton();
 	}
 
-	@When("User enters tag as {string} in Edit Model Details and press enter")
-	public void user_enters_tag_as_in_edit_model_details_and_press_enter(String tagName) {
-		openModelPage.enterTagName(tagName);
+	@When("User searches the {string} in the model catalog searchbox")
+	public void user_searches_the_in_the_model_catalog_searchbox(String modelName) {
+		openModelPage.searchModelCatalog(modelName);
+	}
+
+	@Then("User should see the {string} on the model catalog page")
+	public void user_should_see_the_on_the_model_catalog_page(String modelName) {
+		boolean isModelDisplayed = openModelPage.verifyModelIsDisplayedOnCatalogPage(modelName);
+		Assertions.assertTrue(isModelDisplayed);
+	}
+
+	@And("User selects the {string} from the model catalog")
+	public void user_selects_the_from_the_model_catalog(String modelName) {
+		openModelPage.selectModelFromSearchOptions(modelName);
+	}
+
+	@And("User enters the details as {string}")
+	public void user_enters_the_details_as(String detailsText) {
+		openModelPage.enterDetails(detailsText);
+	}
+
+	@And("User enters the description as {string}")
+	public void user_enters_the_description_as(String descriptionText) {
+		openModelPage.enterDescription(descriptionText);
+	}
+
+	@And("User add tags {string} and presses Enter")
+	public void user_add_tags_and_presses_enter(String tags) {
+		String[] tagsArray = tags.split(", ");
+		for (String tag : tagsArray) {
+			openModelPage.enterTagName(tag);
+		}
+	}
+
+	@And("User enters the Domains as {string}")
+	public void user_enters_the_domains_as(String domainNames) {
+		String[] allDomainNames = domainNames.split(", ");
+		for (String domainName : allDomainNames) {
+			openModelPage.enterDomainName(domainName);
+		}
+	}
+
+	@And("User selects {string} from the Data Classification dropdown")
+	public void user_selects_from_the_data_classification_dropdown(String dataClassificationOptions) {
+		String[] options = dataClassificationOptions.split(", ");
+		for (String option : options) {
+			openModelPage.selectDataClassificationOption(option);
+		}
+	}
+
+	@And("User selects {string} from the Data Restrictions dropdown")
+	public void user_selects_from_the_data_restrictions_dropdown(String dataRestictionOptions) {
+		String[] options = dataRestictionOptions.split(", ");
+		for (String option : options) {
+			openModelPage.selectDataRestrictionsOption(option);
+		}
+	}
+
+	@Then("User can see a edit success toast message as {string}")
+	public void user_can_see_a_edit_success_toast_message_as(String expectedToastMessage) {
+		String actualToastMessage = openModelPage.verifyEditSuccessfullToastMessage();
+		Assertions.assertEquals(actualToastMessage, expectedToastMessage);
+		openModelPage.waitForEditSuccessToastMessageToDisappear();
+	}
+
+	@And("User should see description as {string} on the page")
+	public void user_should_see_description_as_on_the_page(String expectedDescriptionText) {
+		String actualDescriptionText = openModelPage.verifyDescriptionText();
+		Assertions.assertEquals(actualDescriptionText, expectedDescriptionText);
+	}
+
+	@And("User should see {string} on the page")
+	public void user_should_see_on_the_page(String expectedTags) {
+		String[] tagArray = expectedTags.split(", ");
+		List<String> actualTagList = openModelPage.verifyTagNames();
+		List<String> expectedTagList = Arrays.asList(tagArray).subList(0, Math.min(2, tagArray.length));
+		Assertions.assertEquals(actualTagList, expectedTagList);
+	}
+
+	@And("User should see {string} in the overview Details section")
+	public void user_should_see_in_the_overview_details_section(String expectedDetailsText) {
+		String actualDetailsText = openModelPage.verifyDetailsTextUnderOverview();
+		Assertions.assertEquals(actualDetailsText, expectedDetailsText);
+	}
+
+	@And("User should see {string} in the overview Tag section")
+	public void user_should_see_in_the_overview_tag_section(String expectedTags) {
+		String[] tagArray = expectedTags.split(", ");
+		List<String> expectedTagList = Arrays.asList(tagArray);
+		List<String> actualTagList = openModelPage.verifyTagNamesUnderOverview();
+		Assertions.assertEquals(actualTagList, expectedTagList);
+	}
+
+	@And("User should see {string} in the overview Domain section")
+	public void user_should_see_in_the_overview_domain_section(String expectedDomains) {
+		String[] domainArray = expectedDomains.split(", ");
+		List<String> expectedDomainList = Arrays.asList(domainArray);
+		List<String> actualDomainList = openModelPage.verifyDomainValuesUnderOverview();
+		Assertions.assertEquals(actualDomainList, expectedDomainList);
+	}
+
+	@And("User should see {string} in the overview Data classification section")
+	public void user_should_see_in_the_overview_data_classification_section(String expectedDataClassificationOptions) {
+		String[] dataClassificationOptionsArray = expectedDataClassificationOptions.split(", ");
+		List<String> expectedDataClassificationOptionsList = Arrays.asList(dataClassificationOptionsArray);
+		List<String> actualDataClassificationOptionsList = openModelPage.verifyDataClassificationOptionsUnderOverview();
+		Assertions.assertEquals(actualDataClassificationOptionsList, expectedDataClassificationOptionsList);
+	}
+
+	@And("User should see {string} in the overview Data restrictions section")
+	public void user_should_see_in_the_overview_data_restrictions_section(String expectedDataRestrictionOptions) {
+		String[] dataRestrictionOptionsArray = expectedDataRestrictionOptions.split(", ");
+		List<String> expectedDataRestrictionOptionsList = Arrays.asList(dataRestrictionOptionsArray);
+		List<String> actualDataRestrictionOptionsList = openModelPage.verifyDataRestrictionOptionsUnderOverview();
+		Assertions.assertEquals(actualDataRestrictionOptionsList, expectedDataRestrictionOptionsList);
 	}
 
 	@When("User clicks on Submit button")
 	public void user_clicks_on_submit_button() {
 		openModelPage.clickOnSubmit();
-	}
-
-	@Then("User can see {string} tag added")
-	public void user_can_see_tag_added(String tagNameAfterAdding) {
-		String actualTagName = openModelPage.verifyTagNameafteradding();
-		Assertions.assertEquals(actualTagName, tagNameAfterAdding, "Tag name after adding failed");
 	}
 
 //Edit SMSS
@@ -151,6 +256,7 @@ public class AddModelSteps {
 			break;
 		case "KEEP_CONVERSATION_HISTORY":
 			fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
+			break;
 		default:
 			System.out.println("Invalid field name " + field);
 		}

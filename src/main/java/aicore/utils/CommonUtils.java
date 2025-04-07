@@ -3,10 +3,9 @@ package aicore.utils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import java.util.List;
 
 import com.microsoft.playwright.Locator;
 
@@ -34,6 +33,18 @@ public class CommonUtils {
 		return actualName;
 	}
 
+	public static void extractOverviewSectionValues(List<String> keys, List<String> keyText) {
+		for (String text : keyText) {
+			String[] splitTags = text.split("[," + System.lineSeparator() + "]+");
+			for (String tag : splitTags) {
+				if (!tag.trim().isEmpty()) {
+					keys.add(tag.trim());
+				}
+			}
+		}
+
+	}
+  
 	public static int countIdOccurances(String section, String id) {
 		String pattern = "\\b" + Pattern.quote(id) + "\\b";
 		Pattern regex = Pattern.compile(pattern);

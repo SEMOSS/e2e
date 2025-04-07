@@ -1,5 +1,6 @@
 package aicore.pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.microsoft.playwright.Locator;
@@ -15,7 +16,6 @@ public class AddModelToCatalogPage {
 	private Page page;
 	private String timestamp;
 
-	private static final String ADD_MODEL_BUTTON_XPATH = "//button[@aria-label='Navigate to import Model']";
 	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
 	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
@@ -25,7 +25,7 @@ public class AddModelToCatalogPage {
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	private static final String CRAETED_MODEL_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
-	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//div[@class='MuiFormControl-root MuiTextField-root css-1t5kjpm']//input";
+	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
 	// SMSS field
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
@@ -64,9 +64,21 @@ public class AddModelToCatalogPage {
 	private static final String CONFIRM_BUTTON_XPATH = "//button[span[text()='Confirm']]";
 	// Edit model
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
-	private static final String TAG_NAME_AFTER_ADDING_XPATH = "//span[@class='MuiChip-label MuiChip-labelMedium css-9iedg7'][1]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
+	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
+	private static final String DETAILS_TEXTBOX_XPATH = "//textarea[@class='inputarea monaco-mouse-cursor-text']";
+	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
+	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
+	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "(//input[@aria-autocomplete='list'])[3]";
+	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "(//input[@aria-autocomplete='list'])[4]";
+	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
+	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
+	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
+	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Tag')]]/following-sibling::div";
+	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Domain')]]/following-sibling::div";
+	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data classification')]]/following-sibling::div";
+	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
 
 	// Usage
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
@@ -109,6 +121,12 @@ public class AddModelToCatalogPage {
 		return toastMessage.textContent().trim();
 	}
 
+	public void waitForModelCreationToastMessageDisappear() {
+		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE))
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		;
+	}
+
 	public String verifyModelTitle(String modelTitle) {
 		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
 				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
@@ -139,32 +157,125 @@ public class AddModelToCatalogPage {
 				.textContent(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
 		return varNameInSMSSProperties;
 	}
+//Edit model
 
 	public void searchModelCatalog(String modelName) {
-		page.fill(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH, modelName + timestamp);
+		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).fill(modelName + timestamp);
 	}
 
 	public void selectModelFromSearchOptions(String modelName) {
-		page.click(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp));
+		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp))).isVisible();
+		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp)).click();
+	}
+
+	public boolean verifyModelIsDisplayedOnCatalogPage(String modelName) {
+		String modelNameWithTimestamp = SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp);
+		page.waitForSelector(modelNameWithTimestamp, new Page.WaitForSelectorOptions().setTimeout(10000));
+		boolean isModelVisible = page.isVisible(modelNameWithTimestamp);
+		return isModelVisible;
 	}
 
 	public void clickOnEditButton() {
 		page.click(EDIT_BUTTON_XPATH);
 	}
 
+	public void enterDetails(String detailsText) {
+		page.fill(DETAILS_TEXTBOX_XPATH, detailsText);
+	}
+
+	public void enterDescription(String descriptionText) {
+		page.getByLabel(DESCRIPTION_TEXTBOX_LABEL).fill(descriptionText);
+	}
+
 	public void enterTagName(String tagName) {
 		page.getByLabel(TAG_TEXTBOX).click();
-		page.getByLabel(TAG_TEXTBOX).fill("embeddings");
+		page.getByLabel(TAG_TEXTBOX).fill(tagName);
 		page.getByLabel(TAG_TEXTBOX).press("Enter");
+	}
+
+	public void enterDomainName(String domainName) {
+		page.getByLabel(DOMAIN_TEXTBOX_LABEL).fill(domainName);
+		page.getByLabel(DOMAIN_TEXTBOX_LABEL).press("Enter");
+	}
+
+	public void selectDataClassificationOption(String option) {
+		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH);
+		page.fill(DATA_CLASSIFICATION_TEXTBOX_XPATH, option);
+		page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("ArrowDown");
+		page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("Enter");
+	}
+
+	public void selectDataRestrictionsOption(String option) {
+		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH);
+		page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
+		page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
+		page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public void clickOnSubmit() {
 		page.click(SUBMIT_BUTTON_XPATH);
 	}
 
-	public String verifyTagNameafteradding() {
-		String modelTagName = page.textContent(TAG_NAME_AFTER_ADDING_XPATH);
-		return modelTagName;
+	public String verifyEditSuccessfullToastMessage() {
+		Locator toastMessage = page.getByRole(AriaRole.ALERT)
+				.filter(new Locator.FilterOptions().setHasText(EDIT_SUCCESS_TOAST_MESSAGE));
+		return toastMessage.textContent().trim();
+	}
+
+	public void waitForEditSuccessToastMessageToDisappear() {
+		page.locator(EDIT_SUCCESS_TOAST_MESSAGE)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+	}
+
+	public String verifyDescriptionText() {
+
+		String descriptionText = page.textContent(DESCRIPTION_TEXT_XPATH).trim();
+		return descriptionText;
+	}
+
+	public List<String> verifyTagNames() {
+		List<String> tags = new ArrayList<String>();
+		List<String> tagsText = page.locator(MODEL_TAGS_XPATH).allInnerTexts();
+		CommonUtils.extractOverviewSectionValues(tags, tagsText);
+		return tags;
+	}
+
+	public String verifyDetailsTextUnderOverview() {
+		Locator shadowElement = page.locator(DETAILS_UNDER_OVERVIEW_XPATH).locator("p");
+		shadowElement.waitFor();
+		String text = shadowElement.innerText().trim();
+		return text;
+	}
+
+	public List<String> verifyTagNamesUnderOverview() {
+		List<String> tags = new ArrayList<String>();
+		List<String> tagsText = page.locator(TAGS_UNDER_OVERVIEW_XPATH).allInnerTexts();
+		CommonUtils.extractOverviewSectionValues(tags, tagsText);
+		return tags;
+	}
+
+	public List<String> verifyDomainValuesUnderOverview() {
+		List<String> domains = new ArrayList<String>();
+		List<String> domainText = page.locator(DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH).allInnerTexts();
+		CommonUtils.extractOverviewSectionValues(domains, domainText);
+		return domains;
+	}
+
+	public List<String> verifyDataClassificationOptionsUnderOverview() {
+		List<String> dataClassificationOptions = new ArrayList<String>();
+		List<String> dataClassificationOptionsText = page.locator(DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH)
+				.allInnerTexts();
+		CommonUtils.extractOverviewSectionValues(dataClassificationOptions, dataClassificationOptionsText);
+		return dataClassificationOptions;
+	}
+
+	public List<String> verifyDataRestrictionOptionsUnderOverview() {
+		List<String> dataRestrictionOptions = new ArrayList<String>();
+		List<String> dataRestrictionOptionsText = page.locator(DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH)
+				.allInnerTexts();
+		CommonUtils.extractOverviewSectionValues(dataRestrictionOptions, dataRestrictionOptionsText);
+		return dataRestrictionOptions;
 	}
 
 	// Methods used for settings
