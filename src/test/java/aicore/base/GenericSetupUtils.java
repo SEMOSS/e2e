@@ -213,7 +213,7 @@ public class GenericSetupUtils {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", waitingForUrl, page.url());
 		}
 	}
-	
+
 	private static void setupInitialAdmin(Page page, String userName) {
 		page.navigate(UrlUtils.getApi("setAdmin/"));
 
