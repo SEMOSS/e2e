@@ -3,9 +3,13 @@ package aicore.utils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import java.util.List;
 
 import com.microsoft.playwright.Locator;
+
 
 public class CommonUtils {
 
@@ -31,6 +35,16 @@ public class CommonUtils {
 		return actualName;
 	}
 
+	public static int countIdOccurances(String section, String id) {
+		String pattern = "\\b" + Pattern.quote(id) + "\\b";
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(section);
+		int count = 0;
+		while (matcher.find()) {
+			count++;
+		}
+		return count;
+	}
 
 	public static List<String> getAppliedStyles(Locator element) {
 		List<String> appliedStyles = new ArrayList<>();
