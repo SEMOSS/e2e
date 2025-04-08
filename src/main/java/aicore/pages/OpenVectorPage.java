@@ -9,18 +9,18 @@ public class OpenVectorPage {
 	private Page page;
 	private String timestamp;
 
-	private static final String ADD_VECTOR_BUTTON_XPATH = "//div[@class='MuiStack-root css-1lnp4vl']";
+	private static final String ADD_VECTOR_BUTTON_XPATH = "//button/span[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "#NAME";
-	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[@class='MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-9r28x9'])[1]";
-	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[@class='MuiList-root MuiList-padding MuiMenu-list css-r8u8y9']//li[text()='{modelName}']";
-	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[@class='MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-9r28x9'])[2]";
-	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[@class='MuiList-root MuiList-padding MuiMenu-list css-r8u8y9']//li[text()='{strategyName}']";
+	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
+	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{modelName}']";
+	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
+	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{strategyName}']";
 	private static final String CONTENT_LENGTH_ID = "#CONTENT_LENGTH";
 	private static final String CONTENT_OVERLAP_ID = "#CONTENT_OVERLAP";
 	private static final String CREATE_VECTOR_BUTTON_XPATH = "//button[@type='submit']";
-	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
-	private static final String VECTOR_TITLE_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
+	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message css-')]";
+	private static final String VECTOR_TITLE_XPATH = "//h4[contains(@class,'MuiTypography-root MuiTypography-h4 css-')]";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String EMBEDDER_ENGINE_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'EMBEDDER_ENGINE_NAME')]";
 	private static final String CONTENT_LENGTH_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CONTENT_LENGTH')]";

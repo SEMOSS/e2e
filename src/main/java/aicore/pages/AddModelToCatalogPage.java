@@ -23,7 +23,8 @@ public class AddModelToCatalogPage {
 	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
-	private static final String MODEL_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
+	//private static final String MODEL_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
+	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	private static final String CRAETED_MODEL_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
 	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//div[@class='MuiFormControl-root MuiTextField-root css-1t5kjpm']//input";
 	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
@@ -97,14 +98,25 @@ public class AddModelToCatalogPage {
 		page.click(CREATE_MODEL_BUTTON_XPATH);
 	}
 
+//	public String modelCreationToastMessage() {
+//		String toastMessage = page.textContent(MODEL_TOAST_MESSAGE_XPATH).trim();
+//		return toastMessage;
+//	}
 	public String modelCreationToastMessage() {
-		String toastMessage = page.textContent(MODEL_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+//		String toastMessage = page.textContent(MODEL_TOAST_MESSAGE_XPATH).trim();
+		Locator toastMessage = page.getByRole(AriaRole.ALERT)
+				.filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE));
+		return toastMessage.textContent().trim();
 	}
 
-	public String verifyModelTitle() {
-		String modelTitle = page.textContent(CRAETED_MODEL_XPATH).trim();
-		return modelTitle;
+//	public String verifyModelTitle() {
+//		String modelTitle = page.textContent(CRAETED_MODEL_XPATH).trim();
+//		return modelTitle;
+//	}
+	public String verifyModelTitle(String modelTitle) {
+		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
+				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
+		return actualmodelTitle.textContent().trim();
 	}
 
 	public void clickOnSMSSTab() {

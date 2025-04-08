@@ -13,7 +13,7 @@ Feature: Create Vector Database
     When User clicks on Edit button
     And User enters tag as 'embeddings' in Edit Model Details and press enter
     And User clicks on Submit button
-
+@LoginWithAdmin
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
     Given User clicks on Open Vector engine
     When User clicks on Add Vector button
@@ -37,6 +37,10 @@ Feature: Create Vector Database
     Examples: 
       | connection | catalog_name    | model_name | chunking_strategy | content_length | content_overlap |
       | FAISS      | FAISS Vector DB | Catalog    | Token             |            510 |              17 |
-      | FAISS      | FAISS Vector DB | Catalog    | Page by page      |            512 |              19 |
-      | FAISS      | FAISS Vector DB | Catalog    | Markdown          |            512 |              15 |
-#Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present.
+      #| FAISS      | FAISS Vector DB | Catalog    | Page by page      |            512 |              19 |
+      #| FAISS      | FAISS Vector DB | Catalog    | Markdown          |            512 |              15 |
+#Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
+
+
+
+

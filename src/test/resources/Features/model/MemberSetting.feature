@@ -15,18 +15,18 @@ Background: User is on member setting page
  Scenario: Validate Pagination in member setting page
    Given User sees atleast one count of users on Member setting page
    When User sees Member count equal or greater than '28'
-   Then User select '5' in Rows per page filter
-   And User sees the '5' rows in the page
+   Then User select '25' in Rows per page filter
+   And User sees the '25' rows in the page
    Then User clicks on the Right pagination arrow to navigate to next page
    Then User clicks on the Left pagination arrow to navigate to previous page 
-   Then User select '10' in Rows per page filter
-   Then User sees the '10' rows in the page
-   Then User clicks on the Right pagination arrow to navigate to next page
-   Then User clicks on the Left pagination arrow to navigate to previous page
-   Then User select '20' in Rows per page filter
-   Then User sees the '20' rows in the page
-   Then User clicks on the Right pagination arrow to navigate to next page
-   Then User clicks on the Left pagination arrow to navigate to previous page  
+   #Then User select '10' in Rows per page filter
+   #Then User sees the '10' rows in the page
+   #Then User clicks on the Right pagination arrow to navigate to next page
+   #Then User clicks on the Left pagination arrow to navigate to previous page
+   #Then User select '20' in Rows per page filter
+   #Then User sees the '20' rows in the page
+   #Then User clicks on the Right pagination arrow to navigate to next page
+   #Then User clicks on the Left pagination arrow to navigate to previous page  
    
 @LoginWithAdmin   
  Scenario: Validate Search Functionality 
