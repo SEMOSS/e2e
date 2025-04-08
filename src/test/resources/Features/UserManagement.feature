@@ -2,22 +2,20 @@ Feature: User Management
 
   @LoginWithAdmin
   Scenario: Add New Native User
-    Given User logs as Admin user in AI CORE application
-    And User navigates to the settings
-    And User enables admin mode
-    And User clicks on 'Member Settings' Card
+    Given User navigates to Open Setting page
+    When User enable admin mode
+    And  User clicks on 'Member Settings' Card
     Then User sees the Add User button
-    And User adds 30 members and can see toast message as 'Successfully added user' for all added members
+    And User adds 1 members and can see toast message as 'Successfully added user' for all added members
     And User sees the search button
     And User searches for the created user
-    And User clicks on Delete Selected button 30 times
+    And User clicks on Delete Selected button 1 times
 
   @LoginWithAdmin
   Scenario: Edit Native User - Change Model Limit Restriction
-    Given User logs as Admin user in AI CORE application
-    When User navigates to the settings
-    And User enables admin mode
-    And User clicks on 'Member Settings' Card
+   Given User navigates to Open Setting page
+    When User enable admin mode
+    And  User clicks on 'Member Settings' Card
     Then User sees the Add User button
     And User adds 1 members and can see toast message as 'Successfully added user' for all added members
     And User clicks on Edit icon

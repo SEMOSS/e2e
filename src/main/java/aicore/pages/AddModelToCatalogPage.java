@@ -466,7 +466,9 @@ public class AddModelToCatalogPage {
 	}
 
 	public String copyCommand(String commandName) {
-		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).isVisible();
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).scrollIntoViewIfNeeded();
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName))
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).click();
 		return page.evaluate("navigator.clipboard.readText()").toString().trim();
 	}

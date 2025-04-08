@@ -10,7 +10,6 @@ public class SettingsAdminQueryPage {
 	private Page page;
 
 	private static final String DATABASE_DROPDOWN_NAME = "Database";
-	private static final String DATABASE_DROPDOWN_LIST_OPTIONS_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding')]//li[text()='{databaseName}']";
 	private static final String QUERY_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root')]//label[text()='Enter query to run on database']";
 	private static final String RUN_BUTTON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiButton-root MuiButton-contained')]//span[text()='Run']";
 	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
