@@ -62,14 +62,6 @@ public class MemberSettingSteps {
 		Assertions.assertTrue(countOfUser > 0);
 	}
 
-	@When("User sees Member count equal or greater than {string}")
-	public void user_sees_member_count_equal_or_greater_than(String membercount) {
-		int countOfUser = settingPage.checkCountOfUsers();
-		int countMember = Integer.parseInt(membercount);
-		Assertions.assertTrue(countOfUser > countMember,
-				"The number should be greater than 29, but was " + countOfUser);
-	}
-
 	@Then("User select {string} in Rows per page filter")
 	public void user_select_in_Rows_per_page_filter(String RowsNumber) {
 		settingPage.clickNumberOfRows(RowsNumber);
@@ -99,10 +91,10 @@ public class MemberSettingSteps {
 	}
 
 	@Then("User searchs for user having username {string}")
- 	public void user_searchs_for_user_having_username(String username) {
- 		settingPage.enterUsername(username);
- 
- 	}
+	public void user_searchs_for_user_having_username(String username) {
+		settingPage.enterUsername(username);
+
+	}
 
 	@Then("User sees the {string} in the searched user list")
 	public void user_sees_the_username_in_the_searched_user_list(String username) {

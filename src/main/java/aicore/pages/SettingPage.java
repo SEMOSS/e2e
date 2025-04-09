@@ -11,7 +11,7 @@ public class SettingPage {
 	private Page page;
 	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
 	private static final String CARD_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[text()='{cardName}']";
-	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin On']";
+	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin on']";
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
 	private static final String MEMBER_COUNT_XPATH = "//div[@class='css-1lxwves']//span";
 	private static final String ROWS_PER_PAGE_XPATH = "//div[(@aria-haspopup='listbox')]";
@@ -80,24 +80,22 @@ public class SettingPage {
 	public void checkBackwardButton() {
 		for (int i = 1; i < countOfPages(); i++) {
 			page.locator(PREVIOUS_PAGE_XPATH).isVisible();
-			page.locator(PREVIOUS_PAGE_XPATH).isEnabled();
+			page.locator(PREVIOUS_PAGE_XPATH).isVisible();
 			page.locator(PREVIOUS_PAGE_XPATH).click();
+			;
 		}
 	}
 
 	public int checkRecordsOnPage() {
 		int rowsCount = page.locator(TOTAL_ROWS_XPATH).count();
 		return rowsCount;
-
 	}
 
 	public void clickNumberOfRows(String rowsPerPageValue) {
 		page.locator(ROWS_PER_PAGE_XPATH).click();
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).isVisible();
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).click();
-
 	}
-
 	public void clickOnSearchButton() {
 		page.locator(SEARCH_BUTTON_XPATH).isVisible();
 		page.locator(SEARCH_BUTTON_XPATH).click();
