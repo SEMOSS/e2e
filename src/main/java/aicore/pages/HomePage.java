@@ -13,11 +13,15 @@ public class HomePage {
 	private static final String PAGE_TITLE_XPATH = "//a[@class='css-jnxb8i']";
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
-	private static final String OPEN_MODEL_XPATH = "(//a[@data-testid='Model-icon'])";
+	private static final String OPEN_APP_LIBRARY_XPATH = "//a[@data-tour='nav-app-library']";
+	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
-	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"+ ConfigUtils.getValue("applicationName") + "']//button";
-	private static final String OPEN_SETTING_XPATH = "//a[@aria-label='Navigate to settings']";
+	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
+			+ ConfigUtils.getValue("applicationName") + "']//button";
+
+	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
+
 
 	public HomePage(Page page) {
 		this.page = page;
@@ -53,17 +57,25 @@ public class HomePage {
 		page.click(OPEN_VECTOR_XPATH);
 	}
 
+	public void clickOnOpenAppLibrary() {
+		page.click(OPEN_APP_LIBRARY_XPATH);
+	}
+
 	public void logOutAsCurrentUser() {
 		page.click(USER_PROFILE_ICON_XPATH);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 	}
 
+	public void clickOnOpenSettings() {
+		page.locator(OPEN_SETTINGS_XPATH).click();
+	}
+
 	public void checkOnOpenSetting() {
-		page.locator(OPEN_SETTING_XPATH).isVisible();
+		page.locator(OPEN_SETTINGS_XPATH).isVisible();
 	}
 
 	public void clickOnOpenSetting() {
-		page.locator(OPEN_SETTING_XPATH).click();
+		page.locator(OPEN_SETTINGS_XPATH).click();
 	}
 
 }
