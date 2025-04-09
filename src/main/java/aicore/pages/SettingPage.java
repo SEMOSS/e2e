@@ -3,6 +3,7 @@ package aicore.pages;
 import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Page;
 
+
 import aicore.utils.CommonUtils;
 
 public class SettingPage {
@@ -35,9 +36,7 @@ public class SettingPage {
 	}
 
 	public void checkCardVisible(String cardName) {
-
 		page.locator(CARD_XPATH.replace("{cardName}", cardName)).isVisible();
-
 	}
 
 	public void clickOnCard(String cardName) {
