@@ -132,6 +132,7 @@ public class GenericSetupUtils {
 		// setup admin user
 		String adminUser = ConfigUtils.getValue("native_username");
 		String adminPassword = ConfigUtils.getValue("native_password");
+
 		setupInitialAdmin(page, adminUser);
 
 		// test admin user login
@@ -140,6 +141,11 @@ public class GenericSetupUtils {
 		String adminUser2 = ConfigUtils.getValue("admin_username");
 		String adminPassword2 = ConfigUtils.getValue("admin_password");
 		registerUser(page, adminUser2, adminPassword2);
+
+		// login and make admin and admin and logout
+		login(page, adminUser, adminPassword);
+		makeAdminUserAdmin(page);
+		logout(page);
 
 		String authorUser = ConfigUtils.getValue("author_username");
 		String authorPassword = ConfigUtils.getValue("author_password");
@@ -152,6 +158,15 @@ public class GenericSetupUtils {
 		String readUser = ConfigUtils.getValue("read_username");
 		String readPassword = ConfigUtils.getValue("read_password");
 		registerUser(page, readUser, readPassword);
+	}
+
+	private static void makeAdminUserAdmin(Page page) {
+		page.getByLabel("Navigate to settings").click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
+		page.getByText("Member Settings").click();
+		page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("al admin lastname User ID:")).getByRole(AriaRole.BUTTON).first().click();
+		page.locator("li").filter(new Locator.FilterOptions().setHasText("AdminAll-Access pass to app")).getByRole(AriaRole.CHECKBOX).check();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
 	}
 
 	public static void logout(Page page) {
@@ -220,7 +235,9 @@ public class GenericSetupUtils {
 		assertEquals(UrlUtils.getApi("setAdmin/"), page.url());
 		logger.info("Going to fill initial admin.");
 		page.locator("#user-id").click();
-		page.locator("#user-id").fill(userName);
+		String userIdString = userName;
+		logger.info("filling user ids with: {}", userIdString);
+		page.locator("#user-id").fill(userIdString);
 		logger.info("Filled initial admin");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
 		logger.info("After submitting admin: {}", page.url());
