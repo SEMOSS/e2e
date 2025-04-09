@@ -16,6 +16,8 @@ public class SettingsAdminQueryPage {
 	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
 	private static final String QUERY_EXECUTED_TOAST_MESSAGE = "Successfully submitted query";
 
+	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Execute query";
+
 	public SettingsAdminQueryPage(Page page) {
 		this.page = page;
 	}
@@ -35,7 +37,7 @@ public class SettingsAdminQueryPage {
 	}
 
 	public void clickOnExecuteQueryButton() {
-		page.locator(RUN_BUTTON_XPATH).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(EXECUTE_QUERY_BUTTON_TEXT)).click();
 	}
 
 	public int getTableHeaderCount() {
