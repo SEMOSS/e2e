@@ -71,6 +71,7 @@ public class UserManagementSteps {
 			userpage.clickSaveButton();
 			String actualMessage = userpage.userCreationToastMessage();
 			Assertions.assertEquals(actualMessage, toastMessage, "User creation failed");
+			userpage.closeToastMessage();
 		}
 	}
 

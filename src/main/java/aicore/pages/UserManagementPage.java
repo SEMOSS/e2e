@@ -1,6 +1,8 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class UserManagementPage {
 
@@ -28,6 +30,7 @@ public class UserManagementPage {
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
 	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
+	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 
 	public UserManagementPage(Page page) {
 		this.page = page;
@@ -85,8 +88,15 @@ public class UserManagementPage {
 	}
 
 	public String userCreationToastMessage() {
+		page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String toastMessage = page.textContent(ADD_MEMBER_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
+	}
+
+	public void closeToastMessage() {
+		page.locator(TOAST_MESSAGE_CLOSE_XPATH).isVisible();
+		page.locator(TOAST_MESSAGE_CLOSE_XPATH).click();
 	}
 
 	public void clickOnEditUser() {

@@ -11,11 +11,9 @@ public class SettingsAdminQueryPage {
 
 	private static final String DATABASE_DROPDOWN_NAME = "Database";
 	private static final String QUERY_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root')]//label[text()='Enter query to run on database']";
-	private static final String RUN_BUTTON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiButton-root MuiButton-contained')]//span[text()='Run']";
 	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
 	private static final String QUERY_EXECUTED_TOAST_MESSAGE = "Successfully submitted query";
-
-	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Execute query";
+	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Run";
 
 	public SettingsAdminQueryPage(Page page) {
 		this.page = page;

@@ -164,8 +164,10 @@ public class GenericSetupUtils {
 		page.getByLabel("Navigate to settings").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
 		page.getByText("Member Settings").click();
-		page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("al admin lastname User ID:")).getByRole(AriaRole.BUTTON).first().click();
-		page.locator("li").filter(new Locator.FilterOptions().setHasText("AdminAll-Access pass to app")).getByRole(AriaRole.CHECKBOX).check();
+		page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("al admin lastname User ID:"))
+				.getByRole(AriaRole.BUTTON).first().click();
+		page.locator("li").filter(new Locator.FilterOptions().setHasText("AdminAll-Access pass to app"))
+				.getByRole(AriaRole.CHECKBOX).check();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
 	}
 
