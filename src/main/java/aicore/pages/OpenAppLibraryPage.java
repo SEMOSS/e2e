@@ -5,6 +5,7 @@ import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.ConfigUtils;
 
@@ -27,13 +28,16 @@ public class OpenAppLibraryPage {
 	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
+	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
+	// Block settings for Text elements
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
-	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text' and @value='Insert text']";
+	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String FONT_LIST_XPATH = "//p[text()='Font']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String COLOR_BOX_XPATH = "//input[@type='color']";
+
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl + s)";
 
 	public OpenAppLibraryPage(Page page, String timestamp) {
@@ -81,9 +85,11 @@ public class OpenAppLibraryPage {
 		return actualWelcomeText;
 	}
 
-	public void navigateToPreviousPage() {
+	public void navigateToHomePage() {
 		String appNameWithLogo = ConfigUtils.getValue("applicationName");
-		page.locator(MENU_OPTION_XPATH).click();
+		if (page.locator(MENU_CLOSED_ICON_XPATH).isVisible()) {
+			page.locator(MENU_OPTION_XPATH).click();
+		}
 		page.locator(APP_LOGO_ON_EDIT_PAGE_XPATH.replace("{appName}", appNameWithLogo)).click();
 	}
 
@@ -141,8 +147,8 @@ public class OpenAppLibraryPage {
 		page.locator(DESTINATION_TEXTBOX_XPATH).fill(destination);
 	}
 
-	public void enterLinkText(String linkText) {
-		page.locator(TEXT_TEXTBOX_XPATH).fill(linkText);
+	public void enterText(String text) {
+		page.locator(TEXT_TEXTBOX_XPATH).fill(text);
 	}
 
 	public void selectTextStyle(String textStyles) {
@@ -152,14 +158,14 @@ public class OpenAppLibraryPage {
 		}
 	}
 
-	public void selectLinkTextFont(String fontName) {
+	public void selectTextFont(String fontName) {
 		page.locator(FONT_LIST_XPATH).click();
 		page.locator(FONT_LIST_XPATH).fill(fontName);
 		page.locator(FONT_LIST_XPATH).press("ArrowDown");
 		page.locator(FONT_LIST_XPATH).press("Enter");
 	}
 
-	public void selectLinkTextColor(String hexColor) {
+	public void selectTextColor(String hexColor) {
 		page.locator(COLOR_BOX_XPATH).fill(hexColor);
 	}
 
@@ -171,38 +177,56 @@ public class OpenAppLibraryPage {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME)).click();
 	}
 
-	public Locator linkLocator(String linkText) {
-		return page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(linkText));
+	public Locator textBlockLocator(String blockName, String blockText) {
+		Locator textBlockLocator = null;
+		switch (blockName) {
+		case "Link":
+			textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
+			break;
+		case "Text (h1)":
+			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
+			break;
+		default:
+			System.out.println("Invalid block name: " + blockName);
+		}
+		return textBlockLocator;
 	}
 
-	public String getLinkText(String linkText) {
-		return linkLocator(linkText).textContent().trim();
+	public String getBlockText(String blockName, String blockText) {
+		return textBlockLocator(blockName, blockText).textContent().trim();
 	}
 
-	public String getLinkFont(String linkText) {
-		return linkLocator(linkText).evaluate("el => el.style.fontFamily || getComputedStyle(el).fontFamily").toString()
+	public String getBlockTextFont(String blockName, String blockText) {
+		return textBlockLocator(blockName, blockText)
+				.evaluate("el => el.style.fontFamily || getComputedStyle(el).fontFamily").toString()
 				.replaceAll("^\"|\"$", "");
 	}
 
-	public String getLinkStyle(String linkText) {
-		return linkLocator(linkText).evaluate("el => el.style.fontWeight").toString();
+	public String getBlockTextStyle(String blockName, String blockText) {
+		return textBlockLocator(blockName, blockText).evaluate("el => el.style.fontWeight").toString();
 	}
 
-	public String getLinkColor(String linkText) {
-		return linkLocator(linkText).evaluate("el => getComputedStyle(el).color").toString().trim();
+	public String getBlockTextColor(String blockName, String blockText) {
+		return textBlockLocator(blockName, blockText).evaluate("el => getComputedStyle(el).color").toString().trim();
 	}
 
-	public String getLinkTextAlign(String linkText) {
-		return linkLocator(linkText).evaluate("el => getComputedStyle(el).textAlign").toString();
+	public String getBlockTextAlign(String blockName, String blockText) {
+		return textBlockLocator(blockName, blockText).evaluate("el => getComputedStyle(el).textAlign").toString();
 	}
 
-	public void clickOnLink(String linkText) {
-		linkLocator(linkText).click();
+	public void clickOnLink(String blockText) {
+		Locator link = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
+		link.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		link.click();
 	}
 
 	public String getDestinationUrl(String url) {
 		page.waitForURL(url);
 		return page.url();
+	}
+
+	public void navigateToPreviosPage() {
+		page.goBack(new Page.GoBackOptions().setTimeout(5000));
 	}
 
 }
