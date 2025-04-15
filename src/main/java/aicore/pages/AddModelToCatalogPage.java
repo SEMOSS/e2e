@@ -428,9 +428,10 @@ public class AddModelToCatalogPage {
 	public void addMember(String role) throws InterruptedException {
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		// search is by user name first name and lastname
-		username = username + " lastname";
+		// username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
-		page.getByTitle("Name: " + username).click();
+//		page.getByTitle("Name: " + username).click();
+		page.getByText(username).click();
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
