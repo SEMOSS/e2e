@@ -1,13 +1,13 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class UserManagementPage {
 
 	private Page page;
-	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
-	private static final String MEMBER_SETTING_PAGE_XPATH = "//div[contains(@class, 'MuiGrid-grid')]/div/div/div/span[text()='Member Settings']";
-	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin on']";
+
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
 	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div";
 	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//li[text()='NATIVE']";
@@ -18,45 +18,26 @@ public class UserManagementPage {
 	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/following-sibling::div/input";
 	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//span[text()='Save']";
 	private static final String ADD_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added user']";
-	private static final String EDIT_ICON_XPATH = "[data-testid='EditIcon']";
+	private static final String EDIT_ICON_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td//*[name()='svg'][@data-testid='EditIcon']";
 	private static final String MODEL_DROPDOWN_XPATH = "//div[text()='None']";
 	private static final String TOKEN_VALUE_XPATH = "//li[text()='{dropdown_value}']";
 	private static final String MAX_TOKEN_VALUE_XPATH = "//label[text()='Max Tokens']";
 	private static final String FREQUENCY_DROPDOWN_XPATH = "//label[text()='Frequency']//parent::div//div";
 	private static final String WEEKELY_VALUE_XPATH = "//li[text()='{dropdown_option}']";
-	private static final String MODEL_LIMIT_XPATH = "//td[text()='{limitValue}']";
+	private static final String MODEL_LIMIT_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td[text()='{limitValue}']";
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Users\"]";
-	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@class=\"MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1o4vkg1-MuiFormControlLabel-root\"]/parent::th//input";
+	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@class='MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1o4vkg1-MuiFormControlLabel-root']/parent::th//input";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
 	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
+	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 
 	public UserManagementPage(Page page) {
 		this.page = page;
 	}
 
-	public boolean checkAdminButton() {
-		return page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible();
-	}
-
-	public void clickAdminButton() {
-		page.locator(ADMIN_ON_OFF_BUTTON_XPATH).click();
-	}
-
-	public boolean checkMemberSettingPageTile() {
-		return page.locator(MEMBER_SETTING_PAGE_XPATH).isVisible();
-	}
-
-	public void clickMemberSettingPageTile() {
-		page.locator(MEMBER_SETTING_PAGE_XPATH).click();
-	}
-
 	public void checkAddMemberButton() {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
-	}
-
-	public void checkAdminOnButton() {
-		page.locator(ADMIN_ON_BUTTON_XPATH).isVisible();
 	}
 
 	public void checkAddUserButton() {
@@ -107,13 +88,20 @@ public class UserManagementPage {
 	}
 
 	public String userCreationToastMessage() {
+		page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String toastMessage = page.textContent(ADD_MEMBER_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
 	}
 
+	public void closeToastMessage() {
+		page.locator(TOAST_MESSAGE_CLOSE_XPATH).isVisible();
+		page.locator(TOAST_MESSAGE_CLOSE_XPATH).click();
+	}
+
 	public void clickOnEditUser() {
-		page.locator(EDIT_ICON_XPATH).first().isVisible();
-		page.locator(EDIT_ICON_XPATH).first().click();
+		page.locator(EDIT_ICON_XPATH).isVisible();
+		page.locator(EDIT_ICON_XPATH).click();
 	}
 
 	public void clickModelUserDropdown() {

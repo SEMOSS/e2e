@@ -88,6 +88,11 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_is_on_the_home_page() {
 		openAppLibraryPage.navigatesToHomePage();
 	}
+	
+	@When("User navigate to Home page")
+	public void user_navigate_to_home_page() {
+		openAppLibraryPage.navigatesToHomePage();
+	}
 
 	@And("User searches {string} app in the app searchbox")
 	public void user_searches_app_in_the_app_searchbox(String appName) {
