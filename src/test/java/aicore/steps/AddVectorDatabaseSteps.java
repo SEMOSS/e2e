@@ -1,6 +1,7 @@
 package aicore.steps;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.utils.CommonUtils;
@@ -11,16 +12,20 @@ import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
+
 public class AddVectorDatabaseSteps {
 
 	private HomePage homePage;
 	private OpenVectorPage vectorPage;
 	private String timestamp;
+	private EmbedDocumentPage embedDocumentPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp;
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
+		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Vector engine")
@@ -63,13 +68,31 @@ public class AddVectorDatabaseSteps {
 		vectorPage.enterContentOverlap(contentOverlap);
 	}
 
+	@And("User enters value of Host Name")
+	public void User_enters_value_of_host_name() {
+		vectorPage.enterHostName();
+
+	}
+
+	@And("User enters value of API Key")
+	public void sUer_enters_value_of_api_key() {
+		vectorPage.enterApiKey();
+
+	}
+
+	@And("User enters value of Namespace as {string}")
+	public void User_enters_value_of_namespace_as_(String nameSpace) {
+		vectorPage.enterNameSpace(nameSpace);
+
+	}
+
 	@And("User clicks on Create Vector button")
 	public void user_clicks_on_create_vector_button() {
 		vectorPage.clickOnCreateVectorButton();
 	}
 
 	@Then("User can see vector database created success toast message as {string}")
-	public void user_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
+	public void User_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
 		String actualToastMessage = vectorPage.verifyVectorCreatedToastMessage();
 		assertEquals(actualToastMessage, expectedToastMessage, "Toast message is incorrect");
 		vectorPage.waitForVectorToastMessageToDisappear();
@@ -79,15 +102,69 @@ public class AddVectorDatabaseSteps {
 	public void user_can_see_the_vector_title_as(String VectorTitle) {
 		String actualVectorTitle = vectorPage.verifyVectorTitle();
 		System.out.println("act Title is : " + actualVectorTitle);
-		String expectedVectorTitle = VectorTitle + " " + timestamp;
+		String expectedVectorTitle = VectorTitle + " " + CommonUtils.getTodayDateFormatted();
 		assertEquals(actualVectorTitle, expectedVectorTitle, "Vector Title is not matching with expected");
+	}
+
+	@When("User clicks on files")
+	public void user_clicks_on_files() {
+		embedDocumentPage.clickOnFilesButton();
+	}
+
+	@Then("User clicks on Embed New Document")
+	public void user_clicks_on_embed_new_document() {
+		embedDocumentPage.clickOnAddEmbedDocument();
+	}
+
+	@Then("User clicks on Embed button")
+	public void user_clicks_on_embed_button() {
+		embedDocumentPage.clickOnEmbedDocument();
+	}
+
+	@Then("User sees file embeded success toast message {string}")
+	public void user_sees_file_embeded_success_toast_message(String toastMessage) {
+		String expectedMessage = embedDocumentPage.verifyToastMessage();
+		String actualMessage = toastMessage;
+		Assertions.assertEquals(actualMessage, expectedMessage, "Vector Title is not matching with expected");
+
+	}
+
+	@Then("User sees file named {string} in the file list")
+	public void user_sees_file_named_in_the_file_list(String name) {
+
+		String actualvalue = embedDocumentPage.fileNameinList();
+		String expectedValue = name;
+		Assertions.assertEquals(actualvalue, expectedValue, "Name not seen in the list");
+	}
+
+	@Then("User sees date of uploaded in the file list")
+	public void user_sees_date_of_uploaded_in_the_file_list() {
+		String actualDate = embedDocumentPage.dateUploaded();
+		String expectedDate = CommonUtils.getTodayDateFormatted();
+		Assertions.assertEquals(actualDate, expectedDate, "Upload date is not present or either not same");
+	}
+
+	@Then("User sees file size {string} in the file list")
+	public void user_sees_file_size_in_the_file_list(String filesize) {
+		String actualSize = embedDocumentPage.fileSize();
+		String expectedSize = filesize;
+		Assertions.assertEquals(actualSize, expectedSize, "File size is not seen in the list");
+	}
+
+	@Then("User sees delete icon in the file list")
+	public void user_sees_delete_icon_in_the_file_list() {
+		embedDocumentPage.deleteButton();
 	}
 
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
 	public void user_can_see_vector_catalog_name_in_field_as_in_smss_properties(String field, String name) {
+
 		String fullText = vectorPage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedName = name + " " + timestamp;
+		System.out.println(expectedName);
+		System.out.println(actualName);
+
 		assertEquals(actualName, expectedName, "Name is not matching");
 	}
 
@@ -97,8 +174,7 @@ public class AddVectorDatabaseSteps {
 		String fullText = vectorPage.verifyEmbedderEngineNameInSMSS();
 		String actualEmbedderEngineName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedEmbedderEngineName = embedderEngineName + timestamp;
-		assertEquals(actualEmbedderEngineName, expectedEmbedderEngineName,
-				"Embedder Engine Name is not matching");
+		assertEquals(actualEmbedderEngineName, expectedEmbedderEngineName, "Embedder Engine Name is not matching");
 	}
 
 	@And("User can see content length in {string} field as {string} in SMSS properties")
@@ -113,8 +189,7 @@ public class AddVectorDatabaseSteps {
 			String expectedContentOverlapValue) {
 		String fullText = vectorPage.verifyContentOverlapInSMSS();
 		String actualContentOverlapValue = CommonUtils.splitTrimValue(fullText, field);
-		assertEquals(actualContentOverlapValue, expectedContentOverlapValue,
-				"Content overlap value is not matching");
+		assertEquals(actualContentOverlapValue, expectedContentOverlapValue, "Content overlap value is not matching");
 	}
 
 	@And("User can see chunking strategy in {string} field as {string} in SMSS properties")
@@ -135,4 +210,29 @@ public class AddVectorDatabaseSteps {
 		}
 		assertEquals(actualChunkingStrategy, expectedChunkingStrategy, "Chunking strategy is not matching");
 	}
+
+	@Then("User clicks on the created Vector card name as {string}")
+	public void user_clicks_on_the_created_vector_card_name_as(String catalogName) {
+		vectorPage.addedVectorCard(catalogName);
+	}
+
+	@Then("User clicks on Access Control")
+	public void user_clicks_on_access_control() {
+		vectorPage.clickOnAccessControl();
+	}
+
+	@Then("User clicks on delete icon")
+	public void user_clicks_on_delete_icon() {
+		vectorPage.clickOnDeleteButton();
+		vectorPage.confirmationPopUp();
+	}
+
+	@Then("User sees deleted Vector success toast message {string}")
+	public void user_sees_deleted_Vector_success_toast_message(String toastMessage) {
+		String expectedMessage = vectorPage.verifyDeleteToastMessage();
+		String actualMessage = toastMessage;
+		Assertions.assertEquals(actualMessage, expectedMessage, "Vector Title is not matching with expected");
+
+	}
+
 }

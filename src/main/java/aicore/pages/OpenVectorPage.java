@@ -4,11 +4,13 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.CommonUtils;
+import aicore.utils.ConfigUtils;
+
 public class OpenVectorPage {
 
 	private Page page;
 	private String timestamp;
-
 	private static final String ADD_VECTOR_BUTTON_XPATH = "//button/span[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "#NAME";
@@ -18,6 +20,9 @@ public class OpenVectorPage {
 	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{strategyName}']";
 	private static final String CONTENT_LENGTH_ID = "#CONTENT_LENGTH";
 	private static final String CONTENT_OVERLAP_ID = "#CONTENT_OVERLAP";
+	private static final String HOST_NAME_ID = "#HOSTNAME";
+	private static final String API_KEY_ID = "#API_KEY";
+	private static final String NAME_SPACE_ID = "#NAMESPACE";
 	private static final String CREATE_VECTOR_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message css-')]";
 	private static final String VECTOR_TITLE_XPATH = "//h4[contains(@class,'MuiTypography-root MuiTypography-h4 css-')]";
@@ -26,6 +31,12 @@ public class OpenVectorPage {
 	private static final String CONTENT_LENGTH_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CONTENT_LENGTH')]";
 	private static final String CONTENT_OVERLAP_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CONTENT_OVERLAP')]";
 	private static final String CHUNKING_STRATEGY_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CHUNKING_STRATEGY')]";
+	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String VECTOR_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
+	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -41,12 +52,12 @@ public class OpenVectorPage {
 	}
 
 	public void enterVectorCatalogName(String catalogName) {
-		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName + " " + timestamp);
+		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName + " " + CommonUtils.getTodayDateFormatted());
 	}
 
 	public void selectModelfromEmbedderDropdown(String modelName) {
 		page.click(EMBEDDER_DROPDOWN_XPATH);
-		page.click(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName + timestamp));
+		page.click(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName));
 	}
 
 	public void selectStrategyfromChunkingStrategyDropdown(String strategyName) {
@@ -62,6 +73,23 @@ public class OpenVectorPage {
 
 	public void enterContentOverlap(String contentOverlap) {
 		page.fill(CONTENT_OVERLAP_ID, contentOverlap);
+	}
+
+	public void enterHostName() {
+		String hostName = ConfigUtils.getValue("host_name");
+		page.locator(HOST_NAME_ID).fill(hostName);
+
+	}
+
+	public void enterApiKey() {
+		String apiKey = ConfigUtils.getValue("api_key");
+		page.locator(API_KEY_ID).fill(apiKey);
+
+	}
+
+	public void enterNameSpace(String namespace) {
+		page.locator(NAME_SPACE_ID).fill(namespace);
+
 	}
 
 	public void clickOnCreateVectorButton() {
@@ -106,5 +134,39 @@ public class OpenVectorPage {
 	public String verifyChunkingStrategyInSMSS() {
 		String name = page.textContent(CHUNKING_STRATEGY_SMSS_PROPERTIES_XPATH).trim();
 		return name;
+	}
+
+	public void clickOnAccessControl() {
+		page.locator(ACCESS_CONTROL_XPATH).isVisible();
+		page.locator(ACCESS_CONTROL_XPATH).click();
+	}
+
+	public void clickOnDeleteButton() {
+		page.locator(DELETE_BUTTON_XPATH).isVisible();
+		page.locator(DELETE_BUTTON_XPATH).click();
+	}
+
+	public void confirmationPopUp() {
+		page.locator(CONFIRMATION_POPUP_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).isVisible();
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+	}
+
+	public void addedVectorCard(String catalogName) {
+		System.out.println(catalogName + " " + timestamp);
+		page.locator(
+				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName + " " + CommonUtils.getTodayDateFormatted()))
+				.isVisible();
+		page.locator(
+				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName + " " + CommonUtils.getTodayDateFormatted()))
+				.click();
+	}
+
+	public String verifyDeleteToastMessage() {
+		page.locator(DELETE_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toastMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).textContent();
+		return toastMessage;
 	}
 }

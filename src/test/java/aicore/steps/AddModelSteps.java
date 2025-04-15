@@ -57,6 +57,12 @@ public class AddModelSteps {
 		openModelPage.createModel();
 	}
 
+	@Given("User uploads a file {string}")
+	public void user_uploads_a_file(String fileName) {
+		String uploadedFileName = openModelPage.addPathModelZip(fileName);
+		Assertions.assertEquals(fileName, uploadedFileName);
+	}
+
 	@And("User can see a toast message as {string}")
 	public void user_can_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
@@ -148,4 +154,17 @@ public class AddModelSteps {
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
 		Assertions.assertEquals(actualVarName, newValue, "Value is not matching for " + field + "field");
 	}
+
+	@Then("User clicks on the created Model card name as {string}")
+	public void user_clicks_on_the_created_Model_card_name_as(String modelName) {
+		openModelPage.addedModelCard(modelName);
+	}
+
+	@Then("User sees deleted Model success toast message {string}")
+	public void user_sees_deleted_Model_success_toast_message(String toastMessage) {
+		String expectedMessage = openModelPage.verifyDeleteToastMessage();
+		String actualMessage = toastMessage;
+		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
+	}
+
 }

@@ -2,6 +2,8 @@ package aicore.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class CommonUtils {
 
@@ -26,6 +28,17 @@ public class CommonUtils {
 		}
 		return actualName;
 	}
+	
+	public static String getTodayDateFormatted() {
+	        // Get today's date
+	        LocalDate today = LocalDate.now();
+
+	        // Define the formatter
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	        // Return formatted date
+	        return today.format(formatter);
+	    }
 
 	public static String[] splitStringBySpace(String input) {
 		if (input != null && !input.isEmpty()) {
