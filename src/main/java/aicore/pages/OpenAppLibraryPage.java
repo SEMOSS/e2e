@@ -8,12 +8,13 @@ import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 
 public class OpenAppLibraryPage {
 
 	private Page page;
 	private String timestamp;
-
+	private static final String OPEN_APP_LIBRARY_XPATH = "//a[@data-tour='nav-app-library']";
 	private static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
 	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
 	private static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
@@ -26,6 +27,13 @@ public class OpenAppLibraryPage {
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
 	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Blocks']/parent::div";
 	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
+	private static final String HEADING_2_BLOCK_XPATH = "//div[@aria-label='Display Text in header 2']";
+	private static final String HEADING_3_BLOCK_XPATH = "//div[@aria-label='Display Text in header 3']";
+	private static final String HEADING_4_BLOCK_XPATH = "//div[@aria-label='Display Text in header 4']";
+	private static final String HEADING_5_BLOCK_XPATH = "//div[@aria-label='Display Text in header 5']";
+	private static final String HEADING_6_BLOCK_XPATH = "//div[@aria-label='Display Text in header 6']";
+	private static final String TEXT_BLOCK_XPATH = "//div[@aria-label='Show text in a regular paragraph style']";
+	private static final String MARKDOWN_BLOCK_XPATH = "//div[@aria-label='Show text in markdown format']";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
@@ -37,7 +45,7 @@ public class OpenAppLibraryPage {
 	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String FONT_LIST_XPATH = "//p[text()='Font']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String COLOR_BOX_XPATH = "//input[@type='color']";
-
+	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl + s)";
 
 	public OpenAppLibraryPage(Page page, String timestamp) {
@@ -85,12 +93,20 @@ public class OpenAppLibraryPage {
 		return actualWelcomeText;
 	}
 
-	public void navigateToHomePage() {
+	public void navigateToHomePageFromAppEditPage() {
 		String appNameWithLogo = ConfigUtils.getValue("applicationName");
 		if (page.locator(MENU_CLOSED_ICON_XPATH).isVisible()) {
 			page.locator(MENU_OPTION_XPATH).click();
 		}
 		page.locator(APP_LOGO_ON_EDIT_PAGE_XPATH.replace("{appName}", appNameWithLogo)).click();
+	}
+
+	public void navigatesToHomePage() {
+		Locator openAppLibrary = page.locator(OPEN_APP_LIBRARY_XPATH);
+		if (!openAppLibrary.isVisible()) {
+			page.navigate(UrlUtils.getUrl("#/"));
+			openAppLibrary.waitFor();
+		}
 	}
 
 	public void searchApp(String appName) {
@@ -113,7 +129,6 @@ public class OpenAppLibraryPage {
 	}
 
 	public void blockDropPosition() {
-		page.mouse().down();
 		BoundingBox targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH).boundingBox();
 		double dropX = targetBox.x + (targetBox.width / 2); // Center X position
 		double dropY = targetBox.y + targetBox.height + 10; // Below target (+10 for margin)
@@ -121,14 +136,52 @@ public class OpenAppLibraryPage {
 		page.mouse().up();
 	}
 
-	public void mouseHoverOnHeading1Block() {
-		page.locator(HEADING_1_BLOCK_XPATH).isVisible();
-		page.locator(HEADING_1_BLOCK_XPATH).hover();
-	}
-
-	public void mouseHoverOnLinkBlock() {
-		page.locator(LINK_BLOCK_XPATH).isVisible();
-		page.locator(LINK_BLOCK_XPATH).hover();
+	public void mouseHoverOnTextSectionBlock(String blockName) {
+		boolean isValidBlock = true;
+		switch (blockName) {
+		case "Text (h1)":
+			page.locator(HEADING_1_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_1_BLOCK_XPATH).hover();
+			break;
+		case "Text (h2)":
+			page.locator(HEADING_2_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_2_BLOCK_XPATH).hover();
+			break;
+		case "Text (h3)":
+			page.locator(HEADING_3_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_3_BLOCK_XPATH).hover();
+			break;
+		case "Text (h4)":
+			page.locator(HEADING_4_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_4_BLOCK_XPATH).hover();
+			break;
+		case "Text (h5)":
+			page.locator(HEADING_5_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_5_BLOCK_XPATH).hover();
+			break;
+		case "Text (h6)":
+			page.locator(HEADING_6_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_6_BLOCK_XPATH).hover();
+			break;
+		case "Text":
+			page.locator(TEXT_BLOCK_XPATH).isVisible();
+			page.locator(TEXT_BLOCK_XPATH).hover();
+			break;
+		case "Link":
+			page.locator(LINK_BLOCK_XPATH).isVisible();
+			page.locator(LINK_BLOCK_XPATH).hover();
+			break;
+		case "Markdown":
+			page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
+			page.locator(MARKDOWN_BLOCK_XPATH).hover();
+			break;
+		default:
+			isValidBlock = false;
+			System.out.println("Invalid block name: " + blockName);
+		}
+		if (isValidBlock) {
+			page.mouse().down();
+		}
 	}
 
 	public String verifyHeadingBlockTextMessage() {
@@ -149,6 +202,10 @@ public class OpenAppLibraryPage {
 
 	public void enterText(String text) {
 		page.locator(TEXT_TEXTBOX_XPATH).fill(text);
+	}
+
+	public void enterMarkdown(String markdown) {
+		page.locator(MARKDOWN_TEXTBOX_XPATH).fill(markdown);
 	}
 
 	public void selectTextStyle(String textStyles) {
@@ -177,41 +234,48 @@ public class OpenAppLibraryPage {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME)).click();
 	}
 
-	public Locator textBlockLocator(String blockName, String blockText) {
+	public Locator textSectionDragAndDroppedBlockLocator(String blockName, String blockText) {
 		Locator textBlockLocator = null;
 		switch (blockName) {
 		case "Link":
 			textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
 			break;
-		case "Text (h1)":
-			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
+		case "Text":
+			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			break;
+		case "Markdown":
+			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
 			break;
 		default:
-			System.out.println("Invalid block name: " + blockName);
+			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
+			break;
 		}
 		return textBlockLocator;
 	}
 
 	public String getBlockText(String blockName, String blockText) {
-		return textBlockLocator(blockName, blockText).textContent().trim();
+		return textSectionDragAndDroppedBlockLocator(blockName, blockText).textContent().trim();
 	}
 
 	public String getBlockTextFont(String blockName, String blockText) {
-		return textBlockLocator(blockName, blockText)
+		return textSectionDragAndDroppedBlockLocator(blockName, blockText)
 				.evaluate("el => el.style.fontFamily || getComputedStyle(el).fontFamily").toString()
 				.replaceAll("^\"|\"$", "");
 	}
 
 	public String getBlockTextStyle(String blockName, String blockText) {
-		return textBlockLocator(blockName, blockText).evaluate("el => el.style.fontWeight").toString();
+		return textSectionDragAndDroppedBlockLocator(blockName, blockText).evaluate("el => el.style.fontWeight")
+				.toString();
 	}
 
 	public String getBlockTextColor(String blockName, String blockText) {
-		return textBlockLocator(blockName, blockText).evaluate("el => getComputedStyle(el).color").toString().trim();
+		return textSectionDragAndDroppedBlockLocator(blockName, blockText).evaluate("el => getComputedStyle(el).color")
+				.toString().trim();
 	}
 
 	public String getBlockTextAlign(String blockName, String blockText) {
-		return textBlockLocator(blockName, blockText).evaluate("el => getComputedStyle(el).textAlign").toString();
+		return textSectionDragAndDroppedBlockLocator(blockName, blockText)
+				.evaluate("el => getComputedStyle(el).textAlign").toString();
 	}
 
 	public void clickOnLink(String blockText) {

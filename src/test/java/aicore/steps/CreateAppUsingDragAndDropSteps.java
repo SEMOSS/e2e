@@ -79,9 +79,14 @@ public class CreateAppUsingDragAndDropSteps {
 		assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage);
 	}
 
-	@When("User navigate to Home page")
-	public void user_navigateto_home_page() {
-		openAppLibraryPage.navigateToHomePage();
+	@When("User navigates to the Home page from the App Edit page")
+	public void user_navigates_to_the_home_page_from_the_app_edit_page() {
+		openAppLibraryPage.navigateToHomePageFromAppEditPage();
+	}
+
+	@Given("User is on the Home page")
+	public void user_is_on_the_home_page() {
+		openAppLibraryPage.navigatesToHomePage();
 	}
 
 	@And("User searches {string} app in the app searchbox")
@@ -106,16 +111,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
-		switch (blockName) {
-		case "Text (h1)":
-			openAppLibraryPage.mouseHoverOnHeading1Block();
-			break;
-		case "Link":
-			openAppLibraryPage.mouseHoverOnLinkBlock();
-			break;
-		default:
-			System.out.println("Invalid block name");
-		}
+		openAppLibraryPage.mouseHoverOnTextSectionBlock(blockName);
 		openAppLibraryPage.blockDropPosition();
 	}
 
@@ -137,9 +133,16 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-	@And("User enters {string} as the text")
-	public void user_enters_as_the_text(String linkText) {
-		openAppLibraryPage.enterText(linkText);
+	@And("User enters {string} text as {string}")
+	public void user_enters_text_as(String blockName, String blockText) {
+		switch (blockName) {
+		case "Markdown":
+			openAppLibraryPage.enterMarkdown(blockText);
+			break;
+		default:
+			openAppLibraryPage.enterText(blockText);
+			break;
+		}
 	}
 
 	@And("User selects the {string} styles")
@@ -154,7 +157,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User selects {string} as the HEX color value")
 	public void user_selects_as_the_rgb_color_values(String hexColor) {
-		openAppLibraryPage.selectTextColor(hexColor);
+		openAppLibraryPage.selectTextColor(hexColor.trim());
 	}
 
 	@And("User selects {string} as the text alignment")
@@ -169,14 +172,23 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Then("User should see the {string} text as {string}")
 	public void user_should_see_the_text_as(String blockName, String text) {
-		this.blockText = text;
+		String BOLD_MARKDOWN_PATTERN = "\\*\\*(.*?)\\*\\*";
+		String BOLD_REPLACEMENT = "$1";
+		switch (blockName) {
+		case "Markdown":
+			this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
+			break;
+		default:
+			this.blockText = text;
+			break;
+		}
 		String actualText = openAppLibraryPage.getBlockText(blockName, blockText);
 		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
 	}
 
 	@Then("User should see the {string} text displayed in {string} styles")
 	public void user_should_see_the_text_displayed_in_styles(String blockName, String textStyles) {
-		Locator linkLocator = openAppLibraryPage.textBlockLocator(blockName, blockText);
+		Locator linkLocator = openAppLibraryPage.textSectionDragAndDroppedBlockLocator(blockName, blockText);
 		List<String> appliedTextStyles = Arrays.asList(textStyles.split(", "));
 		List<String> actualAppliedTextStyles = CommonUtils.getAppliedStyles(linkLocator);
 		Assertions.assertEquals(appliedTextStyles, actualAppliedTextStyles,
