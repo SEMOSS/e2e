@@ -10,3 +10,4 @@ state.json
 /.settings
 .idea/
 src/main/resources/local.properties
+/results

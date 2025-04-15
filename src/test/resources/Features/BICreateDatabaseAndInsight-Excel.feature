@@ -9,7 +9,7 @@ Feature: Create Database and Insight to BI System app- Excel
     #And User enters description as 'Created by automation script'
     #And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User navigate back to the Home page
+    And User navigate to Home page
     And User clicks on System app
     And User clicks on BI
     And User clicks on Welcome popup close option
