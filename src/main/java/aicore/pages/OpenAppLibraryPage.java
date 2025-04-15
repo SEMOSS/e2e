@@ -27,6 +27,7 @@ public class OpenAppLibraryPage {
 	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
+	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
@@ -81,9 +82,11 @@ public class OpenAppLibraryPage {
 		return actualWelcomeText;
 	}
 
-	public void navigateToPreviousPage() {
+	public void navigateToHomePage() {
 		String appNameWithLogo = ConfigUtils.getValue("applicationName");
-		page.locator(MENU_OPTION_XPATH).click();
+		if (page.locator(MENU_CLOSED_ICON_XPATH).isVisible()) {
+			page.locator(MENU_OPTION_XPATH).click();
+		}
 		page.locator(APP_LOGO_ON_EDIT_PAGE_XPATH.replace("{appName}", appNameWithLogo)).click();
 	}
 

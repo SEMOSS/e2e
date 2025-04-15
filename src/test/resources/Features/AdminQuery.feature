@@ -1,7 +1,7 @@
 Feature: Admin query
 
   @LoginWithAdmin
-  Scenario Outline: Validate Admin query
+  Scenario Outline: Validate '<DATABASE_NAME>' Admin query
     Given Admin User navigates to Open Setting page
     When Admin User enable admin mode
     And Admin User clicks on 'Admin Query' Card

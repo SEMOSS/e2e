@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.AriaRole;
 public class SettingsMyProfile {
 	private Page page;
 	private String timestamp;
-	private static final String OPEN_SETTINGS_ICON_XPATH = "//a[@aria-label='Navigate to settings']";
+	private static final String OPEN_SETTINGS_ICON_XPATH = "Settings-icon";
 	private static final String MY_PROFILE_SECTION_TITLE_XPATH = "//h6[text()='{sectionText}']";
 	private static final String PRIVACY_CENTER_XPATH = "//span[text()='Privacy Center']";
 	private static final String DESCRIPTION_FIELD_BUTTON_XPATH = "//label[text()='Description']/following-sibling::div//input";
@@ -26,7 +26,7 @@ public class SettingsMyProfile {
 	}
 
 	public void openSettingsIcon() {
-		page.click(OPEN_SETTINGS_ICON_XPATH);
+		page.getByTestId(OPEN_SETTINGS_ICON_XPATH).click();;
 	}
 
 	public void clickOnMyProfileCard() {
