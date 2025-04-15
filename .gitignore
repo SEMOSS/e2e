@@ -10,3 +10,6 @@ state.json
 /.settings
 .idea/
 src/main/resources/local.properties
+src/test/resources/data/pinecone_model.zip
+src/test/resources/data/test1.pdf
+
