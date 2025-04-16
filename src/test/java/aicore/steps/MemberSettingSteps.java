@@ -1,11 +1,13 @@
 package aicore.steps;
 
 import org.apache.logging.log4j.LogManager;
+
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.*;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -15,6 +17,7 @@ public class MemberSettingSteps {
 	private HomePage homePage;
 	private SettingPage settingPage;
 	private static final Logger logger = LogManager.getLogger(MemberSettingSteps.class);
+	int NumberOfUser = 0;
 
 	public MemberSettingSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -109,6 +112,18 @@ public class MemberSettingSteps {
 		int countOfMember = Integer.parseInt(count);
 		Assertions.assertTrue(countOfUser == countOfMember, "The number should be 1, but was " + countOfUser);
 
+	}
+
+	@And("User sees a count of member")
+	public void User_sees_a_count_of_member() {
+		int initialCount = settingPage.checkCountOfUsers();
+		this.NumberOfUser = initialCount;
+	}
+
+	@And("User sees the updated count of members increase by {int}")
+	public void user_sees_the_updated_count_of_members_increase_by(int addedNumberOfUser) {
+		int updatedCountOfUser = settingPage.checkCountOfUsers();
+		Assertions.assertTrue(updatedCountOfUser - this.NumberOfUser == addedNumberOfUser);
 	}
 
 }
