@@ -1,5 +1,6 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -20,6 +21,10 @@ public class SettingPage {
 	private static final String TOTAL_ROWS_XPATH = "//tbody[contains(@class, 'MuiTableBody-root')]/tr";
 	private static final String NEXT_PAGE_XPATH = "//button[contains(@title,'Go to next page')]";
 	private static final String PREVIOUS_PAGE_XPATH = "//button[contains(@title,'Go to previous page')]";
+	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
+	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
+	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
+
 
 	public SettingPage(Page page) {
 		this.page = page;
@@ -96,5 +101,27 @@ public class SettingPage {
 		page.locator(ROWS_PER_PAGE_XPATH).click();
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).isVisible();
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).click();
+	}
+  
+	public void clickOnSearchButton() {
+		page.locator(SEARCH_BUTTON_XPATH).isVisible();
+		page.locator(SEARCH_BUTTON_XPATH).click();
+
+	}
+
+	public void clickOnSearchBox() {
+		page.locator(SEARCH_BAR_XPATH).isVisible();
+		page.locator(SEARCH_BAR_XPATH).click();
+
+	}
+
+	public void enterUsername(String username) {
+		page.keyboard().type(username, new Keyboard.TypeOptions().setDelay(200));
+		page.waitForTimeout(1500);
+	}
+
+	public String checkUsername(String username) {
+		return page.locator(USERLIST_XPATH.replace("{userName}", username)).textContent();
+
 	}
 }
