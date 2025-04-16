@@ -11,7 +11,7 @@ Feature: View Member Settings for Admin User
     
  Scenario: Validate Pagination in member setting page
    Given User sees atleast one count of users on Member setting page
-   When  User adds 110 members and can see toast message as 'Successfully added user' for all added members
+   When  User adds 110 members using the api
    Then User select '25' in Rows per page filter
    And User sees the '25' rows in the page
    Then User clicks on the Right pagination arrow to navigate to next page
@@ -37,6 +37,6 @@ Feature: View Member Settings for Admin User
   When  User adds 1 members and can see toast message as 'Successfully added user' for all added members
   Then User sees the updated count of members increase by 1
   And User clicks on search button 
-  And User searchs for user having username 'Name1' 
-  And User sees the 'Name1' in the searched user list 
+  And User searchs for user having username 'Tester1'
+  And User sees the 'Tester1' in the searched user list
   And User sees the count of user as '1' in searched result

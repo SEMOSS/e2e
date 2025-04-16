@@ -1,5 +1,6 @@
 package aicore.steps;
 
+import aicore.utils.RestCaller;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -10,6 +11,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.io.IOException;
 
 public class UserManagementSteps {
 
@@ -72,6 +75,13 @@ public class UserManagementSteps {
 			String actualMessage = userpage.userCreationToastMessage();
 			Assertions.assertEquals(actualMessage, toastMessage, "User creation failed");
 			userpage.closeToastMessage();
+		}
+	}
+
+	@And("User adds {int} members using the api")
+	public void user_adds_members_using_api(Integer usercount) throws IOException {
+		for (int i = 1; i <= usercount; i++) {
+			RestCaller.createNewUser("Name" + i);
 		}
 	}
 
