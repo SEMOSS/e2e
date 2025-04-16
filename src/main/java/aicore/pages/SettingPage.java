@@ -101,7 +101,6 @@ public class SettingPage {
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).isVisible();
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).click();
 	}
-
 	public void clickOnSearchButton() {
 		page.locator(SEARCH_BUTTON_XPATH).isVisible();
 		page.locator(SEARCH_BUTTON_XPATH).click();
