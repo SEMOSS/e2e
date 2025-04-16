@@ -1,6 +1,6 @@
 #!/bin/sh
-
-docker compose rm -f semoss \
+docker pull quay.io/semoss/docker:ubi8-rhel \
+; docker compose rm -f semoss \
 ; docker compose up semoss --build -d
 
 
