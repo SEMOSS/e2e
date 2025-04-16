@@ -11,6 +11,7 @@ public class OpenStoragePage {
 	private static final String STORAGE_XPATH = "//div[@class='css-axw7ok']//p[text()='{Storage}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "#NAME";
 	private static final String REGION_TEXTBOX_ID = "#S3_REGION";
+	private static final String BUCKET_TEXTBOX_ID = "#S3_BUCKET";
 	private static final String ACCESS_KEY_TEXTBOX_ID = "#S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_ID = "#S3_SECRET_KEY";
 	private static final String CREATE_STORAGE_BUTTON = "//span[text()='Create storage']";
@@ -19,6 +20,7 @@ public class OpenStoragePage {
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String S3_REGION_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_REGION')]";
+	private static final String S3_BUCKET_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_BUCKET')]";
 	private static final String S3_ACCESS_KEY_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_ACCESS_KEY')]";
 
 	public OpenStoragePage(Page page, String timestamp) {
@@ -40,6 +42,10 @@ public class OpenStoragePage {
 
 	public void enterRegionName(String regionName) {
 		page.fill(REGION_TEXTBOX_ID, regionName);
+	}
+	
+	public void enterBucket(String bucket) {
+		page.fill(BUCKET_TEXTBOX_ID, bucket);
 	}
 
 	public void enterAccessKey(String accessKey) {
@@ -82,6 +88,11 @@ public class OpenStoragePage {
 	public String verifyS3RegionFiledInSMSS() {
 		String s3Region = page.textContent(S3_REGION_SMSS_PROPERTIES_XPATH).trim();
 		return s3Region;
+	}
+	
+	public String verifyS3BucketFiledInSMSS() {
+		String s3Bucket = page.textContent(S3_BUCKET_SMSS_PROPERTIES_XPATH).trim();
+		return s3Bucket;
 	}
 
 	public String verifyS3AccessKeyFiledInSMSS() {
