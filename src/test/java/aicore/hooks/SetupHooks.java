@@ -140,6 +140,7 @@ public class SetupHooks {
 	@After
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
+		GenericSetupUtils.navigateToHomePage(page);
 	}
 
 
