@@ -79,9 +79,9 @@ public class CreateAppUsingDragAndDropSteps {
 		assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage);
 	}
 
-	@When("User navigate back to the Home page")
-	public void user_navigate_back_to_the_home_page() {
-		openAppLibraryPage.navigateToPreviousPage();
+	@When("User navigate to Home page")
+	public void user_navigate_to_home_page() {
+		openAppLibraryPage.navigateToHomePage();
 	}
 
 	@And("User searches {string} app in the app searchbox")

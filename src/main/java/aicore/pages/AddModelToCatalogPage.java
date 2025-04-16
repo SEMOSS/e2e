@@ -84,6 +84,7 @@ public class AddModelToCatalogPage {
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION_XPATH = "//button[@aria-label='copy Model ID']";
 	private static final String USAGE_COMMAND_COPY_OPTION_XPATH = "//div[h6[text()='{commandName}']]//button[contains(@class,'MuiButtonBase-root MuiButton-root MuiButton-outlined')]";
+	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 
 	public AddModelToCatalogPage(Page page, String timestamp) {
 		this.page = page;
@@ -405,6 +406,17 @@ public class AddModelToCatalogPage {
 		return isModelVisible;
 	}
 
+	public boolean verifyTileIsVisible(String tileName) {
+		boolean isTileVisible = page.isVisible(TILE_XPATH.replace("{tileName}", tileName));
+		return isTileVisible;
+	}
+
+	public void clickOnSearchBox(String string) {
+		page.getByPlaceholder("Search").isVisible();
+		page.getByPlaceholder("Search").click();
+		page.getByPlaceholder("Search").fill(string);
+	}
+
 	public void clickOnAccessControl() {
 		page.click(SETTINGS_TAB_XPATH);
 	}
@@ -416,9 +428,10 @@ public class AddModelToCatalogPage {
 	public void addMember(String role) throws InterruptedException {
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		// search is by user name first name and lastname
-		username = username + " lastname";
+		// username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
-		page.getByTitle("Name: " + username).click();
+//		page.getByTitle("Name: " + username).click();
+		page.getByText(username).click();
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
@@ -466,7 +479,9 @@ public class AddModelToCatalogPage {
 	}
 
 	public String copyCommand(String commandName) {
-		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).isVisible();
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).scrollIntoViewIfNeeded();
+		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName))
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).click();
 		return page.evaluate("navigator.clipboard.readText()").toString().trim();
 	}

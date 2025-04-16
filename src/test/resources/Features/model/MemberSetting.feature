@@ -1,4 +1,5 @@
 Feature: View Member Settings for Admin User
+
 @LoginWithAdmin
  Scenario: View Member Settings
     Given User navigates to Open Setting page
@@ -7,7 +8,7 @@ Feature: View Member Settings for Admin User
     Then User sees the Add User button
     And User sees Admin mode on
     And User sees atleast one count of users on Member setting page
-    
+
  Scenario: Validate Pagination in member setting page
    Given User sees atleast one count of users on Member setting page
    When  User adds 110 members and can see toast message as 'Successfully added user' for all added members
