@@ -35,8 +35,8 @@ public class UserManagementSteps {
 
 	@And("User enables admin mode")
 	public void user_enables_admin_mode() {
-		userpage.checkAdminButton();
-		userpage.clickAdminButton();
+		settingpage.checkAdminButton();
+		settingpage.clickOnAdminButton();
 	}
 
 	@When("User Management clicks on {string} Card")
@@ -71,6 +71,7 @@ public class UserManagementSteps {
 			userpage.clickSaveButton();
 			String actualMessage = userpage.userCreationToastMessage();
 			Assertions.assertEquals(actualMessage, toastMessage, "User creation failed");
+			userpage.closeToastMessage();
 		}
 	}
 

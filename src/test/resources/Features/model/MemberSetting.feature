@@ -1,4 +1,5 @@
 Feature: View Member Settings for Admin User
+
 @LoginWithAdmin
  Scenario: View Member Settings
     Given User navigates to Open Setting page

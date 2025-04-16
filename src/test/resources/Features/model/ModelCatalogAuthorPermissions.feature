@@ -1,7 +1,7 @@
 Feature: Model catalog permission - Author
 Adding LLM to the catalog
  
-  Background: Create a Model - GPT-3.5
+  Scenario: Create a Model - GPT-3.5
     Given User navigates to Open Model
     When User clicks on Add Model
     And User selects 'GPT-3.5'
@@ -42,11 +42,11 @@ Adding LLM to the catalog
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     
-  #Scenario: Model Catalog - Author - Delete editor Member
-    #And User deletes the 'Editor' user
-    #
-  #Scenario: Model Catalog - Author - Delete read Member
-    #And User deletes the 'Read' user
-    #
-  #Scenario: Model Catalog - Author - Delete Model
-    #Then 'Author' user 'can' Delete Model
+  Scenario: Model Catalog - Author - Delete editor Member
+    And User deletes the 'Editor' user
+    
+  Scenario: Model Catalog - Author - Delete read Member
+    And User deletes the 'Read' user
+    
+  Scenario: Model Catalog - Author - Delete Model
+    Then 'Author' user 'can' Delete Model

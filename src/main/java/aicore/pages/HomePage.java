@@ -58,6 +58,7 @@ public class HomePage {
 	}
 
 	public void clickOnOpenAppLibrary() {
+//		page.locator("[aria-label='Navigate to app library']").click();
 		page.click(OPEN_APP_LIBRARY_XPATH);
 	}
 
