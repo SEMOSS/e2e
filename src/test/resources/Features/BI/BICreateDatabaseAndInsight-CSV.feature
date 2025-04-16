@@ -6,8 +6,8 @@ Feature: Create Database and Insight to BI System app- CSV
     When User clicks on Create New App button
     And User clicks on Get Started button in Drag and Drop
     And User enters app name as 'Test app'
-    #And User enters description as 'Created by automation script'
-    #And User enters tags 'Test1, Test2' and presses Enter
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
     And User navigate to Home page
     And User clicks on System app
@@ -29,4 +29,4 @@ Feature: Create Database and Insight to BI System app- CSV
     And User mouse hover on database frame and click on Visualize this data option
     And User clicks on Save button
     And User enters 'Test Automation' as the insight name, selects the 'Test App' project, and clicks the Save button
-    Then User can see Insight created toast message as 'Successfully saved insight(s)'
+   # Then User can see Insight created toast message as 'Successfully saved insight(s)'

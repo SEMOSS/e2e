@@ -47,6 +47,11 @@ public class AddStorageSteps {
 	public void user_enters_region_as(String regionName) {
 		storagePage.enterRegionName(regionName);
 	}
+	
+	@And("User enters Bucket as {string}")
+	public void user_enters_bucket_as(String regionName) {
+		storagePage.enterBucket(regionName);
+	}
 
 	@And("User enters Access Key as {string}")
 	public void user_enters_access_key_as(String accessKey) {
@@ -82,6 +87,14 @@ public class AddStorageSteps {
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedName = name + " " + timestamp;
 		Assertions.assertEquals(actualName, expectedName, "Storage title is not matching");
+	}
+	
+	@Then("User can see storage bucket in {string} field as {string} in SMSS properties")
+	public void user_can_see_storage_bucket_in_field_as_in_smss_properties(String field, String name) {
+		String fullText = storagePage.verifyS3BucketFiledInSMSS();
+		String actualName = CommonUtils.splitTrimValue(fullText, field);
+		String expectedName = name;
+		Assertions.assertEquals(actualName, expectedName, "Storage bucket is not matching");
 	}
 
 	@Then("User can see storage region in {string} field as {string} in SMSS properties")

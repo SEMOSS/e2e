@@ -13,7 +13,7 @@ public class SettingsAdminQueryPage {
 	private static final String QUERY_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root')]//label[text()='Enter query to run on database']";
 	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
 	private static final String QUERY_EXECUTED_TOAST_MESSAGE = "Successfully submitted query";
-	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Execute Query";
+	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Run";
 
 	public SettingsAdminQueryPage(Page page) {
 		this.page = page;
@@ -34,6 +34,7 @@ public class SettingsAdminQueryPage {
 	}
 
 	public void clickOnExecuteQueryButton() {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(EXECUTE_QUERY_BUTTON_TEXT)).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(EXECUTE_QUERY_BUTTON_TEXT)).click();
 	}
 
