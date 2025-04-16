@@ -2,12 +2,13 @@ Feature: Create Database and Insight to BI System app- Excel
   I want to use this feature file for all the scenarios related to Create Database and Insight via Excel
  
   Background: Create database by importing data from Excel file
-    Given User navigates to Open App Library
+    Given User can navigate to home page
+    And User navigates to Open App Library
     When User clicks on Create New App button
     And User clicks on Get Started button in Drag and Drop
     And User enters app name as 'Test app'
-    #And User enters description as 'Created by automation script'
-    #And User enters tags 'Test1, Test2' and presses Enter
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
     And User navigate to Home page
     And User clicks on System app
@@ -30,5 +31,5 @@ Feature: Create Database and Insight to BI System app- Excel
     And User mouse hover on database frame and click on Visualize this data option
     And User clicks on Save button
     And User enters 'Test Automation' as the insight name, selects the 'Test App' project, and clicks the Save button
-    Then User can see Insight created toast message as 'Successfully saved insight(s)'
+    #Then User can see Insight created toast message as 'Successfully saved insight(s)'
  

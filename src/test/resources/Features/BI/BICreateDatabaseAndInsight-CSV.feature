@@ -2,7 +2,8 @@ Feature: Create Database and Insight to BI System app- CSV
   I want to use this feature file for all the scenarios related to Create Database and Insight via CSV
 
   Background: Create database by importing data from CSV file
-    Given User navigates to Open App Library
+    Given User can navigate to home page
+    And User navigates to Open App Library
     When User clicks on Create New App button
     And User clicks on Get Started button in Drag and Drop
     And User enters app name as 'Test app'

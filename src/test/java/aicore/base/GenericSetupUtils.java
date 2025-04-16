@@ -201,12 +201,17 @@ public class GenericSetupUtils {
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.waitForLoadState(LoadState.LOAD);
-		String waitingForUrl = UrlUtils.getUrl("#");
+		navigateToHomePage(page);
+	}
+
+	public static void navigateToHomePage(Page page) {
+		String homePage = UrlUtils.getUrl("#");
+		page.navigate(homePage);
 		try {
-			page.waitForURL(waitingForUrl);
+			page.waitForURL(homePage);
 		} catch (Throwable t) {
-			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", waitingForUrl, page.url());
-		}
+			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
+		}		
 	}
 
 	public static void loginWithMSuser(Page page, String Username, String Password) {
