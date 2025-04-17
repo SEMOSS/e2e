@@ -44,7 +44,7 @@ public class SetupHooks {
 
 	@BeforeAll
 	public static void beforeAll() throws IOException {
-		// logger.info("BEFORE ALL: {}", scenario.getName());
+		logger.info("BEFORE ALL");
 		GenericSetupUtils.initialize();
 		scenarioNumber = 0;
 
@@ -79,6 +79,7 @@ public class SetupHooks {
 		GenericSetupUtils.setupLoggers(page);
 
 		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
+			logger.info("Creating users");
 			GenericSetupUtils.createUsers(page);
 		}
 
@@ -139,6 +140,7 @@ public class SetupHooks {
 	@After
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
+		GenericSetupUtils.navigateToHomePage(page);
 	}
 
 
@@ -151,17 +153,24 @@ public class SetupHooks {
 	}
 
 	private static void logoutAndSave() throws IOException {
-		page.navigate(UrlUtils.getUrl("#/"));
-		GenericSetupUtils.logout(page);
+		try {
+			page.navigate(UrlUtils.getUrl("#/"));
+			GenericSetupUtils.logout(page);
+		} catch (Throwable t) {
+			logger.error("Could not logout with throwable message: {}", t.getMessage());
+		}
 
 		if (GenericSetupUtils.useTrace()) {
+			logger.info("Using trace. Saving trace video");
 			Tracing.StopOptions so = new Tracing.StopOptions();
 			String filename = feature + ".zip";
 			Path dir = Paths.get("traces", "features");
 			if (!Files.exists(dir)) {
+				logger.info("Creating directories");
 				Files.createDirectories(dir);
 			}
 			Path traceFile = Paths.get("traces", "features", filename);
+			logger.info("Setting path: {}", traceFile);
 			so.setPath(traceFile);
 			page.context().tracing().stop(so);
 		}
