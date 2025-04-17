@@ -1,6 +1,7 @@
 package aicore.steps;
 
 import org.apache.logging.log4j.LogManager;
+
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
@@ -64,14 +65,6 @@ public class MemberSettingSteps {
 		Assertions.assertTrue(countOfUser > 0);
 	}
 
-	@When("User sees Member count equal or greater than {string}")
-	public void user_sees_member_count_equal_or_greater_than(String membercount) {
-		int countOfUser = settingPage.checkCountOfUsers();
-		int countMember = Integer.parseInt(membercount);
-		Assertions.assertTrue(countOfUser > countMember,
-				"The number should be greater than 29, but was " + countOfUser);
-	}
-
 	@Then("User select {string} in Rows per page filter")
 	public void user_select_in_Rows_per_page_filter(String RowsNumber) {
 		settingPage.clickNumberOfRows(RowsNumber);
@@ -98,7 +91,6 @@ public class MemberSettingSteps {
 	public void user_clicks_on_search_button() {
 		settingPage.clickOnSearchButton();
 		settingPage.clickOnSearchBox();
-
 	}
 
 	@Then("User searchs for user having username {string}")
@@ -126,30 +118,6 @@ public class MemberSettingSteps {
 	public void User_sees_a_count_of_member() {
 		int initialCount = settingPage.checkCountOfUsers();
 		this.NumberOfUser = initialCount;
-	}
-
-	@Given("User adds {int} member and can see toast message as {string}")
-	public void user_adds_member(Integer usercount, String toastMessage) throws InterruptedException {
-		for (int i = 1; i <= usercount; i++) {
-			settingPage.clickAddUserButton();
-			settingPage.clickTypeDropdown();
-			settingPage.clickNativeDropdownValue();
-			settingPage.fillUserId("UserId" + i);
-			settingPage.fillName("Name" + i);
-			settingPage.fillEmail("UserEmail" + i + "@testautomation.com");
-			if (i <= 9) {
-				settingPage.fillPhoneNumber("100000000" + i);
-			} else if (i > 9 && i < 100) {
-				settingPage.fillPhoneNumber("10000000" + i);
-			} else if (i >= 100) {
-				settingPage.fillPhoneNumber("1000000" + i);
-			}
-			settingPage.clickSaveButton();
-			String actualMessage = settingPage.userCreationToastMessage();
-			Assertions.assertEquals(actualMessage, toastMessage, "User creation failed");
-
-		}
-
 	}
 
 	@And("User sees the updated count of members increase by {int}")

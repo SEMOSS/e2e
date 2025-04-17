@@ -52,7 +52,7 @@ public class GenericSetupUtils {
 		useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
 		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
-		
+
 		if (useDocker) {
 			DockerUtils.startup();
 		}
@@ -103,14 +103,13 @@ public class GenericSetupUtils {
 			co.setRecordVideoSize(1920, 1080);
 			co.setViewportSize(1920, 1080);
 		}
-		
+
 		if (Boolean.parseBoolean(ConfigUtils.getValue("use_state"))) {
 			co.setStorageStatePath(Paths.get("state.json"));
 		}
 		return co;
 	}
-	
-	
+
 	public static StartOptions getStartOptions() {
 		StartOptions so = new Tracing.StartOptions();
 		so.setScreenshots(true);
@@ -122,7 +121,7 @@ public class GenericSetupUtils {
 	public static void setupLoggers(Page page) {
 		// request handling
 		page.onRequest(HttpLogger::logRequest);
-		
+
 		// response handling
 		page.onResponse(HttpLogger::logResponse);
 
@@ -133,6 +132,7 @@ public class GenericSetupUtils {
 		// setup admin user
 		String adminUser = ConfigUtils.getValue("native_username");
 		String adminPassword = ConfigUtils.getValue("native_password");
+
 		setupInitialAdmin(page, adminUser);
 
 		// test admin user login
@@ -141,6 +141,11 @@ public class GenericSetupUtils {
 		String adminUser2 = ConfigUtils.getValue("admin_username");
 		String adminPassword2 = ConfigUtils.getValue("admin_password");
 		registerUser(page, adminUser2, adminPassword2);
+
+		// login and make admin and admin and logout
+		login(page, adminUser, adminPassword);
+		makeAdminUserAdmin(page);
+		logout(page);
 
 		String authorUser = ConfigUtils.getValue("author_username");
 		String authorPassword = ConfigUtils.getValue("author_password");
@@ -155,6 +160,16 @@ public class GenericSetupUtils {
 		registerUser(page, readUser, readPassword);
 	}
 
+	private static void makeAdminUserAdmin(Page page) {
+		page.getByLabel("Navigate to settings").click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
+		page.getByText("Member Settings").click();
+		page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("al admin lastname User ID:"))
+				.getByRole(AriaRole.BUTTON).first().click();
+		page.locator("li").filter(new Locator.FilterOptions().setHasText("AdminAll-Access pass to app"))
+				.getByRole(AriaRole.CHECKBOX).check();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
+	}
 
 	public static void logout(Page page) {
 		// going to logout
@@ -173,8 +188,9 @@ public class GenericSetupUtils {
 		page.getByLabel("Username").fill(nativeUsername);
 		page.getByLabel("Username").press("Tab");
 		page.locator("input[type=\"password\"]").fill(nativePassword);
-		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"), () -> page
-				.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
+		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
+				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
+
 		assertEquals(200, response.status());
 
 		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
@@ -213,7 +229,7 @@ public class GenericSetupUtils {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", waitingForUrl, page.url());
 		}
 	}
-	
+
 	private static void setupInitialAdmin(Page page, String userName) {
 		page.navigate(UrlUtils.getApi("setAdmin/"));
 
@@ -221,7 +237,9 @@ public class GenericSetupUtils {
 		assertEquals(UrlUtils.getApi("setAdmin/"), page.url());
 		logger.info("Going to fill initial admin.");
 		page.locator("#user-id").click();
-		page.locator("#user-id").fill(userName);
+		String userIdString = userName;
+		logger.info("filling user ids with: {}", userIdString);
+		page.locator("#user-id").fill(userIdString);
 		logger.info("Filled initial admin");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
 		logger.info("After submitting admin: {}", page.url());
@@ -280,7 +298,7 @@ public class GenericSetupUtils {
 	public static boolean useDocker() {
 		return useDocker;
 	}
-	
+
 	public static boolean useVideo() {
 		return useVideo;
 	}

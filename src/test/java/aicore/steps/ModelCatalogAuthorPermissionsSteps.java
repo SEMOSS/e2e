@@ -2,15 +2,14 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import aicore.hooks.SetupHooks;
 import org.junit.jupiter.api.Assertions;
 
+import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.pages.ModelPermissionsAuthor;
 import aicore.utils.CommonUtils;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -118,16 +117,6 @@ public class ModelCatalogAuthorPermissionsSteps {
 		loginpage.loginWithDifferetUsers(role);
 	}
 
-	@When("User searches the {string} in the model catalog searchbox")
-	public void user_searches_the_in_the_model_catalog_searchbox(String modelName) {
-		openModelPage.searchModelCatalog(modelName);
-	}
-
-	@And("User selects the {string} from the model catalog")
-	public void user_selects_the_from_the_model_catalog(String modelName) {
-		openModelPage.selectModelFromSearchOptions(modelName);
-	}
-
 	@Given("{string} user clicks on Access Control")
 	public void user_clicks_on_access_control(String role) {
 		openModelPage.clickOnAccessControl();
@@ -137,7 +126,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 	public void user_clicks_on_settings(String role) {
 		openModelPage.clickOnAccessControl();
 	}
-	
+
 	@Then("{string} user {string} Delete Model")
 	public void userDeleteModel(String userRole, String expectedOutcome) {
 		// Perform delete action

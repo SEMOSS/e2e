@@ -1,7 +1,8 @@
 name: e2e
 services:
   semoss:
-    image: "semoss/docker"
+    build:
+      context: dockersemoss
     ports:
       - 127.0.0.1:9091:8080
     environment:
@@ -11,6 +12,8 @@ services:
     command: /bin/bash -c "runCS.sh"
     networks:
       - tnet
+    volumes:
+      - ./results/coverage:/opt/testresults/
     restart: always
     
   test:

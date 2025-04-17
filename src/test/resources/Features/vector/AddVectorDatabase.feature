@@ -11,7 +11,7 @@ Feature: Create Vector Database
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
     When User clicks on Edit button
-    And User enters tag as 'embeddings' in Edit Model Details and press enter
+    And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
 @LoginWithAdmin
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'

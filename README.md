@@ -85,3 +85,6 @@ Feel free to view the current Issues for more detailed examples!
 
 - a Chromium browser should open where you can view the webpage and click through playwright commands, and view network calls
 
+### Developer WIKI
+
++ [More in depth info, tips, and tricks can be found here](wiki/README.md)
