@@ -29,3 +29,21 @@ Feature: User Management
     And User sees the search button
     And User searches for the created user
     And User clicks on Delete Selected button 1 times
+    
+    
+  @LoginWithAdmin
+  Scenario: Add New Native User with Unique Incremental Details
+    And User navigates to the settings
+    And User enables admin mode
+    And User clicks on 'Member Settings' Card
+    And User sees the Add User button
+    And User adds 1 members with name "PranaleeChaudhari", userId "UserId", password "Test@123", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
+    And User logs out from the application
+    And User logs in with the last generated userId and password
+    And User clicks on Open Settings icon
+    When User clicks on My Profile
+    And User can see 'Edit profile information' section on profile page
+    Then User can see that the displayed User ID matches the generated userIdc
+    And User can see that the displayed Name matches the generated name
+    And User can see that the displayed Email matches the generated email
+ 

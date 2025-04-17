@@ -17,6 +17,7 @@ public class UserManagementPage {
 	private static final String ADD_MEMBER_PHONE_NUMBER_XPATH = "//label[text()='Phone Number']/following-sibling::div/input";
 	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/following-sibling::div/input";
 	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//span[text()='Save']";
+	private static final String ADD_MEMBER_PASSWORD_XPATH = "//input[@type='password']";
 	private static final String ADD_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added user']";
 	private static final String EDIT_ICON_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td//*[name()='svg'][@data-testid='EditIcon']";
 	private static final String MODEL_DROPDOWN_XPATH = "//div[text()='None']";
@@ -31,6 +32,13 @@ public class UserManagementPage {
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
 	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
+	private static final String NATIVE_USERNAME_XPATH = "//label[text()='Username']/following-sibling::div//input";
+	private static final String NATIVE_PASSWORD_XPATH = "//input[contains(@class, 'MuiInputBase-input') and contains(@class, 'MuiOutlinedInput-input') and @type='password']";
+	private static final String LOGIN_WITH_NATIVE_XPATH = "//button[@type='submit' and contains(@class, 'MuiButton-containedPrimary')]";
+	private static final String DISPLAYED_NAME_XPATH = "//legend[span[text()='Name']]/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
+	private static final String DISPLAYED_USER_ID_XPATH = "//legend[span[text()='User Id']]/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
+	private static final String DISPLAYED_USERNAME_XPATH = "//label[text()='Username']/following-sibling::p";
+	private static final String DISPLAYED_EMAIL_XPATH = "//legend[span[text()='Email']]/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
 
 	public UserManagementPage(Page page) {
 		this.page = page;
@@ -157,6 +165,35 @@ public class UserManagementPage {
 	public String userDeletionToastMessage() {
 		String toastMessage = page.textContent(DELETE_MEMBER_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
+	}
+
+	public void loginAsUser(String username, String password) {
+		page.fill(NATIVE_USERNAME_XPATH, username);
+		page.fill(NATIVE_PASSWORD_XPATH, password);
+		page.click(LOGIN_WITH_NATIVE_XPATH);
+	}
+
+	public String getDisplayedName() {
+
+		return page.locator(DISPLAYED_NAME_XPATH).textContent().trim();
+
+	}
+
+	public String getDisplayedId() {
+
+		return page.locator(DISPLAYED_USER_ID_XPATH).textContent().trim();
+
+	}
+
+	public String getDisplayedEmail() {
+
+		return page.locator(DISPLAYED_EMAIL_XPATH).textContent().trim();
+
+	}
+
+	public void fillPassword(String password) {
+		page.locator(ADD_MEMBER_PASSWORD_XPATH).isVisible();
+		page.locator(ADD_MEMBER_PASSWORD_XPATH).fill(password);
 	}
 
 }
