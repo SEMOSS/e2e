@@ -1,6 +1,5 @@
 #!/bin/sh
-
-rm -r ./results/coverage/* \
+docker pull quay.io/semoss/docker:ubi8-rhel \
 ; docker compose rm -f semoss \
 ; docker compose up semoss --build -d
 
@@ -40,7 +39,7 @@ echo $JACOCLI_COMMAND
 # PROBABLY...
 # TO BE HONEST, I REALLY WANTED CODE COVERAGE AND DIDN'T KNOW THE RIGHT WAY TO DO IT
 # BUT THIS IS A WAY TO DO IT. THE RIGHT WAY? NO, IT CAN'T BE. BUT HERE WE ARE.
-docker compose run test --remove-orphans \
+docker compose run test \
 ; docker compose exec semoss sh "$SHUTDOWN_COMMAND" \
 ; docker compose exec semoss sh "$SHUTDOWN_COMMAND" \
 ; docker compose exec semoss sh "$SHUTDOWN_COMMAND" \

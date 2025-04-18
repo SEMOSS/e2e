@@ -90,6 +90,16 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.navigatesToHomePage();
 	}
 
+	@When("User navigates to the Home page from the App Edit page")
+	public void user_navigates_to_the_home_page_from_the_app_edit_page() {
+		openAppLibraryPage.navigateToHomePageFromAppEditPage();
+	}
+
+	@Given("User is on the Home page")
+	public void user_is_on_the_home_page() {
+		openAppLibraryPage.navigatesToHomePage();
+	}
+
 	@When("User navigate to Home page")
 	public void user_navigate_to_home_page() {
 		openAppLibraryPage.navigatesToHomePage();
@@ -269,5 +279,4 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_from_the_query_dropdown(String string) {
 
 	}
-
 }
