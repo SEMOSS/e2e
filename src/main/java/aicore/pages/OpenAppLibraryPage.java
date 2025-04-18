@@ -13,9 +13,7 @@ import aicore.utils.UrlUtils;
 public class OpenAppLibraryPage {
 
 	private Page page;
-	private String timestamp;<<<<<<<HEAD
-
-	=======>>>>>>>origin/main
+	private String timestamp;
 	private static final String OPEN_APP_LIBRARY_XPATH = "//a[@data-tour='nav-app-library']";
 	private static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
 	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
@@ -38,17 +36,14 @@ public class OpenAppLibraryPage {
 	private static final String HEADING_4_BLOCK_XPATH = "//div[@aria-label='Display Text in header 4']";
 	private static final String HEADING_5_BLOCK_XPATH = "//div[@aria-label='Display Text in header 5']";
 	private static final String HEADING_6_BLOCK_XPATH = "//div[@aria-label='Display Text in header 6']";
-	private static final String TEXT_BLOCK_XPATH = "//div[@aria-label='Show text in a regular paragraph style']";<<<<<<<HEAD
-	private static final String LOGS_BLOCK_XPATH = "//div[@aria-label='Show logs from the notebook']";=======>>>>>>>origin/main
+	private static final String TEXT_BLOCK_XPATH = "//div[@aria-label='Show text in a regular paragraph style']";
+	private static final String LOGS_BLOCK_XPATH = "//div[@aria-label='Show logs from the notebook']";
 	private static final String MARKDOWN_BLOCK_XPATH = "//div[@aria-label='Show text in markdown format']";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
-
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
-	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";<<<<<<<HEAD
-
-	=======
-	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";>>>>>>>origin/main
+	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
+	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
 	// Block settings for Text elements
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
@@ -56,12 +51,15 @@ public class OpenAppLibraryPage {
 	private static final String FONT_LIST_XPATH = "//p[text()='Font']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String COLOR_BOX_XPATH = "//input[@type='color']";
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
+	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl + s)";
 //Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
 	private static final String NOTEBOOK_QUERY_ID_LABEL = "Id";
+	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor textarea.inputarea";
+	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//div[contains(@id,'notebook-cell-actions')]/child::div/span[text()='{codeOutput}']";
 
 	public OpenAppLibraryPage(Page page, String timestamp) {
 		this.page = page;
@@ -190,13 +188,10 @@ public class OpenAppLibraryPage {
 			page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
 			page.locator(MARKDOWN_BLOCK_XPATH).hover();
 			break;
-<<<<<<< HEAD
 		case "Logs":
 			page.locator(LOGS_BLOCK_XPATH).isVisible();
 			page.locator(LOGS_BLOCK_XPATH).hover();
 			break;
-=======
->>>>>>> origin/main
 		default:
 			isValidBlock = false;
 			System.out.println("Invalid block name: " + blockName);
@@ -268,6 +263,9 @@ public class OpenAppLibraryPage {
 		case "Markdown":
 			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
 			break;
+		case "Logs":
+			textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
+			break;
 		default:
 			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
 			break;
@@ -276,6 +274,8 @@ public class OpenAppLibraryPage {
 	}
 
 	public String getBlockText(String blockName, String blockText) {
+		textSectionDragAndDroppedBlockLocator(blockName, blockText)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return textSectionDragAndDroppedBlockLocator(blockName, blockText).textContent().trim();
 	}
 
@@ -323,8 +323,8 @@ public class OpenAppLibraryPage {
 		page.getByTestId(CREATE_NEW_NOTEBOOK_DATA_TESTID).click();
 	}
 
-	public void enterQueryID(String queryId) {
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL)).fill(queryId);
+	public void enterQueryName(String queryName) {
+		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL)).fill(queryName);
 	}
 
 	public void clickOnQuerySubmitButton() {
@@ -332,10 +332,26 @@ public class OpenAppLibraryPage {
 	}
 
 	public void selectPage(String pageName) {
-		Locator pageSelect = page.locator(PAGE_SELECTION_XPATH.replace("{pageName}", pageName));
-		// pageSelect.waitFor(new
-		// Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		pageSelect.first().click();
+		page.locator(PAGE_SELECTION_XPATH.replace("{pageName}", pageName)).first().click();
 	}
 
+	public void enterCodeInQuery(String code) {
+		page.locator(CODE_ENTER_TEXTAREA).fill(code);
+	}
+
+	public void clickOnRunAllButton() {
+		page.getByTestId("ArrowDownwardIcon").click();
+	}
+
+	public void selectQueryFromList(String queryName) {
+		page.locator(QUERY_DROPDOWN_XPATH).fill(queryName);
+		page.locator(QUERY_DROPDOWN_XPATH).press("ArrowDown");
+		page.locator(QUERY_DROPDOWN_XPATH).press("Enter");
+	}
+
+	public String getCodeOutput(String codeOutput) {
+		Locator outputResult = page.locator(QUERY_CODE_RUN_OUTPUT_XPATH.replace("{codeOutput}", codeOutput));
+		outputResult.waitFor(new Locator.WaitForOptions().setTimeout(10000));
+		return outputResult.textContent().trim();
+	}
 }

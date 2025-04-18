@@ -6,8 +6,8 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/Features/settings", glue = { "aicore.steps",
-		"aicore.hooks" }, plugin = { "pretty", "html:target/cucumber-report.html" }, monochrome = true, dryRun = false)
+@CucumberOptions(features = "src/test/resources/Features", glue = { "aicore.steps", "aicore.hooks" }, plugin = {
+		"pretty", "html:target/cucumber-report.html" }, monochrome = true, dryRun = false)
 
 public class AICoreTestRunner {
 
