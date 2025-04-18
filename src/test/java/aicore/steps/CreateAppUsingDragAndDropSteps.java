@@ -76,7 +76,8 @@ public class CreateAppUsingDragAndDropSteps {
 		boolean isWelcomeTextboxVisible = openAppLibraryPage.verifyWelcomeTextboxIsVisible();
 		assertTrue(isWelcomeTextboxVisible);
 		String actualWelcomeTextMessage = openAppLibraryPage.verifyWelcomeText();
-		assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage);
+		Assertions.assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage,
+				"Mismatch between the expected and actual message");
 	}
 
 	@When("User navigates to the Home page from the App Edit page")
@@ -88,7 +89,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_is_on_the_home_page() {
 		openAppLibraryPage.navigatesToHomePage();
 	}
-	
+
 	@When("User navigate to Home page")
 	public void user_navigate_to_home_page() {
 		openAppLibraryPage.navigatesToHomePage();
@@ -232,4 +233,41 @@ public class CreateAppUsingDragAndDropSteps {
 			openAppLibraryPage.navigateToPreviosPage();
 		}
 	}
+
+	@When("User clicks on Notebook")
+	public void user_clicks_on_notebook() {
+		openAppLibraryPage.clickOnNotebooksOption();
+	}
+
+	@And("User clicks on Create new notebook")
+	public void user_clicks_on_create_new_notebook() {
+		openAppLibraryPage.clickOnCreateNewNotebook();
+	}
+
+	@And("User enters New Query name as {string}")
+	public void user_enters_new_query_name_as(String queryId) {
+		openAppLibraryPage.enterQueryID(queryId);
+	}
+
+	@When("User clicks on query Submit button")
+	public void user_clicks_on_query_submit_button() {
+		openAppLibraryPage.clickOnQuerySubmitButton();
+	}
+
+	@And("User clicks on Blocks")
+	public void user_clicks_on_blocks() throws InterruptedException {
+		openAppLibraryPage.clickOnBlocksOption();
+		Thread.sleep(5000);
+	}
+
+	@And("User clicks on {string} page")
+	public void user_clicks_on_page(String pageName) {
+		openAppLibraryPage.selectPage(pageName);
+	}
+
+	@And("User selects {string} from the Query dropdown")
+	public void user_selects_from_the_query_dropdown(String string) {
+
+	}
+
 }
