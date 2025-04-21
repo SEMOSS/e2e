@@ -31,8 +31,8 @@ public class UserManagementSteps {
 		homePage.checkOnOpenSetting();
 	}
 
-	@And("User navigates to the settings")
-	public void user_navigates_to_the_settings() {
+	@And("User navigates to settings")
+	public void user_navigates_to_settings() {
 		homePage.clickOnOpenSetting();
 	}
 
