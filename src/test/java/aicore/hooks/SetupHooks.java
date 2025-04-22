@@ -39,14 +39,15 @@ public class SetupHooks {
 	private static Playwright playwright;
 
 	private static int step = 0;
-	private static int scenarioNumber = 0;
-	private static String feature = null;
+	private static int scenarioNumberOfFeatureFile = 0;
+	private static String feature = "";
+	private static int featureNumber = 0;
 
 	@BeforeAll
 	public static void beforeAll() throws IOException {
 		logger.info("BEFORE ALL");
 		GenericSetupUtils.initialize();
-		scenarioNumber = 0;
+		scenarioNumberOfFeatureFile = 0;
 
 		playwright = Playwright.create();
 		browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
@@ -54,17 +55,24 @@ public class SetupHooks {
 	}
 
 	@Before
-	public void before(Scenario scenario) {
+	public void before(Scenario scenario) throws IOException {
 		logger.info("BEFORE: {}", scenario.getName());
-		if (scenarioNumber == 0) {
+		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
+		if (!tempFeature.equals(feature)) {
+			scenarioNumberOfFeatureFile = 0;
 			setupFirstScenarioOfFeature(scenario);
+			featureNumber++;
 		}
-		feature = FilenameUtils.getBaseName(scenario.getUri().toString());
-		scenarioNumber++;
+		feature = tempFeature;
+		scenarioNumberOfFeatureFile++;
 		step = 0;
 	}
 
-	private static void setupFirstScenarioOfFeature(Scenario scenario) {
+	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
+		if (featureNumber != 0) {
+			GenericSetupUtils.navigateToHomePage(page);
+			logoutAndSave();
+		}
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions();
 		context = browser.newContext(newContextOptions);
 
@@ -148,7 +156,6 @@ public class SetupHooks {
 	@AfterAll
 	public static void afterAll() throws IOException {
 		logger.info("AFTER ALL");
-		logoutAndSave();
 		playwright.close();
 	}
 
@@ -176,9 +183,14 @@ public class SetupHooks {
 		}
 
 		context.close();
+		Path og = null;
+		if (GenericSetupUtils.useVideo()) {
+			og = page.video().path();
+		}
+		
+		page.close();
 
 		if (GenericSetupUtils.useVideo()) {
-			Path og = page.video().path();
 			Path newPath = Paths.get("videos", "features", feature + ".webm");
 			Path newDir = Paths.get("videos", "features");
 			if (!Files.exists(newDir)) {
@@ -187,7 +199,6 @@ public class SetupHooks {
 			Files.move(og, newPath);
 		}
 
-		page.close();
 	}
 
 	public static Page getPage() {
