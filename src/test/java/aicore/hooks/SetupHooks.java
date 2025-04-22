@@ -156,6 +156,8 @@ public class SetupHooks {
 	@AfterAll
 	public static void afterAll() throws IOException {
 		logger.info("AFTER ALL");
+		GenericSetupUtils.navigateToHomePage(page);
+		logoutAndSave();
 		playwright.close();
 	}
 
