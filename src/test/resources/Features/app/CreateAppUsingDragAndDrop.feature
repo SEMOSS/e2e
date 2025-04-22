@@ -49,3 +49,19 @@ Feature: Create new app
       | Text (h6)  |                         | Heading 6 block    | Bold, Underlined         | Georgia         | #ff5733   | Center         |
       | Text       |                         | Text block         | Italic                   | Arial           | #ffcc00   | Right          |
       | Markdown   |                         | **Markdown** block | Italic                   | Times New Roman | #ffcc00   | Left           |
+
+  Scenario: Drag and Drop Text section Logs block
+    When User clicks on Notebook
+    And User clicks on Create new notebook
+    And User enters New Query name as 'Test query'
+    And User clicks on query Submit button
+    And User enters code as 'print("Hello word")'
+    And User clicks on Run this cell and below icon
+    Then User can see code output as 'Hello word'
+    And User clicks on Blocks
+    And User clicks on 'page-1' page
+    And User drags the 'Logs' block and drops it on the page
+    And User clicks on the Block Settings option
+    And User selects 'Test query' from the Query dropdown
+    And User clicks on the Save App icon
+    Then User should see the 'Logs' text as 'Hello word' 
