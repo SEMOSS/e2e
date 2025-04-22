@@ -1,5 +1,5 @@
-#Feature: User Management
-#
+Feature: User Management
+
   #@LoginWithAdmin
   #Scenario: Add New Native User
     #Given User navigates to Open Setting page
@@ -29,3 +29,25 @@
     #And User sees the search button
     #And User searches for the created user
     #And User clicks on Delete Selected button 1 times
+
+   @LoginWithAdmin
+  Scenario: Update Configuration Settings - access_keys_allowed - true - Adfs
+    Given User navigates to Open Setting page
+    When User enable admin mode
+    And User clicks on 'Configuration' Card
+    And User clicks on 'access_keys_allowed' value 
+    And User change value of the key to 'true'
+    And User clicks on Save button of the configuration
+    And User can see a toast message after updating values of 'Adfs' as "Succesfully modified adfs properties"
+    
+    @LoginWithAdmin
+  Scenario: Update Configuration Settings - access_keys_allowed - true - native
+    Given User navigates to Open Setting page
+    When User enable admin mode
+    And User clicks on 'Configuration' Card
+    And User clicks on Authentication dropdown
+    And User search 'Native' and select  
+    And User clicks on 'access_keys_allowed' value 
+    And User change value of the key to 'true'
+    And User clicks on Save button of the configuration
+    And User can see a toast message after updating values of 'Native' as "Succesfully modified native properties"

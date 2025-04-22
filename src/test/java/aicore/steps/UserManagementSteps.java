@@ -1,18 +1,18 @@
 package aicore.steps;
 
-import aicore.utils.RestCaller;
+import java.io.IOException;
+
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.SettingPage;
 import aicore.pages.UserManagementPage;
+import aicore.utils.RestCaller;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.io.IOException;
 
 public class UserManagementSteps {
 
@@ -154,6 +154,38 @@ public class UserManagementSteps {
 	public void user_sees_delete_toast_message_as(String toastMessage) {
 		String actualMessage = userpage.userDeletionToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "User deletion failed");
+	}
+
+	@When("User clicks on 'access_keys_allowed' value")
+	public void user_clicks_on_access_keys_allowed_value() {
+		userpage.clickOnAccessKeyValue();
+	}
+
+	@When("User change value of the key to 'true'")
+	public void user_change_value_of_the_key_to_true() throws InterruptedException {
+		userpage.updateAccessKeyValue("true");
+	}
+
+	@Then("User can see a toast message after updating values of {string} as {string}")
+	public void user_can_see_toast_message(String sectionName, String expectedToastMessage) {
+		String actualMessage = userpage.getToastMessage(expectedToastMessage);
+		Assertions.assertEquals(expectedToastMessage, actualMessage, sectionName + " update failed");
+		userpage.waitForToastMessageToDisappear(expectedToastMessage);
+	}
+
+	@When("User clicks on Save button of the configuration")
+	public void user_clicks_on_save_button_of_the_configuration() {
+		userpage.clickSaveButton();
+	}
+
+	@When("User clicks on Authentication dropdown")
+	public void user_clicks_on_authentication_dropdown() {
+		userpage.clickOnAuthenticationDropdown();
+	}
+
+	@When("User search {string} and select")
+	public void user_search_and_select(String option) {
+		userpage.searchAndSelectOption(option);
 	}
 
 }
