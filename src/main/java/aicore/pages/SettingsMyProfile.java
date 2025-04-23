@@ -26,7 +26,7 @@ public class SettingsMyProfile {
 	}
 
 	public void openSettingsIcon() {
-		page.getByTestId(OPEN_SETTINGS_ICON_XPATH).click();;
+		page.getByTestId(OPEN_SETTINGS_ICON_XPATH).click();
 	}
 
 	public void clickOnMyProfileCard() {
