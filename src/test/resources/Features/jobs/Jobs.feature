@@ -4,7 +4,6 @@ Feature: Job Management
     Given User clicks on Open Settings Engine
     And User clicks on Jobs Icon
 
-  @tag1
   Scenario: Pause a Running Job
     When User clicks the checkbox of "Test Job"
     And User clicks the green Pause button
@@ -12,7 +11,6 @@ Feature: Job Management
     And the checkbox of "Test Job" should become unselected
     And the green Pause button should revert to its default state
 
-  @tag2
   Scenario: Resume a Paused Job
     When User clicks the checkbox of Paused "New Job"
     And User clicks the Resume button
