@@ -10,6 +10,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.base.GenericSetupUtils;
@@ -44,8 +45,10 @@ public class PlaygroundTests {
 		// user in on home page after login
 		GenericSetupUtils.login(page, adminUser, adminPassword);
 		
+		/*
 		// TODO go to settings page
 		page.getByTestId("Settings-icon").click();
+		
 		
 		// click on model settings
 		page.getByText("Model Settings").click();
@@ -67,7 +70,7 @@ public class PlaygroundTests {
         // Get all items within the container
         java.util.List<ElementHandle> items = container.querySelectorAll(itemSelector);
 
-        /*
+        
         // Iterate through each item and click on it
         for (ElementHandle item : items) {
             item.click();
@@ -100,7 +103,9 @@ public class PlaygroundTests {
         }
        */
 		
-        // import playground v4
+        /*
+        // import playground v4 (only do once)
+        
         page.click("//a[@data-tour='nav-app-library']");
         page.getByText("Create New App").click();
         page.getByText("Upload").click();
@@ -112,11 +117,27 @@ public class PlaygroundTests {
         fileInput.setInputFiles(Paths.get(ConfigUtils.getValue("playgroundAppFile")));
   
         page.getByText("Next").click();
-        page.getByText("Name").click();
-        page.getByText("Name").fill("Playground v04");
+       
+        page.getByLabel("Name").click();
+        page.getByLabel("Name").fill("Playground v04");
+        
+        page.getByLabel("Description").click();
+        page.getByLabel("Description").fill("playground");
+        
         page.getByText("Next").click();
-		
-		// navigate to playground v4
+        page.getByText("Next").click();
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Upload")).click();
+        
+        */
+        // navigate to playground v4
+        page.getByText("Playground v04").click();
+        
+        // now on Playground app
+        
+        // click on drop down for models 
+        // page.locator("div[role='combobox'][aria-controls=':r1:'][aria-expanded='false'][aria-haspopup='listbox'].MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-15unbrw").click();
+        
+        
         
 		
 		// write out test cases for each playground test
