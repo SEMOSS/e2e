@@ -20,6 +20,7 @@ import com.microsoft.playwright.Response;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.base.GenericSetupUtils;
 import aicore.utils.ConfigUtils;
@@ -76,36 +77,45 @@ public class PlaygroundTests {
 		
 		// Wait for the iframe to be available and get the iframe element using the class attribute
         FrameLocator iframe = page.frameLocator("iframe.css-2n02x3");
+        
+        // Locate the dropdown element within the iframe and click to open it
+        Locator dropdown = iframe.locator("div[role='combobox']");
+        dropdown.click();
 
+        // Wait for the dropdown options to be visible
+        Locator options = iframe.locator("ul[role='listbox'] li[role='option']");
+        options.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+
+        // Get the count of option elements
+        int count = options.count();
+
+        // Iterate through each option element and click it
+        for (int i = 0; i < count; i++) {
+            options.nth(i).click();
+            // Optionally, add a delay between clicks if needed
+            page.waitForTimeout(500); // 500 milliseconds delay
+            
+            iframe.locator("textarea[placeholder='Ask a question...']").click();
+    		iframe.locator("textarea[placeholder='Ask a question...']").fill("how to tie my shoes");
+    		iframe.locator("[data-testid='SendRoundedIcon']").click();
+    		
+    		page.waitForTimeout(5000); // 500 milliseconds delay
+
+            // Re-open the dropdown if needed
+            if (i < count - 1) {
+                dropdown.click();
+                options.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+            }
+        }
+
+        /*
         // Locate an element within the iframe
-        Locator elementInIframe = iframe.locator("//h3[text()='Welcome']");
+        Locator elementInIframe = iframe.locator("div[role='combobox']");
+        // "//h3[text()='Welcome']"
         
         boolean x = elementInIframe.isVisible();
         System.out.println(x);
-		
-		page.locator("//h3[text()='Welcome']").isVisible();
-		// boolean x = page.getByPlaceholder("Ask a question").isVisible();
-		boolean y = page.locator("//textarea[@placeholder='Ask a question...']").isVisible();
-		System.out.println(page.content());
-		
-		
-		
-		page.getByPlaceholder("Ask a question...").click();
-		page.getByPlaceholder("Ask a question...").fill("how to tie my shoes");
-		page.getByTestId("KeyboardArrowDownRoundedIcon").click();
-		Locator listbox = page.locator("[role='listbox']");
-		
-
-		// Find all option elements within the listbox
-		Locator options = listbox.locator("[role='option']");
-
-		// Get the count of option elements
-		int count = options.count();
-
-		// Iterate through each option element and click it
-		for (int i = 0; i < count; i++) {
-			options.nth(i).click();
-		}
+        
 		// write out test cases for each playground test
 
 	}
@@ -164,7 +174,7 @@ public class PlaygroundTests {
 		page.setExtraHTTPHeaders(newMap);
 		page.reload();
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-		page.waitForLoadState(LoadState.NETWORKIDLE);
+		// page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.waitForLoadState(LoadState.LOAD);
 		GenericSetupUtils.navigateToHomePage(page);
 		return cookie;
