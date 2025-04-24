@@ -115,7 +115,7 @@ public class PlaygroundTests {
         
         boolean x = elementInIframe.isVisible();
         System.out.println(x);
-        
+        */ 
 		// write out test cases for each playground test
 
 	}
