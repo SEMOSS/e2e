@@ -1,11 +1,18 @@
 package aicore.utils;
 
-import org.apache.hc.client5.http.fluent.Content;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.fluent.Request;
+import org.apache.hc.client5.http.fluent.Response;
 import org.apache.hc.core5.http.HttpResponse;
 
-import java.io.IOException;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class RestCaller {
 
@@ -23,6 +30,32 @@ public class RestCaller {
         int code = response.getCode();
         System.out.println(code);
         assert code == 200;
+    }
+    
+    public static List<Map<String, Object>> getModelEngines(String cookie) throws IOException {
+    	List<Map<String, Object>> engines = new ArrayList<>();
+    	String endpoint = UrlUtils.getApi("api/auth/admin/engine/getEngines?engineTypes=MODEL");
+		Request rq = Request.get(endpoint);
+//                .bodyForm(Form.form()
+//                        .add("engineTypes", "MODEL")
+//                        .add("limit", limit+"")
+//                        .add("offset", offset+"")
+//                        .build());
+
+		rq.addHeader("cookie", cookie);
+		Response r = rq.execute();
+		String s = r.returnContent().toString();
+		Gson gson = new Gson();
+
+		// Define the type of the map
+		Type type = new TypeToken<List<Map<String, Object>>>() {
+		}.getType();
+
+		// Convert the JSON string to a map
+		engines = gson.fromJson(s, type);
+
+		return engines;
+       
     }
 
     public static void main(String[] args) throws IOException {

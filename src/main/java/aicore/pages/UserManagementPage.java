@@ -2,6 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class UserManagementPage {
@@ -31,6 +32,9 @@ public class UserManagementPage {
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
 	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
+	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
+	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
+	private static final String ADFS_TOAST_MESSAGE_XPATH = "Succesfully modified adfs properties";
 
 	public UserManagementPage(Page page) {
 		this.page = page;
@@ -157,6 +161,63 @@ public class UserManagementPage {
 	public String userDeletionToastMessage() {
 		String toastMessage = page.textContent(DELETE_MEMBER_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
+	}
+
+	public void clickOnAccessKeyValue() {
+		page.locator(CONFIGERATION_KEY_VALUE_XPATH).click();
+
+	}
+
+	public void updateAccessKeyValue(String newValue) {
+
+		Locator valueInput = page.locator(CONFIGERATION_KEY_VALUE_XPATH);
+
+		valueInput.fill("");
+		valueInput.fill(newValue);
+
+	}
+
+	public void clickSaveButtonOFAdfs() {
+
+		page.locator(SAVE_BUTTON_ADFS_XPATH).click();
+
+	}
+
+	public String getToastMessage(String expectedMessage) {
+
+		Locator toast = page.getByRole(AriaRole.ALERT)
+
+				.filter(new Locator.FilterOptions().setHasText(expectedMessage));
+
+		toast.waitFor(new Locator.WaitForOptions().setTimeout(5000)); // wait until visible
+
+		return toast.textContent().trim();
+
+	}
+
+	public void waitForToastMessageToDisappear(String expectedMessage) {
+
+		page.getByRole(AriaRole.ALERT)
+
+				.filter(new Locator.FilterOptions().setHasText(expectedMessage))
+
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+
+	}
+
+	public void clickOnAuthenticationDropdown() {
+		page.getByTestId("KeyboardArrowDownIcon").click();
+	}
+
+	public void searchAndSelectOption(String optionText) {
+		// Fill the search box
+		Locator searchInput = page.locator("//input[@placeholder='Search']");
+		searchInput.fill("");
+		searchInput.fill(optionText);
+
+		// Click on the result button
+		Locator resultButton = page.locator("//button[.//span[text()='" + optionText + "']]");
+		resultButton.click();
 	}
 
 }
