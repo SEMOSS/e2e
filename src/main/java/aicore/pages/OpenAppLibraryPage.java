@@ -27,7 +27,6 @@ public class OpenAppLibraryPage {
 	private static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	private static final String SEARCHED_APP_XPATH = "//a[contains(@class,'MuiTypography-root MuiTypography-inherit')]//p[text()='{appName}']";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
-	private static final String SYSTEM_APPS_XPATH = "//button[contains(text(),'System Apps')]";
 	private static final String TERMINAL_XPATH = "//p[contains(text(),'Terminal')]";
 
 	// Blocks section
@@ -356,11 +355,6 @@ public class OpenAppLibraryPage {
 		Locator outputResult = page.locator(QUERY_CODE_RUN_OUTPUT_XPATH.replace("{codeOutput}", codeOutput));
 		outputResult.waitFor(new Locator.WaitForOptions().setTimeout(10000));
 		return outputResult.textContent().trim();
-	}
-
-	public void clickOnSystemApps() {
-		page.locator(SYSTEM_APPS_XPATH).isVisible();
-		page.locator(SYSTEM_APPS_XPATH).click();
 	}
 
 	public void clickOnTerminalCard() {
