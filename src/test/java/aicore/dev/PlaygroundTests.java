@@ -12,6 +12,7 @@ import java.util.Map;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.ElementHandle;
+import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
@@ -39,9 +40,13 @@ public class PlaygroundTests {
 
 		String cookie = login(page, adminUser, adminPassword);
 
+		/*
 		List<Map<String, Object>> engines = RestCaller.getModelEngines(cookie);
+		
 		grantAccessForAllEngines(page, engines, adminUser);
+		*/	
 			
+		/*
 		// import playground v4
 		page.click("//a[@data-tour='nav-app-library']");
 		page.getByText("Create New App").click();
@@ -54,12 +59,53 @@ public class PlaygroundTests {
 		fileInput.setInputFiles(Paths.get(ConfigUtils.getValue("playgroundAppFile")));
 
 		page.getByText("Next").click();
-		page.getByText("Name").click();
-		page.getByText("Name").fill("Playground v04");
+		page.getByLabel("Name").click();
+		page.getByLabel("Name").fill("Playground v04");
+		page.getByLabel("Description").click();
+		page.getByLabel("Description").fill("Playground v04");
 		page.getByText("Next").click();
-
+		*/
+		
 		// navigate to playground v4
+		page.getByTestId("LibraryBooksOutlinedIcon").click();
+		page.getByPlaceholder("Search", new Page.GetByPlaceholderOptions().setExact(true)).click();
+		page.getByPlaceholder("Search", new Page.GetByPlaceholderOptions().setExact(true)).fill("play");
+		
+		page.getByText("Playground v04").click();
+		// page.locator("div[role='combobox'][aria-haspopup='listbox']").click();
+		
+		// Wait for the iframe to be available and get the iframe element using the class attribute
+        FrameLocator iframe = page.frameLocator("iframe.css-2n02x3");
 
+        // Locate an element within the iframe
+        Locator elementInIframe = iframe.locator("//h3[text()='Welcome']");
+        
+        boolean x = elementInIframe.isVisible();
+        System.out.println(x);
+		
+		page.locator("//h3[text()='Welcome']").isVisible();
+		// boolean x = page.getByPlaceholder("Ask a question").isVisible();
+		boolean y = page.locator("//textarea[@placeholder='Ask a question...']").isVisible();
+		System.out.println(page.content());
+		
+		
+		
+		page.getByPlaceholder("Ask a question...").click();
+		page.getByPlaceholder("Ask a question...").fill("how to tie my shoes");
+		page.getByTestId("KeyboardArrowDownRoundedIcon").click();
+		Locator listbox = page.locator("[role='listbox']");
+		
+
+		// Find all option elements within the listbox
+		Locator options = listbox.locator("[role='option']");
+
+		// Get the count of option elements
+		int count = options.count();
+
+		// Iterate through each option element and click it
+		for (int i = 0; i < count; i++) {
+			options.nth(i).click();
+		}
 		// write out test cases for each playground test
 
 	}
@@ -99,13 +145,17 @@ public class PlaygroundTests {
 		// user in on home page after login
 		// going to login
 		page.navigate(UrlUtils.getUrl("#/login"));
+		page.getByTestId("CloseIcon").click();
 		page.getByLabel("Username").click();
 		page.getByLabel("Username").fill(adminUser);
 		page.getByLabel("Username").press("Tab");
 		page.locator("input[type=\"password\"]").fill(adminPassword);
+		/*
 		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
 				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
-
+		*/
+		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
+                () -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login").setExact(true)).first().click());
 		assertEquals(200, response.status());
 
 		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
