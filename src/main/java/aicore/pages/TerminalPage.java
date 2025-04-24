@@ -8,24 +8,21 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class TerminalPage {
 	private Page page;
 
-	private static final String OUTPUT_XPATH = "//span[contains(text(),'{OutputValue}')]";
+	private static final String OUTPUT_XPATH = "(//div[contains(@class, 'ace_layer')]//div[contains(@class, 'ace_line')][last()-2]//span[contains(@class, 'ace_constant')])";
 
 	public TerminalPage(Page page) {
 		this.page = page;
 	}
 
-	public void terminalInputBox(String pixelCommand) {
+	public void runPixel(String pixelCommand) {
 		page.getByRole(AriaRole.TEXTBOX).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.getByRole(AriaRole.TEXTBOX).isVisible();
 		page.getByRole(AriaRole.TEXTBOX).fill(pixelCommand);
 		page.keyboard().press("Enter");
 	}
 
-	public String validateOutput(String pixelOutput) {
-		page.locator(OUTPUT_XPATH.replace("{OutputValue}", pixelOutput))
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(OUTPUT_XPATH.replace("{OutputValue}", pixelOutput)).isVisible();
-		String actualOutput = page.locator(OUTPUT_XPATH.replace("{OutputValue}", pixelOutput)).textContent();
+	public String getActualPixelOutput() {
+		page.locator(OUTPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String actualOutput = page.locator(OUTPUT_XPATH).textContent().trim();
 		return actualOutput;
 
 	}
