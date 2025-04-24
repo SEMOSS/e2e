@@ -41,7 +41,7 @@ public class AddModelSteps {
 
 	@When("User selects {string}")
 	public void user_selects(String aiModelName) {
-		openModelPage.selectOpenAi(aiModelName);
+		openModelPage.selectModel(aiModelName);
 	}
 
 	@And("User enters Catalog name as {string}")
@@ -66,12 +66,18 @@ public class AddModelSteps {
 
 	@Given("User uploads a file {string}")
 	public void user_uploads_a_file(String fileName) {
-		String uploadedFileName = openModelPage.addPathModelZip(fileName);
-		Assertions.assertEquals(fileName, uploadedFileName);
+		String uploadedFileName = openModelPage.enterFilePath(fileName);
+		if(fileName.contains("/")) {
+			String [] ActualFileName = fileName.split("/");
+			int fileNameIndex = ActualFileName.length-1;
+			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName, "Document is not uploaded successfully");
+		}else {
+			Assertions.assertEquals(fileName, uploadedFileName, "Document is not uploaded successfully");
+		}
 	}
 
 	@And("User can see a toast message as {string}")
-	public void user_can_see_toast_message_as(String toastMessage) {
+	public void user_can_a_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
 		openModelPage.waitForModelCreationToastMessageDisappear();

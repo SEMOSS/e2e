@@ -76,18 +76,21 @@ public class OpenVectorPage {
 	}
 
 	public void enterHostName() {
-		String hostName = ConfigUtils.getValue("host_name");
+		String hostName = ConfigUtils.getValue("pinecone_host_name");
+		page.locator(HOST_NAME_ID).isVisible();
 		page.locator(HOST_NAME_ID).fill(hostName);
 
 	}
 
 	public void enterApiKey() {
-		String apiKey = ConfigUtils.getValue("api_key");
+		String apiKey = ConfigUtils.getValue("pinecone_api_key");
+		page.locator(API_KEY_ID).isVisible();
 		page.locator(API_KEY_ID).fill(apiKey);
 
 	}
 
 	public void enterNameSpace(String namespace) {
+		page.locator(NAME_SPACE_ID).isVisible();
 		page.locator(NAME_SPACE_ID).fill(namespace);
 
 	}

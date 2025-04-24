@@ -1,5 +1,6 @@
 package aicore.pages;
 
+import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class AddModelToCatalogPage {
 
 	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
 	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
-	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
+	private static final String SELECT_OPENAI_XPATH = "//p[text()='{ModelName}']";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
@@ -102,8 +103,8 @@ public class AddModelToCatalogPage {
 		page.getByLabel("Navigate to import Model").click();
 	}
 
-	public void selectOpenAi(String aiModelName) {
-		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
+	public void selectModel(String modelName) {
+		page.click(SELECT_OPENAI_XPATH.replace("{ModelName}", modelName));
 	}
 
 	public void enterCatalogName(String CatalogName) {
@@ -123,14 +124,28 @@ public class AddModelToCatalogPage {
 		page.click(CREATE_MODEL_BUTTON_XPATH);
 	}
 
-	public String addPathModelZip(String fileName) {
+	public String enterFilePath(String fileName) {
+		String pathSeparator = FileSystems.getDefault().getSeparator();
 		Locator fileInput = page.locator(ADD_FILE_XPATH);
-		String relativePath = "src/test/resources/data/";
+		String relativePath = "src"+pathSeparator+"test"+pathSeparator+"resources"+pathSeparator+"data"+pathSeparator;
+		if(fileName.contains("/")) {
+			fileName.replace("/", pathSeparator);
+		}
 		fileInput.setInputFiles(Paths.get(relativePath + fileName));
-		Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
-		String uploadedFileNameValue = uploadedFileName.textContent();
-		return uploadedFileNameValue;
+		if(fileName.contains("/")) {
+			String [] ActualFileName = fileName.split("/");
+			int fileNameIndex = ActualFileName.length-1;
+			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", ActualFileName[fileNameIndex]));
+			String uploadedFileNameValue = uploadedFileName.textContent();
+			return uploadedFileNameValue;
+		}else {
+			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
+			String uploadedFileNameValue = uploadedFileName.textContent();
+			return uploadedFileNameValue;
+		}
+		
 	}
+
 	public String modelCreationToastMessage() {
 		Locator toastMessage = page.getByRole(AriaRole.ALERT)
 				.filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE));
@@ -493,7 +508,7 @@ public class AddModelToCatalogPage {
 		String toastMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).textContent();
 		return toastMessage;
 	}
-	
+
 	public void clickOnUsageTab() {
 		page.click(USAGE_TAB_XPATH);
 	}

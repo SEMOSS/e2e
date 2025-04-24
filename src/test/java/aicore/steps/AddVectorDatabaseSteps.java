@@ -106,56 +106,6 @@ public class AddVectorDatabaseSteps {
 		assertEquals(actualVectorTitle, expectedVectorTitle, "Vector Title is not matching with expected");
 	}
 
-	@When("User clicks on files")
-	public void user_clicks_on_files() {
-		embedDocumentPage.clickOnFilesButton();
-	}
-
-	@Then("User clicks on Embed New Document")
-	public void user_clicks_on_embed_new_document() {
-		embedDocumentPage.clickOnAddEmbedDocument();
-	}
-
-	@Then("User clicks on Embed button")
-	public void user_clicks_on_embed_button() {
-		embedDocumentPage.clickOnEmbedDocument();
-	}
-
-	@Then("User sees file embeded success toast message {string}")
-	public void user_sees_file_embeded_success_toast_message(String toastMessage) {
-		String expectedMessage = embedDocumentPage.verifyToastMessage();
-		String actualMessage = toastMessage;
-		Assertions.assertEquals(actualMessage, expectedMessage, "Vector Title is not matching with expected");
-
-	}
-
-	@Then("User sees file named {string} in the file list")
-	public void user_sees_file_named_in_the_file_list(String name) {
-
-		String actualvalue = embedDocumentPage.fileNameinList();
-		String expectedValue = name;
-		Assertions.assertEquals(actualvalue, expectedValue, "Name not seen in the list");
-	}
-
-	@Then("User sees date of uploaded in the file list")
-	public void user_sees_date_of_uploaded_in_the_file_list() {
-		String actualDate = embedDocumentPage.dateUploaded();
-		String expectedDate = CommonUtils.getTodayDateFormatted();
-		Assertions.assertEquals(actualDate, expectedDate, "Upload date is not present or either not same");
-	}
-
-	@Then("User sees file size {string} in the file list")
-	public void user_sees_file_size_in_the_file_list(String filesize) {
-		String actualSize = embedDocumentPage.fileSize();
-		String expectedSize = filesize;
-		Assertions.assertEquals(actualSize, expectedSize, "File size is not seen in the list");
-	}
-
-	@Then("User sees delete icon in the file list")
-	public void user_sees_delete_icon_in_the_file_list() {
-		embedDocumentPage.deleteButton();
-	}
-
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
 	public void user_can_see_vector_catalog_name_in_field_as_in_smss_properties(String field, String name) {
 

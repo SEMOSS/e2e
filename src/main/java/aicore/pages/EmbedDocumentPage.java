@@ -11,12 +11,12 @@ public class EmbedDocumentPage {
 
 	private static final String TOAST_MESSAGE_XPATH = "//div[text()='Successfully added document']";
 	private static final String FILES_XPATH = "//button[text()='Files']";
-	private static final String EMBED_DOCUMENT_BUTTON = "[data-testid='AddIcon']";
+	private static final String EMBED_DOCUMENT_BUTTON = "AddIcon";
 	private static final String EMBED_BUTTON = "//span[text()='Embed']";
 	private static final String FILE_NAME_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[2]";
 	private static final String DATE_UPLOADED_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[3]";
 	private static final String FILE_SIZE_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[4]";
-	private static final String DELETE_BUTTON_XPATH = "[data-testid='DeleteIcon']";
+	private static final String DELETE_BUTTON = "DeleteIcon";
 
 	public EmbedDocumentPage(Page page) {
 		this.page = page;
@@ -28,8 +28,8 @@ public class EmbedDocumentPage {
 	}
 
 	public void clickOnAddEmbedDocument() {
-		page.locator(EMBED_DOCUMENT_BUTTON).isVisible();
-		page.locator(EMBED_DOCUMENT_BUTTON).click();
+		page.getByTestId(EMBED_DOCUMENT_BUTTON).isVisible();
+		page.getByTestId(EMBED_DOCUMENT_BUTTON).click();
 	}
 
 	public void clickOnEmbedDocument() {
@@ -62,10 +62,9 @@ public class EmbedDocumentPage {
 		return fileSize;
 	}
 
-	public boolean deleteButton() {
-		page.locator(DELETE_BUTTON_XPATH).isVisible();
-		boolean deleteButton = page.locator(DELETE_BUTTON_XPATH).isEnabled();
-		return deleteButton;
+	public void deleteButton() {
+		page.getByTestId(DELETE_BUTTON).isVisible();
+		page.getByTestId(DELETE_BUTTON).isEnabled();
 
 	}
 }

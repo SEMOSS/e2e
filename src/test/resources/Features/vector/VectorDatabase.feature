@@ -1,14 +1,14 @@
-Feature: Embed file into the Vector
+Feature: Embed file into the Vector Database
 
   @LoginWithAdmin
   Scenario Outline: Add Model and Vector database
     Given User navigates to Open Model
-    And User clicks on Add Model
-    And User selects 'ZIP'
-    And User uploads a file 'pinecone_model.zip'
+    When User clicks on Add Model
+    Then User selects 'ZIP'
+    And User uploads a file '<file_Name>'
     And User clicks on Create Model button
-    Then User clicks on Open Vector engine
-    When User clicks on Add Vector button
+    And User clicks on Open Vector engine
+    And User clicks on Add Vector button
     And User selects '<connection>' connection
     And User enters vector database Catalog name as '<catalog_name>'
     And User selects '<model_name>' from Embedder field
@@ -19,40 +19,40 @@ Feature: Embed file into the Vector
     And User enters value of API Key
     And User enters value of Namespace as '<Namespace>'
     And User clicks on Create Vector button
-    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as '<catalog_name>'
 
     Examples: 
-      | connection | catalog_name       | model_name                        | chunking_strategy | content_length | content_overlap | Namespace |
-      | Pinecone   | Pinecone Vector DB | TextEmbeddings BAAI-Large-En-V1.5 | Token             |            510 |              17 | Default   |
+      | connection | catalog_name       | model_name                        | chunking_strategy | content_length | content_overlap | Namespace | file_Name                               |
+      | Pinecone   | Pinecone Vector DB | TextEmbeddings BAAI-Large-En-V1.5 | Token             |            510 |              17 | Default   | VectorDatabase/Text_Embedding_model.zip |
 
   @LoginWithAdmin
-  Scenario Outline: Embed a document
+  Scenario Outline: Embed a document in Vector DB
     Given User clicks on Open Vector engine
     When User clicks on the created Vector card name as '<catalog_name>'
-    Then User clicks on files
-    Then User clicks on Embed New Document
-    And User uploads a file 'test1.pdf'
-    Then User clicks on Embed button
-    And User sees file embeded success toast message 'Successfully added document'
-    And User sees file named 'test1.pdf' in the file list
-    And User sees date of uploaded in the file list
-    And User sees file size '13 KB' in the file list
+    And User clicks on files
+    And User clicks on Embed New Document
+    And User uploads a file '<file_Name>'
+    And User clicks on Embed button
+    Then User sees file embeded success toast message 'Successfully added document'
+    And User sees file named '<file_Name>' in the file list
+    And User sees date of upload in the file list
+    And User sees file size '<file_Size>' in the file list
     And User sees delete icon in the file list
     And User clicks on Open Vector engine
 
     Examples: 
-      | catalog_name       |
-      | Pinecone Vector DB |
+      | catalog_name       | file_Name                            | file_Size |
+      | Pinecone Vector DB | VectorDatabase/Vector_Embed_file.pdf | 13 KB     |
 
   @LoginWithAdmin
-  Scenario Outline: Delete vector and model
+  Scenario Outline: Delete created vector and model
     Given User clicks on Open Vector engine
     When User clicks on the created Vector card name as '<catalog_name>'
-    And User clicks on Access Control
+    Then User clicks on Access Control
     And User clicks on delete icon
     And User sees deleted Vector success toast message 'Successfully deleted Vector'
-    Then User navigates to Open Model
+    And User navigates to Open Model
     And User clicks on the created Model card name as '<model_name>'
     And User clicks on Access Control
     And User clicks on delete icon
