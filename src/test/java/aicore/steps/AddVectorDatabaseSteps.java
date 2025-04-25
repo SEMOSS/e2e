@@ -1,7 +1,6 @@
 package aicore.steps;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.utils.CommonUtils;
@@ -19,13 +18,11 @@ public class AddVectorDatabaseSteps {
 	private HomePage homePage;
 	private OpenVectorPage vectorPage;
 	private String timestamp;
-	private EmbedDocumentPage embedDocumentPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp;
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
-		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Vector engine")
@@ -114,7 +111,6 @@ public class AddVectorDatabaseSteps {
 		String expectedName = name + " " + timestamp;
 		System.out.println(expectedName);
 		System.out.println(actualName);
-
 		assertEquals(actualName, expectedName, "Name is not matching");
 	}
 

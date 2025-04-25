@@ -31,6 +31,11 @@ public class BICreateDatabaseAndInsightSteps {
 	public void user_clicks_on_system_app() {
 		homePage.clickOnSystemApp();
 	}
+	
+	@And("User clicks on {string} tab")
+	public void user_clicks_on_tab(String tabName ) {
+		homePage.clickOnTab(tabName);
+	}
 
 	@And("User clicks on BI")
 	public void user_clicks_on_bi() {

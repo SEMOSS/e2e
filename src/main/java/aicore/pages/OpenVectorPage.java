@@ -37,6 +37,8 @@ public class OpenVectorPage {
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String VECTOR_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
+	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
+	private static final String COPIED_TOAST_MESSAGE_XPATH = "//div[text()='Successfully copied ID']";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -170,6 +172,18 @@ public class OpenVectorPage {
 		page.locator(DELETE_TOAST_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String toastMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).textContent();
+		return toastMessage;
+	}
+
+	public void copyVectorId() {
+		page.getByTestId(COPY_VECTOR_ID).isVisible();
+		page.getByTestId(COPY_VECTOR_ID).click();
+	}
+
+	public String copiedSuccessToastMessage() {
+		page.locator(COPIED_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toastMessage = page.locator(COPIED_TOAST_MESSAGE_XPATH).textContent();
 		return toastMessage;
 	}
 }

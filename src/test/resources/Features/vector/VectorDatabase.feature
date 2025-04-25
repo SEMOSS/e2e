@@ -46,6 +46,25 @@ Feature: Embed file into the Vector Database
       | Pinecone Vector DB | VectorDatabase/Vector_Embed_file.pdf | 13 KB     |
 
   @LoginWithAdmin
+  Scenario Outline: Verifying Document List in Vector Database using Pixel
+    Given User clicks on Open Vector engine
+    When User clicks on the created Vector card name as '<catalog_name>'
+    Then User can see the Vector title as '<catalog_name>'
+    And User copies the vector id
+    And User sees the copied success toast message 'Successfully copied ID'
+    And User navigates to Open App Library
+    And User clicks on '<tab_Name>' tab
+    And User clicks on Terminal card
+    And User run pixel command '<pixel_Command>'
+    And User sees Filename in the output as '<file_Name>'
+    And User sees Filesize in the output as '<file_Size>'
+    And User sees Last modified date in the output
+
+    Examples: 
+      | catalog_name       | file_Name                            | file_Size | pixel_Command                                           | tab_Name    |
+      | Pinecone Vector DB | VectorDatabase/Vector_Embed_file.pdf |        13 | ListDocumentsInVectorDatabase (engine = "{VECTOR_ID}"); | System Apps |
+
+  @LoginWithAdmin
   Scenario Outline: Delete created vector and model
     Given User clicks on Open Vector engine
     When User clicks on the created Vector card name as '<catalog_name>'
