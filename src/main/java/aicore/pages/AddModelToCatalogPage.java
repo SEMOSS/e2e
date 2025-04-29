@@ -447,7 +447,7 @@ public class AddModelToCatalogPage {
 				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
 				new Page.WaitForConditionOptions().setTimeout(5000));
 		// Added cancel button code because pop-up is not closing because of bug
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
 	}
 
 	public boolean isDeleteSuccessful() {
