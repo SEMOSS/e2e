@@ -98,11 +98,47 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.bookmarkVector(bookmark);
 	}
 	
-
+	@When("User clicks on Add vector button")
+	public void user_clicks_on_add_vector_button() {
+		openVectorPage.addVector();
+	}
+	
+	@And("User selects {string} as connection")
+	public void user_selects_connection(String connection) {
+		openVectorPage.selectConnection(connection);
+	}
+	
+	@And("User enters {string} as {string}")
+	public void user_enters_input_field(String iName,String name) {
+		openVectorPage.inputName(iName,name);
+	}
+	
+	@And("User selects {string} from embedder field")
+	public void user_selects_input_field_embedder(String name) {
+		openVectorPage.selectEmbedder(name);
+	}
+	
+	@And("User selects {string} from chunking strategy field")
+	public void user_selects_input_field_chunking(String name) {
+		openVectorPage.selectChunking(name);
+	}
+	
+	@And("User selects {string} from record question and responses field")
+	public void user_selects_input_field_record(String name) {
+		openVectorPage.selectRecord(name);
+	}
+	
+	@And("User clicks on Create Vector Button")
+	public void user_clicks_on_create_vector_button() {
+		openVectorPage.createVector();
+	}
 	
 	
 	
-
 	
-
+	
+	
 }
+	
+	
+	
