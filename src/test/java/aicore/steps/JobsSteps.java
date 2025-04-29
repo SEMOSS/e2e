@@ -59,8 +59,8 @@ public class JobsSteps {
 
 	@Then("the {string} should start running")
 	public void the_job_should_start_running(String jobName) {
-		boolean isStopped = job.isTestJobRunning(jobName);
-		assertTrue("Test Job not stopped: " + jobName, isStopped);
+		boolean isStarted = job.isTestJobRunning(jobName);
+		assertTrue("Test Job not started: " + jobName, isStarted);
 	}
 
 	@Then("the checkbox of {string} should become unselected")
