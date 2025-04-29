@@ -32,7 +32,7 @@ public class BICreateDatabaseAndInsightSteps {
 		homePage.clickOnSystemApp();
 	}
 	
-	@And("User clicks on {string} tab")
+	@And("User clicks on {string} app tab")
 	public void user_clicks_on_tab(String tabName ) {
 		homePage.clickOnTab(tabName);
 	}
