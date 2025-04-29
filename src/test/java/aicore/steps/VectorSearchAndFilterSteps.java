@@ -98,6 +98,7 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.bookmarkVector(bookmark);
 	}
 	
+
 	@When("User clicks on Add vector button")
 	public void user_clicks_on_add_vector_button() {
 		openVectorPage.addVector();
@@ -142,3 +143,12 @@ public class VectorSearchAndFilterSteps {
 	
 	
 	
+
+
+	
+	
+	
+
+	
+
+

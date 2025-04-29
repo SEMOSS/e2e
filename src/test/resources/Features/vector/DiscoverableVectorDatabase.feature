@@ -1,3 +1,4 @@
+
 Feature: View Existing Vectors
   
    Background: View Open Vectors
@@ -24,4 +25,3 @@ Feature: View Existing Vectors
 	 And User enters the search value as 'WeaviateCatalogeeVectorr' and presses Enter
 	 Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
  
-  

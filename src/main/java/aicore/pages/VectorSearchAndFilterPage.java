@@ -26,6 +26,7 @@ public class VectorSearchAndFilterPage {
 	private static final String SELECT_XPATH="//div//ul//li[text()='{selectName}']";
 	private static final String CREATE_VECTOR_XPATH="//div//button//span[text()='Create vector']";
 	private static final String DIV_XPATH="//div[@class='css-155d4xt']";
+
 	
 	public VectorSearchAndFilterPage(Page page, String timestamp) {
 		this.page = page;
@@ -130,6 +131,7 @@ public class VectorSearchAndFilterPage {
 		
 	}
 
+
 	public void addVector() {
 		page.locator(ADD_VECTOR_XPATH).click();
 	}
@@ -165,6 +167,7 @@ public class VectorSearchAndFilterPage {
 	}
 
 	
+
 
 	
 
