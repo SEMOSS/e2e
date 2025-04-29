@@ -13,6 +13,7 @@ public class JobsPage {
 	private static final String JOB_STATUS_CHECK_XPATH = "//div[@role='rowgroup']//div[@role='row'][.//div[@data-field='name' and normalize-space(text())='{JobName}']]//div[@data-field='isActive']";
 	private static final String RESUME_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Resume']";
 
+
 	public JobsPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
