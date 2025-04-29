@@ -51,8 +51,8 @@ public class OpenVectorPage {
 		page.click(CONNECTIONS_XPATH.replace("{Connections}", connectionName));
 	}
 
-	public void enterVectorCatalogName(String catalogName) {
-		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName + " " + CommonUtils.getTodayDateFormatted());
+	public void enterVectorCatalogName(String vCatalogName) {
+		page.fill(CATALOG_NAME_TEXTBOX_ID, vCatalogName);
 	}
 
 	public void selectModelfromEmbedderDropdown(String modelName) {
@@ -157,12 +157,11 @@ public class OpenVectorPage {
 	}
 
 	public void addedVectorCard(String catalogName) {
-		System.out.println(catalogName + " " + timestamp);
 		page.locator(
-				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName + " " + CommonUtils.getTodayDateFormatted()))
+				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName))
 				.isVisible();
 		page.locator(
-				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName + " " + CommonUtils.getTodayDateFormatted()))
+				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName))
 				.click();
 	}
 
