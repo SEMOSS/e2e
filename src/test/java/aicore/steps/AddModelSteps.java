@@ -1,10 +1,11 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -288,9 +289,8 @@ public class AddModelSteps {
 		openModelPage.clickOnUsageTab();
 	}
 
-	@When("User copies contents using copy icon and validate model catalog Id occurences in sections:")
-	public void user_copies_contents_using_copy_icon_and_validate_model_catalog_id_occurences_in_sections(
-			DataTable table) {
+	@When("User copies code contents and validate model catalog Id occurences in sections:")
+	public void user_copies_code_contents_and_validate_model_catalog_id_occurences_in_sections(DataTable table) {
 
 		final String MODEL_USAGE_COMMANDS_SECTION_NAME = "SECTIONS";
 		final String EXPECTED_MODEL_ID_COUNT = "EXPECTED_MODEL_ID_COUNT";
@@ -300,7 +300,7 @@ public class AddModelSteps {
 		for (Map<String, String> row : rows) {
 			String sectionName = row.get(MODEL_USAGE_COMMANDS_SECTION_NAME);
 			int expectedCount = Integer.parseInt(row.get(EXPECTED_MODEL_ID_COUNT));
-			String copiedSectionContents = openModelPage.copyCommand(sectionName);
+			String copiedSectionContents = openModelPage.getFullSectionCodeByHeading(sectionName);
 			int countIdOccurances = CommonUtils.countIdOccurances(copiedSectionContents, expectedCatalogId);
 			Assertions.assertEquals(expectedCount, countIdOccurances,
 					"Model id not match for the section '" + sectionName + "'");
