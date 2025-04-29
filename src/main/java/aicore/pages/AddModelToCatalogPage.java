@@ -24,7 +24,6 @@ public class AddModelToCatalogPage {
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
-	private static final String CRAETED_MODEL_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
 	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
 	// SMSS field
@@ -83,7 +82,7 @@ public class AddModelToCatalogPage {
 	// Usage
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION_XPATH = "//button[@aria-label='copy Model ID']";
-	private static final String USAGE_COMMAND_COPY_OPTION_XPATH = "//div[h6[text()='{commandName}']]//button[contains(@class,'MuiButtonBase-root MuiButton-root MuiButton-outlined')]";
+	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 
 	public AddModelToCatalogPage(Page page, String timestamp) {
@@ -478,11 +477,22 @@ public class AddModelToCatalogPage {
 		return page.evaluate("navigator.clipboard.readText()").toString().trim();
 	}
 
-	public String copyCommand(String commandName) {
-		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).scrollIntoViewIfNeeded();
-		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName))
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(USAGE_COMMAND_COPY_OPTION_XPATH.replace("{commandName}", commandName)).click();
-		return page.evaluate("navigator.clipboard.readText()").toString().trim();
+	public String getFullSectionCodeByHeading(String headingText) {
+		StringBuilder sectionCodeContents = new StringBuilder();
+		switch (headingText) {
+		case "How to use in Javascript":
+			Locator sections = page.locator(USAGE_CODE_SECTION_XPATH.replace("{sectionName}", headingText));
+			for (int i = 0; i < sections.count(); i++) {
+				Locator subsection = sections.nth(i);
+				String codeContent = subsection.textContent().trim();
+				sectionCodeContents.append(codeContent).append("\n");
+			}
+			break;
+		default:
+			String codeContent = page.locator(USAGE_CODE_SECTION_XPATH.replace("{sectionName}", headingText))
+					.textContent().trim();
+			sectionCodeContents.append(codeContent).append("\n");
+		}
+		return sectionCodeContents.toString().trim();
 	}
 }

@@ -30,8 +30,8 @@ public class AdminQuerySteps {
 		homePage.clickOnOpenSettings();
 	}
 
-	@When("Admin User enable admin mode")
-	public void admin_user_enable_admin_mode() {
+	@When("Admin User enables admin mode")
+	public void admin_user_enables_admin_mode() {
 		settingPage.checkAdminButton();
 		settingPage.clickOnAdminButton();
 	}
