@@ -427,7 +427,7 @@ public class AddModelToCatalogPage {
 	public void addMember(String role) throws InterruptedException {
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		// search is by user name first name and lastname
-		// username = username + " lastname";
+		 username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
 //		page.getByTitle("Name: " + username).click();
 		page.getByText(username).click();
@@ -446,7 +446,7 @@ public class AddModelToCatalogPage {
 				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
 				new Page.WaitForConditionOptions().setTimeout(5000));
 		// Added cancel button code because pop-up is not closing because of bug
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
+//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
 	}
 
 	public boolean isDeleteSuccessful() {

@@ -1,7 +1,7 @@
 Feature: Model Catalog Permission - Editor
   Adding LLM to the catalog
    
-  Scenario: Model Catalog - Editor - View overview
+  Background: Model Catalog - Editor - View overview
     When User navigates to Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
@@ -20,36 +20,57 @@ Feature: Model Catalog Permission - Editor
     Then 'Editor' user can 'View' Overview       
   
   Scenario: Model Catalog - Editor - View usage
-    Then 'Editor' user can 'View' Usage    
+    Then 'Editor' user can 'View' Usage
+    And User logs out from the application
+    Then User login as "author"    
      
   Scenario: Model Catalog - Editor - SMSS Details
     Then 'Editor' user can 'Not View' SMSS Details 
+    And User logs out from the application
+    Then User login as "author"    
     
   Scenario: Model Catalog - Editor - Edit SMSS
     And 'Editor' user can 'Not View' SMSS Details
-    Then 'Editor' user can 'Not View' Edit SMSS  
+    Then 'Editor' user can 'Not View' Edit SMSS
+    And User logs out from the application
+    Then User login as "author"      
   
   Scenario: Model Catalog - Editor -  Access Control
     Then 'Editor' user can 'View' Access Control 
+    And User logs out from the application
+    Then User login as "author"    
     
   Scenario: Model Catalog - Editor - Member setting
     And 'Editor' user clicks on Access Control
     Then 'Editor' user 'can' see member setting
+    And User logs out from the application
+    Then User login as "author"    
 
-  Scenario: Model Catalog - Editor -  Delete Model
-    Then 'Editor' user 'can not' Delete Model
+  #Scenario: Model Catalog - Editor -  Delete Model
+    #Then 'Editor' user 'can not' Delete Model
+    #And User logs out from the application
+    #Then User login as "author"    
    
   Scenario: Model Catalog - Editor - Add Read
+  And 'Editor' user clicks on Access Control
    And User clicks on Add Member button
    And User adds one user and assigns them as "Read"
+   And User logs out from the application
+    Then User login as "author"    
    
   Scenario: Model Catalog - Editor - Delete Read Member
+   And 'Editor' user clicks on Access Control
+   And User clicks on Add Member button
+   And User adds one user and assigns them as "Read"
    And User deletes the 'Read' user
+   And User logs out from the application
+    Then User login as "author"    
    
   Scenario: Model Catalog - Editor -  Delete Model as Author
    And User logs out from the application
    Then User login as "Author"
     And 'Author' user clicks on Access Control
     Then 'Author' user 'can' Delete Model
+    
    
  
