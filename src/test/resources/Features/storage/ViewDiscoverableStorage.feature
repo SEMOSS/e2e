@@ -21,4 +21,3 @@ Feature: View Existing Discoverable Storage
     When User unselects 'CONFIDENTIAL' under 'Data Classification' section
     And User selects 'CONFIDENTIAL ALLOWED' under 'Data Restrictions' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
-    
