@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright/java:v1.49.0-jammy
+FROM mcr.microsoft.com/playwright/java:v1.51.0-noble
 
 WORKDIR /workspace
 
