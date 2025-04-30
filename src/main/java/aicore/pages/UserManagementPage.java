@@ -5,219 +5,143 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.UserManagementPageUtils;
+
 public class UserManagementPage {
 
 	private Page page;
-
-	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
-	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div";
-	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//li[text()='NATIVE']";
-	private static final String ADD_MEMBER_USERID_XPATH = "//label[text()='User Id']";
-	private static final String ADD_MEMBER_NAME_XPATH = "//label[text()='Name']/following-sibling::div/input";
-	private static final String ADD_MEMBER_EMAIL_XPATH = "//label[text()='Email']/following-sibling::div/input";
-	private static final String ADD_MEMBER_PHONE_NUMBER_XPATH = "//label[text()='Phone Number']/following-sibling::div/input";
-	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/following-sibling::div/input";
-	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//span[text()='Save']";
-	private static final String ADD_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added user']";
-	private static final String EDIT_ICON_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td//*[name()='svg'][@data-testid='EditIcon']";
-	private static final String MODEL_DROPDOWN_XPATH = "//div[text()='None']";
-	private static final String TOKEN_VALUE_XPATH = "//li[text()='{dropdown_value}']";
-	private static final String MAX_TOKEN_VALUE_XPATH = "//label[text()='Max Tokens']";
-	private static final String FREQUENCY_DROPDOWN_XPATH = "//label[text()='Frequency']//parent::div//div";
-	private static final String WEEKELY_VALUE_XPATH = "//li[text()='{dropdown_option}']";
-	private static final String MODEL_LIMIT_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td[text()='{limitValue}']";
-	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Users\"]";
-	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@class='MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1o4vkg1-MuiFormControlLabel-root']/parent::th//input";
-	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
-	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
-	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
-	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
-	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
-	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
-	private static final String ADFS_TOAST_MESSAGE_XPATH = "Succesfully modified adfs properties";
 
 	public UserManagementPage(Page page) {
 		this.page = page;
 	}
 
 	public void checkAddMemberButton() {
-		page.locator(ADD_MEMBER_XPATH).isVisible();
+		UserManagementPageUtils.checkAddMemberButton(page);
 	}
 
 	public void checkAddUserButton() {
-		page.locator(ADD_MEMBER_XPATH).isVisible();
+		UserManagementPageUtils.checkAddUserButton(page);
 	}
 
 	public void clickAddUserButton() {
-		page.locator(ADD_MEMBER_XPATH).click();
+		UserManagementPageUtils.clickAddUserButton(page);
 	}
 
 	public void clickTypeDropdown() {
-		page.locator(ADD_MEMBER_TYPE_XPATH).isVisible();
-		page.locator(ADD_MEMBER_TYPE_XPATH).click();
+		UserManagementPageUtils.clickTypeDropdown(page);
 	}
 
 	public void clickNativeDropdownValue() {
-		page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).isVisible();
-		page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).click();
+		UserManagementPageUtils.clickNativeDropdownValue(page);
 	}
 
 	public void fillUserId(String UserId) throws InterruptedException {
-		page.locator(ADD_MEMBER_USERID_XPATH).isVisible();
-		page.locator(ADD_MEMBER_USERID_XPATH).fill(UserId);
+		UserManagementPageUtils.fillUserId(page, UserId);
 	}
 
 	public void fillName(String Name) throws InterruptedException {
-		page.locator(ADD_MEMBER_NAME_XPATH).isVisible();
-		page.locator(ADD_MEMBER_NAME_XPATH).fill(Name);
+		UserManagementPageUtils.fillName(page, Name);
 	}
 
 	public void fillEmail(String Email) {
-		page.locator(ADD_MEMBER_EMAIL_XPATH).isVisible();
-		page.locator(ADD_MEMBER_EMAIL_XPATH).fill(Email);
+		UserManagementPageUtils.fillEmail(page, Email);
 	}
 
 	public void fillPhoneNumber(String Number) {
-		page.locator(ADD_MEMBER_PHONE_NUMBER_XPATH).isVisible();
-		page.locator(ADD_MEMBER_PHONE_NUMBER_XPATH).fill(Number);
+		UserManagementPageUtils.fillPhoneNumber(page, Number);
 	}
 
 	public void fillExtension(String Extension) {
-		page.locator(ADD_MEMBER_EXTENSION_XPATH).isVisible();
-		page.locator(ADD_MEMBER_EXTENSION_XPATH).fill(Extension);
+		UserManagementPageUtils.fillExtension(page, Extension);
 	}
 
 	public void clickSaveButton() {
-		page.locator(ADD_MEMBER_TYPE_SAVE_XPATH).click();
+		UserManagementPageUtils.clickSaveButton(page);
 	}
 
 	public String userCreationToastMessage() {
-		page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.textContent(ADD_MEMBER_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		return UserManagementPageUtils.userCreationToastMessage(page);
 	}
 
 	public void closeToastMessage() {
-		page.locator(TOAST_MESSAGE_CLOSE_XPATH).isVisible();
-		page.locator(TOAST_MESSAGE_CLOSE_XPATH).click();
+		UserManagementPageUtils.closeToastMessage(page);
 	}
 
 	public void clickOnEditUser() {
-		page.locator(EDIT_ICON_XPATH).isVisible();
-		page.locator(EDIT_ICON_XPATH).click();
+		UserManagementPageUtils.clickOnEditUser(page);
 	}
 
 	public void clickModelUserDropdown() {
-		page.locator(MODEL_DROPDOWN_XPATH).isVisible();
-		page.locator(MODEL_DROPDOWN_XPATH).click();
+		UserManagementPageUtils.clickModelUserDropdown(page);
 	}
 
 	public void selectTokenValueDropdown(String dropdownOption) {
-		page.locator(TOKEN_VALUE_XPATH.replace("{dropdown_value}", dropdownOption)).isVisible();
-		page.locator(TOKEN_VALUE_XPATH.replace("{dropdown_value}", dropdownOption)).click();
+		UserManagementPageUtils.selectTokenValueDropdown(page, dropdownOption);
 	}
 
 	public void fillMaxTokensValue(String value) {
-		page.locator(MAX_TOKEN_VALUE_XPATH).isVisible();
-		page.locator(MAX_TOKEN_VALUE_XPATH).fill(value);
+		UserManagementPageUtils.fillMaxTokensValue(page, value);
 	}
 
 	public void clickFrequencyDropdown() {
-		page.locator(FREQUENCY_DROPDOWN_XPATH).first().isVisible();
-		page.locator(FREQUENCY_DROPDOWN_XPATH).first().click();
-
+		UserManagementPageUtils.clickFrequencyDropdown(page);
 	}
 
 	public void selectWeeklyValueDropdown(String dropdownValue) {
-		page.locator(WEEKELY_VALUE_XPATH.replace("{dropdown_option}", dropdownValue)).isVisible();
-		page.locator(WEEKELY_VALUE_XPATH.replace("{dropdown_option}", dropdownValue)).click();
+		UserManagementPageUtils.selectWeeklyValueDropdown(page, dropdownValue);
 	}
 
 	public String getModelLimitValue(String limit) {
-		page.locator(MODEL_LIMIT_XPATH.replace("{limitValue}", limit)).isVisible();
-		return page.locator(MODEL_LIMIT_XPATH.replace("{limitValue}", limit)).textContent();
+		return UserManagementPageUtils.getModelLimitValue(page, limit);
 	}
 
 	public void checkSearchButton() {
-		page.isVisible(SEARCH_ICON_XPATH);
-		page.click(SEARCH_ICON_XPATH);
+		UserManagementPageUtils.checkSearchButton(page);
 	}
 
 	public void searchUser() {
-		page.fill(SEARCH_BUTTON_XPATH, "UserId");
+		UserManagementPageUtils.searchUser(page);
 	}
 
 	public void clickSelectAllButton() {
-		page.isVisible(SELECT_ALL_BUTTON_XPATH);
-		page.click(SELECT_ALL_BUTTON_XPATH);
+		UserManagementPageUtils.clickSelectAllButton(page);
 	}
 
 	public void clickDeleteSelectedButton() {
-		page.isVisible(DELETE_SELECTED_BUTTON_XPATH);
-		page.click(DELETE_SELECTED_BUTTON_XPATH);
+		UserManagementPageUtils.clickDeleteSelectedButton(page);
 	}
 
 	public String userDeletionToastMessage() {
-		String toastMessage = page.textContent(DELETE_MEMBER_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		return UserManagementPageUtils.userDeletionToastMessage(page);
 	}
 
 	public void clickOnAccessKeyValue() {
-		page.locator(CONFIGERATION_KEY_VALUE_XPATH).click();
+		UserManagementPageUtils.clickOnAccessKeyValue(page);
 
 	}
 
 	public void updateAccessKeyValue(String newValue) {
-
-		Locator valueInput = page.locator(CONFIGERATION_KEY_VALUE_XPATH);
-
-		valueInput.fill("");
-		valueInput.fill(newValue);
-
+		UserManagementPageUtils.updateAccessKeyValue(page, newValue);
 	}
 
 	public void clickSaveButtonOFAdfs() {
-
-		page.locator(SAVE_BUTTON_ADFS_XPATH).click();
-
+		UserManagementPageUtils.clickSaveButtonOFAdfs(page);
 	}
 
 	public String getToastMessage(String expectedMessage) {
-
-		Locator toast = page.getByRole(AriaRole.ALERT)
-
-				.filter(new Locator.FilterOptions().setHasText(expectedMessage));
-
-		toast.waitFor(new Locator.WaitForOptions().setTimeout(5000)); // wait until visible
-
-		return toast.textContent().trim();
-
+		return UserManagementPageUtils.getToastMessage(page, expectedMessage);
 	}
 
 	public void waitForToastMessageToDisappear(String expectedMessage) {
-
-		page.getByRole(AriaRole.ALERT)
-
-				.filter(new Locator.FilterOptions().setHasText(expectedMessage))
-
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-
+		UserManagementPageUtils.waitForToastMessageToDisappear(page, expectedMessage);
 	}
 
 	public void clickOnAuthenticationDropdown() {
-		page.getByTestId("KeyboardArrowDownIcon").click();
+		UserManagementPageUtils.clickOnAuthenticationDropdown(page);
 	}
 
 	public void searchAndSelectOption(String optionText) {
-		// Fill the search box
-		Locator searchInput = page.locator("//input[@placeholder='Search']");
-		searchInput.fill("");
-		searchInput.fill(optionText);
-
-		// Click on the result button
-		Locator resultButton = page.locator("//button[.//span[text()='" + optionText + "']]");
-		resultButton.click();
+		UserManagementPageUtils.searchAndSelectOption(page, optionText);
 	}
 
 }
