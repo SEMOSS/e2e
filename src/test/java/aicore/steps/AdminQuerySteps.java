@@ -44,7 +44,7 @@ public class AdminQuerySteps {
 
 	@And("User selects {string} from the database dropdown")
 	public void user_selects_from_the_database_dropdown(String databaseName) {
-		adminQuery.selectDatabse(databaseName);
+		adminQuery.selectDatabase(databaseName);
 	}
 
 	@And("User enters {string} in the query textbox")
