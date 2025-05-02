@@ -79,8 +79,6 @@ public class ModelPageUtils {
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 
-
-
 	public void addModelButton(Page page) {
 		page.getByLabel("Navigate to import Model").click();
 	}
@@ -417,8 +415,6 @@ public class ModelPageUtils {
 
 	public static void addMember(Page page, String role) throws InterruptedException {
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
-		// search is by user name first name and lastname
-		 username = username + " lastname";
 		page.fill(ADD_MEMBER_XPATH, username);
 //		page.getByTitle("Name: " + username).click();
 		page.getByText(username).click();
@@ -486,7 +482,7 @@ public class ModelPageUtils {
 		}
 		return sectionCodeContents.toString().trim();
 	}
-	
+
 	//////////// MODEL PERMISSIONS - AUTHOR
 
 	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
