@@ -48,57 +48,6 @@ public class AddFunctionSteps {
         }
     }
 
-    @And("User sees astrisk mark on the required fields {string}")
-    public void user_sees_astrisk_mark_on_the_required_fields(String requiredFields) {
-        addFunctionToCatalogPage.verifyAsteriskMarkOnFields(requiredFields);
-    }
-
-    @And("User enters Catalog name {string}")
-    public void user_enters_catalog_name(String catalogName) {
-        addFunctionToCatalogPage.enterCatalogName(catalogName);
-    }
-
-    @And("User enters Url as {string}")
-    public void user_enters_url_as(String url) {
-        addFunctionToCatalogPage.enterUrl(url);
-    }
-
-    @And("User selects HTTP method as {string}")
-    public void user_selects_http_method_as(String httpMethod) {
-        addFunctionToCatalogPage.selectHttpMethod(httpMethod);
-    }
-
-    @And("User selects Post body message as {string}")
-    public void user_selects_post_body_message_as(String postBodyMessage) {
-        addFunctionToCatalogPage.selectPostBodyMessage(postBodyMessage);
-    }
-
-    @And("User enters Headers as {string}")
-    public void user_enters_headers_as(String headers) {
-        addFunctionToCatalogPage.enterHeaders(headers);
-    }
-
-    @And("User enters Function parameters as {string}")
-    public void user_enters_function_parameters_as(String functionParameters) {
-        addFunctionToCatalogPage.enterFunctionParameters(functionParameters);
-    }
-
-    @And("User enters Function required parameters as {string}")
-    public void user_enters_function_required_parameters_as(String functionRequiredParameters) {
-        addFunctionToCatalogPage.enterFunctionRequiredParameters(functionRequiredParameters);
-
-    }
-
-    @And("User enters Function name as {string}")
-    public void user_enters_function_name_as(String functionName) {
-        addFunctionToCatalogPage.enterFunctionName(functionName);
-    }
-
-    @And("User enters Function description as {string}")
-    public void user_enters_function_description_as(String functionDescription) {
-        addFunctionToCatalogPage.enterFunctionDescription(functionDescription);
-    }
-
     @Then("User clicks on Create Funtion button")
     public void user_sees_create_Funtion_button() {
         addFunctionToCatalogPage.clickOnCreateFunctionButton();
