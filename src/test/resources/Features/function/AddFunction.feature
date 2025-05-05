@@ -5,7 +5,7 @@ Feature: Add Function
     Given User navigates to Open Function
     When User clicks on Add Function
     Then User selects function 'ZIP'
-    And User uploads function file ' Function/weatherFunctionTest.zip'
+    And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Funtion button
     And User sees the function name 'WeatherFunctionTest' in the function catalog
 

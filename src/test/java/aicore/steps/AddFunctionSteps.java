@@ -49,7 +49,7 @@ public class AddFunctionSteps {
     }
 
     @Then("User clicks on Create Funtion button")
-    public void user_sees_create_Funtion_button() {
+    public void user_clicks_on_create_Funtion_button() {
         addFunctionToCatalogPage.clickOnCreateFunctionButton();
     }
 
@@ -76,7 +76,7 @@ public class AddFunctionSteps {
     }
 
     @Then("User sees deleted function success toast message {string}")
-    public void user_sees_seleted_function_success_toast_message(String toastMessage) {
+    public void user_sees_deleted_function_success_toast_message(String toastMessage) {
         String expectedMessage = addFunctionToCatalogPage.verifyDeleteToastMessage();
         String actualMessage = toastMessage;
         Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
