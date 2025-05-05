@@ -9,6 +9,8 @@ jobs:
   test:
     #runs-on: ubuntu-latest
     runs-on: self-hosted
+    container:
+      image: quay.io/semoss/test-quay:ubuntu-dind
     
     steps:
     
@@ -40,9 +42,9 @@ jobs:
         name: test-results
         path: target/* # Adjust this path to where your test results are stored
 
-    - name: Clean workspace
-      if: always()
-      run: |
-        /usr/bin/chown -R ubuntu:ubuntu $GITHUB_WORKSPACE
-        find $GITHUB_WORKSPACE -mindepth 1 -delete
+    # - name: Clean workspace
+    #   if: always()
+    #   run: |
+    #     /usr/bin/chown -R ubuntu:ubuntu $GITHUB_WORKSPACE
+    #     find $GITHUB_WORKSPACE -mindepth 1 -delete
       
