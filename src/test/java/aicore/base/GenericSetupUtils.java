@@ -165,7 +165,7 @@ public class GenericSetupUtils {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
 		page.getByText("Member Settings").click();
 		try {
-			page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("A admin lastname ID: admin")).getByLabel("Admin").check();
+			page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("A admin lastname")).getByLabel("Admin").check();
 		} catch (Throwable t) {
 			logger.warn("This works, but throws anyway, just catch it and move on: {}", t.getMessage());
 		}
