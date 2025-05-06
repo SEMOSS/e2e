@@ -99,7 +99,8 @@ public class AddModelToCatalogPage {
 
 	public void selectModel(String modelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{ModelName}", modelName));
-
+	}
+	
 	public void selectOpenAi(String aiModelName) {
 		ModelPageUtils.selectOpenAi(page, aiModelName);
 	}
