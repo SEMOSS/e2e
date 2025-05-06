@@ -18,11 +18,6 @@ public class AddFunctionSteps {
         addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage());
     }
 
-    @Given("User navigates to Open Function")
-    public void user_navigates_to_open_function() {
-        homePage.clickOnOpenFunction();
-    }
-
     @When("User clicks on Add Function")
     public void user_clicks_on_add_function() {
         addFunctionToCatalogPage.clickOnAddFunctionButton();
