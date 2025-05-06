@@ -23,7 +23,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private HomePage homePage;
 	private OpenAppLibraryPage openAppLibraryPage;
 	protected static String timestamp;
-	private String linkText;
+	private String blockText;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -76,12 +76,23 @@ public class CreateAppUsingDragAndDropSteps {
 		boolean isWelcomeTextboxVisible = openAppLibraryPage.verifyWelcomeTextboxIsVisible();
 		assertTrue(isWelcomeTextboxVisible);
 		String actualWelcomeTextMessage = openAppLibraryPage.verifyWelcomeText();
-		assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage);
+		Assertions.assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage,
+				"Mismatch between the expected and actual message");
+	}
+
+	@When("User navigates to the Home page from the App Edit page")
+	public void user_navigates_to_the_home_page_from_the_app_edit_page() {
+		openAppLibraryPage.navigateToHomePageFromAppEditPage();
+	}
+
+	@Given("User is on the Home page")
+	public void user_is_on_the_home_page() {
+		openAppLibraryPage.navigatesToHomePage();
 	}
 
 	@When("User navigate to Home page")
 	public void user_navigate_to_home_page() {
-		openAppLibraryPage.navigateToHomePage();
+		openAppLibraryPage.navigatesToHomePage();
 	}
 
 	@And("User searches {string} app in the app searchbox")
@@ -106,16 +117,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
-		switch (blockName) {
-		case "Heading 1":
-			openAppLibraryPage.mouseHoverOnHeading1Block();
-			break;
-		case "Link":
-			openAppLibraryPage.mouseHoverOnLinkBlock();
-			break;
-		default:
-			System.out.println("Invalid block name");
-		}
+		openAppLibraryPage.mouseHoverOnTextSectionBlock(blockName);
 		openAppLibraryPage.blockDropPosition();
 	}
 
@@ -132,12 +134,21 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User enters {string} as the destination")
 	public void user_enters_as_the_destination(String destination) {
-		openAppLibraryPage.enterDestination(destination);
+		if (!destination.trim().isEmpty()) {
+			openAppLibraryPage.enterDestination(destination);
+		}
 	}
 
-	@And("User enters {string} as the text")
-	public void user_enters_as_the_text(String linkText) {
-		openAppLibraryPage.enterLinkText(linkText);
+	@And("User enters {string} text as {string}")
+	public void user_enters_text_as(String blockName, String blockText) {
+		switch (blockName) {
+		case "Markdown":
+			openAppLibraryPage.enterMarkdown(blockText);
+			break;
+		default:
+			openAppLibraryPage.enterText(blockText);
+			break;
+		}
 	}
 
 	@And("User selects the {string} styles")
@@ -147,12 +158,12 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User selects {string} from the font list")
 	public void user_selects_from_the_font_list(String fontName) {
-		openAppLibraryPage.selectLinkTextFont(fontName);
+		openAppLibraryPage.selectTextFont(fontName);
 	}
 
 	@And("User selects {string} as the HEX color value")
 	public void user_selects_as_the_rgb_color_values(String hexColor) {
-		openAppLibraryPage.selectLinkTextColor(hexColor);
+		openAppLibraryPage.selectTextColor(hexColor.trim());
 	}
 
 	@And("User selects {string} as the text alignment")
@@ -165,52 +176,113 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.clickOnSaveAppButton();
 	}
 
-	@Then("User should see {string} as the link name")
-	public void user_should_see_as_the_link_name(String text) {
-		this.linkText = text;
-		String actualLinkText = openAppLibraryPage.getLinkText(linkText);
-		Assertions.assertEquals(linkText, actualLinkText, "Mismatch between the expected and actual link text");
+	@Then("User should see the {string} text as {string}")
+	public void user_should_see_the_text_as(String blockName, String text) {
+		String BOLD_MARKDOWN_PATTERN = "\\*\\*(.*?)\\*\\*";
+		String BOLD_REPLACEMENT = "$1";
+		switch (blockName) {
+		case "Markdown":
+			this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
+			break;
+		default:
+			this.blockText = text;
+			break;
+		}
+		String actualText = openAppLibraryPage.getBlockText(blockName, blockText);
+		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
 	}
 
-	@And("User should see the link name displayed in {string} styles")
-	public void user_should_see_the_link_name_displayed_in_styles(String linkStyles) {
-		Locator linkLocator = openAppLibraryPage.linkLocator(linkText);
-		List<String> appliedLinkStyles = Arrays.asList(linkStyles.split(", "));
-		List<String> actualAppliedLinkStyles = CommonUtils.getAppliedStyles(linkLocator);
-		Assertions.assertEquals(appliedLinkStyles, actualAppliedLinkStyles,
-				"Mismatch between the expected and actual link styles");
+	@Then("User should see the {string} text displayed in {string} styles")
+	public void user_should_see_the_text_displayed_in_styles(String blockName, String textStyles) {
+		Locator linkLocator = openAppLibraryPage.textSectionDragAndDroppedBlockLocator(blockName, blockText);
+		List<String> appliedTextStyles = Arrays.asList(textStyles.split(", "));
+		List<String> actualAppliedTextStyles = CommonUtils.getAppliedStyles(linkLocator);
+		Assertions.assertEquals(appliedTextStyles, actualAppliedTextStyles,
+				"Mismatch between the expected and actual text styles");
 	}
 
-	@And("User should see the link name displayed in {string} font")
-	public void user_should_see_the_link_name_displayed_in_font(String expectedLinkFont) {
-		String actualLinkFont = openAppLibraryPage.getLinkFont(linkText);
-		Assertions.assertEquals(expectedLinkFont, actualLinkFont, "Mismatch between the expected and actual link font");
+	@Then("User should see the {string} text displayed in {string} font")
+	public void user_should_see_the_text_displayed_in_font(String blockName, String expectedLinkFont) {
+		String actualTextFont = openAppLibraryPage.getBlockTextFont(blockName, blockText);
+		Assertions.assertEquals(expectedLinkFont, actualTextFont, "Mismatch between the expected and actual text font");
 	}
 
-	@And("User should see the link name displayed in {string} HEX color value")
-	public void user_should_see_the_link_name_displayed_in_hex_color_value(String hexLinkColor) {
-		String actualLinkColor = openAppLibraryPage.getLinkColor(linkText);
-		String expectedLinkColor = CommonUtils.hexToRGBConversion(hexLinkColor);
-		Assertions.assertEquals("rgb(" + expectedLinkColor + ")", actualLinkColor,
-				"Mismatch between the expected and actual link color");
+	@Then("User should see the {string} text displayed in {string} HEX color value")
+	public void user_should_see_the_text_displayed_in_hex_color_value(String blockName, String hexColor) {
+		String actualTextColor = openAppLibraryPage.getBlockTextColor(blockName, blockText);
+		String expectedTextColor = CommonUtils.hexToRGBConversion(hexColor);
+		Assertions.assertEquals("rgb(" + expectedTextColor + ")", actualTextColor,
+				"Mismatch between the expected and actual text color");
 	}
 
-	@And("User should see the link name aligned to the {string}")
-	public void user_should_see_the_link_name_aligned_to_the(String linkAlign) {
-		String actualLinkAlign = openAppLibraryPage.getLinkTextAlign(linkText);
-		String expectedLinkAlign = linkAlign.toLowerCase();
-		Assertions.assertEquals(expectedLinkAlign, actualLinkAlign,
-				"Mismatch between the expected and actual link align");
+	@Then("User should see the {string} text aligned to the {string}")
+	public void user_should_see_the_text_aligned_to_the(String blockName, String textAlign) {
+		String actualTextAlign = openAppLibraryPage.getBlockTextAlign(blockName, blockText);
+		String expectedTextAlign = textAlign.toLowerCase();
+		Assertions.assertEquals(expectedTextAlign, actualTextAlign,
+				"Mismatch between the expected and actual text align");
 	}
 
-	@When("User clicks on the link")
-	public void user_clicks_on_the_link() {
-		openAppLibraryPage.clickOnLink(linkText);
+	@Then("User should be navigated to {string} by clicking on link")
+	public void user_should_be_navigated_to_by_clicking_on_link(String destination) {
+		if (!destination.trim().isEmpty()) {
+			openAppLibraryPage.clickOnLink(blockText);
+			String actualUrl = openAppLibraryPage.getDestinationUrl(destination);
+			Assertions.assertEquals(destination, actualUrl,
+					"Mismatch between the expected and actual link destination");
+			openAppLibraryPage.navigateToPreviosPage();
+		}
 	}
 
-	@Then("User should be navigated to {string}")
-	public void user_should_be_navigated_to(String expectedUrl) {
-		String actualUrl = openAppLibraryPage.getDestinationUrl(expectedUrl);
-		Assertions.assertEquals(expectedUrl, actualUrl, "Mismatch between the expected and actual link destination");
+	@When("User clicks on Notebook")
+	public void user_clicks_on_notebook() {
+		openAppLibraryPage.clickOnNotebooksOption();
+	}
+
+	@And("User clicks on Create new notebook")
+	public void user_clicks_on_create_new_notebook() {
+		openAppLibraryPage.clickOnCreateNewNotebook();
+	}
+
+	@And("User enters New Query name as {string}")
+	public void user_enters_new_query_name_as(String queryName) {
+		openAppLibraryPage.enterQueryName(queryName);
+	}
+
+	@When("User clicks on query Submit button")
+	public void user_clicks_on_query_submit_button() {
+		openAppLibraryPage.clickOnQuerySubmitButton();
+	}
+
+	@When("User enters code as {string}")
+	public void user_enters_code_as(String code) {
+		openAppLibraryPage.enterCodeInQuery(code);
+	}
+
+	@When("User clicks on Run this cell and below icon")
+	public void user_clicks_on_run_this_cell_and_below_icon() {
+		openAppLibraryPage.clickOnRunAllButton();
+	}
+
+	@Then("User can see code output as {string}")
+	public void user_can_see_code_output_as(String expectedCodeOutput) {
+		String actualOutput = openAppLibraryPage.getCodeOutput(expectedCodeOutput);
+		Assertions.assertEquals(expectedCodeOutput, actualOutput,
+				"Mismatch between the expected and actual code output");
+	}
+
+	@And("User clicks on Blocks")
+	public void user_clicks_on_blocks() {
+		openAppLibraryPage.clickOnBlocksOption();
+	}
+
+	@And("User clicks on {string} page")
+	public void user_clicks_on_page(String pageName) {
+		openAppLibraryPage.selectPage(pageName);
+	}
+
+	@And("User selects {string} from the Query dropdown")
+	public void user_selects_from_the_query_dropdown(String queryName) {
+		openAppLibraryPage.selectQueryFromList(queryName);
 	}
 }

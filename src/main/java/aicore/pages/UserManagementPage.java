@@ -2,12 +2,12 @@ package aicore.pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitForSelectorState;
+
+import aicore.utils.UserManagementPageUtils;
 
 public class UserManagementPage {
 
 	private Page page;
-
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
 	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div";
 	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//li[text()='NATIVE']";
@@ -36,7 +36,7 @@ public class UserManagementPage {
 	private static final String NATIVE_PASSWORD_XPATH = "//input[contains(@class, 'MuiInputBase-input') and contains(@class, 'MuiOutlinedInput-input') and @type='password']";
 	private static final String LOGIN_WITH_NATIVE_XPATH = "//button[@type='submit' and contains(@class, 'MuiButton-containedPrimary')]";
 	private static final String DISPLAYED_NAME_XPATH = "//legend[span[text()='Name']]/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
-	private static final String DISPLAYED_USER_ID_XPATH = "//legend[span[text()='User Id']]/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
+	private static final String DISPLAYED_USER_ID_XPATH = "//input[contains(@value, 'TestId')]";
 	private static final String DISPLAYED_USERNAME_XPATH = "//label[text()='Username']/following-sibling::p";
 	private static final String DISPLAYED_EMAIL_XPATH = "//legend[span[text()='Email']]/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
 
@@ -45,126 +45,132 @@ public class UserManagementPage {
 	}
 
 	public void checkAddMemberButton() {
-		page.locator(ADD_MEMBER_XPATH).isVisible();
+		UserManagementPageUtils.checkAddMemberButton(page);
 	}
 
 	public void checkAddUserButton() {
-		page.locator(ADD_MEMBER_XPATH).isVisible();
+		UserManagementPageUtils.checkAddUserButton(page);
 	}
 
 	public void clickAddUserButton() {
-		page.locator(ADD_MEMBER_XPATH).click();
+		UserManagementPageUtils.clickAddUserButton(page);
 	}
 
 	public void clickTypeDropdown() {
-		page.locator(ADD_MEMBER_TYPE_XPATH).isVisible();
-		page.locator(ADD_MEMBER_TYPE_XPATH).click();
+		UserManagementPageUtils.clickTypeDropdown(page);
 	}
 
 	public void clickNativeDropdownValue() {
-		page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).isVisible();
-		page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).click();
+		UserManagementPageUtils.clickNativeDropdownValue(page);
 	}
 
 	public void fillUserId(String UserId) throws InterruptedException {
-		page.locator(ADD_MEMBER_USERID_XPATH).isVisible();
-		page.locator(ADD_MEMBER_USERID_XPATH).fill(UserId);
+		UserManagementPageUtils.fillUserId(page, UserId);
 	}
 
 	public void fillName(String Name) throws InterruptedException {
-		page.locator(ADD_MEMBER_NAME_XPATH).isVisible();
-		page.locator(ADD_MEMBER_NAME_XPATH).fill(Name);
+		UserManagementPageUtils.fillName(page, Name);
 	}
 
 	public void fillEmail(String Email) {
-		page.locator(ADD_MEMBER_EMAIL_XPATH).isVisible();
-		page.locator(ADD_MEMBER_EMAIL_XPATH).fill(Email);
+		UserManagementPageUtils.fillEmail(page, Email);
 	}
 
 	public void fillPhoneNumber(String Number) {
-		page.locator(ADD_MEMBER_PHONE_NUMBER_XPATH).isVisible();
-		page.locator(ADD_MEMBER_PHONE_NUMBER_XPATH).fill(Number);
+		UserManagementPageUtils.fillPhoneNumber(page, Number);
 	}
 
 	public void fillExtension(String Extension) {
-		page.locator(ADD_MEMBER_EXTENSION_XPATH).isVisible();
-		page.locator(ADD_MEMBER_EXTENSION_XPATH).fill(Extension);
+		UserManagementPageUtils.fillExtension(page, Extension);
 	}
 
 	public void clickSaveButton() {
-		page.locator(ADD_MEMBER_TYPE_SAVE_XPATH).click();
+		UserManagementPageUtils.clickSaveButton(page);
 	}
 
 	public String userCreationToastMessage() {
-		page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.textContent(ADD_MEMBER_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		return UserManagementPageUtils.userCreationToastMessage(page);
 	}
 
 	public void closeToastMessage() {
-		page.locator(TOAST_MESSAGE_CLOSE_XPATH).isVisible();
-		page.locator(TOAST_MESSAGE_CLOSE_XPATH).click();
+		UserManagementPageUtils.closeToastMessage(page);
 	}
 
 	public void clickOnEditUser() {
-		page.locator(EDIT_ICON_XPATH).isVisible();
-		page.locator(EDIT_ICON_XPATH).click();
+		UserManagementPageUtils.clickOnEditUser(page);
 	}
 
 	public void clickModelUserDropdown() {
-		page.locator(MODEL_DROPDOWN_XPATH).isVisible();
-		page.locator(MODEL_DROPDOWN_XPATH).click();
+		UserManagementPageUtils.clickModelUserDropdown(page);
 	}
 
 	public void selectTokenValueDropdown(String dropdownOption) {
-		page.locator(TOKEN_VALUE_XPATH.replace("{dropdown_value}", dropdownOption)).isVisible();
-		page.locator(TOKEN_VALUE_XPATH.replace("{dropdown_value}", dropdownOption)).click();
+		UserManagementPageUtils.selectTokenValueDropdown(page, dropdownOption);
 	}
 
 	public void fillMaxTokensValue(String value) {
-		page.locator(MAX_TOKEN_VALUE_XPATH).isVisible();
-		page.locator(MAX_TOKEN_VALUE_XPATH).fill(value);
+		UserManagementPageUtils.fillMaxTokensValue(page, value);
 	}
 
 	public void clickFrequencyDropdown() {
-		page.locator(FREQUENCY_DROPDOWN_XPATH).first().isVisible();
-		page.locator(FREQUENCY_DROPDOWN_XPATH).first().click();
-
+		UserManagementPageUtils.clickFrequencyDropdown(page);
 	}
 
 	public void selectWeeklyValueDropdown(String dropdownValue) {
-		page.locator(WEEKELY_VALUE_XPATH.replace("{dropdown_option}", dropdownValue)).isVisible();
-		page.locator(WEEKELY_VALUE_XPATH.replace("{dropdown_option}", dropdownValue)).click();
+		UserManagementPageUtils.selectWeeklyValueDropdown(page, dropdownValue);
 	}
 
 	public String getModelLimitValue(String limit) {
-		page.locator(MODEL_LIMIT_XPATH.replace("{limitValue}", limit)).isVisible();
-		return page.locator(MODEL_LIMIT_XPATH.replace("{limitValue}", limit)).textContent();
+		return UserManagementPageUtils.getModelLimitValue(page, limit);
 	}
 
 	public void checkSearchButton() {
-		page.isVisible(SEARCH_ICON_XPATH);
-		page.click(SEARCH_ICON_XPATH);
+		UserManagementPageUtils.checkSearchButton(page);
 	}
 
 	public void searchUser() {
-		page.fill(SEARCH_BUTTON_XPATH, "UserId");
+		UserManagementPageUtils.searchUser(page);
 	}
 
 	public void clickSelectAllButton() {
-		page.isVisible(SELECT_ALL_BUTTON_XPATH);
-		page.click(SELECT_ALL_BUTTON_XPATH);
+		UserManagementPageUtils.clickSelectAllButton(page);
 	}
 
 	public void clickDeleteSelectedButton() {
-		page.isVisible(DELETE_SELECTED_BUTTON_XPATH);
-		page.click(DELETE_SELECTED_BUTTON_XPATH);
+		UserManagementPageUtils.clickDeleteSelectedButton(page);
 	}
 
 	public String userDeletionToastMessage() {
-		String toastMessage = page.textContent(DELETE_MEMBER_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		return UserManagementPageUtils.userDeletionToastMessage(page);
+	}
+
+	public void clickOnAccessKeyValue() {
+		UserManagementPageUtils.clickOnAccessKeyValue(page);
+
+	}
+
+	public void updateAccessKeyValue(String newValue) {
+		UserManagementPageUtils.updateAccessKeyValue(page, newValue);
+	}
+
+	public void clickSaveButtonOFAdfs() {
+		UserManagementPageUtils.clickSaveButtonOFAdfs(page);
+	}
+
+	public String getToastMessage(String expectedMessage) {
+		return UserManagementPageUtils.getToastMessage(page, expectedMessage);
+	}
+
+	public void waitForToastMessageToDisappear(String expectedMessage) {
+		UserManagementPageUtils.waitForToastMessageToDisappear(page, expectedMessage);
+	}
+
+	public void clickOnAuthenticationDropdown() {
+		UserManagementPageUtils.clickOnAuthenticationDropdown(page);
+	}
+
+	public void searchAndSelectOption(String optionText) {
+		UserManagementPageUtils.searchAndSelectOption(page, optionText);
 	}
 
 	public void loginAsUser(String username, String password) {
@@ -179,9 +185,13 @@ public class UserManagementPage {
 
 	}
 
-	public String getDisplayedId() {
-
-		return page.locator(DISPLAYED_USER_ID_XPATH).textContent().trim();
+	public String getDisplayedId() throws InterruptedException {
+//		page.locator(DISPLAYED_USER_ID_XPATH).waitFor();
+//		page.click(DISPLAYED_USER_ID_XPATH);
+//		Thread.sleep(3000);
+//		return page.locator(DISPLAYED_USER_ID_XPATH).nth(0).textContent().trim();
+		Locator userIdInput = page.locator("//label[contains(text(), 'User Id')]/following::input[1]");
+		return userIdInput.getAttribute("value");
 
 	}
 

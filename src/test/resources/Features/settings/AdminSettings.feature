@@ -1,10 +1,12 @@
 Feature: Admin Settings
 
+	Background: View Admin Settings  
+		Given User logs as Admin user in AI CORE application
+    And User navigates to settings
+    And User enables admin mode
+
   @LoginWithAdmin
   Scenario: Check admin have access to each setting
-    Given User logs as Admin user in AI CORE application
-    And User navigates to the settings
-    And User enables admin mode
     Then User can view the following settings tile
       | SETTINGS_TILE     |
       | App Settings      |

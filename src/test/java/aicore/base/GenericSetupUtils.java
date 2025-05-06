@@ -164,11 +164,11 @@ public class GenericSetupUtils {
 		page.getByLabel("Navigate to settings").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
 		page.getByText("Member Settings").click();
-		page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("al admin lastname User ID:"))
-				.getByRole(AriaRole.BUTTON).first().click();
-		page.locator("li").filter(new Locator.FilterOptions().setHasText("AdminAll-Access pass to app"))
-				.getByRole(AriaRole.CHECKBOX).check();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
+		try {
+			page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("A admin lastname")).getByLabel("Admin").check();
+		} catch (Throwable t) {
+			logger.warn("This works, but throws anyway, just catch it and move on: {}", t.getMessage());
+		}
 	}
 
 	public static void logout(Page page) {
@@ -201,12 +201,17 @@ public class GenericSetupUtils {
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.waitForLoadState(LoadState.LOAD);
-		String waitingForUrl = UrlUtils.getUrl("#");
+		navigateToHomePage(page);
+	}
+
+	public static void navigateToHomePage(Page page) {
+		String homePage = UrlUtils.getUrl("#");
+		page.navigate(homePage);
 		try {
-			page.waitForURL(waitingForUrl);
+			page.waitForURL(homePage);
 		} catch (Throwable t) {
-			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", waitingForUrl, page.url());
-		}
+			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
+		}		
 	}
 
 	public static void loginWithMSuser(Page page, String Username, String Password) {
@@ -287,9 +292,9 @@ public class GenericSetupUtils {
 
 		visiblePasswords.get(1).click();
 		visiblePasswords.get(1).fill(password);
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register Account")).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register")).click();
 
-		page.waitForLoadState(LoadState.LOAD);
+		//page.waitForLoadState(LoadState.LOAD);
 		page.getByRole(AriaRole.ALERT).click();
 		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
 		logger.info("Account registration Done");

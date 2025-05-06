@@ -30,8 +30,8 @@ public class AdminQuerySteps {
 		homePage.clickOnOpenSettings();
 	}
 
-	@When("Admin User enable admin mode")
-	public void admin_user_enable_admin_mode() {
+	@When("Admin User enables admin mode")
+	public void admin_user_enables_admin_mode() {
 		settingPage.checkAdminButton();
 		settingPage.clickOnAdminButton();
 	}
@@ -44,7 +44,7 @@ public class AdminQuerySteps {
 
 	@And("User selects {string} from the database dropdown")
 	public void user_selects_from_the_database_dropdown(String databaseName) {
-		adminQuery.selectDatabse(databaseName);
+		adminQuery.selectDatabase(databaseName);
 	}
 
 	@And("User enters {string} in the query textbox")

@@ -1,39 +1,67 @@
 Feature: Create new app
 
   Background: Create Drag and Drop app and navigate to Blocks option
-    Given User navigates to Open App Library
-    When User clicks on Create New App button
+    Given User is on the Home page
+    When User navigates to Open App Library
+    And User clicks on Create New App button
     And User clicks on Get Started button in Drag and Drop
     And User enters app name as 'Test app'
     #And User enters description as 'Created by automation script'
     #And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-    When User navigate to Home page
+    When User navigates to the Home page from the App Edit page
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
     And User clicks on Blocks if it is not selected by default
 
-  Scenario: Drag and Drop Heading 1 block component
-    When User drags the 'Heading 1' block and drops it on the page
+  Scenario: Drag and Drop Heading 1 block
+    When User drags the 'Text (h1)' block and drops it on the page
     Then User can see 'Hello world' on the page
     When User navigate to Home page
 
-  Scenario: Drag and Drop Builder - Add Link
-    When User drags the 'Link' block and drops it on the page
+  Scenario Outline: Drag and Drop Text section '<BLOCK_NAME>' block
+    When User drags the '<BLOCK_NAME>' block and drops it on the page
     And User clicks on the Block Settings option
-    And User enters 'https://playwright.dev/' as the destination
-    And User enters 'Test App Link' as the text
-    And User selects the 'Bold, Italic, Underlined' styles
-    And User selects 'Times New Roman' from the font list
-    And User selects '#ff5733' as the HEX color value
-    And User selects 'Center' as the text alignment
+    And User enters '<DESTINATION>' as the destination
+    And User enters '<BLOCK_NAME>' text as '<TEXT>'
+    And User selects the '<STYLES>' styles
+    And User selects '<FONT>' from the font list
+    And User selects '<HEX_COLOR>' as the HEX color value
+    And User selects '<TEXT_ALIGNMENT>' as the text alignment
     And User clicks on the Save App icon
-    Then User should see 'Test App Link' as the link name
-    And User should see the link name displayed in 'Bold, Italic, Underlined' styles
-    And User should see the link name displayed in 'Times New Roman' font
-    And User should see the link name displayed in '#ff5733' HEX color value
-    And User should see the link name aligned to the 'Center'
-    When User clicks on the link
-    Then User should be navigated to 'https://playwright.dev/'
+    Then User should see the '<BLOCK_NAME>' text as '<TEXT>'
+    And User should see the '<BLOCK_NAME>' text displayed in '<STYLES>' styles
+    And User should see the '<BLOCK_NAME>' text displayed in '<FONT>' font
+    And User should see the '<BLOCK_NAME>' text displayed in '<HEX_COLOR>' HEX color value
+    And User should see the '<BLOCK_NAME>' text aligned to the '<TEXT_ALIGNMENT>'
+    And User should be navigated to '<DESTINATION>' by clicking on link
+
+    Examples: 
+      | BLOCK_NAME | DESTINATION             | TEXT               | STYLES                   | FONT            | HEX_COLOR | TEXT_ALIGNMENT |
+      | Link       | https://playwright.dev/ | Test App Link      | Bold, Italic, Underlined | Times New Roman | #ff5733   | Center         |
+      | Text (h1)  |                         | Heading 1 block    | Bold, Italic, Underlined | Times New Roman | #ff6666   | Center         |
+      | Text (h2)  |                         | Heading 2 block    | Bold, Italic             | Arial           | #ff9900   | Left           |
+      | Text (h3)  |                         | Heading 3 block    | Bold, Underlined         | Roboto          | #ffcc00   | Right          |
+      | Text (h4)  |                         | Heading 4 block    | Bold                     | Times New Roman | #ff5733   | Justify        |
+      | Text (h5)  |                         | Heading 5 block    | Bold, Italic, Underlined | Helvetica       | #ff007f   | Center         |
+      | Text (h6)  |                         | Heading 6 block    | Bold, Underlined         | Georgia         | #ff5733   | Center         |
+      | Text       |                         | Text block         | Italic                   | Arial           | #ffcc00   | Right          |
+      | Markdown   |                         | **Markdown** block | Italic                   | Times New Roman | #ffcc00   | Left           |
+
+  Scenario: Drag and Drop Text section Logs block
+    When User clicks on Notebook
+    And User clicks on Create new notebook
+    And User enters New Query name as 'Test query'
+    And User clicks on query Submit button
+    And User enters code as 'print("Hello word")'
+    And User clicks on Run this cell and below icon
+    Then User can see code output as 'Hello word'
+    And User clicks on Blocks
+    And User clicks on 'page-1' page
+    And User drags the 'Logs' block and drops it on the page
+    And User clicks on the Block Settings option
+    And User selects 'Test query' from the Query dropdown
+    And User clicks on the Save App icon
+    Then User should see the 'Logs' text as 'Hello word' 

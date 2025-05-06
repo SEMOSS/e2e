@@ -48,10 +48,26 @@ public class BISystemAppPage {
 		this.timestamp = timestamp;
 	}
 
+	/**
+	 * This is the old ui and the behavior is inconsistent so wrapping in try/catch
+	 * to handle errors
+	 */
 	public void closeWelcomePopup() {
-		page.click(WELCOME_POPUP_CLOSE_XPATH);
 		// accepting browser cookies
-		page.getByText("Accept").click();
+		try {
+			page.getByText("Accept").click();
+		} catch (Exception e) {
+		}
+		
+		// welcome popup
+		try {
+			boolean popUp = page.locator(WELCOME_POPUP_CLOSE_XPATH).isVisible();
+			if (popUp) {
+				page.click(WELCOME_POPUP_CLOSE_XPATH);
+			}
+		} catch (Exception e) {
+			// no popup
+		}
 	}
 
 	public void clickOnAppOption() {

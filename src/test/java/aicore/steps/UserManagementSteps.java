@@ -1,5 +1,7 @@
 package aicore.steps;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -7,6 +9,7 @@ import aicore.pages.HomePage;
 import aicore.pages.SettingPage;
 import aicore.pages.UserManagementPage;
 import aicore.utils.LastCreatedUser;
+import aicore.utils.RestCaller;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,6 +20,7 @@ public class UserManagementSteps {
 	private HomePage homePage;
 	private UserManagementPage userpage;
 	private SettingPage settingpage;
+	private String generatedUserId;
 
 	public UserManagementSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -29,8 +33,8 @@ public class UserManagementSteps {
 		homePage.checkOnOpenSetting();
 	}
 
-	@And("User navigates to the settings")
-	public void user_navigates_to_the_settings() {
+	@And("User navigates to settings")
+	public void user_navigates_to_settings() {
 		homePage.clickOnOpenSetting();
 	}
 
@@ -73,6 +77,13 @@ public class UserManagementSteps {
 			String actualMessage = userpage.userCreationToastMessage();
 			Assertions.assertEquals(actualMessage, toastMessage, "User creation failed");
 			userpage.closeToastMessage();
+		}
+	}
+
+	@And("User adds {int} members using the api")
+	public void user_adds_members_using_api(Integer usercount) throws IOException {
+		for (int i = 1; i <= usercount; i++) {
+			RestCaller.createNewUser("Name" + i);
 		}
 	}
 
@@ -208,12 +219,18 @@ public class UserManagementSteps {
 
 	@Then("User can see that the displayed User ID matches the generated userId")
 	public void user_can_see_that_the_displayed_user_id_matches_the_generated_user_id() throws InterruptedException {
+//		String actualUserId = userpage.getDisplayedId();
+//		System.out.println(actualUserId);
+//		String expectedUserId = LastCreatedUser.getUserId();
+//		System.out.println(expectedUserId);
+//		Thread.sleep(5000);
+//		Assertions.assertEquals(expectedUserId, actualUserId, "Displayed User ID does not match");
+//	}
+		String generatedUserId = LastCreatedUser.getUserId();
 		String actualUserId = userpage.getDisplayedId();
-		System.out.println(actualUserId);
-		String expectedUserId = LastCreatedUser.getUserId();
-		System.out.println(expectedUserId);
-		Thread.sleep(5000);
-		Assertions.assertEquals(expectedUserId, actualUserId, "Displayed User ID does not match");
+		System.out.println("Expected User ID: " + generatedUserId);
+		System.out.println("Actual User ID: " + actualUserId);
+		Assertions.assertEquals(generatedUserId, actualUserId, "Displayed User ID does not match");
 	}
 
 	@Then("User can see that the displayed Email matches the generated email")
@@ -221,6 +238,39 @@ public class UserManagementSteps {
 		String actualEmail = userpage.getDisplayedEmail();
 		String expectedEmail = LastCreatedUser.getEmail();
 		Assertions.assertEquals(expectedEmail, actualEmail, "Displayed email does not match");
+	}
+
+	@When("User clicks on 'access_keys_allowed' value")
+	public void user_clicks_on_access_keys_allowed_value() {
+		userpage.clickOnAccessKeyValue();
+	}
+
+	@When("User change value of the key to 'true'")
+	public void user_change_value_of_the_key_to_true() throws InterruptedException {
+		userpage.updateAccessKeyValue("true");
+	}
+
+	@Then("User can see a toast message after updating values of {string} as {string}")
+	public void user_can_see_toast_message(String sectionName, String expectedToastMessage) {
+		String actualMessage = userpage.getToastMessage(expectedToastMessage);
+		Assertions.assertEquals(expectedToastMessage, actualMessage, sectionName + " update failed");
+		userpage.waitForToastMessageToDisappear(expectedToastMessage);
+	}
+
+	@When("User clicks on Save button of the configuration")
+	public void user_clicks_on_save_button_of_the_configuration() {
+		userpage.clickSaveButton();
+	}
+
+	@When("User clicks on Authentication dropdown")
+	public void user_clicks_on_authentication_dropdown() {
+		userpage.clickOnAuthenticationDropdown();
+	}
+
+	@When("User search {string} and select")
+	public void user_search_and_select(String option) {
+		userpage.searchAndSelectOption(option);
+
 	}
 
 }

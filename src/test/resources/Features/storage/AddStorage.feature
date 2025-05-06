@@ -1,4 +1,4 @@
-Feature: Connect to Storage
+Feature: Add Storage
   I want to use this feature file for all scenarios related to the Add Storage
 
   Background: Add Amazon S3 Storage
@@ -7,6 +7,7 @@ Feature: Connect to Storage
     And User selects 'Amazon S3' storage
     And User enters storage Catalog name as 'Amazon S3 Storage'
     And User enters Region as 'India'
+    And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
     And User enters Secret Key
     And User clicks on Create Storage button
@@ -18,5 +19,6 @@ Feature: Connect to Storage
     And User clicks on SMSS
     Then User can see storage name in 'NAME' field as 'Amazon S3 Storage' in SMSS properties
     And User can see storage region in 'S3_REGION' field as 'India' in SMSS properties
+    And User can see storage bucket in 'S3_BUCKET' field as 'BucketTest' in SMSS properties
     And User can see storage access key in 'S3_ACCESS_KEY' field as 'Test123' in SMSS properties
     And User clicks on Open Storage engine

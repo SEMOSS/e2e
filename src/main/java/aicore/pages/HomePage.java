@@ -1,11 +1,16 @@
 package aicore.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.UrlUtils;
 
 public class HomePage {
+	private static final Logger logger = LogManager.getLogger(HomePage.class);
 
 	private Page page;
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
@@ -77,6 +82,16 @@ public class HomePage {
 
 	public void clickOnOpenSetting() {
 		page.locator(OPEN_SETTINGS_XPATH).click();
+	}
+
+	public void navigateToHomePage() {
+		String homePage = UrlUtils.getUrl("#");
+		page.navigate(homePage);
+		try {
+			page.waitForURL(homePage);
+		} catch (Throwable t) {
+			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
+		}		
 	}
 
 }
