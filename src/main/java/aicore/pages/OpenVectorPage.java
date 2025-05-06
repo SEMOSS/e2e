@@ -4,7 +4,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import aicore.utils.CommonUtils;
 import aicore.utils.ConfigUtils;
 
 public class OpenVectorPage {

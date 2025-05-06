@@ -24,7 +24,7 @@ public class AddVectorDatabaseSteps {
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp.substring(0, 5);
-		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
+		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 	}
 
@@ -53,7 +53,7 @@ public class AddVectorDatabaseSteps {
 		if (modelName.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
 			vectorPage.selectModelfromEmbedderDropdown(modelName);
 		} else {
-			vectorPage.selectModelfromEmbedderDropdown(modelName + timestamp);
+			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class AddVectorDatabaseSteps {
 			String embedderEngineName) {
 		String fullText = vectorPage.verifyEmbedderEngineNameInSMSS();
 		String actualEmbedderEngineName = CommonUtils.splitTrimValue(fullText, field);
-		String expectedEmbedderEngineName = embedderEngineName + timestamp;
+		String expectedEmbedderEngineName = embedderEngineName + AddModelSteps.timestamp;
 		assertEquals(actualEmbedderEngineName, expectedEmbedderEngineName, "Embedder Engine Name is not matching");
 	}
 
