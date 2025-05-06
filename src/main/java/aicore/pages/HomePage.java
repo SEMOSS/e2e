@@ -25,6 +25,8 @@ public class HomePage {
 	private static final String OPEN_FUNCTION_XPATH = "//a[@data-testid='Function-icon']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
+	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";		
+		
 
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
 
@@ -45,6 +47,10 @@ public class HomePage {
 	public void clickOnSystemApp() {
 		page.click(SYSTEM_APP_BUTTON_XPATH);
 	}
+	public void clickOnOpenFunction() {
+		page.getByTestId(OPEN_FUNCTIONS_XPATH).isVisible();
+		page.getByTestId(OPEN_FUNCTIONS_XPATH).click();
+		}
 
 	public void clickOnBIApp() {
 		page.click(BI_APP_XPATH);

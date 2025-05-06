@@ -263,8 +263,8 @@ public class AddModelToCatalogPage {
 		ModelPageUtils.clickOnAddMembersButton(page);
 	}
 
-	public void addMember(String role) throws InterruptedException {
-		ModelPageUtils.addMember(page, role);
+	public void addMember(String role, boolean useDocker) throws InterruptedException {
+		ModelPageUtils.addMember(page, role, useDocker);
 	}
 
 	public void clickOnDeleteButton() {
