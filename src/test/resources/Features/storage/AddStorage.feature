@@ -1,4 +1,4 @@
-Feature: Connect to Storage
+Feature: Add Storage
   I want to use this feature file for all scenarios related to the Add Storage
 
   Background: Add Amazon S3 Storage
