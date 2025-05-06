@@ -2,6 +2,7 @@ package aicore.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,10 +17,13 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Locator;
 
 public class CommonUtils {
-
+	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
 	public static String getTimeStampName() {
@@ -119,36 +123,33 @@ public class CommonUtils {
 				return false;
 			}
 			if (iconUrl.startsWith("data:image")) {
-				if (iconUrl.startsWith("data:image/svg+xml")) {
-					// Assume SVG is valid if base64 is decodable
-					String base64Data = iconUrl.substring(iconUrl.indexOf(",") + 1);
-					try {
-						Base64.getDecoder().decode(base64Data);
-						return true; // basic check passed
-					} catch (IllegalArgumentException e) {
-						return false; // invalid base64
-					}
-				} else {
+				String base64Data = iconUrl.substring(iconUrl.indexOf(",") + 1);
+				byte[] imageBytes = null;
+				try {
+					imageBytes = Base64.getDecoder().decode(base64Data);
+				} catch (IllegalArgumentException e) {
+					return false; // invalid base64
+				}
+				if (!iconUrl.startsWith("data:image/svg+xml")) {
 					// PNG, JPEG, etc.
-					String base64Data = iconUrl.substring(iconUrl.indexOf(",") + 1);
-					byte[] imageBytes = Base64.getDecoder().decode(base64Data);
-					BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
-					return image != null;
+					if (imageBytes != null) {
+						BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+						return (image != null);
+					}
+					return false;
+				} else {
+					// SVG image
+					return true;
 				}
 			}
 			// Handle traditional image URLs (http, https, file)
-//			HttpURLConnection connection = (HttpURLConnection) new URL(iconUrl).openConnection();
-//			connection.setRequestMethod("GET");
-//			return connection.getResponseCode() == HttpURLConnection.HTTP_OK;
-
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(iconUrl))
 					.method("GET", HttpRequest.BodyPublishers.noBody()).build();
-
 			HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
-			return response.statusCode() == 200;
+			return (response.statusCode() == HttpURLConnection.HTTP_OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("icon validation failed", e);
 			return false;
 		}
 	}
