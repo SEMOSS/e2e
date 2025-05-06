@@ -7,7 +7,7 @@ Feature: View Member Settings for Admin User
     Then User sees the Add User button
     And User sees Admin mode on
     And User sees atleast one count of users on Member setting page
-
+    
   @LoginWithAdmin
   Scenario: Validate Pagination in member setting page
     Given User sees atleast one count of users on Member setting page

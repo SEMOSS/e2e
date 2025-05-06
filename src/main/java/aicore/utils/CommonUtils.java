@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +47,17 @@ public class CommonUtils {
 		}
 		return actualName;
 	}
+	
+	public static String getTodayDateFormatted() {
+	        // Get today's date
+	        LocalDate today = LocalDate.now();
+
+	        // Define the formatter
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	        // Return formatted date
+	        return today.format(formatter);
+	    }
 
 	public static void extractOverviewSectionValues(List<String> keys, List<String> keyText) {
 		for (String text : keyText) {

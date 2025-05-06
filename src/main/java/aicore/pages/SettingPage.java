@@ -81,3 +81,4 @@ public class SettingPage {
 		return SettingsPageUtils.checkUsername(page, username);
 	}
 }
+
