@@ -413,11 +413,17 @@ public class ModelPageUtils {
 		page.click(ADD_MEMBERS_BUTTON_XPATH);
 	}
 
-	public static void addMember(Page page, String role) throws InterruptedException {
+	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
-		page.fill(ADD_MEMBER_XPATH, username);
-//		page.getByTitle("Name: " + username).click();
-		page.getByText(username).click();
+		if (useDocker) {
+			username = username + " lastname";
+			// search is by user name first name and lastname
+			page.fill(ADD_MEMBER_XPATH, username);
+			page.getByTitle("Name: " + username).click();
+		} else {
+			page.fill(ADD_MEMBER_XPATH, username);
+			page.getByText(username).click();
+		}
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
 		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);

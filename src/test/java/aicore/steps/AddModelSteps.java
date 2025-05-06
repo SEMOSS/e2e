@@ -42,7 +42,7 @@ public class AddModelSteps {
 
 	@When("User selects {string}")
 	public void user_selects(String aiModelName) {
-		openModelPage.selectOpenAi(aiModelName);
+		openModelPage.selectModel(aiModelName);
 	}
 
 	@And("User enters Catalog name as {string}")
@@ -65,8 +65,20 @@ public class AddModelSteps {
 		openModelPage.createModel();
 	}
 
+	@Given("User uploads a file {string}")
+	public void user_uploads_a_file(String fileName) {
+		String uploadedFileName = openModelPage.enterFilePath(fileName);
+		if(fileName.contains("/")) {
+			String [] ActualFileName = fileName.split("/");
+			int fileNameIndex = ActualFileName.length-1;
+			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName, "Document is not uploaded successfully");
+		}else {
+			Assertions.assertEquals(fileName, uploadedFileName, "Document is not uploaded successfully");
+		}
+	}
+
 	@And("User can see a toast message as {string}")
-	public void user_can_see_toast_message_as(String toastMessage) {
+	public void user_can_a_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
 		openModelPage.waitForModelCreationToastMessageDisappear();
@@ -294,4 +306,17 @@ public class AddModelSteps {
 					"Model id not match for the section '" + sectionName + "'");
 		}
 	}
+
+	@Then("User clicks on the created Model card name as {string}")
+	public void user_clicks_on_the_created_Model_card_name_as(String modelName) {
+		openModelPage.addedModelCard(modelName);
+	}
+
+	@Then("User sees deleted Model success toast message {string}")
+	public void user_sees_deleted_Model_success_toast_message(String toastMessage) {
+		String expectedMessage = openModelPage.verifyDeleteToastMessage();
+		String actualMessage = toastMessage;
+		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
+	}
+
 }
