@@ -11,12 +11,11 @@ import io.cucumber.java.en.When;
 
 public class VectorDatabaseSteps {
 	private EmbedDocumentPage embedDocumentPage;
+	private OpenVectorPage vectorPage;
 
 	public VectorDatabaseSteps() {
-
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
-
 	}
 
 	@When("User clicks on files")

@@ -98,7 +98,7 @@ public class AddVectorDatabaseSteps {
 	@Then("User can see vector database created success toast message as {string}")
 	public void User_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
 		String actualToastMessage = vectorPage.verifyVectorCreatedToastMessage();
-		assertEquals(actualToastMessage, expectedToastMessage, "Toast message is incorrect");
+		assertEquals(expectedToastMessage, actualToastMessage, "Toast message is incorrect");
 		vectorPage.waitForVectorToastMessageToDisappear();
 	}
 
