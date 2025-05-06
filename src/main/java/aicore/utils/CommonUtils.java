@@ -1,11 +1,20 @@
 package aicore.utils;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
 
 import com.microsoft.playwright.Locator;
 
@@ -44,7 +53,7 @@ public class CommonUtils {
 		}
 
 	}
-  
+
 	public static int countIdOccurances(String section, String id) {
 		String pattern = "\\b" + Pattern.quote(id) + "\\b";
 		Pattern regex = Pattern.compile(pattern);
@@ -97,7 +106,6 @@ public class CommonUtils {
 		return r + ", " + g + ", " + b;
 	}
 
-
 	public static String[] splitStringBySpace(String input) {
 		if (input != null && !input.isEmpty()) {
 			return input.trim().split("\\s+"); // Split by one or more spaces
@@ -105,4 +113,43 @@ public class CommonUtils {
 		return new String[0]; // Return an empty array if the string is null or empty
 	}
 
+	public static boolean isIconValid(String iconUrl) {
+		try {
+			if (iconUrl == null || iconUrl.isEmpty()) {
+				return false;
+			}
+			if (iconUrl.startsWith("data:image")) {
+				if (iconUrl.startsWith("data:image/svg+xml")) {
+					// Assume SVG is valid if base64 is decodable
+					String base64Data = iconUrl.substring(iconUrl.indexOf(",") + 1);
+					try {
+						Base64.getDecoder().decode(base64Data);
+						return true; // basic check passed
+					} catch (IllegalArgumentException e) {
+						return false; // invalid base64
+					}
+				} else {
+					// PNG, JPEG, etc.
+					String base64Data = iconUrl.substring(iconUrl.indexOf(",") + 1);
+					byte[] imageBytes = Base64.getDecoder().decode(base64Data);
+					BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+					return image != null;
+				}
+			}
+			// Handle traditional image URLs (http, https, file)
+//			HttpURLConnection connection = (HttpURLConnection) new URL(iconUrl).openConnection();
+//			connection.setRequestMethod("GET");
+//			return connection.getResponseCode() == HttpURLConnection.HTTP_OK;
+
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(iconUrl))
+					.method("GET", HttpRequest.BodyPublishers.noBody()).build();
+
+			HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
+			return response.statusCode() == 200;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

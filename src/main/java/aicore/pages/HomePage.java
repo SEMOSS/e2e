@@ -22,11 +22,11 @@ public class HomePage {
 	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
+	private static final String OPEN_FUNCTION_XPATH = "//a[@data-testid='Function-icon']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
-
 
 	public HomePage(Page page) {
 		this.page = page;
@@ -63,7 +63,6 @@ public class HomePage {
 	}
 
 	public void clickOnOpenAppLibrary() {
-//		page.locator("[aria-label='Navigate to app library']").click();
 		page.click(OPEN_APP_LIBRARY_XPATH);
 	}
 
@@ -84,6 +83,10 @@ public class HomePage {
 		page.locator(OPEN_SETTINGS_XPATH).click();
 	}
 
+	public void clickOnOpenFunction() {
+		page.locator(OPEN_FUNCTION_XPATH).click();
+	}
+
 	public void navigateToHomePage() {
 		String homePage = UrlUtils.getUrl("#");
 		page.navigate(homePage);
@@ -91,7 +94,7 @@ public class HomePage {
 			page.waitForURL(homePage);
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
-		}		
+		}
 	}
 
 }
