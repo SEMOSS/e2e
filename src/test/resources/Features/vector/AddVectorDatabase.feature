@@ -1,4 +1,4 @@
-Feature: Create Vector Database
+Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
 
   Background: Login to the application and Create model tagged with embeddings
@@ -13,6 +13,7 @@ Feature: Create Vector Database
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
+    
 @LoginWithAdmin
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
     Given User clicks on Open Vector engine

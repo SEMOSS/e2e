@@ -1,6 +1,7 @@
 package aicore.steps;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.utils.CommonUtils;
@@ -18,11 +19,13 @@ public class AddVectorDatabaseSteps {
 	private HomePage homePage;
 	private OpenVectorPage vectorPage;
 	private String timestamp;
+	private EmbedDocumentPage embedDocumentPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = AddModelSteps.timestamp;
-		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
+		timestamp = AddModelSteps.timestamp.substring(0, 5);
+		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
+		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Vector engine")
@@ -42,12 +45,16 @@ public class AddVectorDatabaseSteps {
 
 	@And("User enters vector database Catalog name as {string}")
 	public void user_enters_vector_database_catalog_name_as(String catalogName) {
-		vectorPage.enterVectorCatalogName(catalogName);
+		vectorPage.enterVectorCatalogName(catalogName + timestamp);
 	}
 
 	@And("User selects {string} from Embedder field")
 	public void user_selects_from_embedder_field(String modelName) {
-		vectorPage.selectModelfromEmbedderDropdown(modelName);
+		if (modelName.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
+			vectorPage.selectModelfromEmbedderDropdown(modelName);
+		} else {
+			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
+		}
 	}
 
 	@And("User selects {string} from Chunking Strategy field")
@@ -99,7 +106,7 @@ public class AddVectorDatabaseSteps {
 	public void user_can_see_the_vector_title_as(String VectorTitle) {
 		String actualVectorTitle = vectorPage.verifyVectorTitle();
 		System.out.println("act Title is : " + actualVectorTitle);
-		String expectedVectorTitle = VectorTitle + " " + CommonUtils.getTodayDateFormatted();
+		String expectedVectorTitle = VectorTitle + timestamp;
 		assertEquals(actualVectorTitle, expectedVectorTitle, "Vector Title is not matching with expected");
 	}
 
@@ -108,9 +115,10 @@ public class AddVectorDatabaseSteps {
 
 		String fullText = vectorPage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
-		String expectedName = name + " " + timestamp;
+		String expectedName = name + timestamp;
 		System.out.println(expectedName);
 		System.out.println(actualName);
+
 		assertEquals(actualName, expectedName, "Name is not matching");
 	}
 
@@ -119,7 +127,7 @@ public class AddVectorDatabaseSteps {
 			String embedderEngineName) {
 		String fullText = vectorPage.verifyEmbedderEngineNameInSMSS();
 		String actualEmbedderEngineName = CommonUtils.splitTrimValue(fullText, field);
-		String expectedEmbedderEngineName = embedderEngineName + timestamp;
+		String expectedEmbedderEngineName = embedderEngineName + AddModelSteps.timestamp;
 		assertEquals(actualEmbedderEngineName, expectedEmbedderEngineName, "Embedder Engine Name is not matching");
 	}
 
@@ -159,7 +167,7 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User clicks on the created Vector card name as {string}")
 	public void user_clicks_on_the_created_vector_card_name_as(String catalogName) {
-		vectorPage.addedVectorCard(catalogName);
+		vectorPage.addedVectorCard(catalogName + timestamp);
 	}
 
 	@Then("User clicks on Access Control")
@@ -178,7 +186,6 @@ public class AddVectorDatabaseSteps {
 		String expectedMessage = vectorPage.verifyDeleteToastMessage();
 		String actualMessage = toastMessage;
 		Assertions.assertEquals(actualMessage, expectedMessage, "Vector Title is not matching with expected");
-
 	}
 
 }

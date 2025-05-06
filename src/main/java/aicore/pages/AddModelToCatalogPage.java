@@ -1,7 +1,6 @@
 package aicore.pages;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.microsoft.playwright.Locator;

@@ -11,7 +11,6 @@ import io.cucumber.java.en.When;
 
 public class VectorDatabaseSteps {
 	private EmbedDocumentPage embedDocumentPage;
-	private OpenVectorPage vectorPage;
 
 	public VectorDatabaseSteps() {
 
