@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Assertions;
 
+import aicore.base.GenericSetupUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
@@ -104,7 +105,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 
 	@Then("User adds one user and assigns them as {string}")
 	public void user_adds_one_user_and_assigns_them_as(String role) throws InterruptedException {
-		openModelPage.addMember(role);
+		openModelPage.addMember(role, GenericSetupUtils.useDocker());
 	}
 
 	@Then("User logs out from the application")
