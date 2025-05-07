@@ -49,7 +49,7 @@ public class AppLibraryPageUtils {
 	private static final String COLOR_BOX_XPATH = "//input[@type='color']";
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
-	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl + s)";
+	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
 	//Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
@@ -241,7 +241,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void clickOnSaveAppButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME)).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true)).click();
 	}
 
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
