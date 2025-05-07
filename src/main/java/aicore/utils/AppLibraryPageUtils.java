@@ -220,7 +220,8 @@ public class AppLibraryPageUtils {
 	public static void selectTextStyle(Page page, String textStyles) {
 		String[] textStyle = textStyles.split(", ");
 		for (String style : textStyle) {
-			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim())).click();
+			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim()).setExact(true)).click();
+//			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim())).click();
 		}
 	}
 
