@@ -15,7 +15,7 @@ public class AddStorageSteps {
 
 	private HomePage homePage;
 	private OpenStoragePage storagePage;
-	private String timestamp;
+	protected static String timestamp;
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
