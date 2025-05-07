@@ -140,7 +140,12 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchUser(Page page) {
-		page.fill(SEARCH_BUTTON_XPATH, "UserId");
+		
+		String responseURL = ConfigUtils.getValue("baseUrl") + "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+		page.waitForResponse(responseURL, () -> {
+			  // Triggers the response
+			page.fill(SEARCH_BUTTON_XPATH, "UserId");
+			});
 	}
 
 	public static void clickSelectAllButton(Page page) {
