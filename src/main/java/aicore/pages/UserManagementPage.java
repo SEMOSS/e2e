@@ -179,26 +179,31 @@ public class UserManagementPage {
 		page.click(LOGIN_WITH_NATIVE_XPATH);
 	}
 
-	public String getDisplayedName() {
+//	public String getDisplayedName() {
+//
+//		return page.locator(DISPLAYED_NAME_XPATH).textContent().trim();
+//
+//	}
 
-		return page.locator(DISPLAYED_NAME_XPATH).textContent().trim();
-
+	public String getDisplayedName() throws InterruptedException {
+		Locator nameInput = page.locator("//label[contains(text(), 'Name')]/following::input[1]");
+		return nameInput.getAttribute("value");
 	}
 
 	public String getDisplayedId() throws InterruptedException {
-//		page.locator(DISPLAYED_USER_ID_XPATH).waitFor();
-//		page.click(DISPLAYED_USER_ID_XPATH);
-//		Thread.sleep(3000);
-//		return page.locator(DISPLAYED_USER_ID_XPATH).nth(0).textContent().trim();
 		Locator userIdInput = page.locator("//label[contains(text(), 'User Id')]/following::input[1]");
 		return userIdInput.getAttribute("value");
-
 	}
 
-	public String getDisplayedEmail() {
+//	public String getDisplayedEmail() {
+//
+//		return page.locator(DISPLAYED_EMAIL_XPATH).textContent().trim();
+//
+//	}
 
-		return page.locator(DISPLAYED_EMAIL_XPATH).textContent().trim();
-
+	public String getDisplayedEmail() throws InterruptedException {
+		Locator emailInput = page.locator("//label[contains(text(), 'Email')]/following::input[1]");
+		return emailInput.getAttribute("value");
 	}
 
 	public void fillPassword(String password) {

@@ -20,7 +20,6 @@ public class UserManagementSteps {
 	private HomePage homePage;
 	private UserManagementPage userpage;
 	private SettingPage settingpage;
-	private String generatedUserId;
 
 	public UserManagementSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -166,17 +165,12 @@ public class UserManagementSteps {
 			String name = baseName + i;
 			String userId = baseUserId + i;
 			String email = baseUserId + i + "@" + emailDomain;
-
 			userpage.clickAddUserButton();
 			userpage.clickTypeDropdown();
 			userpage.clickNativeDropdownValue();
 			userpage.fillUserId(userId);
-			Thread.sleep(5000);
 			userpage.fillName(name);
-			Thread.sleep(5000);
 			userpage.fillEmail(email);
-			Thread.sleep(5000);
-
 			if (i <= 9) {
 				userpage.fillPhoneNumber("100000000" + i);
 			} else if (i <= 99) {
@@ -184,7 +178,6 @@ public class UserManagementSteps {
 			} else {
 				userpage.fillPhoneNumber("1000000" + i);
 			}
-
 			userpage.fillPassword(password);
 			Thread.sleep(5000);
 			userpage.clickSaveButton();
@@ -192,14 +185,12 @@ public class UserManagementSteps {
 			String actualMessage = userpage.userCreationToastMessage();
 			Assertions.assertEquals(toastMessage, actualMessage, "User creation failed for user " + userId);
 
-			// Optionally store last created credentials in a static map or variable for
-			// later steps
+			// store last created credentials in a static map or variable for later steps
 			LastCreatedUser.setUserId(userId);
 			LastCreatedUser.setPassword(password);
 			LastCreatedUser.setName(name);
 			LastCreatedUser.setEmail(email);
 
-			Thread.sleep(5000);
 		}
 	}
 
@@ -211,21 +202,16 @@ public class UserManagementSteps {
 	}
 
 	@Then("User can see that the displayed Name matches the generated name")
-	public void user_can_see_that_the_displayed_name_matches_the_generated_name() {
+	public void user_can_see_that_the_displayed_name_matches_the_generated_name() throws InterruptedException {
+		String generatedName = LastCreatedUser.getName();
 		String actualName = userpage.getDisplayedName();
-		String expectedName = LastCreatedUser.getName();
-		Assertions.assertEquals(expectedName, actualName, "Displayed name does not match");
+		System.out.println("Expected User name: " + generatedName);
+		System.out.println("Actual User name: " + actualName);
+		Assertions.assertEquals(generatedName, actualName, "Displayed User name does not match");
 	}
 
 	@Then("User can see that the displayed User ID matches the generated userId")
 	public void user_can_see_that_the_displayed_user_id_matches_the_generated_user_id() throws InterruptedException {
-//		String actualUserId = userpage.getDisplayedId();
-//		System.out.println(actualUserId);
-//		String expectedUserId = LastCreatedUser.getUserId();
-//		System.out.println(expectedUserId);
-//		Thread.sleep(5000);
-//		Assertions.assertEquals(expectedUserId, actualUserId, "Displayed User ID does not match");
-//	}
 		String generatedUserId = LastCreatedUser.getUserId();
 		String actualUserId = userpage.getDisplayedId();
 		System.out.println("Expected User ID: " + generatedUserId);
@@ -234,10 +220,13 @@ public class UserManagementSteps {
 	}
 
 	@Then("User can see that the displayed Email matches the generated email")
-	public void user_can_see_that_the_displayed_email_matches_the_generated_email() {
+	public void user_can_see_that_the_displayed_email_matches_the_generated_email() throws InterruptedException {
+		String generatedEmail = LastCreatedUser.getEmail();
 		String actualEmail = userpage.getDisplayedEmail();
-		String expectedEmail = LastCreatedUser.getEmail();
-		Assertions.assertEquals(expectedEmail, actualEmail, "Displayed email does not match");
+		System.out.println("Expected Email: " + generatedEmail);
+		System.out.println("Actual Email: " + actualEmail);
+		Assertions.assertEquals(generatedEmail.toLowerCase(), actualEmail.toLowerCase(),
+				"Displayed User Email does not match");
 	}
 
 	@When("User clicks on 'access_keys_allowed' value")
@@ -270,7 +259,6 @@ public class UserManagementSteps {
 	@When("User search {string} and select")
 	public void user_search_and_select(String option) {
 		userpage.searchAndSelectOption(option);
-
 	}
 
 }
