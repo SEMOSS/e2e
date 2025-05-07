@@ -28,6 +28,11 @@ Feature: View Existing Storage
     And User enters 'Test Tag' under 'Tag' and press enter
     And User clicks on 'Submit' button 
     Then User should see 'Test Tag' under 'Tag' in the Overview tab
+    ### Scenario filter by the test tag on the main page
+    Given User clicks on Open Storage Engine
+    And User expands 'Filter By' section
+    And User selects 'Test Tag' under 'Tag' section
+    Then User should see the Storage title as 'Amazon S3 Test Storage'
  
     Scenario: Apply 'Domain' Filter to my storage
     Given User clicks on Open Storage engine
@@ -37,14 +42,23 @@ Feature: View Existing Storage
     And User enters 'Test Domain' under 'Domain' section and press enter
     And User clicks on 'Submit' button 
     Then User should see 'Test Domain' under 'Domain' in the Overview tab
+    #### filter by domain on the main page
+    Given User clicks on Open Storage Engine
+    And User selects 'Test Domain' under 'Domain' section
+    Then User should see the Storage title as 'Amazon S3 Test Storage'
  
 	  Scenario: Apply 'Data Classification' Filter to my storage
+	  Given User clicks on Open Storage engine    
     When User clicks on 'My Storages' tab
     And User clicks on 'Amazon S3 Test Storage'
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
     And User clicks on 'Submit' button 
     Then User should see 'CONFIDENTIAL' under 'Data classification' in the Overview tab
+    ### filter by data classification on the main page
+    Given User clicks on Open Storage Engine 
+    And User selects 'CONFIDENTIAL' under 'Data Classification' section
+    Then User should see the Storage title as 'Amazon S3 Test Storage'
  
     Scenario: Apply 'Data Restrictions' Filter to discoverable storage
     Given User clicks on Open Storage engine    
@@ -54,25 +68,8 @@ Feature: View Existing Storage
     And User enters and selects 'CONFIDENTIAL ALLOWED' under 'Data restrictions' section
     And User clicks on 'Submit' button 
     Then User should see 'CONFIDENTIAL ALLOWED' under 'Data restrictions' in the Overview tab
- 
-    Scenario: Filter my storage by 'Tag'
-    Given User clicks on Open Storage Engine
-    And User expands 'Filter By' section
-    And User selects 'Test Tag' under 'Tag' section
-    Then User should see the Storage title as 'Amazon S3 Test Storage'
-  
-    Scenario: Filter my storage by 'Domain'
-    When User unselects 'Test Tag' under 'Tag' section
-    And User selects 'Test Domain' under 'Domain' section
-    Then User should see the Storage title as 'Amazon S3 Test Storage'
-   
-    Scenario: Filter my storage by 'Data Classification'
-    When User unselects 'Test Domain' under 'Domain' section
-    And User selects 'CONFIDENTIAL' under 'Data Classification' section
-    Then User should see the Storage title as 'Amazon S3 Test Storage'
-    
-    Scenario: Filter my storage by 'Data Restrictions'
-    When User unselects 'CONFIDENTIAL' under 'Data Classification' section
+    ###Scenario: Filter my storage by 'Data Restrictions' on the main page
+    Given User clicks on Open Storage Engine 
     And User selects 'CONFIDENTIAL ALLOWED' under 'Data Restrictions' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
     
