@@ -17,12 +17,15 @@ public class AddFunctionToCatalogPage {
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make Function discoverable']/child::input[@type='checkbox']";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
 	private static final String FUNCTION_SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
 	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']";
 	private static final String ICONS_XPATH = "//p[text()='{optionName}']/parent::div//img";
+	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
+	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 
 	public AddFunctionToCatalogPage(Page page) {
 		this.page = page;
@@ -68,10 +71,16 @@ public class AddFunctionToCatalogPage {
 	}
 
 	public String verifyFunctionNameInCatalog(String functionName) {
-		page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).isVisible();
-		String functionNameInCatalog = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
-				.textContent();
+		Locator functionNameLocator = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).first();
+		functionNameLocator.isVisible();
+		String functionNameInCatalog = functionNameLocator.textContent();
 		return functionNameInCatalog;
+	}
+
+	public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
+		boolean isFunctionVisible = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
+				.isVisible();
+		return isFunctionVisible;
 	}
 
 	public void clickOnFunctionNameInCatalog(String functionName) {
@@ -123,6 +132,26 @@ public class AddFunctionToCatalogPage {
 
 	public boolean isIconVisible(String optionName) {
 		return page.locator(ICONS_XPATH.replace("{optionName}", optionName)).isVisible();
+	}
+
+	public void searchFilterValue(String filterValue) {
+		page.getByPlaceholder("Search by...").fill(filterValue);
+	}
+
+	public void selectFilterValue(String filterCategory, String filterValue) {
+		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
+				.replace("{filterValue}", filterValue));
+		filterValueLocator.waitFor();
+		filterValueLocator.click();
+	}
+
+	public void clickOnMakeDiscoverableButton() {
+		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).isVisible();
+		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).click();
+	}
+
+	public void clickOnDiscoverableFunctionsbutton() {
+		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
 	}
 
 }
