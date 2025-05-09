@@ -26,24 +26,25 @@ Feature: Embed file into the Vector Database
       | connection | catalog_name       | model_name                        | chunking_strategy | content_length | content_overlap | Namespace | file_Name                               |
       | Pinecone   | Pinecone Vector DB | TextEmbeddings BAAI-Large-En-V1.5 | Token             |            510 |              17 | Default   | VectorDatabase/Text_Embedding_model.zip |
 
-  @LoginWithAdmin
-  Scenario Outline: Embed a document in Vector DB
-    Given User clicks on Open Vector engine
-    When User clicks on the created Vector card name as '<catalog_name>'
-    And User clicks on files
-    And User clicks on Embed New Document
-    And User uploads a file '<file_Name>'
-    And User clicks on Embed button
-    Then User sees file embeded success toast message 'Successfully added document'
-    And User sees file named '<file_Name>' in the file list
-    And User sees date of upload in the file list
-    And User sees file size '<file_Size>' in the file list
-    And User sees delete icon in the file list
-    And User clicks on Open Vector engine
-
-    Examples: 
-      | catalog_name       | file_Name                            | file_Size |
-      | Pinecone Vector DB | VectorDatabase/Vector_Embed_file.pdf | 13 KB     |
+#	TODO: need to setup docker pinecone above
+  #@LoginWithAdmin
+  #Scenario Outline: Embed a document in Vector DB
+    #Given User clicks on Open Vector engine
+    #When User clicks on the created Vector card name as '<catalog_name>'
+    #And User clicks on files
+    #And User clicks on Embed New Document
+    #And User uploads a file '<file_Name>'
+    #And User clicks on Embed button
+    #Then User sees file embeded success toast message 'Successfully added document'
+    #And User sees file named '<file_Name>' in the file list
+    #And User sees date of upload in the file list
+    #And User sees file size '<file_Size>' in the file list
+    #And User sees delete icon in the file list
+    #And User clicks on Open Vector engine
+#
+    #Examples: 
+      #| catalog_name       | file_Name                            | file_Size |
+      #| Pinecone Vector DB | VectorDatabase/Vector_Embed_file.pdf | 13 KB     |
 
   @LoginWithAdmin
   Scenario Outline: Delete created vector and model

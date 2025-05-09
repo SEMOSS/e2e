@@ -36,10 +36,10 @@ Feature: Add Vector Database
     And User navigates to Open Model
 
     Examples: 
-      | connection | catalog_name    | model_name | chunking_strategy | content_length | content_overlap |
-      | FAISS      | FAISS Vector DB | Catalog    | Token             |            510 |              17 |
-      | FAISS      | FAISS Vector DB | Catalog    | Page by page      |            512 |              19 |
-      | FAISS      | FAISS Vector DB | Catalog    | Markdown          |            512 |              15 |
+      | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
+      | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
+      | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
+      | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
  
 
