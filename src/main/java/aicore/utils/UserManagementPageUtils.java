@@ -25,8 +25,7 @@ public class UserManagementPageUtils {
 	private static final String WEEKELY_VALUE_XPATH = "//li[text()='{dropdown_option}']";
 	private static final String MODEL_LIMIT_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td[text()='{limitValue}']";
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Users\"]";
-//	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@class='MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1o4vkg1-MuiFormControlLabel-root']/parent::th//input";
-	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@class='MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-ocqmiw']/parent::th//input";
+	private static final String SELECT_ALL_BUTTON_XPATH = "//th//label//span//input[@type='checkbox']";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
 	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
