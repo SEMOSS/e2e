@@ -1,5 +1,6 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class ViewStoragePage {
@@ -71,9 +72,8 @@ public class ViewStoragePage {
 	}
 
 	public boolean isFilterValueVisibleInOverview(String expectedFilter) {
-		String filterValue = String.format(OVERVIEW_FILTER_VALUE_XPATH.replace("{title}", expectedFilter));
-		return page.isVisible(filterValue);
-		
+        Locator testTagLocator = page.locator("span.MuiChip-label.MuiChip-labelMedium:has-text('"+expectedFilter+"')").first();
+		return  testTagLocator.isVisible();
 	}
 	
 	public void enterDomain(String domainName) {

@@ -17,7 +17,8 @@ Feature: Create Database and Insight to BI System app- CSV
     And User clicks on Catalog option
     And User clicks on Add Database button
     And User enter the database name as 'DB created from CSV'
-    And User uploads CSV file and clicks on Next button
+    And User uploads CSV file 
+    And User clicks on Next button
     And User clicks on Import button
     Then User can see database created success toast message as 'Success'
 

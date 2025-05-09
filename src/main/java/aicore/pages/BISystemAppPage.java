@@ -2,8 +2,10 @@ package aicore.pages;
 
 import java.nio.file.Paths;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 
 import aicore.utils.ConfigUtils;
 
@@ -35,11 +37,9 @@ public class BISystemAppPage {
 
 	// catalog option
 	private static final String CATALOG_OPTION_ID = "#home-nav__item--catalog";
-	private static final String ADD_DATABASE_BUTTON_ID = "#catalog__semoss-tour-import";
 	private static final String EXCEL_OPTION_XPATH = "//div[@class='smss-block__text']//span[text()='Excel']";
 	private static final String ENTER_DATABASE_NAME_TEXTBOX_XPATH = "//input[@placeholder='Database Name']";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "(//input[@type='file'])[2]";
-	private static final String UPLOAD_FILE_PAGE_NEXT_BUTTON_XPATH = "//button[@class='smss-right smss-btn']//span[normalize-space(text())='Next']";
 	private static final String IMPORT_BUTTON_XPATH = "//button[@class='smss-right smss-btn']//span[normalize-space(text())='Import']";
 	private static final String DATABASE_CREATED_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 
@@ -83,7 +83,7 @@ public class BISystemAppPage {
 	}
 
 	public void clickOnAddDatabaseButton() {
-		page.click(ADD_DATABASE_BUTTON_ID);
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add Database")).click();
 	}
 
 	public void selectExcelOption() {
@@ -103,11 +103,11 @@ public class BISystemAppPage {
 	}
 
 	public void clickOnNextButton() {
-		page.click(UPLOAD_FILE_PAGE_NEXT_BUTTON_XPATH);
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Next").setExact(true)).click();
 	}
 
 	public void clickOnImportButton() {
-		page.click(IMPORT_BUTTON_XPATH);
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Import").setExact(true)).click();
 	}
 
 	public String verifyDBCreatedToastMessage() {
