@@ -204,6 +204,10 @@ public class AppLibraryPageUtils {
 			blockSettingsOption.click();
 		}
 	}
+	
+	public static void userSelectsTheAppearanceTab(Page page) {
+		page.getByText("Appearance").click();
+	}
 
 	public static void enterDestination(Page page, String destination) {
 		page.locator(DESTINATION_TEXTBOX_XPATH).fill(destination);

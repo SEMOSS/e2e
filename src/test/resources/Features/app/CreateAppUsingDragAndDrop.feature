@@ -26,6 +26,7 @@ Feature: Create new app
     And User clicks on the Block Settings option
     And User enters '<DESTINATION>' as the destination
     And User enters '<BLOCK_NAME>' text as '<TEXT>'
+    And User selects the Appearance tab
     And User selects the '<STYLES>' styles
     And User selects '<FONT>' from the font list
     And User selects '<HEX_COLOR>' as the HEX color value
