@@ -15,7 +15,6 @@ import io.cucumber.java.en.And;
 
 public class VectorSearchAndFilterSteps {
 	
-	
 	private VectorSearchAndFilterPage openVectorPage;
 	protected static String timestamp;
 	
@@ -59,7 +58,6 @@ public class VectorSearchAndFilterSteps {
 		 openVectorPage.clickSubmit(submit);
 	 }
 
-	
 	@When("User clicks on Search box")
 	public void click_search_box() {
 		openVectorPage.clickSearch();
@@ -86,7 +84,6 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.selectFilterBy1(input,filter);
 	}
 	
-	
 	@Then("User should see {string} vector on the Vectort Catalog page under My Vectors tab")
 	public void user_should_see_the_on_the_vector_catalog_page1(String vectorName) {
 		boolean isVectorDisplayed = openVectorPage.verifyVectorIsDisplayedOnCatalogPage(vectorName);
@@ -98,7 +95,6 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.bookmarkVector(bookmark);
 	}
 	
-
 	@When("User clicks on Add vector button")
 	public void user_clicks_on_add_vector_button() {
 		openVectorPage.addVector();
@@ -132,23 +128,9 @@ public class VectorSearchAndFilterSteps {
 	@And("User clicks on Create Vector Button")
 	public void user_clicks_on_create_vector_button() {
 		openVectorPage.createVector();
-	}
-	
-	
-	
-	
-	
-	
+	}	
 }
 	
 	
 	
-
-
-	
-	
-	
-
-	
-
 

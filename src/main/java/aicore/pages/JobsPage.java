@@ -8,10 +8,11 @@ public class JobsPage {
 	private String timestamp;
 
 	private static final String OPEN_SETTINGS_ICON_XPATH = "Settings-icon";
-	private static final String PAUSE_BUTTON_XPATH = "//button[@type='button' and contains(., 'Pause')]";
-	private static final String JOB_CHECKBOX_XPATH = "//div[@data-field='name' and contains(text(), '{JobName}')]/ancestor::div[@role='row']//input[@type='checkbox']";
+	private static final String PAUSE_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Pause']";
+	private static final String JOB_CHECKBOX_XPATH = "//div[@data-field='name' and normalize-space(text()) = '{JobName}']/ancestor::div[@role='row']//input[@type='checkbox']";
 	private static final String JOB_STATUS_CHECK_XPATH = "//div[@role='rowgroup']//div[@role='row'][.//div[@data-field='name' and normalize-space(text())='{JobName}']]//div[@data-field='isActive']";
-	private static final String RESUME_BUTTON_XPATH = "//button[@type='button' and contains(., 'Resume')]";
+	private static final String RESUME_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Resume']";
+
 
 	public JobsPage(Page page, String timestamp) {
 		this.page = page;

@@ -1,4 +1,4 @@
-Feature: Create Vector Database
+Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
 
   Background: Login to the application and Create model tagged with embeddings
@@ -13,7 +13,8 @@ Feature: Create Vector Database
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
-
+    
+@LoginWithAdmin
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
     Given User clicks on Open Vector engine
     When User clicks on Add Vector button
@@ -35,8 +36,12 @@ Feature: Create Vector Database
     And User navigates to Open Model
 
     Examples: 
-      | connection | catalog_name    | model_name | chunking_strategy | content_length | content_overlap |
-      | FAISS      | FAISS Vector DB | Catalog    | Token             |            510 |              17 |
-      | FAISS      | FAISS Vector DB | Catalog    | Page by page      |            512 |              19 |
-      | FAISS      | FAISS Vector DB | Catalog    | Markdown          |            512 |              15 |
-#Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present.
+      | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
+      | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
+      | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
+      | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
+#Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
+ 
+
+
+

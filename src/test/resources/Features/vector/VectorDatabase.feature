@@ -1,4 +1,3 @@
-
 Feature: View Existing Vectors
   
    Background: View Open Vectors
