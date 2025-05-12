@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.ConfigUtils;
 
 public class OpenVectorPage {
@@ -169,5 +170,9 @@ public class OpenVectorPage {
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String toastMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).textContent();
 		return toastMessage;
+	}
+
+	public void verifyToastMessage(String expectedToastMessage) {
+		AICorePageUtils.verifyToastMessage(page, expectedToastMessage);
 	}
 }

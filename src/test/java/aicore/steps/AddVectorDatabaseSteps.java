@@ -1,5 +1,7 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import aicore.hooks.SetupHooks;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
@@ -9,10 +11,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Assertions;
 
 public class AddVectorDatabaseSteps {
 
@@ -97,9 +95,7 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User can see vector database created success toast message as {string}")
 	public void User_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
-		String actualToastMessage = vectorPage.verifyVectorCreatedToastMessage();
-		assertEquals(actualToastMessage, expectedToastMessage, "Toast message is incorrect");
-		vectorPage.waitForVectorToastMessageToDisappear();
+		vectorPage.verifyToastMessage(expectedToastMessage);
 	}
 
 	@Then("User can see the Vector title as {string}")
@@ -183,9 +179,7 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User sees deleted Vector success toast message {string}")
 	public void user_sees_deleted_Vector_success_toast_message(String toastMessage) {
-		String expectedMessage = vectorPage.verifyDeleteToastMessage();
-		String actualMessage = toastMessage;
-		Assertions.assertEquals(actualMessage, expectedMessage, "Vector Title is not matching with expected");
+		vectorPage.verifyToastMessage(toastMessage);
 	}
 
 }
