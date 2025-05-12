@@ -99,16 +99,12 @@ public class AddVectorDatabaseSteps {
 	}
 
 	@Then("User can see the Vector title as {string}")
-	public void user_can_see_the_vector_title_as(String VectorTitle) {
-		String actualVectorTitle = vectorPage.verifyVectorTitle();
-		System.out.println("act Title is : " + actualVectorTitle);
-		String expectedVectorTitle = VectorTitle + timestamp;
-		assertEquals(actualVectorTitle, expectedVectorTitle, "Vector Title is not matching with expected");
+	public void user_can_see_the_vector_title_as(String vectorTitle) {
+		vectorPage.verifyVectorTitle( vectorTitle + timestamp);
 	}
 
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
 	public void user_can_see_vector_catalog_name_in_field_as_in_smss_properties(String field, String name) {
-
 		String fullText = vectorPage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedName = name + timestamp;
