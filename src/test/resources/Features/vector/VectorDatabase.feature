@@ -1,64 +1,79 @@
-#Feature: Embed file into the Vector Database
-#
-  #@LoginWithAdmin
-  #Scenario Outline: Add Model and Vector database
-    #Given User navigates to Open Model
-    #When User clicks on Add Model
-    #Then User selects 'ZIP'
-    #And User uploads a file '<file_Name>'
-    #And User clicks on Create Model button
-    #And User clicks on Open Vector engine
-    #And User clicks on Add Vector button
-    #And User selects '<connection>' connection
-    #And User enters vector database Catalog name as '<catalog_name>'
-    #And User selects '<model_name>' from Embedder field
-    #And User selects '<chunking_strategy>' from Chunking Strategy field
-    #And User enters value of Content Length as '<content_length>'
-    #And User enters value of Content Overlap as '<content_overlap>'
-    #And User enters value of Host Name
-    #And User enters value of API Key
-    #And User enters value of Namespace as '<Namespace>'
-    #And User clicks on Create Vector button
-    #And User can see vector database created success toast message as 'Successfully added vector database to catalog'
-    #And User can see the Vector title as '<catalog_name>'
-#
-    #Examples: 
-      #| connection | catalog_name       | model_name                        | chunking_strategy | content_length | content_overlap | Namespace | file_Name                               |
-      #| Pinecone   | Pinecone Vector DB | TextEmbeddings BAAI-Large-En-V1.5 | Token             |            510 |              17 | Default   | VectorDatabase/Text_Embedding_model.zip |
-#
-#	TODO: need to setup docker pinecone above
-  #@LoginWithAdmin
-  #Scenario Outline: Embed a document in Vector DB
-    #Given User clicks on Open Vector engine
-    #When User clicks on the created Vector card name as '<catalog_name>'
-    #And User clicks on files
-    #And User clicks on Embed New Document
-    #And User uploads a file '<file_Name>'
-    #And User clicks on Embed button
-    #Then User sees file embeded success toast message 'Successfully added document'
-    #And User sees file named '<file_Name>' in the file list
-    #And User sees date of upload in the file list
-    #And User sees file size '<file_Size>' in the file list
-    #And User sees delete icon in the file list
-    #And User clicks on Open Vector engine
-#
-    #Examples: 
-      #| catalog_name       | file_Name                            | file_Size |
-      #| Pinecone Vector DB | VectorDatabase/Vector_Embed_file.pdf | 13 KB     |
-#
-  #@LoginWithAdmin
-  #Scenario Outline: Delete created vector and model
-    #Given User clicks on Open Vector engine
-    #When User clicks on the created Vector card name as '<catalog_name>'
-    #Then User clicks on Access Control
-    #And User clicks on delete icon
-    #And User sees deleted Vector success toast message 'Successfully deleted Vector'
-    #And User navigates to Open Model
-    #And User clicks on the created Model card name as '<model_name>'
-    #And User clicks on Access Control
-    #And User clicks on delete icon
-    #And User sees deleted Model success toast message 'Successfully deleted Model'
-#
-    #Examples: 
-      #| catalog_name       | model_name                        |
-      #| Pinecone Vector DB | TextEmbeddings BAAI-Large-En-V1.5 |
+Feature: View Existing Vectors
+  
+   Background: View Open Vectors
+   Given User navigates to Open Vector Page
+   And User clicks on 'My Vectors' tab
+   
+   Scenario Outline: Create Vector Databases
+    Given User clicks on Add vector button
+    And User selects 'Weaviate' as connection
+    And User enters 'Catalog Name' as 'WeaviateCatalogeeVectorr'
+    And User selects 'TextEmbeddings BAAI-Large-En-V1.5' from embedder field
+    And User selects 'Token' from chunking strategy field
+    And User enters 'Content Length' as '512'
+    And User enters 'Content Overlap' as '20'
+    And User enters 'Host Name' as 'wz8lcmanqayxpb4efgx9nw.c0.us-east1.gcp.weaviate.cloud'
+    And User enters 'API Key' as 'TaTTTdQ4xJdt734qECQ4Rz08w62NWzacW8KM'
+    And User enters 'Weaviate Classname' as 'Vector_Table'
+    And User enters 'Autocut default' as '1'
+    And User selects 'false' from record question and responses field
+    And User clicks on Create Vector Button
+    And User navigates to Open Vector Page
+    Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
+
+   Scenario Outline: View My Vectors
+   Given User navigates to Open Vector Page
+   And User clicks on 'My Vectors' tab
+   Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
+  
+   Scenario Outline: Add Tag
+   When User clciks on 'WeaviateCatalogeeVectorr'
+   And User clicks on 'Edit' button
+   And User enters the filters 'TestTag' in 'Tag' box and clicks enter
+   Then User clicks on the 'Submit' button
+  
+   Scenario Outline: Add Domain
+   When User clciks on 'WeaviateCatalogeeVectorr'
+   And User clicks on 'Edit' button
+   And User enters the filters 'TestDomain' in 'Domain' box and clicks enter
+   Then User clicks on the 'Submit' button
+  
+   Scenario Outline: Add Data Classification
+   When User clciks on 'WeaviateCatalogeeVectorr'
+   And User clicks on 'Edit' button
+   And User enters the filters 'PUBLIC' in 'Data classification' box
+   Then User clicks on the 'Submit' button
+  
+   Scenario Outline: Add Data Restrictions
+   When User clciks on 'WeaviateCatalogeeVectorr'
+   And User clicks on 'Edit' button
+   And User enters the filters 'IP ALLOWED' in 'Data restrictions' box
+   Then User clicks on the 'Submit' button
+  
+   Scenario Outline: Filter by Tags
+   When User clicks on search by under Filter By Section
+   And User enters 'TestTag' in the search box and clicks on it under 'Tag'
+   Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
+   
+   Scenario Outline: Filter by Domain
+   When User clicks on search by under Filter By Section
+   And User enters 'TestDomain' in the search box and clicks on it under 'Domain'
+   Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
+   
+   Scenario Outline: Filter by Data Classification
+   When User clicks on search by under Filter By Section
+   And User enters 'PUBLIC' in the search box and clicks on it under 'Data Classification'
+   Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
+   
+   Scenario Outline: Filter by Data Restrictions
+   When User clicks on search by under Filter By Section
+   And User enters 'IP ALLOWED' in the search box and clicks on it under 'Data Restrictions'
+   Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
+  
+   Scenario Outline: Vecter Search
+	 When User clicks on Search box
+	 And User enters the search value as 'WeaviateCatalogeeVectorr' and presses Enter
+	 Then User should see the 'WeaviateCatalogeeVectorr' vector on the Vector Catalog page
+ 
+   Scenario Outline: Bookmark Vector
+   When User clicks on Bookmark  icon of 'WeaviateCatalogeeVectorr' then the vector is bookmarked
