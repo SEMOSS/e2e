@@ -136,7 +136,7 @@ public class AppLibraryPageUtils {
 	public static void blockDropPosition(Page page) {
 		BoundingBox targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH).boundingBox();
 		double dropX = targetBox.x + (targetBox.width / 2); // Center X position
-		double dropY = targetBox.y + targetBox.height + 10; // Below target (+10 for margin)
+		double dropY = targetBox.y + targetBox.height;// + 10; // Below target (+10 for margin)
 		page.mouse().move(dropX, dropY, new Mouse.MoveOptions().setSteps(10)); // Slow movement
 		page.mouse().up();
 	}
@@ -203,6 +203,10 @@ public class AppLibraryPageUtils {
 		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			blockSettingsOption.click();
 		}
+	}
+	
+	public static void userSelectsTheAppearanceTab(Page page) {
+		page.getByText("Appearance").click();
 	}
 
 	public static void enterDestination(Page page, String destination) {

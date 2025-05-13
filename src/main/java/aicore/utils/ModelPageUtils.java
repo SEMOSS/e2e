@@ -426,9 +426,10 @@ public class ModelPageUtils {
 		}
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);
-		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
-		page.locator(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		// THESE ELEMENTS REMOVED ON A SEMOSS UPDATE ON May 12, 2025
+//		page.click(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH);
+//		page.locator(MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH)
+//				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
 	public static void clickOnDeleteButton(Page page) {

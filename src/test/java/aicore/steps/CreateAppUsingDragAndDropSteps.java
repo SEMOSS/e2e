@@ -131,6 +131,11 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_the_block_settings_option() {
 		openAppLibraryPage.clickOnBlockSettingsOption();
 	}
+	
+	@And("User selects the Appearance tab")
+	public void user_selects_the_Appearance_tab() {
+		openAppLibraryPage.userSelectsTheAppearanceTab();
+	}
 
 	@And("User enters {string} as the destination")
 	public void user_enters_as_the_destination(String destination) {
