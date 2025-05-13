@@ -32,8 +32,11 @@ Feature: Jobs
     And the green Pause button should revert to its default state
 
   Scenario: Resume a Paused Job
-    When User clicks the checkbox of Paused "Test Job"
+    When User clicks the checkbox of "Test Job"
+    And User clicks the green Pause button
+    And the "Test Job" should stop running
+    And User clicks the checkbox of "Test Job"
     And User clicks the Resume button
-    Then the "Test Job" should start running
+    Then 'Test Job' will start running and Pause button will be enabled
     And the checkbox of "Test Job" should become unselected
     And the Resume button should revert to its default state
