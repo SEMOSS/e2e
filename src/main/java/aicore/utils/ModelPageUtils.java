@@ -113,7 +113,6 @@ public class ModelPageUtils {
 	public static void waitForModelCreationToastMessageDisappear(Page page) {
 		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE))
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-		;
 	}
 
 	public static String verifyModelTitle(Page page, String modelTitle, String timestamp) {
