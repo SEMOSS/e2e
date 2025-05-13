@@ -20,9 +20,9 @@ public class VectorSearchAndFilterPage {
 	private static final String ADD_VECTOR_XPATH="//button[@aria-label='Navigate to import Vector']";
 	private static final String CONNECTION_XPATH="//div//p[text()='{connection}']";
 	private static final String INPUT_XPATH="//div//label[text()='{inputName}']/following-sibling::div//input";
-	private static final String EMBEDDER_DROPDOWN_XPATH="(//div[@class=\"MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-rre4r0-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input\"])[1]";
-	private static final String CHUNKING_DROPDOWN_XPATH="(//div[@class=\"MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-rre4r0-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input\"])[2]";
-	private static final String RECORD_DROPDOWN_XPATH="(//div[@class=\"MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-rre4r0-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input\"])[3]";
+	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
+	private static final String CHUNKING_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
+	private static final String RECORD_DROPDOWN_XPATH="(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[3]";
 	private static final String SELECT_XPATH="//div//ul//li[text()='{selectName}']";
 	private static final String CREATE_VECTOR_XPATH="//div//button//span[text()='Create vector']";
 	private static final String DIV_XPATH="//div[@class='css-155d4xt']";

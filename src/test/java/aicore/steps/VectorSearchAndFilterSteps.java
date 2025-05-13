@@ -33,13 +33,14 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.vectorsTab(myv);
 	}
 	
-	@When("User clciks on {string}")
+	@When("User clicks on the vector {string}")
 	public void user_clicks_on_the_vector(String vector) {
 		openVectorPage.clickVector(vector);
 	}
 	
-	@And("User clicks on {string} button")
-	public void user_clicks_on_edit_button(String edit) {
+	@And("User clicks on vector Edit button")
+	public void user_clicks_on_vector_edit_button() {
+		String edit = "Edit";
 		openVectorPage.clickEdit(edit);
 	}
 	
@@ -112,7 +113,11 @@ public class VectorSearchAndFilterSteps {
 	
 	@And("User selects {string} from embedder field")
 	public void user_selects_input_field_embedder(String name) {
-		openVectorPage.selectEmbedder(name);
+		if (name.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
+			openVectorPage.selectEmbedder(name);
+		} else {
+			openVectorPage.selectEmbedder(name + AddModelSteps.timestamp);
+		}
 	}
 	
 	@And("User selects {string} from chunking strategy field")
