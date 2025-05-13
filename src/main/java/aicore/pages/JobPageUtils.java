@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class JobPageUtils {
-	
+
 	private static final String JOBS_TILE_XPATH = "//span[text()='Jobs']";
 	private static final String NAME_XPATH = "//label[text()='Name']/parent::div/div/input";
 	private static final String PIXEL_XPATH = "//label[text()='Pixel']/parent::div/div/textarea[@aria-invalid=\"false\"]";
@@ -77,9 +77,7 @@ public class JobPageUtils {
 	}
 
 	public static void verifyAddedTag(Page page, String expectedText, String jobTitle) {
-		page.locator(
-				ADDED_TAG_XPATH.replace("{jobName}", jobTitle).replace("{textValue}", expectedText))
-				.isVisible();
+		page.locator(ADDED_TAG_XPATH.replace("{jobName}", jobTitle).replace("{textValue}", expectedText)).isVisible();
 	}
 
 	public static void clickDeleteIcon(Page page, String jobTitle) throws InterruptedException {
@@ -119,7 +117,7 @@ public class JobPageUtils {
 	public static void clickPauseButton(Page page) {
 		Locator pauseButton = page.locator(PAUSE_BUTTON_XPATH);
 		pauseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		pauseButton.click();		
+		pauseButton.click();
 	}
 
 	public static boolean isJobStopped(Page page, String jobName) {
@@ -129,7 +127,7 @@ public class JobPageUtils {
 		String status = page.locator(xpath).textContent().trim();
 		return status.equals(PAUSED);
 	}
-	
+
 	public static boolean isJobRunning(Page page, String jobName) {
 		final String ACTIVE = "Active";
 		String xpath = JOB_STATUS_CHECK_XPATH.replace("{JobName}", jobName);
@@ -137,7 +135,6 @@ public class JobPageUtils {
 		String status = page.locator(xpath).textContent().trim();
 		return status.equals(ACTIVE);
 	}
-
 
 	public static boolean isCheckboxSelected(Page page, String jobName) {
 		String xpath = JOB_CHECKBOX_XPATH.replace("{JobName}", jobName);
@@ -154,7 +151,7 @@ public class JobPageUtils {
 	public static void clickResumeButton(Page page) {
 		Locator pauseButton = page.locator(RESUME_BUTTON_XPATH);
 		pauseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		pauseButton.click();		
+		pauseButton.click();
 	}
 
 	public static boolean isResumeButtonReverted(Page page) {
