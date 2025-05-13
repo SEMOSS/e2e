@@ -18,6 +18,7 @@ import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
 import aicore.base.RunInfo;
+import aicore.utils.CommonUtils;
 import aicore.utils.ConfigUtils;
 import aicore.utils.UrlUtils;
 import io.cucumber.java.After;
@@ -27,7 +28,6 @@ import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
-
 
 public class SetupHooks {
 
@@ -151,8 +151,6 @@ public class SetupHooks {
 		GenericSetupUtils.navigateToHomePage(page);
 	}
 
-
-
 	@AfterAll
 	public static void afterAll() throws IOException {
 		logger.info("AFTER ALL");
@@ -189,7 +187,7 @@ public class SetupHooks {
 		if (GenericSetupUtils.useVideo()) {
 			og = page.video().path();
 		}
-		
+
 		page.close();
 
 		if (GenericSetupUtils.useVideo()) {
@@ -205,6 +203,22 @@ public class SetupHooks {
 
 	public static Page getPage() {
 		return page;
+	}
+
+	@After("@DeleteCreatedCatalog")
+	public void deleteCatalog(Scenario scenario) {
+		final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+		final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+		final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+		final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Function']";
+		boolean isDeleted = CommonUtils.deleteCatalog(page, ACCESS_CONTROL_XPATH, DELETE_BUTTON_XPATH,
+				CONFIRMATION_POPUP_DELETE_BUTTON_XPATH, DELETE_TOAST_MESSAGE_XPATH);
+
+		if (isDeleted) {
+			logger.info("Catalog deleted successfully after scenario", scenario.getName());
+		} else {
+			logger.warn("Failed to delete catalog after scenario", scenario.getName());
+		}
 	}
 
 }
