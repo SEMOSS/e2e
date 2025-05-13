@@ -8,16 +8,24 @@ import com.microsoft.playwright.options.WaitForSelectorState;
  * Main AI Core Home page utils
  */
 public class AICorePageUtils {
-	
+
 	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), '{TOAST_MESSAGE}')]";
-	
+
 	public static void verifyToastMessage(Page page, String msg) {
 		page.locator(TOAST_MESSAGE_XPATH.replace("{TOAST_MESSAGE}", msg))
-		.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
 	public static String readStringFromClipboard(Page page) {
-		return page.evaluate("navigator.clipboard.readText()").toString();
+		String clipboardText = null;
+		Boolean isClipboardSupported = (Boolean) page.evaluate("typeof navigator.clipboard !== 'undefined'");
+		if (isClipboardSupported) {
+			clipboardText = (String) page.evaluate("navigator.clipboard.readText()");
+			System.out.println("Clipboard contains: " + clipboardText);
+		} else {
+			System.out.println("Clipboard API is not supported in this context.");
+		}
+		return clipboardText;
 	}
 
 }

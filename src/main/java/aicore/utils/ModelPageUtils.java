@@ -467,7 +467,18 @@ public class ModelPageUtils {
 
 	public static String copyModelID(Page page) {
 		page.locator(MODEL_ID_COPY_OPTION).click();
-		return AICorePageUtils.readStringFromClipboard(page).trim();
+		String modelId = null;
+		String clipboardText = AICorePageUtils.readStringFromClipboard(page);
+		if (clipboardText != null) {
+			modelId = clipboardText.trim();
+		} else {
+			// get current url of the page
+            String currentUrl = page.url();
+            // Extract the substring after the last slash this will also give us the model id
+            int lastSlashIndex = currentUrl.lastIndexOf('/');
+            modelId = currentUrl.substring(lastSlashIndex + 1);
+		}
+		return modelId;
 	}
 
 	public static String getFullSectionCodeByHeading(Page page, String headingText) {
