@@ -2,6 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 /**
@@ -26,6 +27,13 @@ public class AICorePageUtils {
 			System.out.println("Clipboard API is not supported in this context.");
 		}
 		return clipboardText;
+	}
+
+	public static void clickOnButton(Page page, String buttonLabel) {
+		Locator buttonLocator = page.getByRole(AriaRole.BUTTON,
+				new Page.GetByRoleOptions().setName(buttonLabel).setExact(true));
+		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		buttonLocator.click();
 	}
 
 }
