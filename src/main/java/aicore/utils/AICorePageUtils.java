@@ -16,4 +16,8 @@ public class AICorePageUtils {
 		.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
+	public static String readStringFromClipboard(Page page) {
+		return page.evaluate("navigator.clipboard.readText()").toString();
+	}
+
 }
