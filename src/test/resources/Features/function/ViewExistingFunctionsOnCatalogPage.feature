@@ -16,6 +16,7 @@ Feature: View existing functions in Function Catalog
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
+  @LoginWithAdmin
   Scenario: view and validate filter functionality - My Functions
     Given User navigates to Open Function
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
@@ -30,7 +31,6 @@ Feature: View existing functions in Function Catalog
     And User clicks on Delete button
     Then User sees deleted function success toast message 'Successfully deleted Function'
 
-  @LoginWithAdmin
   Scenario: view and validate filter functionality - Discoverable Functions
     Given User navigates to Open Function
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
@@ -38,18 +38,16 @@ Feature: View existing functions in Function Catalog
     And User clicks on Access Control Tab
     And User clicks Make Discoverable button
     And User logs out from the application
-    And User login as "editor"
+    And User login as 'native'
     And User navigates to Open Function
     And User clicks on Discoverable Functions button
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
-    #And User applies each filter and validate 'WeatherFunctionTest' function is visible on the page
-      #| FILTER_CATEGORY     | FILTER_VALUE      |
-      #| Tag                 | embeddings, Test1 |
-      #| Domain              | SAP, AI           |
-      #| Data Classification | IP                |
-      #| Data Restrictions   | IP ALLOWED        |
+    And User applies each filter and validate 'WeatherFunctionTest' function is visible on the page
+      | FILTER_CATEGORY     | FILTER_VALUE |
+      | Data Classification | IP           |
+      | Data Restrictions   | IP ALLOWED   |
     When User logs out from the application
-    And User login as "admin"
+    And User login as 'admin'
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
     And User clicks on Access Control Tab
     And User clicks on Delete button
