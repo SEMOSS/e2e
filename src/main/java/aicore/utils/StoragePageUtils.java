@@ -30,6 +30,9 @@ public class StoragePageUtils {
 
 	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
 		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName + " " + timestamp);
+	
+	public static void enterCatalogName(Page page, String catalogName) {
+		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName);
 	}
 
 	public static void enterRegionName(Page page, String regionName) {
@@ -60,6 +63,9 @@ public class StoragePageUtils {
 	public static String verifyStorageTitle(Page page, String storageTitle, String timestamp) {
 		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle + " " + timestamp))
 				.trim();
+	
+	public static String verifyStorageTitle(Page page, String storageTitle) {
+		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle)).trim();
 		return actualtitle;
 	}
 

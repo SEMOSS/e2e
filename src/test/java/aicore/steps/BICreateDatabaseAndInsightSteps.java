@@ -62,9 +62,13 @@ public class BICreateDatabaseAndInsightSteps {
 		biApp.enterDatabaseName(databaseName);
 	}
 
-	@And("User uploads CSV file and clicks on Next button")
-	public void user_uploads_csv_file_and_clicks_on_next_button() {
+	@And("User uploads CSV file")
+	public void user_uploads_csv_file() {
 		biApp.uploadCSVFile();
+	}
+	
+	@And("User clicks on Next button")
+	public void user_clicks_on_next_button() {
 		biApp.clickOnNextButton();
 	}
 
