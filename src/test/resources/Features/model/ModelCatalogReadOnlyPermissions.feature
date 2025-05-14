@@ -16,6 +16,9 @@ Feature: Model Catalog Permission - Read
     And User adds one user and assigns them as 'Read'
     And User logs out from the application
     Then User login as 'Read'
+    And User navigates to Open Model
+  	And User searches the 'Catalog' in the model catalog searchbox
+  	And User selects the 'Catalog' from the model catalog
     Given User Can see the Model title as 'Catalog'  
     Then 'Read' user can 'View' Overview       
   
