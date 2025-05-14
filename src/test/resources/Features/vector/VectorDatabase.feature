@@ -1,4 +1,4 @@
-Feature: View Existing Vectors
+Feature: View Existing Vectors Using Search And Filters
   
    Background: View Open Vectors
    Given User navigates to Open Vector Page
