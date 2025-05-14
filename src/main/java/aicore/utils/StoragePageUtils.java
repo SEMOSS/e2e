@@ -4,7 +4,7 @@ import com.microsoft.playwright.Page;
 
 public class StoragePageUtils {
 
-	private static final String ADD_STORAGE_BUTTON_XPATH = "//div[@class=\"MuiStack-root css-6za6r5-MuiStack-root\"]";
+	private static final String ADD_STORAGE_BUTTON_XPATH = "//div[@class='MuiStack-root css-1lnp4vl']";
 	private static final String STORAGE_XPATH = "//div[@class='css-axw7ok']//p[text()='{Storage}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "#NAME";
 	private static final String REGION_TEXTBOX_ID = "#S3_REGION";
@@ -12,7 +12,7 @@ public class StoragePageUtils {
 	private static final String ACCESS_KEY_TEXTBOX_ID = "#S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_ID = "#S3_SECRET_KEY";
 	private static final String CREATE_STORAGE_BUTTON = "//span[text()='Create storage']";
-	private static final String STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class=\"MuiAlert-message css-1pxa9xg-MuiAlert-message\"]";
+	private static final String STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
 	private static final String STORAGE_TITLE_XPATH = "//h4[text()='{title}']";
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
@@ -30,6 +30,7 @@ public class StoragePageUtils {
 
 	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
 		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName + " " + timestamp);
+	}
 	
 	public static void enterCatalogName(Page page, String catalogName) {
 		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName);
@@ -63,6 +64,8 @@ public class StoragePageUtils {
 	public static String verifyStorageTitle(Page page, String storageTitle, String timestamp) {
 		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle + " " + timestamp))
 				.trim();
+		return actualtitle;
+	}
 	
 	public static String verifyStorageTitle(Page page, String storageTitle) {
 		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle)).trim();
