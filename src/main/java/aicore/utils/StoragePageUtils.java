@@ -23,64 +23,74 @@ public class StoragePageUtils {
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
 	}
-	
+
 	public static void selectStorage(Page page, String storageName) {
 		page.click(STORAGE_XPATH.replace("{Storage}", storageName));
+	}
+
+	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
+		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName + " " + timestamp);
 	}
 	
 	public static void enterCatalogName(Page page, String catalogName) {
 		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName);
 	}
-	
+
 	public static void enterRegionName(Page page, String regionName) {
 		page.fill(REGION_TEXTBOX_ID, regionName);
 	}
-	
+
 	public static void enterBucket(Page page, String bucket) {
 		page.fill(BUCKET_TEXTBOX_ID, bucket);
 	}
-	
+
 	public static void enterAccessKey(Page page, String accessKey) {
 		page.fill(ACCESS_KEY_TEXTBOX_ID, accessKey);
 	}
-	
+
 	public static void enterSecretKey(Page page) {
 		page.fill(SECRET_KEY_TEXTBOX_ID, "Test@123");
 	}
-	
+
 	public static void clickOnCreateStorageButton(Page page) {
 		page.click(CREATE_STORAGE_BUTTON);
 	}
-	
+
 	public static String verifyStorageCreatedToastMessage(Page page) {
 		String toastMessage = page.textContent(STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
+	}
+
+	public static String verifyStorageTitle(Page page, String storageTitle, String timestamp) {
+		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle + " " + timestamp))
+				.trim();
+		return actualtitle;
 	}
 	
 	public static String verifyStorageTitle(Page page, String storageTitle) {
 		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle)).trim();
 		return actualtitle;
 	}
-	
+
 	public static void clickOnSMSSTab(Page page) {
 		page.click(SMSS_TAB_XPATH);
 	}
-	
+
 	public static String verifyNameFiledInSMSS(Page page) {
 		String name = page.textContent(NAME_SMSS_PROPERTIES_XPATH).trim();
 		return name;
 	}
-	
+
 	public static String verifyS3RegionFiledInSMSS(Page page) {
 		String s3Region = page.textContent(S3_REGION_SMSS_PROPERTIES_XPATH).trim();
 		return s3Region;
 	}
-	
+
 	public static String verifyS3BucketFiledInSMSS(Page page) {
 		String s3Bucket = page.textContent(S3_BUCKET_SMSS_PROPERTIES_XPATH).trim();
 		return s3Bucket;
 	}
-	
+
 	public static String verifyS3AccessKeyFiledInSMSS(Page page) {
 		String s3AccessKey = page.textContent(S3_ACCESS_KEY_SMSS_PROPERTIES_XPATH).trim();
 		return s3AccessKey;

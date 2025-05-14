@@ -1,5 +1,8 @@
 package aicore.steps;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -96,6 +99,45 @@ public class JobManagementSteps {
 	@Then("{string} will start running and Pause button will be enabled")
 	public void will_start_running_and_pause_button_will_be_enabled(String jobTitle) {
 		jobManagementPage.verifyPauseButtonEnabled(jobTitle);
+	}
+	
+	@When("User clicks the checkbox of {string}")
+	public void user_checks_on_the_checkbox_of_job(String jobName) {
+		jobManagementPage.clickJobCheckBox(jobName);
+	}
+	
+	@When("User clicks the green Pause button")
+	public void user_clicks_the_pause_button() {
+		jobManagementPage.clickPauseButton();
+	}
+	
+	@Then("the {string} should stop running")
+	public void the_job_should_stop_running(String jobName) {
+		boolean isStopped = jobManagementPage.isJobStopped(jobName);
+		assertTrue("Test Job not stopped: " + jobName, isStopped);
+	}
+	
+	@Then("the checkbox of {string} should become unselected")
+	public void the_checkbox_is_unselected(String jobName) {
+		boolean isSelected = jobManagementPage.isCheckboxSelected(jobName);
+		assertFalse("Checkbox is still selected: " + isSelected, isSelected);
+	}
+	
+	@Then("the green Pause button should revert to its default state")
+	public void green_pause_revert_default() {
+		boolean isReverted = jobManagementPage.isPauseButtonReverted();
+		assertTrue("The button is not reverted: " + isReverted, isReverted);
+	}
+	
+	@When("User clicks the Resume button")
+	public void user_clicks_the_resume_button() {
+		jobManagementPage.clickResumeButton();
+	}
+	
+	@Then("the Resume button should revert to its default state")
+	public void resume_button_revert_default() {
+		boolean isReverted = jobManagementPage.isResumeButtonReverted();
+		assertTrue("The button is not reverted: " + isReverted, isReverted);
 	}
 
 }

@@ -7,6 +7,7 @@ import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.ConfigUtils;
 
 public class BISystemAppPage {
@@ -103,11 +104,11 @@ public class BISystemAppPage {
 	}
 
 	public void clickOnNextButton() {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Next").setExact(true)).click();
+		AICorePageUtils.clickOnButton(page, "Next");
 	}
 
 	public void clickOnImportButton() {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Import").setExact(true)).click();
+		AICorePageUtils.clickOnButton(page, "Import");
 	}
 
 	public String verifyDBCreatedToastMessage() {

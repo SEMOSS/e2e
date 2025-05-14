@@ -96,6 +96,10 @@ public class OpenAppLibraryPage {
 	public void clickOnBlockSettingsOption() {
 		AppLibraryPageUtils.clickOnBlockSettingsOption(page);
 	}
+	
+	public void userSelectsTheAppearanceTab() {
+		AppLibraryPageUtils.userSelectsTheAppearanceTab(page);
+	}
 
 	public void enterDestination(String destination) {
 		AppLibraryPageUtils.enterDestination(page, destination);
