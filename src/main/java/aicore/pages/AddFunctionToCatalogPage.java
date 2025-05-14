@@ -1,128 +1,145 @@
 package aicore.pages;
 
-import java.nio.file.FileSystems;
-import java.nio.file.Paths;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitForSelectorState;
+import aicore.utils.AddFunctionToCatalogPageUtils;
 
 public class AddFunctionToCatalogPage {
 
-	private Page page;
-	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
-	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
-	private static final String CREATE_FUNCTION_BUTTON = "Create Function";
-	private static final String CATALOG_FUNCTION = "{FunctionName}";
-	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
-	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
-	private static final String FUNCTION_SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
-	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']";
-	private static final String ICONS_XPATH = "//p[text()='{optionName}']/parent::div//img";
+    private Page page;
+    private String timestamp;
+    private static final String FUNCTION_SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
+    private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']";
+    private static final String ICONS_XPATH = "//p[text()='{optionName}']/parent::div//img";
 
-	public AddFunctionToCatalogPage(Page page) {
-		this.page = page;
-	}
+    public AddFunctionToCatalogPage(Page page, String timestamp) {
+        this.page = page;
+        this.timestamp = timestamp;
+    }
 
-	public void clickOnAddFunctionButton() {
-		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
-		page.getByLabel(ADD_FUNCTION_BUTTON).click();
-	}
+    public boolean isSearchBarPresent() {
+        return page.getByPlaceholder("Search").isVisible();
+    }
 
-	public void selectFunction(String functionType) {
-		page.getByText(functionType).isVisible();
-		page.getByText(functionType).click();
-	}
+    public boolean verifySectionIsVisible(String sectionName) {
+        boolean isSectionVisible = page.isVisible(FUNCTION_SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
+        return isSectionVisible;
+    }
 
-	public void clickOnCreateFunctionButton() {
-		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
-		page.getByText(CREATE_FUNCTION_BUTTON).isEnabled();
-		page.getByText(CREATE_FUNCTION_BUTTON).click();
-	}
+    public boolean VerifyDatabaseOptionIsVisible(String sectionName, String databaseOptionName) {
+        boolean isOptionVisible = page.isVisible(DATABASE_OPTIONS_UNDER_SECTION_XPATH
+                .replace("{sectionName}", sectionName).replace("{optionName}", databaseOptionName));
+        return isOptionVisible;
+    }
 
-	public String enterFilePath(String fileName) {
-		String pathSeparator = FileSystems.getDefault().getSeparator();
-		Locator fileInput = page.locator(ADD_FILE_XPATH);
-		String relativePath = "src" + pathSeparator + "test" + pathSeparator + "resources" + pathSeparator + "data"
-				+ pathSeparator;
-		if (fileName.contains("/")) {
-			fileName.replace("/", pathSeparator);
-		}
-		fileInput.setInputFiles(Paths.get(relativePath + fileName));
-		if (fileName.contains("/")) {
-			String[] ActualFileName = fileName.split("/");
-			int fileNameIndex = ActualFileName.length - 1;
-			Locator uploadedFileName = page
-					.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", ActualFileName[fileNameIndex]));
-			String uploadedFileNameValue = uploadedFileName.textContent();
-			return uploadedFileNameValue;
-		} else {
-			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
-			String uploadedFileNameValue = uploadedFileName.textContent();
-			return uploadedFileNameValue;
-		}
-	}
+    public Locator getIconByLabel(String optionName) {
+        return page.locator(ICONS_XPATH.replace("{optionName}", optionName));
+    }
 
-	public String verifyFunctionNameInCatalog(String functionName) {
-		page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).isVisible();
-		String functionNameInCatalog = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
-				.textContent();
-		return functionNameInCatalog;
-	}
+    public boolean isIconVisible(String optionName) {
+        return page.locator(ICONS_XPATH.replace("{optionName}", optionName)).isVisible();
+    }
 
-	public void clickOnFunctionNameInCatalog(String functionName) {
-		page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).click();
-	}
+    public void clickOnAddFunctionButton() {
+        AddFunctionToCatalogPageUtils.clickOnAddFunctionButton(page);
+    }
 
-	public void clickOnAccessControl() {
-		page.locator(ACCESS_CONTROL_XPATH).isVisible();
-		page.locator(ACCESS_CONTROL_XPATH).click();
-	}
+    public void selectFunction(String functionType) {
+        AddFunctionToCatalogPageUtils.selectFunction(page, functionType);
 
-	public void clickOnDeleteButton() {
-		page.locator(DELETE_BUTTON_XPATH).isVisible();
-		page.locator(DELETE_BUTTON_XPATH).click();
-	}
+    }
 
-	public void clickOnDeleteConfirmationButton() {
-		page.locator(CONFIRMATION_POPUP_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).isVisible();
-		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
-	}
+    public void enterCatalogName(String catalogName) {
+        AddFunctionToCatalogPageUtils.enterCatalogName(page, catalogName, timestamp);
 
-	public String verifyDeleteToastMessage() {
-		page.getByText(DELETE_TOAST_MESSAGE)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
-		return toastMessage;
-	}
+    }
 
-	public boolean isSearchBarPresent() {
-		return page.getByPlaceholder("Search").isVisible();
-	}
+    public void enterUrl(String url) {
+        AddFunctionToCatalogPageUtils.enterUrl(page, url);
 
-	public boolean verifySectionIsVisible(String sectionName) {
-		boolean isSectionVisible = page.isVisible(FUNCTION_SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
-		return isSectionVisible;
-	}
+    }
 
-	public boolean VerifyDatabaseOptionIsVisible(String sectionName, String databaseOptionName) {
-		boolean isOptionVisible = page.isVisible(DATABASE_OPTIONS_UNDER_SECTION_XPATH
-				.replace("{sectionName}", sectionName).replace("{optionName}", databaseOptionName));
-		return isOptionVisible;
-	}
+    public void selectHttpMethod(String httpMethod) {
+        AddFunctionToCatalogPageUtils.selectHttpMethod(page, httpMethod);
+    }
 
-	public Locator getIconByLabel(String optionName) {
-		return page.locator(ICONS_XPATH.replace("{optionName}", optionName));
-	}
+    public void selectPostBodyMessage(String postBodyMessage) {
+        AddFunctionToCatalogPageUtils.selectPostBodyMessage(page, postBodyMessage);
+    }
 
-	public boolean isIconVisible(String optionName) {
-		return page.locator(ICONS_XPATH.replace("{optionName}", optionName)).isVisible();
-	}
+    public void verifyAsteriskMarkOnFields(String fieldLabels) {
+        AddFunctionToCatalogPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
+    }
 
+    public void enterHeaders(String headers) {
+        AddFunctionToCatalogPageUtils.enterHeaders(page, headers);
+    }
+
+    public void enterFunctionParameters(String functionParameters) {
+        AddFunctionToCatalogPageUtils.enterFunctionParameters(page, functionParameters);
+    }
+
+    public void enterFunctionName(String functionName) {
+        AddFunctionToCatalogPageUtils.enterFunctionName(page, functionName);
+    }
+
+    public void enterFunctionDescription(String functionDescription) {
+        AddFunctionToCatalogPageUtils.enterFunctionDescription(page, functionDescription);
+    }
+
+    public void selectFunctionType(String functionType) {
+        AddFunctionToCatalogPageUtils.selectFunctionType(page, functionType);
+    }
+
+    public void enterFunctionRequiredParameters(String functionRequiredParameters) {
+        AddFunctionToCatalogPageUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
+    }
+
+    public void checkCreateFunctionButton() {
+        AddFunctionToCatalogPageUtils.checkCreateFunctionButton(page);
+    }
+
+    public void clickOnCreateFunctionButton() {
+        AddFunctionToCatalogPageUtils.clickOnCreateFunctionButton(page);
+    }
+
+    public String enterFilePath(String fileName) {
+        return AddFunctionToCatalogPageUtils.enterFilePath(page, fileName);
+
+    }
+
+    public String verifyFunctionNameInCatalog(String catalogName) {
+        return AddFunctionToCatalogPageUtils.verifyFunctionNameInCatalog(page, catalogName, timestamp);
+
+    }
+
+    public void clickOnFunctionNameInCatalog(String functionName) {
+        AddFunctionToCatalogPageUtils.clickOnFunctionNameInCatalog(page, functionName, timestamp);
+    }
+
+    public void clickOnAccessControl() {
+        AddFunctionToCatalogPageUtils.clickOnAccessControl(page);
+    }
+
+    public void clickOnDeleteButton() {
+        AddFunctionToCatalogPageUtils.clickOnDeleteButton(page);
+    }
+
+    public void clickOnDeleteConfirmationButton() {
+        AddFunctionToCatalogPageUtils.clickOnDeleteConfirmationButton(page);
+    }
+
+    public String verifyDeleteToastMessage() {
+        return AddFunctionToCatalogPageUtils.verifyDeleteToastMessage(page);
+
+    }
+
+    public String verifySuccessToastMessage(String Toast_message) {
+        AddFunctionToCatalogPageUtils.verifySuccessToastMessage(page, Toast_message);
+        return Toast_message;
+    }
+
+    public boolean verifyMissingInputField() {
+        return AddFunctionToCatalogPageUtils.verifyMissingInputField(page);
+    }
 }
