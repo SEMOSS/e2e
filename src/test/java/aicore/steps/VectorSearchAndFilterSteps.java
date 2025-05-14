@@ -28,7 +28,7 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.clickOnOpenVector();
 	}
 	
-	@And("User clicks on {string} tab")
+	@And("User clicks on vector {string} tab")
 	public void user_clicks_on_vectors_tab(String myv) {
 		openVectorPage.vectorsTab(myv);
 	}

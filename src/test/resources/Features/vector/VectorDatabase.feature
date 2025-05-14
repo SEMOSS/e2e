@@ -2,7 +2,7 @@ Feature: View Existing Vectors
   
    Background: View Open Vectors
    Given User navigates to Open Vector Page
-   And User clicks on 'My Vectors' tab
+   And User clicks on vector 'My Vectors' tab
   
    @LoginWithAuthor
    Scenario Outline: Create Vector Databases
@@ -21,7 +21,7 @@ Feature: View Existing Vectors
    
    # creating vector DB
    And User navigates to Open Vector Page
-   And User clicks on 'Discoverable Vectors' tab
+   And User clicks on vector 'Discoverable Vectors' tab
    And User clicks on Add vector button
    And User selects 'FAISS' as connection
    And User enters 'Catalog Name' as 'FAISSCatalogeeVectorr'
@@ -36,7 +36,7 @@ Feature: View Existing Vectors
 
    Scenario Outline: View My Vectors
    Given User navigates to Open Vector Page
-   And User clicks on 'My Vectors' tab
+   And User clicks on vector 'My Vectors' tab
    Then User should see the 'FAISSCatalogeeVectorr' vector on the Vector Catalog page
   
    Scenario Outline: Add Tag

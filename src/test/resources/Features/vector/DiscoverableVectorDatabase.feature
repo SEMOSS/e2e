@@ -18,7 +18,7 @@
    #
    # creating vector DB
    #And User navigates to Open Vector Page
-   #And User clicks on 'Discoverable Vectors' tab
+   #And User clicks on vector 'Discoverable Vectors' tab
    #And User clicks on Add vector button
    #And User selects 'FAISS' as connection
    #And User enters 'Catalog Name' as 'FAISSCatalogeeVectorr'
@@ -34,7 +34,7 @@
   # now testing discoverable vector search
   # TODO log in with a different user
    #Scenario Outline: View My Vectors
-   #Given User clicks on 'Discoverable Vectors' tab
+   #Given User clicks on vector 'Discoverable Vectors' tab
    #Then User should see the 'FAISSCatalogeeVectorr' vector on the Vector Catalog page
 #
    #Scenario Outline: Vecter Search
