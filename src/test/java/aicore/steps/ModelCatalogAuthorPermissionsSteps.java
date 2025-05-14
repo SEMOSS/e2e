@@ -168,7 +168,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 			System.out.println(userRole + " can see the Add Member button.");
 		} else if ("can not".equalsIgnoreCase(expectedOutcome)) {
 			// Assert that the button is NOT visible
-			Assertions.assertTrue(isButtonVisible,
+			Assertions.assertFalse(isButtonVisible,
 					userRole + " should NOT be able to see the Add Member button, but it is visible.");
 			System.out.println(userRole + " cannot see the Add Member button.");
 		} else {
