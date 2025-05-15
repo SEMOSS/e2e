@@ -75,4 +75,32 @@ public class JobManagementPage {
 		JobPageUtils.verifyPauseButtonEnabled(page, jobTitle);
 	}
 
+	public void clickJobCheckBox(String jobName) {
+		JobPageUtils.clickJobCheckBox(page, jobName + " " + timestamp);
+	}
+
+	public void clickPauseButton() {
+		JobPageUtils.clickPauseButton(page);
+	}
+
+	public boolean isJobStopped(String jobName) {
+		return JobPageUtils.isJobStopped(page, jobName + " " + timestamp);
+	}
+
+	public boolean isCheckboxSelected(String jobName) {
+		return JobPageUtils.isCheckboxSelected(page, jobName + " " + timestamp);
+	}
+
+	public boolean isPauseButtonReverted() {
+		return JobPageUtils.isPauseButtonReverted(page);
+	}
+
+	public void clickResumeButton() {
+		JobPageUtils.clickResumeButton(page);		
+	}
+
+	public boolean isResumeButtonReverted() {
+		return JobPageUtils.isResumeButtonReverted(page);
+	}
+
 }
