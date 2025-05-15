@@ -48,6 +48,7 @@ Feature: View existing functions in Function Catalog
       | Data Restrictions   | IP ALLOWED   |
     When User logs out from the application
     And User login as 'admin'
+    And User navigates to Open Function
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
     And User clicks on Access Control Tab
     And User clicks on Delete button
