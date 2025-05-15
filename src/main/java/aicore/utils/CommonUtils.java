@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
@@ -128,6 +129,14 @@ public class CommonUtils {
 			return input.trim().split("\\s+"); // Split by one or more spaces
 		}
 		return new String[0]; // Return an empty array if the string is null or empty
+	}
+
+	public static boolean deleteCatalog(Page page, String accessControlXpath, String deleteButtonXpath,
+			String confirmationPopupXpath, String deleteToastMessageXpath) {
+		page.locator(accessControlXpath).click();
+		page.locator(deleteButtonXpath).click();
+		page.locator(confirmationPopupXpath).click();
+		return page.locator(deleteToastMessageXpath).isVisible();
 	}
 
 	public static boolean isIconValid(String iconUrl) {

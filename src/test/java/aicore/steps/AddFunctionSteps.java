@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.HomePage;
+import io.cucumber.java.en.Given;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -20,6 +21,11 @@ public class AddFunctionSteps {
 	public AddFunctionSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage());
+	}
+
+	@Given("User navigates to Open Function")
+	public void user_navigates_to_open_function() {
+		homePage.clickOnOpenFunction();
 	}
 
 	@When("User clicks on Add Function")
@@ -46,8 +52,8 @@ public class AddFunctionSteps {
 		}
 	}
 
-	@Then("User clicks on Create Funtion button")
-	public void user_clicks_on_create_Funtion_button() {
+	@Then("User clicks on Create Function button")
+	public void user_clicks_on_create_Function_button() {
 		addFunctionToCatalogPage.clickOnCreateFunctionButton();
 	}
 
