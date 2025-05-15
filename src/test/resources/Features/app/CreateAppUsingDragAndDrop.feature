@@ -26,29 +26,30 @@ Feature: Create new app
     And User clicks on the Block Settings option
     And User enters '<DESTINATION>' as the destination
     And User enters '<BLOCK_NAME>' text as '<TEXT>'
+    And User selects the Appearance tab
     And User selects the '<STYLES>' styles
     And User selects '<FONT>' from the font list
     And User selects '<HEX_COLOR>' as the HEX color value
     And User selects '<TEXT_ALIGNMENT>' as the text alignment
     And User clicks on the Save App icon
     Then User should see the '<BLOCK_NAME>' text as '<TEXT>'
-    And User should see the '<BLOCK_NAME>' text displayed in '<STYLES>' styles
+    And User should see the '<BLOCK_NAME>' text displayed in '<EXPECTED_STYLES>' styles
     And User should see the '<BLOCK_NAME>' text displayed in '<FONT>' font
     And User should see the '<BLOCK_NAME>' text displayed in '<HEX_COLOR>' HEX color value
     And User should see the '<BLOCK_NAME>' text aligned to the '<TEXT_ALIGNMENT>'
     And User should be navigated to '<DESTINATION>' by clicking on link
 
     Examples: 
-      | BLOCK_NAME | DESTINATION             | TEXT               | STYLES                   | FONT            | HEX_COLOR | TEXT_ALIGNMENT |
-      | Link       | https://playwright.dev/ | Test App Link      | Bold, Italic, Underlined | Times New Roman | #ff5733   | Center         |
-      | Text (h1)  |                         | Heading 1 block    | Bold, Italic, Underlined | Times New Roman | #ff6666   | Center         |
-      | Text (h2)  |                         | Heading 2 block    | Bold, Italic             | Arial           | #ff9900   | Left           |
-      | Text (h3)  |                         | Heading 3 block    | Bold, Underlined         | Roboto          | #ffcc00   | Right          |
-      | Text (h4)  |                         | Heading 4 block    | Bold                     | Times New Roman | #ff5733   | Justify        |
-      | Text (h5)  |                         | Heading 5 block    | Bold, Italic, Underlined | Helvetica       | #ff007f   | Center         |
-      | Text (h6)  |                         | Heading 6 block    | Bold, Underlined         | Georgia         | #ff5733   | Center         |
-      | Text       |                         | Text block         | Italic                   | Arial           | #ffcc00   | Right          |
-      | Markdown   |                         | **Markdown** block | Italic                   | Times New Roman | #ffcc00   | Left           |
+      | BLOCK_NAME | DESTINATION             | TEXT               | STYLES                   | EXPECTED_STYLES          | FONT            | HEX_COLOR | TEXT_ALIGNMENT |
+      | Link       | https://playwright.dev/ | Test App Link      | Bold, Italic             | Bold, Italic, Underlined | Times New Roman | #ff5733   | Center         |
+      | Text (h1)  |                         | Heading 1 block    | Italic, Underlined       | Bold, Italic, Underlined | Times New Roman | #ff6666   | Center         |
+      | Text (h2)  |                         | Heading 2 block    | Italic, Underlined       | Bold, Italic, Underlined | Arial           | #ff9900   | Left           |
+      | Text (h3)  |                         | Heading 3 block    | Italic, Underlined       | Bold, Italic, Underlined | Roboto          | #ffcc00   | Right          |
+      | Text (h4)  |                         | Heading 4 block    | Italic, Underlined       | Bold, Italic, Underlined | Times New Roman | #ff5733   | Justify        |
+      | Text (h5)  |                         | Heading 5 block    | Italic, Underlined       | Bold, Italic, Underlined | Helvetica       | #ff007f   | Center         |
+      | Text (h6)  |                         | Heading 6 block    | Italic, Underlined       | Bold, Italic, Underlined | Georgia         | #ff5733   | Center         |
+      | Text       |                         | Text block         | Bold, Italic, Underlined | Bold, Italic, Underlined | Arial           | #ffcc00   | Right          |
+      | Markdown   |                         | **Markdown** block | Bold, Italic             | Bold, Italic             | Times New Roman | #ffcc00   | Left           |
 
   Scenario: Drag and Drop Text section Logs block
     When User clicks on Notebook

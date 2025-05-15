@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.CommonUtils;
+import aicore.utils.AICorePageUtils;
 import aicore.utils.ConfigUtils;
 
 public class OpenVectorPage {
@@ -24,8 +25,9 @@ public class OpenVectorPage {
 	private static final String API_KEY_ID = "#API_KEY";
 	private static final String NAME_SPACE_ID = "#NAMESPACE";
 	private static final String CREATE_VECTOR_BUTTON_XPATH = "//button[@type='submit']";
+	// private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class=\"MuiAlert-message css-1pxa9xg-MuiAlert-message\"]";
+	private static final String VECTOR_TITLE_XPATH = "//h4[@class=\"MuiTypography-root MuiTypography-h4 css-10k44j9-MuiTypography-root\"]";
 	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message css-')]";
-	private static final String VECTOR_TITLE_XPATH = "//h4[contains(@class,'MuiTypography-root MuiTypography-h4 css-')]";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String EMBEDDER_ENGINE_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'EMBEDDER_ENGINE_NAME')]";
 	private static final String CONTENT_LENGTH_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CONTENT_LENGTH')]";
@@ -81,20 +83,17 @@ public class OpenVectorPage {
 		String hostName = ConfigUtils.getValue("pinecone_host_name");
 		page.locator(HOST_NAME_ID).isVisible();
 		page.locator(HOST_NAME_ID).fill(hostName);
-
 	}
 
 	public void enterApiKey() {
 		String apiKey = ConfigUtils.getValue("pinecone_api_key");
 		page.locator(API_KEY_ID).isVisible();
 		page.locator(API_KEY_ID).fill(apiKey);
-
 	}
 
 	public void enterNameSpace(String namespace) {
 		page.locator(NAME_SPACE_ID).isVisible();
 		page.locator(NAME_SPACE_ID).fill(namespace);
-
 	}
 
 	public void clickOnCreateVectorButton() {
@@ -106,14 +105,9 @@ public class OpenVectorPage {
 		return toastMessage;
 	}
 
-	public void waitForVectorToastMessageToDisappear() {
-		page.locator(VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-	}
-
-	public String verifyVectorTitle() {
-		String vectorTitle = page.textContent(VECTOR_TITLE_XPATH).trim();
-		return vectorTitle;
+	public void verifyVectorTitle(String vectorTitle) {
+		Locator locator = page.locator("h4:has-text('" + vectorTitle + "')");
+		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 	}
 
 	public String verifyNameFiledInSMSS() {
@@ -159,19 +153,12 @@ public class OpenVectorPage {
 	}
 
 	public void addedVectorCard(String catalogName) {
-		page.locator(
-				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName))
-				.isVisible();
-		page.locator(
-				VECTOR_CARD_XPATH.replace("{catalogName}", catalogName))
-				.click();
+		page.locator(VECTOR_CARD_XPATH.replace("{catalogName}", catalogName)).isVisible();
+		page.locator(VECTOR_CARD_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
-	public String verifyDeleteToastMessage() {
-		page.locator(DELETE_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).textContent();
-		return toastMessage;
+	public void verifyToastMessage(String expectedToastMessage) {
+		AICorePageUtils.verifyToastMessage(page, expectedToastMessage);
 	}
 
 	public void copyVectorId() {

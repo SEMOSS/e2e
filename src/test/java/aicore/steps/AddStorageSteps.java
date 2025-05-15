@@ -15,12 +15,12 @@ public class AddStorageSteps {
 
 	private HomePage homePage;
 	private OpenStoragePage storagePage;
-	private String timestamp;
+	protected static String timestamp;
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
+		storagePage = new OpenStoragePage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Storage engine")
@@ -40,6 +40,7 @@ public class AddStorageSteps {
 
 	@And("User enters storage Catalog name as {string}")
 	public void user_enters_storage_catalog_name_as(String catalogName) {
+		catalogName = catalogName + timestamp;
 		storagePage.enterCatalogName(catalogName);
 	}
 
@@ -76,8 +77,8 @@ public class AddStorageSteps {
 
 	@Then("User can see the Storage title as {string}")
 	public void user_can_see_the_storage_title_as(String storageTitle) {
-		String actualTitle = storagePage.verifyStorageTitle(storageTitle);
-		String expectedTitle = storageTitle + " " + timestamp;
+		String actualTitle = storagePage.verifyStorageTitle(storageTitle + timestamp);
+		String expectedTitle = storageTitle + timestamp;
 		Assertions.assertEquals(actualTitle, expectedTitle, "Storage title is not matching");
 	}
 
@@ -85,7 +86,7 @@ public class AddStorageSteps {
 	public void user_can_see_storage_name_in_field_as_in_smss_properties(String field, String name) {
 		String fullText = storagePage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
-		String expectedName = name + " " + timestamp;
+		String expectedName = name + timestamp;
 		Assertions.assertEquals(actualName, expectedName, "Storage title is not matching");
 	}
 	

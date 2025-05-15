@@ -4,7 +4,7 @@ services:
     build:
       context: dockersemoss
     ports:
-      - 127.0.0.1:9091:8080
+      - "9091:8080"
     environment:
       - SETSOCIAL=true
       - ENABLE_NATIVE=true
