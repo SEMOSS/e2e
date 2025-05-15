@@ -7,11 +7,9 @@ import aicore.utils.StoragePageUtils;
 public class OpenStoragePage {
 
 	private Page page;
-	private String timestamp;
 
-	public OpenStoragePage(Page page, String timestamp) {
+	public OpenStoragePage(Page page) {
 		this.page = page;
-		this.timestamp = timestamp;
 	}
 
 	public void clickOnAddStorageButton() {
@@ -23,7 +21,7 @@ public class OpenStoragePage {
 	}
 
 	public void enterCatalogName(String catalogName) {
-		StoragePageUtils.enterCatalogName(page, catalogName, timestamp);
+		StoragePageUtils.enterCatalogName(page, catalogName);
 	}
 
 	public void enterRegionName(String regionName) {
@@ -51,12 +49,7 @@ public class OpenStoragePage {
 	}
 
 	public String verifyStorageTitle(String storageTitle) {
-		return StoragePageUtils.verifyStorageTitle(page, storageTitle, timestamp);
-	}
-
-	public String getExpectedStorageTitle(String title) {
-		String expectedTitle = title + " " + timestamp;
-		return expectedTitle;
+		return StoragePageUtils.verifyStorageTitle(page, storageTitle);
 	}
 
 	public void clickOnSMSSTab() {

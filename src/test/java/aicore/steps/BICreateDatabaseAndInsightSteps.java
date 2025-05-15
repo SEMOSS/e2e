@@ -31,6 +31,11 @@ public class BICreateDatabaseAndInsightSteps {
 	public void user_clicks_on_system_app() {
 		homePage.clickOnSystemApp();
 	}
+	
+	@And("User clicks on {string} app tab")
+	public void user_clicks_on_tab(String tabName ) {
+		homePage.clickOnTab(tabName);
+	}
 
 	@And("User clicks on BI")
 	public void user_clicks_on_bi() {
@@ -62,9 +67,13 @@ public class BICreateDatabaseAndInsightSteps {
 		biApp.enterDatabaseName(databaseName);
 	}
 
-	@And("User uploads CSV file and clicks on Next button")
-	public void user_uploads_csv_file_and_clicks_on_next_button() {
+	@And("User uploads CSV file")
+	public void user_uploads_csv_file() {
 		biApp.uploadCSVFile();
+	}
+	
+	@And("User clicks on Next button")
+	public void user_clicks_on_next_button() {
 		biApp.clickOnNextButton();
 	}
 

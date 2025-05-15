@@ -1,17 +1,32 @@
 package aicore.utils;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class CommonUtils {
-
+	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
 	public static String getTimeStampName() {
@@ -33,6 +48,17 @@ public class CommonUtils {
 		}
 		return actualName;
 	}
+	
+	public static String getTodayDateFormatted() {
+	        // Get today's date
+	        LocalDate today = LocalDate.now();
+
+	        // Define the formatter
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	        // Return formatted date
+	        return today.format(formatter);
+	    }
 
 	public static void extractOverviewSectionValues(List<String> keys, List<String> keyText) {
 		for (String text : keyText) {
@@ -113,4 +139,40 @@ public class CommonUtils {
 		return page.locator(deleteToastMessageXpath).isVisible();
 	}
 
+	public static boolean isIconValid(String iconUrl) {
+		try {
+			if (iconUrl == null || iconUrl.isEmpty()) {
+				return false;
+			}
+			if (iconUrl.startsWith("data:image")) {
+				String base64Data = iconUrl.substring(iconUrl.indexOf(",") + 1);
+				byte[] imageBytes = null;
+				try {
+					imageBytes = Base64.getDecoder().decode(base64Data);
+				} catch (IllegalArgumentException e) {
+					return false; // invalid base64
+				}
+				if (!iconUrl.startsWith("data:image/svg+xml")) {
+					// PNG, JPEG, etc.
+					if (imageBytes != null) {
+						BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+						return (image != null);
+					}
+					return false;
+				} else {
+					// SVG image
+					return true;
+				}
+			}
+			// Handle traditional image URLs (http, https, file)
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(iconUrl))
+					.method("GET", HttpRequest.BodyPublishers.noBody()).build();
+			HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
+			return (response.statusCode() == HttpURLConnection.HTTP_OK);
+		} catch (Exception e) {
+			logger.error("icon validation failed", e);
+			return false;
+		}
+	}
 }

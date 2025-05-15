@@ -15,7 +15,6 @@ import io.cucumber.java.en.And;
 
 public class VectorSearchAndFilterSteps {
 	
-	
 	private VectorSearchAndFilterPage openVectorPage;
 	protected static String timestamp;
 	
@@ -29,18 +28,19 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.clickOnOpenVector();
 	}
 	
-	@And("User clicks on {string} tab")
+	@And("User clicks on vector {string} tab")
 	public void user_clicks_on_vectors_tab(String myv) {
 		openVectorPage.vectorsTab(myv);
 	}
 	
-	@When("User clciks on {string}")
+	@When("User clicks on the vector {string}")
 	public void user_clicks_on_the_vector(String vector) {
 		openVectorPage.clickVector(vector);
 	}
 	
-	@And("User clicks on {string} button")
-	public void user_clicks_on_edit_button(String edit) {
+	@And("User clicks on vector Edit button")
+	public void user_clicks_on_vector_edit_button() {
+		String edit = "Edit";
 		openVectorPage.clickEdit(edit);
 	}
 	
@@ -59,7 +59,6 @@ public class VectorSearchAndFilterSteps {
 		 openVectorPage.clickSubmit(submit);
 	 }
 
-	
 	@When("User clicks on Search box")
 	public void click_search_box() {
 		openVectorPage.clickSearch();
@@ -86,7 +85,6 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.selectFilterBy1(input,filter);
 	}
 	
-	
 	@Then("User should see {string} vector on the Vectort Catalog page under My Vectors tab")
 	public void user_should_see_the_on_the_vector_catalog_page1(String vectorName) {
 		boolean isVectorDisplayed = openVectorPage.verifyVectorIsDisplayedOnCatalogPage(vectorName);
@@ -98,11 +96,46 @@ public class VectorSearchAndFilterSteps {
 		openVectorPage.bookmarkVector(bookmark);
 	}
 	
-
+	@When("User clicks on Add vector button")
+	public void user_clicks_on_add_vector_button() {
+		openVectorPage.addVector();
+	}
 	
+	@And("User selects {string} as connection")
+	public void user_selects_connection(String connection) {
+		openVectorPage.selectConnection(connection);
+	}
 	
+	@And("User enters {string} as {string}")
+	public void user_enters_input_field(String iName,String name) {
+		openVectorPage.inputName(iName,name);
+	}
 	
-
+	@And("User selects {string} from embedder field")
+	public void user_selects_input_field_embedder(String name) {
+		if (name.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
+			openVectorPage.selectEmbedder(name);
+		} else {
+			openVectorPage.selectEmbedder(name + AddModelSteps.timestamp);
+		}
+	}
 	
-
+	@And("User selects {string} from chunking strategy field")
+	public void user_selects_input_field_chunking(String name) {
+		openVectorPage.selectChunking(name);
+	}
+	
+	@And("User selects {string} from record question and responses field")
+	public void user_selects_input_field_record(String name) {
+		openVectorPage.selectRecord(name);
+	}
+	
+	@And("User clicks on Create Vector Button")
+	public void user_clicks_on_create_vector_button() {
+		openVectorPage.createVector();
+	}	
 }
+	
+	
+	
+

@@ -4,28 +4,43 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.CommonUtils;
+import aicore.utils.AICorePageUtils;
+import aicore.utils.ConfigUtils;
+
 public class OpenVectorPage {
 
 	private Page page;
 	private String timestamp;
-
-	private static final String ADD_VECTOR_BUTTON_XPATH = "//div[@class='MuiStack-root css-1lnp4vl']";
+	private static final String ADD_VECTOR_BUTTON_XPATH = "//button/span[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "#NAME";
-	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[@class='MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-9r28x9'])[1]";
-	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[@class='MuiList-root MuiList-padding MuiMenu-list css-r8u8y9']//li[text()='{modelName}']";
-	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[@class='MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-9r28x9'])[2]";
-	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[@class='MuiList-root MuiList-padding MuiMenu-list css-r8u8y9']//li[text()='{strategyName}']";
+	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
+	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{modelName}']";
+	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
+	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{strategyName}']";
 	private static final String CONTENT_LENGTH_ID = "#CONTENT_LENGTH";
 	private static final String CONTENT_OVERLAP_ID = "#CONTENT_OVERLAP";
+	private static final String HOST_NAME_ID = "#HOSTNAME";
+	private static final String API_KEY_ID = "#API_KEY";
+	private static final String NAME_SPACE_ID = "#NAMESPACE";
 	private static final String CREATE_VECTOR_BUTTON_XPATH = "//button[@type='submit']";
-	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class='MuiAlert-message css-1xsto0d']";
-	private static final String VECTOR_TITLE_XPATH = "//h4[@class='MuiTypography-root MuiTypography-h4 css-grm9aw']";
+	// private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class=\"MuiAlert-message css-1pxa9xg-MuiAlert-message\"]";
+	private static final String VECTOR_TITLE_XPATH = "//h4[@class=\"MuiTypography-root MuiTypography-h4 css-10k44j9-MuiTypography-root\"]";
+	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message css-')]";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String EMBEDDER_ENGINE_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'EMBEDDER_ENGINE_NAME')]";
 	private static final String CONTENT_LENGTH_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CONTENT_LENGTH')]";
 	private static final String CONTENT_OVERLAP_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CONTENT_OVERLAP')]";
 	private static final String CHUNKING_STRATEGY_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'CHUNKING_STRATEGY')]";
+	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String VECTOR_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
+	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
+	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
+	private static final String COPIED_TOAST_MESSAGE_XPATH = "//div[text()='Successfully copied ID']";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -40,13 +55,13 @@ public class OpenVectorPage {
 		page.click(CONNECTIONS_XPATH.replace("{Connections}", connectionName));
 	}
 
-	public void enterVectorCatalogName(String catalogName) {
-		page.fill(CATALOG_NAME_TEXTBOX_ID, catalogName + " " + timestamp);
+	public void enterVectorCatalogName(String vCatalogName) {
+		page.fill(CATALOG_NAME_TEXTBOX_ID, vCatalogName);
 	}
 
 	public void selectModelfromEmbedderDropdown(String modelName) {
 		page.click(EMBEDDER_DROPDOWN_XPATH);
-		page.click(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName + timestamp));
+		page.click(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName));
 	}
 
 	public void selectStrategyfromChunkingStrategyDropdown(String strategyName) {
@@ -64,6 +79,23 @@ public class OpenVectorPage {
 		page.fill(CONTENT_OVERLAP_ID, contentOverlap);
 	}
 
+	public void enterHostName() {
+		String hostName = ConfigUtils.getValue("pinecone_host_name");
+		page.locator(HOST_NAME_ID).isVisible();
+		page.locator(HOST_NAME_ID).fill(hostName);
+	}
+
+	public void enterApiKey() {
+		String apiKey = ConfigUtils.getValue("pinecone_api_key");
+		page.locator(API_KEY_ID).isVisible();
+		page.locator(API_KEY_ID).fill(apiKey);
+	}
+
+	public void enterNameSpace(String namespace) {
+		page.locator(NAME_SPACE_ID).isVisible();
+		page.locator(NAME_SPACE_ID).fill(namespace);
+	}
+
 	public void clickOnCreateVectorButton() {
 		page.click(CREATE_VECTOR_BUTTON_XPATH);
 	}
@@ -73,14 +105,9 @@ public class OpenVectorPage {
 		return toastMessage;
 	}
 
-	public void waitForVectorToastMessageToDisappear() {
-		page.locator(VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-	}
-
-	public String verifyVectorTitle() {
-		String vectorTitle = page.textContent(VECTOR_TITLE_XPATH).trim();
-		return vectorTitle;
+	public void verifyVectorTitle(String vectorTitle) {
+		Locator locator = page.locator("h4:has-text('" + vectorTitle + "')");
+		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 	}
 
 	public String verifyNameFiledInSMSS() {
@@ -106,5 +133,43 @@ public class OpenVectorPage {
 	public String verifyChunkingStrategyInSMSS() {
 		String name = page.textContent(CHUNKING_STRATEGY_SMSS_PROPERTIES_XPATH).trim();
 		return name;
+	}
+
+	public void clickOnAccessControl() {
+		page.locator(ACCESS_CONTROL_XPATH).isVisible();
+		page.locator(ACCESS_CONTROL_XPATH).click();
+	}
+
+	public void clickOnDeleteButton() {
+		page.locator(DELETE_BUTTON_XPATH).isVisible();
+		page.locator(DELETE_BUTTON_XPATH).click();
+	}
+
+	public void confirmationPopUp() {
+		page.locator(CONFIRMATION_POPUP_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).isVisible();
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+	}
+
+	public void addedVectorCard(String catalogName) {
+		page.locator(VECTOR_CARD_XPATH.replace("{catalogName}", catalogName)).isVisible();
+		page.locator(VECTOR_CARD_XPATH.replace("{catalogName}", catalogName)).click();
+	}
+
+	public void verifyToastMessage(String expectedToastMessage) {
+		AICorePageUtils.verifyToastMessage(page, expectedToastMessage);
+	}
+
+	public void copyVectorId() {
+		page.getByTestId(COPY_VECTOR_ID).isVisible();
+		page.getByTestId(COPY_VECTOR_ID).click();
+	}
+
+	public String copiedSuccessToastMessage() {
+		page.locator(COPIED_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toastMessage = page.locator(COPIED_TOAST_MESSAGE_XPATH).textContent();
+		return toastMessage;
 	}
 }

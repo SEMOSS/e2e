@@ -17,8 +17,16 @@ public class VectorSearchAndFilterPage {
 	private static final String FILTER_ADD_XPATH="//label[text()='{filter}']/following-sibling::div//input";
 	private static final String SUBMIT_BUTTON_XPATH="//button//span[text()='{submit}']";
 	private static final String FILTER_XPATH="//li//div//h6[text()='{filterName}']/ancestor::li/following-sibling::div//p[text()='{filter}']";
-	
-	
+	private static final String ADD_VECTOR_XPATH="//button[@aria-label='Navigate to import Vector']";
+	private static final String CONNECTION_XPATH="//div//p[text()='{connection}']";
+	private static final String INPUT_XPATH="//div//label[text()='{inputName}']/following-sibling::div//input";
+	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
+	private static final String CHUNKING_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
+	private static final String RECORD_DROPDOWN_XPATH="(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[3]";
+	private static final String SELECT_XPATH="//div//ul//li[text()='{selectName}']";
+	private static final String CREATE_VECTOR_XPATH="//div//button//span[text()='Create vector']";
+	private static final String DIV_XPATH="//div[@class='css-155d4xt']";
+
 	
 	public VectorSearchAndFilterPage(Page page, String timestamp) {
 		this.page = page;
@@ -122,6 +130,44 @@ public class VectorSearchAndFilterPage {
 		page.getByText(myd).click();
 		
 	}
+
+
+	public void addVector() {
+		page.locator(ADD_VECTOR_XPATH).click();
+	}
+
+	public void selectConnection(String connection) {
+		page.locator(CONNECTION_XPATH.replace("{connection}", connection)).click();
+	}
+
+	public void inputName(String iName, String name) {
+		page.locator(INPUT_XPATH.replace("{inputName}", iName)).click();
+		page.locator(INPUT_XPATH.replace("{inputName}", iName)).fill(name);
+	    page.locator(DIV_XPATH).click();
+	}
+
+	public void selectEmbedder(String name) {
+		page.locator(EMBEDDER_DROPDOWN_XPATH).click();
+		page.locator(SELECT_XPATH.replace("{selectName}", name)).click();
+		
+	}
+	
+	public void selectChunking(String name) {
+		page.locator(CHUNKING_DROPDOWN_XPATH).click();
+		page.locator(SELECT_XPATH.replace("{selectName}", name)).click();
+	}
+
+	public void selectRecord(String name) {
+		page.locator(RECORD_DROPDOWN_XPATH).click();
+		page.locator(SELECT_XPATH.replace("{selectName}", name)).click();
+	}
+
+	public void createVector() {
+		page.locator(CREATE_VECTOR_XPATH).click();
+	}
+
+	
+
 
 	
 

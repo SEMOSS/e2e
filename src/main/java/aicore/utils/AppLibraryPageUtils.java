@@ -49,7 +49,7 @@ public class AppLibraryPageUtils {
 	private static final String COLOR_BOX_XPATH = "//input[@type='color']";
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
-	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl + s)";
+	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
 	//Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
@@ -136,7 +136,7 @@ public class AppLibraryPageUtils {
 	public static void blockDropPosition(Page page) {
 		BoundingBox targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH).boundingBox();
 		double dropX = targetBox.x + (targetBox.width / 2); // Center X position
-		double dropY = targetBox.y + targetBox.height + 10; // Below target (+10 for margin)
+		double dropY = targetBox.y + targetBox.height;// + 10; // Below target (+10 for margin)
 		page.mouse().move(dropX, dropY, new Mouse.MoveOptions().setSteps(10)); // Slow movement
 		page.mouse().up();
 	}
@@ -204,6 +204,10 @@ public class AppLibraryPageUtils {
 			blockSettingsOption.click();
 		}
 	}
+	
+	public static void userSelectsTheAppearanceTab(Page page) {
+		page.getByText("Appearance").click();
+	}
 
 	public static void enterDestination(Page page, String destination) {
 		page.locator(DESTINATION_TEXTBOX_XPATH).fill(destination);
@@ -220,7 +224,8 @@ public class AppLibraryPageUtils {
 	public static void selectTextStyle(Page page, String textStyles) {
 		String[] textStyle = textStyles.split(", ");
 		for (String style : textStyle) {
-			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim())).click();
+			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim()).setExact(true)).click();
+//			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim())).click();
 		}
 	}
 
@@ -240,7 +245,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void clickOnSaveAppButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME)).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true)).click();
 	}
 
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {

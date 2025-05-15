@@ -1,5 +1,8 @@
 Feature: User Management
 
+	## These scenarios fail due to a semoss ui bug that doesn't allow more than 1 
+	## native users created without adding extra required fields for the new member form
+
   #@LoginWithAdmin
   #Scenario: Add New Native User
     #Given User navigates to Open Setting page
@@ -51,3 +54,27 @@ Feature: User Management
     And User change value of the key to 'true'
     And User clicks on Save button of the configuration
     And User can see a toast message after updating values of 'Native' as "Succesfully modified native properties"
+   
+  @LoginWithAdmin
+  Scenario: Add New Native User with Unique Incremental Details - Validate profile info
+    And User navigates to Open Setting page
+    And User enables admin mode
+    And User clicks on 'Member Settings' Card
+    And User sees the Add User button
+    And User adds 1 members with name "TestUser", userId "TestUserId", password "Test@123", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
+    And User logs out from the application
+    And User logs in with the last generated userId and password
+    And User clicks on Open Settings icon
+    When User clicks on My Profile
+    And User can see 'Edit profile information' section on profile page
+    Then User can see that the displayed User ID matches the generated userId
+    And User can see that the displayed Name matches the generated name
+    And User can see that the displayed Email matches the generated email
+    And User logs out from the application
+    Then User login as "Admin"
+   Then User navigates to Open Setting page
+    And User enables admin mode
+    And User clicks on 'Member Settings' Card
+    And User sees the search button
+    And User searches for the created user
+    And User clicks on Delete Selected button 1 times

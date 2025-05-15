@@ -4,12 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Assertions;
 
+import com.microsoft.playwright.Page;
+
+import aicore.base.GenericSetupUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.pages.ModelPermissionsAuthor;
 import aicore.utils.CommonUtils;
+import aicore.utils.ConfigUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -104,7 +108,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 
 	@Then("User adds one user and assigns them as {string}")
 	public void user_adds_one_user_and_assigns_them_as(String role) throws InterruptedException {
-		openModelPage.addMember(role);
+		openModelPage.addMember(role, GenericSetupUtils.useDocker());
 	}
 
 	@Then("User logs out from the application")
@@ -114,7 +118,15 @@ public class ModelCatalogAuthorPermissionsSteps {
 
 	@Given("User login as {string}")
 	public void user_login_as(String role) throws Exception {
-		loginpage.loginWithDifferetUsers(role);
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username");
+		String password = ConfigUtils.getValue(role.toLowerCase() + "_password");
+
+		if (username == null || password == null) {
+			throw new Exception("Login credentials not found for role: " + role);
+		}
+		
+		Page page = SetupHooks.getPage();
+		GenericSetupUtils.login(page, username, password);
 	}
 
 	@Given("{string} user clicks on Access Control")
@@ -156,7 +168,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 			System.out.println(userRole + " can see the Add Member button.");
 		} else if ("can not".equalsIgnoreCase(expectedOutcome)) {
 			// Assert that the button is NOT visible
-			Assertions.assertTrue(isButtonVisible,
+			Assertions.assertFalse(isButtonVisible,
 					userRole + " should NOT be able to see the Add Member button, but it is visible.");
 			System.out.println(userRole + " cannot see the Add Member button.");
 		} else {

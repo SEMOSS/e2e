@@ -8,6 +8,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.SettingPage;
 import aicore.pages.UserManagementPage;
+import aicore.utils.LastCreatedUser;
 import aicore.utils.RestCaller;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -154,6 +155,78 @@ public class UserManagementSteps {
 	public void user_sees_delete_toast_message_as(String toastMessage) {
 		String actualMessage = userpage.userDeletionToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "User deletion failed");
+	}
+
+	@Given("User adds {int} members with name {string}, userId {string}, password {string}, and email domain {string} and can see toast message as {string} for all added members")
+	public void user_adds_members_with_name_user_id_password_and_email_domain_and_can_see_toast_message_as_for_all_added_members(
+			Integer userCount, String baseName, String baseUserId, String password, String emailDomain,
+			String toastMessage) throws InterruptedException {
+		for (int i = 1; i <= userCount; i++) {
+			String name = baseName + i;
+			String userId = baseUserId + i;
+			String email = baseUserId + i + "@" + emailDomain;
+			userpage.clickAddUserButton();
+			userpage.clickTypeDropdown();
+			userpage.clickNativeDropdownValue();
+			userpage.fillUserId(userId);
+			userpage.fillName(name);
+			userpage.fillEmail(email);
+			if (i <= 9) {
+				userpage.fillPhoneNumber("100000000" + i);
+			} else if (i <= 99) {
+				userpage.fillPhoneNumber("10000000" + i);
+			} else {
+				userpage.fillPhoneNumber("1000000" + i);
+			}
+			userpage.fillPassword(password);
+			Thread.sleep(5000);
+			userpage.clickSaveButton();
+
+			String actualMessage = userpage.userCreationToastMessage();
+			Assertions.assertEquals(toastMessage, actualMessage, "User creation failed for user " + userId);
+
+			// store last created credentials in a static map or variable for later steps
+			LastCreatedUser.setUserId(userId);
+			LastCreatedUser.setPassword(password);
+			LastCreatedUser.setName(name);
+			LastCreatedUser.setEmail(email);
+
+		}
+	}
+
+	@Given("User logs in with the last generated userId and password")
+	public void user_logs_in_with_the_last_generated_user_id_and_password() {
+		String username = LastCreatedUser.getUserId();
+		String password = LastCreatedUser.getPassword();
+		userpage.loginAsUser(username, password);
+	}
+
+	@Then("User can see that the displayed Name matches the generated name")
+	public void user_can_see_that_the_displayed_name_matches_the_generated_name() throws InterruptedException {
+		String generatedName = LastCreatedUser.getName();
+		String actualName = userpage.getDisplayedName();
+		System.out.println("Expected User name: " + generatedName);
+		System.out.println("Actual User name: " + actualName);
+		Assertions.assertEquals(generatedName, actualName, "Displayed User name does not match");
+	}
+
+	@Then("User can see that the displayed User ID matches the generated userId")
+	public void user_can_see_that_the_displayed_user_id_matches_the_generated_user_id() throws InterruptedException {
+		String generatedUserId = LastCreatedUser.getUserId();
+		String actualUserId = userpage.getDisplayedId();
+		System.out.println("Expected User ID: " + generatedUserId);
+		System.out.println("Actual User ID: " + actualUserId);
+		Assertions.assertEquals(generatedUserId, actualUserId, "Displayed User ID does not match");
+	}
+
+	@Then("User can see that the displayed Email matches the generated email")
+	public void user_can_see_that_the_displayed_email_matches_the_generated_email() throws InterruptedException {
+		String generatedEmail = LastCreatedUser.getEmail();
+		String actualEmail = userpage.getDisplayedEmail();
+		System.out.println("Expected Email: " + generatedEmail);
+		System.out.println("Actual Email: " + actualEmail);
+		Assertions.assertEquals(generatedEmail.toLowerCase(), actualEmail.toLowerCase(),
+				"Displayed User Email does not match");
 	}
 
 	@When("User clicks on 'access_keys_allowed' value")
