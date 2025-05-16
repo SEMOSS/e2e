@@ -1,11 +1,15 @@
 package aicore.steps;
 
-import aicore.hooks.SetupHooks;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 
+import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,7 +24,7 @@ public class AddStorageSteps {
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		storagePage = new OpenStoragePage(SetupHooks.getPage());
+		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
 	}
 
 	@Given("User clicks on Open Storage engine")
@@ -48,7 +52,7 @@ public class AddStorageSteps {
 	public void user_enters_region_as(String regionName) {
 		storagePage.enterRegionName(regionName);
 	}
-	
+
 	@And("User enters Bucket as {string}")
 	public void user_enters_bucket_as(String regionName) {
 		storagePage.enterBucket(regionName);
@@ -59,9 +63,9 @@ public class AddStorageSteps {
 		storagePage.enterAccessKey(accessKey);
 	}
 
-	@And("User enters Secret Key")
-	public void user_enters_secret_key() {
-		storagePage.enterSecretKey();
+	@And("User enters Secret Key as {string}")
+	public void user_enters_secret_key_as(String secretKey) {
+		storagePage.enterSecretKey(secretKey);
 	}
 
 	@And("User clicks on Create Storage button")
@@ -89,7 +93,7 @@ public class AddStorageSteps {
 		String expectedName = name + timestamp;
 		Assertions.assertEquals(actualName, expectedName, "Storage title is not matching");
 	}
-	
+
 	@Then("User can see storage bucket in {string} field as {string} in SMSS properties")
 	public void user_can_see_storage_bucket_in_field_as_in_smss_properties(String field, String name) {
 		String fullText = storagePage.verifyS3BucketFiledInSMSS();
@@ -112,4 +116,34 @@ public class AddStorageSteps {
 		Assertions.assertEquals(actualAccessKey, expectedAccessKey, "Storage title is not matching");
 	}
 
+	@Then("User can see {string} fileds on the form")
+	public void user_can_see_fileds_on_the_form(String fields) {
+		String[] fieldNames = fields.split(", ");
+		for (String field : fieldNames) {
+			boolean isFieldVisible = storagePage.verifyFieldIsVisible(field);
+			Assertions.assertTrue(isFieldVisible, "Field is not visible on form: " + field);
+		}
+	}
+
+	@And("User sees astrisk mark on the {string} fields of storage creation form")
+	public void user_sees_astrisk_mark_on_the_fields_of_storage_creation_form(String requiredFields) {
+		storagePage.verifyAsteriskMarkOnFields(requiredFields);
+	}
+
+	@Then("User redirects to the missing {string} input field")
+	public void user_redirects_to_the_missing_input_field(String fieldName) {
+		boolean missingFieldFlag = storagePage.verifyMissingInputField(fieldName);
+		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected " + fieldName);
+	}
+
+	@When("User enters value in below fields")
+	public void user_enters_value_in_below_fields(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("FIELD_NAME");
+			String fieldValue = row.get("FIELD_VALUE");
+			fieldValue = fieldValue != null ? fieldValue.trim() : "";
+			storagePage.enterValuesInField(fieldName, fieldValue);
+		}
+	}
 }
