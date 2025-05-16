@@ -116,8 +116,8 @@ public class AddStorageSteps {
 		Assertions.assertEquals(actualAccessKey, expectedAccessKey, "Storage title is not matching");
 	}
 
-	@Then("User can see {string} fileds on the form")
-	public void user_can_see_fileds_on_the_form(String fields) {
+	@Then("User can see {string} fields on the form")
+	public void user_can_see_fields_on_the_form(String fields) {
 		String[] fieldNames = fields.split(", ");
 		for (String field : fieldNames) {
 			boolean isFieldVisible = storagePage.verifyFieldIsVisible(field);
