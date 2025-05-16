@@ -75,7 +75,7 @@ public class ModelPageUtils {
 
 	// Usage
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
-	private static final String MODEL_ID_COPY_OPTION_XPATH = "//button[@aria-label='copy Model ID']";
+	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 
@@ -113,12 +113,12 @@ public class ModelPageUtils {
 	public static void waitForModelCreationToastMessageDisappear(Page page) {
 		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE))
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-		;
 	}
 
 	public static String verifyModelTitle(Page page, String modelTitle, String timestamp) {
 		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
 				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
+		actualmodelTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return actualmodelTitle.textContent().trim();
 	}
 
@@ -465,10 +465,19 @@ public class ModelPageUtils {
 	}
 
 	public static String copyModelID(Page page) {
-		page.locator(MODEL_ID_COPY_OPTION_XPATH).isVisible();
-		page.locator(MODEL_ID_COPY_OPTION_XPATH).click();
-		page.click(MODEL_ID_COPY_OPTION_XPATH);
-		return page.evaluate("navigator.clipboard.readText()").toString().trim();
+		page.locator(MODEL_ID_COPY_OPTION).click();
+		String modelId = null;
+		String clipboardText = AICorePageUtils.readStringFromClipboard(page);
+		if (clipboardText != null) {
+			modelId = clipboardText.trim();
+		} else {
+			// get current url of the page
+            String currentUrl = page.url();
+            // Extract the substring after the last slash this will also give us the model id
+            int lastSlashIndex = currentUrl.lastIndexOf('/');
+            modelId = currentUrl.substring(lastSlashIndex + 1);
+		}
+		return modelId;
 	}
 
 	public static String getFullSectionCodeByHeading(Page page, String headingText) {

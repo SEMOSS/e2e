@@ -17,6 +17,7 @@ public class HomePage {
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
 	private static final String PAGE_TITLE_XPATH = "//a[@class='css-jnxb8i']";
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
+	private static final String APP_TAB_XPATH = "//button[text()='{tab}']";
 	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
 	private static final String OPEN_APP_LIBRARY_XPATH = "//a[@data-tour='nav-app-library']";
 	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
@@ -25,7 +26,8 @@ public class HomePage {
 	private static final String OPEN_FUNCTION_XPATH = "//a[@data-testid='Function-icon']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
+	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";		
+		
 
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
 
@@ -45,6 +47,10 @@ public class HomePage {
 
 	public void clickOnSystemApp() {
 		page.click(SYSTEM_APP_BUTTON_XPATH);
+	}
+	
+	public void clickOnTab(String tabName) {
+		page.click(APP_TAB_XPATH.replace("{tab}", tabName));
 	}
 
 	public void clickOnOpenFunction() {

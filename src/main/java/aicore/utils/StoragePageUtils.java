@@ -60,6 +60,12 @@ public class StoragePageUtils {
 		return toastMessage;
 	}
 
+	public static String verifyStorageTitle(Page page, String storageTitle, String timestamp) {
+		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle + " " + timestamp))
+				.trim();
+		return actualtitle;
+	}
+
 	public static String verifyStorageTitle(Page page, String storageTitle) {
 		String actualtitle = page.textContent(STORAGE_TITLE_XPATH.replace("{title}", storageTitle)).trim();
 		return actualtitle;

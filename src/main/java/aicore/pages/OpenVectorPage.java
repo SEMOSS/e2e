@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.CommonUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.ConfigUtils;
 
@@ -24,6 +25,8 @@ public class OpenVectorPage {
 	private static final String API_KEY_ID = "#API_KEY";
 	private static final String NAME_SPACE_ID = "#NAMESPACE";
 	private static final String CREATE_VECTOR_BUTTON_XPATH = "//button[@type='submit']";
+	// private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class=\"MuiAlert-message css-1pxa9xg-MuiAlert-message\"]";
+	private static final String VECTOR_TITLE_XPATH = "//h4[@class=\"MuiTypography-root MuiTypography-h4 css-10k44j9-MuiTypography-root\"]";
 	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message css-')]";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String EMBEDDER_ENGINE_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'EMBEDDER_ENGINE_NAME')]";
@@ -36,6 +39,8 @@ public class OpenVectorPage {
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String VECTOR_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
+	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
+	private static final String COPIED_TOAST_MESSAGE_XPATH = "//div[text()='Successfully copied ID']";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -154,5 +159,17 @@ public class OpenVectorPage {
 
 	public void verifyToastMessage(String expectedToastMessage) {
 		AICorePageUtils.verifyToastMessage(page, expectedToastMessage);
+	}
+
+	public void copyVectorId() {
+		page.getByTestId(COPY_VECTOR_ID).isVisible();
+		page.getByTestId(COPY_VECTOR_ID).click();
+	}
+
+	public String copiedSuccessToastMessage() {
+		page.locator(COPIED_TOAST_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toastMessage = page.locator(COPIED_TOAST_MESSAGE_XPATH).textContent();
+		return toastMessage;
 	}
 }
