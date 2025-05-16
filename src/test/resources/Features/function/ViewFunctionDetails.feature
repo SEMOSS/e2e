@@ -1,5 +1,5 @@
 @DeleteCreatedCatalog
-Feature: Observe the details for a selected Function
+Feature: View Function Details
 
   Background: Create Function using ZIP file
     Given User navigates to Open Function
@@ -21,7 +21,7 @@ Feature: Observe the details for a selected Function
     Then User login as "read"
     Then User sees 'Change Access' button
     And User logs out from the application
-    Then User login as "admin"
+    Then User login as "native"
     And User navigates to Open Function
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     Then User clicks on the function name 'WeatherFunctionTest' in the function catalog
