@@ -1,4 +1,4 @@
-Feature: View Existing Storage
+Feature: View Storage
   I want to use this feature file for all scenarios related to View Existing Storage
   
   Background: Add Amazon S3 Storage
@@ -9,7 +9,7 @@ Feature: View Existing Storage
     And User enters Region as 'India'
     And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
-    And User enters Secret Key
+    And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
     And User can see the Storage title as 'Amazon S3 Test Storage'

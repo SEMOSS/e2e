@@ -30,7 +30,7 @@ public final class ConfigUtils {
 			logger.info("Loaded properties from file");
 			p.entrySet().stream().forEach(entry -> {
 				logger.info("Key: " + entry.getKey() + " Value: " + entry.getValue());
-			});		
+			});
 		} catch (Exception e) {
 			logger.error("Could not load properties", e);
 			throw new RuntimeException(e);
@@ -44,9 +44,9 @@ public final class ConfigUtils {
 		logger.info("Getting value for key: {}", key);
 		String value = p.getProperty(key);
 		logger.info("KEY: {} VALUE: {}", key, value);
-		if(value==null || value.trim().length()==0) {
+		if (value == null || value.trim().length() == 0) {
 			logger.error("Value of key is empty: {}", key);
-			System.err.println("Property '"+key+"' is undefined in config.properties!");
+			System.err.println("Property '" + key + "' is undefined in config.properties!");
 		}
 		return value;
 	}
