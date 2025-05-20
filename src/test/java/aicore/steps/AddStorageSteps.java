@@ -15,7 +15,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class AddStorageSteps {
+public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	private HomePage homePage;
 	private OpenStoragePage storagePage;
@@ -27,6 +27,11 @@ public class AddStorageSteps {
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
 	}
 
+	@Override
+	protected boolean isSearchBarPresent() {
+		return storagePage.isSearchBarPresent();
+	}
+
 	@Given("User clicks on Open Storage engine")
 	public void user_clicks_on_open_storage_engine() {
 		homePage.clickOnOpenStorage();
@@ -35,6 +40,19 @@ public class AddStorageSteps {
 	@When("User clicks on Add Storage button")
 	public void user_clicks_on_add_storage_button() {
 		storagePage.clickOnAddStorageButton();
+	}
+
+	@Then("User should see Search bar to filter storage options")
+	public void user_should_see_search_bar_to_filter_options() {
+		validateSearchBar();
+	}
+
+	@Then("User should see the following storage options with valid icons on the page")
+	public void user_should_see_the_following_storage_options_with_valid_icon_on_the_page(DataTable dataTable) {
+		final String GROUP_NAME = "GROUP";
+		final String STORAGE_OPTION_NAMES = "STORAGE_OPTIONS";
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		validateOptionsWithIcon(GROUP_NAME, STORAGE_OPTION_NAMES, rows, storagePage);
 	}
 
 	@And("User selects {string} storage")
@@ -146,4 +164,5 @@ public class AddStorageSteps {
 			storagePage.enterValuesInField(fieldName, fieldValue);
 		}
 	}
+
 }

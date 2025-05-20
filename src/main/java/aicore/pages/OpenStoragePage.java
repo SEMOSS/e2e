@@ -4,9 +4,9 @@ import com.microsoft.playwright.Page;
 
 import aicore.utils.StoragePageUtils;
 
-public class OpenStoragePage {
+public class OpenStoragePage extends AbstractAddCatalogPageBase {
 
-	private Page page;
+	// private Page page;
 	private String timestamp;
 
 	public OpenStoragePage(Page page, String timestamp) {

@@ -7,9 +7,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-public class AddFunctionToCatalogPage {
+public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
-	private Page page;
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
 	private static final String CATALOG_NAME = "importForm-textField-NAME";
 	private static final String URL = "importForm-textField-URL";
@@ -31,9 +30,7 @@ public class AddFunctionToCatalogPage {
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
 	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make Function discoverable']/child::input[@type='checkbox']";
-	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
-	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']";
-	private static final String ICONS_XPATH = "//p[text()='{optionName}']/parent::div//img";
+
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 
@@ -194,29 +191,6 @@ public class AddFunctionToCatalogPage {
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
 		return toastMessage;
-	}
-
-	public boolean isSearchBarPresent() {
-		return page.getByPlaceholder("Search").isVisible();
-	}
-
-	public boolean verifySectionIsVisible(String sectionName) {
-		boolean isSectionVisible = page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
-		return isSectionVisible;
-	}
-
-	public boolean VerifyDatabaseOptionIsVisible(String sectionName, String databaseOptionName) {
-		boolean isOptionVisible = page.isVisible(DATABASE_OPTIONS_UNDER_SECTION_XPATH
-				.replace("{sectionName}", sectionName).replace("{optionName}", databaseOptionName));
-		return isOptionVisible;
-	}
-
-	public Locator getIconByLabel(String optionName) {
-		return page.locator(ICONS_XPATH.replace("{optionName}", optionName));
-	}
-
-	public boolean isIconVisible(String optionName) {
-		return page.locator(ICONS_XPATH.replace("{optionName}", optionName)).isVisible();
 	}
 
 	public void searchFilterValue(String filterValue) {
