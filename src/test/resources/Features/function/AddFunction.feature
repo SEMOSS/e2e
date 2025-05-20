@@ -10,7 +10,7 @@ Feature: Add Function
     And User sees the function name 'WeatherFunctionTest' in the function catalog
 
   @LoginWithAdmin
-  Scenario Outline: add function with all the required fields
+  Scenario Outline: Create function with all the required fields
     Given User navigates to Open Function
     When User clicks on Add Function
     Then User selects function '<functionType>'
@@ -55,7 +55,7 @@ Feature: Add Function
       | REST         | TestFunction{Timestamp} | GET        | json            | {"X-Api-Key": "myKey"} | [{"parameterName":"lat","parameterType":"String","parameterDescription":"The lat of the location"},{"parameterName":"lon","parameterType":"String","parameterDescription":"lon of the location"}] | ["lat", "lon"]             | WeatherFunction | a function to call weather based on lat and long | catalog_name  | Create function | Successfully added function to catalog | Function Type,Catalog Name,URL,Http Method,POST Message Body Type,Function Parameters,Function Required Parameters,Function Name (metadata),Function Description (metadata) |
 
   @LoginWithAdmin
-  Scenario: Delete Function
+ Scenario Outline: Delete Function
     Given User navigates to Open Function
     When User sees the function name '<function_name>' in the function catalog
     Then User clicks on the function name '<function_name>' in the function catalog
