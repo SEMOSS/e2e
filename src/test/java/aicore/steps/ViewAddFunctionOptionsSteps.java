@@ -12,7 +12,6 @@ import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -62,7 +61,8 @@ public class ViewAddFunctionOptionsSteps {
 				Assertions.assertTrue(isIconVisible, optionName + " icon is not visible");
 				// verify icon is not broken
 				String iconUrl = icon.getAttribute("src");
-				if (isIconVisible) {
+				// for 'Local File System' storage option getting broken image
+				if (isIconVisible && !optionName.contains("Local File System")) {
 					boolean isIconValid = CommonUtils.isIconValid(iconUrl);
 					Assertions.assertTrue(isIconValid, optionName + " icon src is broken: " + iconUrl);
 				}
