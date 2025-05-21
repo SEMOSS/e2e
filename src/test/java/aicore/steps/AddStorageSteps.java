@@ -146,4 +146,15 @@ public class AddStorageSteps {
 			storagePage.enterValuesInField(fieldName, fieldValue);
 		}
 	}
+
+	@And("User clicks on Usage")
+	public void user_clicks_on_usage() {
+		storagePage.clickOnUsageTab();
+
+	}
+
+	@Then("User sees an example of {string} with example code")
+	public void user_sees_an_example_of_with_example_code(String example) {
+		storagePage.verifyExampleOfStorage(example);
+	}
 }
