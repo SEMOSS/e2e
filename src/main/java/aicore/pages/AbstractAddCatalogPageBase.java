@@ -16,7 +16,7 @@ public abstract class AbstractAddCatalogPageBase {
 		return isSectionVisible;
 	}
 
-	public boolean VerifyDatabaseOptionIsVisible(String sectionName, String databaseOptionName) {
+	public boolean verifyOptionIsVisible(String sectionName, String databaseOptionName) {
 		boolean isOptionVisible = page.isVisible(DATABASE_OPTIONS_UNDER_SECTION_XPATH
 				.replace("{sectionName}", sectionName).replace("{optionName}", databaseOptionName));
 		return isOptionVisible;

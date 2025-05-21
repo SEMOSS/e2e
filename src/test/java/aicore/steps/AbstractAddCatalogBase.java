@@ -15,23 +15,23 @@ public abstract class AbstractAddCatalogBase {
 	protected abstract boolean isSearchBarPresent();
 
 	protected void validateOptionsWithIcon(final String groupName, final String supportedOptions, List<Map<String, String>> rows,
-			AbstractAddCatalogPageBase functionPage) {
+			AbstractAddCatalogPageBase abstractCatalogPage) {
 		for (Map<String, String> row : rows) {
 			String sectionName = row.get(groupName);
 			String expectedOptions = row.get(supportedOptions);
 			// Verify section is visible
-			boolean isSectionVisible = functionPage.verifySectionIsVisible(sectionName);
+			boolean isSectionVisible = abstractCatalogPage.verifySectionIsVisible(sectionName);
 			Assertions.assertTrue(isSectionVisible, sectionName + "section not visible");
 
 			String[] expectedOptionsArray = expectedOptions.split(", ");
 			for (String optionName : expectedOptionsArray) {
 				// Verify option is visible
-				boolean isOptionVisible = functionPage.VerifyDatabaseOptionIsVisible(sectionName, optionName);
+				boolean isOptionVisible = abstractCatalogPage.verifyOptionIsVisible(sectionName, optionName);
 				Assertions.assertTrue(isOptionVisible, optionName + "option not visible");
 				// Verify icon is visible
-				Locator icon = functionPage.getIconByLabel(optionName);
+				Locator icon = abstractCatalogPage.getIconByLabel(optionName);
 				icon.waitFor();
-				boolean isIconVisible = functionPage.isIconVisible(optionName);
+				boolean isIconVisible = abstractCatalogPage.isIconVisible(optionName);
 				Assertions.assertTrue(isIconVisible, optionName + " icon is not visible");
 				// verify icon is not broken
 				String iconUrl = icon.getAttribute("src");
