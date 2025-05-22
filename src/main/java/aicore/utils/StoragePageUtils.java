@@ -21,6 +21,8 @@ public class StoragePageUtils {
 	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-textField-S3_BUCKET";
 	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_SECRET_KEY";
+	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
+	private static final String USAGE_TAB_EXAMPLE_STRING_XPATH = "//h6[text()='{Usage Example}']/../pre/code";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
@@ -181,5 +183,20 @@ public class StoragePageUtils {
 			System.out.println("Invalid Field name" + fieldName);
 		}
 		fieldLocator.fill(fieldValue);
+	}
+
+	public static void clickOnUsageTab(Page page) {
+		page.locator(USAGE_TAB_XPATH).isVisible();
+		page.locator(USAGE_TAB_XPATH).click();
+	}
+
+	public static void verifyExampleOfStorage(Page page, String example) {
+		page.getByText(example, new Page.GetByTextOptions().setExact(true)).isVisible();
+		String exampleXpath = USAGE_TAB_EXAMPLE_STRING_XPATH.replace("{Usage Example}", example);
+		page.locator(exampleXpath).isVisible();
+		String exampleText = page.locator(exampleXpath).textContent();
+		if (exampleText == null || exampleText.trim().length() <= 1) {
+			throw new AssertionError("Example code of storage is not visible for"+ example);
+		}
 	}
 }

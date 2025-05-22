@@ -5,8 +5,9 @@ import com.microsoft.playwright.Page;
 
 import aicore.utils.AddFunctionToCatalogPageUtils;
 
-public class AddFunctionToCatalogPage {
+public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
+  
 	private Page page;
 	private String timestamp;
 	
@@ -15,7 +16,6 @@ public class AddFunctionToCatalogPage {
 		this.page = page;
 		this.timestamp= timestamp;
 	}
-
 	
 // change in main
 	// 	Locator functionNameLocator = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).first();
@@ -65,105 +65,104 @@ public class AddFunctionToCatalogPage {
 	}
 	public void clickOnAddFunctionButton() {
         AddFunctionToCatalogPageUtils.clickOnAddFunctionButton(page);
-    }
+  }
 
-    public void selectFunction(String functionType) {
-        AddFunctionToCatalogPageUtils.selectFunction(page, functionType);
+  public void selectFunction(String functionType) {
+      AddFunctionToCatalogPageUtils.selectFunction(page, functionType);
 
-    }
+  }
 
-    public void enterCatalogName(String catalogName) {
-        AddFunctionToCatalogPageUtils.enterCatalogName(page, catalogName, timestamp);
+  public void enterCatalogName(String catalogName) {
+      AddFunctionToCatalogPageUtils.enterCatalogName(page, catalogName, timestamp);
 
-    }
+  }
 
-    public void enterUrl(String url) {
-        AddFunctionToCatalogPageUtils.enterUrl(page, url);
+  public void enterUrl(String url) {
+      AddFunctionToCatalogPageUtils.enterUrl(page, url);
+  }
 
-    }
+  public void selectHttpMethod(String httpMethod) {
+      AddFunctionToCatalogPageUtils.selectHttpMethod(page, httpMethod);
+  }
 
-    public void selectHttpMethod(String httpMethod) {
-        AddFunctionToCatalogPageUtils.selectHttpMethod(page, httpMethod);
-    }
+  public void selectPostBodyMessage(String postBodyMessage) {
+      AddFunctionToCatalogPageUtils.selectPostBodyMessage(page, postBodyMessage);
+  }
 
-    public void selectPostBodyMessage(String postBodyMessage) {
-        AddFunctionToCatalogPageUtils.selectPostBodyMessage(page, postBodyMessage);
-    }
+  public void verifyAsteriskMarkOnFields(String fieldLabels) {
+      AddFunctionToCatalogPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
+  }
 
-    public void verifyAsteriskMarkOnFields(String fieldLabels) {
-        AddFunctionToCatalogPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
-    }
+  public void enterHeaders(String headers) {
+      AddFunctionToCatalogPageUtils.enterHeaders(page, headers);
+  }
 
-    public void enterHeaders(String headers) {
-        AddFunctionToCatalogPageUtils.enterHeaders(page, headers);
-    }
+  public void enterFunctionParameters(String functionParameters) {
+      AddFunctionToCatalogPageUtils.enterFunctionParameters(page, functionParameters);
+  }
 
-    public void enterFunctionParameters(String functionParameters) {
-        AddFunctionToCatalogPageUtils.enterFunctionParameters(page, functionParameters);
-    }
+  public void enterFunctionName(String functionName) {
+      AddFunctionToCatalogPageUtils.enterFunctionName(page, functionName);
+  }
 
-    public void enterFunctionName(String functionName) {
-        AddFunctionToCatalogPageUtils.enterFunctionName(page, functionName);
-    }
+  public void enterFunctionDescription(String functionDescription) {
+      AddFunctionToCatalogPageUtils.enterFunctionDescription(page, functionDescription);
+  }
 
-    public void enterFunctionDescription(String functionDescription) {
-        AddFunctionToCatalogPageUtils.enterFunctionDescription(page, functionDescription);
-    }
+  public void selectFunctionType(String functionType) {
+      AddFunctionToCatalogPageUtils.selectFunctionType(page, functionType);
+  }
 
-    public void selectFunctionType(String functionType) {
-        AddFunctionToCatalogPageUtils.selectFunctionType(page, functionType);
-    }
+  public void enterFunctionRequiredParameters(String functionRequiredParameters) {
+      AddFunctionToCatalogPageUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
+  }
 
-    public void enterFunctionRequiredParameters(String functionRequiredParameters) {
-        AddFunctionToCatalogPageUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
-    }
+  public void checkCreateFunctionButton() {
+      AddFunctionToCatalogPageUtils.checkCreateFunctionButton(page);
+  }
 
-    public void checkCreateFunctionButton() {
-        AddFunctionToCatalogPageUtils.checkCreateFunctionButton(page);
-    }
+  public void clickOnCreateFunctionButton() {
+      AddFunctionToCatalogPageUtils.clickOnCreateFunctionButton(page);
+  }
 
-    public void clickOnCreateFunctionButton() {
-        AddFunctionToCatalogPageUtils.clickOnCreateFunctionButton(page);
-    }
+  public String enterFilePath(String fileName) {
+      return AddFunctionToCatalogPageUtils.enterFilePath(page, fileName);
 
-    public String enterFilePath(String fileName) {
-        return AddFunctionToCatalogPageUtils.enterFilePath(page, fileName);
+  }
 
-    }
+  public String verifyFunctionNameInCatalog(String catalogName) {
+      return AddFunctionToCatalogPageUtils.verifyFunctionNameInCatalog(page, catalogName, timestamp);
 
-    public String verifyFunctionNameInCatalog(String catalogName) {
-        return AddFunctionToCatalogPageUtils.verifyFunctionNameInCatalog(page, catalogName, timestamp);
+  }
 
-    }
+  public void clickOnFunctionNameInCatalog(String functionName) {
+      AddFunctionToCatalogPageUtils.clickOnFunctionNameInCatalog(page, functionName, timestamp);
+  }
 
-    public void clickOnFunctionNameInCatalog(String functionName) {
-        AddFunctionToCatalogPageUtils.clickOnFunctionNameInCatalog(page, functionName, timestamp);
-    }
+  public void clickOnAccessControl() {
+      AddFunctionToCatalogPageUtils.clickOnAccessControl(page);
+  }
 
-    public void clickOnAccessControl() {
-        AddFunctionToCatalogPageUtils.clickOnAccessControl(page);
-    }
+  public void clickOnDeleteButton() {
+      AddFunctionToCatalogPageUtils.clickOnDeleteButton(page);
+  }
 
-    public void clickOnDeleteButton() {
-        AddFunctionToCatalogPageUtils.clickOnDeleteButton(page);
-    }
+  public void clickOnDeleteConfirmationButton() {
+      AddFunctionToCatalogPageUtils.clickOnDeleteConfirmationButton(page);
+  }
 
-    public void clickOnDeleteConfirmationButton() {
-        AddFunctionToCatalogPageUtils.clickOnDeleteConfirmationButton(page);
-    }
+  public String verifyDeleteToastMessage() {
+      return AddFunctionToCatalogPageUtils.verifyDeleteToastMessage(page);
 
-    public String verifyDeleteToastMessage() {
-        return AddFunctionToCatalogPageUtils.verifyDeleteToastMessage(page);
+  }
 
-    }
+  public String verifySuccessToastMessage(String Toast_message) {
+      AddFunctionToCatalogPageUtils.verifySuccessToastMessage(page, Toast_message);
+      return Toast_message;
+  }
 
-    public String verifySuccessToastMessage(String Toast_message) {
-        AddFunctionToCatalogPageUtils.verifySuccessToastMessage(page, Toast_message);
-        return Toast_message;
-    }
-
-    public boolean verifyMissingInputField() {
-        return AddFunctionToCatalogPageUtils.verifyMissingInputField(page);
-    }
+  public boolean verifyMissingInputField() {
+      return AddFunctionToCatalogPageUtils.verifyMissingInputField(page);
+  }
 
 }
