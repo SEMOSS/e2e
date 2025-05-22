@@ -214,29 +214,6 @@ public class AddFunctionToCatalogPageUtils {
 		return isFunctionVisible;
 	}
 
-	public static boolean isSearchBarPresent(Page page){
-		return page.getByPlaceholder("Search").isVisible();
-	}
-
-	public static boolean verifySectionIsVisible(Page page,String sectionName) {
-		boolean isSectionVisible = page.isVisible(FUNCTION_SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
-		return isSectionVisible;
-	}
-
-	public static boolean VerifyDatabaseOptionIsVisible(Page page,String sectionName,String databaseOptionName) {
-		boolean isOptionVisible = page.isVisible(DATABASE_OPTIONS_UNDER_SECTION_XPATH
-				.replace("{sectionName}", sectionName).replace("{optionName}", databaseOptionName));
-		return isOptionVisible;
-	}
-
-	public static Locator getIconByLabel(Page page,String optionName) {
-		return page.locator(ICONS_XPATH.replace("{optionName}", optionName));
-	}
-
-	public static boolean isIconVisible(Page page,String optionName) {
-		return page.locator(ICONS_XPATH.replace("{optionName}", optionName)).isVisible();
-	}
-
 	public static void searchFilterValue(Page page,String filterValue) {
 		page.getByPlaceholder("Search by...").fill(filterValue);
 	}

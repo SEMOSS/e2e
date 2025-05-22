@@ -4,9 +4,9 @@ import com.microsoft.playwright.Page;
 
 import aicore.utils.StoragePageUtils;
 
-public class OpenStoragePage {
+public class OpenStoragePage extends AbstractAddCatalogPageBase {
 
-	private Page page;
+	// private Page page;
 	private String timestamp;
 
 	public OpenStoragePage(Page page, String timestamp) {
@@ -88,6 +88,14 @@ public class OpenStoragePage {
 
 	public void enterValuesInField(String fieldname, String fieldValue) {
 		StoragePageUtils.enterValuesInField(page, fieldname, fieldValue, timestamp);
+	}
+
+	public void clickOnUsageTab() {
+		StoragePageUtils.clickOnUsageTab(page);
+	}
+
+	public void verifyExampleOfStorage(String example) {
+		StoragePageUtils.verifyExampleOfStorage(page, example);
 	}
 
 }

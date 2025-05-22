@@ -13,6 +13,16 @@ Feature: Add Storage
   And User clicks on Create Storage button
   Then User can see create storage success toast message as 'Successfully added to catalog storage'
   And User can see the Storage title as 'Amazon S3 Storage'
+
+  @LoginWithAdmin
+ Scenario: Validate usage of storage
+  Given User can see the Storage title as 'Amazon S3 Storage'
+  When User clicks on Usage
+  Then User sees an example of "How to use in Javascript" with example code
+  And User sees an example of "How to use in Python" with example code
+  And User sees an example of "How to use with Langchain API" with example code
+  And User sees an example of "How to use in Java" with example code
+
  
   Scenario: Validate SMSS properties of storage
     Given User can see the Storage title as 'Amazon S3 Storage'

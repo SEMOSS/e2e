@@ -1,69 +1,39 @@
 package aicore.pages;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AddFunctionToCatalogPageUtils;
 
-public class AddFunctionToCatalogPage {
+public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
-	private Page page;
-	private String timestamp;
-	
+    private final String timestamp;
 
-	public AddFunctionToCatalogPage(Page page,String timestamp) {
-		this.page = page;
-		this.timestamp= timestamp;
-	}
+    public AddFunctionToCatalogPage(Page page, String timestamp) {
+        this.page = page;
+        this.timestamp = timestamp;
+    }
 
-	
-// change in main
-	// 	Locator functionNameLocator = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).first();
-	// 	functionNameLocator.isVisible();
-	// 	String functionNameInCatalog = functionNameLocator.textContent();
-	// 	return functionNameInCatalog;
-	// }
+    public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
+        return AddFunctionToCatalogPageUtils.verifyFunctionIsVisbileInCatalog(page, functionName);
+    }
 
-	public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
-		return AddFunctionToCatalogPageUtils.verifyFunctionIsVisbileInCatalog(page, functionName);
-	}
+    public void searchFilterValue(String filterValue) {
+        AddFunctionToCatalogPageUtils.searchFilterValue(page, filterValue);
+    }
 
-	public boolean isSearchBarPresent() {
-     return AddFunctionToCatalogPageUtils.isSearchBarPresent(page);
-	}
+    public void selectFilterValue(String filterCategory, String filterValue) {
+        AddFunctionToCatalogPageUtils.selectFilterValue(page, filterCategory, filterValue);
+    }
 
-	public boolean verifySectionIsVisible(String sectionName) {
-    return AddFunctionToCatalogPageUtils.verifySectionIsVisible(page, sectionName);
-	} 
+    public void clickOnMakeDiscoverableButton() {
+        AddFunctionToCatalogPageUtils.clickOnMakeDiscoverableButton(page);
+    }
 
-	public boolean VerifyDatabaseOptionIsVisible(String sectionName, String databaseOptionName) {
-		return AddFunctionToCatalogPageUtils.VerifyDatabaseOptionIsVisible(page, sectionName, databaseOptionName);
-	}
+    public void clickOnDiscoverableFunctionsbutton() {
+        AddFunctionToCatalogPageUtils.clickOnDiscoverableFunctionsbutton(page);
+    }
 
-	public Locator getIconByLabel(String optionName) {
-		return AddFunctionToCatalogPageUtils.getIconByLabel(page, optionName);
-	}
-
-	public boolean isIconVisible(String optionName) {
-		return AddFunctionToCatalogPageUtils.isIconVisible(page, optionName);
-	}
-
-	public void searchFilterValue(String filterValue) {
-		AddFunctionToCatalogPageUtils.searchFilterValue(page, filterValue);	
-	}
-
-	public void selectFilterValue(String filterCategory, String filterValue) {
-		AddFunctionToCatalogPageUtils.selectFilterValue(page, filterCategory, filterValue);
-	}
-
-	public void clickOnMakeDiscoverableButton() {
-		AddFunctionToCatalogPageUtils.clickOnMakeDiscoverableButton(page);
-	}
-
-	public void clickOnDiscoverableFunctionsbutton() {
-		AddFunctionToCatalogPageUtils.clickOnDiscoverableFunctionsbutton(page);
-	}
-	public void clickOnAddFunctionButton() {
+    public void clickOnAddFunctionButton() {
         AddFunctionToCatalogPageUtils.clickOnAddFunctionButton(page);
     }
 
@@ -79,7 +49,6 @@ public class AddFunctionToCatalogPage {
 
     public void enterUrl(String url) {
         AddFunctionToCatalogPageUtils.enterUrl(page, url);
-
     }
 
     public void selectHttpMethod(String httpMethod) {
