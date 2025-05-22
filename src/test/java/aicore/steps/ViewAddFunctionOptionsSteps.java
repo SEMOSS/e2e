@@ -12,17 +12,17 @@ import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class ViewAddFunctionOptionsSteps {
 	private HomePage homePage;
+	protected static String timestamp;
 	private AddFunctionToCatalogPage functionPage;
 
 	public ViewAddFunctionOptionsSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
-		functionPage = new AddFunctionToCatalogPage(SetupHooks.getPage());
+		functionPage = new AddFunctionToCatalogPage(SetupHooks.getPage(),timestamp);
 	}
 
 	@When("User clicks on Add Function button")
