@@ -14,7 +14,7 @@ public class VectorDatabaseSteps {
 	private OpenVectorPage vectorPage;
 
 	public VectorDatabaseSteps() {
-		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
+		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage(), null);
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
 	}
 

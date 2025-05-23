@@ -42,6 +42,68 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
  
+@LoginWithAdmin
+  Scenario Outline: Change access control for created vector
+    Given User clicks on Open Vector engine
+    When User clicks on Add Vector button
+    And User selects '<connection>' connection
+    And User enters vector database Catalog name as '<catalog_name>'
+    And User selects '<model_name>' from Embedder field
+    And User selects '<chunking_strategy>' from Chunking Strategy field
+    And User enters value of Content Length as '<content_length>'
+    And User enters value of Content Overlap as '<content_overlap>'
+    And User clicks on Create Vector button
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And 'Author' user clicks on Settings
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User clicks on Open Vector engine
+    And User searches the '<catalog_name>' in the Vector Catalog searchbox
+    And User selects the '<catalog_name>' from the Vector catalog
+    And User click on the Change Access button
+    And User should see the "Change Access" popup with following options:
+    | Author         |
+    | Editor         |
+    | Read-Only      |
+    | Comment Box    |
+    | Cancel Button |
+    | Request Button |
+    And User click on cancel button
+    And User logs out from the application
+    Then User login as "Author"
+    Examples: 
+      | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
+      | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
 
-
+@LoginWithAdmin
+  Scenario Outline: Change access control for created vector
+    Given User clicks on Open Vector engine
+    When User clicks on Add Vector button
+    And User selects '<connection>' connection
+    And User enters vector database Catalog name as '<catalog_name>'
+    And User selects '<model_name>' from Embedder field
+    And User selects '<chunking_strategy>' from Chunking Strategy field
+    And User enters value of Content Length as '<content_length>'
+    And User enters value of Content Overlap as '<content_overlap>'
+    And User clicks on Create Vector button
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And 'Author' user clicks on Settings
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User clicks on Open Vector engine
+    And User searches the '<catalog_name>' in the Vector Catalog searchbox
+    And User selects the '<catalog_name>' from the Vector catalog
+    And User click on the Change Access button
+    And User selects 'author' access
+    And User types a comment as 'Access Request'
+    And User clicks on Request button
+    Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
+ 
+    Examples: 
+      | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
+      | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
 

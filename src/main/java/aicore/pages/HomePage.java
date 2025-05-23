@@ -26,8 +26,7 @@ public class HomePage {
 	private static final String OPEN_FUNCTION_XPATH = "//a[@data-testid='Function-icon']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";		
-		
+	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
 
@@ -48,7 +47,7 @@ public class HomePage {
 	public void clickOnSystemApp() {
 		page.click(SYSTEM_APP_BUTTON_XPATH);
 	}
-	
+
 	public void clickOnTab(String tabName) {
 		page.click(APP_TAB_XPATH.replace("{tab}", tabName));
 	}
@@ -78,7 +77,8 @@ public class HomePage {
 		page.click(OPEN_APP_LIBRARY_XPATH);
 	}
 
-	public void logOutAsCurrentUser() {
+	public void logOutAsCurrentUser() throws InterruptedException {
+		page.waitForSelector(USER_PROFILE_ICON_XPATH);
 		page.click(USER_PROFILE_ICON_XPATH);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 	}

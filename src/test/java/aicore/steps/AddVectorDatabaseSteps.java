@@ -2,6 +2,8 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
+
 import aicore.hooks.SetupHooks;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
@@ -21,9 +23,11 @@ public class AddVectorDatabaseSteps {
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = AddModelSteps.timestamp.substring(0, 5);
+//		timestamp = AddModelSteps.timestamp.substring(0, 5);
+		timestamp = CommonUtils.getTimeStampName();
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
-		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
+		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage(), timestamp);
+
 	}
 
 	@Given("User clicks on Open Vector engine")
@@ -100,7 +104,7 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User can see the Vector title as {string}")
 	public void user_can_see_the_vector_title_as(String vectorTitle) {
-		vectorPage.verifyVectorTitle( vectorTitle + timestamp);
+		vectorPage.verifyVectorTitle(vectorTitle + timestamp);
 	}
 
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
@@ -176,6 +180,53 @@ public class AddVectorDatabaseSteps {
 	@Then("User sees deleted Vector success toast message {string}")
 	public void user_sees_deleted_Vector_success_toast_message(String toastMessage) {
 		vectorPage.verifyToastMessage(toastMessage);
+	}
+
+	@Then("User click on the Change Access button")
+	public void user_click_on_the_change_access_button() {
+		embedDocumentPage.clickOnAccessControlButton();
+	}
+
+	@Then("User should see the {string} popup with following options:")
+	public void user_should_see_the_popup_with_following_options(String expectedTitle,
+			io.cucumber.datatable.DataTable dataTable) {
+		Assertions.assertTrue(embedDocumentPage.isPopupVisible(), expectedTitle + " popup is not visible");
+		for (String option : dataTable.asList()) {
+			Assertions.assertTrue(embedDocumentPage.isOptionVisible(option),
+					option + " is not visible in Change Access popup");
+		}
+	}
+
+	@Then("User searches the {string} in the Vector Catalog searchbox")
+	public void user_searches_the_in_the_vector_catalog_searchbox(String catalogName) {
+		embedDocumentPage.searchVectorCatalog(catalogName);
+	}
+
+	@Then("User selects the {string} from the Vector catalog")
+	public void user_selects_the_from_the_vector_catalog(String catalogName) {
+		embedDocumentPage.selectVectorFromSearchOptions(catalogName);
+	}
+
+	@Then("User selects {string} access")
+	public void user_selects_access(String accessType) {
+		embedDocumentPage.selectAccessType(accessType);
+	}
+
+	@Then("User types a comment as {string}")
+	public void user_types_a_comment_as(String comment) {
+		embedDocumentPage.enterComment(comment);
+	}
+
+	@Then("User clicks on Request button")
+	public void user_clicks_on_request_button() {
+		embedDocumentPage.clickOnRequestButton();
+	}
+
+	@Then("User should successfully request access given the Vector is requestable with a toast message as {string}")
+	public void user_should_successfully_request_access_given_the_vector_is_requestable_with_a_toast_message_as(
+			String expectedMessage) {
+		boolean toastVisible = embedDocumentPage.isRequestSuccessToastVisible();
+		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
 	}
 
 }

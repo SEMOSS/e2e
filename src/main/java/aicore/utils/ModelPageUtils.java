@@ -472,10 +472,11 @@ public class ModelPageUtils {
 			modelId = clipboardText.trim();
 		} else {
 			// get current url of the page
-            String currentUrl = page.url();
-            // Extract the substring after the last slash this will also give us the model id
-            int lastSlashIndex = currentUrl.lastIndexOf('/');
-            modelId = currentUrl.substring(lastSlashIndex + 1);
+			String currentUrl = page.url();
+			// Extract the substring after the last slash this will also give us the model
+			// id
+			int lastSlashIndex = currentUrl.lastIndexOf('/');
+			modelId = currentUrl.substring(lastSlashIndex + 1);
 		}
 		return modelId;
 	}

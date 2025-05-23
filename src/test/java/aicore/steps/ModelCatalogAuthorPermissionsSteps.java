@@ -112,7 +112,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 	}
 
 	@Then("User logs out from the application")
-	public void user_logs_out_from_the_application() {
+	public void user_logs_out_from_the_application() throws InterruptedException {
 		homePage.logOutAsCurrentUser();
 	}
 
@@ -124,7 +124,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 		if (username == null || password == null) {
 			throw new Exception("Login credentials not found for role: " + role);
 		}
-		
+
 		Page page = SetupHooks.getPage();
 		GenericSetupUtils.login(page, username, password);
 	}

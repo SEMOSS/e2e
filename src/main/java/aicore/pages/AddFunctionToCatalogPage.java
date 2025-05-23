@@ -36,6 +36,8 @@ public class AddFunctionToCatalogPage {
 	private static final String ICONS_XPATH = "//p[text()='{optionName}']/parent::div//img";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
+	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 
 	public AddFunctionToCatalogPage(Page page) {
 		this.page = page;
@@ -154,10 +156,12 @@ public class AddFunctionToCatalogPage {
 		return functionNameInCatalog;
 	}
 // change in main
-	// 	Locator functionNameLocator = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).first();
-	// 	functionNameLocator.isVisible();
-	// 	String functionNameInCatalog = functionNameLocator.textContent();
-	// 	return functionNameInCatalog;
+	// Locator functionNameLocator =
+	// page.getByText(CATALOG_FUNCTION.replace("{FunctionName}",
+	// functionName)).first();
+	// functionNameLocator.isVisible();
+	// String functionNameInCatalog = functionNameLocator.textContent();
+	// return functionNameInCatalog;
 	// }
 
 	public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
@@ -235,6 +239,16 @@ public class AddFunctionToCatalogPage {
 
 	public void clickOnDiscoverableFunctionsbutton() {
 		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
+	}
+
+	public void searchFunctionCatalog(String catalogName) {
+		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
+	}
+
+	public void selectFunctionFromSearchOptions(String catalogName) {
+		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
+		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
 }

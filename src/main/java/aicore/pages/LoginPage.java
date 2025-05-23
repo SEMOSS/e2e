@@ -17,9 +17,9 @@ public class LoginPage {
 	private static final String NEXT_BUTTON_XPATH = "#idSIButton9";
 	private static final String PASSWORD_XPATH = "//input[@type='password']";
 	private static final String SIGNIN_BUTTON_XPATH = "//input[@data-report-event='Signin_Submit']";
-	private static final String NATIVE_USERNAME_XPATH = "//label[text()='Username']/following-sibling::div//input";
-	private static final String NATIVE_PASSWORD_XPATH = "//input[contains(@class, 'MuiInputBase-input') and contains(@class, 'MuiOutlinedInput-input') and @type='password']";
-	private static final String LOGIN_WITH_NATIVE_XPATH = "//button[@type='submit' and contains(@class, 'MuiButton-containedPrimary')]";
+	private static final String NATIVE_USERNAME_DATA_TEST_ID = "loginPage-textField-username";
+	private static final String NATIVE_PASSWORD_DATA_TEST_ID = "loginPage-textField-password";
+	private static final String LOGIN_BUTTON_DATA_TEST_ID = "loginPage-button-login";
 
 	public LoginPage(Page page) {
 		this.page = page;
@@ -50,11 +50,11 @@ public class LoginPage {
 	}
 
 	public void enterNativeUsernamePassword() {
-		page.fill(NATIVE_USERNAME_XPATH, ConfigUtils.getValue("native_username"));
-		page.fill(NATIVE_PASSWORD_XPATH, ConfigUtils.getValue("native_password"));
+		page.getByTestId(NATIVE_USERNAME_DATA_TEST_ID).fill(ConfigUtils.getValue("native_username"));
+		page.getByTestId(NATIVE_PASSWORD_DATA_TEST_ID).fill(ConfigUtils.getValue("native_password"));
 	}
 
 	public void loginWithNative() {
-		page.click(LOGIN_WITH_NATIVE_XPATH);
+		page.getByTestId(LOGIN_BUTTON_DATA_TEST_ID).click();
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
 import aicore.utils.CommonUtils;
@@ -20,11 +21,13 @@ public class AddStorageSteps {
 	private HomePage homePage;
 	private OpenStoragePage storagePage;
 	protected static String timestamp;
+	private EmbedDocumentPage embedDocumentPage;
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
+		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@Given("User clicks on Open Storage engine")
@@ -145,5 +148,25 @@ public class AddStorageSteps {
 			fieldValue = fieldValue != null ? fieldValue.trim() : "";
 			storagePage.enterValuesInField(fieldName, fieldValue);
 		}
+	}
+
+	@Then("User searches the {string} in the storage Catalog searchbox")
+	public void user_searches_the_in_the_storage_catalog_searchbox(String catalogName) {
+		storagePage.searchStorageCatalog(catalogName);
+	}
+
+	@Then("User selects the {string} from the storage catalog")
+	public void user_selects_the_from_the_storage_catalog(String catalogName) {
+		storagePage.selectStorageFromSearchOptions(catalogName);
+	}
+
+	@Then("User click on cancel button")
+	public void user_click_on_cancel_button() {
+		storagePage.clickOnCancelButton();
+	}
+
+	@Given("{string} user clicks on Settings of Storage")
+	public void user_clicks_on_settings_of_storage(String string) {
+		storagePage.clickOnSettingsTab();
 	}
 }

@@ -90,4 +90,21 @@ public class OpenStoragePage {
 		StoragePageUtils.enterValuesInField(page, fieldname, fieldValue, timestamp);
 	}
 
+	public void searchStorageCatalog(String catalogName) {
+		StoragePageUtils.searchStorageCatalog(page, catalogName, timestamp);
+	}
+
+	public void selectStorageFromSearchOptions(String catalogName) {
+		StoragePageUtils.selectStorageFromSearchOptions(page, catalogName, timestamp);
+	}
+
+	public void clickOnCancelButton() {
+		StoragePageUtils.clickOnCancelButton(page);
+	}
+
+	public void clickOnSettingsTab() {
+		StoragePageUtils.clickOnSettingsTab(page);
+
+	}
+
 }
