@@ -19,7 +19,7 @@ public class UserRegistrationSteps {
 	private HomePage homePage;
 	private LoginPage loginPage;
 	private UserRegistrationPage userRegistration;
-	protected static String timestamp;
+	protected String timestamp;
 
 	public UserRegistrationSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
@@ -35,25 +35,12 @@ public class UserRegistrationSteps {
 
 	@And("User fills below user creation form fields")
 	public void user_fills_below_user_creation_form_fields(io.cucumber.datatable.DataTable dataTable) {
-		String uniqueEmail = "User" + timestamp + "@gmail.com";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("FIELD_NAME");
 			String fieldValue = row.get("FIELD_VALUE");
-			switch (fieldName) {
-			case "Username":
-				fieldValue = fieldValue + timestamp;
-				break;
-			case "Email":
-				fieldValue = uniqueEmail;
-				break;
-			case "Password":
-				fieldValue = fieldValue + timestamp;
-				break;
-			case "Confirm Password":
-				fieldValue = fieldValue + timestamp;
-				break;
-			}
+
+			fieldValue = fieldValue.replace("<RANDOM_ID>", timestamp);
 			userRegistration.fillUserRegistartionFormField(fieldName, fieldValue);
 		}
 	}
@@ -71,8 +58,8 @@ public class UserRegistrationSteps {
 
 	@When("User enters username as {string} and password {string}")
 	public void user_enters_username_as_and_password(String username, String password) {
-		String uniqueUsername = username + timestamp;
-		String uniquePassword = password + timestamp;
+		String uniqueUsername = username.replace("<RANDOM_ID>", timestamp);
+		String uniquePassword = password.replace("<RANDOM_ID>", timestamp);
 		loginPage.enterUsernameAndPassword(uniqueUsername, uniquePassword);
 	}
 
