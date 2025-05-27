@@ -100,7 +100,7 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User can see the Vector title as {string}")
 	public void user_can_see_the_vector_title_as(String vectorTitle) {
-		vectorPage.verifyVectorTitle( vectorTitle + timestamp);
+		vectorPage.verifyVectorTitle(vectorTitle + timestamp);
 	}
 
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
