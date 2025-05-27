@@ -421,8 +421,12 @@ public class ModelPageUtils {
 			page.fill(ADD_MEMBER_XPATH, username);
 			page.getByTitle("Name: " + username).click();
 		} else {
-			page.fill(ADD_MEMBER_XPATH, username);
-			page.getByText(username).click();
+			Locator addMemberSearchbar = page.locator(ADD_MEMBER_XPATH);
+			addMemberSearchbar.click();
+			addMemberSearchbar.fill(username);
+			page.waitForTimeout(2000);
+			addMemberSearchbar.press("ArrowDown");
+			addMemberSearchbar.press("Enter");
 		}
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);

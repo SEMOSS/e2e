@@ -6,8 +6,8 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.CommonUtils;
 
-public class EmbedDocumentPage {
-	private Page page;
+public class EmbedDocumentPage extends AbstractSearchAndSelectCatalogPage {
+//	private Page page;
 	private String timestamp;
 
 	private static final String TOAST_MESSAGE_XPATH = "//div[text()='Successfully added document']";
@@ -26,8 +26,8 @@ public class EmbedDocumentPage {
 	private static final String COMMENT_BOX_XPATH = "//textarea[not(@aria-hidden) and not(@readonly)]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[contains(., 'Cancel')]";
 	private static final String REQUEST_BUTTON_XPATH = "//button[contains(., 'Request')]";
-	private static final String VECTOR_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
-	private static final String SEARCHED_VECTOR_XPATH = "//p[text()='{catalogName}']";
+//	private static final String VECTOR_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
+//	private static final String SEARCHED_VECTOR_XPATH = "//p[text()='{catalogName}']";
 	private static final String REQUEST_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'Successfully requested access to engine')]";
 
 	public EmbedDocumentPage(Page page, String timestamp) {
@@ -94,7 +94,7 @@ public class EmbedDocumentPage {
 	}
 
 	public boolean isOptionVisible(String option) {
-		return switch (option.toLowerCase()) {
+		switch (option.toLowerCase()) {
 		case "author" -> page.locator(AUTHOR_OPTION_XPATH).isVisible();
 		case "editor" -> page.locator(EDITOR_OPTION_XPATH).isVisible();
 		case "read-only" -> page.locator(READONLY_OPTION_XPATH).isVisible();
@@ -102,18 +102,19 @@ public class EmbedDocumentPage {
 		case "cancel button" -> page.locator(CANCEL_BUTTON_XPATH).isVisible();
 		case "request button" -> page.locator(REQUEST_BUTTON_XPATH).isVisible();
 		default -> false;
-		};
+		}
+		;
 	}
 
-	public void searchVectorCatalog(String catalogName) {
-		page.locator(VECTOR_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(VECTOR_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName + timestamp);
-	}
-
-	public void selectVectorFromSearchOptions(String catalogName) {
-		page.locator((SEARCHED_VECTOR_XPATH.replace("{catalogName}", catalogName + timestamp))).isVisible();
-		page.locator(SEARCHED_VECTOR_XPATH.replace("{catalogName}", catalogName + timestamp)).click();
-	}
+//	public void searchVectorCatalog(String catalogName) {
+//		page.locator(VECTOR_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+//		page.locator(VECTOR_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName + timestamp);
+//	}
+//
+//	public void selectVectorFromSearchOptions(String catalogName) {
+//		page.locator((SEARCHED_VECTOR_XPATH.replace("{catalogName}", catalogName + timestamp))).isVisible();
+//		page.locator(SEARCHED_VECTOR_XPATH.replace("{catalogName}", catalogName + timestamp)).click();
+//	}
 
 	public void selectAccessType(String accessType) {
 		String xpath;

@@ -4,9 +4,9 @@ import com.microsoft.playwright.Page;
 
 import aicore.utils.StoragePageUtils;
 
-public class OpenStoragePage {
+public class OpenStoragePage extends AbstractAddCatalogPageBase {
 
-	private Page page;
+	// private Page page;
 	private String timestamp;
 
 	public OpenStoragePage(Page page, String timestamp) {
@@ -91,11 +91,11 @@ public class OpenStoragePage {
 	}
 
 	public void searchStorageCatalog(String catalogName) {
-		StoragePageUtils.searchStorageCatalog(page, catalogName, timestamp);
+		StoragePageUtils.searchCatalog(page, catalogName, timestamp);
 	}
 
 	public void selectStorageFromSearchOptions(String catalogName) {
-		StoragePageUtils.selectStorageFromSearchOptions(page, catalogName, timestamp);
+		StoragePageUtils.selectCatalogFromSearchOptions(page, catalogName, timestamp);
 	}
 
 	public void clickOnCancelButton() {
@@ -104,7 +104,14 @@ public class OpenStoragePage {
 
 	public void clickOnSettingsTab() {
 		StoragePageUtils.clickOnSettingsTab(page);
+	}
 
+	public void clickOnUsageTab() {
+		StoragePageUtils.clickOnUsageTab(page);
+	}
+
+	public void verifyExampleOfStorage(String example) {
+		StoragePageUtils.verifyExampleOfStorage(page, example);
 	}
 
 }

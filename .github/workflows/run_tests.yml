@@ -8,9 +8,9 @@ on:
 jobs:
   test:
     #runs-on: ubuntu-latest
-    runs-on: self-hosted
-    container:
-      image: quay.io/semoss/test-quay:ubuntu-dind
+    runs-on: CICD-GitHubRunner-private
+    # container:
+    #   image: quay.io/semoss/test-quay:ubuntu-dind
     
     steps:
     

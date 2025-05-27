@@ -199,12 +199,12 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User searches the {string} in the Vector Catalog searchbox")
 	public void user_searches_the_in_the_vector_catalog_searchbox(String catalogName) {
-		embedDocumentPage.searchVectorCatalog(catalogName);
+		embedDocumentPage.searchCatalog(catalogName, timestamp);
 	}
 
 	@Then("User selects the {string} from the Vector catalog")
 	public void user_selects_the_from_the_vector_catalog(String catalogName) {
-		embedDocumentPage.selectVectorFromSearchOptions(catalogName);
+		embedDocumentPage.selectCatalogFromSearchOptions(catalogName, timestamp);
 	}
 
 	@Then("User selects {string} access")
