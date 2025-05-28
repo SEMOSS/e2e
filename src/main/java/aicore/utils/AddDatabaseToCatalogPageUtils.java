@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddDatabaseToCatalogPageUtils {
 
@@ -12,6 +14,9 @@ public class AddDatabaseToCatalogPageUtils {
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CREATE_DATABASE_BUTTON = "Create database";
+	private static final String VERTICAL_OPTIONS_DATA_TEST_ID = "MoreVertIcon";
+	private static final String COPY_ID_OPTION_TEXT = "Copy";
+	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -57,7 +62,36 @@ public class AddDatabaseToCatalogPageUtils {
 		return databaseNameInCatalog;
 	}
 
+	public static boolean verifyDatabaseIsVisbileInCatalog(Page page, String dbName) {
+		boolean isFunctionVisible = page.getByText(dbName).isVisible();
+		return isFunctionVisible;
+	}
+
 	public static void clickOnDatabaseNameInCatalog(Page page, String dbName) {
 		page.getByText(dbName).click();
 	}
+
+	public static void clickOnCopyID(Page page) {
+		page.getByTestId(VERTICAL_OPTIONS_DATA_TEST_ID).click();
+		page.getByRole(AriaRole.MENUITEM, new Page.GetByRoleOptions().setName(COPY_ID_OPTION_TEXT)).click();
+	}
+
+	public static String verifyCopyIdSuccessToastMessage(Page page, String toastMessage) {
+		Locator toastAlert = page.getByRole(AriaRole.ALERT)
+				.filter(new Locator.FilterOptions().setHasText(toastMessage));
+		toastAlert.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return toastAlert.textContent().trim();
+	}
+
+	public static void searchFilterValue(Page page, String filterValue) {
+		page.getByPlaceholder("Search by...").fill(filterValue);
+	}
+
+	public static void selectFilterValue(Page page, String filterCategory, String filterValue) {
+		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
+				.replace("{filterValue}", filterValue));
+		filterValueLocator.waitFor();
+		filterValueLocator.click();
+	}
+
 }

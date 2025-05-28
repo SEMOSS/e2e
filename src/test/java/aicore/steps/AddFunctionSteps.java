@@ -93,7 +93,7 @@ public class AddFunctionSteps {
 
 	@And("User applies each filter and validate {string} function is visible on the page")
 	public void user_applies_each_filter_and_validate_function_is_visible_on_the_page(String functionName,
-			DataTable dataTable) throws InterruptedException {
+			DataTable dataTable) {
 		final String FILTER_CATEGORY_NAME = "FILTER_CATEGORY";
 		final String FILTER_VALUE_NAME = "FILTER_VALUE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);

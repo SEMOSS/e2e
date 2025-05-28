@@ -150,14 +150,6 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 				.textContent();
 		return functionNameInCatalog;
 	}
-// change in main
-	// Locator functionNameLocator =
-	// page.getByText(CATALOG_FUNCTION.replace("{FunctionName}",
-	// functionName)).first();
-	// functionNameLocator.isVisible();
-	// String functionNameInCatalog = functionNameLocator.textContent();
-	// return functionNameInCatalog;
-	// }
 
 	public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
 		boolean isFunctionVisible = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
