@@ -210,7 +210,7 @@ public class SetupHooks {
 		final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 		final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 		final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
-		final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Function']";
+		final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
 		boolean isDeleted = CommonUtils.deleteCatalog(page, ACCESS_CONTROL_XPATH, DELETE_BUTTON_XPATH,
 				CONFIRMATION_POPUP_DELETE_BUTTON_XPATH, DELETE_TOAST_MESSAGE_XPATH);
 

@@ -1,7 +1,6 @@
-Feature: View existing databases on database Catalog page
+Feature: View existing databases on database catalog page
 
-  @LoginWithAdmin
-  Scenario: Create Function using ZIP file
+  Background: Create and edit database
     Given User navigates to Open Database
     When User clicks on Add Database
     Then User selects database 'ZIP'
@@ -17,7 +16,7 @@ Feature: View existing databases on database Catalog page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: view and validate filter functionality - My Functions
     Given User navigates to Open Database
     Then User sees the database name 'TestDatabase' in the database catalog
@@ -31,4 +30,5 @@ Feature: View existing databases on database Catalog page
       | Data Restrictions   | IP ALLOWED        |
     When User clicks on bookmark button of database
     Then User sees the database name 'TestDatabase' in the Bookmarked section
-    When User clicks on the database name 'TestDatabase' in the database catalog
+    When User clicks on bookmark button to unbookmark database
+    And User clicks on the database name 'TestDatabase' in the database catalog

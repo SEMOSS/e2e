@@ -54,4 +54,16 @@ public class AddDatabaseToCatalogPage {
 	public void selectFilterValue(String filterCategory, String filterValue) {
 		AddDatabaseToCatalogPageUtils.selectFilterValue(page, filterCategory, filterValue);
 	}
+
+	public void clickOnBookmark() {
+		AddDatabaseToCatalogPageUtils.clickOnBookmark(page);
+	}
+
+	public void clickOnUnbookmark() {
+		AddDatabaseToCatalogPageUtils.clickOnUnbookmark(page);
+	}
+
+	public boolean verifyCatalogDisplayedUnderBookmarkedSection(String catalaogName) {
+		return AddDatabaseToCatalogPageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
+	}
 }

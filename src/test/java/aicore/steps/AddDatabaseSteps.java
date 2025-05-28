@@ -50,7 +50,6 @@ public class AddDatabaseSteps {
 		} else {
 			Assertions.assertEquals(fileName, uploadedFileName, "function Document file is not uploaded successfully");
 		}
-
 	}
 
 	@And("User clicks on Create Database button")
@@ -98,17 +97,27 @@ public class AddDatabaseSteps {
 				boolean isDatabaseVisible = addDatabaseToCatalogPage.verifyDatabaseIsVisbileInCatalog(databaseName);
 				Assertions.assertTrue(isDatabaseVisible, "Database is not present in the databse catalog for " + " ' "
 						+ filterValue + " ' " + " filter value");
+				// To de-select selected filter we again call this method
+				addDatabaseToCatalogPage.selectFilterValue(filterCategory, filterValue);
 			}
 		}
 	}
 
 	@When("User clicks on bookmark button of database")
 	public void user_clicks_on_bookmark_button_of_database() {
-
+		addDatabaseToCatalogPage.clickOnBookmark();
 	}
 
 	@Then("User sees the database name {string} in the Bookmarked section")
-	public void user_sees_the_database_name_in_the_bookmarked_section(String string) {
+	public void user_sees_the_database_name_in_the_bookmarked_section(String catalogName) {
+		boolean iscatalogDisplayedUnderBookmarkedSection = addDatabaseToCatalogPage
+				.verifyCatalogDisplayedUnderBookmarkedSection(catalogName);
+		Assertions.assertTrue(iscatalogDisplayedUnderBookmarkedSection,
+				catalogName + " " + "not dispaled under bookmarked section");
+	}
 
+	@When("User clicks on bookmark button to unbookmark database")
+	public void user_clicks_on_bookmark_button_ot_unbookmark_database() {
+		addDatabaseToCatalogPage.clickOnUnbookmark();
 	}
 }

@@ -17,6 +17,9 @@ public class AddDatabaseToCatalogPageUtils {
 	private static final String VERTICAL_OPTIONS_DATA_TEST_ID = "MoreVertIcon";
 	private static final String COPY_ID_OPTION_TEXT = "Copy";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
+	private static final String BOOKMARK_ICON_DATA_TEST_ID = "BookmarkBorderIcon";
+	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
+	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -92,6 +95,20 @@ public class AddDatabaseToCatalogPageUtils {
 				.replace("{filterValue}", filterValue));
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
+	}
+
+	public static void clickOnBookmark(Page page) {
+		page.getByTestId(BOOKMARK_ICON_DATA_TEST_ID).isVisible();
+		page.getByTestId(BOOKMARK_ICON_DATA_TEST_ID).click();
+	}
+
+	public static void clickOnUnbookmark(Page page) {
+		page.getByTestId(UNBOOKMARK_ICON_DATA_TEST_ID).first().isVisible();
+		page.getByTestId(UNBOOKMARK_ICON_DATA_TEST_ID).first().click();
+	}
+
+	public static boolean verifyCatalogDisplayedUnderBookmarkedSection(Page page, String catalogName) {
+		return page.locator(CATALOG_UNDER_BOOKMARKED_SECTION_XPATH.replace("{catalogName}", catalogName)).isVisible();
 	}
 
 }
