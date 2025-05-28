@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
+import aicore.pages.ViewUsagePage;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -20,11 +21,13 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	private HomePage homePage;
 	private OpenStoragePage storagePage;
 	protected static String timestamp;
+	private ViewUsagePage viewUsagePage;
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
+		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 	}
 
 	@Override
@@ -165,14 +168,14 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		}
 	}
 
-	@And("User clicks on Usage")
+	@And("User clicks on Usage tab for storage")
 	public void user_clicks_on_usage() {
-		storagePage.clickOnUsageTab();
+		viewUsagePage.clickOnUsageTab();
 	}
 
-	@Then("User sees an example of {string} with example code")
+	@Then("User sees an example of {string} with example code for storage")
 	public void user_sees_an_example_of_with_example_code(String example) {
-		storagePage.verifyExampleOfStorage(example);
+		viewUsagePage.verifyExample(example);
 	}
 
 }
