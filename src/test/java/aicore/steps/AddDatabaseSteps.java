@@ -13,7 +13,6 @@ import io.cucumber.java.en.When;
 public class AddDatabaseSteps {
     private AddDatabaseToCatalogPage addDatabaseToCatalogPage;
     private HomePage homePage;
-    
 
     public AddDatabaseSteps() {
         homePage = new HomePage(SetupHooks.getPage());
@@ -23,7 +22,6 @@ public class AddDatabaseSteps {
     @Given("User navigates to Open Database")
     public void user_navigates_to_open_database() {
         homePage.clickOnOpenDatabase();
-
     }
 
     @When("User clicks on Add Database")
@@ -43,11 +41,11 @@ public class AddDatabaseSteps {
             String[] ActualFileName = fileName.split("/");
             int fileNameIndex = ActualFileName.length - 1;
             Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
-                    "function Document file is not uploaded successfully");
+                    "Database Document file is not uploaded successfully");
         } else {
-            Assertions.assertEquals(fileName, uploadedFileName, "function Document file is not uploaded successfully");
+            Assertions.assertEquals(fileName, uploadedFileName, "Database Document file is not uploaded successfully");
         }
-        
+
     }
 
     @And("User clicks on Create Database button")
@@ -60,6 +58,11 @@ public class AddDatabaseSteps {
         String databaseNameInCatalog = addDatabaseToCatalogPage.verifyDatabaseNameInCatalog(dbName);
         Assertions.assertEquals(dbName, databaseNameInCatalog,
                 "Database name is not visible in the database catalog");
+    }
+
+    @And("User clicks on the database name {string} in the database catalog")
+    public void user_clicks_the_database_name_in_the_database_catalog(String dbName) {
+        addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName);
     }
 
 }

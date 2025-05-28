@@ -31,4 +31,8 @@ public class AddDatabaseToCatalogPage {
         return AddDatabaseToCatalogPageUtils.verifyDatabaseNameInCatalog(page, dbName);
     }
 
+    public void clickOnDatabaseNameInCatalog(String dbName) {
+        AddDatabaseToCatalogPageUtils.clickOnDatabaseNameInCatalog(page, dbName);
+    }
+
 }

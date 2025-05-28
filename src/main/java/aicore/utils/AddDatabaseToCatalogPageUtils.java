@@ -56,4 +56,8 @@ public class AddDatabaseToCatalogPageUtils {
         String databaseNameInCatalog = page.getByText(dbName).textContent();
         return databaseNameInCatalog;
     }
+
+    public static void clickOnDatabaseNameInCatalog(Page page, String dbName) {
+        page.getByText(dbName).click();
+    }
 }
