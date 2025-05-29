@@ -7,7 +7,6 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class StoragePageUtils {
 
 	private static final String ADD_STORAGE_BUTTON_XPATH = "[aria-label=\"Navigate to import Storage\"]";
-	private static final String STORAGE_XPATH = "//div[@class='css-axw7ok']//p[text()='{Storage}']";
 	private static final String CREATE_STORAGE_BUTTON = "//span[text()='Create storage']";
 	private static final String STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added to catalog storage']";
 	private static final String STORAGE_TITLE_XPATH = "//h4[text()='{title}']";
@@ -27,7 +26,8 @@ public class StoragePageUtils {
 	}
 
 	public static void selectStorage(Page page, String storageName) {
-		page.click(STORAGE_XPATH.replace("{Storage}", storageName));
+		Locator locator = page.locator("p", new Page.LocatorOptions().setHasText(storageName));
+		locator.click();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
