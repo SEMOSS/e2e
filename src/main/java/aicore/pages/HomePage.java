@@ -26,7 +26,9 @@ public class HomePage {
 	private static final String OPEN_FUNCTION_XPATH = "//a[@data-testid='Function-icon']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";		
+	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";	
+	public static final String OPEN_DATABASE= "Database-icon";	
+	
 		
 
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
@@ -103,6 +105,11 @@ public class HomePage {
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
 		}
+	}
+
+	public void clickOnOpenDatabase() {
+		page.getByTestId(OPEN_DATABASE).isVisible();
+		page.getByTestId(OPEN_DATABASE).click();
 	}
 
 }
