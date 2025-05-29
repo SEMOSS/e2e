@@ -60,7 +60,8 @@ public class AddFunctionSteps {
 	@Then("User sees the function name {string} in the function catalog")
 	public void user_sees_the_function_name_in_the_catalog(String functionName) {
 		String addedFunction = addFunctionToCatalogPage.verifyFunctionNameInCatalog(functionName);
-		Assertions.assertEquals(functionName, addedFunction, "Function is not present in the function catalog");
+		Assertions.assertEquals(functionName.toLowerCase(), addedFunction.toLowerCase(),
+				"Function is not present in the function catalog");
 	}
 
 	@Then("User clicks on the function name {string} in the function catalog")

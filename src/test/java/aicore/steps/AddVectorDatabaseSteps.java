@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.ChangeAccessPopUpPage;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
@@ -20,13 +21,14 @@ public class AddVectorDatabaseSteps {
 	private OpenVectorPage vectorPage;
 	private String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
+	private ChangeAccessPopUpPage chnageAccessPopUpPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-//		timestamp = AddModelSteps.timestamp.substring(0, 5);
 		timestamp = CommonUtils.getTimeStampName();
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage(), timestamp);
+		chnageAccessPopUpPage = new ChangeAccessPopUpPage(SetupHooks.getPage());
 
 	}
 
@@ -190,9 +192,9 @@ public class AddVectorDatabaseSteps {
 	@Then("User should see the {string} popup with following options:")
 	public void user_should_see_the_popup_with_following_options(String expectedTitle,
 			io.cucumber.datatable.DataTable dataTable) {
-		Assertions.assertTrue(embedDocumentPage.isPopupVisible(), expectedTitle + " popup is not visible");
+		Assertions.assertTrue(chnageAccessPopUpPage.isPopupVisible(), expectedTitle + " popup is not visible");
 		for (String option : dataTable.asList()) {
-			Assertions.assertTrue(embedDocumentPage.isOptionVisible(option),
+			Assertions.assertTrue(chnageAccessPopUpPage.isOptionVisible(option),
 					option + " is not visible in Change Access popup");
 		}
 	}
@@ -209,23 +211,23 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User selects {string} access")
 	public void user_selects_access(String accessType) {
-		embedDocumentPage.selectAccessType(accessType);
+		chnageAccessPopUpPage.selectAccessType(accessType);
 	}
 
 	@Then("User types a comment as {string}")
 	public void user_types_a_comment_as(String comment) {
-		embedDocumentPage.enterComment(comment);
+		chnageAccessPopUpPage.enterComment(comment);
 	}
 
 	@Then("User clicks on Request button")
 	public void user_clicks_on_request_button() {
-		embedDocumentPage.clickOnRequestButton();
+		chnageAccessPopUpPage.clickOnRequestButton();
 	}
 
 	@Then("User should successfully request access given the Vector is requestable with a toast message as {string}")
 	public void user_should_successfully_request_access_given_the_vector_is_requestable_with_a_toast_message_as(
 			String expectedMessage) {
-		boolean toastVisible = embedDocumentPage.isRequestSuccessToastVisible();
+		boolean toastVisible = chnageAccessPopUpPage.isRequestSuccessToastVisible();
 		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
 	}
 

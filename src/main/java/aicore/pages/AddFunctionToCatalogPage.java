@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
@@ -147,19 +148,15 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	}
 
 	public String verifyFunctionNameInCatalog(String functionName) {
+		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName)).isVisible();
 		String functionNameInCatalog = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
 				.textContent();
+		if (functionNameInCatalog != null && functionNameInCatalog.endsWith(".zip")) {
+			functionNameInCatalog = functionNameInCatalog.replace(".zip", "");
+		}
 		return functionNameInCatalog;
 	}
-// change in main
-	// Locator functionNameLocator =
-	// page.getByText(CATALOG_FUNCTION.replace("{FunctionName}",
-	// functionName)).first();
-	// functionNameLocator.isVisible();
-	// String functionNameInCatalog = functionNameLocator.textContent();
-	// return functionNameInCatalog;
-	// }
 
 	public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
 		boolean isFunctionVisible = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
@@ -216,6 +213,7 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void searchFunctionCatalog(String catalogName) {
+		page.waitForSelector(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH);
 		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).click();
 		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
 	}

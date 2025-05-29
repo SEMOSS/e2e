@@ -15,7 +15,4 @@ public abstract class AbstractSearchAndSelectCatalogPage {
 		AbstarctSearchAndSelectCatalogPageUtils.searchCatalog(page, catalogName, timestamp);
 	}
 
-	public void isOptionVisible(String option) {
-		AbstarctSearchAndSelectCatalogPageUtils.isOptionVisible(page, option);
-	}
 }

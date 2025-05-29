@@ -8,7 +8,7 @@ Feature: Add Function
     And User clicks on Create Function button
     And User sees the function name 'WeatherFunctionTest' in the function catalog
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Change access control for created function
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
@@ -29,6 +29,12 @@ Feature: Add Function
       | Comment Box    |
       | Cancel Button  |
       | Request Button |
+    And User click on cancel button
+    And User logs out from the application
+    Then User login as "Author"
+    And User navigates to Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    And User selects the 'WeatherFunctionTest' from the function catalog
 
   @LoginWithAdmin
   Scenario: Change access control for created function
