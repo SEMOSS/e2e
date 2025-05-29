@@ -5,15 +5,18 @@ import java.util.Map;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddFunctionToCatalogPage;
+import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class ViewAddFunctionOptionsSteps extends AbstractAddCatalogBase {
 	AddFunctionToCatalogPage functionPage;
+	protected static String timestamp;
 
 	public ViewAddFunctionOptionsSteps() {
-		functionPage = new AddFunctionToCatalogPage(SetupHooks.getPage());
+		timestamp = CommonUtils.getTimeStampName();
+		functionPage = new AddFunctionToCatalogPage(SetupHooks.getPage(),timestamp);
 	}
 
 	@When("User clicks on Add Function button")
