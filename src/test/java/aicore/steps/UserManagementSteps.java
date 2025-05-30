@@ -34,7 +34,7 @@ public class UserManagementSteps {
 
 	@And("User navigates to settings")
 	public void user_navigates_to_settings() {
-		homePage.clickOnOpenSetting();
+		homePage.clickOnOpenSettings();
 	}
 
 	@And("User enables admin mode")

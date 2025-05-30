@@ -8,16 +8,17 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-public class AddDatabaseToCatalogPageUtils {
+public class AddDatabasePageUtils {
 
 	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CREATE_DATABASE_BUTTON = "Create database";
-	private static final String VERTICAL_OPTIONS_DATA_TEST_ID = "MoreVertIcon";
+
+	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
 	private static final String COPY_ID_OPTION_TEXT = "Copy";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
-	private static final String BOOKMARK_ICON_DATA_TEST_ID = "BookmarkBorderIcon";
+	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
 	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
 	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";
 
@@ -74,8 +75,8 @@ public class AddDatabaseToCatalogPageUtils {
 		page.getByText(dbName).click();
 	}
 
-	public static void clickOnCopyID(Page page) {
-		page.getByTestId(VERTICAL_OPTIONS_DATA_TEST_ID).click();
+	public static void clickOnCopyID(Page page, String catalogName) {
+		page.locator(VERTICAL_OPTIONS_XPATH.replace("{catalogName}", catalogName)).click();
 		page.getByRole(AriaRole.MENUITEM, new Page.GetByRoleOptions().setName(COPY_ID_OPTION_TEXT)).click();
 	}
 
@@ -97,14 +98,12 @@ public class AddDatabaseToCatalogPageUtils {
 		filterValueLocator.click();
 	}
 
-	public static void clickOnBookmark(Page page) {
-		page.getByTestId(BOOKMARK_ICON_DATA_TEST_ID).isVisible();
-		page.getByTestId(BOOKMARK_ICON_DATA_TEST_ID).click();
+	public static void clickOnBookmark(Page page, String catalogName) {
+		page.locator(BOOKMARK_ICON_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
-	public static void clickOnUnbookmark(Page page) {
-		page.getByTestId(UNBOOKMARK_ICON_DATA_TEST_ID).first().isVisible();
-		page.getByTestId(UNBOOKMARK_ICON_DATA_TEST_ID).first().click();
+	public static void clickOnUnbookmark(Page page, String catalogName) {
+		page.locator(BOOKMARK_ICON_XPATH.replace("{catalogName}", catalogName)).first().click();
 	}
 
 	public static boolean verifyCatalogDisplayedUnderBookmarkedSection(Page page, String catalogName) {

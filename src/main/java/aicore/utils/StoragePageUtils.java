@@ -7,7 +7,6 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class StoragePageUtils {
 
 	private static final String ADD_STORAGE_BUTTON_XPATH = "[aria-label=\"Navigate to import Storage\"]";
-	private static final String STORAGE_XPATH = "//div[@class='css-axw7ok']//p[text()='{Storage}']";
 	private static final String CREATE_STORAGE_BUTTON = "//span[text()='Create storage']";
 	private static final String STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added to catalog storage']";
 	private static final String STORAGE_TITLE_XPATH = "//h4[text()='{title}']";
@@ -21,15 +20,14 @@ public class StoragePageUtils {
 	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-textField-S3_BUCKET";
 	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_SECRET_KEY";
-	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
-	private static final String USAGE_TAB_EXAMPLE_STRING_XPATH = "//h6[text()='{Usage Example}']/../pre/code";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
 	}
 
 	public static void selectStorage(Page page, String storageName) {
-		page.click(STORAGE_XPATH.replace("{Storage}", storageName));
+		Locator locator = page.locator("p", new Page.LocatorOptions().setHasText(storageName));
+		locator.click();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
@@ -185,18 +183,4 @@ public class StoragePageUtils {
 		fieldLocator.fill(fieldValue);
 	}
 
-	public static void clickOnUsageTab(Page page) {
-		page.locator(USAGE_TAB_XPATH).isVisible();
-		page.locator(USAGE_TAB_XPATH).click();
-	}
-
-	public static void verifyExampleOfStorage(Page page, String example) {
-		page.getByText(example, new Page.GetByTextOptions().setExact(true)).isVisible();
-		String exampleXpath = USAGE_TAB_EXAMPLE_STRING_XPATH.replace("{Usage Example}", example);
-		page.locator(exampleXpath).isVisible();
-		String exampleText = page.locator(exampleXpath).textContent();
-		if (exampleText == null || exampleText.trim().length() <= 1) {
-			throw new AssertionError("Example code of storage is not visible for"+ example);
-		}
-	}
 }

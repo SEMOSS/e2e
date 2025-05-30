@@ -2,7 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.AddDatabaseToCatalogPageUtils;
+import aicore.utils.AddDatabasePageUtils;
 
 public class AddDatabaseToCatalogPage {
 	private Page page;
@@ -12,58 +12,58 @@ public class AddDatabaseToCatalogPage {
 	}
 
 	public void clickOnAddDatabaseButton() {
-		AddDatabaseToCatalogPageUtils.clickAddDatabaseButton(page);
+		AddDatabasePageUtils.clickAddDatabaseButton(page);
 	}
 
 	public void selectDatabaseType(String dbType) {
-		AddDatabaseToCatalogPageUtils.selectDatabaseType(page, dbType);
+		AddDatabasePageUtils.selectDatabaseType(page, dbType);
 	}
 
 	public String uploadDatabaseFile(String fileName) {
-		return AddDatabaseToCatalogPageUtils.uploadDatabaseFile(page, fileName);
+		return AddDatabasePageUtils.uploadDatabaseFile(page, fileName);
 	}
 
 	public void clickOnCreateDatabaseButton() {
-		AddDatabaseToCatalogPageUtils.clickCreateDatabaseButton(page);
+		AddDatabasePageUtils.clickCreateDatabaseButton(page);
 	}
 
 	public String verifyDatabaseNameInCatalog(String dbName) {
-		return AddDatabaseToCatalogPageUtils.verifyDatabaseNameInCatalog(page, dbName);
+		return AddDatabasePageUtils.verifyDatabaseNameInCatalog(page, dbName);
 	}
 
 	public boolean verifyDatabaseIsVisbileInCatalog(String dbName) {
-		return AddDatabaseToCatalogPageUtils.verifyDatabaseIsVisbileInCatalog(page, dbName);
+		return AddDatabasePageUtils.verifyDatabaseIsVisbileInCatalog(page, dbName);
 	}
 
 	public void clickOnDatabaseNameInCatalog(String dbName) {
-		AddDatabaseToCatalogPageUtils.clickOnDatabaseNameInCatalog(page, dbName);
+		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 	}
 
-	public void clickOnCopyID() {
-		AddDatabaseToCatalogPageUtils.clickOnCopyID(page);
+	public void clickOnCopyID(String dbName) {
+		AddDatabasePageUtils.clickOnCopyID(page, dbName);
 	}
 
 	public String verifyCopyIdSuccessToastMessage(String toastMessage) {
-		return AddDatabaseToCatalogPageUtils.verifyCopyIdSuccessToastMessage(page, toastMessage);
+		return AddDatabasePageUtils.verifyCopyIdSuccessToastMessage(page, toastMessage);
 	}
 
 	public void searchFilterValue(String filterValue) {
-		AddDatabaseToCatalogPageUtils.searchFilterValue(page, filterValue);
+		AddDatabasePageUtils.searchFilterValue(page, filterValue);
 	}
 
 	public void selectFilterValue(String filterCategory, String filterValue) {
-		AddDatabaseToCatalogPageUtils.selectFilterValue(page, filterCategory, filterValue);
+		AddDatabasePageUtils.selectFilterValue(page, filterCategory, filterValue);
 	}
 
-	public void clickOnBookmark() {
-		AddDatabaseToCatalogPageUtils.clickOnBookmark(page);
+	public void clickOnBookmark(String catalogName) {
+		AddDatabasePageUtils.clickOnBookmark(page, catalogName);
 	}
 
-	public void clickOnUnbookmark() {
-		AddDatabaseToCatalogPageUtils.clickOnUnbookmark(page);
+	public void clickOnUnbookmark(String catalogName) {
+		AddDatabasePageUtils.clickOnUnbookmark(page, catalogName);
 	}
 
 	public boolean verifyCatalogDisplayedUnderBookmarkedSection(String catalaogName) {
-		return AddDatabaseToCatalogPageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
+		return AddDatabasePageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
 	}
 }

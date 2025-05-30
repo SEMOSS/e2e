@@ -4,7 +4,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import aicore.utils.CommonUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.ConfigUtils;
 
@@ -25,8 +24,6 @@ public class OpenVectorPage {
 	private static final String API_KEY_ID = "#API_KEY";
 	private static final String NAME_SPACE_ID = "#NAMESPACE";
 	private static final String CREATE_VECTOR_BUTTON_XPATH = "//button[@type='submit']";
-	// private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[@class=\"MuiAlert-message css-1pxa9xg-MuiAlert-message\"]";
-	private static final String VECTOR_TITLE_XPATH = "//h4[@class=\"MuiTypography-root MuiTypography-h4 css-10k44j9-MuiTypography-root\"]";
 	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message css-')]";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String EMBEDDER_ENGINE_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'EMBEDDER_ENGINE_NAME')]";
@@ -52,7 +49,8 @@ public class OpenVectorPage {
 	}
 
 	public void selectConnections(String connectionName) {
-		page.click(CONNECTIONS_XPATH.replace("{Connections}", connectionName));
+		Locator locator = page.locator("p", new Page.LocatorOptions().setHasText(connectionName));
+		locator.click();
 	}
 
 	public void enterVectorCatalogName(String vCatalogName) {

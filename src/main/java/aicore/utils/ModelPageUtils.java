@@ -13,6 +13,7 @@ public class ModelPageUtils {
 	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
 	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
+	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
 	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
 	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
 	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
@@ -28,6 +29,7 @@ public class ModelPageUtils {
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	// Settings field
+	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
 	private static final String MAKE_PUBLIC_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//p[text()='{title}']";
 	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[1]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
@@ -51,8 +53,6 @@ public class ModelPageUtils {
 	private static final String SAVE_BUTTON_XPATH = "//button[contains(@class, 'MuiButton-containedPrimary') and .//span[text()='Save']]";
 	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
 	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
-	private static final String MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'Successfully added member permissions')]";
-	private static final String MEMBER_ADDED_SUCCESS_TOAST_MESSAGE_CLOSE_ICON_XPATH = "//button[@aria-label='Close']";
 	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "td:has(button svg[data-testid='EditIcon']) button svg[data-testid='DeleteIcon']";
 	private static final String CONFIRM_BUTTON_XPATH = "//button[span[text()='Confirm']]";
 	// Edit model
@@ -79,10 +79,15 @@ public class ModelPageUtils {
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 
-	public void addModelButton(Page page) {
+	public static void clickAddModelButton(Page page) {
+		// TODO switch to data-test-id
 		page.getByLabel("Navigate to import Model").click();
 	}
 
+	public static void selectModel(Page page, String modelName) {
+		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
+	}
+	
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
 	}
@@ -157,6 +162,11 @@ public class ModelPageUtils {
 		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp))).isVisible();
 		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp)).click();
 	}
+	
+	public static void addedModelCard(Page page, String modelName) {
+		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).isVisible();
+		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).click();
+	}
 
 	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName, String timestamp) {
 		String modelNameWithTimestamp = SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp);
@@ -218,7 +228,6 @@ public class ModelPageUtils {
 	}
 
 	public static String verifyDescriptionText(Page page) {
-
 		String descriptionText = page.textContent(DESCRIPTION_TEXT_XPATH).trim();
 		return descriptionText;
 	}
@@ -472,10 +481,11 @@ public class ModelPageUtils {
 			modelId = clipboardText.trim();
 		} else {
 			// get current url of the page
-            String currentUrl = page.url();
-            // Extract the substring after the last slash this will also give us the model id
-            int lastSlashIndex = currentUrl.lastIndexOf('/');
-            modelId = currentUrl.substring(lastSlashIndex + 1);
+			String currentUrl = page.url();
+			// Extract the substring after the last slash this will also give us the model
+			// id
+			int lastSlashIndex = currentUrl.lastIndexOf('/');
+			modelId = currentUrl.substring(lastSlashIndex + 1);
 		}
 		return modelId;
 	}

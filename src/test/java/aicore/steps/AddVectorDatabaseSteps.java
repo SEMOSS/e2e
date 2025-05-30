@@ -6,6 +6,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
+import aicore.pages.ViewUsagePage;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -18,12 +19,14 @@ public class AddVectorDatabaseSteps {
 	private OpenVectorPage vectorPage;
 	private String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
+	private ViewUsagePage viewUsagePage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp.substring(0, 5);
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
+		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Vector engine")
@@ -146,13 +149,13 @@ public class AddVectorDatabaseSteps {
 		String expectedChunkingStrategy = null;
 
 		switch (chunkingStrategy) {
-		case "Token":
-			expectedChunkingStrategy = "ALL";
-			break;
-		default:
-			expectedChunkingStrategy = chunkingStrategy.trim().toUpperCase();
-			expectedChunkingStrategy = expectedChunkingStrategy.replace(" ", "_");
-			break;
+			case "Token":
+				expectedChunkingStrategy = "ALL";
+				break;
+			default:
+				expectedChunkingStrategy = chunkingStrategy.trim().toUpperCase();
+				expectedChunkingStrategy = expectedChunkingStrategy.replace(" ", "_");
+				break;
 		}
 		assertEquals(actualChunkingStrategy, expectedChunkingStrategy, "Chunking strategy is not matching");
 	}
@@ -176,6 +179,16 @@ public class AddVectorDatabaseSteps {
 	@Then("User sees deleted Vector success toast message {string}")
 	public void user_sees_deleted_Vector_success_toast_message(String toastMessage) {
 		vectorPage.verifyToastMessage(toastMessage);
+	}
+
+	@And("User clicks on Usage tab for Vector DB")
+	public void user_clicks_on_usage() {
+		viewUsagePage.clickOnUsageTab();
+	}
+
+	@Then("User sees an example of {string} with example code for Vector DB")
+	public void user_sees_an_example_of_with_example_code(String example) {
+		viewUsagePage.verifyExample(example);
 	}
 
 }

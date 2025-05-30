@@ -26,7 +26,6 @@ public class AddDatabaseSteps {
 	@Given("User navigates to Open Database")
 	public void user_navigates_to_open_database() {
 		homePage.clickOnOpenDatabase();
-
 	}
 
 	@When("User clicks on Add Database")
@@ -46,10 +45,11 @@ public class AddDatabaseSteps {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;
 			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
-					"function Document file is not uploaded successfully");
+					"Database Document file is not uploaded successfully");
 		} else {
-			Assertions.assertEquals(fileName, uploadedFileName, "function Document file is not uploaded successfully");
+			Assertions.assertEquals(fileName, uploadedFileName, "Database Document file is not uploaded successfully");
 		}
+
 	}
 
 	@And("User clicks on Create Database button")
@@ -63,14 +63,14 @@ public class AddDatabaseSteps {
 		Assertions.assertEquals(dbName, databaseNameInCatalog, "Database name is not visible in the database catalog");
 	}
 
-	@Then("User clicks on the database name {string} in the database catalog")
-	public void user_clicks_on_the_database_name_in_the_database_catalog(String dbName) {
+	@And("User clicks on the database name {string} in the database catalog")
+	public void user_clicks_the_database_name_in_the_database_catalog(String dbName) {
 		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName);
 	}
 
-	@When("User clicks on Copy ID option of database")
-	public void user_clicks_on_copy_id_option_of_database() {
-		addDatabaseToCatalogPage.clickOnCopyID();
+	@When("User clicks on Copy ID option of {string} database")
+	public void user_clicks_on_copy_id_option_of_database(String dbName) {
+		addDatabaseToCatalogPage.clickOnCopyID(dbName);
 	}
 
 	@Then("User can see a copy success toast message as {string}")
@@ -103,9 +103,9 @@ public class AddDatabaseSteps {
 		}
 	}
 
-	@When("User clicks on bookmark button of database")
-	public void user_clicks_on_bookmark_button_of_database() {
-		addDatabaseToCatalogPage.clickOnBookmark();
+	@When("User clicks on bookmark button of {string} database")
+	public void user_clicks_on_bookmark_button_of_database(String dbName) {
+		addDatabaseToCatalogPage.clickOnBookmark(dbName);
 	}
 
 	@Then("User sees the database name {string} in the Bookmarked section")
@@ -116,8 +116,8 @@ public class AddDatabaseSteps {
 				catalogName + " " + "not dispaled under bookmarked section");
 	}
 
-	@When("User clicks on bookmark button to unbookmark database")
-	public void user_clicks_on_bookmark_button_ot_unbookmark_database() {
-		addDatabaseToCatalogPage.clickOnUnbookmark();
+	@When("User clicks on bookmark button to unbookmark {string} database")
+	public void user_clicks_on_bookmark_button_ot_unbookmark_database(String dbName) {
+		addDatabaseToCatalogPage.clickOnUnbookmark(dbName);
 	}
 }

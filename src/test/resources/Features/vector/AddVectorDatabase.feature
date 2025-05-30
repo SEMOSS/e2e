@@ -13,8 +13,8 @@ Feature: Add Vector Database
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
-    
-@LoginWithAdmin
+
+  @LoginWithAdmin
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
     Given User clicks on Open Vector engine
     When User clicks on Add Vector button
@@ -35,13 +35,20 @@ Feature: Add Vector Database
     And User can see chunking strategy in 'CHUNKING_STRATEGY' field as '<chunking_strategy>' in SMSS properties
     And User navigates to Open Model
 
-    Examples: 
+    Examples:
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
       | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
       | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
- 
 
-
-
+  #@LoginWithAdmin
+  #Scenario: Validate usage of storage
+    #Given User clicks on Open Vector engine
+    #And User clicks on the created Vector card name as 'FAISS Vector DB03'
+    #And User can see the Vector title as 'FAISS Vector DB03'
+    #When User clicks on Usage tab for Vector DB
+    #Then User sees an example of "How to use in Javascript" with example code for Vector DB
+    #And User sees an example of "How to use in Python" with example code for Vector DB
+    #And User sees an example of "How to use with Langchain API" with example code for Vector DB
+    #And User sees an example of "How to use in Java" with example code for Vector DB

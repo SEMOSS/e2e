@@ -20,7 +20,7 @@ Feature: View existing databases on database catalog page
   Scenario: view and validate filter functionality - My Functions
     Given User navigates to Open Database
     Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on Copy ID option of database
+    When User clicks on Copy ID option of 'TestDatabase' database
     Then User can see a copy success toast message as 'Succesfully copied to clipboard'
     And User applies each filter and validate 'TestDatabase' database is visible on the page
       | FILTER_CATEGORY     | FILTER_VALUE      |
@@ -28,7 +28,7 @@ Feature: View existing databases on database catalog page
       | Domain              | SAP, AI           |
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
-    When User clicks on bookmark button of database
+    When User clicks on bookmark button of 'TestDatabase' database
     Then User sees the database name 'TestDatabase' in the Bookmarked section
-    When User clicks on bookmark button to unbookmark database
+    When User clicks on bookmark button to unbookmark 'TestDatabase' database
     And User clicks on the database name 'TestDatabase' in the database catalog
