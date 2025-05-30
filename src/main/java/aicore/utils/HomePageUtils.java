@@ -3,6 +3,7 @@ package aicore.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
@@ -17,7 +18,7 @@ public class HomePageUtils {
 	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
-	private static final String OPEN_FUNCTION_XPATH = "//a[@data-testid='Function-icon']";
+	private static final String OPEN_FUNCTION_DATA_TEST_ID_VALUE = "Function-icon";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	public static final String OPEN_DATABASE = "Database-icon";
@@ -51,8 +52,8 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenFunction(Page page) {
-		page.getByTestId(OPEN_FUNCTION_XPATH).isVisible();
-		page.getByTestId(OPEN_FUNCTION_XPATH).click();
+		Locator locator = page.getByTestId(OPEN_FUNCTION_DATA_TEST_ID_VALUE);
+		locator.click();
 	}
 
 	public static void clickOnBIApp(Page page) {

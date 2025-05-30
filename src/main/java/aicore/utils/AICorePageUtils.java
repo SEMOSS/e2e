@@ -12,9 +12,10 @@ public class AICorePageUtils {
 
 	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), '{TOAST_MESSAGE}')]";
 
-	public static void verifyToastMessage(Page page, String msg) {
-		page.locator(TOAST_MESSAGE_XPATH.replace("{TOAST_MESSAGE}", msg))
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+	public static Locator verifyToastMessage(Page page, String msg) {
+		Locator locator = page.locator(TOAST_MESSAGE_XPATH.replace("{TOAST_MESSAGE}", msg));
+				locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+				return locator;
 	}
 
 	public static String readStringFromClipboard(Page page) {

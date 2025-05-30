@@ -1,8 +1,6 @@
 package aicore.pages;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 
 public class JobManagementPage {
 
@@ -12,7 +10,6 @@ public class JobManagementPage {
 	public JobManagementPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
-
 	}
 
 	public void clickOnJobTile() {
@@ -40,7 +37,7 @@ public class JobManagementPage {
 	}
 
 	public void clickEditIcon(String jobTitle) {
-		JobPageUtils.clickEditIcon(page,  jobTitle + " " + timestamp);
+		JobPageUtils.clickEditIcon(page, jobTitle + " " + timestamp);
 	}
 
 	public void editTags(int value) {
@@ -96,7 +93,7 @@ public class JobManagementPage {
 	}
 
 	public void clickResumeButton() {
-		JobPageUtils.clickResumeButton(page);		
+		JobPageUtils.clickResumeButton(page);
 	}
 
 	public boolean isResumeButtonReverted() {

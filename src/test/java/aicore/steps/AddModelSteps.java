@@ -37,7 +37,7 @@ public class AddModelSteps {
 
 	@When("User clicks on Add Model")
 	public void user_clicks_on_add_model() {
-		openModelPage.addModelButton();
+		openModelPage.clickAddModelButton();
 	}
 
 	@When("User selects {string}")

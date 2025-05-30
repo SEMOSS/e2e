@@ -15,10 +15,8 @@ public class AddModelToCatalogPage {
 	private Page page;
 	private String timestamp;
 
-	private static final String SELECT_OPENAI_XPATH = "//p[text()='{ModelName}']";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
-	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Model']";
 
 	public AddModelToCatalogPage(Page page, String timestamp) {
@@ -26,12 +24,12 @@ public class AddModelToCatalogPage {
 		this.timestamp = timestamp;
 	}
 
-	public void addModelButton() {
-		page.getByLabel("Navigate to import Model").click();
+	public void clickAddModelButton() {
+		ModelPageUtils.clickAddModelButton(page);
 	}
 
 	public void selectModel(String modelName) {
-		page.click(SELECT_OPENAI_XPATH.replace("{ModelName}", modelName));
+		ModelPageUtils.selectModel(page, modelName);
 	}
 
 	public void selectOpenAi(String aiModelName) {
@@ -325,11 +323,11 @@ public class AddModelToCatalogPage {
 	}
 
 	public void addedModelCard(String modelName) {
-		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).isVisible();
-		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).click();
+		ModelPageUtils.addedModelCard(page, modelName);
 	}
 
 	public String verifyDeleteToastMessage() {
+		// TODO use AICorePageUtils.verifyToastMessage
 		page.locator(DELETE_TOAST_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String toastMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).textContent();

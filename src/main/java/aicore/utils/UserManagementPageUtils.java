@@ -34,7 +34,6 @@ public class UserManagementPageUtils {
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
 	private static final String ADFS_TOAST_MESSAGE_XPATH = "Succesfully modified adfs properties";
 
-
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
 	}
@@ -140,11 +139,12 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchUser(Page page) {
-		String responseURL = ConfigUtils.getValue("baseUrl") + "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+		String responseURL = ConfigUtils.getValue("baseUrl")
+				+ "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
 		page.waitForResponse(responseURL, () -> {
-			  // Triggers the response
+			// Triggers the response
 			page.fill(SEARCH_BUTTON_XPATH, "UserId");
-			});
+		});
 	}
 
 	public static void clickSelectAllButton(Page page) {
@@ -168,40 +168,24 @@ public class UserManagementPageUtils {
 	}
 
 	public static void updateAccessKeyValue(Page page, String newValue) {
-
 		Locator valueInput = page.locator(CONFIGERATION_KEY_VALUE_XPATH);
-
 		valueInput.fill("");
 		valueInput.fill(newValue);
-
 	}
 
 	public static void clickSaveButtonOFAdfs(Page page) {
-
 		page.locator(SAVE_BUTTON_ADFS_XPATH).click();
-
 	}
 
 	public static String getToastMessage(Page page, String expectedMessage) {
-
-		Locator toast = page.getByRole(AriaRole.ALERT)
-
-				.filter(new Locator.FilterOptions().setHasText(expectedMessage));
-
+		Locator toast = page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(expectedMessage));
 		toast.waitFor(new Locator.WaitForOptions().setTimeout(5000)); // wait until visible
-
 		return toast.textContent().trim();
-
 	}
 
 	public static void waitForToastMessageToDisappear(Page page, String expectedMessage) {
-
-		page.getByRole(AriaRole.ALERT)
-
-				.filter(new Locator.FilterOptions().setHasText(expectedMessage))
-
+		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(expectedMessage))
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-
 	}
 
 	public static void clickOnAuthenticationDropdown(Page page) {
