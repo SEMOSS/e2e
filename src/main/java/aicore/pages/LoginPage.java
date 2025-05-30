@@ -5,61 +5,37 @@ import java.io.IOException;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.ConfigUtils;
-import aicore.utils.UrlUtils;
+import aicore.utils.LoginPageUtils;
 
 public class LoginPage {
 
 	private Page page;
-
-	private static final String INFO_POPUP_ACCEPT_BUTTON_XPATH = "//div[@class='MuiStack-root css-bcmwpg']//button";
-	private static final String MICROSOFT_LOGIN_XPATH = "(//button[@type='button'])[4]";
-	private static final String USERNAME_XPATH = "//input[@type='email']";
-	private static final String NEXT_BUTTON_XPATH = "#idSIButton9";
-	private static final String PASSWORD_XPATH = "//input[@type='password']";
-	private static final String SIGNIN_BUTTON_XPATH = "//input[@data-report-event='Signin_Submit']";
-	private static final String NATIVE_USERNAME_DATA_TEST_ID = "loginPage-textField-username";
-	private static final String NATIVE_PASSWORD_DATA_TEST_ID = "loginPage-textField-password";
-	private static final String LOGIN_BUTTON_DATA_TEST_ID = "loginPage-button-login";
 
 	public LoginPage(Page page) {
 		this.page = page;
 	}
 
 	public void navigateToLoginPage() throws IOException {
-		page.navigate(UrlUtils.getUrl("#/login"));
+		LoginPageUtils.navigateToLoginPage(page);
 	}
 
 	public void closeCookiesPopup() throws InterruptedException {
-		if (Boolean.parseBoolean(ConfigUtils.getValue("accept_cookies_popup"))) {
-			page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
-		}
+		LoginPageUtils.closeCookiesPopup(page);
 	}
 
 	public void loginToApplication() throws InterruptedException, IOException {
-		Page page1 = page.waitForPopup(() -> {
-			page.locator(MICROSOFT_LOGIN_XPATH).click();
-		});
-		// optional test if the user adds in credentials
-		String userName = ConfigUtils.getValue("ms_username");
-		if (userName != null && !userName.isEmpty()) {
-			page1.fill(USERNAME_XPATH, userName);
-			page1.click(NEXT_BUTTON_XPATH);
-			page1.fill(PASSWORD_XPATH, ConfigUtils.getValue("ms_password"));
-			page1.click(SIGNIN_BUTTON_XPATH);
-		}
+		LoginPageUtils.loginToApplication(page);
 	}
 
 	public void enterNativeUsernamePassword() {
-		page.getByTestId(NATIVE_USERNAME_DATA_TEST_ID).fill(ConfigUtils.getValue("native_username"));
-		page.getByTestId(NATIVE_PASSWORD_DATA_TEST_ID).fill(ConfigUtils.getValue("native_password"));
+		LoginPageUtils.enterUsernameAndPassword(page, ConfigUtils.getValue("native_username"), ConfigUtils.getValue("native_password"));
 	}
 
 	public void loginWithNative() {
-		page.getByTestId(LOGIN_BUTTON_DATA_TEST_ID).click();
+		LoginPageUtils.clickLogin(page);
 	}
 
-	public void enterUsernameAndPassword(String username, String Password) {
-		page.getByTestId(NATIVE_USERNAME_DATA_TEST_ID).fill(username);
-		page.getByTestId(NATIVE_PASSWORD_DATA_TEST_ID).fill(Password);
+	public void enterUsernameAndPassword(String username, String password) {
+		LoginPageUtils.enterUsernameAndPassword(page, username, password);
 	}
 }
