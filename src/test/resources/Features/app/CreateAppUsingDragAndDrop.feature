@@ -1,4 +1,4 @@
-Feature: Create new app
+Feature: Create drag and drop app
 
   Background: Create Drag and Drop app and navigate to Blocks option
     Given User is on the Home page
