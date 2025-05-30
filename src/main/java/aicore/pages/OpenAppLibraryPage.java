@@ -1,15 +1,9 @@
 package aicore.pages;
 
 import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.BoundingBox;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AppLibraryPageUtils;
-import aicore.utils.ConfigUtils;
-import aicore.utils.UrlUtils;
 
 public class OpenAppLibraryPage {
 
