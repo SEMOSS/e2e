@@ -2,7 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.AddDatabaseToCatalogPageUtils;
+import aicore.utils.AddDatabasePageUtils;
 
 public class AddDatabaseToCatalogPage {
     private Page page;
@@ -12,27 +12,27 @@ public class AddDatabaseToCatalogPage {
     }
 
     public void clickOnAddDatabaseButton() {
-        AddDatabaseToCatalogPageUtils.clickAddDatabaseButton(page);
+        AddDatabasePageUtils.clickAddDatabaseButton(page);
     }
 
     public void selectDatabaseType(String dbType) {
-        AddDatabaseToCatalogPageUtils.selectDatabaseType(page, dbType);
+        AddDatabasePageUtils.selectDatabaseType(page, dbType);
     }
 
     public String uploadDatabaseFile(String fileName) {
-        return AddDatabaseToCatalogPageUtils.uploadDatabaseFile(page, fileName);
+        return AddDatabasePageUtils.uploadDatabaseFile(page, fileName);
     }
 
     public void clickOnCreateDatabaseButton() {
-        AddDatabaseToCatalogPageUtils.clickCreateDatabaseButton(page);
+        AddDatabasePageUtils.clickCreateDatabaseButton(page);
     }
 
     public String verifyDatabaseNameInCatalog(String dbName) {
-        return AddDatabaseToCatalogPageUtils.verifyDatabaseNameInCatalog(page, dbName);
+        return AddDatabasePageUtils.verifyDatabaseNameInCatalog(page, dbName);
     }
 
     public void clickOnDatabaseNameInCatalog(String dbName) {
-        AddDatabaseToCatalogPageUtils.clickOnDatabaseNameInCatalog(page, dbName);
+        AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
     }
 
 }

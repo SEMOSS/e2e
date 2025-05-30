@@ -2,7 +2,6 @@ package aicore.pages;
 
 import java.nio.file.Paths;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
