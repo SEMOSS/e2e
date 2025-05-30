@@ -7,6 +7,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import aicore.utils.ConfigUtils;
+import aicore.utils.HomePageUtils;
 import aicore.utils.UrlUtils;
 
 public class HomePage {
@@ -28,9 +29,6 @@ public class HomePage {
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";	
 	public static final String OPEN_DATABASE= "Database-icon";	
-	
-		
-
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
 
 	public HomePage(Page page) {
@@ -38,78 +36,63 @@ public class HomePage {
 	}
 
 	public void closeInfoPopup() {
-		page.click(ACCEPT_BUTTON_XPATH);
-		page.click(CLOSE_POPUP_BUTTON_XPATH);
+		HomePageUtils.closeInfoPopup(page);
 	}
 
 	public String getPageTitle() {
-		String actTitle = page.textContent(PAGE_TITLE_XPATH).trim();
-		return actTitle;
+		return HomePageUtils.getPageTitle(page);
 	}
 
 	public void clickOnSystemApp() {
-		page.click(SYSTEM_APP_BUTTON_XPATH);
+		HomePageUtils.clickOnSystemApp(page);
 	}
 	
 	public void clickOnTab(String tabName) {
-		page.click(APP_TAB_XPATH.replace("{tab}", tabName));
+		HomePageUtils.clickOnTab(page, tabName);
 	}
 
 	public void clickOnOpenFunction() {
-		page.getByTestId(OPEN_FUNCTIONS_XPATH).isVisible();
-		page.getByTestId(OPEN_FUNCTIONS_XPATH).click();
+		HomePageUtils.clickOnOpenFunction(page);
 	}
 
 	public void clickOnBIApp() {
-		page.click(BI_APP_XPATH);
+		HomePageUtils.clickOnBIApp(page);
 	}
 
 	public void clickOnOpenModel() {
-		page.click(OPEN_MODEL_XPATH);
+		HomePageUtils.clickOnOpenModel(page);
 	}
 
 	public void clickOnOpenStorage() {
-		page.click(OPEN_STORAGE_XPATH);
+		HomePageUtils.clickOnOpenStorage(page);
 	}
 
 	public void clickOnOpenVector() {
-		page.click(OPEN_VECTOR_XPATH);
+		HomePageUtils.clickOnOpenVector(page);
 	}
 
 	public void clickOnOpenAppLibrary() {
-		page.click(OPEN_APP_LIBRARY_XPATH);
+		HomePageUtils.clickOnOpenAppLibrary(page);
 	}
 
 	public void logOutAsCurrentUser() {
-		page.click(USER_PROFILE_ICON_XPATH);
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
+		HomePageUtils.logOutAsCurrentUser(page);
 	}
 
 	public void clickOnOpenSettings() {
-		page.locator(OPEN_SETTINGS_XPATH).click();
+		HomePageUtils.clickOnOpenSettings(page);
 	}
 
 	public void checkOnOpenSetting() {
-		page.locator(OPEN_SETTINGS_XPATH).isVisible();
-	}
-
-	public void clickOnOpenSetting() {
-		page.locator(OPEN_SETTINGS_XPATH).click();
+		HomePageUtils.checkOnOpenSetting(page);
 	}
 
 	public void navigateToHomePage() {
-		String homePage = UrlUtils.getUrl("#");
-		page.navigate(homePage);
-		try {
-			page.waitForURL(homePage);
-		} catch (Throwable t) {
-			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
-		}
+		HomePageUtils.navigateToHomePage(page);
 	}
 
 	public void clickOnOpenDatabase() {
-		page.getByTestId(OPEN_DATABASE).isVisible();
-		page.getByTestId(OPEN_DATABASE).click();
+		HomePageUtils.clickOnOpenDatabase(page);
 	}
 
 }

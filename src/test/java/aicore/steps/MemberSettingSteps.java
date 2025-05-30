@@ -27,7 +27,7 @@ public class MemberSettingSteps {
 	@Given("User navigates to Open Setting page")
 	public void user_navigates_to_open_setting_page() {
 		homePage.checkOnOpenSetting();
-		homePage.clickOnOpenSetting();
+		homePage.clickOnOpenSettings();
 	}
 
 	@When("User enable admin mode")
