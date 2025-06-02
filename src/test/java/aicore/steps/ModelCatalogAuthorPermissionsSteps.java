@@ -8,7 +8,7 @@ import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
 import aicore.hooks.SetupHooks;
-import aicore.pages.AddModelToCatalogPage;
+import aicore.pages.AddModelPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.pages.ModelPermissionsAuthor;
@@ -21,7 +21,7 @@ import io.cucumber.java.en.When;
 public class ModelCatalogAuthorPermissionsSteps {
 	private LoginPage loginpage;
 	private HomePage homePage;
-	private AddModelToCatalogPage openModelPage;
+	private AddModelPage openModelPage;
 	private ModelPermissionsAuthor authorPermissions;
 	protected static String timestamp;
 
@@ -29,7 +29,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 		this.loginpage = new LoginPage(SetupHooks.getPage());
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		this.openModelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
+		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		this.authorPermissions = new ModelPermissionsAuthor(SetupHooks.getPage());
 	}
 

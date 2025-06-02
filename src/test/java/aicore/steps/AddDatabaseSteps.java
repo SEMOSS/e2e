@@ -3,7 +3,7 @@ package aicore.steps;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.AddDatabaseToCatalogPage;
+import aicore.pages.AddDatabasePage;
 import aicore.pages.HomePage;
 import aicore.pages.ViewUsagePage;
 import io.cucumber.java.en.And;
@@ -12,13 +12,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddDatabaseSteps {
-    private AddDatabaseToCatalogPage addDatabaseToCatalogPage;
+    private AddDatabasePage addDatabaseToCatalogPage;
     private HomePage homePage;
     private ViewUsagePage viewUsagePage;
 
     public AddDatabaseSteps() {
         homePage = new HomePage(SetupHooks.getPage());
-        addDatabaseToCatalogPage = new AddDatabaseToCatalogPage(SetupHooks.getPage());
+        addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
         viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
     }
 
