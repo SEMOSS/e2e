@@ -1,11 +1,7 @@
 package aicore.pages;
 
-import com.microsoft.playwright.Keyboard;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
-import aicore.utils.CommonUtils;
 import aicore.utils.SettingsPageUtils;
 
 public class SettingPage {

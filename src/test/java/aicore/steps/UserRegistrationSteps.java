@@ -65,7 +65,7 @@ public class UserRegistrationSteps {
 
 	@When("User clicks on Login button")
 	public void user_clicks_on_login_button() {
-		loginPage.loginWithNative();
+		loginPage.clickOnLoginButton();
 	}
 
 	@Then("User should navigate to home page")

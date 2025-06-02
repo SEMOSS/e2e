@@ -2,16 +2,13 @@ package aicore.steps;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
-
 import aicore.hooks.SetupHooks;
-import aicore.pages.HomePage;
 import aicore.pages.VectorSearchAndFilterPage;
 import aicore.utils.CommonUtils;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java.en.And;
 
 public class VectorSearchAndFilterSteps {
 	

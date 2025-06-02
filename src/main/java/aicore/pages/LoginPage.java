@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.ConfigUtils;
 import aicore.utils.LoginPageUtils;
 
 public class LoginPage {
@@ -27,12 +26,8 @@ public class LoginPage {
 		LoginPageUtils.loginToApplication(page);
 	}
 
-	public void enterNativeUsernamePassword() {
-		LoginPageUtils.enterUsernameAndPassword(page, ConfigUtils.getValue("native_username"), ConfigUtils.getValue("native_password"));
-	}
-
-	public void loginWithNative() {
-		LoginPageUtils.clickLogin(page);
+	public void clickOnLoginButton() {
+		LoginPageUtils.clickLoginButton(page);
 	}
 
 	public void enterUsernameAndPassword(String username, String password) {

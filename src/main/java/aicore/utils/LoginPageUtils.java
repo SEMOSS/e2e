@@ -41,7 +41,7 @@ public class LoginPageUtils {
 		}
 	}
 
-	public static void clickLogin(Page page) {
+	public static void clickLoginButton(Page page) {
 		page.getByTestId(LOGIN_BUTTON_DATA_TEST_ID).click();
 	}
 

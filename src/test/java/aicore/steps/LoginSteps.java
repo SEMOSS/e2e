@@ -2,12 +2,10 @@ package aicore.steps;
 
 import java.io.IOException;
 
-import aicore.base.GenericSetupUtils;
-import aicore.hooks.SetupHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
 
+import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.ConfigUtils;
@@ -45,15 +43,15 @@ public class LoginSteps {
 	}
 
 	@When("User enters nativeUsername and nativePassword")
-	public void user_enters_native_username_and_native_password_and_click_on_sign_in_button()
+	public void user_enters_native_username_and_native_password()
 			throws InterruptedException {
 		loginpage.closeCookiesPopup();
-		loginpage.enterNativeUsernamePassword();
+		loginpage.enterUsernameAndPassword(ConfigUtils.getValue("native_username"), ConfigUtils.getValue("native_password"));
 	}
 
-	@And("User clicks on Login with native button")
-	public void click_on_sign_in_button() {
-		loginpage.loginWithNative();
+	@And("User clicks on Login button")
+	public void user_clicks_on_login_button() {
+		loginpage.clickOnLoginButton();
 	}
 
 }
