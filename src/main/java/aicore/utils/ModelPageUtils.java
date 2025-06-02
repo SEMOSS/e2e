@@ -10,8 +10,9 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class ModelPageUtils {
 
-	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
-	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
+	private static final String ADD_MODEL_BUTTON_DATA_TEST_ID = "engine-catalog-add-btn";
+	private static final String MODEL_GROUP_TAB_XPATH = "//div[@role='tablist']//button[text()='{groupTabName}']";
+	private static final String MODELS_OPTIONS_XPATH = "//p[text()='{modelOptionName}']";
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
 	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
@@ -80,14 +81,13 @@ public class ModelPageUtils {
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 
 	public static void clickAddModelButton(Page page) {
-		// TODO switch to data-test-id
-		page.getByLabel("Navigate to import Model").click();
+		page.getByTestId(ADD_MODEL_BUTTON_DATA_TEST_ID).click();
 	}
 
 	public static void selectModel(Page page, String modelName) {
 		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
 	}
-	
+
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
 	}
@@ -162,7 +162,7 @@ public class ModelPageUtils {
 		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp))).isVisible();
 		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp)).click();
 	}
-	
+
 	public static void addedModelCard(Page page, String modelName) {
 		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).isVisible();
 		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).click();
@@ -392,14 +392,14 @@ public class ModelPageUtils {
 		page.reload();
 	}
 
-	public static boolean verifyGroupIsVisible(Page page, String groupName) {
-		boolean isGroupVisible = page.isVisible(MODEL_GROUP_XPATH.replace("{groupName}", groupName));
-		return isGroupVisible;
+	public static void clickOnOptionsGroupTab(Page page, String groupName) {
+		page.locator(MODEL_GROUP_TAB_XPATH.replace("{groupTabName}", groupName)).isVisible();
+		page.locator(MODEL_GROUP_TAB_XPATH.replace("{groupTabName}", groupName)).click();
 	}
 
-	public static boolean VerifyModelIsVisible(Page page, String groupName, String modelName) {
-		boolean isModelVisible = page.isVisible(
-				MODELS_UNDER_GROUP_XPATH.replace("{groupName}", groupName).replace("{modelName}", modelName));
+	public static boolean verifyModelOptionIsVisible(Page page, String modelOption) {
+		boolean isModelVisible = page.locator(MODELS_OPTIONS_XPATH.replace("{modelOptionName}", modelOption))
+				.isVisible();
 		return isModelVisible;
 	}
 
