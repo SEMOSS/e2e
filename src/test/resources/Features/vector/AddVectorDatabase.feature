@@ -1,7 +1,8 @@
 Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
-
-  Background: Login to the application and Create model tagged with embeddings
+  
+@LoginWithAdmin
+  Scenario: Login to the application and Create model tagged with embeddings
     Given User navigates to Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
@@ -42,13 +43,13 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
 
-  #@LoginWithAdmin
-  #Scenario: Validate usage of storage
-    #Given User clicks on Open Vector engine
-    #And User clicks on the created Vector card name as 'FAISS Vector DB03'
-    #And User can see the Vector title as 'FAISS Vector DB03'
-    #When User clicks on Usage tab for Vector DB
-    #Then User sees an example of "How to use in Javascript" with example code for Vector DB
-    #And User sees an example of "How to use in Python" with example code for Vector DB
-    #And User sees an example of "How to use with Langchain API" with example code for Vector DB
-    #And User sees an example of "How to use in Java" with example code for Vector DB
+  @LoginWithAdmin
+  Scenario: Validate usage of storage
+    Given User clicks on Open Vector engine
+    And User clicks on the created Vector card name as 'FAISS Vector DB03'
+    And User can see the Vector title as 'FAISS Vector DB03'
+    When User clicks on Usage tab for Vector DB
+    Then User sees an example of "How to use in Javascript" with example code for Vector DB
+    And User sees an example of "How to use in Python" with example code for Vector DB
+    And User sees an example of "How to use with Langchain API" with example code for Vector DB
+    And User sees an example of "How to use in Java" with example code for Vector DB

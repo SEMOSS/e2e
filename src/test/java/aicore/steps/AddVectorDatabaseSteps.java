@@ -23,7 +23,7 @@ public class AddVectorDatabaseSteps {
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = AddModelSteps.timestamp.substring(0, 5);
+		timestamp = AddModelSteps.timestamp;
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
