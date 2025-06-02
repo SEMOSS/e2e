@@ -9,19 +9,23 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.AddDatabaseToCatalogPage;
 import aicore.pages.HomePage;
 import io.cucumber.datatable.DataTable;
+import aicore.pages.ViewUsagePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddDatabaseSteps {
-	private AddDatabaseToCatalogPage addDatabaseToCatalogPage;
-	private HomePage homePage;
+  
+    private AddDatabaseToCatalogPage addDatabaseToCatalogPage;
+    private HomePage homePage;
+    private ViewUsagePage viewUsagePage;
 
-	public AddDatabaseSteps() {
-		homePage = new HomePage(SetupHooks.getPage());
-		addDatabaseToCatalogPage = new AddDatabaseToCatalogPage(SetupHooks.getPage());
-	}
+    public AddDatabaseSteps() {
+        homePage = new HomePage(SetupHooks.getPage());
+        addDatabaseToCatalogPage = new AddDatabaseToCatalogPage(SetupHooks.getPage());
+        viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
+    }
 
 	@Given("User navigates to Open Database")
 	public void user_navigates_to_open_database() {
@@ -120,4 +124,14 @@ public class AddDatabaseSteps {
 	public void user_clicks_on_bookmark_button_ot_unbookmark_database(String dbName) {
 		addDatabaseToCatalogPage.clickOnUnbookmark(dbName);
 	}
+
+    @When("User clicks on Usage tab for Database")
+    public void user_clicks_on_usage_tab_for_database() {
+        viewUsagePage.clickOnUsageTab();
+    }
+
+    @Then("User sees an example of {string} with example code for Database")
+    public void user_sees_an_example_of_with_example_code_for_database(String usageType) {
+        viewUsagePage.verifyExample(usageType);
+    }
 }
