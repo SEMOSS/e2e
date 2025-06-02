@@ -21,11 +21,13 @@ import io.cucumber.java.en.When;
 public class AddModelSteps {
 	private HomePage homePage;
 	private AddModelToCatalogPage openModelPage;
-	public static String timestamp = CommonUtils.getTimeStampName();;
+	protected static String timestamp;
+//	public static String timestamp = CommonUtils.getTimeStampName();;
 	private String expectedCatalogId;
 
 	public AddModelSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
+		timestamp = CommonUtils.getTimeStampName();
 		this.openModelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 
