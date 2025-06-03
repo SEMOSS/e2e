@@ -2,7 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.ModelPageUtils;
+import aicore.utils.page.model.ModelPageUtils;
 
 public class ModelPermissionsAuthor {
 

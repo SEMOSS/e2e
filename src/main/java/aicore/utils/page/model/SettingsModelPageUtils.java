@@ -1,35 +1,21 @@
-package aicore.utils;
+package aicore.utils.page.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
-public class ModelPageUtils {
+import aicore.utils.AICorePageUtils;
+import aicore.utils.CommonUtils;
+import aicore.utils.ConfigUtils;
+
+public class SettingsModelPageUtils {
 
 	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
 	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
-	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
-	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
-	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
-	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
-	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
-	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
-	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
-	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
-	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
-	// SMSS field
-	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
-	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
-	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
-	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
-	// Settings field
-	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
 	private static final String MAKE_PUBLIC_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//p[text()='{title}']";
 	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[1]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
@@ -55,228 +41,11 @@ public class ModelPageUtils {
 	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
 	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "td:has(button svg[data-testid='EditIcon']) button svg[data-testid='DeleteIcon']";
 	private static final String CONFIRM_BUTTON_XPATH = "//button[span[text()='Confirm']]";
-	// Edit model
-	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
-	private static final String TAG_TEXTBOX = "Tag";
-	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
-	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
-	private static final String DETAILS_TEXTBOX_XPATH = "//textarea[@class='inputarea monaco-mouse-cursor-text']";
-	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
-	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
-	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "(//input[@aria-autocomplete='list'])[3]";
-	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "(//input[@aria-autocomplete='list'])[4]";
-	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
-	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
-	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
-	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Tag')]]/following-sibling::div";
-	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Domain')]]/following-sibling::div";
-	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data classification')]]/following-sibling::div";
-	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
-
-	// Usage
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
-
-	public static void clickAddModelButton(Page page) {
-		// TODO switch to data-test-id
-		page.getByLabel("Navigate to import Model").click();
-	}
-
-	public static void selectModel(Page page, String modelName) {
-		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
-	}
-	
-	public static void selectOpenAi(Page page, String aiModelName) {
-		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
-	}
-
-	public static void enterCatalogName(Page page, String CatalogName, String timestamp) {
-		String uniqueCatalogName = CatalogName + timestamp;
-		page.fill(CATALOG_NAME_XPATH, uniqueCatalogName);
-	}
-
-	public static void enterOpenAIKey(Page page, String openAIKey) {
-		page.fill(OPEN_AI_KEY_XPATH, openAIKey);
-	}
-
-	public static void enterVariableName(Page page, String varName) {
-		page.fill(VARIABLE_NAME_ID, varName);
-	}
-
-	public static void createModel(Page page) {
-		page.click(CREATE_MODEL_BUTTON_XPATH);
-	}
-
-	public static String modelCreationToastMessage(Page page) {
-		Locator toastMessage = page.getByRole(AriaRole.ALERT)
-				.filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE));
-		return toastMessage.textContent().trim();
-	}
-
-	public static void waitForModelCreationToastMessageDisappear(Page page) {
-		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE))
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-	}
-
-	public static String verifyModelTitle(Page page, String modelTitle, String timestamp) {
-		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
-				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
-		actualmodelTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		return actualmodelTitle.textContent().trim();
-	}
-
-	public static void clickOnSMSSTab(Page page) {
-		page.click(SMSS_TAB_XPATH);
-	}
-
-	public static String getExpectedCatalogTitle(String modelTitle, String timestamp) {
-		String expTitle = modelTitle + timestamp;
-		return expTitle;
-	}
-
-	public static String verifyNameInSMSS(Page page) {
-		String nameInSMSSProperties = page.textContent(NAME_SMSS_PROPERTIES_XPATH);
-		return nameInSMSSProperties;
-	}
-
-	public static String verifyVarNameInSMSS(Page page) {
-		String varNameInSMSSProperties = page.textContent(VAR_NAME_SMSS_PROPERTIES_XPATH);
-		return varNameInSMSSProperties;
-	}
-
-	public static String verifyKeepConversationHistoryValueInSMSS(Page page, String fieldName) {
-		String varNameInSMSSProperties = page
-				.textContent(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
-		return varNameInSMSSProperties;
-	}
-//Edit model
-
-	public static void searchModelCatalog(Page page, String modelName, String timestamp) {
-		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).fill(modelName + timestamp);
-	}
-
-	public static void selectModelFromSearchOptions(Page page, String modelName, String timestamp) {
-		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp))).isVisible();
-		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp)).click();
-	}
-	
-	public static void addedModelCard(Page page, String modelName) {
-		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).isVisible();
-		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).click();
-	}
-
-	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName, String timestamp) {
-		String modelNameWithTimestamp = SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp);
-		page.waitForSelector(modelNameWithTimestamp, new Page.WaitForSelectorOptions().setTimeout(10000));
-		boolean isModelVisible = page.isVisible(modelNameWithTimestamp);
-		return isModelVisible;
-	}
-
-	public static void clickOnEditButton(Page page) {
-		page.click(EDIT_BUTTON_XPATH);
-	}
-
-	public static void enterDetails(Page page, String detailsText) {
-		page.fill(DETAILS_TEXTBOX_XPATH, detailsText);
-	}
-
-	public static void enterDescription(Page page, String descriptionText) {
-		page.getByLabel(DESCRIPTION_TEXTBOX_LABEL).fill(descriptionText);
-	}
-
-	public static void enterTagName(Page page, String tagName) {
-		page.getByLabel(TAG_TEXTBOX).click();
-		page.getByLabel(TAG_TEXTBOX).fill(tagName);
-		page.getByLabel(TAG_TEXTBOX).press("Enter");
-	}
-
-	public static void enterDomainName(Page page, String domainName) {
-		page.getByLabel(DOMAIN_TEXTBOX_LABEL).fill(domainName);
-		page.getByLabel(DOMAIN_TEXTBOX_LABEL).press("Enter");
-	}
-
-	public static void selectDataClassificationOption(Page page, String option) {
-		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH);
-		page.fill(DATA_CLASSIFICATION_TEXTBOX_XPATH, option);
-		page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("ArrowDown");
-		page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("Enter");
-	}
-
-	public static void selectDataRestrictionsOption(Page page, String option) {
-		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH);
-		page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
-		page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
-		page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
-	}
-
-	public static void clickOnSubmit(Page page) {
-		page.click(SUBMIT_BUTTON_XPATH);
-	}
-
-	public static String verifyEditSuccessfullToastMessage(Page page) {
-		Locator toastMessage = page.getByRole(AriaRole.ALERT)
-				.filter(new Locator.FilterOptions().setHasText(EDIT_SUCCESS_TOAST_MESSAGE));
-		return toastMessage.textContent().trim();
-	}
-
-	public static void waitForEditSuccessToastMessageToDisappear(Page page) {
-		page.locator(EDIT_SUCCESS_TOAST_MESSAGE)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-	}
-
-	public static String verifyDescriptionText(Page page) {
-		String descriptionText = page.textContent(DESCRIPTION_TEXT_XPATH).trim();
-		return descriptionText;
-	}
-
-	public static List<String> verifyTagNames(Page page) {
-		List<String> tags = new ArrayList<String>();
-		List<String> tagsText = page.locator(MODEL_TAGS_XPATH).allInnerTexts();
-		CommonUtils.extractOverviewSectionValues(tags, tagsText);
-		return tags;
-	}
-
-	public static String verifyDetailsTextUnderOverview(Page page) {
-		Locator shadowElement = page.locator(DETAILS_UNDER_OVERVIEW_XPATH).locator("p");
-		shadowElement.waitFor();
-		String text = shadowElement.innerText().trim();
-		return text;
-	}
-
-	public static List<String> verifyTagNamesUnderOverview(Page page) {
-		List<String> tags = new ArrayList<String>();
-		List<String> tagsText = page.locator(TAGS_UNDER_OVERVIEW_XPATH).allInnerTexts();
-		CommonUtils.extractOverviewSectionValues(tags, tagsText);
-		return tags;
-	}
-
-	public static List<String> verifyDomainValuesUnderOverview(Page page) {
-		List<String> domains = new ArrayList<String>();
-		List<String> domainText = page.locator(DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH).allInnerTexts();
-		CommonUtils.extractOverviewSectionValues(domains, domainText);
-		return domains;
-	}
-
-	public static List<String> verifyDataClassificationOptionsUnderOverview(Page page) {
-		List<String> dataClassificationOptions = new ArrayList<String>();
-		List<String> dataClassificationOptionsText = page.locator(DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH)
-				.allInnerTexts();
-		CommonUtils.extractOverviewSectionValues(dataClassificationOptions, dataClassificationOptionsText);
-		return dataClassificationOptions;
-	}
-
-	public static List<String> verifyDataRestrictionOptionsUnderOverview(Page page) {
-		List<String> dataRestrictionOptions = new ArrayList<String>();
-		List<String> dataRestrictionOptionsText = page.locator(DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH)
-				.allInnerTexts();
-		CommonUtils.extractOverviewSectionValues(dataRestrictionOptions, dataRestrictionOptionsText);
-		return dataRestrictionOptions;
-	}
-
-	// Methods used for settings
+	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -507,33 +276,5 @@ public class ModelPageUtils {
 			sectionCodeContents.append(codeContent).append("\n");
 		}
 		return sectionCodeContents.toString().trim();
-	}
-
-	//////////// MODEL PERMISSIONS - AUTHOR
-
-	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
-	private static final String VIEW_USAGE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Usage']";
-	private static final String VIEW_SMSS_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='SMSS']";
-	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
-	private static final String VIEW_ACCESSCONTROL_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Access Control']";
-
-	public static boolean canViewOverview(Page page) {
-		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
-	}
-
-	public static boolean canViewUsage(Page page) {
-		return page.isVisible(VIEW_USAGE_TAB_XPATH);
-	}
-
-	public static boolean canViewSMSSDetails(Page page) {
-		return page.isVisible(VIEW_SMSS_TAB_XPATH);
-	}
-
-	public static boolean canViewEditSMSS(Page page) {
-		return page.isVisible(VIEW_EDIT_SMSS_BUTTON_XPATH);
-	}
-
-	public static boolean canViewAccessControl(Page page) {
-		return page.isVisible(VIEW_ACCESSCONTROL_TAB_XPATH);
 	}
 }
