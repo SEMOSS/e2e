@@ -24,11 +24,6 @@ public class ModelSettingsSteps {
 		softAssert = SoftAssertionHooks.getSoftAssertions();
 	}
 
-	@When("User click on Setting tab")
-	public void user_click_on_setting_tab() {
-		modelPage.clickOnSettingsTab();
-	}
-
 	@Then("User can see {string} section")
 	public void user_can_see_section(String sectionName) {
 		boolean isSectionVisible = false;

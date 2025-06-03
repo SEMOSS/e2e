@@ -1,13 +1,13 @@
-Feature: View Existing Vectors Using Search And Filters
+Feature: Vector Database
   
    Background: View Open Vectors
-   Given User navigates to Open Vector Page
+   Given User clicks on Open Vector
    And User clicks on vector 'My Vectors' tab
   
    @LoginWithAuthor
    Scenario Outline: Create Vector Databases
    # adding embedder for use when creating vector DB
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Catalog'
@@ -20,7 +20,7 @@ Feature: View Existing Vectors Using Search And Filters
     And User clicks on Submit button
    
    # creating vector DB
-   And User navigates to Open Vector Page
+   And User clicks on Open Vector
    And User clicks on vector 'Discoverable Vectors' tab
    And User clicks on Add vector button
    And User selects 'FAISS' as connection
@@ -30,12 +30,12 @@ Feature: View Existing Vectors Using Search And Filters
    And User enters 'Content Length' as '512'
    And User enters 'Content Overlap' as '20'
    And User clicks on Create Vector Button
-   And User navigates to Open Vector Page
+   And User clicks on Open Vector
    Then User should see the 'FAISSCatalogeeVectorr' vector on the Vector Catalog page
   
 
    Scenario Outline: View My Vectors
-   Given User navigates to Open Vector Page
+   Given User clicks on Open Vector
    And User clicks on vector 'My Vectors' tab
    Then User should see the 'FAISSCatalogeeVectorr' vector on the Vector Catalog page
   

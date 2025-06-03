@@ -11,7 +11,6 @@ import aicore.pages.LoginPage;
 import aicore.utils.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class LoginSteps {
@@ -35,11 +34,6 @@ public class LoginSteps {
 			throws InterruptedException, IOException {
 		loginPage.closeCookiesPopup();
 		loginPage.loginToApplication();
-	}
-
-	@Then("User can navigate to home page")
-	public void user_can_navigate_to_home_page() throws InterruptedException {
-		homePage.navigateToHomePage();
 	}
 
 	@When("User enters nativeUsername and nativePassword")

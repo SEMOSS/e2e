@@ -10,9 +10,7 @@ import aicore.pages.HomePage;
 import aicore.pages.SettingPage;
 import aicore.pages.SettingsAdminQueryPage;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
 public class AdminQuerySteps {
 	private HomePage homePage;
@@ -23,23 +21,6 @@ public class AdminQuerySteps {
 		homePage = new HomePage(SetupHooks.getPage());
 		settingPage = new SettingPage(SetupHooks.getPage());
 		adminQuery = new SettingsAdminQueryPage(SetupHooks.getPage());
-	}
-
-	@Given("Admin User navigates to Open Setting page")
-	public void admin_user_navigates_to_open_setting_page() {
-		homePage.clickOnOpenSettings();
-	}
-
-	@When("Admin User enables admin mode")
-	public void admin_user_enables_admin_mode() {
-		settingPage.checkAdminButton();
-		settingPage.clickOnAdminButton();
-	}
-
-	@And("Admin User clicks on {string} Card")
-	public void admin_user_clicks_on_card(String cardName) {
-		settingPage.checkCardVisible(cardName);
-		settingPage.clickOnCard(cardName);
 	}
 
 	@And("User selects {string} from the database dropdown")

@@ -1,14 +1,13 @@
 package aicore.steps;
 
 import org.apache.logging.log4j.LogManager;
-
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.*;
+import aicore.pages.HomePage;
+import aicore.pages.SettingPage;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -22,12 +21,6 @@ public class MemberSettingSteps {
 	public MemberSettingSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		this.settingPage = new SettingPage(SetupHooks.getPage());
-	}
-
-	@Given("User navigates to Open Setting page")
-	public void user_navigates_to_open_setting_page() {
-		homePage.checkOnOpenSetting();
-		homePage.clickOnOpenSettings();
 	}
 
 	@When("User enable admin mode")

@@ -1,7 +1,7 @@
 Feature: View existing functions in Function Catalog
 
   Background: Create Function using ZIP file
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     When User clicks on Add Function
     Then User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
@@ -18,7 +18,7 @@ Feature: View existing functions in Function Catalog
 
   @LoginWithAdmin
   Scenario: view and validate filter functionality - My Functions
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     And User applies each filter and validate 'WeatherFunctionTest' function is visible on the page
       | FILTER_CATEGORY     | FILTER_VALUE      |
@@ -33,14 +33,14 @@ Feature: View existing functions in Function Catalog
 
 
   Scenario: view and validate filter functionality - Discoverable Functions
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
     And User clicks on Access Control Tab
     And User clicks Make Discoverable button
     And User logs out from the application
     And User login as 'author'
-    And User navigates to Open Function
+    And User clicks on Open Function
     And User clicks on Discoverable Functions button
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     And User applies each filter and validate 'WeatherFunctionTest' function is visible on the page
@@ -49,7 +49,7 @@ Feature: View existing functions in Function Catalog
       | Data Restrictions   | IP ALLOWED   |
     When User logs out from the application
     And User login as 'admin'
-    And User navigates to Open Function
+    And User clicks on Open Function
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
     And User clicks on Access Control Tab
     And User clicks on Delete button

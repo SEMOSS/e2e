@@ -22,8 +22,8 @@ public class AddDatabaseSteps {
         viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
     }
 
-    @Given("User navigates to Open Database")
-    public void user_navigates_to_open_database() {
+    @Given("User clicks on Open Database")
+    public void user_clicks_to_open_database() {
         homePage.clickOnOpenDatabase();
     }
 

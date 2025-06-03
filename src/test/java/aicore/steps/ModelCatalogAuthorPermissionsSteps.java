@@ -113,7 +113,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 
 	@Then("User logs out from the application")
 	public void user_logs_out_from_the_application() {
-		homePage.logOutAsCurrentUser();
+		homePage.logout();
 	}
 
 	@Given("User login as {string}")

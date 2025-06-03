@@ -2,6 +2,8 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
+import aicore.utils.settings.JobPageUtils;
+
 public class JobManagementPage {
 
 	private Page page;

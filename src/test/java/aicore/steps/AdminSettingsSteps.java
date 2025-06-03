@@ -27,14 +27,11 @@ public class AdminSettingsSteps {
 	public void user_can_view_the_following_settings_tile(io.cucumber.datatable.DataTable dataTable) {
 		final String SETTINGS_TILE_DATATABLE_COL_NAME = "SETTINGS_TILE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-
 		for (Map<String, String> row : rows) {
 			String tileName = row.get(SETTINGS_TILE_DATATABLE_COL_NAME);
-
 			boolean isTileVisible = modelPage.verifyTileIsVisible(tileName);
 			softAssert.assertThat(isTileVisible).isTrue();
 		}
-
 	}
 
 	@Given("User searches {string} in Search box")

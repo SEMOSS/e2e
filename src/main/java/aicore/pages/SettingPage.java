@@ -2,7 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.SettingsPageUtils;
+import aicore.utils.settings.SettingsPageUtils;
 
 public class SettingPage {
 

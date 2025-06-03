@@ -20,11 +20,6 @@ public class VectorSearchAndFilterSteps {
 		this.openVectorPage = new VectorSearchAndFilterPage(SetupHooks.getPage(), timestamp);
 	}
 	
-	@Given("User navigates to Open Vector Page")
-	public void user_navigates_to_open_vector() {
-		openVectorPage.clickOnOpenVector();
-	}
-	
 	@And("User clicks on vector {string} tab")
 	public void user_clicks_on_vectors_tab(String myv) {
 		openVectorPage.vectorsTab(myv);

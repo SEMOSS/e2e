@@ -2,7 +2,7 @@ Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
   
   Background: Login to the application and Create model tagged with embeddings
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Catalog'
@@ -16,7 +16,7 @@ Feature: Add Vector Database
 
   @LoginWithAdmin
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
-    Given User clicks on Open Vector engine
+    Given User clicks on Open Vector
     When User clicks on Add Vector button
     And User selects '<connection>' connection
     And User enters vector database Catalog name as '<catalog_name>'
@@ -33,7 +33,7 @@ Feature: Add Vector Database
     And User can see content length in 'CONTENT_LENGTH' field as '<content_length>' in SMSS properties
     And User can see content overlap in 'CONTENT_OVERLAP' field as '<content_overlap>' in SMSS properties
     And User can see chunking strategy in 'CHUNKING_STRATEGY' field as '<chunking_strategy>' in SMSS properties
-    And User navigates to Open Model
+    And User clicks on Open Model
 
     Examples:
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
@@ -44,7 +44,7 @@ Feature: Add Vector Database
 
   @LoginWithAdmin
   Scenario: Validate usage of storage
-    Given User clicks on Open Vector engine
+    Given User clicks on Open Vector
     When User clicks on Add Vector button
     And User selects 'FAISS' connection
     And User enters vector database Catalog name as 'FAISS Vector DB00'

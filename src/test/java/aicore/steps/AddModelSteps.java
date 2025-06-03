@@ -31,7 +31,7 @@ public class AddModelSteps {
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 	}
 
-	@Given("User navigates to Open Model")
+	@Given("User clicks on Open Model")
 	public void user_navigates_to_open_model() {
 		homePage.clickOnOpenModel();
 	}

@@ -2,7 +2,7 @@ Feature: Add Model
   Adding LLM to the catalog
 
   Background: Create a Model - GPT-3.5
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     When User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Model'
@@ -17,7 +17,7 @@ Feature: Add Model
     When User clicks on SMSS
     And User can see name in 'NAME' field as 'Model' in SMSS properties
     And User can see var name in 'VAR_NAME' field as 'Variable1' in SMSS properties
-    And User navigates to Open Model
+    And User clicks on Open Model
 
   Scenario: Edit SMSS properties of Model - GPT-3.5
     Given User Can see the Model title as 'Model'
@@ -29,7 +29,7 @@ Feature: Add Model
     And User refresh the page
     And User can see updated value in 'KEEP_CONVERSATION_HISTORY' field as 'True'
     Then User can see updated value in 'VAR_NAME' field as 'New_Name'
-    And User navigates to Open Model
+    And User clicks on Open Model
 
   Scenario: Adding tag to Model to catalog - GPT-3.5 - embeddings
     Given User Can see the Model title as 'Model'
@@ -38,15 +38,15 @@ Feature: Add Model
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
-    And User navigates to Open Model
+    And User clicks on Open Model
 
   Scenario: View Existing Models in Model Catalog Page
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     When User searches the 'Model' in the model catalog searchbox
     Then User should see the 'Model' on the model catalog page
 
   Scenario Outline: Edit Model Details
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     When User searches the '<MODEL_NAME>' in the model catalog searchbox
     And User selects the '<MODEL_NAME>' from the model catalog
     And User clicks on Edit button

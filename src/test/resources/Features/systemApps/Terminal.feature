@@ -1,8 +1,8 @@
-Feature: Verify Pixel Command in Terminal
+Feature: Terminal
 
   @LoginWithAdmin
   Scenario: Verify Pixel command output
-    Given User navigates to Open App Library
+    Given User clicks on Open App Library
     When User clicks on System app
     Then User clicks on Terminal card
     And User run pixel command '1+1'

@@ -27,13 +27,8 @@ public class UserManagementSteps {
 		this.settingpage = new SettingPage(SetupHooks.getPage());
 	}
 
-	@Given("User logs as Admin user in AI CORE application")
-	public void user_logs_as_admin_user_in_ai_core_application() {
-		homePage.checkOnOpenSetting();
-	}
-
-	@And("User navigates to settings")
-	public void user_navigates_to_settings() {
+	@And("User clicks on Open Settings")
+	public void user_clicks_on_open_settings() {
 		homePage.clickOnOpenSettings();
 	}
 

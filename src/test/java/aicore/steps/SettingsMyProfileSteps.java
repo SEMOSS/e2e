@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.SettingsMyProfile;
 import aicore.utils.CommonUtils;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -25,10 +24,10 @@ public class SettingsMyProfileSteps {
 		this.settings = new SettingsMyProfile(SetupHooks.getPage(), timestamp);
 	}
 
-	@Given("User clicks on Open Settings icon")
-	public void user_clicks_on_open_settings_icon() {
-		settings.openSettingsIcon();
-	}
+//	@Given("User clicks on Open Settings")
+//	public void user_clicks_on_open_settings_icon() {
+//		HomePageUtils.clickOnOpenSettings(SetupHooks.getPage());
+//	}
 
 	@When("User clicks on My Profile")
 	public void user_clicks_on_my_profile() {
