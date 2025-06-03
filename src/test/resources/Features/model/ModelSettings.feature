@@ -12,7 +12,7 @@ Feature: Model settings
     Then User can see a toast message as 'Successfully added LLM to catalog'
 
   Scenario: Validate Model Settings page
-    When User clicks on Open Settings
+    When User clicks on Model Setting tab
     Then User can see 'Make Public' section
     And User can see text message in 'Make Public' section as 'Show Model to all users and automatically give them read-only access. Users can request elevated access.'
     And User can see toggle button in 'Make Public' section
