@@ -2,7 +2,7 @@ Feature: Model catalog permission - Author
 Adding LLM to the catalog
  
   Background: Create a Model - GPT-3.5
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     When User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Model'

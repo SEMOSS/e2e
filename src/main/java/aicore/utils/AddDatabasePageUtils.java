@@ -11,7 +11,7 @@ public class AddDatabasePageUtils {
 	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
-	private static final String CREATE_DATABASE_BUTTON = "Create database";
+	private static final String CREATE_DATABASE_BUTTON_LABEL = "Create database";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -47,8 +47,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickCreateDatabaseButton(Page page) {
-		page.getByText(CREATE_DATABASE_BUTTON).isVisible();
-		page.getByText(CREATE_DATABASE_BUTTON).click();
+		AICorePageUtils.clickOnButton(page, CREATE_DATABASE_BUTTON_LABEL);
 	}
 
 	public static String verifyDatabaseNameInCatalog(Page page, String dbName) {

@@ -2,7 +2,7 @@
 Feature: View Function Details
 
   Background: Create Function using ZIP file
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     When User clicks on Add Function
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
@@ -22,7 +22,7 @@ Feature: View Function Details
     Then User sees 'Change Access' button
     And User logs out from the application
     Then User login as "native"
-    And User navigates to Open Function
+    And User clicks on Open Function
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     Then User clicks on the function name 'WeatherFunctionTest' in the function catalog
 

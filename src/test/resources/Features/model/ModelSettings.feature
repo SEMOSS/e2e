@@ -2,7 +2,7 @@ Feature: Model settings
   I want to use this feature file for all the scenarios related to Model settings
 
   Background: Create a model
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Catalog'
@@ -12,7 +12,7 @@ Feature: Model settings
     Then User can see a toast message as 'Successfully added LLM to catalog'
 
   Scenario: Validate Model Settings page
-    When User click on Setting tab
+    When User clicks on Open Settings
     Then User can see 'Make Public' section
     And User can see text message in 'Make Public' section as 'Show Model to all users and automatically give them read-only access. Users can request elevated access.'
     And User can see toggle button in 'Make Public' section

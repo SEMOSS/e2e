@@ -1,4 +1,4 @@
-package aicore.pages;
+package aicore.utils.settings;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;

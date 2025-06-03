@@ -52,8 +52,8 @@ public class HomePage {
 		HomePageUtils.clickOnOpenAppLibrary(page);
 	}
 
-	public void logOutAsCurrentUser() {
-		HomePageUtils.logOutAsCurrentUser(page);
+	public void logout() {
+		HomePageUtils.logout(page);
 	}
 
 	public void clickOnOpenSettings() {

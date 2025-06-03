@@ -1,8 +1,8 @@
 Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
-
+  
   Background: Login to the application and Create model tagged with embeddings
-    Given User navigates to Open Model
+    Given User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Catalog'
@@ -16,7 +16,7 @@ Feature: Add Vector Database
 
   @LoginWithAdmin
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
-    Given User clicks on Open Vector engine
+    Given User clicks on Open Vector
     When User clicks on Add Vector button
     And User selects '<connection>' connection
     And User enters vector database Catalog name as '<catalog_name>'
@@ -33,7 +33,7 @@ Feature: Add Vector Database
     And User can see content length in 'CONTENT_LENGTH' field as '<content_length>' in SMSS properties
     And User can see content overlap in 'CONTENT_OVERLAP' field as '<content_overlap>' in SMSS properties
     And User can see chunking strategy in 'CHUNKING_STRATEGY' field as '<chunking_strategy>' in SMSS properties
-    And User navigates to Open Model
+    And User clicks on Open Model
 
     Examples:
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
@@ -42,13 +42,24 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
 
-  #@LoginWithAdmin
-  #Scenario: Validate usage of storage
-    #Given User clicks on Open Vector engine
-    #And User clicks on the created Vector card name as 'FAISS Vector DB03'
-    #And User can see the Vector title as 'FAISS Vector DB03'
-    #When User clicks on Usage tab for Vector DB
-    #Then User sees an example of "How to use in Javascript" with example code for Vector DB
-    #And User sees an example of "How to use in Python" with example code for Vector DB
-    #And User sees an example of "How to use with Langchain API" with example code for Vector DB
-    #And User sees an example of "How to use in Java" with example code for Vector DB
+  @LoginWithAdmin
+  Scenario: Validate usage of storage
+    Given User clicks on Open Vector
+    When User clicks on Add Vector button
+    And User selects 'FAISS' connection
+    And User enters vector database Catalog name as 'FAISS Vector DB00'
+    And User selects 'Catalog' from Embedder field
+    And User selects 'Token' from Chunking Strategy field
+    And User enters value of Content Length as '510'
+    And User enters value of Content Overlap as '17'
+    And User clicks on Create Vector button
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And User can see the Vector title as 'FAISS Vector DB00'
+    
+    #And User clicks on the created Vector card name as 'FAISS Vector DB00'
+    #And User can see the Vector title as 'FAISS Vector DB00'
+    When User clicks on Usage tab for Vector DB
+    Then User sees an example of "How to use in Javascript" with example code for Vector DB
+    And User sees an example of "How to use in Python" with example code for Vector DB
+    And User sees an example of "How to use with Langchain API" with example code for Vector DB
+    And User sees an example of "How to use in Java" with example code for Vector DB

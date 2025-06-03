@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AppLibraryPageUtils;
+import aicore.utils.HomePageUtils;
 
 public class OpenAppLibraryPage {
 
@@ -51,12 +52,12 @@ public class OpenAppLibraryPage {
 		return AppLibraryPageUtils.verifyWelcomeText(page);
 	}
 
-	public void navigateToHomePageFromAppEditPage() {
-		AppLibraryPageUtils.navigateToHomePageFromAppEditPage(page);
-	}
+//	public void navigateToHomePageFromAppEditPage() {
+//		AppLibraryPageUtils.navigateToHomePageFromAppEditPage(page);
+//	}
 
 	public void navigatesToHomePage() {
-		AppLibraryPageUtils.navigatesToHomePage(page);
+		HomePageUtils.navigateToHomePage(page);
 	}
 
 	public void searchApp(String appName) {

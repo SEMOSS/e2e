@@ -23,14 +23,14 @@ public class AddVectorDatabaseSteps {
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = AddModelSteps.timestamp.substring(0, 5);
+		timestamp = AddModelSteps.timestamp;
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 	}
 
-	@Given("User clicks on Open Vector engine")
-	public void user_clicks_on_open_vector_engine() {
+	@Given("User clicks on Open Vector")
+	public void user_clicks_on_open_vector() {
 		homePage.clickOnOpenVector();
 	}
 

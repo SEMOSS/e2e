@@ -7,18 +7,18 @@ import aicore.hooks.SetupHooks;
 import org.assertj.core.api.SoftAssertions;
 
 import aicore.hooks.SoftAssertionHooks;
-import aicore.pages.AddModelToCatalogPage;
+import aicore.pages.AddModelPage;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.Then;
 
 public class AvailableModelsUnderGroupsSteps {
-	private AddModelToCatalogPage modelPage;
+	private AddModelPage modelPage;
 	private String timestamp;
 	private SoftAssertions softAssert;
 
 	public AvailableModelsUnderGroupsSteps() {
 		timestamp = CommonUtils.getTimeStampName();
-		modelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
+		modelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		softAssert = SoftAssertionHooks.getSoftAssertions();
 	}
 

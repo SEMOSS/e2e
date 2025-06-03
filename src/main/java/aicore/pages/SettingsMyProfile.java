@@ -2,7 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.SettingsPageUtils;
+import aicore.utils.settings.MyProfilePageUtils;
 
 public class SettingsMyProfile {
 	private Page page;
@@ -13,76 +13,72 @@ public class SettingsMyProfile {
 		this.timestamp = timestamp;
 	}
 
-	public void openSettingsIcon() {
-		SettingsPageUtils.openSettingsIcon(page);
-	}
-
 	public void clickOnMyProfileCard() {
-		SettingsPageUtils.clickOnMyProfileCard(page);
+		MyProfilePageUtils.clickOnMyProfileCard(page);
 	}
 
 	public boolean isSectionVisible(String sectionText) {
-		return SettingsPageUtils.isSectionVisible(page, sectionText);
+		return MyProfilePageUtils.isSectionVisible(page, sectionText);
 	}
 
 	public String verifyPrivacyCenter() {
-		return SettingsPageUtils.verifyPrivacyCenter(page);
+		return MyProfilePageUtils.verifyPrivacyCenter(page);
 	}
 
 	public void clickNewKeyButton() {
-		SettingsPageUtils.clickNewKeyButton(page);
+		MyProfilePageUtils.clickNewKeyButton(page);
 	}
 
 	public void enterKeyName(String keyName) {
-		SettingsPageUtils.enterKeyName(page, keyName, timestamp);
+		MyProfilePageUtils.enterKeyName(page, keyName, timestamp);
 	}
 
 	public void enterDescription(String description) {
-		SettingsPageUtils.enterDescription(page, description, timestamp);
+		MyProfilePageUtils.enterDescription(page, description, timestamp);
 	}
 
 	public void clickGenerateButton() {
-		SettingsPageUtils.clickGenerateButton(page);
+		MyProfilePageUtils.clickGenerateButton(page);
 	}
 
 	public boolean isAccessKeyPopupVisible() {
-		return SettingsPageUtils.isAccessKeyPopupVisible(page);
+		return MyProfilePageUtils.isAccessKeyPopupVisible(page);
 	}
 
 	public String copyAccessKey(String KeyName) {
-		return SettingsPageUtils.copyAccessKey(page, KeyName);
+		return MyProfilePageUtils.copyAccessKey(page, KeyName);
 	}
 
 	public String extractExampleSectionContent(String sectionName) {
-		return SettingsPageUtils.extractExampleSectionContent(page, sectionName);
+		return MyProfilePageUtils.extractExampleSectionContent(page, sectionName);
 	}
 
 	public void clickOnCancelButton() {
-		SettingsPageUtils.clickOnCancelButton(page);
+		MyProfilePageUtils.clickOnCancelButton(page);
 	}
 
 	public void clickOnDeleteIcon(String KeyName) {
-		SettingsPageUtils.clickOnDeleteIcon(page, KeyName, timestamp);
+		MyProfilePageUtils.clickOnDeleteIcon(page, KeyName, timestamp);
 	}
 
 	public String deleteKeyToastMessage() {
-		return SettingsPageUtils.deleteKeyToastMessage(page);
+		return MyProfilePageUtils.deleteKeyToastMessage(page);
 	}
 
 	public String getExpectedAccessKeyTitle(String keyName) {
-		return SettingsPageUtils.getExpectedAccessKeyTitle(page, keyName, timestamp);
+		return MyProfilePageUtils.getExpectedAccessKeyTitle(page, keyName, timestamp);
 	}
 
 	public String validateGeneratedKey(String keyName) {
-		return SettingsPageUtils.validateGeneratedKey(page, keyName, timestamp);
+		return MyProfilePageUtils.validateGeneratedKey(page, keyName, timestamp);
 	}
 
 	public String validateDescriptionName(String description) {
-		return SettingsPageUtils.validateDescriptionName(page, description, timestamp);
+		return MyProfilePageUtils.validateDescriptionName(page, description, timestamp);
 	}
 
 	public String getExpectedDescriptionName(String description) {
-		return SettingsPageUtils.getExpectedDescriptionName(page, description, timestamp);
+		return MyProfilePageUtils.getExpectedDescriptionName(page, description, timestamp);
 	}
 
 }

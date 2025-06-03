@@ -31,7 +31,7 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage = new OpenAppLibraryPage(SetupHooks.getPage(), timestamp);
 	}
 
-	@Given("User navigates to Open App Library")
+	@Given("User clicks on Open App Library")
 	public void user_navigates_to_open_app_library() {
 		homePage.clickOnOpenAppLibrary();
 	}
@@ -80,17 +80,12 @@ public class CreateAppUsingDragAndDropSteps {
 				"Mismatch between the expected and actual message");
 	}
 
-	@When("User navigates to the Home page from the App Edit page")
-	public void user_navigates_to_the_home_page_from_the_app_edit_page() {
-		openAppLibraryPage.navigateToHomePageFromAppEditPage();
-	}
+//	@When("User navigates to the Home page from the App Edit page")
+//	public void user_navigates_to_the_home_page_from_the_app_edit_page() {
+//		openAppLibraryPage.navigateToHomePageFromAppEditPage();
+//	}
 
-	@Given("User is on the Home page")
-	public void user_is_on_the_home_page() {
-		openAppLibraryPage.navigatesToHomePage();
-	}
-
-	@When("User navigate to Home page")
+	@When("User navigates to Home page")
 	public void user_navigate_to_home_page() {
 		openAppLibraryPage.navigatesToHomePage();
 	}

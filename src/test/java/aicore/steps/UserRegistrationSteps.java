@@ -63,11 +63,6 @@ public class UserRegistrationSteps {
 		loginPage.enterUsernameAndPassword(uniqueUsername, uniquePassword);
 	}
 
-	@When("User clicks on Login button")
-	public void user_clicks_on_login_button() {
-		loginPage.loginWithNative();
-	}
-
 	@Then("User should navigate to home page")
 	public void user_should_navigate_to_home_page() {
 		String actualPageTitle = homePage.getPageTitle();

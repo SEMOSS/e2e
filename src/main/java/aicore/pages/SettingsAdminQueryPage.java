@@ -2,11 +2,9 @@ package aicore.pages;
 
 import java.util.List;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 
-import aicore.utils.SettingsPageUtils;
+import aicore.utils.settings.AdminQueryPageUtils;
 
 public class SettingsAdminQueryPage {
 	private Page page;
@@ -16,26 +14,26 @@ public class SettingsAdminQueryPage {
 	}
 
 	public void selectDatabase(String databaseName) {
-		SettingsPageUtils.selectDatabase(page, databaseName);
+		AdminQueryPageUtils.selectDatabase(page, databaseName);
 	}
 
 	public void enterQuery(String query) {
-		SettingsPageUtils.enterQuery(page, query);
+		AdminQueryPageUtils.enterQuery(page, query);
 	}
 
 	public void clickOnExecuteQueryButton() {
-		SettingsPageUtils.clickOnExecuteQueryButton(page);
+		AdminQueryPageUtils.clickOnExecuteQueryButton(page);
 	}
 
 	public int getTableHeaderCount() {
-		return SettingsPageUtils.getTableHeaderCount(page);
+		return AdminQueryPageUtils.getTableHeaderCount(page);
 	}
 
 	public List<String> getTableHeaderNames() {
-		return SettingsPageUtils.getTableHeaderNames(page);
+		return AdminQueryPageUtils.getTableHeaderNames(page);
 	}
 
 	public String verifyQueryExecutedToastMessage() {
-		return SettingsPageUtils.verifyQueryExecutedToastMessage(page);
+		return AdminQueryPageUtils.verifyQueryExecutedToastMessage(page);
 	}
 }

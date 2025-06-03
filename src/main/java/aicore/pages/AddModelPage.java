@@ -8,9 +8,11 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import aicore.utils.ModelPageUtils;
+import aicore.utils.page.model.EditModelPageUtils;
+import aicore.utils.page.model.ModelPageUtils;
+import aicore.utils.page.model.SettingsModelPageUtils;
 
-public class AddModelToCatalogPage {
+public class AddModelPage {
 
 	private Page page;
 	private String timestamp;
@@ -19,7 +21,7 @@ public class AddModelToCatalogPage {
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Model']";
 
-	public AddModelToCatalogPage(Page page, String timestamp) {
+	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
 	}
@@ -109,221 +111,221 @@ public class AddModelToCatalogPage {
 	}
 	// Edit model
 	public void searchModelCatalog(String modelName) {
-		ModelPageUtils.searchModelCatalog(page, modelName, timestamp);
+		EditModelPageUtils.searchModelCatalog(page, modelName, timestamp);
 	}
 
 	public void selectModelFromSearchOptions(String modelName) {
-		ModelPageUtils.selectModelFromSearchOptions(page, modelName, timestamp);
+		EditModelPageUtils.selectModelFromSearchOptions(page, modelName, timestamp);
 	}
 
 	public boolean verifyModelIsDisplayedOnCatalogPage(String modelName) {
-		return ModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelName, timestamp);
+		return EditModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelName, timestamp);
 	}
 
 	public void clickOnEditButton() {
-		ModelPageUtils.clickOnEditButton(page);
+		EditModelPageUtils.clickOnEditButton(page);
 	}
 
 	public void enterDetails(String detailsText) {
-		ModelPageUtils.enterDetails(page, detailsText);
+		EditModelPageUtils.enterDetails(page, detailsText);
 	}
 
 	public void enterDescription(String descriptionText) {
-		ModelPageUtils.enterDescription(page, descriptionText);
+		EditModelPageUtils.enterDescription(page, descriptionText);
 	}
 
 	public void enterTagName(String tagName) {
-		ModelPageUtils.enterTagName(page, tagName);
+		EditModelPageUtils.enterTagName(page, tagName);
 	}
 
 	public void enterDomainName(String domainName) {
-		ModelPageUtils.enterDomainName(page, domainName);
+		EditModelPageUtils.enterDomainName(page, domainName);
 	}
 
 	public void selectDataClassificationOption(String option) {
-		ModelPageUtils.selectDataClassificationOption(page, option);
+		EditModelPageUtils.selectDataClassificationOption(page, option);
 	}
 
 	public void selectDataRestrictionsOption(String option) {
-		ModelPageUtils.selectDataRestrictionsOption(page, option);
+		EditModelPageUtils.selectDataRestrictionsOption(page, option);
 	}
 
 	public void clickOnSubmit() {
-		ModelPageUtils.clickOnSubmit(page);
+		EditModelPageUtils.clickOnSubmit(page);
 	}
 
 	public String verifyEditSuccessfullToastMessage() {
-		return ModelPageUtils.verifyEditSuccessfullToastMessage(page);
+		return EditModelPageUtils.verifyEditSuccessfullToastMessage(page);
 	}
 
 	public void waitForEditSuccessToastMessageToDisappear() {
-		ModelPageUtils.waitForEditSuccessToastMessageToDisappear(page);
+		EditModelPageUtils.waitForEditSuccessToastMessageToDisappear(page);
 	}
 
 	public String verifyDescriptionText() {
-		return ModelPageUtils.verifyDescriptionText(page);
+		return EditModelPageUtils.verifyDescriptionText(page);
 	}
 
 	public List<String> verifyTagNames() {
-		return ModelPageUtils.verifyTagNames(page);
+		return EditModelPageUtils.verifyTagNames(page);
 	}
 
 	public String verifyDetailsTextUnderOverview() {
-		return ModelPageUtils.verifyDetailsTextUnderOverview(page);
+		return EditModelPageUtils.verifyDetailsTextUnderOverview(page);
 	}
 
 	public List<String> verifyTagNamesUnderOverview() {
-		return ModelPageUtils.verifyTagNamesUnderOverview(page);
+		return EditModelPageUtils.verifyTagNamesUnderOverview(page);
 	}
 
 	public List<String> verifyDomainValuesUnderOverview() {
-		return ModelPageUtils.verifyDomainValuesUnderOverview(page);
+		return EditModelPageUtils.verifyDomainValuesUnderOverview(page);
 	}
 
 	public List<String> verifyDataClassificationOptionsUnderOverview() {
-		return ModelPageUtils.verifyDataClassificationOptionsUnderOverview(page);
+		return EditModelPageUtils.verifyDataClassificationOptionsUnderOverview(page);
 	}
 
 	public List<String> verifyDataRestrictionOptionsUnderOverview() {
-		return ModelPageUtils.verifyDataRestrictionOptionsUnderOverview(page);
+		return EditModelPageUtils.verifyDataRestrictionOptionsUnderOverview(page);
 	}
 
 	// Methods used for settings
 
 	public void clickOnSettingsTab() {
-		ModelPageUtils.clickOnSettingsTab(page);
+		SettingsModelPageUtils.clickOnSettingsTab(page);
 	}
 
 	public boolean verifyMakePublicSectionIsVisible(String title) {
-		return ModelPageUtils.verifyMakePublicSectionIsVisible(page, title);
+		return SettingsModelPageUtils.verifyMakePublicSectionIsVisible(page, title);
 	}
 
 	public String verifyMakePublicSectionTextMessage() {
-		return ModelPageUtils.verifyMakePublicSectionTextMessage(page);
+		return SettingsModelPageUtils.verifyMakePublicSectionTextMessage(page);
 	}
 
 	public boolean verifyMakePublicToggleButtonIsVisible() {
-		return ModelPageUtils.verifyMakePublicToggleButtonIsVisible(page);
+		return SettingsModelPageUtils.verifyMakePublicToggleButtonIsVisible(page);
 	}
 
 	public boolean verifyMakeDiscoverableSectionIsVisible(String title) {
-		return ModelPageUtils.verifyMakeDiscoverableSectionIsVisible(page, title);
+		return SettingsModelPageUtils.verifyMakeDiscoverableSectionIsVisible(page, title);
 	}
 
 	public String verifyMakeDiscoverableSectionTextMessage() {
-		return ModelPageUtils.verifyMakeDiscoverableSectionTextMessage(page);
+		return SettingsModelPageUtils.verifyMakeDiscoverableSectionTextMessage(page);
 	}
 
 	public boolean verifyMakeDiscoverableToggleButtonIsVisible() {
-		return ModelPageUtils.verifyMakeDiscoverableToggleButtonIsVisible(page);
+		return SettingsModelPageUtils.verifyMakeDiscoverableToggleButtonIsVisible(page);
 	}
 
 	public boolean verifyDeleteSectionIsVisible(String title) {
-		return ModelPageUtils.verifyDeleteSectionIsVisible(page, title);
+		return SettingsModelPageUtils.verifyDeleteSectionIsVisible(page, title);
 	}
 
 	public String verifyDeleteSectionTextMessage() {
-		return ModelPageUtils.verifyDeleteSectionTextMessage(page);
+		return SettingsModelPageUtils.verifyDeleteSectionTextMessage(page);
 	}
 
 	public boolean verifyDeleteButtonIsVisible() {
-		return ModelPageUtils.verifyDeleteButtonIsVisible(page);
+		return SettingsModelPageUtils.verifyDeleteButtonIsVisible(page);
 	}
 
 	public boolean verifyPendingRequestsSectionIsVisible() {
-		return ModelPageUtils.verifyPendingRequestsSectionIsVisible(page);
+		return SettingsModelPageUtils.verifyPendingRequestsSectionIsVisible(page);
 	}
 
 	public String verifyPendingRequestsSectionTextMessage() {
-		return ModelPageUtils.verifyPendingRequestsSectionTextMessage(page);
+		return SettingsModelPageUtils.verifyPendingRequestsSectionTextMessage(page);
 	}
 
 	public boolean verifyMembersSectionIsVisible() {
-		return ModelPageUtils.verifyMembersSectionIsVisible(page);
+		return SettingsModelPageUtils.verifyMembersSectionIsVisible(page);
 	}
 
 	public boolean verifySearchMembersSearchBoxIsVisible() {
-		return ModelPageUtils.verifySearchMembersSearchBoxIsVisible(page);
+		return SettingsModelPageUtils.verifySearchMembersSearchBoxIsVisible(page);
 	}
 
 	public boolean verifyAddMembersButtonIsVisible() {
-		return ModelPageUtils.verifyAddMembersButtonIsVisible(page);
+		return SettingsModelPageUtils.verifyAddMembersButtonIsVisible(page);
 	}
 
 	public boolean verifyRowsPerPageDropdownIsVisible() {
-		return ModelPageUtils.verifyRowsPerPageDropdownIsVisible(page);
+		return SettingsModelPageUtils.verifyRowsPerPageDropdownIsVisible(page);
 	}
 
 	public List<String> verifyRowsPerPageDropdownOptions() {
-		return ModelPageUtils.verifyRowsPerPageDropdownOptions(page);
+		return SettingsModelPageUtils.verifyRowsPerPageDropdownOptions(page);
 	}
 
 	public void clickOnEditSMSSButton() {
-		ModelPageUtils.clickOnEditSMSSButton(page);
+		SettingsModelPageUtils.clickOnEditSMSSButton(page);
 	}
 
 	public void clickOnUpdateSMSSButton() {
-		ModelPageUtils.clickOnUpdateSMSSButton(page);
+		SettingsModelPageUtils.clickOnUpdateSMSSButton(page);
 	}
 
 	public void editSMSSFieldValues(String fieldName, String newValue) {
-		ModelPageUtils.editSMSSFieldValues(page, fieldName, newValue);
+		SettingsModelPageUtils.editSMSSFieldValues(page, fieldName, newValue);
 	}
 
 	public void pageReload() {
-		ModelPageUtils.pageReload(page);
+		SettingsModelPageUtils.pageReload(page);
 	}
 
 	public boolean verifyGroupIsVisible(String groupName) {
-		return ModelPageUtils.verifyGroupIsVisible(page, groupName);
+		return SettingsModelPageUtils.verifyGroupIsVisible(page, groupName);
 	}
 
 	public boolean VerifyModelIsVisible(String groupName, String modelName) {
-		return ModelPageUtils.VerifyModelIsVisible(page, groupName, modelName);
+		return SettingsModelPageUtils.VerifyModelIsVisible(page, groupName, modelName);
 	}
 
 	public boolean verifyTileIsVisible(String tileName) {
-		return ModelPageUtils.verifyTileIsVisible(page, tileName);
+		return SettingsModelPageUtils.verifyTileIsVisible(page, tileName);
 	}
 
 	public void clickOnSearchBox(String string) {
-		ModelPageUtils.clickOnSearchBox(page, string);
+		SettingsModelPageUtils.clickOnSearchBox(page, string);
 	}
 
 	public void clickOnAccessControl() {
-		ModelPageUtils.clickOnAccessControl(page);
+		SettingsModelPageUtils.clickOnAccessControl(page);
 	}
 
 	public void clickOnAddMembersButton() {
-		ModelPageUtils.clickOnAddMembersButton(page);
+		SettingsModelPageUtils.clickOnAddMembersButton(page);
 	}
 
 	public void addMember(String role, boolean useDocker) throws InterruptedException {
-		ModelPageUtils.addMember(page, role, useDocker);
+		SettingsModelPageUtils.addMember(page, role, useDocker);
 	}
 
 	public void clickOnDeleteButton() {
-		ModelPageUtils.clickOnDeleteButton(page);
+		SettingsModelPageUtils.clickOnDeleteButton(page);
 	}
 
 	public boolean isDeleteSuccessful() {
-		return ModelPageUtils.isDeleteSuccessful(page);
+		return SettingsModelPageUtils.isDeleteSuccessful(page);
 	}
 
 	public boolean isPermissionErrorDisplayed() {
-		return ModelPageUtils.isPermissionErrorDisplayed(page);
+		return SettingsModelPageUtils.isPermissionErrorDisplayed(page);
 	}
 
 	public boolean isAddMemberButtonVisible() {
-		return ModelPageUtils.isAddMemberButtonVisible(page);
+		return SettingsModelPageUtils.isAddMemberButtonVisible(page);
 	}
 
 	public void deleteAddedMember(String role) {
-		ModelPageUtils.deleteAddedMember(page, role);
+		SettingsModelPageUtils.deleteAddedMember(page, role);
 	}
 
 	public void addedModelCard(String modelName) {
-		ModelPageUtils.addedModelCard(page, modelName);
+		EditModelPageUtils.addedModelCard(page, modelName);
 	}
 
 	public String verifyDeleteToastMessage() {
@@ -335,14 +337,14 @@ public class AddModelToCatalogPage {
 	}
 
 	public void clickOnUsageTab() {
-		ModelPageUtils.clickOnUsageTab(page);
+		SettingsModelPageUtils.clickOnUsageTab(page);
 	}
 
 	public String copyModelID() {
-		return ModelPageUtils.copyModelID(page);
+		return SettingsModelPageUtils.copyModelID(page);
 	}
 
 	public String getFullSectionCodeByHeading(String headingText) {
-		return ModelPageUtils.getFullSectionCodeByHeading(page, headingText);
+		return SettingsModelPageUtils.getFullSectionCodeByHeading(page, headingText);
 	}
 }

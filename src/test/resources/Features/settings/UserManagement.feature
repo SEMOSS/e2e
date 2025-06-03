@@ -35,7 +35,7 @@ Feature: User Management
 
    @LoginWithAdmin
   Scenario: Update Configuration Settings - access_keys_allowed - true - Adfs
-    Given User navigates to Open Setting page
+    Given User clicks on Open Settings
     When User enable admin mode
     And User clicks on 'Configuration' Card
     And User clicks on 'access_keys_allowed' value 
@@ -45,7 +45,7 @@ Feature: User Management
     
     @LoginWithAdmin
   Scenario: Update Configuration Settings - access_keys_allowed - true - native
-    Given User navigates to Open Setting page
+    Given User clicks on Open Settings
     When User enable admin mode
     And User clicks on 'Configuration' Card
     And User clicks on Authentication dropdown
@@ -57,14 +57,14 @@ Feature: User Management
    
   @LoginWithAdmin
   Scenario: Add New Native User with Unique Incremental Details - Validate profile info
-    And User navigates to Open Setting page
+    And User clicks on Open Settings
     And User enables admin mode
     And User clicks on 'Member Settings' Card
     And User sees the Add User button
     And User adds 1 members with name "TestUser", userId "TestUserId", password "Test@123", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
     And User logs out from the application
     And User logs in with the last generated userId and password
-    And User clicks on Open Settings icon
+    And User clicks on Open Settings
     When User clicks on My Profile
     And User can see 'Edit profile information' section on profile page
     Then User can see that the displayed User ID matches the generated userId
@@ -72,7 +72,7 @@ Feature: User Management
     And User can see that the displayed Email matches the generated email
     And User logs out from the application
     Then User login as "Admin"
-   Then User navigates to Open Setting page
+   Then User clicks on Open Settings
     And User enables admin mode
     And User clicks on 'Member Settings' Card
     And User sees the search button
