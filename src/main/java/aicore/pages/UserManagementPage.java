@@ -146,7 +146,7 @@ public class UserManagementPage {
 
 	public void loginAsUser(String username, String password) {
 		LoginPageUtils.enterUsernameAndPassword(page, username, password);
-		LoginPageUtils.clickLogin(page);
+		LoginPageUtils.clickLoginButton(page);
 	}
 
 	public String getDisplayedName() throws InterruptedException {

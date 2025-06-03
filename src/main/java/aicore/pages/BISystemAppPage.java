@@ -40,7 +40,6 @@ public class BISystemAppPage {
 	private static final String EXCEL_OPTION_XPATH = "//div[@class='smss-block__text']//span[text()='Excel']";
 	private static final String ENTER_DATABASE_NAME_TEXTBOX_XPATH = "//input[@placeholder='Database Name']";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "(//input[@type='file'])[2]";
-	private static final String IMPORT_BUTTON_XPATH = "//button[@class='smss-right smss-btn']//span[normalize-space(text())='Import']";
 	private static final String DATABASE_CREATED_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 
 	public BISystemAppPage(Page page, String timestamp) {

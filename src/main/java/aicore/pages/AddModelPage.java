@@ -10,7 +10,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.ModelPageUtils;
 
-public class AddModelToCatalogPage {
+public class AddModelPage {
 
 	private Page page;
 	private String timestamp;
@@ -19,7 +19,7 @@ public class AddModelToCatalogPage {
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Model']";
 
-	public AddModelToCatalogPage(Page page, String timestamp) {
+	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
 	}

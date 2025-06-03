@@ -3,7 +3,6 @@ package aicore.dev;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.Map;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -24,7 +22,6 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.base.GenericSetupUtils;
 import aicore.utils.ConfigUtils;
-import aicore.utils.RestCaller;
 import aicore.utils.UrlUtils;
 
 /**

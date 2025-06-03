@@ -1,7 +1,7 @@
-Feature: Jobs
+Feature: Job Management
 
   Background: Add Job
-    Given User navigates to settings
+    Given User clicks on Open Settings
     And User clicks on Jobs
     And User clicks on Add Job button
     And User fills 'Test Job' in Name field

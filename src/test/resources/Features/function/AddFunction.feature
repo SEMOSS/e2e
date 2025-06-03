@@ -2,7 +2,7 @@ Feature: Add Function
 
   @LoginWithAdmin
   Scenario: Create Function using ZIP file
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     When User clicks on Add Function
     Then User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
@@ -11,7 +11,7 @@ Feature: Add Function
 
   @LoginWithAdmin
   Scenario Outline: Create function with all the required fields
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     When User clicks on Add Function
     Then User selects function '<functionType>'
     And User sees astrisk mark on the required fields '<required_fields>'
@@ -35,7 +35,7 @@ Feature: Add Function
 
   @LoginWithAdmin
   Scenario Outline: Add Function with missing Form fields
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     When User clicks on Add Function
     And User selects function '<functionType>'
     And User sees astrisk mark on the required fields '<required_fields>'
@@ -56,7 +56,7 @@ Feature: Add Function
 
   @LoginWithAdmin
  Scenario Outline: Delete Function
-    Given User navigates to Open Function
+    Given User clicks on Open Function
     When User sees the function name '<function_name>' in the function catalog
     Then User clicks on the function name '<function_name>' in the function catalog
     And User clicks on Access Control Tab

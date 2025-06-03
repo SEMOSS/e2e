@@ -3,24 +3,27 @@ package aicore.steps;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.AddDatabaseToCatalogPage;
+import aicore.pages.AddDatabasePage;
 import aicore.pages.HomePage;
+import aicore.pages.ViewUsagePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddDatabaseSteps {
-    private AddDatabaseToCatalogPage addDatabaseToCatalogPage;
+    private AddDatabasePage addDatabaseToCatalogPage;
     private HomePage homePage;
+    private ViewUsagePage viewUsagePage;
 
     public AddDatabaseSteps() {
         homePage = new HomePage(SetupHooks.getPage());
-        addDatabaseToCatalogPage = new AddDatabaseToCatalogPage(SetupHooks.getPage());
+        addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
+        viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
     }
 
-    @Given("User navigates to Open Database")
-    public void user_navigates_to_open_database() {
+    @Given("User clicks on Open Database")
+    public void user_clicks_to_open_database() {
         homePage.clickOnOpenDatabase();
     }
 
@@ -65,4 +68,13 @@ public class AddDatabaseSteps {
         addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName);
     }
 
+    @When("User clicks on Usage tab for Database")
+    public void user_clicks_on_usage_tab_for_database() {
+        viewUsagePage.clickOnUsageTab();
+    }
+
+    @Then("User sees an example of {string} with example code for Database")
+    public void user_sees_an_example_of_with_example_code_for_database(String usageType) {
+        viewUsagePage.verifyExample(usageType);
+    }
 }

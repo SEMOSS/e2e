@@ -9,7 +9,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.AddModelToCatalogPage;
+import aicore.pages.AddModelPage;
 import aicore.pages.HomePage;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
@@ -20,17 +20,18 @@ import io.cucumber.java.en.When;
 
 public class AddModelSteps {
 	private HomePage homePage;
-	private AddModelToCatalogPage openModelPage;
+	private AddModelPage openModelPage;
 	protected static String timestamp;
+//	public static String timestamp = CommonUtils.getTimeStampName();;
 	private String expectedCatalogId;
 
 	public AddModelSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
-		this.openModelPage = new AddModelToCatalogPage(SetupHooks.getPage(), timestamp);
+		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 	}
 
-	@Given("User navigates to Open Model")
+	@Given("User clicks on Open Model")
 	public void user_navigates_to_open_model() {
 		homePage.clickOnOpenModel();
 	}

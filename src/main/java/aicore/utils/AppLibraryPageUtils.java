@@ -9,7 +9,6 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppLibraryPageUtils {
 	
-	private static final String OPEN_APP_LIBRARY_XPATH = "//a[@data-tour='nav-app-library']";
 	private static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
 	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
 	private static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
@@ -104,14 +103,6 @@ public class AppLibraryPageUtils {
 			page.locator(MENU_OPTION_XPATH).click();
 		}
 		page.locator(APP_LOGO_ON_EDIT_PAGE_XPATH.replace("{appName}", appNameWithLogo)).click();
-	}
-
-	public static void navigatesToHomePage(Page page) {
-		Locator openAppLibrary = page.locator(OPEN_APP_LIBRARY_XPATH);
-		if (!openAppLibrary.isVisible()) {
-			page.navigate(UrlUtils.getUrl("#/"));
-			openAppLibrary.waitFor();
-		}
 	}
 
 	public static void searchApp(Page page, String appName, String timestamp) {

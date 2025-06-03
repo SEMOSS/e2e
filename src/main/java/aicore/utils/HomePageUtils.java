@@ -76,7 +76,7 @@ public class HomePageUtils {
 		page.click(OPEN_APP_LIBRARY_XPATH);
 	}
 
-	public static void logOutAsCurrentUser(Page page) {
+	public static void logout(Page page) {
 		page.click(USER_PROFILE_ICON_XPATH);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 	}

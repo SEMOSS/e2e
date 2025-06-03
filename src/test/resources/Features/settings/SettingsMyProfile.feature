@@ -1,7 +1,7 @@
-Feature: Settings
+Feature: Settings My Profile
 
   Scenario: Settings - My Profile Page
-    Given User clicks on Open Settings icon
+    Given User clicks on Open Settings
     When User clicks on My Profile
     Then User can see 'Privacy Center' link in the top right
     And User can see 'Edit profile information' section on profile page
