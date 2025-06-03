@@ -36,7 +36,7 @@ public class AvailableModelsUnderGroupsSteps {
 			for (String modelOption : expectedModelOptionsArray) {
 				boolean isModelOptionVisible = modelPage.verifyModelOptionIsVisible(modelOption);
 				softAssert.assertThat(isModelOptionVisible)
-						.withFailMessage(modelOption + " " + "model option is not visible").isTrue();
+						.withFailMessage(modelOption + " " + "model option is not visible under " + group).isTrue();
 			}
 		}
 
