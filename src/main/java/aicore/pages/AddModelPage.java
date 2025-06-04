@@ -109,6 +109,7 @@ public class AddModelPage {
 	public String verifyKeepConversationHistoryValueInSMSS(String fieldName) {
 		return ModelPageUtils.verifyKeepConversationHistoryValueInSMSS(page, fieldName);
 	}
+
 	// Edit model
 	public void searchModelCatalog(String modelName) {
 		EditModelPageUtils.searchModelCatalog(page, modelName, timestamp);
@@ -276,12 +277,12 @@ public class AddModelPage {
 		SettingsModelPageUtils.pageReload(page);
 	}
 
-	public boolean verifyGroupIsVisible(String groupName) {
-		return SettingsModelPageUtils.verifyGroupIsVisible(page, groupName);
+	public void clickOnOptionsGroupTab(String groupName) {
+		SettingsModelPageUtils.clickOnOptionsGroupTab(page, groupName);
 	}
 
-	public boolean VerifyModelIsVisible(String groupName, String modelName) {
-		return SettingsModelPageUtils.VerifyModelIsVisible(page, groupName, modelName);
+	public boolean verifyModelOptionIsVisible(String modelOption) {
+		return SettingsModelPageUtils.verifyModelOptionIsVisible(page, modelOption);
 	}
 
 	public boolean verifyTileIsVisible(String tileName) {
