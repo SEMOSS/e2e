@@ -34,4 +34,36 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 	}
 
+	public boolean verifyDatabaseIsVisbileInCatalog(String dbName) {
+		return AddDatabasePageUtils.verifyDatabaseIsVisbileInCatalog(page, dbName);
+	}
+
+	public void clickOnCopyID(String dbName) {
+		AddDatabasePageUtils.clickOnCopyID(page, dbName);
+	}
+
+	public String verifyCopyIdSuccessToastMessage(String toastMessage) {
+		return AddDatabasePageUtils.verifyCopyIdSuccessToastMessage(page, toastMessage);
+	}
+
+	public void searchFilterValue(String filterValue) {
+		AddDatabasePageUtils.searchFilterValue(page, filterValue);
+	}
+
+	public void selectFilterValue(String filterCategory, String filterValue) {
+		AddDatabasePageUtils.selectFilterValue(page, filterCategory, filterValue);
+	}
+
+	public void clickOnBookmark(String catalogName) {
+		AddDatabasePageUtils.clickOnBookmark(page, catalogName);
+	}
+
+	public void clickOnUnbookmark(String catalogName) {
+		AddDatabasePageUtils.clickOnUnbookmark(page, catalogName);
+	}
+
+	public boolean verifyCatalogDisplayedUnderBookmarkedSection(String catalaogName) {
+		return AddDatabasePageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
+	}
+
 }

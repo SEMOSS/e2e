@@ -16,6 +16,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddDatabaseSteps extends AbstractAddCatalogBase {
+
 	private AddDatabasePage addDatabaseToCatalogPage;
 	private HomePage homePage;
 	private ViewUsagePage viewUsagePage;
@@ -92,5 +93,58 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		final String DATABASE_OPTION_NAMES = "DATABASE_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		validateOptionsWithIcon(GROUP_NAME, DATABASE_OPTION_NAMES, rows, addDatabaseToCatalogPage);
+	}
+
+	@When("User clicks on Copy ID option of {string} database")
+	public void user_clicks_on_copy_id_option_of_database(String dbName) {
+		addDatabaseToCatalogPage.clickOnCopyID(dbName);
+	}
+
+	@Then("User can see a copy success toast message as {string}")
+	public void user_can_see_a_copy_success_toast_message_as(String expectedToastMessage) {
+		String actualToastMessage = addDatabaseToCatalogPage.verifyCopyIdSuccessToastMessage(expectedToastMessage);
+		Assertions.assertEquals(expectedToastMessage, actualToastMessage, "Toast message is incorrect");
+	}
+
+	@And("User applies each filter and validate {string} database is visible on the page")
+	public void user_applies_each_filter_and_validate_database_is_visible_on_the_page(String databaseName,
+			DataTable dataTable) {
+		final String FILTER_CATEGORY_NAME = "FILTER_CATEGORY";
+		final String FILTER_VALUE_NAME = "FILTER_VALUE";
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+
+		for (Map<String, String> row : rows) {
+			String filterCategory = row.get(FILTER_CATEGORY_NAME);
+			String filterValues = row.get(FILTER_VALUE_NAME);
+
+			String[] filterValuesArray = filterValues.split(", ");
+			for (String filterValue : filterValuesArray) {
+				addDatabaseToCatalogPage.searchFilterValue(filterValue);
+				addDatabaseToCatalogPage.selectFilterValue(filterCategory, filterValue);
+				boolean isDatabaseVisible = addDatabaseToCatalogPage.verifyDatabaseIsVisbileInCatalog(databaseName);
+				Assertions.assertTrue(isDatabaseVisible, "Database is not present in the databse catalog for " + " ' "
+						+ filterValue + " ' " + " filter value");
+				// To de-select selected filter we again call this method
+				addDatabaseToCatalogPage.selectFilterValue(filterCategory, filterValue);
+			}
+		}
+	}
+
+	@When("User clicks on bookmark button of {string} database")
+	public void user_clicks_on_bookmark_button_of_database(String dbName) {
+		addDatabaseToCatalogPage.clickOnBookmark(dbName);
+	}
+
+	@Then("User sees the database name {string} in the Bookmarked section")
+	public void user_sees_the_database_name_in_the_bookmarked_section(String catalogName) {
+		boolean iscatalogDisplayedUnderBookmarkedSection = addDatabaseToCatalogPage
+				.verifyCatalogDisplayedUnderBookmarkedSection(catalogName);
+		Assertions.assertTrue(iscatalogDisplayedUnderBookmarkedSection,
+				catalogName + " " + "not dispaled under bookmarked section");
+	}
+
+	@When("User clicks on bookmark button to unbookmark {string} database")
+	public void user_clicks_on_bookmark_button_ot_unbookmark_database(String dbName) {
+		addDatabaseToCatalogPage.clickOnUnbookmark(dbName);
 	}
 }

@@ -7,6 +7,7 @@
 
 ## Install Linux Distro
 
++ For ubuntu you can run `wsl --install`
 + [Debian](https://apps.microsoft.com/detail/9MSVKQC78PK6?hl=en-us&gl=US&ocid=pdpshare)
 
 ## Install Docker engine inside of wsl2
