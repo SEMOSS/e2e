@@ -4,8 +4,7 @@ import com.microsoft.playwright.Page;
 
 import aicore.utils.AddDatabasePageUtils;
 
-public class AddDatabasePage {
-	private Page page;
+public class AddDatabasePage extends AbstractAddCatalogPageBase {
 
 	public AddDatabasePage(Page page) {
 		this.page = page;
