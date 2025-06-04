@@ -15,7 +15,7 @@ RUN mkdir /opt/repos
 WORKDIR /opt/repos
 
 #RUN apt-get update && apt-get install -y git
-RUN dnf install git
+RUN dnf install git -y
 
 RUN git clone https://github.com/SEMOSS/Semoss.git
 RUN git clone https://github.com/SEMOSS/Monolith.git
