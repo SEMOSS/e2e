@@ -35,4 +35,11 @@ public class AddDatabasePage {
         AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
     }
 
+    public void clickOnMetaDataTab() {
+        AddDatabasePageUtils.clickOnMetadataTab(page);
+    }
+
+    public void verifyMetaData() {
+        AddDatabasePageUtils.verifyMetaData(page);
+    }
 }

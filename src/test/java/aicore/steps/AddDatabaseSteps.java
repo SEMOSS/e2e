@@ -77,4 +77,14 @@ public class AddDatabaseSteps {
     public void user_sees_an_example_of_with_example_code_for_database(String usageType) {
         viewUsagePage.verifyExample(usageType);
     }
+
+    @When("User clicks on MetaData tab")
+    public void user_clicks_on_metadata_tab() {
+        addDatabaseToCatalogPage.clickOnMetaDataTab();
+    }
+
+    @Then("User sees the table in the metadata tab")
+    public void user_sees_the_table_in_the_metadata_tab() {
+        addDatabaseToCatalogPage.verifyMetaData();
+    }
 }
