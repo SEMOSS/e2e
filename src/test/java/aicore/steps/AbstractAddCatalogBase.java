@@ -20,7 +20,6 @@ public abstract class AbstractAddCatalogBase {
 			// Verify section is visible
 			boolean isSectionVisible = abstractCatalogPage.verifySectionIsVisible(sectionName);
 			Assertions.assertTrue(isSectionVisible, sectionName + "section not visible");
-
 			String[] expectedOptionsArray = expectedOptions.split(", ");
 			for (String optionName : expectedOptionsArray) {
 				// Verify option is visible
