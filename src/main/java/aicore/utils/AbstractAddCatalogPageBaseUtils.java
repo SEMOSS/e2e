@@ -3,7 +3,7 @@ package aicore.utils;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public class AbstractAddCatalogPageBaseUtils {
+public abstract class AbstractAddCatalogPageBaseUtils {
 
 	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
 	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']";
