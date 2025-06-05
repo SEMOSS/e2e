@@ -16,7 +16,7 @@ public class ViewAddFunctionOptionsSteps extends AbstractAddCatalogBase {
 
 	public ViewAddFunctionOptionsSteps() {
 		timestamp = CommonUtils.getTimeStampName();
-		functionPage = new AddFunctionToCatalogPage(SetupHooks.getPage(),timestamp);
+		functionPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@When("User clicks on Add Function button")
@@ -35,11 +35,6 @@ public class ViewAddFunctionOptionsSteps extends AbstractAddCatalogBase {
 
 	@Then("User should see Search bar to filter function options")
 	public void user_should_see_search_bar_to_filter_options() {
-		validateSearchBar();
-	}
-
-	@Override
-	protected boolean isSearchBarPresent() {
-		return functionPage.isSearchBarPresent();
+		validateSearchBar(functionPage);
 	}
 }

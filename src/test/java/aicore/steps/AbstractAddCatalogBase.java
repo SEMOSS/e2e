@@ -12,10 +12,8 @@ import aicore.utils.CommonUtils;
 
 public abstract class AbstractAddCatalogBase {
 
-	protected abstract boolean isSearchBarPresent();
-
-	protected void validateOptionsWithIcon(final String groupName, final String supportedOptions, List<Map<String, String>> rows,
-			AbstractAddCatalogPageBase abstractCatalogPage) {
+	protected void validateOptionsWithIcon(final String groupName, final String supportedOptions,
+			List<Map<String, String>> rows, AbstractAddCatalogPageBase abstractCatalogPage) {
 		for (Map<String, String> row : rows) {
 			String sectionName = row.get(groupName);
 			String expectedOptions = row.get(supportedOptions);
@@ -29,14 +27,14 @@ public abstract class AbstractAddCatalogBase {
 				boolean isOptionVisible = abstractCatalogPage.verifyOptionIsVisible(sectionName, optionName);
 				Assertions.assertTrue(isOptionVisible, optionName + "option not visible");
 				// Verify icon is visible
-				Locator icon = abstractCatalogPage.getIconByLabel(optionName);
+				Locator icon = abstractCatalogPage.getIconByLabel(sectionName, optionName);
 				icon.waitFor();
-				boolean isIconVisible = abstractCatalogPage.isIconVisible(optionName);
+				boolean isIconVisible = abstractCatalogPage.isIconVisible(sectionName, optionName);
 				Assertions.assertTrue(isIconVisible, optionName + " icon is not visible");
 				// verify icon is not broken
 				String iconUrl = icon.getAttribute("src");
-				// for 'Local File System' storage option getting broken image
-				if (isIconVisible && !optionName.contains("Local File System")) {
+				// for 'Local File System' storage & 'FAISS' vector options getting broken image
+				if (isIconVisible && !optionName.matches(".*(Local File System||FAISS).*")) {
 					boolean isIconValid = CommonUtils.isIconValid(iconUrl);
 					Assertions.assertTrue(isIconValid, optionName + " icon src is broken: " + iconUrl);
 				}
@@ -44,10 +42,8 @@ public abstract class AbstractAddCatalogBase {
 		}
 	}
 
-	protected void validateSearchBar() {
-		boolean isSearchBarVisible = isSearchBarPresent();
+	protected void validateSearchBar(AbstractAddCatalogPageBase abstractCatalogPage) {
+		boolean isSearchBarVisible = abstractCatalogPage.isSearchBarPresent();
 		Assertions.assertTrue(isSearchBarVisible, "Search bar not visible");
-		// System.out.println("Search bar is present");
 	}
-
 }

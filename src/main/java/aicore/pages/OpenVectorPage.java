@@ -7,9 +7,8 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.ConfigUtils;
 
-public class OpenVectorPage {
+public class OpenVectorPage extends AbstractAddCatalogPageBase {
 
-	private Page page;
 	private String timestamp;
 	private static final String ADD_VECTOR_BUTTON_XPATH = "//button/span[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
