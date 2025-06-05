@@ -29,7 +29,8 @@ jobs:
     - name: Build and run Docker Compose
       run: |
         docker compose rm -f semoss
-        docker compose up --build --exit-code-from test
+        docker compose up semoss --build -d
+        docker compose run test
       env:
         COMPOSE_DOCKER_CLI_BUILD: 1
         DOCKER_BUILDKIT: 1

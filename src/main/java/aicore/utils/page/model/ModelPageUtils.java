@@ -1,0 +1,130 @@
+package aicore.utils.page.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
+
+import aicore.utils.AICorePageUtils;
+import aicore.utils.CommonUtils;
+import aicore.utils.ConfigUtils;
+
+public class ModelPageUtils {
+
+	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
+	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
+	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
+	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
+	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
+	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
+	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
+	// SMSS field
+	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
+	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
+	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
+	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
+
+	public static void clickAddModelButton(Page page) {
+		// TODO switch to data-test-id
+		page.getByLabel("Navigate to import Model").click();
+	}
+
+	public static void selectModel(Page page, String modelName) {
+		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
+	}
+	
+	public static void selectOpenAi(Page page, String aiModelName) {
+		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
+	}
+
+	public static void enterCatalogName(Page page, String CatalogName, String timestamp) {
+		String uniqueCatalogName = CatalogName + timestamp;
+		page.fill(CATALOG_NAME_XPATH, uniqueCatalogName);
+	}
+
+	public static void enterOpenAIKey(Page page, String openAIKey) {
+		page.fill(OPEN_AI_KEY_XPATH, openAIKey);
+	}
+
+	public static void enterVariableName(Page page, String varName) {
+		page.fill(VARIABLE_NAME_ID, varName);
+	}
+
+	public static void createModel(Page page) {
+		page.click(CREATE_MODEL_BUTTON_XPATH);
+	}
+
+	public static String modelCreationToastMessage(Page page) {
+		Locator toastMessage = page.getByRole(AriaRole.ALERT)
+				.filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE));
+		return toastMessage.textContent().trim();
+	}
+
+	public static void waitForModelCreationToastMessageDisappear(Page page) {
+		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE))
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+	}
+
+	public static String verifyModelTitle(Page page, String modelTitle, String timestamp) {
+		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
+				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
+		actualmodelTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return actualmodelTitle.textContent().trim();
+	}
+
+	public static void clickOnSMSSTab(Page page) {
+		page.click(SMSS_TAB_XPATH);
+	}
+
+	public static String getExpectedCatalogTitle(String modelTitle, String timestamp) {
+		String expTitle = modelTitle + timestamp;
+		return expTitle;
+	}
+
+	public static String verifyNameInSMSS(Page page) {
+		String nameInSMSSProperties = page.textContent(NAME_SMSS_PROPERTIES_XPATH);
+		return nameInSMSSProperties;
+	}
+
+	public static String verifyVarNameInSMSS(Page page) {
+		String varNameInSMSSProperties = page.textContent(VAR_NAME_SMSS_PROPERTIES_XPATH);
+		return varNameInSMSSProperties;
+	}
+
+	public static String verifyKeepConversationHistoryValueInSMSS(Page page, String fieldName) {
+		String varNameInSMSSProperties = page
+				.textContent(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
+		return varNameInSMSSProperties;
+	}
+
+	//////////// MODEL PERMISSIONS - AUTHOR
+
+	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
+	private static final String VIEW_USAGE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Usage']";
+	private static final String VIEW_SMSS_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='SMSS']";
+	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
+	private static final String VIEW_ACCESSCONTROL_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Access Control']";
+
+	public static boolean canViewOverview(Page page) {
+		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
+	}
+
+	public static boolean canViewUsage(Page page) {
+		return page.isVisible(VIEW_USAGE_TAB_XPATH);
+	}
+
+	public static boolean canViewSMSSDetails(Page page) {
+		return page.isVisible(VIEW_SMSS_TAB_XPATH);
+	}
+
+	public static boolean canViewEditSMSS(Page page) {
+		return page.isVisible(VIEW_EDIT_SMSS_BUTTON_XPATH);
+	}
+
+	public static boolean canViewAccessControl(Page page) {
+		return page.isVisible(VIEW_ACCESSCONTROL_TAB_XPATH);
+	}
+}

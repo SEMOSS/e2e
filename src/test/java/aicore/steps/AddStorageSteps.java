@@ -30,11 +30,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 	}
 
-	@Override
-	protected boolean isSearchBarPresent() {
-		return storagePage.isSearchBarPresent();
-	}
-
 	@Given("User clicks on Open Storage engine")
 	public void user_clicks_on_open_storage_engine() {
 		homePage.clickOnOpenStorage();
@@ -47,7 +42,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User should see Search bar to filter storage options")
 	public void user_should_see_search_bar_to_filter_options() {
-		validateSearchBar();
+		validateSearchBar(storagePage);
 	}
 
 	@Then("User should see the following storage options with valid icons on the page")
