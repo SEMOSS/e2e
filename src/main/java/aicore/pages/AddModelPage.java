@@ -38,8 +38,9 @@ public class AddModelPage {
 		ModelPageUtils.selectOpenAi(page, aiModelName);
 	}
 
-	public void enterCatalogName(String CatalogName) {
-		ModelPageUtils.enterCatalogName(page, CatalogName, timestamp);
+	public void enterCatalogName(String catalogName) {
+		catalogName = catalogName.replace("<RANDOM_VALUE>", timestamp);
+		ModelPageUtils.enterCatalogName(page, catalogName);
 	}
 
 	public void enterOpenAIKey(String openAIKey) {
@@ -87,7 +88,8 @@ public class AddModelPage {
 	}
 
 	public String verifyModelTitle(String modelTitle) {
-		return ModelPageUtils.verifyModelTitle(page, modelTitle, timestamp);
+		modelTitle = modelTitle.replace("<RANDOM_VALUE>", timestamp);
+		return ModelPageUtils.verifyModelTitle(page, modelTitle);
 	}
 
 	public void clickOnSMSSTab() {
@@ -95,7 +97,8 @@ public class AddModelPage {
 	}
 
 	public String getExpectedCatalogTitle(String modelTitle) {
-		return ModelPageUtils.getExpectedCatalogTitle(modelTitle, timestamp);
+		modelTitle = modelTitle.replace("<RANDOM_VALUE>", timestamp);
+		return ModelPageUtils.getExpectedCatalogTitle(modelTitle);
 	}
 
 	public String verifyNameInSMSS() {
@@ -116,11 +119,13 @@ public class AddModelPage {
 	}
 
 	public void selectModelFromSearchOptions(String modelName) {
-		EditModelPageUtils.selectModelFromSearchOptions(page, modelName, timestamp);
+		modelName = modelName.replace("<RANDOM_VALUE>", timestamp);
+		EditModelPageUtils.selectModelFromSearchOptions(page, modelName);
 	}
 
 	public boolean verifyModelIsDisplayedOnCatalogPage(String modelName) {
-		return EditModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelName, timestamp);
+		modelName = modelName.replace("<RANDOM_VALUE>", timestamp);
+		return EditModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelName);
 	}
 
 	public void clickOnEditButton() {
