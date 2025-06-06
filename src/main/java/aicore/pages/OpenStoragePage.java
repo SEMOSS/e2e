@@ -2,7 +2,6 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.AbstarctSearchAndSelectCatalogPageUtils;
 import aicore.utils.StoragePageUtils;
 
 public class OpenStoragePage extends AbstractAddCatalogPageBase {
@@ -97,14 +96,6 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 
 	public void clickOnSettingsTab() {
 		StoragePageUtils.clickOnSettingsTab(page);
-	}
-
-	public void searchStorageCatalog(String catalogName) {
-		AbstarctSearchAndSelectCatalogPageUtils.searchCatalog(page, catalogName, timestamp);
-	}
-
-	public void selectStorageFromSearchOptions(String catalogName) {
-		AbstarctSearchAndSelectCatalogPageUtils.selectCatalogFromSearchOptions(page, catalogName, timestamp);
 	}
 
 }

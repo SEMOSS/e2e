@@ -6,6 +6,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.CatalogPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
 import aicore.pages.ViewUsagePage;
@@ -22,12 +23,14 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	private OpenStoragePage storagePage;
 	protected static String timestamp;
 	private ViewUsagePage viewUsagePage;
+	private CatalogPage catalogPage;
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
+		catalogPage = new CatalogPage(SetupHooks.getPage());
 	}
 
 	@Override
@@ -190,11 +193,11 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User searches the {string} in the storage Catalog searchbox")
 	public void user_searches_the_in_the_storage_catalog_searchbox(String catalogName) {
-		storagePage.searchStorageCatalog(catalogName);
+		catalogPage.searchCatalog(catalogName, timestamp);
 	}
 
 	@Then("User selects the {string} from the storage catalog")
 	public void user_selects_the_from_the_storage_catalog(String catalogName) {
-		storagePage.selectStorageFromSearchOptions(catalogName);
+		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
 	}
 }

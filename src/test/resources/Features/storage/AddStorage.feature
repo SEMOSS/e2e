@@ -22,7 +22,8 @@ Feature: Add Storage
     And User sees an example of "How to use in Python" with example code for storage
     And User sees an example of "How to use with Langchain API" with example code for storage
     And User sees an example of "How to use in Java" with example code for storage
-
+    
+@LoginWithAdmin
   Scenario: Validate SMSS properties of storage
     Given User can see the Storage title as 'Amazon S3 Storage'
     And User clicks on SMSS
@@ -54,7 +55,8 @@ Feature: Add Storage
     And User click on cancel button
     And User logs out from the application
     Then User login as "Author"
-
+    
+@LoginWithAdmin
   Scenario: Validate change access request
     Given User can see the Storage title as 'Amazon S3 Storage'
     And 'Author' user clicks on Settings of Storage

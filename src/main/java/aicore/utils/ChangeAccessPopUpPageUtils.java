@@ -2,7 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Page;
 
-public class AbstractChangeAccessPopUpPageUtils {
+public class ChangeAccessPopUpPageUtils {
 	private static final String AUTHOR_OPTION_XPATH = "//div[contains(@class,'MuiCardHeader-content')]//div[contains(., 'Author')]/ancestor::div[contains(@class,'MuiCard-root')]//input[@type='radio']";
 	private static final String EDITOR_OPTION_XPATH = "//div[contains(@class,'MuiCardHeader-content')]//div[contains(., 'Editor')]/ancestor::div[contains(@class,'MuiCard-root')]//input[@type='radio']";
 	private static final String READONLY_OPTION_XPATH = "//div[contains(@class,'MuiCardHeader-content')]//div[contains(., 'Read-Only')]/ancestor::div[contains(@class,'MuiCard-root')]//input[@type='radio']";

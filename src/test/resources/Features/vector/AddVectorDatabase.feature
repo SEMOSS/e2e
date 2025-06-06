@@ -64,8 +64,8 @@ Feature: Add Vector Database
     And User sees an example of "How to use in Java" with example code for Vector DB
     
     @LoginWithAdmin
-  Scenario Outline: Change access control for created vector
-    Given User clicks on Open Vector engine
+  Scenario Outline: Validate Change access popup
+    Given User clicks on Open Vector
     When User clicks on Add Vector button
     And User selects '<connection>' connection
     And User enters vector database Catalog name as '<catalog_name>'
@@ -80,7 +80,7 @@ Feature: Add Vector Database
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
     Then User login as "Editor"
-    And User clicks on Open Vector engine
+    And User clicks on Open Vector
     And User searches the '<catalog_name>' in the Vector Catalog searchbox
     And User selects the '<catalog_name>' from the Vector catalog
     And User click on the Change Access button
@@ -99,8 +99,8 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
 
 @LoginWithAdmin
-  Scenario Outline: Change access control for created vector
-    Given User clicks on Open Vector engine
+  Scenario Outline: Validate change access request
+    Given User clicks on Open Vector
     When User clicks on Add Vector button
     And User selects '<connection>' connection
     And User enters vector database Catalog name as '<catalog_name>'
@@ -115,7 +115,7 @@ Feature: Add Vector Database
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
     Then User login as "Editor"
-    And User clicks on Open Vector engine
+    And User clicks on Open Vector
     And User searches the '<catalog_name>' in the Vector Catalog searchbox
     And User selects the '<catalog_name>' from the Vector catalog
     And User click on the Change Access button

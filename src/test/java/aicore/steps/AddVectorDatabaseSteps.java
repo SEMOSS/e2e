@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.CatalogPage;
 import aicore.pages.ChangeAccessPopUpPage;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
@@ -24,6 +25,7 @@ public class AddVectorDatabaseSteps {
 	private EmbedDocumentPage embedDocumentPage;
 	private ViewUsagePage viewUsagePage;
 	private ChangeAccessPopUpPage chnageAccessPopUpPage;
+	private CatalogPage catalogPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
@@ -31,6 +33,8 @@ public class AddVectorDatabaseSteps {
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
+		chnageAccessPopUpPage = new ChangeAccessPopUpPage(SetupHooks.getPage());
+		catalogPage = new CatalogPage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Vector")
@@ -202,7 +206,7 @@ public class AddVectorDatabaseSteps {
 
 	@Then("User should see the {string} popup with following options:")
 	public void user_should_see_the_popup_with_following_options(String expectedTitle,
-			io.cucumber.datatable.DataTable dataTable) {
+			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
 		Assertions.assertTrue(chnageAccessPopUpPage.isPopupVisible(), expectedTitle + " popup is not visible");
 		for (String option : dataTable.asList()) {
 			Assertions.assertTrue(chnageAccessPopUpPage.isOptionVisible(option),
@@ -230,5 +234,15 @@ public class AddVectorDatabaseSteps {
 			String expectedMessage) {
 		boolean toastVisible = chnageAccessPopUpPage.isRequestSuccessToastVisible();
 		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
+	}
+
+	@Then("User searches the {string} in the Vector Catalog searchbox")
+	public void user_searches_the_in_the_vector_catalog_searchbox(String catalogName) {
+		catalogPage.searchCatalog(catalogName, timestamp);
+	}
+
+	@Then("User selects the {string} from the Vector catalog")
+	public void user_selects_the_from_the_vector_catalog(String catalogName) {
+		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
 	}
 }

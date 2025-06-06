@@ -2,37 +2,37 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.AbstractChangeAccessPopUpPageUtils;
+import aicore.utils.ChangeAccessPopUpPageUtils;
 
-public class AbstractChangeAccessPopUpPage {
+public abstract class AbstractChangeAccessPopUpPage {
 	protected Page page;
 
 	public String getChangeAccessPopupTitle() {
-		return AbstractChangeAccessPopUpPageUtils.isChangeAccessPopupVisible(page);
+		return ChangeAccessPopUpPageUtils.isChangeAccessPopupVisible(page);
 	}
 
-	public boolean isPopupVisible() {
-		return AbstractChangeAccessPopUpPageUtils.isPopupVisible(page);
+	public boolean isPopupVisible() throws InterruptedException {
+		return ChangeAccessPopUpPageUtils.isPopupVisible(page);
 	}
 
 	public boolean isOptionVisible(String option) {
-		return AbstractChangeAccessPopUpPageUtils.isOptionVisible(page, option);
+		return ChangeAccessPopUpPageUtils.isOptionVisible(page, option);
 	}
 
 	public void selectAccessType(String accessType) {
-		AbstractChangeAccessPopUpPageUtils.selectAccessType(page, accessType);
+		ChangeAccessPopUpPageUtils.selectAccessType(page, accessType);
 	}
 
 	public void enterComment(String comment) {
-		AbstractChangeAccessPopUpPageUtils.enterComment(page, comment);
+		ChangeAccessPopUpPageUtils.enterComment(page, comment);
 	}
 
 	public void clickOnRequestButton() {
-		AbstractChangeAccessPopUpPageUtils.clickOnRequestButton(page);
+		ChangeAccessPopUpPageUtils.clickOnRequestButton(page);
 	}
 
 	public boolean isRequestSuccessToastVisible() {
-		return AbstractChangeAccessPopUpPageUtils.isRequestSuccessToastVisible(page);
+		return ChangeAccessPopUpPageUtils.isRequestSuccessToastVisible(page);
 	}
 
 }
