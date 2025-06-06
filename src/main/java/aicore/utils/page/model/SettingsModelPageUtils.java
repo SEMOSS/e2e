@@ -12,8 +12,8 @@ import aicore.utils.ConfigUtils;
 
 public class SettingsModelPageUtils {
 
-	private static final String MODEL_GROUP_XPATH = "//div[text()='{groupName}']";
-	private static final String MODELS_UNDER_GROUP_XPATH = "//div[text()='{groupName}']/following-sibling::div//p[text()='{modelName}']";
+	private static final String MODEL_GROUP_TAB_XPATH = "//div[@role='tablist']//button[text()='{groupTabName}']";
+	private static final String MODELS_OPTIONS_XPATH = "//p[text()='{modelOptionName}']";
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
@@ -161,14 +161,14 @@ public class SettingsModelPageUtils {
 		page.reload();
 	}
 
-	public static boolean verifyGroupIsVisible(Page page, String groupName) {
-		boolean isGroupVisible = page.isVisible(MODEL_GROUP_XPATH.replace("{groupName}", groupName));
-		return isGroupVisible;
+	public static void clickOnOptionsGroupTab(Page page, String groupName) {
+		page.locator(MODEL_GROUP_TAB_XPATH.replace("{groupTabName}", groupName)).isVisible();
+		page.locator(MODEL_GROUP_TAB_XPATH.replace("{groupTabName}", groupName)).click();
 	}
 
-	public static boolean VerifyModelIsVisible(Page page, String groupName, String modelName) {
-		boolean isModelVisible = page.isVisible(
-				MODELS_UNDER_GROUP_XPATH.replace("{groupName}", groupName).replace("{modelName}", modelName));
+	public static boolean verifyModelOptionIsVisible(Page page, String modelOption) {
+		boolean isModelVisible = page.locator(MODELS_OPTIONS_XPATH.replace("{modelOptionName}", modelOption))
+				.isVisible();
 		return isModelVisible;
 	}
 

@@ -15,7 +15,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class AddDatabaseSteps {
+public class AddDatabaseSteps extends AbstractAddCatalogBase {
+
 	private AddDatabasePage addDatabaseToCatalogPage;
 	private HomePage homePage;
 	private ViewUsagePage viewUsagePage;
@@ -79,6 +80,19 @@ public class AddDatabaseSteps {
 	@Then("User sees an example of {string} with example code for Database")
 	public void user_sees_an_example_of_with_example_code_for_database(String usageType) {
 		viewUsagePage.verifyExample(usageType);
+	}
+
+	@Then("User should see Search bar to filter database options")
+	public void user_should_see_search_bar_to_filter_database_options() {
+		validateSearchBar(addDatabaseToCatalogPage);
+	}
+
+	@And("User should see the following database options with icons on the page")
+	public void user_should_see_the_following_database_options_with_icons_on_the_page(DataTable dataTable) {
+		final String GROUP_NAME = "GROUP";
+		final String DATABASE_OPTION_NAMES = "DATABASE_OPTIONS";
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		validateOptionsWithIcon(GROUP_NAME, DATABASE_OPTION_NAMES, rows, addDatabaseToCatalogPage);
 	}
 
 	@When("User clicks on Copy ID option of {string} database")
