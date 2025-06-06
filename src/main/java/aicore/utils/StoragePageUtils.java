@@ -20,6 +20,8 @@ public class StoragePageUtils {
 	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-textField-S3_BUCKET";
 	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_SECRET_KEY";
+	private static final String CANCEL_BUTTON_XPATH = "//button[span[text()='Cancel']]";
+	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
@@ -181,6 +183,14 @@ public class StoragePageUtils {
 			System.out.println("Invalid Field name" + fieldName);
 		}
 		fieldLocator.fill(fieldValue);
+	}
+
+	public static void clickOnCancelButton(Page page) {
+		page.click(CANCEL_BUTTON_XPATH);
+	}
+
+	public static void clickOnSettingsTab(Page page) {
+		page.click(SETTINGS_TAB_XPATH);
 	}
 
 }

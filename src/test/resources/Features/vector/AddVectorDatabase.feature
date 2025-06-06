@@ -54,8 +54,7 @@ Feature: Add Vector Database
     And User enters value of Content Overlap as '17'
     And User clicks on Create Vector button
     Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
-    And User can see the Vector title as 'FAISS Vector DB00'
-    
+    And User can see the Vector title as 'FAISS Vector DB00'   
     #And User clicks on the created Vector card name as 'FAISS Vector DB00'
     #And User can see the Vector title as 'FAISS Vector DB00'
     When User clicks on Usage tab for Vector DB
@@ -63,3 +62,70 @@ Feature: Add Vector Database
     And User sees an example of "How to use in Python" with example code for Vector DB
     And User sees an example of "How to use with Langchain API" with example code for Vector DB
     And User sees an example of "How to use in Java" with example code for Vector DB
+    
+    @LoginWithAdmin
+  Scenario Outline: Change access control for created vector
+    Given User clicks on Open Vector engine
+    When User clicks on Add Vector button
+    And User selects '<connection>' connection
+    And User enters vector database Catalog name as '<catalog_name>'
+    And User selects '<model_name>' from Embedder field
+    And User selects '<chunking_strategy>' from Chunking Strategy field
+    And User enters value of Content Length as '<content_length>'
+    And User enters value of Content Overlap as '<content_overlap>'
+    And User clicks on Create Vector button
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And 'Author' user clicks on Settings
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User clicks on Open Vector engine
+    And User searches the '<catalog_name>' in the Vector Catalog searchbox
+    And User selects the '<catalog_name>' from the Vector catalog
+    And User click on the Change Access button
+    And User should see the "Change Access" popup with following options:
+    | Author         |
+    | Editor         |
+    | Read-Only      |
+    | Comment Box    |
+    | Cancel Button  |
+    | Request Button |
+    And User click on cancel button
+    And User logs out from the application
+    Then User login as "Author"
+    Examples: 
+      | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
+      | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
+
+@LoginWithAdmin
+  Scenario Outline: Change access control for created vector
+    Given User clicks on Open Vector engine
+    When User clicks on Add Vector button
+    And User selects '<connection>' connection
+    And User enters vector database Catalog name as '<catalog_name>'
+    And User selects '<model_name>' from Embedder field
+    And User selects '<chunking_strategy>' from Chunking Strategy field
+    And User enters value of Content Length as '<content_length>'
+    And User enters value of Content Overlap as '<content_overlap>'
+    And User clicks on Create Vector button
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And 'Author' user clicks on Settings
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User clicks on Open Vector engine
+    And User searches the '<catalog_name>' in the Vector Catalog searchbox
+    And User selects the '<catalog_name>' from the Vector catalog
+    And User click on the Change Access button
+    And User selects 'author' access
+    And User types a comment as 'Access Request'
+    And User clicks on Request button
+    Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
+ 
+    Examples: 
+      | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
+      | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
+
+    

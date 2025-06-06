@@ -2,7 +2,10 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
+
 import aicore.hooks.SetupHooks;
+import aicore.pages.ChangeAccessPopUpPage;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
@@ -20,6 +23,7 @@ public class AddVectorDatabaseSteps {
 	private String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
 	private ViewUsagePage viewUsagePage;
+	private ChangeAccessPopUpPage chnageAccessPopUpPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
@@ -149,13 +153,13 @@ public class AddVectorDatabaseSteps {
 		String expectedChunkingStrategy = null;
 
 		switch (chunkingStrategy) {
-			case "Token":
-				expectedChunkingStrategy = "ALL";
-				break;
-			default:
-				expectedChunkingStrategy = chunkingStrategy.trim().toUpperCase();
-				expectedChunkingStrategy = expectedChunkingStrategy.replace(" ", "_");
-				break;
+		case "Token":
+			expectedChunkingStrategy = "ALL";
+			break;
+		default:
+			expectedChunkingStrategy = chunkingStrategy.trim().toUpperCase();
+			expectedChunkingStrategy = expectedChunkingStrategy.replace(" ", "_");
+			break;
 		}
 		assertEquals(actualChunkingStrategy, expectedChunkingStrategy, "Chunking strategy is not matching");
 	}
@@ -191,4 +195,40 @@ public class AddVectorDatabaseSteps {
 		viewUsagePage.verifyExample(example);
 	}
 
+	@Then("User click on the Change Access button")
+	public void user_click_on_the_change_access_button() {
+		embedDocumentPage.clickOnAccessControlButton();
+	}
+
+	@Then("User should see the {string} popup with following options:")
+	public void user_should_see_the_popup_with_following_options(String expectedTitle,
+			io.cucumber.datatable.DataTable dataTable) {
+		Assertions.assertTrue(chnageAccessPopUpPage.isPopupVisible(), expectedTitle + " popup is not visible");
+		for (String option : dataTable.asList()) {
+			Assertions.assertTrue(chnageAccessPopUpPage.isOptionVisible(option),
+					option + " is not visible in Change Access popup");
+		}
+	}
+
+	@Then("User selects {string} access")
+	public void user_selects_access(String accessType) {
+		chnageAccessPopUpPage.selectAccessType(accessType);
+	}
+
+	@Then("User types a comment as {string}")
+	public void user_types_a_comment_as(String comment) {
+		chnageAccessPopUpPage.enterComment(comment);
+	}
+
+	@Then("User clicks on Request button")
+	public void user_clicks_on_request_button() {
+		chnageAccessPopUpPage.clickOnRequestButton();
+	}
+
+	@Then("User should successfully request access given the Vector is requestable with a toast message as {string}")
+	public void user_should_successfully_request_access_given_the_vector_is_requestable_with_a_toast_message_as(
+			String expectedMessage) {
+		boolean toastVisible = chnageAccessPopUpPage.isRequestSuccessToastVisible();
+		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
+	}
 }

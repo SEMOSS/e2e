@@ -9,7 +9,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddFunctionPageUtils {
 
-    private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
+	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
 	private static final String CATALOG_NAME = "importForm-textField-NAME";
 	private static final String URL = "importForm-textField-URL";
 	private static final String HTTP_METHOD = "importForm-selectField-HTTP_METHOD";
@@ -24,55 +24,56 @@ public class AddFunctionPageUtils {
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CREATE_FUNCTION_BUTTON = "Create Function";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
-    private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
-    public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
+	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
+	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
-	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function"; 
-    private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make Function discoverable']/child::input[@type='checkbox']";
+	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
+	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make Function discoverable']/child::input[@type='checkbox']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
-	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";  
+	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
+	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 
-
-    public static void clickOnAddFunctionButton(Page page) {
+	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
 		page.getByLabel(ADD_FUNCTION_BUTTON).click();
 	}
 
-	public static void selectFunction(Page page,String functionType) {
+	public static void selectFunction(Page page, String functionType) {
 		page.getByText(functionType).isVisible();
 		page.getByText(functionType).click();
-	} 
-	
-    public static void enterCatalogName(Page page, String catalogName, String timestamp) {
-        catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
-        page.getByTestId(CATALOG_NAME).click();
-        page.getByTestId(CATALOG_NAME).fill(catalogName);
-    
 	}
 
-	public static void enterUrl(Page page,String url) {
+	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
+		catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
+		page.getByTestId(CATALOG_NAME).click();
+		page.getByTestId(CATALOG_NAME).fill(catalogName);
+
+	}
+
+	public static void enterUrl(Page page, String url) {
 		page.getByTestId(URL).click();
 		page.getByTestId(URL).fill(url);
 	}
 
-	public static void selectHttpMethod(Page page,String httpMethod) {
+	public static void selectHttpMethod(Page page, String httpMethod) {
 		page.getByTestId(HTTP_METHOD).isVisible();
 		page.getByTestId(HTTP_METHOD).click();
 		page.getByTestId(httpMethod).isVisible();
 		page.getByTestId(httpMethod).click();
 	}
 
-	public static void selectPostBodyMessage(Page page,String postBodyMessage) {
+	public static void selectPostBodyMessage(Page page, String postBodyMessage) {
 		page.getByTestId(POST_BODY_MESSAGE).isVisible();
 		page.getByTestId(POST_BODY_MESSAGE).click();
 		page.getByTestId(postBodyMessage).isVisible();
 		page.getByTestId(postBodyMessage).click();
 	}
 
-	public static void verifyAsteriskMarkOnFields(Page page,String fieldLabels) {
+	public static void verifyAsteriskMarkOnFields(Page page, String fieldLabels) {
 		String[] labels = fieldLabels.split(",");
 		for (String label : labels) {
 			String asteriskSelector = "//label[text()='%s']/span[text()='*']".replace("%s", label.trim());
@@ -84,39 +85,40 @@ public class AddFunctionPageUtils {
 		}
 	}
 
-	public static void enterHeaders(Page page,String headers) {
+	public static void enterHeaders(Page page, String headers) {
 		page.getByTestId(HEADERS).click();
 		page.getByTestId(HEADERS).fill(headers);
 	}
 
-	public static void enterFunctionParameters(Page page,String functionParameters) {
+	public static void enterFunctionParameters(Page page, String functionParameters) {
 		page.getByTestId(FUNCTION_PARAMETERS).click();
 		page.getByTestId(FUNCTION_PARAMETERS).fill(functionParameters);
 	}
 
-	public static void enterFunctionName(Page page,String functionName) {
+	public static void enterFunctionName(Page page, String functionName) {
 		page.getByTestId(FUNCTION_NAME).click();
 		page.getByTestId(FUNCTION_NAME).fill(functionName);
 	}
 
-	public static void enterFunctionDescription(Page page,String functionDescription) {
+	public static void enterFunctionDescription(Page page, String functionDescription) {
 		page.getByTestId(FUNCTION_DESCRIPTION).click();
 		page.getByTestId(FUNCTION_DESCRIPTION).fill(functionDescription);
 	}
 
-	public static void selectFunctionType(Page page,String functionType) {
+	public static void selectFunctionType(Page page, String functionType) {
 		page.getByTestId(FUNCTION_TYPE).isVisible();
 		page.getByTestId(FUNCTION_TYPE).click();
 		page.getByTestId(FUNCTION_TYPE).fill(functionType);
 	}
 
-	public static void enterFunctionRequiredParameters(Page page,String functionRequiredParameters) {
+	public static void enterFunctionRequiredParameters(Page page, String functionRequiredParameters) {
 		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).click();
 		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).fill(functionRequiredParameters);
 	}
-     public static void checkCreateFunctionButton(Page page) {
-        page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
-    }
+
+	public static void checkCreateFunctionButton(Page page) {
+		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
+	}
 
 	public static void clickOnCreateFunctionButton(Page page) {
 		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
@@ -124,7 +126,7 @@ public class AddFunctionPageUtils {
 		page.getByText(CREATE_FUNCTION_BUTTON).click();
 	}
 
-	public static String enterFilePath(Page page,String fileName) {
+	public static String enterFilePath(Page page, String fileName) {
 		String pathSeparator = FileSystems.getDefault().getSeparator();
 		Locator fileInput = page.locator(ADD_FILE_XPATH);
 		String relativePath = "src" + pathSeparator + "test" + pathSeparator + "resources" + pathSeparator + "data"
@@ -147,25 +149,25 @@ public class AddFunctionPageUtils {
 		}
 	}
 
-	 public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
-        page.getByTestId(OPEN_FUNCTIONS_XPATH).click();
-        if (catalogName.contains("{Timestamp}")) {
-            catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
-        }
-        page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", catalogName)).isVisible();
-        String functionNameInCatalog = page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", catalogName))
-                .textContent();
-        return functionNameInCatalog;
+	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
+		page.getByTestId(OPEN_FUNCTIONS_XPATH).click();
+		if (catalogName.contains("{Timestamp}")) {
+			catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
+		}
+		page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", catalogName)).isVisible();
+		String functionNameInCatalog = page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", catalogName))
+				.textContent();
+		return functionNameInCatalog;
 
-    }
+	}
 
-    public static void clickOnFunctionNameInCatalog(Page page, String functionName, String timestamp) {
-        if (functionName.contains("{Timestamp}")) {
-            functionName = functionName.replace("{Timestamp}", " " + timestamp);
-        }
-        page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", functionName)).isVisible();
-        page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", functionName)).click();
-    }
+	public static void clickOnFunctionNameInCatalog(Page page, String functionName, String timestamp) {
+		if (functionName.contains("{Timestamp}")) {
+			functionName = functionName.replace("{Timestamp}", " " + timestamp);
+		}
+		page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", functionName)).isVisible();
+		page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", functionName)).click();
+	}
 
 	public static void clickOnAccessControl(Page page) {
 		page.locator(ACCESS_CONTROL_XPATH).isVisible();
@@ -190,38 +192,39 @@ public class AddFunctionPageUtils {
 		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
 		return toastMessage;
 	}
-     public static String verifySuccessToastMessage(Page page, String Toast_message) {
-        page.getByText(Toast_message).waitFor(
-                new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        String toastMessage = page.getByText(Toast_message).textContent();
-        return toastMessage;
 
-    }
+	public static String verifySuccessToastMessage(Page page, String Toast_message) {
+		page.getByText(Toast_message).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toastMessage = page.getByText(Toast_message).textContent();
+		return toastMessage;
 
-    public static boolean verifyMissingInputField(Page page) {
-        Locator missingFieldParent = page.getByTestId(URL).locator("..");
-        missingFieldParent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        String missingFieldClass = missingFieldParent.getAttribute("class");
-        return missingFieldClass.contains("Mui-focused");
-    }
-    
-	public static boolean verifyFunctionIsVisbileInCatalog(Page page,String functionName) {
+	}
+
+	public static boolean verifyMissingInputField(Page page) {
+		Locator missingFieldParent = page.getByTestId(URL).locator("..");
+		missingFieldParent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String missingFieldClass = missingFieldParent.getAttribute("class");
+		return missingFieldClass.contains("Mui-focused");
+	}
+
+	public static boolean verifyFunctionIsVisbileInCatalog(Page page, String functionName) {
 		boolean isFunctionVisible = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
 				.isVisible();
 		return isFunctionVisible;
 	}
 
-	public static void searchFilterValue(Page page,String filterValue) {
+	public static void searchFilterValue(Page page, String filterValue) {
 		page.getByPlaceholder("Search by...").fill(filterValue);
 	}
 
-	public static void selectFilterValue(Page page,String filterCategory, String filterValue) {
+	public static void selectFilterValue(Page page, String filterCategory, String filterValue) {
 		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
 				.replace("{filterValue}", filterValue));
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
 	}
-    public static void clickOnMakeDiscoverableButton(Page page) {
+
+	public static void clickOnMakeDiscoverableButton(Page page) {
 		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).isVisible();
 		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).click();
 	}
@@ -229,5 +232,15 @@ public class AddFunctionPageUtils {
 	public static void clickOnDiscoverableFunctionsbutton(Page page) {
 		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
 	}
-}
 
+	public static void searchFunctionCatalog(Page page, String catalogName) {
+		page.waitForSelector(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH);
+		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
+	}
+
+	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
+		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
+		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
+	}
+}

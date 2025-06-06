@@ -17,6 +17,7 @@ public class EmbedDocumentPage {
 	private static final String DATE_UPLOADED_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[3]";
 	private static final String FILE_SIZE_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[4]";
 	private static final String DELETE_BUTTON = "DeleteIcon";
+	private static final String CHANGE_ACCESS_XPATH = "//span[text()='Change Access']";
 
 	public EmbedDocumentPage(Page page) {
 		this.page = page;
@@ -67,4 +68,9 @@ public class EmbedDocumentPage {
 		page.getByTestId(DELETE_BUTTON).isEnabled();
 
 	}
+
+	public void clickOnAccessControlButton() {
+		page.locator(CHANGE_ACCESS_XPATH).click();
+	}
+
 }
