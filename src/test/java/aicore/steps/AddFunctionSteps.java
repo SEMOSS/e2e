@@ -43,9 +43,8 @@ public class AddFunctionSteps {
 	}
 
 	@Then("User uploads function file {string}")
-	public void user_uploads_funtion_file(String fileName) throws InterruptedException {
+	public void user_uploads_funtion_file(String fileName) {
 		String uploadedFileName = addFunctionToCatalogPage.enterFilePath(fileName);
-		Thread.sleep(3000);
 		if (fileName.contains("/")) {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;
