@@ -37,13 +37,15 @@ public class AddFunctionSteps {
 	}
 
 	@Then("User selects function {string}")
-	public void user_selects_function(String functionType) {
+	public void user_selects_function(String functionType) throws InterruptedException {
 		addFunctionToCatalogPage.selectFunction(functionType);
+		Thread.sleep(3000);
 	}
 
 	@Then("User uploads function file {string}")
-	public void user_uploads_funtion_file(String fileName) {
+	public void user_uploads_funtion_file(String fileName) throws InterruptedException {
 		String uploadedFileName = addFunctionToCatalogPage.enterFilePath(fileName);
+		Thread.sleep(3000);
 		if (fileName.contains("/")) {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;
