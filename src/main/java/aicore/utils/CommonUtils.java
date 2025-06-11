@@ -124,11 +124,11 @@ public class CommonUtils {
 		return r + ", " + g + ", " + b;
 	}
 
-	public static String[] splitStringBySpace(String input) {
+	public static String[] splitStringBySpace(String input, int index) {
 		if (input != null && !input.isEmpty()) {
 			return input.trim().split("\\s+"); // Split by one or more spaces
 		}
-		return new String[0]; // Return an empty array if the string is null or empty
+		return new String[index]; // Return an empty array if the string is null or empty
 	}
 
 	public static boolean deleteCatalog(Page page, String accessControlXpath, String deleteButtonXpath,

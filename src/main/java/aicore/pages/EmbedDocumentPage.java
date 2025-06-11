@@ -52,7 +52,7 @@ public class EmbedDocumentPage {
 	public String dateUploaded() {
 		page.locator(DATE_UPLOADED_XPATH).isVisible();
 		String dateUploaded = page.locator(DATE_UPLOADED_XPATH).textContent();
-		String[] date = CommonUtils.splitStringBySpace(dateUploaded);
+		String[] date = CommonUtils.splitStringBySpace(dateUploaded, 0);
 		return date[0];
 	}
 
