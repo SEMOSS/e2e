@@ -30,7 +30,7 @@ Feature: Vector Overview
     When User clicks on vector Edit button
     And User add tags 'TestTag' and presses Enter
     And User clicks on the 'Submit' button
-    And 'Author' user clicks on Settings
+    And 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
@@ -43,4 +43,4 @@ Feature: Vector Overview
     And User sees a description for this Vector
     And User sees Tags 'TestTag' that have been added to the Vector
     And User sees the Change Access button
-    And User sees Updated By as 'Author' and Updated At as current date
+    And User sees Updated By as 'Admin' and Updated At as current date
