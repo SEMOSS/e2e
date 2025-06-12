@@ -22,7 +22,7 @@ Feature: View existing databases on database catalog page
     Then User sees the database name 'TestDatabase' in the database catalog
     When User clicks on Copy ID option of 'TestDatabase' database
     Then User can see a copy success toast message as 'Succesfully copied to clipboard'
-    And User applies each filter and validate 'TestDatabase' database is visible on the page
+    And User applies each filter and validate 'TestDatabase' catalog is visible on the 'database' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE      |
       | Tag                 | embeddings, Test1 |
       | Domain              | SAP, AI           |
