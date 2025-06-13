@@ -51,8 +51,8 @@ public class AddModelSteps {
 	}
 
 	@And("User enters Catalog name as {string}")
-	public void user_enters_Catalog_name_as(String CatalogName) {
-		openModelPage.enterCatalogName(CatalogName);
+	public void user_enters_Catalog_name_as(String catalogName) {
+		openModelPage.enterCatalogName(catalogName);
 	}
 
 	@When("User enters open AI Key as {string}")

@@ -201,7 +201,6 @@ public class AddFunctionPageUtils {
 		page.getByText(Toast_message).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String toastMessage = page.getByText(Toast_message).textContent();
 		return toastMessage;
-
 	}
 
 	public static boolean verifyMissingInputField(Page page) {
@@ -227,6 +226,7 @@ public class AddFunctionPageUtils {
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
 	}
+
 
 	public static void clickOnMakeDiscoverableButton(Page page) {
 		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).isVisible();
