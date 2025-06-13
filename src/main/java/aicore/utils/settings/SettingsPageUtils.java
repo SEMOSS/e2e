@@ -56,7 +56,7 @@ public class SettingsPageUtils {
 	public static int checkCountOfUsers(Page page) {
 		page.locator(MEMBER_COUNT_XPATH).isVisible();
 		String countOfUser = page.locator(MEMBER_COUNT_XPATH).textContent();
-		String[] numberOfUser = CommonUtils.splitStringBySpace(countOfUser);
+		String[] numberOfUser = CommonUtils.splitStringBySpace(countOfUser,0);
 		int totalUser = Integer.parseInt(numberOfUser[0]);
 		return totalUser;
 
