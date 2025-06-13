@@ -13,7 +13,7 @@ Feature: Add Function
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
-    When 'Author' user clicks on Settings
+    When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
@@ -31,7 +31,7 @@ Feature: Add Function
       | Request Button |
     And User click on cancel button
     And User logs out from the application
-    Then User login as "Author"
+    Then User login as "Admin"
     And User clicks on Open Function
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
@@ -41,7 +41,7 @@ Feature: Add Function
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
-    When 'Author' user clicks on Settings
+    When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application

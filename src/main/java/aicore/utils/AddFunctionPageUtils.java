@@ -36,7 +36,6 @@ public class AddFunctionPageUtils {
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
-	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 
 
 	public static void clickOnAddFunctionButton(Page page) {
@@ -223,19 +222,6 @@ public class AddFunctionPageUtils {
 				.replace("{filterValue}", filterValue));
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
-	}
-
-	public static boolean verifyMissingInputField(Page page) {
-		Locator missingFieldParent = page.getByTestId(URL).locator("..");
-		missingFieldParent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String missingFieldClass = missingFieldParent.getAttribute("class");
-		return missingFieldClass.contains("Mui-focused");
-	}
-
-	public static boolean verifyFunctionIsVisbileInCatalog(Page page, String functionName) {
-		boolean isFunctionVisible = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
-				.isVisible();
-		return isFunctionVisible;
 	}
 
 //	public static void searchFilterValue(Page page,String filterValue) {

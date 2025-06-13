@@ -2,12 +2,9 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-<<<<<<< feature/124-change-access-control
 import org.junit.jupiter.api.Assertions;
-=======
 import java.util.List;
 import java.util.Map;
->>>>>>> main
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
@@ -206,7 +203,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		viewUsagePage.verifyExample(example);
 	}
 
-<<<<<<< feature/124-change-access-control
 	@Then("User click on the Change Access button")
 	public void user_click_on_the_change_access_button() {
 		embedDocumentPage.clickOnAccessControlButton();
@@ -252,7 +248,8 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@Then("User selects the {string} from the Vector catalog")
 	public void user_selects_the_from_the_vector_catalog(String catalogName) {
 		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
-=======
+	}
+
 	@Then("User should see Search bar to filter vector options")
 	public void user_should_see_search_bar_to_filter_vector_options() {
 		validateSearchBar(vectorPage);
@@ -264,7 +261,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		final String VECTOR_OPTION_NAMES = "VECTOR_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		validateOptionsWithIcon(GROUP_NAME, VECTOR_OPTION_NAMES, rows, vectorPage);
->>>>>>> main
 	}
 
 	@Then("User sees and copies the vector id")
