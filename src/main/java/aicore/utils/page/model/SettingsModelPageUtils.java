@@ -200,7 +200,7 @@ public class SettingsModelPageUtils {
 			page.getByTitle("Name: " + username).click();
 		} else {
 			page.fill(ADD_MEMBER_XPATH, username);
-			page.getByText(username).click();
+			page.getByText(username).last().click();
 		}
 		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
 		page.click(SAVE_BUTTON_XPATH);

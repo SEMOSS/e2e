@@ -194,4 +194,9 @@ public class AddFunctionSteps {
 	public void user_clicks_on_discoverable_functions_button() {
 		addFunctionToCatalogPage.clickOnDiscoverableFunctionsbutton();
 	}
+
+	@Then("User clicks on Settings Tab")
+	public void user_clicks_on_settings_tab() {
+		addFunctionToCatalogPage.clickOnSettings();
+	}
 }
