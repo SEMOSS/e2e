@@ -8,7 +8,7 @@ Feature: AI Core application
     #
   Scenario: Login with native credentials
     Given User logs out from the application
-    And User is on application
+    And User is on login page
     When User enters nativeUsername and nativePassword
-    And User clicks on Login with native button
+    And User clicks on Login button
     Then User can navigate to home page
