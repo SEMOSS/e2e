@@ -2,7 +2,12 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+<<<<<<< feature/124-change-access-control
 import org.junit.jupiter.api.Assertions;
+=======
+import java.util.List;
+import java.util.Map;
+>>>>>>> main
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
@@ -12,12 +17,13 @@ import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.pages.ViewUsagePage;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class AddVectorDatabaseSteps {
+public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	private HomePage homePage;
 	private OpenVectorPage vectorPage;
@@ -200,6 +206,7 @@ public class AddVectorDatabaseSteps {
 		viewUsagePage.verifyExample(example);
 	}
 
+<<<<<<< feature/124-change-access-control
 	@Then("User click on the Change Access button")
 	public void user_click_on_the_change_access_button() {
 		embedDocumentPage.clickOnAccessControlButton();
@@ -245,6 +252,19 @@ public class AddVectorDatabaseSteps {
 	@Then("User selects the {string} from the Vector catalog")
 	public void user_selects_the_from_the_vector_catalog(String catalogName) {
 		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
+=======
+	@Then("User should see Search bar to filter vector options")
+	public void user_should_see_search_bar_to_filter_vector_options() {
+		validateSearchBar(vectorPage);
+	}
+
+	@And("User should see the following vector options with icons on the page")
+	public void user_should_see_the_following_vector_options_with_icons_on_the_page(DataTable dataTable) {
+		final String GROUP_NAME = "GROUP";
+		final String VECTOR_OPTION_NAMES = "VECTOR_OPTIONS";
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		validateOptionsWithIcon(GROUP_NAME, VECTOR_OPTION_NAMES, rows, vectorPage);
+>>>>>>> main
 	}
 
 	@Then("User sees and copies the vector id")
@@ -273,5 +293,4 @@ public class AddVectorDatabaseSteps {
 	public void user_sees_the_change_access_button() {
 		vectorPage.verifyChangeAccessButton();
 	}
-
 }

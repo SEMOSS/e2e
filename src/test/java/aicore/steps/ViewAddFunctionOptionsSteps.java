@@ -37,5 +37,4 @@ public class ViewAddFunctionOptionsSteps extends AbstractAddCatalogBase {
 	public void user_should_see_search_bar_to_filter_options() {
 		validateSearchBar(functionPage);
 	}
-
 }
