@@ -33,8 +33,9 @@ public class AddFunctionSteps {
 	}
 
 	@Then("User selects function {string}")
-	public void user_selects_function(String functionType) {
+	public void user_selects_function(String functionType) throws InterruptedException {
 		addFunctionToCatalogPage.selectFunction(functionType);
+		Thread.sleep(3000);
 	}
 
 	@Then("User uploads function file {string}")
@@ -167,5 +168,15 @@ public class AddFunctionSteps {
 	@Then("User clicks on Settings Tab")
 	public void user_clicks_on_settings_tab() {
 		addFunctionToCatalogPage.clickOnSettings();
+	}
+	
+	@Given("User searches the {string} in the function Catalog searchbox")
+	public void user_searches_the_in_the_function_catalog_searchbox(String catalogName) {
+		addFunctionToCatalogPage.searchFunctionCatalog(catalogName);
+	}
+
+	@Given("User selects the {string} from the function catalog")
+	public void user_selects_the_from_the_function_catalog(String catalogName) {
+		addFunctionToCatalogPage.selectFunctionFromSearchOptions(catalogName);
 	}
 }

@@ -22,7 +22,7 @@ public class CatalogFilterSteps {
 			String engineName, DataTable dataTable) {
 		switch (engineName) {
 		case "model":
-			catalogName = catalogName.replace("<RANDOM_VALUE>", AddModelSteps.timestamp);
+			catalogName = catalogName + AddModelSteps.timestamp;
 			break;
 		}
 		final String FILTER_CATEGORY_NAME = "FILTER_CATEGORY";

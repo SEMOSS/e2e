@@ -100,4 +100,11 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickDatabase(page, databaseName);
 	}
 
+    public void clickOnMetaDataTab() {
+        AddDatabasePageUtils.clickOnMetadataTab(page);
+    }
+
+    public void verifyMetaData() {
+        AddDatabasePageUtils.verifyMetaData(page);
+    }
 }

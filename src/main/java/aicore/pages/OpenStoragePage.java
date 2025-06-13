@@ -125,4 +125,12 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 	public boolean verifyActualTime(String time) {
 		return StoragePageUtils.verifyActualTime(page, time);
 	}
+	public void clickOnCancelButton() {
+		StoragePageUtils.clickOnCancelButton(page);
+	}
+
+	public void clickOnSettingsTab() {
+		StoragePageUtils.clickOnSettingsTab(page);
+	}
+
 }

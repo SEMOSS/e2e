@@ -41,3 +41,11 @@ Feature: Add Database Using ZIP
     And User can see last updated info
     And User clicks on Export button that creates a Zip of DB when clicked
     And User sees an Edit button that opens a pop-up to edit
+    
+  @DeleteCreatedCatalog
+  Scenario: Verify MetaData for Database
+    Given User clicks on Open Database
+    And User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    When User clicks on MetaData tab
+    Then User sees the table in the metadata tab

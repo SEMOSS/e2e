@@ -17,7 +17,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return AddFunctionPageUtils.verifyFunctionIsVisbileInCatalog(page, functionName);
 	}
 
-  public void searchFilterValue(String filterValue) {
+
+	public void searchFilterValue(String filterValue) {
 		AddFunctionPageUtils.searchFilterValue(page, filterValue);
 	}
 
@@ -136,4 +137,11 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return AddFunctionPageUtils.verifyMissingInputField(page);
 	}
 
+	public void searchFunctionCatalog(String catalogName) {
+		AddFunctionPageUtils.searchFunctionCatalog(page, catalogName);
+	}
+
+	public void selectFunctionFromSearchOptions(String catalogName) {
+		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, catalogName);
+	}
 }

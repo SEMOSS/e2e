@@ -220,6 +220,16 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	public void user_sees_change_access_button() {
 		boolean flag = storagePage.verifyChangeAccessButton();
 	}
+	
+	@Then("User click on cancel button")
+	public void user_click_on_cancel_button() {
+		storagePage.clickOnCancelButton();
+	}
+
+	@Given("{string} user clicks on Settings of Storage")
+	public void user_clicks_on_settings_of_storage(String string) {
+		storagePage.clickOnSettingsTab();
+	}
 
 	@Then("User searches the {string} in the storage Catalog searchbox")
 	public void user_searches_the_in_the_storage_catalog_searchbox(String catalogName) {
@@ -230,5 +240,4 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	public void user_selects_the_from_the_storage_catalog(String catalogName) {
 		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
 	}
-
 }

@@ -37,6 +37,8 @@ public class StoragePageUtils {
 	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='Change Access']";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
+	private static final String CANCEL_BUTTON_XPATH = "//button[span[text()='Cancel']]";
+	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
@@ -45,6 +47,7 @@ public class StoragePageUtils {
 	public static void selectStorage(Page page, String storageName) {
 		Locator locator = page.locator("p", new Page.LocatorOptions().setHasText(storageName));
 		locator.click();
+		page.waitForLoadState();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
@@ -241,6 +244,14 @@ public class StoragePageUtils {
 
 	public static boolean verifyChangeAccessButton(Page page) {
 		return page.getByText(CHANGE_ACCESS_BUTTON_XPATH).isVisible();
+	}
+	
+	public static void clickOnCancelButton(Page page) {
+		page.click(CANCEL_BUTTON_XPATH);
+	}
+
+	public static void clickOnSettingsTab(Page page) {
+		page.click(SETTINGS_TAB_XPATH);
 	}
 
 }

@@ -22,7 +22,8 @@ Feature: Add Storage
     And User sees an example of "How to use in Python" with example code for storage
     And User sees an example of "How to use with Langchain API" with example code for storage
     And User sees an example of "How to use in Java" with example code for storage
-
+    
+@LoginWithAdmin
   Scenario: Validate SMSS properties of storage
     Given User can see the Storage title as 'Amazon S3 Storage'
     And User clicks on SMSS
@@ -57,3 +58,44 @@ Feature: Add Storage
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
     Then User sees Change Access button
+    
+    @LoginWithAdmin
+  Scenario: Validate Change access popup
+    Given User can see the Storage title as 'Amazon S3 Storage'
+    And 'Author' user clicks on Settings of Storage
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User clicks on Open Storage engine
+    And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
+    And User selects the 'Amazon S3 Storage' from the storage catalog
+    And User click on the Change Access button
+    And User should see the "Change Access" popup with following options:
+      | Author         |
+      | Editor         |
+      | Read-Only      |
+      | Comment Box    |
+      | Cancel Button  |
+      | Request Button |
+    And User click on cancel button
+    And User logs out from the application
+    Then User login as "Author"
+    
+@LoginWithAdmin
+  Scenario: Validate change access request
+    Given User can see the Storage title as 'Amazon S3 Storage'
+    And 'Author' user clicks on Settings of Storage
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User clicks on Open Storage engine
+    And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
+    And User selects the 'Amazon S3 Storage' from the storage catalog
+    And User click on the Change Access button
+    And User selects 'author' access
+    And User types a comment as 'Access Request'
+    And User clicks on Request button
+    Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
+    

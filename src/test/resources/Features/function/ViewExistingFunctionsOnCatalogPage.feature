@@ -1,4 +1,4 @@
-Feature: View existing functions in Function Catalog
+Feature: View existing functions on Function Catalog Page
 
   Background: Create Function using ZIP file
     Given User clicks on Open Function

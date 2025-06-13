@@ -11,6 +11,7 @@ import aicore.pages.LoginPage;
 import aicore.utils.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class LoginSteps {
@@ -46,6 +47,11 @@ public class LoginSteps {
 	@And("User clicks on Login button")
 	public void user_clicks_on_login_button() {
 		loginPage.clickOnLoginButton();
+	}
+	
+	@Then("User can navigate to home page")
+	public void userCanNavigateToHomePage() {
+		homePage.navigateToHomePage();
 	}
 
 }
