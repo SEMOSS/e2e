@@ -123,4 +123,9 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_clicks_on_bookmark_button_ot_unbookmark_database(String dbName) {
 		addDatabaseToCatalogPage.clickOnUnbookmark(dbName);
 	}
+
+	@Then("User clicks on {string} in the database catalog")
+	public void user_clicks_on_in_the_database_catalog(String databaseName) {
+		addDatabaseToCatalogPage.clickDatabase(databaseName);
+	}
 }

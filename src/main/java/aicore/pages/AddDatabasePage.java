@@ -66,4 +66,8 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		return AddDatabasePageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
 	}
 
+	public void clickDatabase(String databaseName) {
+		AddDatabasePageUtils.clickDatabase(page, databaseName);
+	}
+
 }
