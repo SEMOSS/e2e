@@ -4,7 +4,7 @@ Feature: Validate storage creation form
     Given User clicks on Open Storage engine
     When User clicks on Add Storage button
     And User selects '<FUNCTION_NAME>' storage
-    Then User can see '<FIELD_NAMES>' fields on the form
+    And User can see '<FIELD_NAMES>' fields on the form
     And User sees astrisk mark on the '<REQUIRED_FIELDS>' fields of storage creation form
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |

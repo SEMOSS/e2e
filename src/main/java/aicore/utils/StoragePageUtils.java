@@ -30,6 +30,7 @@ public class StoragePageUtils {
 	public static void selectStorage(Page page, String storageName) {
 		Locator locator = page.locator("p", new Page.LocatorOptions().setHasText(storageName));
 		locator.click();
+		page.waitForLoadState();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
