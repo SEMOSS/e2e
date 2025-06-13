@@ -19,3 +19,11 @@ Feature: Add Database Using ZIP
     And User sees an example of "How to use in Python" with example code for Database
     And User sees an example of "How to use with Langchain API" with example code for Database
     And User sees an example of "How to use in Java" with example code for Database
+
+  @DeleteCreatedCatalog
+  Scenario: Verify MetaData for Database
+    Given User clicks on Open Database
+    And User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    When User clicks on MetaData tab
+    Then User sees the table in the metadata tab

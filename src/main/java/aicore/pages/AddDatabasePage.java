@@ -66,4 +66,11 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		return AddDatabasePageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
 	}
 
+    public void clickOnMetaDataTab() {
+        AddDatabasePageUtils.clickOnMetadataTab(page);
+    }
+
+    public void verifyMetaData() {
+        AddDatabasePageUtils.verifyMetaData(page);
+    }
 }

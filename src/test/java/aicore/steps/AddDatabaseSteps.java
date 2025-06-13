@@ -123,4 +123,13 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_clicks_on_bookmark_button_ot_unbookmark_database(String dbName) {
 		addDatabaseToCatalogPage.clickOnUnbookmark(dbName);
 	}
+  @When("User clicks on MetaData tab")
+  public void user_clicks_on_metadata_tab() {
+      addDatabaseToCatalogPage.clickOnMetaDataTab();
+  }
+
+  @Then("User sees the table in the metadata tab")
+  public void user_sees_the_table_in_the_metadata_tab() {
+      addDatabaseToCatalogPage.verifyMetaData();
+  }
 }

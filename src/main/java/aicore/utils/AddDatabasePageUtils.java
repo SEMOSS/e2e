@@ -14,12 +14,14 @@ public class AddDatabasePageUtils {
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CREATE_DATABASE_BUTTON_LABEL = "Create database";
+	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
 	private static final String COPY_ID_OPTION_TEXT = "Copy";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
 	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
 	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";
+
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -66,6 +68,26 @@ public class AddDatabasePageUtils {
 
 	public static void clickOnDatabaseNameInCatalog(Page page, String dbName) {
 		page.getByText(dbName).click();
+	}
+
+	public static void clickOnMetadataTab(Page page) {
+		page.getByText("Metadata").isVisible();
+		page.getByText("Metadata").click();
+	}
+
+	public static void verifyMetaData(Page page) {
+		Locator metadataTable = page.locator(METADATA_TABLE_XPATH);
+		int tableCount = metadataTable.count();
+		if (tableCount > 0) {
+			for (int i = 0; i < tableCount; i++) {
+				String metaDataContent = metadataTable.nth(i).textContent();
+				if (!metadataTable.nth(i).isVisible() || metaDataContent == null || metaDataContent.length() <= 1) {
+					throw new AssertionError("Metadata table is not present or does not contain valid content.");
+				}
+			}
+		} else {
+			throw new AssertionError("Metadata table is not present.");
+		}
 	}
 
 	public static boolean verifyDatabaseIsVisbileInCatalog(Page page, String dbName) {
