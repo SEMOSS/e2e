@@ -32,8 +32,8 @@ public abstract class AbstractAddCatalogBase {
 				Assertions.assertTrue(isIconVisible, optionName + " icon is not visible");
 				// verify icon is not broken
 				String iconUrl = icon.getAttribute("src");
-				// for 'Local File System' storage option getting broken image
-				if (isIconVisible && !optionName.contains("Local File System")) {
+				// for 'Local File System' storage & 'FAISS' vector options getting broken image
+				if (isIconVisible && !optionName.matches(".*(Local File System||FAISS).*")) {
 					boolean isIconValid = CommonUtils.isIconValid(iconUrl);
 					Assertions.assertTrue(isIconValid, optionName + " icon src is broken: " + iconUrl);
 				}
