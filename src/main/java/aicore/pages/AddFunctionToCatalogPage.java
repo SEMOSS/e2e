@@ -25,7 +25,11 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	public void selectFilterValue(String filterCategory, String filterValue) {
 		AddFunctionPageUtils.selectFilterValue(page, filterCategory, filterValue);
 	}
-
+ 
+	public void clickOnSettings() {
+		AddFunctionPageUtils.clickOnSettings(page);
+	}
+  
 	public void clickOnMakeDiscoverableButton() {
 		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page);
 	}
@@ -97,7 +101,6 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
 	public String enterFilePath(String fileName) {
 		return AddFunctionPageUtils.enterFilePath(page, fileName);
-
 	}
 
 	public String verifyFunctionNameInCatalog(String catalogName) {
@@ -130,7 +133,7 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return Toast_message;
 	}
 
-	public boolean verifyMissingInputField() {
+  public boolean verifyMissingInputField() {
 		return AddFunctionPageUtils.verifyMissingInputField(page);
 	}
 

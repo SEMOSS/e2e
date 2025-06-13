@@ -27,6 +27,7 @@ public class AddFunctionPageUtils {
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
@@ -173,6 +174,11 @@ public class AddFunctionPageUtils {
 	public static void clickOnAccessControl(Page page) {
 		page.locator(ACCESS_CONTROL_XPATH).isVisible();
 		page.locator(ACCESS_CONTROL_XPATH).click();
+	}
+
+	public static void clickOnSettings(Page page) {
+		page.locator(SETTINGS_TAB_XPATH).isVisible();
+		page.locator(SETTINGS_TAB_XPATH).click();
 	}
 
 	public static void clickOnDeleteButton(Page page) {

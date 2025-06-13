@@ -1,5 +1,9 @@
 package aicore.utils;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -20,6 +24,19 @@ public class StoragePageUtils {
 	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-textField-S3_BUCKET";
 	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_SECRET_KEY";
+	private static final String VIEW_STORAGE_XPATH = "//button[@aria-label=\"copy Storage ID\"]/parent::span";
+	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
+	private static final String STORAGE_DESCRIPTION_XPATH = "//h6[text()='{StorageDescription}']";
+	private static final String OVERVIEW_TAB_XPATH = "//button[text()='Overview']";
+	private static final String EDIT_BTN_XPATH = "//span[text()='Edit']";
+	private static final String TAGS_XPATH = "//span[text()='Tag']/ancestor::fieldset/parent::div//input";
+	private static final String SUBMIT_BTN_XPATH = "//span[text()='Submit']";
+	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
+	private static final String DATE_LAST_UPDATED_XPATH = "//p[contains(text(),'{User}]";
+	private static final String PUBLISHED_BY_INFO_XPATH = "//p[text()='Published by:']";
+	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='Change Access']";
+	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
+	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[span[text()='Cancel']]";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 
@@ -186,6 +203,49 @@ public class StoragePageUtils {
 		fieldLocator.fill(fieldValue);
 	}
 
+	public static void viewStorageIDalongwithCopyIcon(Page page) {
+		page.locator(VIEW_STORAGE_XPATH).isVisible();
+		page.locator(COPY_ID_ICON_XPATH).isVisible();
+	}
+
+	public static void clickCopyIcon(Page page) {
+		page.locator(COPY_ID_ICON_XPATH).click();
+	}
+
+	public static void verifyToastMessage(Page page, String toastMessage) {
+		page.getByText(COPY_TOAST_MESSAGE_XPATH.replace("{ToastMessage}", toastMessage)).isVisible();
+	}
+
+	public static void verifyStorageDescription(Page page, String storageDescription) {
+		page.getByText(STORAGE_DESCRIPTION_XPATH.replace("{StorageDescription}", storageDescription)).isVisible();
+	}
+
+	public static void verifyEmbeddedTags(Page page, String tag, String toastMessage) {
+		page.getByText(OVERVIEW_TAB_XPATH).isVisible();
+		page.locator(EDIT_BTN_XPATH).click();
+		page.locator(TAGS_XPATH).fill(tag);
+		page.keyboard().press("Enter");
+		page.locator(SUBMIT_BTN_XPATH).click();
+		page.getByText(EMBEDDED_TOAST_MESSAGE_XPATH.replace("{ToastMessage}", toastMessage)).isVisible();
+	}
+
+	public static String verifyExpectedTime(Page page) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		return ZonedDateTime.now(ZoneId.of("UTC")).format(formatter);
+	}
+
+	public static boolean verifyActualTime(Page page, String time) {
+		return page.locator(CURRENT_DATE_XPATH.replace("{Time}", time)).isVisible();
+	}
+
+	public static void verifyPublishedByInfo(Page page) {
+		page.getByText(PUBLISHED_BY_INFO_XPATH).isVisible();
+	}
+
+	public static boolean verifyChangeAccessButton(Page page) {
+		return page.getByText(CHANGE_ACCESS_BUTTON_XPATH).isVisible();
+	}
+	
 	public static void clickOnCancelButton(Page page) {
 		page.click(CANCEL_BUTTON_XPATH);
 	}

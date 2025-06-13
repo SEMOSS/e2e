@@ -199,8 +199,8 @@ public class SettingsModelPageUtils {
 			page.fill(ADD_MEMBER_XPATH, username);
 			page.getByTitle("Name: " + username).click();
 		} else {
-			page.click(ADD_MEMBER_XPATH);
-			page.fill(ADD_MEMBER_XPATH, username);
+			// page.click(ADD_MEMBER_XPATH);
+			// page.fill(ADD_MEMBER_XPATH, username);
 //			page.getByText(username).click();
 			page.waitForTimeout(500);
 			page.locator(ADD_MEMBER_XPATH).press("ArrowDown");
