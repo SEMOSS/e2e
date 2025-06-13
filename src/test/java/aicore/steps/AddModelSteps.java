@@ -47,8 +47,8 @@ public class AddModelSteps {
 	}
 
 	@And("User enters Catalog name as {string}")
-	public void user_enters_Catalog_name_as(String CatalogName) {
-		openModelPage.enterCatalogName(CatalogName);
+	public void user_enters_Catalog_name_as(String catalogName) {
+		openModelPage.enterCatalogName(catalogName);
 	}
 
 	@When("User enters open AI Key as {string}")
@@ -69,11 +69,12 @@ public class AddModelSteps {
 	@Given("User uploads a file {string}")
 	public void user_uploads_a_file(String fileName) {
 		String uploadedFileName = openModelPage.enterFilePath(fileName);
-		if(fileName.contains("/")) {
-			String [] ActualFileName = fileName.split("/");
-			int fileNameIndex = ActualFileName.length-1;
-			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName, "Document is not uploaded successfully");
-		}else {
+		if (fileName.contains("/")) {
+			String[] ActualFileName = fileName.split("/");
+			int fileNameIndex = ActualFileName.length - 1;
+			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
+					"Document is not uploaded successfully");
+		} else {
 			Assertions.assertEquals(fileName, uploadedFileName, "Document is not uploaded successfully");
 		}
 	}
@@ -84,7 +85,7 @@ public class AddModelSteps {
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
 		openModelPage.waitForModelCreationToastMessageDisappear();
 	}
-	
+
 	@Then("User Can see the Model title as {string}")
 	public void user_can_see_the_model_title_as(String modelTitle) {
 		String actualModelTitle = openModelPage.verifyModelTitle(modelTitle);

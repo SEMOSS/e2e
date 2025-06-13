@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
+import aicore.utils.CommonUtils;
 import aicore.utils.ConfigUtils;
 
 public class OpenVectorPage {
@@ -36,8 +37,13 @@ public class OpenVectorPage {
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String VECTOR_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
+	private static final String VECTOR_ID = "//*[@data-testid=\"ContentCopyOutlinedIcon\"]/../..";
 	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
 	private static final String COPIED_TOAST_MESSAGE_XPATH = "//div[text()='Successfully copied ID']";
+	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
+	private static final String VECTOR_TAGS_XPATH = "//h6[text()='Tag']/../../..//div//div//span[text()='{tagName}']";
+	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
+	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -104,8 +110,11 @@ public class OpenVectorPage {
 	}
 
 	public void verifyVectorTitle(String vectorTitle) {
-		Locator locator = page.locator("h4:has-text('" + vectorTitle + "')");
-		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		Locator vector = page.locator("h4:has-text('" + vectorTitle + "')");
+		vector.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!vector.isVisible()) {
+			throw new AssertionError("Vector title '" + vectorTitle + "' is not visible on the page.");
+		}
 	}
 
 	public String verifyNameFiledInSMSS() {
@@ -170,4 +179,53 @@ public class OpenVectorPage {
 		String toastMessage = page.locator(COPIED_TOAST_MESSAGE_XPATH).textContent();
 		return toastMessage;
 	}
-}
+
+	public void verifyVectorDescription() {
+		page.locator(VECTOR_DESCRIPTION_XPATH).isVisible();
+		String vectorDescription = page.locator(VECTOR_DESCRIPTION_XPATH).textContent().trim();
+		if (vectorDescription == null || vectorDescription.isEmpty()) {
+			throw new AssertionError("Vector description is not available or empty.");
+		}
+	}
+
+	public void verifyChangeAccessButton() {
+		if (!page.getByText("Change Access").isVisible()) {
+			throw new AssertionError("Change Access button is not visible on the Vector page.");
+		}
+	}
+
+	public void verifyCurrentUrlContainsVectorId() {
+		page.locator(VECTOR_ID).isVisible();
+		String vectorIdText = page.locator(VECTOR_ID).textContent().trim();
+		String currentUrl = page.url();
+		if (!currentUrl.contains(vectorIdText)) {
+			throw new AssertionError("Vector ID is not present or wrong in Vector catalog: " + vectorIdText);
+		}
+	}
+
+	public void verifyVectorTags(String tagName) {
+		page.locator(VECTOR_TAGS_XPATH.replace("{tagName}", tagName)).isVisible();
+		if (!page.locator((VECTOR_TAGS_XPATH.replace("{tagName}", tagName))).isVisible()) {
+			throw new AssertionError("Tag " + tagName + " is not visible on the Vector page.");
+		}
+	}
+
+	public void verifyUpdatedBy(String role) {
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username");
+		page.locator(UPDATED_BY_XPATH).isVisible();
+		String updatedByText = page.locator(UPDATED_BY_XPATH).textContent().trim();
+		if (!updatedByText.contains(username)) {
+			throw new AssertionError("Updated By does not contain the expected username: " + username);
+		}
+	}
+
+	public void verifyUpdatedAt() {
+		page.locator(UPDATED_AT_XPATH).isVisible();
+		String updatedAtText = page.locator(UPDATED_AT_XPATH).textContent().trim();
+		String[] updatedDate = CommonUtils.splitStringBySpace(updatedAtText, 1);
+		String currentDate = CommonUtils.getTodayDateFormatted();
+		if (!updatedDate[1].equals(currentDate)) {
+			throw new AssertionError("Updated At does not match the current date: " + currentDate);
+		}
+	}
+};

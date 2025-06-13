@@ -11,7 +11,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 import aicore.utils.CommonUtils;
 
 public class EditModelPageUtils {
-	
+
 	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
@@ -37,9 +37,9 @@ public class EditModelPageUtils {
 		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).fill(modelName + timestamp);
 	}
 
-	public static void selectModelFromSearchOptions(Page page, String modelName, String timestamp) {
-		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp))).isVisible();
-		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp)).click();
+	public static void selectModelFromSearchOptions(Page page, String modelName) {
+		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName))).isVisible();
+		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName)).click();
 	}
 
 	public static void addedModelCard(Page page, String modelName) {
@@ -47,8 +47,8 @@ public class EditModelPageUtils {
 		page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).click();
 	}
 
-	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName, String timestamp) {
-		String modelNameWithTimestamp = SEARCHED_MODEL_XPATH.replace("{modelName}", modelName + timestamp);
+	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName) {
+		String modelNameWithTimestamp = SEARCHED_MODEL_XPATH.replace("{modelName}", modelName);
 		page.waitForSelector(modelNameWithTimestamp, new Page.WaitForSelectorOptions().setTimeout(10000));
 		boolean isModelVisible = page.isVisible(modelNameWithTimestamp);
 		return isModelVisible;

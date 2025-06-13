@@ -112,6 +112,7 @@ public class AddVectorDatabaseSteps {
 	@Then("User can see the Vector title as {string}")
 	public void user_can_see_the_vector_title_as(String vectorTitle) {
 		vectorPage.verifyVectorTitle(vectorTitle + timestamp);
+
 	}
 
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
@@ -245,4 +246,32 @@ public class AddVectorDatabaseSteps {
 	public void user_selects_the_from_the_vector_catalog(String catalogName) {
 		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
 	}
+
+	@Then("User sees and copies the vector id")
+	public void user_copies_the_vector_id() {
+		vectorPage.verifyCurrentUrlContainsVectorId();
+		vectorPage.copyVectorId();
+	}
+
+	@And("User sees a description for this Vector")
+	public void user_sees_a_description_for_this_vector() {
+		vectorPage.verifyVectorDescription();
+	}
+
+	@And("User sees Tags {string} that have been added to the Vector")
+	public void user_sees_tags_that_have_been_added_to_the_vector(String tagName) {
+		vectorPage.verifyVectorTags(tagName);
+	}
+
+	@Then("User sees Updated By as {string} and Updated At as current date")
+	public void User_sees_Updated_By_as_and_Updated_At_as_current_date(String role) {
+		vectorPage.verifyUpdatedBy(role);
+		vectorPage.verifyUpdatedAt();
+	}
+
+	@And("User sees the Change Access button")
+	public void user_sees_the_change_access_button() {
+		vectorPage.verifyChangeAccessButton();
+	}
+
 }
