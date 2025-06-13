@@ -90,4 +90,12 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.enterValuesInField(page, fieldname, fieldValue, timestamp);
 	}
 
+	public void clickOnCancelButton() {
+		StoragePageUtils.clickOnCancelButton(page);
+	}
+
+	public void clickOnSettingsTab() {
+		StoragePageUtils.clickOnSettingsTab(page);
+	}
+
 }

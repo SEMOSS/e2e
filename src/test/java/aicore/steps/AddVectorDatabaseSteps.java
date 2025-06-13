@@ -2,10 +2,16 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+<<<<<<< feature/124-change-access-control
+import org.junit.jupiter.api.Assertions;
+=======
 import java.util.List;
 import java.util.Map;
+>>>>>>> main
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.CatalogPage;
+import aicore.pages.ChangeAccessPopUpPage;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
@@ -24,6 +30,8 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	private String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
 	private ViewUsagePage viewUsagePage;
+	private ChangeAccessPopUpPage chnageAccessPopUpPage;
+	private CatalogPage catalogPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
@@ -31,6 +39,8 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
+		chnageAccessPopUpPage = new ChangeAccessPopUpPage(SetupHooks.getPage());
+		catalogPage = new CatalogPage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Vector")
@@ -196,6 +206,53 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		viewUsagePage.verifyExample(example);
 	}
 
+<<<<<<< feature/124-change-access-control
+	@Then("User click on the Change Access button")
+	public void user_click_on_the_change_access_button() {
+		embedDocumentPage.clickOnAccessControlButton();
+	}
+
+	@Then("User should see the {string} popup with following options:")
+	public void user_should_see_the_popup_with_following_options(String expectedTitle,
+			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
+		Assertions.assertTrue(chnageAccessPopUpPage.isPopupVisible(), expectedTitle + " popup is not visible");
+		for (String option : dataTable.asList()) {
+			Assertions.assertTrue(chnageAccessPopUpPage.isOptionVisible(option),
+					option + " is not visible in Change Access popup");
+		}
+	}
+
+	@Then("User selects {string} access")
+	public void user_selects_access(String accessType) {
+		chnageAccessPopUpPage.selectAccessType(accessType);
+	}
+
+	@Then("User types a comment as {string}")
+	public void user_types_a_comment_as(String comment) {
+		chnageAccessPopUpPage.enterComment(comment);
+	}
+
+	@Then("User clicks on Request button")
+	public void user_clicks_on_request_button() {
+		chnageAccessPopUpPage.clickOnRequestButton();
+	}
+
+	@Then("User should successfully request access given the Vector is requestable with a toast message as {string}")
+	public void user_should_successfully_request_access_given_the_vector_is_requestable_with_a_toast_message_as(
+			String expectedMessage) {
+		boolean toastVisible = chnageAccessPopUpPage.isRequestSuccessToastVisible();
+		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
+	}
+
+	@Then("User searches the {string} in the Vector Catalog searchbox")
+	public void user_searches_the_in_the_vector_catalog_searchbox(String catalogName) {
+		catalogPage.searchCatalog(catalogName, timestamp);
+	}
+
+	@Then("User selects the {string} from the Vector catalog")
+	public void user_selects_the_from_the_vector_catalog(String catalogName) {
+		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
+=======
 	@Then("User should see Search bar to filter vector options")
 	public void user_should_see_search_bar_to_filter_vector_options() {
 		validateSearchBar(vectorPage);
@@ -207,6 +264,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		final String VECTOR_OPTION_NAMES = "VECTOR_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		validateOptionsWithIcon(GROUP_NAME, VECTOR_OPTION_NAMES, rows, vectorPage);
+>>>>>>> main
 	}
 
 	@Then("User sees and copies the vector id")
