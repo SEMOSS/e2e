@@ -8,7 +8,7 @@ import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppLibraryPageUtils {
-	
+
 	private static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
 	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
 	private static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
@@ -35,6 +35,10 @@ public class AppLibraryPageUtils {
 	private static final String TEXT_BLOCK_XPATH = "//div[@aria-label='Show text in a regular paragraph style']";
 	private static final String LOGS_BLOCK_XPATH = "//div[@aria-label='Show logs from the notebook']";
 	private static final String MARKDOWN_BLOCK_XPATH = "//div[@aria-label='Show text in markdown format']";
+	private static final String LINE_CHART_BLOCK_XPATH = "//div[text()='Line Chart']/parent::p/following-sibling::div[div[@aria-label='Show relationships between two variables']]";
+	private static final String SCATTER_PLOT_BLOCK_XPATH = "//div[text()='Scatter Plot']/parent::p/following-sibling::div[div[@aria-label='Show relationships between two variables']]";
+	private static final String BAR_CHART_BLOCK_XPATH = "//div[text()='Bar Chart']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
+	private static final String BAR_CHART_STACKED_BLOCK_XPATH = "//div[text()='Bar Chart - Stacked']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
@@ -49,13 +53,23 @@ public class AppLibraryPageUtils {
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
-	//Notebook section
+	// Block settings for Scatter plot
+	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
+	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
+	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
+	// Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
 	private static final String NOTEBOOK_QUERY_ID_LABEL = "Id";
 	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor textarea.inputarea";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//div[contains(@id,'notebook-cell-actions')]/child::div/span[text()='{codeOutput}']";
+	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
+	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='button']";
+	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
+	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
+	private static final String FRAME_CSS = "input[value*='FRAME_']";
+	private static final String SELECT_FRAME_ID = "Echart-Frame";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
@@ -175,6 +189,26 @@ public class AppLibraryPageUtils {
 			page.locator(LOGS_BLOCK_XPATH).isVisible();
 			page.locator(LOGS_BLOCK_XPATH).hover();
 			break;
+		case "Scatter Plot":
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
+			break;
+		case "Line Chart":
+			page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
+			page.locator(LINE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart":
+			page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart - Stacked":
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
+			break;
 		default:
 			isValidBlock = false;
 			System.out.println("Invalid block name: " + blockName);
@@ -195,7 +229,7 @@ public class AppLibraryPageUtils {
 			blockSettingsOption.click();
 		}
 	}
-	
+
 	public static void userSelectsTheAppearanceTab(Page page) {
 		page.getByText("Appearance").click();
 	}
@@ -236,7 +270,8 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void clickOnSaveAppButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true)).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true))
+				.click();
 	}
 
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
@@ -279,8 +314,8 @@ public class AppLibraryPageUtils {
 	}
 
 	public static String getBlockTextColor(Page page, String blockName, String blockText) {
-		return textSectionDragAndDroppedBlockLocator(page, blockName, blockText).evaluate("el => getComputedStyle(el).color")
-				.toString().trim();
+		return textSectionDragAndDroppedBlockLocator(page, blockName, blockText)
+				.evaluate("el => getComputedStyle(el).color").toString().trim();
 	}
 
 	public static String getBlockTextAlign(Page page, String blockName, String blockText) {
@@ -303,6 +338,7 @@ public class AppLibraryPageUtils {
 		page.goBack(new Page.GoBackOptions().setTimeout(5000));
 	}
 
+// Notebook section
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
 	}
@@ -346,5 +382,91 @@ public class AppLibraryPageUtils {
 	public static void clickOnTerminalCard(Page page) {
 		page.locator(TERMINAL_XPATH).isVisible();
 		page.locator(TERMINAL_XPATH).click();
+	}
+
+	public static void mouseHoverOnNotebookHiddenOptions(Page page) {
+		BoundingBox targetBox = page.locator(CODE_ENTER_TEXTAREA).boundingBox();
+		double dropX = targetBox.x + (targetBox.width / 2);
+		double dropY = targetBox.y + targetBox.height + 80;
+		page.mouse().move(dropX, dropY, new Mouse.MoveOptions().setSteps(10));
+	}
+
+	public static void clickOnHiddenNotebookOption(Page page, String optionName) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(optionName)).click();
+	}
+
+	public static void selectDataImportOption(Page page, String optionName) {
+		page.locator(IMPORT_DATA_OPTIONS_XPATH.replace("{optionName}", optionName)).click();
+	}
+
+	public static void selectDatabaseFromDropdown(Page page, String databaseName) {
+		page.locator(SELECT_DATABASE_DROPDOWN_XPATH).click();
+		page.waitForTimeout(300);
+		page.getByText(databaseName).click();
+	}
+
+	public static void selectAllColumns(Page page) {
+		page.locator(SELECT_ALL_COLUMNS_XPATH).click();
+	}
+
+	public static void clickOnImportButton(Page page) {
+		page.locator(IMPORT_BUTTON_XPATH).scrollIntoViewIfNeeded();
+		page.locator(IMPORT_BUTTON_XPATH).click();
+	}
+
+	public static void deleteFirstCell(Page page) {
+		page.getByTestId("DeleteIcon").first().click();
+	}
+
+	public static void clickOnRunCellButton(Page page) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).click();
+		page.getByTestId("CheckCircleIcon")
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+	}
+
+	public static String getFrameID(Page page) {
+		return page.locator(FRAME_CSS).inputValue().trim();
+	}
+
+	// chart block settings
+
+	public static void clickOnDataTab(Page page) {
+		page.locator(DATA_TAB_XPATH).click();
+	}
+
+	public static void selectFrame(Page page, String frameId) {
+		Locator selectFrame = page.getByPlaceholder("Select frame");
+		selectFrame.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		selectFrame.click();
+		selectFrame.fill(frameId);
+		selectFrame.press("ArrowDown");
+		selectFrame.press("Enter");
+	}
+
+	public static void dragColumnToTargetField(Page page, String columnName, String targetField) {
+		// ---scroll to column---
+		Locator sourceLocator = page.locator(DRAG_COLUMN_NAME_XPATH.replace("{columnName}", columnName));
+		sourceLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		sourceLocator.scrollIntoViewIfNeeded();
+		// ---Grab column---
+		sourceLocator.hover();
+		BoundingBox source = sourceLocator.boundingBox();
+		page.mouse().move(source.x + source.width / 2, source.y + source.height / 2);
+		page.mouse().down();
+		page.waitForTimeout(300);
+		// ---scroll to target filed---
+		Locator targetLocator = page.locator(DROP_FIELD_XPATH.replace("{fieldName}", targetField)).first();
+		targetLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		targetLocator.scrollIntoViewIfNeeded();
+		// ---refresh drag coordinates after scrolling
+		source = sourceLocator.boundingBox();
+		page.mouse().move(source.x + source.width / 2, source.y + source.height / 2);
+		page.waitForTimeout(300);
+		// --drop column to target filed--
+		BoundingBox target = targetLocator.boundingBox();
+		page.mouse().move(target.x + (target.width / 2), (target.y + target.height / 2),
+				new Mouse.MoveOptions().setSteps(10));
+		page.mouse().up();
+		page.waitForTimeout(300);
 	}
 }

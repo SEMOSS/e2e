@@ -24,6 +24,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private OpenAppLibraryPage openAppLibraryPage;
 	protected static String timestamp;
 	private String blockText;
+	private String frameID;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -126,7 +127,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_the_block_settings_option() {
 		openAppLibraryPage.clickOnBlockSettingsOption();
 	}
-	
+
 	@And("User selects the Appearance tab")
 	public void user_selects_the_Appearance_tab() {
 		openAppLibraryPage.userSelectsTheAppearanceTab();
@@ -285,4 +286,90 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_from_the_query_dropdown(String queryName) {
 		openAppLibraryPage.selectQueryFromList(queryName);
 	}
+
+	@And("User mouse hover below the existing cell")
+	public void user_mouse_hover_below_the_existing_cell() {
+		openAppLibraryPage.mouseHoverOnNotebookHiddenOptions();
+	}
+
+	@And("User selects {string} from the hidden options")
+	public void user_selects_from_the_hidden_options(String optionName) {
+		openAppLibraryPage.clickOnHiddenNotebookOption(optionName);
+	}
+
+	@And("User selects {string} from the data import options")
+	public void user_selects_from_the_data_import_options(String optionName) {
+		openAppLibraryPage.selectDataImportOption(optionName);
+	}
+
+	@And("User selects {string} from the dropdown list")
+	public void user_selects_from_the_dropdown_list(String databaseName) {
+		openAppLibraryPage.selectDatabaseFromDropdown(databaseName);
+	}
+
+	@And("User selects all columns from database")
+	public void user_selects_all_columns_from_database() {
+		openAppLibraryPage.selectAllColumns();
+	}
+
+	@And("User clicks on data Import button")
+	public void user_clicks_on_data_import_button() {
+		openAppLibraryPage.clickOnImportButton();
+	}
+
+	@And("User deletes the previous cell")
+	public void user_deletes_the_previous_cell() {
+		openAppLibraryPage.deleteFirstCell();
+	}
+
+	@When("User clicks on Run cell button")
+	public void user_clicks_on_run_cell_button() throws InterruptedException {
+		openAppLibraryPage.clickOnRunCellButton();
+	}
+
+	@And("User fetch the frame id")
+	public void user_fetch_the_frame_id() {
+		frameID = openAppLibraryPage.getFrameID();
+	}
+
+	@And("User clicks on Data tab")
+	public void user_clicks_on_data_tab() {
+		openAppLibraryPage.clickOnDataTab();
+	}
+
+	@And("User selects the frame from the Selected Frame dropdown")
+	public void user_selects_the_frame_from_the_selected_frame_dropdown() {
+		openAppLibraryPage.selectFrame(frameID);
+	}
+
+//	@When("User drag and drop the following columns to respective fields:")
+//	public void user_drag_and_drop_the_following_columns_to_respective_fields(DataTable dataTable)
+//			throws InterruptedException {
+//		final String COLUMN_NAME = "COLUMN_NAME";
+//		final String FIELD_NAME = "FIELD_NAME";
+//		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+//
+//		for (Map<String, String> row : rows) {
+//			String columnName = row.get(COLUMN_NAME);
+//			String fieldName = row.get(FIELD_NAME);
+////			openAppLibraryPage.searchDatabaseColumns(columnName);
+////			Thread.sleep(3000);
+//			openAppLibraryPage.dragColumnToTargetField(columnName, fieldName);
+//			Thread.sleep(3000);
+//		}
+//	}
+
+	@When("User drag and drop the {string} columns to {string} fields")
+	public void user_drag_and_drop_the_columns_to_fields(String columnNames, String fieldNames)
+			throws InterruptedException {
+		String[] columnNameList = columnNames.split(", ");
+		String[] fielsNameList = fieldNames.split(", ");
+		for (int i = 0; i < columnNameList.length; i++) {
+			String columnName = columnNameList[i].trim();
+			String fieldName = fielsNameList[i].trim();
+			openAppLibraryPage.dragColumnToTargetField(columnName, fieldName);
+		}
+		Thread.sleep(10000);
+	}
+
 }
