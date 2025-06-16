@@ -72,6 +72,10 @@ public abstract class AbstractViewCatalogPageBase {
 	public void clickOnSubmit() {
 		AddCatalogPageBaseUtils.clickOnSubmit(page);
 	}
+	
+	public void clickOnClose() {
+		AddCatalogPageBaseUtils.clickOnClose(page);
+	}
 
 	public String verifyEditSuccessfullToastMessage() {
 		return AddCatalogPageBaseUtils.verifyEditSuccessfullToastMessage(page);

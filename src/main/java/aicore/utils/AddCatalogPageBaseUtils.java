@@ -20,6 +20,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
+	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
 
@@ -87,6 +88,10 @@ public class AddCatalogPageBaseUtils {
 
 	public static void clickOnSubmit(Page page) {
 		page.click(SUBMIT_BUTTON_XPATH);
+	}
+	
+	public static void clickOnClose(Page page) {
+		page.click(CLOSE_BUTTON_XPATH);
 	}
 
 	public static void waitForEditSuccessToastMessageToDisappear(Page page) {
