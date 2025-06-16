@@ -20,7 +20,16 @@ Feature: Add Database Using ZIP
     And User sees an example of "How to use in Java" with example code for Database
 
   @LoginWithAdmin
-  Scenario: View Database Overview
+  Scenario: View Database Tags
+    Given User sees the database name 'TestDatabase' in the database catalog
+    When User clicks on 'TestDatabase' in the database catalog
+    And User clicks on Edit button
+    And User add tags 'embeddings' and presses Enter
+    And User clicks on Submit button
+    Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
+    And User should see 'embeddings' on the page
+
+Scenario: View Database Overview
     And User clicks on 'TestDatabase' in the database catalog
     And User sees the database name as 'TestDatabase'
     And User can see 'copy Database ID' Database ID
@@ -28,10 +37,6 @@ Feature: Add Database Using ZIP
     When User can see toast message as 'Successfully copied ID'
     And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
     When User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
-    And User clicks on Submit button
-    Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
-    And User should see 'embeddings' on the page
     And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'

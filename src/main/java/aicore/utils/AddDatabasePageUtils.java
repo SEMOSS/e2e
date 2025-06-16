@@ -41,7 +41,6 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
 
-
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
 		page.getByLabel(ADD_DATABASE_BUTTON).click();
