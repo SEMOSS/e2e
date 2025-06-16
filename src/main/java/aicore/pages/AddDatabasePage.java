@@ -1,5 +1,7 @@
 package aicore.pages;
 
+import java.nio.file.Path;
+
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AddDatabasePageUtils;
@@ -66,8 +68,43 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		return AddDatabasePageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
 	}
 
+	public void verifyDatabaseName(String databaseName) {
+		AddDatabasePageUtils.verifyDatabaseName(page, databaseName);
+	}
+
+	public void verifyDatabaseID() {
+		AddDatabasePageUtils.verifyDatabaseID(page);
+	}
+
+	public void verifyDatabaseDescription(String databaseDescription) {
+		AddDatabasePageUtils.verifyDatabaseDescription(page, databaseDescription);
+	}
+
+	public Path clickOnExportButton() throws Exception {
+		return AddDatabasePageUtils.clickOnExportButton(page);
+	}
+
+	public void clickOnEditButton() {
+		AddDatabasePageUtils.clickOnEditButton(page);
+	}
+
+	public void searchFunctionCatalog(String catalogName) {
+		AddDatabasePageUtils.searchFunctionCatalog(page, catalogName);
+	}
+
+	public void selectFunctionFromSearchOptions(String catalogName) {
+		AddDatabasePageUtils.selectFunctionFromSearchOptions(page, catalogName);
+	}
+
 	public void clickDatabase(String databaseName) {
 		AddDatabasePageUtils.clickDatabase(page, databaseName);
 	}
 
+    public void clickOnMetaDataTab() {
+        AddDatabasePageUtils.clickOnMetadataTab(page);
+    }
+
+    public void verifyMetaData() {
+        AddDatabasePageUtils.verifyMetaData(page);
+    }
 }

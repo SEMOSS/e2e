@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
 import aicore.pages.HomePage;
+import aicore.pages.ViewCatalogPage;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -24,11 +25,14 @@ public class AddModelSteps {
 	protected static String timestamp;
 //	public static String timestamp = CommonUtils.getTimeStampName();;
 	private String expectedCatalogId;
+	private ViewCatalogPage viewCatalogPage;
 
 	public AddModelSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
+		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
+
 	}
 
 	@Given("User clicks on Open Model")
@@ -115,7 +119,7 @@ public class AddModelSteps {
 
 	@When("User clicks on Edit button")
 	public void user_clicks_on_edit_button() {
-		openModelPage.clickOnEditButton();
+		viewCatalogPage.clickEditIcon();
 	}
 
 	@When("User searches the {string} in the model catalog searchbox")
@@ -148,7 +152,7 @@ public class AddModelSteps {
 	public void user_add_tags_and_presses_enter(String tags) {
 		String[] tagsArray = tags.split(", ");
 		for (String tag : tagsArray) {
-			openModelPage.enterTagName(tag);
+			viewCatalogPage.enterTagName(tag);
 		}
 	}
 
@@ -178,9 +182,9 @@ public class AddModelSteps {
 
 	@Then("User can see a edit success toast message as {string}")
 	public void user_can_see_a_edit_success_toast_message_as(String expectedToastMessage) {
-		String actualToastMessage = openModelPage.verifyEditSuccessfullToastMessage();
+		String actualToastMessage = viewCatalogPage.verifyEditSuccessfullToastMessage();
 		Assertions.assertEquals(actualToastMessage, expectedToastMessage);
-		openModelPage.waitForEditSuccessToastMessageToDisappear();
+		viewCatalogPage.waitForEditSuccessToastMessageToDisappear();
 	}
 
 	@And("User should see description as {string} on the page")
@@ -237,7 +241,7 @@ public class AddModelSteps {
 
 	@When("User clicks on Submit button")
 	public void user_clicks_on_submit_button() {
-		openModelPage.clickOnSubmit();
+		viewCatalogPage.clickOnSubmit();
 	}
 
 //Edit SMSS

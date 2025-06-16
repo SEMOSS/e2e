@@ -1,8 +1,15 @@
 package aicore.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.slf4j.LoggerFactory;
+
+import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -14,12 +21,24 @@ public class AddDatabasePageUtils {
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CREATE_DATABASE_BUTTON_LABEL = "Create database";
+	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
 	private static final String COPY_ID_OPTION_TEXT = "Copy";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
 	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
 	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";
+	private static final String EDIT_BTN_XPATH = "EditRoundedIcon";
+	private static final String TAGS_XPATH = "//span[text()='Tag']/ancestor::fieldset/parent::div//input";
+	private static final String SUBMIT_BTN_XPATH = "//span[text()='Submit']";
+	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
+	private static final String EXPORT_BTN_XPATH = "Export";
+	private static final String EDIT_POPUP_XPATH = "//div[contains(text(),\"Edit\")]";
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
+	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
+	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
+	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
 
 	public static void clickAddDatabaseButton(Page page) {
@@ -69,6 +88,26 @@ public class AddDatabasePageUtils {
 		page.getByText(dbName).click();
 	}
 
+	public static void clickOnMetadataTab(Page page) {
+		page.getByText("Metadata").isVisible();
+		page.getByText("Metadata").click();
+	}
+
+	public static void verifyMetaData(Page page) {
+		Locator metadataTable = page.locator(METADATA_TABLE_XPATH);
+		int tableCount = metadataTable.count();
+		if (tableCount > 0) {
+			for (int i = 0; i < tableCount; i++) {
+				String metaDataContent = metadataTable.nth(i).textContent();
+				if (!metadataTable.nth(i).isVisible() || metaDataContent == null || metaDataContent.length() <= 1) {
+					throw new AssertionError("Metadata table is not present or does not contain valid content.");
+				}
+			}
+		} else {
+			throw new AssertionError("Metadata table is not present.");
+		}
+	}
+
 	public static boolean verifyDatabaseIsVisbileInCatalog(Page page, String dbName) {
 		boolean isFunctionVisible = page.getByText(dbName).isVisible();
 		return isFunctionVisible;
@@ -107,6 +146,60 @@ public class AddDatabasePageUtils {
 
 	public static boolean verifyCatalogDisplayedUnderBookmarkedSection(Page page, String catalogName) {
 		return page.locator(CATALOG_UNDER_BOOKMARKED_SECTION_XPATH.replace("{catalogName}", catalogName)).isVisible();
+	}
+
+	public static void verifyDatabaseName(Page page, String databaseName) {
+		page.locator(DATABASE_NAME_XPATH.replace("{DbName}", databaseName)).isVisible();
+	}
+
+	public static void verifyDatabaseID(Page page) {
+		page.getByText(DATABASE_ID_XPATH).isVisible();
+	}
+
+	public static void verifyDatabaseDescription(Page page, String databaseDescription) {
+		page.getByText(DATABASE_DESCRIPTION_XPATH.replace("{DatabaseDescription}", databaseDescription)).isVisible();
+	}
+
+	public static Path clickOnExportButton(Page page) throws IOException {
+		page.getByText(EXPORT_BTN_XPATH).isVisible();
+		Download download = page.waitForDownload(() -> {
+			page.getByText(EXPORT_BTN_XPATH).click();
+		});
+		Path downloadPath = download.path();
+		if (isZipFile(downloadPath)) {
+			logger.info("The downloaded file is a ZIP.");
+		} else {
+			logger.warn("The downloaded file is NOT a ZIP.");
+		}
+		return downloadPath;
+	}
+
+	public static boolean isZipFile(Path file) throws IOException {
+		try (InputStream is = Files.newInputStream(file)) {
+			byte[] signature = new byte[4];
+			is.read(signature);
+			return (signature[0] == 0x50 && signature[1] == 0x4B
+					&& (signature[2] == 0x03 || signature[2] == 0x05 || signature[2] == 0x07)
+					&& (signature[3] == 0x04 || signature[3] == 0x06 || signature[3] == 0x08));
+		}
+	}
+
+	public static void clickOnEditButton(Page page) {
+		page.getByTestId(EDIT_BTN_XPATH).isVisible();
+		page.getByTestId(EDIT_BTN_XPATH).click();
+		page.locator(EDIT_POPUP_XPATH).isVisible();
+
+	}
+
+	public static void searchFunctionCatalog(Page page, String catalogName) {
+		page.waitForSelector(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH);
+		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
+	}
+
+	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
+		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
+		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void clickDatabase(Page page, String databaseName) {

@@ -17,6 +17,19 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return AddFunctionPageUtils.verifyFunctionIsVisbileInCatalog(page, functionName);
 	}
 
+
+	public void searchFilterValue(String filterValue) {
+		AddFunctionPageUtils.searchFilterValue(page, filterValue);
+	}
+
+	public void selectFilterValue(String filterCategory, String filterValue) {
+		AddFunctionPageUtils.selectFilterValue(page, filterCategory, filterValue);
+	}
+ 
+	public void clickOnSettings() {
+		AddFunctionPageUtils.clickOnSettings(page);
+	}
+  
 	public void clickOnMakeDiscoverableButton() {
 		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page);
 	}
@@ -88,7 +101,6 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
 	public String enterFilePath(String fileName) {
 		return AddFunctionPageUtils.enterFilePath(page, fileName);
-
 	}
 
 	public String verifyFunctionNameInCatalog(String catalogName) {
@@ -121,8 +133,15 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return Toast_message;
 	}
 
-	public boolean verifyMissingInputField() {
+  public boolean verifyMissingInputField() {
 		return AddFunctionPageUtils.verifyMissingInputField(page);
 	}
 
+	public void searchFunctionCatalog(String catalogName) {
+		AddFunctionPageUtils.searchFunctionCatalog(page, catalogName);
+	}
+
+	public void selectFunctionFromSearchOptions(String catalogName) {
+		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, catalogName);
+	}
 }
