@@ -220,7 +220,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	public void user_sees_change_access_button() {
 		boolean flag = storagePage.verifyChangeAccessButton();
 	}
-	
+
 	@Then("User click on cancel button")
 	public void user_click_on_cancel_button() {
 		storagePage.clickOnCancelButton();
@@ -239,5 +239,34 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@Then("User selects the {string} from the storage catalog")
 	public void user_selects_the_from_the_storage_catalog(String catalogName) {
 		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
+	}
+
+	@When("User enters Path Prefix as {string}")
+	public void User_enters_Path_Prefix_as(String pathPrefix) {
+		storagePage.enterLocalPathPrefix(pathPrefix);
+	}
+
+	@Then("User clicks on Settings Tab for storage")
+	public void user_clicks_on_settings_tab_for_storage() {
+		storagePage.clickOnSettingsTab();
+	}
+
+	@Then("User clicks on Delete button for storage")
+	public void user_clicks_on_delete_button_for_storage() {
+		storagePage.clickOnDeleteButton();
+		storagePage.clickOnDeleteConfirmationButton();
+	}
+
+	@Then("User sees deleted storage success toast message {string}")
+	public void user_sees_deleted_storage_success_toast_message(String toastMessage) {
+		String expectedMessage = storagePage.verifyDeleteToastMessage();
+		String actualMessage = toastMessage;
+		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
+	}
+
+	@When("User clicks on created storage {string}")
+	public void User_clicks_on_created_storage(String storageName) {
+		storageName = storageName + timestamp;
+		storagePage.clickOnCreatedStorage(storageName);
 	}
 }
