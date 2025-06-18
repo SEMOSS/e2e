@@ -133,4 +133,24 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.clickOnSettingsTab(page);
 	}
 
+	public void enterLocalPathPrefix(String path) {
+		StoragePageUtils.enterLocalPathPrefix(page, path);
+	}
+
+	public void clickOnDeleteButton() {
+		StoragePageUtils.clickOnDeleteButton(page);
+	}
+
+	public void clickOnDeleteConfirmationButton() {
+		StoragePageUtils.clickOnDeleteConfirmationButton(page);
+	}
+
+	public String verifyDeleteToastMessage() {
+		return StoragePageUtils.verifyDeleteToastMessage(page);
+	}
+
+	public void clickOnCreatedStorage(String storageName) {
+		 StoragePageUtils.clickOnCreatedStorage(page, storageName);
+	}
+
 }
