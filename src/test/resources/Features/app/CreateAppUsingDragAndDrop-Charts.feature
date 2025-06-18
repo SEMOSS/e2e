@@ -22,7 +22,8 @@ Feature: Create drag and drop app
     And User clicks on app Edit button
     And User clicks on Blocks if it is not selected by default
 
-  Scenario Outline: Drag and Drop Scatter plot block
+  @DeleteCreatedCatalog
+  Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     When User clicks on Notebook
     And User clicks on Create new notebook
     And User enters New Query name as '<NOTEBOOK_NAME>'
@@ -43,10 +44,16 @@ Feature: Create drag and drop app
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown
     And User drag and drop the '<COLUMN_NAMES>' columns to '<FIELD_NAMES>' fields
+    Then User can see '<BLOCK_NAME>' chart same as baseline image
+    When User clicks on the Save App icon
+    And User navigates to Home page
+    And User clicks on Open Database
+    Then User sees the database name 'TestDatabase' in the database catalog
+    When User clicks on the database name 'TestDatabase' in the database catalog
 
     Examples: 
-      | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES            | FIELD_NAMES                                  |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot | Age, BloodPressure, BMI, Glucose | Select Label, Select X Axis, Select Y Axis, Select Tooltip |
-      #| Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart   | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
-      #| Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart    | Age, BloodPressure               | Select X Axis, Select Y Axis                               |
-      #| Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI | Select X Axis, Select Y Axis, Select Tooltip |
+      | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                     | FIELD_NAMES                                                |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose | Select Label, Select X Axis, Select Y Axis, Select Tooltip |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure               | Select X Axis, Select Y Axis                               |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |

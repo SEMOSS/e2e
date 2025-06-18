@@ -1,5 +1,8 @@
 package aicore.utils;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
@@ -44,6 +47,7 @@ public class AppLibraryPageUtils {
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
+	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	// Block settings for Text elements
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
@@ -53,10 +57,11 @@ public class AppLibraryPageUtils {
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
-	// Block settings for Scatter plot
+	// Block settings for charts
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
+	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
 	// Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
@@ -69,7 +74,7 @@ public class AppLibraryPageUtils {
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
-	private static final String SELECT_FRAME_ID = "Echart-Frame";
+	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
@@ -146,7 +151,7 @@ public class AppLibraryPageUtils {
 		page.mouse().up();
 	}
 
-	public static void mouseHoverOnTextSectionBlock(Page page, String blockName) {
+	public static void mouseHoverOnBlock(Page page, String blockName) {
 		boolean isValidBlock = true;
 		switch (blockName) {
 		case "Text (h1)":
@@ -250,7 +255,6 @@ public class AppLibraryPageUtils {
 		String[] textStyle = textStyles.split(", ");
 		for (String style : textStyle) {
 			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim()).setExact(true)).click();
-//			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(style.trim())).click();
 		}
 	}
 
@@ -415,7 +419,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void deleteFirstCell(Page page) {
-		page.getByTestId("DeleteIcon").first().click();
+		page.getByTestId(DELETE_CELL_DATA_TESTID).first().click();
 	}
 
 	public static void clickOnRunCellButton(Page page) {
@@ -435,7 +439,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void selectFrame(Page page, String frameId) {
-		Locator selectFrame = page.getByPlaceholder("Select frame");
+		Locator selectFrame = page.getByPlaceholder(SEARCH_FRAME_PLACEHOLDER);
 		selectFrame.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		selectFrame.click();
 		selectFrame.fill(frameId);
@@ -444,29 +448,36 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void dragColumnToTargetField(Page page, String columnName, String targetField) {
-		// ---scroll to column---
+		// scroll to column
 		Locator sourceLocator = page.locator(DRAG_COLUMN_NAME_XPATH.replace("{columnName}", columnName));
 		sourceLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		sourceLocator.scrollIntoViewIfNeeded();
-		// ---Grab column---
+		// Grab column
 		sourceLocator.hover();
 		BoundingBox source = sourceLocator.boundingBox();
 		page.mouse().move(source.x + source.width / 2, source.y + source.height / 2);
 		page.mouse().down();
 		page.waitForTimeout(300);
-		// ---scroll to target filed---
+		// scroll to target filed
 		Locator targetLocator = page.locator(DROP_FIELD_XPATH.replace("{fieldName}", targetField)).first();
 		targetLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		targetLocator.scrollIntoViewIfNeeded();
-		// ---refresh drag coordinates after scrolling
+		// refresh drag coordinates after scrolling
 		source = sourceLocator.boundingBox();
 		page.mouse().move(source.x + source.width / 2, source.y + source.height / 2);
 		page.waitForTimeout(300);
-		// --drop column to target filed--
+		// drop column to target filed--
 		BoundingBox target = targetLocator.boundingBox();
 		page.mouse().move(target.x + (target.width / 2), (target.y + target.height / 2),
 				new Mouse.MoveOptions().setSteps(10));
 		page.mouse().up();
 		page.waitForTimeout(300);
+	}
+
+	public static void takeChartScreenshot(Page page, String actualImagePath) {
+		Locator chart = page.locator(CHART_XPATH);
+		Path path = Paths.get(actualImagePath);
+		page.waitForTimeout(2000);
+		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
 }

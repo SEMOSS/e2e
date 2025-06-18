@@ -57,7 +57,7 @@ Feature: Create drag and drop app
     And User enters New Query name as 'Test query'
     And User clicks on query Submit button
     And User enters code as 'print("Hello word")'
-    And User clicks on Run this cell and below icon
+    And User clicks on Run cell button
     Then User can see code output as 'Hello word'
     And User clicks on Blocks
     And User clicks on 'page-1' page
@@ -65,4 +65,4 @@ Feature: Create drag and drop app
     And User clicks on the Block Settings option
     And User selects 'Test query' from the Query dropdown
     And User clicks on the Save App icon
-    Then User should see the 'Logs' text as 'Hello word' 
+    Then User should see the 'Logs' text as 'Hello word'

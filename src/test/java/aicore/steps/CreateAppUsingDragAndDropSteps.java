@@ -113,7 +113,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
-		openAppLibraryPage.mouseHoverOnTextSectionBlock(blockName);
+		openAppLibraryPage.mouseHoverOnBlock(blockName);
 		openAppLibraryPage.blockDropPosition();
 	}
 
@@ -342,26 +342,8 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.selectFrame(frameID);
 	}
 
-//	@When("User drag and drop the following columns to respective fields:")
-//	public void user_drag_and_drop_the_following_columns_to_respective_fields(DataTable dataTable)
-//			throws InterruptedException {
-//		final String COLUMN_NAME = "COLUMN_NAME";
-//		final String FIELD_NAME = "FIELD_NAME";
-//		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-//
-//		for (Map<String, String> row : rows) {
-//			String columnName = row.get(COLUMN_NAME);
-//			String fieldName = row.get(FIELD_NAME);
-////			openAppLibraryPage.searchDatabaseColumns(columnName);
-////			Thread.sleep(3000);
-//			openAppLibraryPage.dragColumnToTargetField(columnName, fieldName);
-//			Thread.sleep(3000);
-//		}
-//	}
-
 	@When("User drag and drop the {string} columns to {string} fields")
-	public void user_drag_and_drop_the_columns_to_fields(String columnNames, String fieldNames)
-			throws InterruptedException {
+	public void user_drag_and_drop_the_columns_to_fields(String columnNames, String fieldNames) {
 		String[] columnNameList = columnNames.split(", ");
 		String[] fielsNameList = fieldNames.split(", ");
 		for (int i = 0; i < columnNameList.length; i++) {
@@ -369,7 +351,19 @@ public class CreateAppUsingDragAndDropSteps {
 			String fieldName = fielsNameList[i].trim();
 			openAppLibraryPage.dragColumnToTargetField(columnName, fieldName);
 		}
-		Thread.sleep(10000);
+	}
+
+	@Then("User can see {string} chart same as baseline image")
+	public void user_can_see_chart_same_as_baseline_image(String chartName) throws Exception {
+		String removeSpace = chartName.replace(" ", "");
+		String folderName = Character.toLowerCase(removeSpace.charAt(0)) + removeSpace.substring(1);
+		final String actualImagePath = "target/screenshots/" + folderName + "/actualChart.png";
+		final String expectedImagePath = "target/screenshots/" + folderName + "/expectedChart.png";
+		final String diffImagePath = "target/screenshots/" + folderName + "/diffChart.png";
+		openAppLibraryPage.takeChartScreenshot(actualImagePath);
+
+		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
+		Assertions.assertTrue(imagesMatches, "Images do not match");
 	}
 
 }

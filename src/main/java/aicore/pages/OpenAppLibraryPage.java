@@ -80,8 +80,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.blockDropPosition(page);
 	}
 
-	public void mouseHoverOnTextSectionBlock(String blockName) {
-		AppLibraryPageUtils.mouseHoverOnTextSectionBlock(page, blockName);
+	public void mouseHoverOnBlock(String blockName) {
+		AppLibraryPageUtils.mouseHoverOnBlock(page, blockName);
 	}
 
 	public String verifyHeadingBlockTextMessage() {
@@ -248,11 +248,11 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.selectFrame(page, frameId);
 	}
 
-//	public void searchDatabaseColumns(String columnName) {
-//		AppLibraryPageUtils.searchDatabaseColumns(page, columnName);
-//	}
-
 	public void dragColumnToTargetField(String columnName, String targetField) {
 		AppLibraryPageUtils.dragColumnToTargetField(page, columnName, targetField);
+	}
+
+	public void takeChartScreenshot(String actualImagePath) {
+		AppLibraryPageUtils.takeChartScreenshot(page, actualImagePath);
 	}
 }
