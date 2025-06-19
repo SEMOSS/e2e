@@ -114,8 +114,8 @@ public class SettingsMyProfileSteps {
 		}
 	}
 
-	@Then("User clicks on Close button")
-	public void user_clicks_on_close_button() {
+	@Then("User clicks on Cancel button")
+	public void user_clicks_on_cancel_button() {
 		settings.clickOnCancelButton();
 	}
 

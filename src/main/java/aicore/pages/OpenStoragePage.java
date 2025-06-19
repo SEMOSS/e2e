@@ -90,4 +90,67 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.enterValuesInField(page, fieldname, fieldValue, timestamp);
 	}
 
+	public void viewStorageIDalongwithCopyIcon() {
+		StoragePageUtils.viewStorageIDalongwithCopyIcon(page);
+	}
+
+	public void clickCopyIcon() {
+		StoragePageUtils.clickCopyIcon(page);
+	}
+
+	public void verifyToastMessage(String toastMessage) {
+		StoragePageUtils.verifyToastMessage(page, toastMessage);
+	}
+
+	public void verifyStorageDescription(String storageDescription) {
+		StoragePageUtils.verifyToastMessage(page, storageDescription);
+	}
+
+	public void verifyEmbeddedTags(String tag, String toastMessage) {
+		StoragePageUtils.verifyEmbeddedTags(page, tag, toastMessage);
+	}
+
+	public void verifyPublishedByInfo() {
+		StoragePageUtils.verifyPublishedByInfo(page);
+	}
+
+	public boolean verifyChangeAccessButton() {
+		return StoragePageUtils.verifyChangeAccessButton(page);
+	}
+
+	public String verifyExpectedTime() {
+		return StoragePageUtils.verifyExpectedTime(page);
+	}
+
+	public boolean verifyActualTime(String time) {
+		return StoragePageUtils.verifyActualTime(page, time);
+	}
+	public void clickOnCancelButton() {
+		StoragePageUtils.clickOnCancelButton(page);
+	}
+
+	public void clickOnSettingsTab() {
+		StoragePageUtils.clickOnSettingsTab(page);
+	}
+
+	public void enterLocalPathPrefix(String path) {
+		StoragePageUtils.enterLocalPathPrefix(page, path);
+	}
+
+	public void clickOnDeleteButton() {
+		StoragePageUtils.clickOnDeleteButton(page);
+	}
+
+	public void clickOnDeleteConfirmationButton() {
+		StoragePageUtils.clickOnDeleteConfirmationButton(page);
+	}
+
+	public String verifyDeleteToastMessage() {
+		return StoragePageUtils.verifyDeleteToastMessage(page);
+	}
+
+	public void clickOnCreatedStorage(String storageName) {
+		 StoragePageUtils.clickOnCreatedStorage(page, storageName);
+	}
+
 }

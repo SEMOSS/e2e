@@ -15,7 +15,7 @@ public class JobPageUtils {
 	private static final String EDIT_TAGS_XPATH = "//span[text()='Tags']/ancestor::fieldset/parent::div//input";
 	private static final String ADDED_TAG_XPATH = "//div[contains(text(),'{jobName}')]/following-sibling::div//div//span[text()='{textValue}']";
 	private static final String DELETE_ICON_XPATH = "//div[contains(text(),'{jobName}')]/following-sibling::div//*[name()='svg'][@data-testid='DeleteIcon']";
-	private static final String DELETE_JOB_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted UNSCHEDULE_JOB']";
+	private static final String DELETE_JOB_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted all selected jobs']";
 	private static final String CHECKBOX_XPATH = "//div[contains(text(),'{jobName}')]/preceding-sibling::div[@role=\"gridcell\"]";
 	private static final String JOB_CHECKBOX_XPATH = "//div[@data-field='name' and normalize-space(text()) = '{JobName}']/ancestor::div[@role='row']//input[@type='checkbox']";
 	private static final String JOB_STATUS_CHECK_XPATH = "//div[@role='rowgroup']//div[@role='row'][.//div[@data-field='name' and normalize-space(text())='{JobName}']]//div[@data-field='isActive']";

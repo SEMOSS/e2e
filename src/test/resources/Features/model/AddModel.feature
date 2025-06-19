@@ -67,7 +67,7 @@ Feature: Add Model
     And User should see '<DATA_RESTRICTIONS>' in the overview Data restrictions section
 
     Examples: 
-      | MODEL_NAME | DETAILS       | DESCRIPTION                | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
+      | MODEL_NAME               | DETAILS       | DESCRIPTION                | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
       | Model      | GPT-3.5 model | This is GPT-3.5 test model | embeddings, Test1, Test2, Test3 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
   Scenario: Validate Model Catalog ID in Usage commands
@@ -75,9 +75,9 @@ Feature: Add Model
     When User copies the model catalog ID below the title using copy icon
     And User clicks on Usage tab
     When User copies code contents and validate model catalog Id occurences in sections:
-      | SECTIONS                              | EXPECTED_MODEL_ID_COUNT |
-      | How to use in Javascript              |                       3 |
-      | How to use in Python                  |                       1 |
-      | How to use with Langchain API         |                       1 |
-      | How to use externally with OpenAI API |                       3 |
-      | How to use in Java                    |                       1 |
+      | SECTIONS                                                 | EXPECTED_MODEL_ID_COUNT |
+      | How to use in Javascript                                 |                       3 |
+      | How to use in Python                                     |                       1 |
+      | How to use with Langchain API                            |                       1 |
+      | How to use externally with OpenAI API and our Python SDK |                       3 |
+      | How to use in Java                                       |                       1 |

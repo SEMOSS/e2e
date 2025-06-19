@@ -18,7 +18,7 @@ Feature: Job Management
 
   Scenario: Delete Job
     When User clicks on Delete Icon for added 'Test Job'
-    Then User sees delete job toast message as 'Successfully deleted UNSCHEDULE_JOB'
+    Then User sees delete job toast message as 'Successfully deleted all selected jobs'
 
   Scenario: Run Job
     When User selects the checkbox next to 'Test Job'

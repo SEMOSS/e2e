@@ -1,13 +1,16 @@
 package aicore.steps;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.CatalogPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
+import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
@@ -22,12 +25,16 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	private OpenStoragePage storagePage;
 	protected static String timestamp;
 	private ViewUsagePage viewUsagePage;
+	private ViewCatalogPage viewCatalogPage;
+	private CatalogPage catalogPage;
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
+		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
+		catalogPage = new CatalogPage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Storage engine")
@@ -93,13 +100,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	public void user_can_see_create_storage_success_toast_message_as(String expectedMessage) {
 		String actualMessage = storagePage.verifyStorageCreatedToastMessage();
 		Assertions.assertEquals(actualMessage, expectedMessage, "Storage creation is failed");
-	}
-
-	@Then("User can see the Storage title as {string}")
-	public void user_can_see_the_storage_title_as(String storageTitle) {
-		String actualTitle = storagePage.verifyStorageTitle(storageTitle + timestamp);
-		String expectedTitle = storageTitle + timestamp;
-		Assertions.assertEquals(actualTitle, expectedTitle, "Storage title is not matching");
 	}
 
 	@Then("User can see storage name in {string} field as {string} in SMSS properties")
@@ -173,4 +173,100 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		viewUsagePage.verifyExample(example);
 	}
 
+	@Then("User can see the Storage title as {string}")
+	public void user_can_see_the_storage_title_as(String storageTitle) {
+		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle);
+	}
+
+	@Then("User can see {string} Storage ID along with copy icon")
+	public void user_can_see_storage_id_along_with_copy_icon(String catalogID) {
+		boolean flag = viewCatalogPage.verifyCatalogID(catalogID);
+		Assertions.assertTrue(flag, "storage ID is not visible");
+	}
+
+	@Then("User clicks on copy icon of Storage ID")
+	public void user_clicks_on_copy_icon_of_storage_id() {
+		viewCatalogPage.clickCopyIcon();
+	}
+
+	@When("User can see toast message as {string}")
+	public void user_can_see_toast_message_as(String toastMessage) {
+		boolean flag = viewCatalogPage.verifyCopyToastMessage(toastMessage);
+		Assertions.assertTrue(flag, "copy message is not visible");
+	}
+
+	@Then("User can see {string} as storage description")
+	public void user_can_see_as_storage_description(String storageDescription) {
+		boolean flag = viewCatalogPage.verifyCatalogDescription(storageDescription);
+		Assertions.assertTrue(flag, "storage description is not visible");
+	}
+
+	@When("User sees {string} tags have been added to the Overview and Usage tab and sees toast message as {string}")
+	public void user_sees_tags_have_been_added_to_the_overview_and_usage_tab_and_sees_toast_message_as(String tag,
+			String toastMessage) {
+		storagePage.verifyEmbeddedTags(tag, toastMessage);
+	}
+
+	@Then("User can see last updated info")
+	public void user_can_see_last_updated_info() throws IOException {
+		String expected = storagePage.verifyExpectedTime();
+		System.out.println(expected);
+		boolean timeflag = storagePage.verifyActualTime(expected);
+		System.out.println(timeflag);
+		Assertions.assertTrue(timeflag, "actual and expected time are not matching");
+	}
+
+	@Then("User sees Change Access button")
+	public void user_sees_change_access_button() {
+		boolean flag = storagePage.verifyChangeAccessButton();
+	}
+
+	@Then("User click on cancel button")
+	public void user_click_on_cancel_button() {
+		storagePage.clickOnCancelButton();
+	}
+
+	@Given("{string} user clicks on Settings of Storage")
+	public void user_clicks_on_settings_of_storage(String string) {
+		storagePage.clickOnSettingsTab();
+	}
+
+	@Then("User searches the {string} in the storage Catalog searchbox")
+	public void user_searches_the_in_the_storage_catalog_searchbox(String catalogName) {
+		catalogPage.searchCatalog(catalogName, timestamp);
+	}
+
+	@Then("User selects the {string} from the storage catalog")
+	public void user_selects_the_from_the_storage_catalog(String catalogName) {
+		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
+	}
+
+	@When("User enters Path Prefix as {string}")
+	public void User_enters_Path_Prefix_as(String pathPrefix) {
+		storagePage.enterLocalPathPrefix(pathPrefix);
+	}
+
+	@Then("User clicks on Settings Tab for storage")
+	public void user_clicks_on_settings_tab_for_storage() {
+		storagePage.clickOnSettingsTab();
+	}
+
+	@Then("User clicks on Delete button for storage")
+	public void user_clicks_on_delete_button_for_storage() {
+		storagePage.clickOnDeleteButton();
+		storagePage.clickOnDeleteConfirmationButton();
+	}
+
+	@Then("User sees deleted storage success toast message {string}")
+	public void user_sees_deleted_storage_success_toast_message(String toastMessage) {
+		String expectedMessage = storagePage.verifyDeleteToastMessage();
+		String actualMessage = toastMessage;
+		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
+	}
+
+	@When("User clicks on created storage {string}")
+	public void User_clicks_on_created_storage(String storageName) {
+		storageName = storageName + timestamp;
+		storagePage.clickOnCreatedStorage(storageName);
+	}
 }

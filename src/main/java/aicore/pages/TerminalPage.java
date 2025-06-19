@@ -59,7 +59,7 @@ public class TerminalPage {
 		page.locator(FILEDATE_XPATH).isVisible();
 		String fileDate = page.locator(FILEDATE_XPATH).textContent();
 		String dateOfFile = fileDate.replace("\"", "");
-		String[] actualFileDate = CommonUtils.splitStringBySpace(dateOfFile);
+		String[] actualFileDate = CommonUtils.splitStringBySpace(dateOfFile,0);
 		return actualFileDate[0];
 	}
 }

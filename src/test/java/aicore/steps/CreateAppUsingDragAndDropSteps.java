@@ -1,11 +1,10 @@
 package aicore.steps;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -86,8 +85,8 @@ public class CreateAppUsingDragAndDropSteps {
 //		openAppLibraryPage.navigateToHomePageFromAppEditPage();
 //	}
 
-	@When("User navigates to Home page")
-	public void user_navigate_to_home_page() {
+	@When("User is on Home page")
+	public void user_is_on_home_page() {
 		openAppLibraryPage.navigatesToHomePage();
 	}
 

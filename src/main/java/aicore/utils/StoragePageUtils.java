@@ -1,5 +1,9 @@
 package aicore.utils;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -20,6 +24,27 @@ public class StoragePageUtils {
 	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-textField-S3_BUCKET";
 	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_SECRET_KEY";
+	private static final String VIEW_STORAGE_XPATH = "//button[@aria-label=\"copy Storage ID\"]/parent::span";
+	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
+	private static final String STORAGE_DESCRIPTION_XPATH = "//h6[text()='{StorageDescription}']";
+	private static final String OVERVIEW_TAB_XPATH = "//button[text()='Overview']";
+	private static final String EDIT_BTN_XPATH = "//span[text()='Edit']";
+	private static final String TAGS_XPATH = "//span[text()='Tag']/ancestor::fieldset/parent::div//input";
+	private static final String SUBMIT_BTN_XPATH = "//span[text()='Submit']";
+	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
+	private static final String DATE_LAST_UPDATED_XPATH = "//p[contains(text(),'{User}]";
+	private static final String PUBLISHED_BY_INFO_XPATH = "//p[text()='Published by:']";
+	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='Change Access']";
+	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
+	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
+	private static final String CANCEL_BUTTON_XPATH = "//button[span[text()='Cancel']]";
+	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
+	private static final String LOCAL_PATH_PREFIX_DATATESTID = "importForm-textField-PATH_PREFIX";
+	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Storage";
+	private static final String STORAGE_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
@@ -28,6 +53,7 @@ public class StoragePageUtils {
 	public static void selectStorage(Page page, String storageName) {
 		Locator locator = page.locator("p", new Page.LocatorOptions().setHasText(storageName));
 		locator.click();
+		page.waitForLoadState();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
@@ -181,6 +207,84 @@ public class StoragePageUtils {
 			System.out.println("Invalid Field name" + fieldName);
 		}
 		fieldLocator.fill(fieldValue);
+	}
+
+	public static void viewStorageIDalongwithCopyIcon(Page page) {
+		page.locator(VIEW_STORAGE_XPATH).isVisible();
+		page.locator(COPY_ID_ICON_XPATH).isVisible();
+	}
+
+	public static void clickCopyIcon(Page page) {
+		page.locator(COPY_ID_ICON_XPATH).click();
+	}
+
+	public static void verifyToastMessage(Page page, String toastMessage) {
+		page.getByText(COPY_TOAST_MESSAGE_XPATH.replace("{ToastMessage}", toastMessage)).isVisible();
+	}
+
+	public static void verifyStorageDescription(Page page, String storageDescription) {
+		page.getByText(STORAGE_DESCRIPTION_XPATH.replace("{StorageDescription}", storageDescription)).isVisible();
+	}
+
+	public static void verifyEmbeddedTags(Page page, String tag, String toastMessage) {
+		page.getByText(OVERVIEW_TAB_XPATH).isVisible();
+		page.locator(EDIT_BTN_XPATH).click();
+		page.locator(TAGS_XPATH).fill(tag);
+		page.keyboard().press("Enter");
+		page.locator(SUBMIT_BTN_XPATH).click();
+		page.getByText(EMBEDDED_TOAST_MESSAGE_XPATH.replace("{ToastMessage}", toastMessage)).isVisible();
+	}
+
+	public static String verifyExpectedTime(Page page) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		return ZonedDateTime.now(ZoneId.of("UTC")).format(formatter);
+	}
+
+	public static boolean verifyActualTime(Page page, String time) {
+		return page.locator(CURRENT_DATE_XPATH.replace("{Time}", time)).isVisible();
+	}
+
+	public static void verifyPublishedByInfo(Page page) {
+		page.getByText(PUBLISHED_BY_INFO_XPATH).isVisible();
+	}
+
+	public static boolean verifyChangeAccessButton(Page page) {
+		return page.getByText(CHANGE_ACCESS_BUTTON_XPATH).isVisible();
+	}
+	
+	public static void clickOnCancelButton(Page page) {
+		page.click(CANCEL_BUTTON_XPATH);
+	}
+
+	public static void clickOnSettingsTab(Page page) {
+		page.click(SETTINGS_TAB_XPATH);
+	}
+	public static void enterLocalPathPrefix(Page page, String path) {
+		page.getByTestId(LOCAL_PATH_PREFIX_DATATESTID).fill(path);
+	}
+
+	public static void clickOnCreatedStorage(Page page, String storageName) {
+		page.locator(STORAGE_CARD_XPATH.replace("{catalogName}", storageName)).isVisible();
+		page.locator(STORAGE_CARD_XPATH.replace("{catalogName}", storageName)).click();
+	}
+
+	public static void clickOnDeleteButton(Page page) {
+		page.locator(DELETE_BUTTON_XPATH).isVisible();
+		page.locator(DELETE_BUTTON_XPATH).click();
+	}
+
+	public static void clickOnDeleteConfirmationButton(Page page) {
+		page.locator(CONFIRMATION_POPUP_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).isVisible();
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+	}
+
+	public static String verifyDeleteToastMessage(Page page) {
+		page.getByText(DELETE_TOAST_MESSAGE)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
+		return toastMessage;
 	}
 
 }

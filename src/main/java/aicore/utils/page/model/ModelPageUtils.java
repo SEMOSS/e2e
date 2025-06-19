@@ -1,16 +1,9 @@
 package aicore.utils.page.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
-
-import aicore.utils.AICorePageUtils;
-import aicore.utils.CommonUtils;
-import aicore.utils.ConfigUtils;
 
 public class ModelPageUtils {
 
@@ -35,14 +28,13 @@ public class ModelPageUtils {
 	public static void selectModel(Page page, String modelName) {
 		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
 	}
-	
+
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
 	}
 
-	public static void enterCatalogName(Page page, String CatalogName, String timestamp) {
-		String uniqueCatalogName = CatalogName + timestamp;
-		page.fill(CATALOG_NAME_XPATH, uniqueCatalogName);
+	public static void enterCatalogName(Page page, String catalogName) {
+		page.fill(CATALOG_NAME_XPATH, catalogName);
 	}
 
 	public static void enterOpenAIKey(Page page, String openAIKey) {
@@ -68,9 +60,8 @@ public class ModelPageUtils {
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
-	public static String verifyModelTitle(Page page, String modelTitle, String timestamp) {
-		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING,
-				new Page.GetByRoleOptions().setName(modelTitle + timestamp));
+	public static String verifyModelTitle(Page page, String modelTitle) {
+		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(modelTitle));
 		actualmodelTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return actualmodelTitle.textContent().trim();
 	}
@@ -79,8 +70,7 @@ public class ModelPageUtils {
 		page.click(SMSS_TAB_XPATH);
 	}
 
-	public static String getExpectedCatalogTitle(String modelTitle, String timestamp) {
-		String expTitle = modelTitle + timestamp;
+	public static String getExpectedCatalogTitle(String expTitle) {
 		return expTitle;
 	}
 
