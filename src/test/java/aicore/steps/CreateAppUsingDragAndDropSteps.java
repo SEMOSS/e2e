@@ -353,17 +353,16 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-	@Then("User can see {string} chart same as baseline image")
-	public void user_can_see_chart_same_as_baseline_image(String chartName) throws Exception {
+	@Then("User can see {string} chart same as baseline chart")
+	public void user_can_see_chart_same_as_baseline_chart(String chartName) throws Exception {
 		String removeSpace = chartName.replace(" ", "");
 		String folderName = Character.toLowerCase(removeSpace.charAt(0)) + removeSpace.substring(1);
 		final String actualImagePath = "target/screenshots/" + folderName + "/actualChart.png";
 		final String expectedImagePath = "target/screenshots/" + folderName + "/expectedChart.png";
 		final String diffImagePath = "target/screenshots/" + folderName + "/diffChart.png";
 		openAppLibraryPage.takeChartScreenshot(actualImagePath);
-
 		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
-		Assertions.assertTrue(imagesMatches, "Images do not match");
+		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}
 
 }

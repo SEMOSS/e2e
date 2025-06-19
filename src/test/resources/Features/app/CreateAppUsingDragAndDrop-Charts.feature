@@ -44,7 +44,7 @@ Feature: Create drag and drop app
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown
     And User drag and drop the '<COLUMN_NAMES>' columns to '<FIELD_NAMES>' fields
-    Then User can see '<BLOCK_NAME>' chart same as baseline image
+    Then User can see '<BLOCK_NAME>' chart same as baseline chart
     When User clicks on the Save App icon
     And User navigates to Home page
     And User clicks on Open Database
