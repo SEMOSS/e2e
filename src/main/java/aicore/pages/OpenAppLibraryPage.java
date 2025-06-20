@@ -1,5 +1,7 @@
 package aicore.pages;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
@@ -254,5 +256,9 @@ public class OpenAppLibraryPage {
 
 	public void takeChartScreenshot(String actualImagePath) {
 		AppLibraryPageUtils.takeChartScreenshot(page, actualImagePath);
+	}
+
+	public List<String> checkColumnNamesOnUI() {
+		return AppLibraryPageUtils.checkColumnNamesOnUI(page);
 	}
 }

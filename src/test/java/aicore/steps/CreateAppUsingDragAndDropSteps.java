@@ -1,10 +1,11 @@
 package aicore.steps;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -364,4 +365,10 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}
 
+	@Then("User can see {string} columns under the fields column")
+	public void user_can_see_columns_under_the_fields_column(String columnNames) {
+		List<String> expectedColumns = Arrays.asList(columnNames.split(", "));
+		List<String> uiColumns = openAppLibraryPage.checkColumnNamesOnUI();
+		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
+	}
 }

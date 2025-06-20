@@ -2,6 +2,7 @@ package aicore.utils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
@@ -72,6 +73,7 @@ public class AppLibraryPageUtils {
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='button']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
+	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'MuiTable-root')]//tbody//tr[position()>1]//td[2]";
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
@@ -144,10 +146,8 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void blockDropPosition(Page page) {
-		BoundingBox targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH).boundingBox();
-		double dropX = targetBox.x + (targetBox.width / 2); // Center X position
-		double dropY = targetBox.y + targetBox.height;// + 10; // Below target (+10 for margin)
-		page.mouse().move(dropX, dropY, new Mouse.MoveOptions().setSteps(10)); // Slow movement
+		Locator targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH);
+		moveMouseToCenterWithMargin(page, targetBox, 0, 10);
 		page.mouse().up();
 	}
 
@@ -389,10 +389,8 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void mouseHoverOnNotebookHiddenOptions(Page page) {
-		BoundingBox targetBox = page.locator(CODE_ENTER_TEXTAREA).boundingBox();
-		double dropX = targetBox.x + (targetBox.width / 2);
-		double dropY = targetBox.y + targetBox.height + 80;
-		page.mouse().move(dropX, dropY, new Mouse.MoveOptions().setSteps(10));
+		Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
+		moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
 	}
 
 	public static void clickOnHiddenNotebookOption(Page page, String optionName) {
@@ -454,22 +452,18 @@ public class AppLibraryPageUtils {
 		sourceLocator.scrollIntoViewIfNeeded();
 		// Grab column
 		sourceLocator.hover();
-		BoundingBox source = sourceLocator.boundingBox();
-		page.mouse().move(source.x + source.width / 2, source.y + source.height / 2);
+		moveMouseToCenter(page, sourceLocator, 0);
 		page.mouse().down();
 		page.waitForTimeout(300);
 		// scroll to target filed
 		Locator targetLocator = page.locator(DROP_FIELD_XPATH.replace("{fieldName}", targetField)).first();
 		targetLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		targetLocator.scrollIntoViewIfNeeded();
-		// refresh drag coordinates after scrolling
-		source = sourceLocator.boundingBox();
-		page.mouse().move(source.x + source.width / 2, source.y + source.height / 2);
 		page.waitForTimeout(300);
+		// refresh drag coordinates after scrolling
+		moveMouseToCenter(page, sourceLocator, 0);
 		// drop column to target filed--
-		BoundingBox target = targetLocator.boundingBox();
-		page.mouse().move(target.x + (target.width / 2), (target.y + target.height / 2),
-				new Mouse.MoveOptions().setSteps(10));
+		moveMouseToCenter(page, targetLocator, 15);
 		page.mouse().up();
 		page.waitForTimeout(300);
 	}
@@ -479,5 +473,21 @@ public class AppLibraryPageUtils {
 		Path path = Paths.get(actualImagePath);
 		page.waitForTimeout(2000);
 		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
+	}
+
+	public static List<String> checkColumnNamesOnUI(Page page) {
+		Locator columnNames = page.locator(LIST_OF_COLUMN_NAMES_XPATH);
+		return columnNames.allTextContents();
+	}
+
+	private static void moveMouseToCenter(Page page, Locator locator, int steps) {
+		BoundingBox box = locator.boundingBox();
+		page.mouse().move(box.x + (box.width / 2), (box.y + box.height / 2), new Mouse.MoveOptions().setSteps(steps));
+	}
+
+	private static void moveMouseToCenterWithMargin(Page page, Locator locator, int margin, int steps) {
+		BoundingBox box = locator.boundingBox();
+		page.mouse().move(box.x + (box.width / 2), (box.y + box.height + margin),
+				new Mouse.MoveOptions().setSteps(steps));
 	}
 }

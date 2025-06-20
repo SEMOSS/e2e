@@ -181,14 +181,11 @@ public class CommonUtils {
 
 	public static boolean compareImages(String actualImagePath, String expectedImagePath, String diffImagePath)
 			throws Exception {
-
 		BufferedImage expected = ImageIO.read(new File(expectedImagePath));
 		BufferedImage actual = ImageIO.read(new File(actualImagePath));
-
 		ImageComparison imageComparison = new ImageComparison(expected, actual);
 		imageComparison.setDestination(new File(diffImagePath));
 		ImageComparisonResult result = imageComparison.compareImages();
-
 		return result.getDifferencePercent() == 0.0;
 	}
 }
