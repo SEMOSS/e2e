@@ -211,13 +211,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/com.github.romankh3/image-comparison -->
-        <dependency>
-             <groupId>com.github.romankh3</groupId>
-             <artifactId>image-comparison</artifactId>
-             <version>4.4.0</version>
-        </dependency>
+
 
     </dependencies>
 </project>
