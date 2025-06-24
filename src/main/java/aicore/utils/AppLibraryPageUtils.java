@@ -63,6 +63,7 @@ public class AppLibraryPageUtils {
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
+	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
 	// Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
@@ -466,6 +467,13 @@ public class AppLibraryPageUtils {
 		moveMouseToCenter(page, targetLocator, 15);
 		page.mouse().up();
 		page.waitForTimeout(300);
+	}
+
+	public static boolean verifyColumnDroppedInCorrectField(Page page, String columnName, String targetField) {
+		Locator tag = page.locator(
+				DROPPED_COLUMN_IN_FIELD_XPATH.replace("{fieldName}", targetField).replace("{columnName}", columnName));
+		tag.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return tag.isVisible();
 	}
 
 	public static void takeChartScreenshot(Page page, String actualImagePath) {

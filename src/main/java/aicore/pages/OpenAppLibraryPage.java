@@ -261,4 +261,8 @@ public class OpenAppLibraryPage {
 	public List<String> checkColumnNamesOnUI() {
 		return AppLibraryPageUtils.checkColumnNamesOnUI(page);
 	}
+
+	public boolean verifyColumnDroppedInCorrectField(String columnName, String targetField) {
+		return AppLibraryPageUtils.verifyColumnDroppedInCorrectField(page, columnName, targetField);
+	}
 }

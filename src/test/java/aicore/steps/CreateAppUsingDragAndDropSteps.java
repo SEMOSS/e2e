@@ -350,6 +350,9 @@ public class CreateAppUsingDragAndDropSteps {
 			String columnName = columnNameList[i].trim();
 			String fieldName = fielsNameList[i].trim();
 			openAppLibraryPage.dragColumnToTargetField(columnName, fieldName);
+			boolean isColumnDroppedCorrectly = openAppLibraryPage.verifyColumnDroppedInCorrectField(columnName,
+					fieldName);
+			Assertions.assertTrue(isColumnDroppedCorrectly, columnName + " column dropped in wrong field " + fieldName);
 		}
 	}
 
@@ -357,9 +360,9 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_chart_same_as_baseline_chart(String chartName) throws Exception {
 		String removeSpace = chartName.replace(" ", "");
 		String folderName = Character.toLowerCase(removeSpace.charAt(0)) + removeSpace.substring(1);
-		final String actualImagePath = "target/screenshots/" + folderName + "/actualChart.png";
-		final String expectedImagePath = "target/screenshots/" + folderName + "/expectedChart.png";
-		final String diffImagePath = "target/screenshots/" + folderName + "/diffChart.png";
+		final String actualImagePath = "src/test/resources/data/screenshots/" + folderName + "/actualChart.png";
+		final String expectedImagePath = "src/test/resources/data/screenshots/" + folderName + "/expectedChart.png";
+		final String diffImagePath = "src/test/resources/data/screenshots/" + folderName + "/diffChart.png";
 		openAppLibraryPage.takeChartScreenshot(actualImagePath);
 		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
