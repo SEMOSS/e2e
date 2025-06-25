@@ -1,7 +1,7 @@
 Feature: Create drag and drop app
 
   Background: Create Drag and Drop app and navigate to Blocks option
-    Given User navigates to Home page
+    Given User is on Home page
     When User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"
@@ -10,7 +10,7 @@ Feature: Create drag and drop app
     #And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-    When User navigates to Home page
+    When User is on Home page
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
@@ -19,7 +19,7 @@ Feature: Create drag and drop app
   Scenario: Drag and Drop Heading 1 block
     When User drags the 'Text (h1)' block and drops it on the page
     Then User can see 'Hello world' on the page
-    When User navigates to Home page
+    When User is on Home page
 
   Scenario Outline: Drag and Drop Text section '<BLOCK_NAME>' block
     When User drags the '<BLOCK_NAME>' block and drops it on the page

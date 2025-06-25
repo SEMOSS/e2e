@@ -39,6 +39,12 @@ public class StoragePageUtils {
 	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[span[text()='Cancel']]";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
+	private static final String LOCAL_PATH_PREFIX_DATATESTID = "importForm-textField-PATH_PREFIX";
+	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Storage";
+	private static final String STORAGE_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
@@ -252,6 +258,33 @@ public class StoragePageUtils {
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
+	}
+	public static void enterLocalPathPrefix(Page page, String path) {
+		page.getByTestId(LOCAL_PATH_PREFIX_DATATESTID).fill(path);
+	}
+
+	public static void clickOnCreatedStorage(Page page, String storageName) {
+		page.locator(STORAGE_CARD_XPATH.replace("{catalogName}", storageName)).isVisible();
+		page.locator(STORAGE_CARD_XPATH.replace("{catalogName}", storageName)).click();
+	}
+
+	public static void clickOnDeleteButton(Page page) {
+		page.locator(DELETE_BUTTON_XPATH).isVisible();
+		page.locator(DELETE_BUTTON_XPATH).click();
+	}
+
+	public static void clickOnDeleteConfirmationButton(Page page) {
+		page.locator(CONFIRMATION_POPUP_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).isVisible();
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+	}
+
+	public static String verifyDeleteToastMessage(Page page) {
+		page.getByText(DELETE_TOAST_MESSAGE)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
+		return toastMessage;
 	}
 
 }

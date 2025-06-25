@@ -2,17 +2,18 @@ package aicore.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +23,8 @@ import javax.imageio.ImageIO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.github.romankh3.image.comparison.ImageComparison;
+import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
@@ -48,17 +51,17 @@ public class CommonUtils {
 		}
 		return actualName;
 	}
-	
+
 	public static String getTodayDateFormatted() {
-	        // Get today's date
-	        LocalDate today = LocalDate.now();
+		// Get today's date
+		LocalDate today = LocalDate.now();
 
-	        // Define the formatter
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		// Define the formatter
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	        // Return formatted date
-	        return today.format(formatter);
-	    }
+		// Return formatted date
+		return today.format(formatter);
+	}
 
 	public static void extractOverviewSectionValues(List<String> keys, List<String> keyText) {
 		for (String text : keyText) {
@@ -174,5 +177,15 @@ public class CommonUtils {
 			logger.error("icon validation failed", e);
 			return false;
 		}
+	}
+
+	public static boolean compareImages(String actualImagePath, String expectedImagePath, String diffImagePath)
+			throws Exception {
+		BufferedImage expected = ImageIO.read(new File(expectedImagePath));
+		BufferedImage actual = ImageIO.read(new File(actualImagePath));
+		ImageComparison imageComparison = new ImageComparison(expected, actual);
+		imageComparison.setDestination(new File(diffImagePath));
+		ImageComparisonResult result = imageComparison.compareImages();
+		return result.getDifferencePercent() == 0.0;
 	}
 }
