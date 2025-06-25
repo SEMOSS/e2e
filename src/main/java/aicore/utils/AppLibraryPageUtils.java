@@ -464,7 +464,7 @@ public class AppLibraryPageUtils {
 		// refresh drag coordinates after scrolling
 		moveMouseToCenter(page, sourceLocator, 0);
 		// drop column to target filed--
-		moveMouseToCenter(page, targetLocator, 15);
+		moveMouseToCenter(page, targetLocator, 20);
 		page.mouse().up();
 		page.waitForTimeout(300);
 	}
