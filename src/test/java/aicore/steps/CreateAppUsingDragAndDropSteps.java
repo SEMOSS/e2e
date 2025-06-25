@@ -41,9 +41,9 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.clickOnCreateNewAppButton();
 	}
 
-	@And("User clicks on Get Started button in Drag and Drop")
-	public void user_clicks_on_get_started_button_in_drag_and_drop() {
-		openAppLibraryPage.clickOnGetStartedButtonInDragAndDrop();
+	@When("User clicks on Get Started button in {string}")
+	public void user_clicks_on_get_started_button_in(String appType) {
+		openAppLibraryPage.clickOnGetStartedButtonInDragAndDrop(appType);
 	}
 
 	@And("User enters app name as {string}")
@@ -126,7 +126,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_the_block_settings_option() {
 		openAppLibraryPage.clickOnBlockSettingsOption();
 	}
-	
+
 	@And("User selects the Appearance tab")
 	public void user_selects_the_Appearance_tab() {
 		openAppLibraryPage.userSelectsTheAppearanceTab();

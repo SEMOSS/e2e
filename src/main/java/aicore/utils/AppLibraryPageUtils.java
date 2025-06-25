@@ -8,9 +8,9 @@ import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppLibraryPageUtils {
-	
+
 	private static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
-	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
+	private static final String GET_STARTED_BUTTON_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get Started']]";
 	private static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -49,7 +49,7 @@ public class AppLibraryPageUtils {
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
-	//Notebook section
+	// Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -61,8 +61,8 @@ public class AppLibraryPageUtils {
 		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
 	}
 
-	public static void clickOnGetStartedButtonInDragAndDrop(Page page) {
-		page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH).click();
+	public static void clickOnGetStartedButtonInDragAndDrop(Page page, String appType) {
+		page.locator(GET_STARTED_BUTTON_XPATH.replace("{appType}", appType)).click();
 	}
 
 	public static void enterAppName(Page page, String appName, String timestamp) {
@@ -195,7 +195,7 @@ public class AppLibraryPageUtils {
 			blockSettingsOption.click();
 		}
 	}
-	
+
 	public static void userSelectsTheAppearanceTab(Page page) {
 		page.getByText("Appearance").click();
 	}
@@ -236,7 +236,8 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void clickOnSaveAppButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true)).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true))
+				.click();
 	}
 
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
@@ -279,8 +280,8 @@ public class AppLibraryPageUtils {
 	}
 
 	public static String getBlockTextColor(Page page, String blockName, String blockText) {
-		return textSectionDragAndDroppedBlockLocator(page, blockName, blockText).evaluate("el => getComputedStyle(el).color")
-				.toString().trim();
+		return textSectionDragAndDroppedBlockLocator(page, blockName, blockText)
+				.evaluate("el => getComputedStyle(el).color").toString().trim();
 	}
 
 	public static String getBlockTextAlign(Page page, String blockName, String blockText) {

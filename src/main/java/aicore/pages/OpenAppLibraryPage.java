@@ -20,8 +20,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
 	}
 
-	public void clickOnGetStartedButtonInDragAndDrop() {
-		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page);
+	public void clickOnGetStartedButtonInDragAndDrop(String appType) {
+		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page, appType);
 	}
 
 	public void enterAppName(String appName) {
@@ -91,7 +91,7 @@ public class OpenAppLibraryPage {
 	public void clickOnBlockSettingsOption() {
 		AppLibraryPageUtils.clickOnBlockSettingsOption(page);
 	}
-	
+
 	public void userSelectsTheAppearanceTab() {
 		AppLibraryPageUtils.userSelectsTheAppearanceTab(page);
 	}
@@ -203,4 +203,5 @@ public class OpenAppLibraryPage {
 	public void clickOnTerminalCard() {
 		AppLibraryPageUtils.clickOnTerminalCard(page);
 	}
+
 }
