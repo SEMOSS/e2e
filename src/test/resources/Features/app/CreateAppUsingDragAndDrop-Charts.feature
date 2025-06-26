@@ -12,8 +12,8 @@ Feature: Create drag and drop app
     And User clicks on Create New App button
     And User clicks on Get Started button in Drag and Drop
     And User enters app name as 'Test app'
-    #And User enters description as 'Created by automation script'
-    #And User enters tags 'Test1, Test2' and presses Enter
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
 
