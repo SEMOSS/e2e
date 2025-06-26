@@ -321,7 +321,7 @@ public class AddModelPage {
 		return SettingsModelPageUtils.isAddMemberButtonVisible(page);
 	}
 
-	public void deleteAddedMember(String role) {
+	public void deleteAddedMember(String role)  {
 		SettingsModelPageUtils.deleteAddedMember(page, role);
 	}
 
