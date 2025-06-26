@@ -371,4 +371,17 @@ public class CreateAppUsingDragAndDropSteps {
 		List<String> uiColumns = openAppLibraryPage.checkColumnNamesOnUI();
 		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
 	}
+
+	@When("User writes the query {string}")
+	public void user_writes_the_query(String query) {
+		boolean flag = openAppLibraryPage.writeQuery(query);
+		Assertions.assertTrue(flag, "query input box is not visible");
+	}
+
+	@Then("User sees the output of the executed query where Age is {string} and Bloodpressure is {string}")
+	public void user_sees_the_output_of_the_executed_query_where_age_is_and_bloodpressure_is(String age, String bp) {
+		boolean flag = openAppLibraryPage.validateQuery(age, bp);
+		Assertions.assertTrue(flag, "age and bp fields is not visible");
+	}
+
 }

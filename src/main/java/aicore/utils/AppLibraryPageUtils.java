@@ -77,6 +77,9 @@ public class AppLibraryPageUtils {
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
+	private static final String QUERY_INPUT_FIELD_XPATH = "[data-mode-id='sql']>div>div>textarea";
+	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{Age}']";
+	private static final String QUERY_OUTPUT_FIELD1_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{BP}']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
@@ -489,5 +492,18 @@ public class AppLibraryPageUtils {
 		BoundingBox box = locator.boundingBox();
 		page.mouse().move(box.x + (box.width / 2), (box.y + box.height + margin),
 				new Mouse.MoveOptions().setSteps(steps));
+	}
+
+	public static boolean writeQuery(Page page, String query) {
+		page.locator(QUERY_INPUT_FIELD_XPATH).isVisible();
+		page.locator(QUERY_INPUT_FIELD_XPATH).clear();
+		page.locator(QUERY_INPUT_FIELD_XPATH).fill(query);
+		return true;
+	}
+
+	public static boolean validateQuery(Page page, String age, String bp) {
+		page.locator(QUERY_OUTPUT_FIELD_XPATH.replace("{Age}", age)).isVisible();
+		page.locator(QUERY_OUTPUT_FIELD1_XPATH.replace("{BP}", bp)).isVisible();
+		return true;
 	}
 }

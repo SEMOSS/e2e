@@ -261,4 +261,12 @@ public class OpenAppLibraryPage {
 	public List<String> checkColumnNamesOnUI() {
 		return AppLibraryPageUtils.checkColumnNamesOnUI(page);
 	}
+
+	public boolean writeQuery(String query) {
+		return AppLibraryPageUtils.writeQuery(page, query);
+	}
+
+	public boolean validateQuery(String age, String bp) {
+		return AppLibraryPageUtils.validateQuery(page, age, bp);
+	}
 }
