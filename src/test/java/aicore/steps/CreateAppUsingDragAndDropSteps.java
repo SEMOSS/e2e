@@ -24,6 +24,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private OpenAppLibraryPage openAppLibraryPage;
 	protected static String timestamp;
 	private String blockText;
+	private String frameID;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -41,9 +42,9 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.clickOnCreateNewAppButton();
 	}
 
-	@And("User clicks on Get Started button in Drag and Drop")
-	public void user_clicks_on_get_started_button_in_drag_and_drop() {
-		openAppLibraryPage.clickOnGetStartedButtonInDragAndDrop();
+	@When("User clicks on Get Started button in {string}")
+	public void user_clicks_on_get_started_button_in(String appType) {
+		openAppLibraryPage.clickOnGetStartedButtonInDragAndDrop(appType);
 	}
 
 	@And("User enters app name as {string}")
@@ -85,8 +86,8 @@ public class CreateAppUsingDragAndDropSteps {
 //		openAppLibraryPage.navigateToHomePageFromAppEditPage();
 //	}
 
-	@When("User navigates to Home page")
-	public void user_navigate_to_home_page() {
+	@When("User is on Home page")
+	public void user_is_on_home_page() {
 		openAppLibraryPage.navigatesToHomePage();
 	}
 
@@ -112,7 +113,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
-		openAppLibraryPage.mouseHoverOnTextSectionBlock(blockName);
+		openAppLibraryPage.mouseHoverOnBlock(blockName);
 		openAppLibraryPage.blockDropPosition();
 	}
 
@@ -126,7 +127,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_the_block_settings_option() {
 		openAppLibraryPage.clickOnBlockSettingsOption();
 	}
-	
+
 	@And("User selects the Appearance tab")
 	public void user_selects_the_Appearance_tab() {
 		openAppLibraryPage.userSelectsTheAppearanceTab();
@@ -284,5 +285,90 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User selects {string} from the Query dropdown")
 	public void user_selects_from_the_query_dropdown(String queryName) {
 		openAppLibraryPage.selectQueryFromList(queryName);
+	}
+
+	@And("User mouse hover below the existing cell")
+	public void user_mouse_hover_below_the_existing_cell() {
+		openAppLibraryPage.mouseHoverOnNotebookHiddenOptions();
+	}
+
+	@And("User selects {string} from the hidden options")
+	public void user_selects_from_the_hidden_options(String optionName) {
+		openAppLibraryPage.clickOnHiddenNotebookOption(optionName);
+	}
+
+	@And("User selects {string} from the data import options")
+	public void user_selects_from_the_data_import_options(String optionName) {
+		openAppLibraryPage.selectDataImportOption(optionName);
+	}
+
+	@And("User selects {string} from the dropdown list")
+	public void user_selects_from_the_dropdown_list(String databaseName) {
+		openAppLibraryPage.selectDatabaseFromDropdown(databaseName);
+	}
+
+	@And("User selects all columns from database")
+	public void user_selects_all_columns_from_database() {
+		openAppLibraryPage.selectAllColumns();
+	}
+
+	@And("User clicks on data Import button")
+	public void user_clicks_on_data_import_button() {
+		openAppLibraryPage.clickOnImportButton();
+	}
+
+	@And("User deletes the previous cell")
+	public void user_deletes_the_previous_cell() {
+		openAppLibraryPage.deleteFirstCell();
+	}
+
+	@When("User clicks on Run cell button")
+	public void user_clicks_on_run_cell_button() throws InterruptedException {
+		openAppLibraryPage.clickOnRunCellButton();
+	}
+
+	@And("User fetch the frame id")
+	public void user_fetch_the_frame_id() {
+		frameID = openAppLibraryPage.getFrameID();
+	}
+
+	@And("User clicks on Data tab")
+	public void user_clicks_on_data_tab() {
+		openAppLibraryPage.clickOnDataTab();
+	}
+
+	@And("User selects the frame from the Selected Frame dropdown")
+	public void user_selects_the_frame_from_the_selected_frame_dropdown() {
+		openAppLibraryPage.selectFrame(frameID);
+	}
+
+	@When("User drag and drop the {string} columns to {string} fields")
+	public void user_drag_and_drop_the_columns_to_fields(String columnNames, String fieldNames) {
+		String[] columnNameList = columnNames.split(", ");
+		String[] fielsNameList = fieldNames.split(", ");
+		for (int i = 0; i < columnNameList.length; i++) {
+			String columnName = columnNameList[i].trim();
+			String fieldName = fielsNameList[i].trim();
+			openAppLibraryPage.dragColumnToTargetField(columnName, fieldName);
+		}
+	}
+
+	@Then("User can see {string} chart same as baseline chart")
+	public void user_can_see_chart_same_as_baseline_chart(String chartName) throws Exception {
+		String removeSpace = chartName.replace(" ", "");
+		String folderName = Character.toLowerCase(removeSpace.charAt(0)) + removeSpace.substring(1);
+		final String actualImagePath = "target/screenshots/" + folderName + "/actualChart.png";
+		final String expectedImagePath = "target/screenshots/" + folderName + "/expectedChart.png";
+		final String diffImagePath = "target/screenshots/" + folderName + "/diffChart.png";
+		openAppLibraryPage.takeChartScreenshot(actualImagePath);
+		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
+		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
+	}
+
+	@Then("User can see {string} columns under the fields column")
+	public void user_can_see_columns_under_the_fields_column(String columnNames) {
+		List<String> expectedColumns = Arrays.asList(columnNames.split(", "));
+		List<String> uiColumns = openAppLibraryPage.checkColumnNamesOnUI();
+		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
 	}
 }

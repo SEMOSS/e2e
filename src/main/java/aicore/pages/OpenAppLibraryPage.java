@@ -1,5 +1,7 @@
 package aicore.pages;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
@@ -20,8 +22,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
 	}
 
-	public void clickOnGetStartedButtonInDragAndDrop() {
-		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page);
+	public void clickOnGetStartedButtonInDragAndDrop(String appType) {
+		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page, appType);
 	}
 
 	public void enterAppName(String appName) {
@@ -80,8 +82,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.blockDropPosition(page);
 	}
 
-	public void mouseHoverOnTextSectionBlock(String blockName) {
-		AppLibraryPageUtils.mouseHoverOnTextSectionBlock(page, blockName);
+	public void mouseHoverOnBlock(String blockName) {
+		AppLibraryPageUtils.mouseHoverOnBlock(page, blockName);
 	}
 
 	public String verifyHeadingBlockTextMessage() {
@@ -91,7 +93,7 @@ public class OpenAppLibraryPage {
 	public void clickOnBlockSettingsOption() {
 		AppLibraryPageUtils.clickOnBlockSettingsOption(page);
 	}
-	
+
 	public void userSelectsTheAppearanceTab() {
 		AppLibraryPageUtils.userSelectsTheAppearanceTab(page);
 	}
@@ -202,5 +204,61 @@ public class OpenAppLibraryPage {
 
 	public void clickOnTerminalCard() {
 		AppLibraryPageUtils.clickOnTerminalCard(page);
+	}
+
+	public void mouseHoverOnNotebookHiddenOptions() {
+		AppLibraryPageUtils.mouseHoverOnNotebookHiddenOptions(page);
+	}
+
+	public void clickOnHiddenNotebookOption(String optionName) {
+		AppLibraryPageUtils.clickOnHiddenNotebookOption(page, optionName);
+	}
+
+	public void selectDataImportOption(String optionName) {
+		AppLibraryPageUtils.selectDataImportOption(page, optionName);
+	}
+
+	public void selectDatabaseFromDropdown(String databaseName) {
+		AppLibraryPageUtils.selectDatabaseFromDropdown(page, databaseName);
+	}
+
+	public void selectAllColumns() {
+		AppLibraryPageUtils.selectAllColumns(page);
+	}
+
+	public void clickOnImportButton() {
+		AppLibraryPageUtils.clickOnImportButton(page);
+	}
+
+	public void deleteFirstCell() {
+		AppLibraryPageUtils.deleteFirstCell(page);
+	}
+
+	public void clickOnRunCellButton() {
+		AppLibraryPageUtils.clickOnRunCellButton(page);
+	}
+
+	public String getFrameID() {
+		return AppLibraryPageUtils.getFrameID(page);
+	}
+
+	public void clickOnDataTab() {
+		AppLibraryPageUtils.clickOnDataTab(page);
+	}
+
+	public void selectFrame(String frameId) {
+		AppLibraryPageUtils.selectFrame(page, frameId);
+	}
+
+	public void dragColumnToTargetField(String columnName, String targetField) {
+		AppLibraryPageUtils.dragColumnToTargetField(page, columnName, targetField);
+	}
+
+	public void takeChartScreenshot(String actualImagePath) {
+		AppLibraryPageUtils.takeChartScreenshot(page, actualImagePath);
+	}
+
+	public List<String> checkColumnNamesOnUI() {
+		return AppLibraryPageUtils.checkColumnNamesOnUI(page);
 	}
 }
