@@ -14,7 +14,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class AppLibraryPageUtils {
 
 	private static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
-	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
+	private static final String GET_STARTED_BUTTON_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get Started']]";
 	private static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -58,11 +58,13 @@ public class AppLibraryPageUtils {
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
+
 	// Block settings for charts
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
+
 	// Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
@@ -82,8 +84,8 @@ public class AppLibraryPageUtils {
 		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
 	}
 
-	public static void clickOnGetStartedButtonInDragAndDrop(Page page) {
-		page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH).click();
+	public static void clickOnGetStartedButtonInDragAndDrop(Page page, String appType) {
+		page.locator(GET_STARTED_BUTTON_XPATH.replace("{appType}", appType)).click();
 	}
 
 	public static void enterAppName(Page page, String appName, String timestamp) {

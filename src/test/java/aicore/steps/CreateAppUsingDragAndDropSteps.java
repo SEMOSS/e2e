@@ -42,9 +42,9 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.clickOnCreateNewAppButton();
 	}
 
-	@And("User clicks on Get Started button in Drag and Drop")
-	public void user_clicks_on_get_started_button_in_drag_and_drop() {
-		openAppLibraryPage.clickOnGetStartedButtonInDragAndDrop();
+	@When("User clicks on Get Started button in {string}")
+	public void user_clicks_on_get_started_button_in(String appType) {
+		openAppLibraryPage.clickOnGetStartedButtonInDragAndDrop(appType);
 	}
 
 	@And("User enters app name as {string}")
