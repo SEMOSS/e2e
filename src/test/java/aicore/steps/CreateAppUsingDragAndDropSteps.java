@@ -1,11 +1,10 @@
 package aicore.steps;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -81,10 +80,10 @@ public class CreateAppUsingDragAndDropSteps {
 				"Mismatch between the expected and actual message");
 	}
 
-//	@When("User navigates to the Home page from the App Edit page")
-//	public void user_navigates_to_the_home_page_from_the_app_edit_page() {
-//		openAppLibraryPage.navigateToHomePageFromAppEditPage();
-//	}
+	// @When("User navigates to the Home page from the App Edit page")
+	// public void user_navigates_to_the_home_page_from_the_app_edit_page() {
+	// openAppLibraryPage.navigateToHomePageFromAppEditPage();
+	// }
 
 	@When("User is on Home page")
 	public void user_is_on_home_page() {
@@ -143,12 +142,12 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User enters {string} text as {string}")
 	public void user_enters_text_as(String blockName, String blockText) {
 		switch (blockName) {
-		case "Markdown":
-			openAppLibraryPage.enterMarkdown(blockText);
-			break;
-		default:
-			openAppLibraryPage.enterText(blockText);
-			break;
+			case "Markdown":
+				openAppLibraryPage.enterMarkdown(blockText);
+				break;
+			default:
+				openAppLibraryPage.enterText(blockText);
+				break;
 		}
 	}
 
@@ -182,12 +181,12 @@ public class CreateAppUsingDragAndDropSteps {
 		String BOLD_MARKDOWN_PATTERN = "\\*\\*(.*?)\\*\\*";
 		String BOLD_REPLACEMENT = "$1";
 		switch (blockName) {
-		case "Markdown":
-			this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
-			break;
-		default:
-			this.blockText = text;
-			break;
+			case "Markdown":
+				this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
+				break;
+			default:
+				this.blockText = text;
+				break;
 		}
 		String actualText = openAppLibraryPage.getBlockText(blockName, blockText);
 		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
@@ -371,4 +370,26 @@ public class CreateAppUsingDragAndDropSteps {
 		List<String> uiColumns = openAppLibraryPage.checkColumnNamesOnUI();
 		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
 	}
+
+	@And("User Sees Python as the default language")
+	public void user_sees_python_as_the_default_language() {
+		openAppLibraryPage.checkPythonAsDefault();
+	}
+
+	@And("User changes the language to {string}")
+	public void user_changes_the_language_to(String language) {
+		openAppLibraryPage.changeToLanguage(language);
+	}
+
+	@Then("User hovers and clicks on the cell")
+	public void user_hovers_and_clicks_on_the_cell() {
+		openAppLibraryPage.hoverAndClickOnCell();
+	}
+
+	@Then("User can see Pixel output as {string}")
+	public void user_can_see_pixel_output_as(String Output) {
+		openAppLibraryPage.getPixelOutput(Output);
+
+	}
+
 }
