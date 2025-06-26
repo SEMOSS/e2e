@@ -12,7 +12,7 @@ Feature: Create Agent builder app
     Then User Can see the Model title as 'Model'
 
   Scenario: Create Agent builder app and navigate to Blocks option
-    Given User navigates to Home page
+    Given User is on Home page
     When User clicks on Create New App button
     And User clicks on Get Started button in "Agent Builder"
     And User enters name as 'Demo app'
