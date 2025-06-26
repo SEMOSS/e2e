@@ -88,7 +88,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void clickOnGetStartedButtonInDragAndDrop(Page page, String appType) {
-		page.locator(GET_STARTED_BUTTON_XPATH.replace("{appType}", appType)).click();
+		page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
 	}
 
 	public static String enterAppName(Page page, String appName, String timestamp) {

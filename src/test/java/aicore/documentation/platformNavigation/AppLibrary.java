@@ -59,7 +59,7 @@ public class AppLibrary {
 		// get image for new app popup
 		HomePageUtils.clickOnOpenAppLibrary(page);
 		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
-		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page);
+		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page, "Drag and Drop");
 		DocumentationUtils.screenshot(page, DocumentationConstants.NEW_APP_POPUP_IMAGE);
 
 		// get image for preview app
