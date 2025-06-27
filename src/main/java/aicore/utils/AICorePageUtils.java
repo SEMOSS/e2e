@@ -11,11 +11,12 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class AICorePageUtils {
 
 	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), '{TOAST_MESSAGE}')]";
+	private static final String NEXT_BUTTON_XPATH = "//button[span[normalize-space(text())='Next']]";
 
 	public static Locator verifyToastMessage(Page page, String msg) {
 		Locator locator = page.locator(TOAST_MESSAGE_XPATH.replace("{TOAST_MESSAGE}", msg));
-				locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-				return locator;
+		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		return locator;
 	}
 
 	public static String readStringFromClipboard(Page page) {
@@ -33,7 +34,9 @@ public class AICorePageUtils {
 	public static void clickOnButton(Page page, String buttonLabel) {
 		Locator buttonLocator = page.getByRole(AriaRole.BUTTON,
 				new Page.GetByRoleOptions().setName(buttonLabel).setExact(true));
+		buttonLocator.scrollIntoViewIfNeeded();
 		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//		page.locator(NEXT_BUTTON_XPATH).click();
 		buttonLocator.click();
 	}
 
