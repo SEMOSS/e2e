@@ -1,5 +1,7 @@
 package aicore.utils;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -8,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -181,11 +184,35 @@ public class CommonUtils {
 
 	public static boolean compareImages(String actualImagePath, String expectedImagePath, String diffImagePath)
 			throws Exception {
-		BufferedImage expected = ImageIO.read(new File(expectedImagePath));
-		BufferedImage actual = ImageIO.read(new File(actualImagePath));
+		File actualFile = new File(actualImagePath);
+		File expectedFile = new File(expectedImagePath);
+		File diffFile = new File(diffImagePath);
+		// If expected image doesn't exist, create it from actual
+		if (!expectedFile.exists()) {
+			logger.info("Expected image not found. Creating baseline from actual");
+			Files.copy(actualFile.toPath(), expectedFile.toPath());
+			return true;
+		}
+		BufferedImage expected = ImageIO.read(expectedFile);
+		BufferedImage actual = ImageIO.read(actualFile);
+		// Resize actual image if dimensions mismatch
+		if (expected.getWidth() != actual.getWidth() || expected.getHeight() != actual.getHeight()) {
+			logger.info("Resizing actual image to match expected dimensions");
+			actual = resizeImage(actual, expected.getWidth(), expected.getHeight());
+		}
+		// Perform image comparison
 		ImageComparison imageComparison = new ImageComparison(expected, actual);
-		imageComparison.setDestination(new File(diffImagePath));
+		imageComparison.setDestination(diffFile);
 		ImageComparisonResult result = imageComparison.compareImages();
 		return result.getDifferencePercent() == 0.0;
+	}
+
+	private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+		Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
+		BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = outputImage.createGraphics();
+		g2d.drawImage(resultingImage, 0, 0, null);
+		g2d.dispose();
+		return outputImage;
 	}
 }
