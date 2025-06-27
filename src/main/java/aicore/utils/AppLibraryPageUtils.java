@@ -35,7 +35,7 @@ public class AppLibraryPageUtils {
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Browse Templates";
 
 	// Blocks section
-	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Blocks']/parent::div";
+	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
 	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
 	private static final String HEADING_2_BLOCK_XPATH = "//div[@aria-label='Display Text in header 2']";
@@ -157,7 +157,7 @@ public class AppLibraryPageUtils {
 
 	public static void clickOnBlocksOption(Page page) {
 		Locator blocksOption = page.locator(BLOCKS_OPTION_XPATH);
-		if (!blocksOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+		if (!blocksOption.getAttribute("class").contains("flexlayout__border_button_content--selected")) {
 			blocksOption.click();
 		}
 	}

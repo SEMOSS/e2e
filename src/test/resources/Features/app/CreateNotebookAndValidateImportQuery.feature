@@ -1,4 +1,4 @@
-Feature: Create Notebook
+Feature: Create Notebook and Validate Import Query
 
   Background: Create Drag and Drop app and Notebook
     Given User is on Home page

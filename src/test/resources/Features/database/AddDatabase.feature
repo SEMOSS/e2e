@@ -1,4 +1,4 @@
-Feature: Add Database Using ZIP
+Feature: Add Database
 
   Background: Create Database using ZIP file
     Given User clicks on Open Database
