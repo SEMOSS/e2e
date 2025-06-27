@@ -64,16 +64,30 @@ public class DocumentationUtils {
         element.evaluate("element => element.style.border = '3px solid red'");
 	}
 	
+	public static void removeElementFocus(Locator element) {
+		element.evaluate("element => element.style.border = ''");
+	}
+	
 	public static void screenshot(Page page, Path outputFile) {
         page.screenshot(new Page.ScreenshotOptions().setPath(outputFile));
 		logger.info("screenshot captured:::");
 		logger.info(outputFile.toString());
 
 	}
+	
+	public static void screenshot(Locator element, Path outputFile) {
+		element.screenshot(new Locator.ScreenshotOptions().setPath(outputFile));
+		logger.info("screenshot captured:::");
+		logger.info(outputFile.toString());
+	}
 
 	public static void moveElementToTopOfScreen(Locator element ) {
 		// this is not ideal, but it shows the element
 		element.evaluate("el => el.scrollIntoView({behavior: 'smooth', block: 'center'})");
+	}
+	
+	public static void zoomPage(Page page, int zoom) {
+		page.evaluate("document.body.style.zoom='"+zoom+"%'");
 	}
 
 }
