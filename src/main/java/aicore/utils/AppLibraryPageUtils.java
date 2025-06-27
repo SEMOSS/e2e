@@ -428,6 +428,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static String getFrameID(Page page) {
+		page.locator(FRAME_CSS).isVisible();
 		return page.locator(FRAME_CSS).inputValue().trim();
 	}
 
@@ -451,6 +452,7 @@ public class AppLibraryPageUtils {
 		Locator sourceLocator = page.locator(DRAG_COLUMN_NAME_XPATH.replace("{columnName}", columnName));
 		sourceLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		sourceLocator.scrollIntoViewIfNeeded();
+		page.waitForTimeout(300);
 		// Grab column
 		sourceLocator.hover();
 		moveMouseToCenter(page, sourceLocator, 0);
@@ -465,8 +467,10 @@ public class AppLibraryPageUtils {
 		moveMouseToCenter(page, sourceLocator, 0);
 		// drop column to target filed--
 		moveMouseToCenter(page, targetLocator, 20);
-		page.mouse().up();
+		targetLocator.hover();
 		page.waitForTimeout(300);
+		page.mouse().up();
+		page.waitForTimeout(500);
 	}
 
 	public static boolean verifyColumnDroppedInCorrectField(Page page, String columnName, String targetField) {
