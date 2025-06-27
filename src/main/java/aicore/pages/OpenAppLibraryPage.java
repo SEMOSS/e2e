@@ -22,8 +22,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
 	}
 
-	public void clickOnGetStartedButtonInDragAndDrop() {
-		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page);
+	public void clickOnGetStartedButtonInDragAndDrop(String appType) {
+		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page, appType);
 	}
 
 	public void enterAppName(String appName) {
@@ -91,7 +91,7 @@ public class OpenAppLibraryPage {
 	}
 
 	public void clickOnBlockSettingsOption() {
-		AppLibraryPageUtils.clickOnBlockSettingsOption(page);
+		AppLibraryPageUtils.clickOnAppSettingsOption(page);
 	}
 
 	public void userSelectsTheAppearanceTab() {

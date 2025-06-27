@@ -181,13 +181,13 @@ public class GenericSetupUtils {
 		assertEquals(UrlUtils.getUrl("#/login"), page.url());
 	}
 
-	public static void login(Page page, String nativeUsername, String nativePassword) {
+	public static String login(Page page, String user, String password) {
 		// going to login
 		page.navigate(UrlUtils.getUrl("#/login"));
 		page.getByLabel("Username").click();
-		page.getByLabel("Username").fill(nativeUsername);
+		page.getByLabel("Username").fill(user);
 		page.getByLabel("Username").press("Tab");
-		page.locator("input[type=\"password\"]").fill(nativePassword);
+		page.locator("input[type=\"password\"]").fill(password);
 		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
 				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
 
@@ -202,6 +202,7 @@ public class GenericSetupUtils {
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.waitForLoadState(LoadState.LOAD);
 		navigateToHomePage(page);
+		return cookie;
 	}
 
 	public static void navigateToHomePage(Page page) {

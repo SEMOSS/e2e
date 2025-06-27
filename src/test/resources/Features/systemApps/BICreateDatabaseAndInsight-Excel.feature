@@ -5,7 +5,7 @@ Feature: Create Database and Insight to BI System app- Excel
     Given  User is on Home page
     And User clicks on Open App Library
     When User clicks on Create New App button
-    And User clicks on Get Started button in Drag and Drop
+    And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
