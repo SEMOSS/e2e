@@ -14,7 +14,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class AppLibraryPageUtils {
 	
 	public static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
-	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
+	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get Started']]";
 	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -58,6 +58,7 @@ public class AppLibraryPageUtils {
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	// Block settings for Text elements
 	public static final String APP_SETTINGS_DATA_TEST_ID = "MenuIcon";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	public static final String PERMISSION_SETTINGS_DATA_TEST_ID = "SettingsIcon";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
@@ -242,6 +243,13 @@ public class AppLibraryPageUtils {
 		String headingBlockTextMessage = page.locator(HEADING_BLOCK_HELLO_WORLD_XPATH).textContent().trim();
 		return headingBlockTextMessage;
 	}
+	
+	public static void clickOnBlockSettingsOption(Page page) {
+		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
+		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+			blockSettingsOption.click();
+		}
+	}
 
 	public static Locator clickOnAppSettingsOption(Page page) {
 		// when settings is not open it uses this dataTestId
@@ -269,15 +277,20 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void enterDestination(Page page, String destination) {
-		page.locator(DESTINATION_TEXTBOX_XPATH).fill(destination);
+		Locator loc = page.locator(DESTINATION_TEXTBOX_XPATH);
+		loc.click();
+		loc.fill(destination);
 	}
 
 	public static void enterText(Page page, String text) {
-		page.locator(TEXT_TEXTBOX_XPATH).fill(text);
+		Locator loc = page.locator(TEXT_TEXTBOX_XPATH);
+		loc.click();
+		loc.fill(text);
 	}
 
 	public static void enterMarkdown(Page page, String markdown) {
-		page.locator(MARKDOWN_TEXTBOX_XPATH).fill(markdown);
+		Locator loc = page.locator(MARKDOWN_TEXTBOX_XPATH);
+		loc.fill(markdown);
 	}
 
 	public static void selectTextStyle(Page page, String textStyles) {

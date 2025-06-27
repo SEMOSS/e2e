@@ -91,7 +91,7 @@ public class OpenAppLibraryPage {
 	}
 
 	public void clickOnBlockSettingsOption() {
-		AppLibraryPageUtils.clickOnAppSettingsOption(page);
+		AppLibraryPageUtils.clickOnBlockSettingsOption(page);
 	}
 
 	public void userSelectsTheAppearanceTab() {
