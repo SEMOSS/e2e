@@ -10,7 +10,7 @@ Feature: Create drag and drop app
     Then User sees the database name 'TestDatabase' in the database catalog
     When User clicks on Open App Library
     And User clicks on Create New App button
-    And User clicks on Get Started button in Drag and Drop
+    And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter

@@ -10,7 +10,7 @@ Feature: Create Notebook
     Then User sees the database name 'TestDatabase' in the database catalog
     When User clicks on Open App Library
     And User clicks on Create New App button
-    And User clicks on Get Started button in Drag and Drop
+    And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
