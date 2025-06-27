@@ -478,7 +478,7 @@ public class AppLibraryPageUtils {
 		targetLocator.hover();
 		page.waitForTimeout(300);
 		page.mouse().up();
-		page.waitForTimeout(500);
+		page.waitForTimeout(800);
 	}
 
 	public static boolean verifyColumnDroppedInCorrectField(Page page, String columnName, String targetField) {
