@@ -91,7 +91,7 @@ public class OpenAppLibraryPage {
 	}
 
 	public void clickOnBlockSettingsOption() {
-		AppLibraryPageUtils.clickOnBlocksOption(page);
+		AppLibraryPageUtils.clickOnBlockSettingsOption(page);
 	}
 
 	public void userSelectsTheAppearanceTab() {
@@ -268,5 +268,9 @@ public class OpenAppLibraryPage {
 
 	public boolean validateQuery(String age, String bp) {
 		return AppLibraryPageUtils.validateQuery(page, age, bp);
+  }
+
+	public boolean verifyColumnDroppedInCorrectField(String columnName, String targetField) {
+		return AppLibraryPageUtils.verifyColumnDroppedInCorrectField(page, columnName, targetField);
 	}
 }

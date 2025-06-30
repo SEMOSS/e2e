@@ -58,6 +58,7 @@ public class AppLibraryPageUtils {
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	// Block settings for Text elements
 	public static final String APP_SETTINGS_DATA_TEST_ID = "MenuIcon";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	public static final String PERMISSION_SETTINGS_DATA_TEST_ID = "SettingsIcon";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
@@ -73,8 +74,9 @@ public class AppLibraryPageUtils {
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
-
-	// Notebook section
+	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
+	
+  // Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -244,6 +246,13 @@ public class AppLibraryPageUtils {
 		String headingBlockTextMessage = page.locator(HEADING_BLOCK_HELLO_WORLD_XPATH).textContent().trim();
 		return headingBlockTextMessage;
 	}
+	
+	public static void clickOnBlockSettingsOption(Page page) {
+		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
+		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+			blockSettingsOption.click();
+		}
+	}
 
 	public static Locator clickOnAppSettingsOption(Page page) {
 		// when settings is not open it uses this dataTestId
@@ -271,15 +280,20 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void enterDestination(Page page, String destination) {
-		page.locator(DESTINATION_TEXTBOX_XPATH).fill(destination);
+		Locator loc = page.locator(DESTINATION_TEXTBOX_XPATH);
+		loc.click();
+		loc.fill(destination);
 	}
 
 	public static void enterText(Page page, String text) {
-		page.locator(TEXT_TEXTBOX_XPATH).fill(text);
+		Locator loc = page.locator(TEXT_TEXTBOX_XPATH);
+		loc.click();
+		loc.fill(text);
 	}
 
 	public static void enterMarkdown(Page page, String markdown) {
-		page.locator(MARKDOWN_TEXTBOX_XPATH).fill(markdown);
+		Locator loc = page.locator(MARKDOWN_TEXTBOX_XPATH);
+		loc.fill(markdown);
 	}
 
 	public static void selectTextStyle(Page page, String textStyles) {
@@ -458,6 +472,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static String getFrameID(Page page) {
+		page.locator(FRAME_CSS).isVisible();
 		return page.locator(FRAME_CSS).inputValue().trim();
 	}
 
@@ -481,6 +496,7 @@ public class AppLibraryPageUtils {
 		Locator sourceLocator = page.locator(DRAG_COLUMN_NAME_XPATH.replace("{columnName}", columnName));
 		sourceLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		sourceLocator.scrollIntoViewIfNeeded();
+		page.waitForTimeout(300);
 		// Grab column
 		sourceLocator.hover();
 		moveMouseToCenter(page, sourceLocator, 0);
@@ -494,9 +510,18 @@ public class AppLibraryPageUtils {
 		// refresh drag coordinates after scrolling
 		moveMouseToCenter(page, sourceLocator, 0);
 		// drop column to target filed--
-		moveMouseToCenter(page, targetLocator, 15);
-		page.mouse().up();
+		moveMouseToCenter(page, targetLocator, 20);
+		targetLocator.hover();
 		page.waitForTimeout(300);
+		page.mouse().up();
+		page.waitForTimeout(800);
+	}
+
+	public static boolean verifyColumnDroppedInCorrectField(Page page, String columnName, String targetField) {
+		Locator tag = page.locator(
+				DROPPED_COLUMN_IN_FIELD_XPATH.replace("{fieldName}", targetField).replace("{columnName}", columnName));
+		tag.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return tag.isVisible();
 	}
 
 	public static void takeChartScreenshot(Page page, String actualImagePath) {
