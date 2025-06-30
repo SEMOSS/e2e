@@ -46,6 +46,11 @@ public class SettingsModelPageUtils {
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
+	
+	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
+	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
+	
+	
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -200,7 +205,7 @@ public class SettingsModelPageUtils {
 			page.getByTitle("Name: " + username).click();
 		} else {
 			// page.click(ADD_MEMBER_XPATH);
-			// page.fill(ADD_MEMBER_XPATH, username);
+			page.fill(ADD_MEMBER_XPATH, username);
 //			page.getByText(username).click();
 			page.waitForTimeout(500);
 			page.locator(ADD_MEMBER_XPATH).press("ArrowDown");
@@ -238,6 +243,14 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
+		// search for the user and wait for search return
+		page.isVisible(SEARCH_ICON_XPATH);
+		page.click(SEARCH_ICON_XPATH);
+
+		page.click(SEARCH_BUTTON_XPATH);
+		page.fill(SEARCH_BUTTON_XPATH, role);
+		page.waitForTimeout(500);
+		// delete the user
 		page.click(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
 		page.click(CONFIRM_BUTTON_XPATH);
 	}

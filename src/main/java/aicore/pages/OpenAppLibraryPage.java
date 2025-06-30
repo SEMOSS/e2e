@@ -22,8 +22,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
 	}
 
-	public void clickOnGetStartedButtonInDragAndDrop() {
-		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page);
+	public void clickOnGetStartedButtonInDragAndDrop(String appType) {
+		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page, appType);
 	}
 
 	public void enterAppName(String appName) {
@@ -276,5 +276,9 @@ public class OpenAppLibraryPage {
 
 	public void getPixelOutput(String output) {
 		AppLibraryPageUtils.getPixelOutput(page, output);
+    
+	public boolean verifyColumnDroppedInCorrectField(String columnName, String targetField) {
+		return AppLibraryPageUtils.verifyColumnDroppedInCorrectField(page, columnName, targetField);
+
 	}
 }

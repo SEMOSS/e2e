@@ -3,24 +3,20 @@ package aicore.dev;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Response;
-import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.base.GenericSetupUtils;
+import aicore.documentation.platformNavigation.DocumentationUtils;
 import aicore.utils.ConfigUtils;
 import aicore.utils.UrlUtils;
 
@@ -31,12 +27,12 @@ import aicore.utils.UrlUtils;
 public class PlaygroundTests {
 
 	public static void main(String[] args) throws IOException {
-		Page page = setupPlaywright();
+		Page page = DocumentationUtils.setupPlaywright(true);
 		
 		String adminUser = ConfigUtils.getValue("admin_username");
 		String adminPassword = ConfigUtils.getValue("admin_password");
 
-		String cookie = login(page, adminUser, adminPassword);
+		String cookie = GenericSetupUtils.login(page, adminUser, adminPassword);
 
 		/*
 		List<Map<String, Object>> engines = RestCaller.getModelEngines(cookie);
@@ -148,52 +144,6 @@ public class PlaygroundTests {
 		}
 	}
 
-	private static String login(Page page, String adminUser, String adminPassword) {
-		// user in on home page after login
-		// going to login
-		page.navigate(UrlUtils.getUrl("#/login"));
-		page.getByTestId("CloseIcon").click();
-		page.getByLabel("Username").click();
-		page.getByLabel("Username").fill(adminUser);
-		page.getByLabel("Username").press("Tab");
-		page.locator("input[type=\"password\"]").fill(adminPassword);
-		/*
-		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
-				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
-		*/
-		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
-                () -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login").setExact(true)).first().click());
-		assertEquals(200, response.status());
 
-		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
-		Map<String, String> newMap = new HashMap<>();
-		newMap.put("cookie", cookie);
-		page.setExtraHTTPHeaders(newMap);
-		page.reload();
-		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-		// page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForLoadState(LoadState.LOAD);
-		GenericSetupUtils.navigateToHomePage(page);
-		return cookie;
-	}
-
-	private static Page setupPlaywright() {
-		Playwright playwright = Playwright.create();
-		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-
-		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions();
-		BrowserContext context = browser.newContext(newContextOptions);
-
-		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
-
-		Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
-		context.tracing().start(startOptions);
-
-		Page page = context.newPage();
-		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
-
-		GenericSetupUtils.setupLoggers(page);
-		return page;
-	}
 
 }

@@ -73,7 +73,8 @@ public class SetupHooks {
 			GenericSetupUtils.navigateToHomePage(page);
 			logoutAndSave();
 		}
-		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions();
+		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
+				.setDeviceScaleFactor(1); // ensures DPI/zoom consistency;
 		context = browser.newContext(newContextOptions);
 
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
