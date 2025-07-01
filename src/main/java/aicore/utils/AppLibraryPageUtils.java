@@ -31,7 +31,7 @@ public class AppLibraryPageUtils {
 	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
 
 	private static final String TERMINAL_XPATH = "//p[contains(text(),'Terminal')]";
-	public static final String BROWSE_TEMPLATES_XPATH = "text=Browse Templates";
+	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Blocks']/parent::div";

@@ -13,6 +13,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']";
 	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
+	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//h6[text()='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::span";
 	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
@@ -49,7 +50,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {
-		return page.locator(CATALOG_NAME_XPATH.replace("{CatalogName}", catalogName)).isVisible();
+		Locator locator = page.locator(CATALOG_NAME_XPATH.replace("{CatalogName}", catalogName));
+		AICorePageUtils.waitFor(locator);
+		return locator.isVisible();
 	}
 
 	public static boolean verifyCatalogDescription(Page page, String catalogDescription) {
@@ -57,7 +60,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCatalogID(Page page, String catalogID) {
-		return page.locator(CATALOG_ID_XPATH.replace("{CatalogID}", catalogID)).isVisible();
+		Locator locator = page.locator(CATALOG_ID_XPATH.replace("{CatalogID}", catalogID));
+		AICorePageUtils.waitFor(locator);
+		return locator.isVisible();
 	}
 
 	public static boolean checkCopyIcon(Page page) {

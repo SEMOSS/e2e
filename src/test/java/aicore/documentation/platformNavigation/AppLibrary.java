@@ -35,7 +35,7 @@ public class AppLibrary {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Page page = DocumentationUtils.setupPlaywright(true);
+		Page page = DocumentationUtils.setupPlaywright(false);
 		
 		String adminUser = ConfigUtils.getValue("admin_username");
 		String adminPassword = ConfigUtils.getValue("admin_password");
@@ -43,6 +43,7 @@ public class AppLibrary {
 		String cookie = GenericSetupUtils.login(page, adminUser, adminPassword);
 		
 		// get image for create new app button
+		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenAppLibrary(page);
 		DocumentationUtils.focusOnElement(page, AppLibraryPageUtils.CREATE_NEW_APP_BUTTON_XPATH);
 		DocumentationUtils.screenshot(page, DocumentationConstants.CREATE_NEW_APP_BUTTON_IMAGE);
