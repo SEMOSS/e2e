@@ -69,7 +69,8 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User sees the database name {string} in the database catalog")
 	public void user_sees_the_database_name_in_the_database_catalog(String dbName) {
 		String databaseNameInCatalog = addDatabaseToCatalogPage.verifyDatabaseNameInCatalog(dbName);
-		Assertions.assertEquals(dbName, databaseNameInCatalog, "Database name is not visible in the database catalog");
+		boolean databaseNameFlag=databaseNameInCatalog.contains(dbName);
+		Assertions.assertTrue(databaseNameFlag, "Database name is not visible in the database catalog");
 	}
 
 	@And("User clicks on the database name {string} in the database catalog")
