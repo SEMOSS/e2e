@@ -13,8 +13,10 @@ public class HomePageUtils {
 
 	private static final String PAGE_TITLE_XPATH = "//a[@class='css-jnxb8i']";
 
-	// side bar options
-	private static final String OPEN_APP_LIBRARY_XPATH = "//a[@data-tour='nav-app-library']";
+	// menu options
+	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
+	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "MenuOpenRoundedIcon";
+	private static final String APP_MENU_BUTTON_LABEL = "Apps";
 	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
@@ -33,6 +35,36 @@ public class HomePageUtils {
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
 
+	
+	public static void navigateToHomePage(Page page) {
+		String homePage = UrlUtils.getUrl("#");
+		page.navigate(homePage);
+		try {
+			page.waitForURL(homePage);
+		} catch (Throwable t) {
+			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
+		}
+	}
+	
+	public static void openMenu(Page page) {
+		// check if menu is open
+		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
+		if (!menuOpen.isVisible()) {
+			Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
+			locator.click();
+			
+			menuOpen.click();
+		}
+	}
+	
+	public static void closeMenu(Page page) {
+		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
+		if (menuOpen.isVisible()) {
+			menuOpen.click();
+		}
+	}
+
+	
 	public static void closeInfoPopup(Page page) {
 		page.click(ACCEPT_BUTTON_XPATH);
 		page.click(CLOSE_POPUP_BUTTON_XPATH);
@@ -73,9 +105,10 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
-		page.click(OPEN_APP_LIBRARY_XPATH);
+        Locator locator = page.locator("text=\""+APP_MENU_BUTTON_LABEL+"\"");
+        locator.click();
 	}
-
+	
 	public static void logout(Page page) {
 		page.click(USER_PROFILE_ICON_XPATH);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
@@ -88,17 +121,7 @@ public class HomePageUtils {
 	public static void checkOnOpenSetting(Page page) {
 		page.locator(OPEN_SETTINGS_XPATH).isVisible();
 	}
-
-	public static void navigateToHomePage(Page page) {
-		String homePage = UrlUtils.getUrl("#");
-		page.navigate(homePage);
-		try {
-			page.waitForURL(homePage);
-		} catch (Throwable t) {
-			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
-		}
-	}
-
+	
 	public static void clickOnOpenDatabase(Page page) {
 		page.getByTestId(OPEN_DATABASE).isVisible();
 		page.getByTestId(OPEN_DATABASE).click();
