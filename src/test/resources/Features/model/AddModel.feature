@@ -2,7 +2,8 @@ Feature: Add Model
   Adding LLM to the catalog
 
   Background: Create a Model - GPT-3.5
-    Given User clicks on Open Model
+    Given User opens Main Menu
+    When User clicks on Open Model
     When User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Model'
