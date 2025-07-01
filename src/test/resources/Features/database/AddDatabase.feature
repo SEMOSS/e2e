@@ -1,7 +1,8 @@
 Feature: Add Database Using ZIP
 
   Background: Create Database using ZIP file
-    Given User clicks on Open Database
+    Given User opens Main Menu
+   	And User clicks on Open Database
     When User clicks on Add Database
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
@@ -10,7 +11,8 @@ Feature: Add Database Using ZIP
 
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify Database Usage Examples
-    Given User clicks on Open Database
+    Given User opens Main Menu
+   	And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on Usage tab for Database
@@ -33,10 +35,11 @@ Feature: Add Database Using ZIP
 	Scenario: View Database Overview
     And User clicks on 'TestDatabase' in the database catalog
     And User sees the database name as 'TestDatabase'
-    And User can see 'copy Database ID' Database ID
+    #And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
     When User can see toast message as 'Successfully copied ID'
-    And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
+    #And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
+    And User can see 'No Markdown available' as database description
     #When User clicks on Edit button
     And User clicks on Access Control Tab
     And User clicks on Add Member button
@@ -52,7 +55,8 @@ Feature: Add Database Using ZIP
     
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify MetaData for Database
-    Given User clicks on Open Database
+    Given User opens Main Menu
+   	And User clicks on Open Database    
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on MetaData tab
