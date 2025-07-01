@@ -24,6 +24,7 @@ public class AddModelPage {
 	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
+//		this.timestamp = CommonUtils.getTimeStampName();
 	}
 
 	public void clickAddModelButton() {
@@ -321,7 +322,7 @@ public class AddModelPage {
 		return SettingsModelPageUtils.isAddMemberButtonVisible(page);
 	}
 
-	public void deleteAddedMember(String role) {
+	public void deleteAddedMember(String role)  {
 		SettingsModelPageUtils.deleteAddedMember(page, role);
 	}
 

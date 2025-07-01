@@ -90,31 +90,4 @@ public class ModelPageUtils {
 		return varNameInSMSSProperties;
 	}
 
-	//////////// MODEL PERMISSIONS - AUTHOR
-
-	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
-	private static final String VIEW_USAGE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Usage']";
-	private static final String VIEW_SMSS_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='SMSS']";
-	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
-	private static final String VIEW_ACCESSCONTROL_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Access Control']";
-
-	public static boolean canViewOverview(Page page) {
-		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
-	}
-
-	public static boolean canViewUsage(Page page) {
-		return page.isVisible(VIEW_USAGE_TAB_XPATH);
-	}
-
-	public static boolean canViewSMSSDetails(Page page) {
-		return page.isVisible(VIEW_SMSS_TAB_XPATH);
-	}
-
-	public static boolean canViewEditSMSS(Page page) {
-		return page.isVisible(VIEW_EDIT_SMSS_BUTTON_XPATH);
-	}
-
-	public static boolean canViewAccessControl(Page page) {
-		return page.isVisible(VIEW_ACCESSCONTROL_TAB_XPATH);
-	}
 }

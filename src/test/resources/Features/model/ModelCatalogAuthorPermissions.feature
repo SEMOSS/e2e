@@ -30,7 +30,7 @@ Adding LLM to the catalog
     
   Scenario: Model Catalog - Author - Member setting
     And 'Author' user clicks on Settings
-    Then 'Author' user 'can' see member setting
+    Then 'Author' user 'can' see Member Setting
     
   Scenario: Model Catalog - Author - Add Editor Member
     And 'Author' user clicks on Settings

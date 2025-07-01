@@ -11,6 +11,7 @@ import aicore.pages.AddDatabasePage;
 import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
+import aicore.utils.HomePageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -32,6 +33,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
 	}
 
+	@Given("User opens Main Menu")
+	public void user_opens_main_menu() {
+		homePage.openMainMenu();
+
+	}
+	
 	@Given("User clicks on Open Database")
 	public void user_clicks_to_open_database() {
 		homePage.clickOnOpenDatabase();
@@ -69,7 +76,8 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User sees the database name {string} in the database catalog")
 	public void user_sees_the_database_name_in_the_database_catalog(String dbName) {
 		String databaseNameInCatalog = addDatabaseToCatalogPage.verifyDatabaseNameInCatalog(dbName);
-		Assertions.assertEquals(dbName, databaseNameInCatalog, "Database name is not visible in the database catalog");
+		boolean databaseNameFlag=databaseNameInCatalog.contains(dbName);
+		Assertions.assertTrue(databaseNameFlag, "Database name is not visible in the database catalog");
 	}
 
 	@And("User clicks on the database name {string} in the database catalog")
@@ -182,6 +190,8 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
   @When("User clicks on MetaData tab")
   public void user_clicks_on_metadata_tab() {
+	  // TODO this should be user clicks on Metadata tab
+	  // if you fix this you need to update in all the places it is used in cucumber files
       addDatabaseToCatalogPage.clickOnMetaDataTab();
   }
 

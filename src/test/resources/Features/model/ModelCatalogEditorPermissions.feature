@@ -39,7 +39,7 @@ Feature: Model Catalog Permission - Editor
     
   Scenario: Model Catalog - Editor - Member setting
     And 'Editor' user clicks on Access Control
-    Then 'Editor' user 'can' see member setting
+    Then 'Editor' user 'can' see Member Setting
  
 
   #Scenario: Model Catalog - Editor -  Delete Model

@@ -16,20 +16,27 @@ import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppLibraryPageUtils {
-
-	private static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
-	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='Drag and Drop']]/following-sibling::div/button[span[text()='Get Started']]";
-	private static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
+	
+	public static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
+	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get Started']]";
+	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
 	private static final String CREATE_BUTTON_XPATH = "//button[span[text()='Create']]";
 	private static final String PAGE_1_ID = "#page-1";
 	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content' and text()='{pageName}']";
 	private static final String WELCOME_TEXT_BLOCK_XPATH = "//div[@id='page-1']//p[@data-block='welcome-text-block']";
-	private static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
+	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	private static final String SEARCHED_APP_XPATH = "//a[contains(@class,'MuiTypography-root MuiTypography-inherit')]//p[text()='{appName}']";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
+	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
+	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
+	public static final String SAVE_APP_BUTTON_DATA_TEST_ID="SaveOutlinedIcon";
+	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
+
+
 	private static final String TERMINAL_XPATH = "//p[contains(text(),'Terminal')]";
+	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Blocks']/parent::div";
@@ -54,7 +61,9 @@ public class AppLibraryPageUtils {
 	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	// Block settings for Text elements
+	public static final String APP_SETTINGS_DATA_TEST_ID = "MenuIcon";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
+	public static final String PERMISSION_SETTINGS_DATA_TEST_ID = "SettingsIcon";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String FONT_LIST_XPATH = "//p[text()='Font']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
@@ -62,13 +71,16 @@ public class AppLibraryPageUtils {
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
+	
+
 	// Block settings for charts
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
-	// Notebook section
+	
+  // Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -91,12 +103,14 @@ public class AppLibraryPageUtils {
 		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
 	}
 
-	public static void clickOnGetStartedButtonInDragAndDrop(Page page) {
-		page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH).click();
+	public static void clickOnGetStartedButtonInDragAndDrop(Page page, String appType) {
+		page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
 	}
 
-	public static void enterAppName(Page page, String appName, String timestamp) {
-		page.locator(NAME_TEXTBOX_XPATH).fill(appName + " " + timestamp);
+	public static String enterAppName(Page page, String appName, String timestamp) {
+		String appNameTesting = appName + " " + timestamp;
+		page.locator(NAME_TEXTBOX_XPATH).fill(appNameTesting);
+		return appNameTesting;
 	}
 
 	public static void enterAppDescription(Page page, String appDescription) {
@@ -113,8 +127,9 @@ public class AppLibraryPageUtils {
 	}
 
 	public static boolean verifyPage1IsVisible(Page page) {
-		boolean isPage1Visible = page.locator(PAGE_1_ID).isVisible();
-		return isPage1Visible;
+		Locator element = page.locator(PAGE_1_ID);
+		element.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return element.isVisible();
 	}
 
 	public static boolean verifyWelcomeTextboxIsVisible(Page page) {
@@ -236,7 +251,7 @@ public class AppLibraryPageUtils {
 		String headingBlockTextMessage = page.locator(HEADING_BLOCK_HELLO_WORLD_XPATH).textContent().trim();
 		return headingBlockTextMessage;
 	}
-
+	
 	public static void clickOnBlockSettingsOption(Page page) {
 		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
 		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
@@ -244,20 +259,46 @@ public class AppLibraryPageUtils {
 		}
 	}
 
+	public static Locator clickOnAppSettingsOption(Page page) {
+		// when settings is not open it uses this dataTestId
+		Locator locator = page.getByTestId(APP_SETTINGS_DATA_TEST_ID);
+		if (!page.getByTestId("MenuOpenIcon").isVisible()) {
+			if (!locator.getAttribute("class").contains("flexlayout__border_button--selected")) {
+				locator.click();
+			}
+		} else {
+			// if the settings menu is open it uses this datatestId
+			return page.getByTestId("MenuOpenIcon");
+		}
+		return locator;
+	}
+	
+	public static Locator clickOnPermissionSettingsOption(Page page) {
+		Locator locator = page.getByTestId(PERMISSION_SETTINGS_DATA_TEST_ID);
+		locator.click();
+		return locator;
+	}
+
+
 	public static void userSelectsTheAppearanceTab(Page page) {
 		page.getByText("Appearance").click();
 	}
 
 	public static void enterDestination(Page page, String destination) {
-		page.locator(DESTINATION_TEXTBOX_XPATH).fill(destination);
+		Locator loc = page.locator(DESTINATION_TEXTBOX_XPATH);
+		loc.click();
+		loc.fill(destination);
 	}
 
 	public static void enterText(Page page, String text) {
-		page.locator(TEXT_TEXTBOX_XPATH).fill(text);
+		Locator loc = page.locator(TEXT_TEXTBOX_XPATH);
+		loc.click();
+		loc.fill(text);
 	}
 
 	public static void enterMarkdown(Page page, String markdown) {
-		page.locator(MARKDOWN_TEXTBOX_XPATH).fill(markdown);
+		Locator loc = page.locator(MARKDOWN_TEXTBOX_XPATH);
+		loc.fill(markdown);
 	}
 
 	public static void selectTextStyle(Page page, String textStyles) {
@@ -436,6 +477,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static String getFrameID(Page page) {
+		page.locator(FRAME_CSS).isVisible();
 		return page.locator(FRAME_CSS).inputValue().trim();
 	}
 
@@ -459,6 +501,7 @@ public class AppLibraryPageUtils {
 		Locator sourceLocator = page.locator(DRAG_COLUMN_NAME_XPATH.replace("{columnName}", columnName));
 		sourceLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		sourceLocator.scrollIntoViewIfNeeded();
+		page.waitForTimeout(300);
 		// Grab column
 		sourceLocator.hover();
 		moveMouseToCenter(page, sourceLocator, 0);
@@ -473,8 +516,10 @@ public class AppLibraryPageUtils {
 		moveMouseToCenter(page, sourceLocator, 0);
 		// drop column to target filed--
 		moveMouseToCenter(page, targetLocator, 20);
-		page.mouse().up();
+		targetLocator.hover();
 		page.waitForTimeout(300);
+		page.mouse().up();
+		page.waitForTimeout(800);
 	}
 
 	public static boolean verifyColumnDroppedInCorrectField(Page page, String columnName, String targetField) {
