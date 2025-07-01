@@ -374,4 +374,43 @@ public class CreateAppUsingDragAndDropSteps {
 		List<String> uiColumns = openAppLibraryPage.checkColumnNamesOnUI();
 		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
 	}
+
+//	@When("User hovers and clicks on the {string}")
+//	public void user_hovers_and_clicks_on_the(String string) {
+//		// Write code here that turns the phrase above into concrete actions
+//		throw new io.cucumber.java.PendingException();
+//	}
+
+	@Then("User can see header names as {string}")
+	public void user_can_see_header_names_as(String headerNames) {
+		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
+		List<String> actualHeaderNames = openAppLibraryPage.getNotebookOutputTableHeader();
+		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
+	}
+
+	@Then("User can see total {string} rows")
+	public void user_can_see_total_rows(String rowsCount) {
+		int actualRowsCount = openAppLibraryPage.getTotalRowsFromPreviewCaption();
+		int expectedRowsCount = Integer.parseInt(rowsCount);
+		Assertions.assertEquals(expectedRowsCount, actualRowsCount, "Rows count are not correct");
+	}
+
+	@Then("User can see the {string} column have unique values")
+	public void user_can_see_the_column_have_unique_values(String headerName) {
+		boolean isColumnUnique = openAppLibraryPage.isColumnUniqueByHeader(headerName);
+		Assertions.assertTrue(isColumnUnique, headerName + " have duplicate values");
+	}
+
+	@Then("User can see name as frame id in JSON")
+	public void user_can_see_name_as_frame_id_in_json() {
+		String jsonFrameId = openAppLibraryPage.validateJsonFieldValue(frameID);
+		String cleanedActualFrameId = jsonFrameId.replaceAll("^\"|\"$", "");
+		Assertions.assertEquals(frameID, cleanedActualFrameId, "Frame Id not matching");
+	}
+
+	@Then("User can see type as {string} for {string} in JSON")
+	public void user_can_see_type_as_for_in_json(String typeFieldValue, String type) {
+		openAppLibraryPage.selectTypeFromDropdown(type);
+		openAppLibraryPage.validateJsonFieldValue(typeFieldValue);
+	}
 }

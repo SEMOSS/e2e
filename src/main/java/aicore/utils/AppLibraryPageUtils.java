@@ -2,7 +2,11 @@ package aicore.utils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
@@ -78,6 +82,10 @@ public class AppLibraryPageUtils {
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
+	private static final String OUTPUT_TABLE_HEADER_XPATH = "//table//th";
+	private static final String JSON_BODY_FIELD_VALUE_XPATH = "//div[contains(@class,'string-value MuiBox-root')]//span[text()='{fieldValue}']";
+	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//div[div[text()='Python']]";
+	private static final String SELECT_TYPE_LISTBOX_XPATH = "//li[text()='{type}']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
@@ -497,5 +505,60 @@ public class AppLibraryPageUtils {
 		BoundingBox box = locator.boundingBox();
 		page.mouse().move(box.x + (box.width / 2), (box.y + box.height + margin),
 				new Mouse.MoveOptions().setSteps(steps));
+	}
+
+	public static List<String> getNotebookOutputTableHeader(Page page) {
+		return page.locator(OUTPUT_TABLE_HEADER_XPATH).allTextContents();
+	}
+
+	public static int getTotalRowsFromPreviewCaption(Page page) {
+		Locator previewCaption = page.locator("(//span[contains(text(),'This is a preview of ingested data')])[1]");
+		previewCaption.scrollIntoViewIfNeeded();
+		String captionText = previewCaption.textContent();
+		Pattern pattern = Pattern.compile("Showing \\d+ of (\\d+)");
+		Matcher matcher = pattern.matcher(captionText);
+		if (matcher.find()) {
+			return Integer.parseInt(matcher.group(1)); // Extracts the second number
+		} else {
+			throw new RuntimeException("Failed to extract total row count from caption: " + captionText);
+		}
+	}
+
+	public static boolean isColumnUniqueByHeader(Page page, String headerName) {
+		Locator headers = page.locator("table thead tr th");
+		int columnCount = headers.count();
+		int targetColumnIndex = -1;
+		for (int i = 0; i < columnCount; i++) {
+			String text = headers.nth(i).textContent().trim();
+			if (text.equalsIgnoreCase(headerName)) {
+				targetColumnIndex = i;
+				break;
+			}
+		}
+		if (targetColumnIndex == -1) {
+			throw new RuntimeException("Header with label '" + headerName + "' not found");
+		}
+		Locator rows = page.locator("table tbody tr");
+		int rowCount = rows.count();
+		Set<String> uniqueValues = new HashSet<>();
+		for (int i = 0; i < rowCount; i++) {
+			Locator cell = rows.nth(i).locator("td").nth(targetColumnIndex);
+			String cellText = cell.textContent().trim();
+			uniqueValues.add(cellText);
+		}
+		return uniqueValues.size() == rowCount;
+	}
+
+	public static String validateJsonFieldValue(Page page, String fieldValue) {
+		Locator jsonNameLocator = page.locator(JSON_BODY_FIELD_VALUE_XPATH.replace("{fieldValue}", fieldValue));
+		jsonNameLocator.isVisible();
+		return jsonNameLocator.textContent();
+	}
+
+	public static void selectTypeFromDropdown(Page page, String type) {
+		Locator dropdownArrow = page.locator(SELECT_TYPE_DROPDOWN_XPATH.replace("{type}", type)).first();
+		dropdownArrow.isVisible();
+		dropdownArrow.click();
+		page.locator(SELECT_TYPE_LISTBOX_XPATH.replace("{type}", type)).click();
 	}
 }
