@@ -61,7 +61,7 @@ public class HomePageUtils {
 		}
 	}
 	
-	public static void closeMenu(Page page) {
+	public static void closeMainMenu(Page page) {
 		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
 		if (menuOpen.isVisible()) {
 			menuOpen.click();
@@ -92,7 +92,7 @@ public class HomePageUtils {
 //		Locator locator = page.getByTestId(OPEN_FUNCTION_DATA_TEST_ID_VALUE);
 		Locator locator = page.locator(FUNCTION_MENU_BUTTON_LABEL);
 		locator.click();
-		HomePageUtils.closeMenu(page);
+		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnBIApp(Page page) {
@@ -101,6 +101,7 @@ public class HomePageUtils {
 
 	public static void clickOnOpenModel(Page page) {
 		page.click(OPEN_MODEL_XPATH);
+		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenStorage(Page page) {
@@ -132,6 +133,6 @@ public class HomePageUtils {
 	public static void clickOnOpenDatabase(Page page) {
         Locator locator = page.locator(DATABASE_MENU_BUTTON_LABEL);
 		locator.click();
-		HomePageUtils.closeMenu(page);
+		HomePageUtils.closeMainMenu(page);
 	}
 }
