@@ -16,14 +16,18 @@ public class HomePageUtils {
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "MenuOpenRoundedIcon";
-	private static final String APP_MENU_BUTTON_LABEL = "Apps";
+	private static final String APP_MENU_BUTTON_LABEL = "text=Apps";
+	public static final String DATABASE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Database')";
+
+	// TODO this changed for now need to use data test id
+	public static final String FUNCTION_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Function')";
+	private static final String OPEN_FUNCTION_DATA_TEST_ID_VALUE = "Function-icon";
+
 	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
-	private static final String OPEN_FUNCTION_DATA_TEST_ID_VALUE = "Function-icon";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	public static final String OPEN_DATABASE = "Database-icon";
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
 
 	// system apps
@@ -46,7 +50,7 @@ public class HomePageUtils {
 		}
 	}
 	
-	public static void openMenu(Page page) {
+	public static void openMainMenu(Page page) {
 		// check if menu is open
 		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
 		if (!menuOpen.isVisible()) {
@@ -84,8 +88,11 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenFunction(Page page) {
-		Locator locator = page.getByTestId(OPEN_FUNCTION_DATA_TEST_ID_VALUE);
+		// TODO change back to id once fe is fixed
+//		Locator locator = page.getByTestId(OPEN_FUNCTION_DATA_TEST_ID_VALUE);
+		Locator locator = page.locator(FUNCTION_MENU_BUTTON_LABEL);
 		locator.click();
+		HomePageUtils.closeMenu(page);
 	}
 
 	public static void clickOnBIApp(Page page) {
@@ -105,7 +112,7 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
-        Locator locator = page.locator("text=\""+APP_MENU_BUTTON_LABEL+"\"");
+        Locator locator = page.locator(APP_MENU_BUTTON_LABEL);
         locator.click();
 	}
 	
@@ -123,7 +130,8 @@ public class HomePageUtils {
 	}
 	
 	public static void clickOnOpenDatabase(Page page) {
-		page.getByTestId(OPEN_DATABASE).isVisible();
-		page.getByTestId(OPEN_DATABASE).click();
+        Locator locator = page.locator(DATABASE_MENU_BUTTON_LABEL);
+		locator.click();
+		HomePageUtils.closeMenu(page);
 	}
 }

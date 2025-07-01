@@ -89,12 +89,12 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnMetadataTab(Page page) {
-		page.getByText("Metadata").isVisible();
-		page.getByText("Metadata").click();
+		CatalogPageUtils.clickOnMetadataTab(page);
 	}
 
 	public static void verifyMetaData(Page page) {
 		Locator metadataTable = page.locator(METADATA_TABLE_XPATH);
+		AICorePageUtils.waitFor(metadataTable);
 		int tableCount = metadataTable.count();
 		if (tableCount > 0) {
 			for (int i = 0; i < tableCount; i++) {
@@ -203,8 +203,9 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickDatabase(Page page, String databaseName) {
-		page.locator(DATABASE_NAME_XPATH.replace("{DatabaseName}", databaseName)).isVisible();
-		page.locator(DATABASE_NAME_XPATH.replace("{DatabaseName}", databaseName)).click();
+		Locator locator = page.locator(DATABASE_NAME_XPATH.replace("{DatabaseName}", databaseName));
+		boolean isVisible = locator.isVisible();
+		locator.click();
 	}
 
 }
