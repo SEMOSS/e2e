@@ -2,13 +2,15 @@ Feature: Create drag and drop app
 
   Background: Create Drag and Drop app and navigate to Blocks option
     Given User is on Home page
-    When User clicks on Open Database
+    When User opens Main Menu
+    And User clicks on Open Database
     And User clicks on Add Database
     And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on Open App Library
+    When User opens Main Menu
+    And User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
@@ -20,7 +22,9 @@ Feature: Create drag and drop app
   @DeleteCreatedCatalog
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     Given User is on Home page
-    When User searches 'Test app' app in the app searchbox
+   	When User opens Main Menu
+   	And User clicks on Open Database
+		And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
     And User clicks on Blocks if it is not selected by default
@@ -48,6 +52,7 @@ Feature: Create drag and drop app
     Then User can see '<BLOCK_NAME>' chart same as baseline chart
     When User clicks on the Save App icon
     And User is on Home page
+    And User opens Main Menu
     And User clicks on Open Database
     Then User sees the database name 'TestDatabase' in the database catalog
     When User clicks on the database name 'TestDatabase' in the database catalog

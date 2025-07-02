@@ -2,7 +2,8 @@ Feature: Create drag and drop app
 
   Background: Create Drag and Drop app and navigate to Blocks option
     Given User is on Home page
-    When User clicks on Open App Library
+   	When User opens Main Menu
+    And User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
