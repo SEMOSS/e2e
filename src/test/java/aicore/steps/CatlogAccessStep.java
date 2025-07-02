@@ -1,7 +1,5 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Page;
@@ -17,6 +15,7 @@ import aicore.utils.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.messages.types.Exception;
 
 public class CatlogAccessStep {
 
@@ -209,4 +208,68 @@ public class CatlogAccessStep {
 		}
 	}
 
+	// Create App Steps
+	@And("User click on Settings")
+	public void user_Click_OnSettings() {
+		catlogpermission.clickOnSettings();
+	}
+
+	@And("User clicks on Delete Model")
+	public void user_Delete_Model() {
+		catlogpermission.userDeleteModel();
+	}
+
+	@Then("{string} user can {string} Member")
+	public void user_Can_See_Member(String role, String action) {
+		boolean viewMember = catlogpermission.userCanSeeMember();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(viewMember, role + " user view the Member Option");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(viewMember, role + " user should not view the Member Option");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+
+	}
+
+	@And("{string} user can {string} Pending Requests")
+	public void user_Can_See_PendingRequests(String role, String action) {
+		boolean viewPendingRequests = catlogpermission.userCanSeePendingRequests();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(viewPendingRequests, role + " user view the Pending Requests Option");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(viewPendingRequests, role + " user should not view the Pending Requests Option");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("{string} user can {string} Data Apps")
+	public void user_Can_See_DataApps(String role, String action) {
+		boolean viewDataApps = catlogpermission.userCanSeeDataApps();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(viewDataApps, role + " user view the Data Apps Option");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(viewDataApps, role + " user should not view the Data Apps Option");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("{string} user can {string} Export Icon")
+	public void user_Can_See_ExportIcon(String role, String action) {
+		boolean viewExportIcon = catlogpermission.userCanSeeExportIcon();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(viewExportIcon, role + " user view the Data Apps Option");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(viewExportIcon, role + " user should not view the Data Apps Option");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@Then("{string} user Make Public toggle should be {string}")
+	public void user_Can_See_MakePulic_Toggle_Enable(String role, String action) {
+
+	}
 }

@@ -46,4 +46,33 @@ public class CatlogPermissionsPage {
 
 	}
 
+	// create App Class file
+	public void clickOnSettings() {
+		CatlogAccessPage.clickOnSettings(page);
+	}
+
+	public void userDeleteModel() {
+		CatlogAccessPage.userDeleteModel(page);
+
+	}
+
+	public boolean userCanSeeMember() {
+		return CatlogAccessPage.user_Can_See_Member(page);
+
+	}
+
+	public boolean userCanSeePendingRequests() {
+		return CatlogAccessPage.User_Can_See_PendingRequests(page);
+
+	}
+
+	public boolean userCanSeeDataApps() {
+		return CatlogAccessPage.user_Can_See_DataApps(page);
+
+	}
+
+	public boolean userCanSeeExportIcon() {
+		return CatlogAccessPage.user_Can_See_ExportIcon(page);
+
+	}
 }
