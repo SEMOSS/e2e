@@ -54,9 +54,9 @@ public class OpenAppLibraryPage {
 		return AppLibraryPageUtils.verifyWelcomeText(page);
 	}
 
-//	public void navigateToHomePageFromAppEditPage() {
-//		AppLibraryPageUtils.navigateToHomePageFromAppEditPage(page);
-//	}
+	// public void navigateToHomePageFromAppEditPage() {
+	// AppLibraryPageUtils.navigateToHomePageFromAppEditPage(page);
+	// }
 
 	public void navigatesToHomePage() {
 		HomePageUtils.navigateToHomePage(page);
@@ -284,5 +284,25 @@ public class OpenAppLibraryPage {
 
 	public void selectTypeFromDropdown(String type) {
 		AppLibraryPageUtils.selectTypeFromDropdown(page, type);
+	}
+
+	public void hoverAndClickOnCell() {
+		AppLibraryPageUtils.hoverAndClickOnCell(page);
+	}
+
+	public void checkPythonAsDefault() {
+		AppLibraryPageUtils.checkPythonAsDefaultLanguage(page);
+	}
+
+	public void changeToLanguage(String language) {
+		AppLibraryPageUtils.changeToLanguage(page, language);
+	}
+
+	public void getPixelOutput(String output) {
+		AppLibraryPageUtils.getPixelOutput(page, output);
+	}
+
+	public void getPythonOutput(String output) {
+		AppLibraryPageUtils.getPythonOutput(page, output);
 	}
 }

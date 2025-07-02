@@ -81,10 +81,10 @@ public class CreateAppUsingDragAndDropSteps {
 				"Mismatch between the expected and actual message");
 	}
 
-//	@When("User navigates to the Home page from the App Edit page")
-//	public void user_navigates_to_the_home_page_from_the_app_edit_page() {
-//		openAppLibraryPage.navigateToHomePageFromAppEditPage();
-//	}
+	// @When("User navigates to the Home page from the App Edit page")
+	// public void user_navigates_to_the_home_page_from_the_app_edit_page() {
+	// openAppLibraryPage.navigateToHomePageFromAppEditPage();
+	// }
 
 	@When("User is on Home page")
 	public void user_is_on_home_page() {
@@ -375,12 +375,6 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
 	}
 
-//	@When("User hovers and clicks on the {string}")
-//	public void user_hovers_and_clicks_on_the(String string) {
-//		// Write code here that turns the phrase above into concrete actions
-//		throw new io.cucumber.java.PendingException();
-//	}
-
 	@Then("User can see header names as {string}")
 	public void user_can_see_header_names_as(String headerNames) {
 		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
@@ -412,5 +406,32 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_type_as_for_in_json(String typeFieldValue, String type) {
 		openAppLibraryPage.selectTypeFromDropdown(type);
 		openAppLibraryPage.validateJsonFieldValue(typeFieldValue);
+	}
+
+	@And("User Sees Python as the default language")
+	public void user_sees_python_as_the_default_language() {
+		openAppLibraryPage.checkPythonAsDefault();
+	}
+
+	@And("User changes the language to {string}")
+	public void user_changes_the_language_to(String language) {
+		openAppLibraryPage.changeToLanguage(language);
+	}
+
+	@Then("User hovers and clicks on the cell")
+	public void user_hovers_and_clicks_on_the_cell() {
+		openAppLibraryPage.mouseHoverOnNotebookHiddenOptions();
+		openAppLibraryPage.hoverAndClickOnCell();
+	}
+
+	@Then("User can see Pixel output as {string}")
+	public void user_can_see_pixel_output_as(String Output) {
+		openAppLibraryPage.getPixelOutput(Output);
+
+	}
+
+	@Then("User can see Python output as {string}")
+	public void user_can_see_python_output_as(String Output) {
+		openAppLibraryPage.getPythonOutput(Output);
 	}
 }
