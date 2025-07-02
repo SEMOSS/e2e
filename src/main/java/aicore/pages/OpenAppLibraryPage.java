@@ -281,4 +281,25 @@ public class OpenAppLibraryPage {
 		return AppLibraryPageUtils.verifyColumnDroppedInCorrectField(page, columnName, targetField);
 
 	}
+
+	public void hoverAndClickOnCell() {
+		AppLibraryPageUtils.hoverAndClickOnCell(page);
+	}
+
+	public void checkPythonAsDefault() {
+		AppLibraryPageUtils.checkPythonAsDefaultLanguage(page);
+	}
+
+	public void changeToLanguage(String language) {
+		AppLibraryPageUtils.changeToLanguage(page, language);
+	}
+
+	public void getPixelOutput(String output) {
+		AppLibraryPageUtils.getPixelOutput(page, output);
+	}
+
+	public void getPythonOutput(String output) {
+		AppLibraryPageUtils.getPythonOutput(page, output);
+	}
+
 }

@@ -39,5 +39,12 @@ public class AICorePageUtils {
 //		page.locator(NEXT_BUTTON_XPATH).click();
 		buttonLocator.click();
 	}
+	
+	public static void waitFor(Locator locator) {
+		if (!locator.isVisible()) {
+			locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		}
+	}
+
 
 }

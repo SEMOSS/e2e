@@ -386,6 +386,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Then("User hovers and clicks on the cell")
 	public void user_hovers_and_clicks_on_the_cell() {
+		openAppLibraryPage.mouseHoverOnNotebookHiddenOptions();
 		openAppLibraryPage.hoverAndClickOnCell();
 	}
 
@@ -393,6 +394,11 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_pixel_output_as(String Output) {
 		openAppLibraryPage.getPixelOutput(Output);
 
+	}
+
+	@Then("User can see Python output as {string}")
+	public void user_can_see_python_output_as(String Output) {
+		openAppLibraryPage.getPythonOutput(Output);
 	}
 
 }

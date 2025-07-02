@@ -72,4 +72,8 @@ public class HomePage {
 		HomePageUtils.clickOnOpenDatabase(page);
 	}
 
+	public void openMainMenu() {
+		HomePageUtils.openMainMenu(page);		
+	}
+
 }

@@ -139,7 +139,9 @@ public class CommonUtils {
 
 	public static boolean deleteCatalog(Page page, String accessControlXpath, String deleteButtonXpath,
 			String confirmationPopupXpath, String deleteToastMessageXpath) {
-		page.locator(accessControlXpath).click();
+		Locator accessLocator = page.locator(accessControlXpath);
+		AICorePageUtils.waitFor(accessLocator);
+		accessLocator.click();
 		page.locator(deleteButtonXpath).click();
 		page.locator(confirmationPopupXpath).click();
 		return page.locator(deleteToastMessageXpath).isVisible();
