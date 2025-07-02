@@ -2,6 +2,7 @@ Feature: Verify Notebook Output
 
   Background: Create Drag and Drop App
     Given User is on Home page
+    When User opens Main Menu
     When User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"

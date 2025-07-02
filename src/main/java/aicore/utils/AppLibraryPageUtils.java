@@ -13,8 +13,8 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppLibraryPageUtils {
 
-	public static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
-	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get Started']]";
+	public static final String CREATE_NEW_APP_DATA_TEST_ID = "home-create-app-btn";
+	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get started with our tools']]";
 	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -93,11 +93,15 @@ public class AppLibraryPageUtils {
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
 
 	public static void clickOnCreateNewAppButton(Page page) {
-		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
+		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
 	}
 
 	public static void clickOnGetStartedButtonInDragAndDrop(Page page, String appType) {
-		page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
+		if (appType.toLowerCase().contains("agent")) {
+			page.getByTestId("new-app-agent-btn").click();
+		} else {
+			page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
+		}
 	}
 
 	public static String enterAppName(Page page, String appName, String timestamp) {

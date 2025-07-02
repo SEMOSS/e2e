@@ -11,7 +11,6 @@ import aicore.pages.AddDatabasePage;
 import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
-import aicore.utils.HomePageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -36,7 +35,6 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@Given("User opens Main Menu")
 	public void user_opens_main_menu() {
 		homePage.openMainMenu();
-
 	}
 	
 	@Given("User clicks on Open Database")
