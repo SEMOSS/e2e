@@ -173,8 +173,13 @@ public class GenericSetupUtils {
 
 	public static void logout(Page page) {
 		// going to logout
-		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
-				.getByRole(AriaRole.BUTTON).click();
+		Locator menuOpen = page.getByTestId("MenuOpenRoundedIcon");
+		if (!menuOpen.isVisible()) {
+			Locator locator = page.getByTestId("MenuRoundedIcon");
+			locator.click();
+			menuOpen.click();
+		}
+		page.getByTestId("PersonIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
