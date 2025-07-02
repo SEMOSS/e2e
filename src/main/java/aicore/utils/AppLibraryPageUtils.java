@@ -99,6 +99,8 @@ public class AppLibraryPageUtils {
 	public static void clickOnGetStartedButtonInDragAndDrop(Page page, String appType) {
 		if (appType.toLowerCase().contains("agent")) {
 			page.getByTestId("new-app-agent-btn").click();
+		} else if (appType.toLowerCase().contains("drag and drop")) {
+			page.getByTestId("new-app-drag-btn").click();
 		} else {
 			page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
 		}
@@ -152,7 +154,15 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void clickOnSearchedApp(Page page, String appName, String timestamp) {
-		page.locator(SEARCHED_APP_XPATH.replace("{appName}", appName + " " + timestamp)).click();
+		// new search box
+		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
+		AICorePageUtils.waitFor(listbox);
+		String expectedText = appName + " " + timestamp;
+		// TODO this will open a new tab in the browser need to handle this new behavior
+		Locator button = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(expectedText));
+		AICorePageUtils.waitFor(button);
+		button.click();
+
 	}
 
 	public static void clickOnEditButton(Page page) {
