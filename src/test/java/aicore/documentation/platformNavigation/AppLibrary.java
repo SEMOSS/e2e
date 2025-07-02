@@ -45,7 +45,7 @@ public class AppLibrary {
 		// get image for create new app button
 		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenAppLibrary(page);
-		DocumentationUtils.focusOnElement(page, AppLibraryPageUtils.CREATE_NEW_APP_BUTTON_XPATH);
+		DocumentationUtils.focusOnElement(page, AppLibraryPageUtils.CREATE_NEW_APP_DATA_TEST_ID);
 		DocumentationUtils.screenshot(page, DocumentationConstants.CREATE_NEW_APP_BUTTON_IMAGE);
 
         // get image for app options
