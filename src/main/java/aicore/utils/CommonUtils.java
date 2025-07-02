@@ -30,6 +30,7 @@ import com.github.romankh3.image.comparison.ImageComparison;
 import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
@@ -38,8 +39,14 @@ public class CommonUtils {
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
 	}
+	
+	public static void removeTargetAttribute(Locator anchor) {
+		
+		anchor.evaluate("element => element.setAttribute('target', '')");
+	}
+	
 
-	public static String splitTrimValue(String keyValueString, String key) {
+ 	public static String splitTrimValue(String keyValueString, String key) {
 		String actualName = null;
 		if (keyValueString != null && !keyValueString.isEmpty()) {
 			keyValueString = keyValueString.replaceAll("\\u00A0", " ");
