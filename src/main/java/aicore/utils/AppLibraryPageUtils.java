@@ -93,9 +93,11 @@ public class AppLibraryPageUtils {
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
 	private static final String OUTPUT_TABLE_HEADER_XPATH = "//table//th";
+	private static final String OUTPUT_TABLE_ROW_XPATH = "//table//tbody//tr";
 	private static final String JSON_BODY_FIELD_VALUE_XPATH = "//div[contains(@class,'string-value MuiBox-root')]//span[text()='{fieldValue}']";
 	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//div[div[text()='Python']]";
 	private static final String SELECT_TYPE_LISTBOX_XPATH = "//li[text()='{type}']";
+	private static final String TOTAL_COUNT_OF_ROWS_XPATH = "(//span[contains(text(),'This is a preview of ingested data')])[1]";
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
@@ -166,14 +168,15 @@ public class AppLibraryPageUtils {
 		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
 		AICorePageUtils.waitFor(listbox);
 		String expectedText = appName + " " + timestamp;
-		// TODO this will open a new tab in the browser need to handle this new behavior
 		Locator button = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(expectedText));
 		AICorePageUtils.waitFor(button);
+		Locator anchor = page.locator("//span[text()='" + expectedText + "']/ancestor::a");
+		CommonUtils.removeTargetAttribute(anchor);
 		button.click();
-
 	}
 
 	public static void clickOnEditButton(Page page) {
+		page.locator(EDIT_BUTTON_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(EDIT_BUTTON_XPATH).click();
 	}
 
@@ -571,10 +574,11 @@ public class AppLibraryPageUtils {
 	}
 
 	public static int getTotalRowsFromPreviewCaption(Page page) {
-		Locator previewCaption = page.locator("(//span[contains(text(),'This is a preview of ingested data')])[1]");
+		final String compilePattern = "Showing \\d+ of (\\d+)";
+		Locator previewCaption = page.locator(TOTAL_COUNT_OF_ROWS_XPATH);
 		previewCaption.scrollIntoViewIfNeeded();
 		String captionText = previewCaption.textContent();
-		Pattern pattern = Pattern.compile("Showing \\d+ of (\\d+)");
+		Pattern pattern = Pattern.compile(compilePattern);
 		Matcher matcher = pattern.matcher(captionText);
 		if (matcher.find()) {
 			return Integer.parseInt(matcher.group(1)); // Extracts the second number
@@ -584,7 +588,7 @@ public class AppLibraryPageUtils {
 	}
 
 	public static boolean isColumnUniqueByHeader(Page page, String headerName) {
-		Locator headers = page.locator("table thead tr th");
+		Locator headers = page.locator(OUTPUT_TABLE_HEADER_XPATH);
 		int columnCount = headers.count();
 		int targetColumnIndex = -1;
 		for (int i = 0; i < columnCount; i++) {
@@ -597,7 +601,7 @@ public class AppLibraryPageUtils {
 		if (targetColumnIndex == -1) {
 			throw new RuntimeException("Header with label '" + headerName + "' not found");
 		}
-		Locator rows = page.locator("table tbody tr");
+		Locator rows = page.locator(OUTPUT_TABLE_ROW_XPATH);
 		int rowCount = rows.count();
 		Set<String> uniqueValues = new HashSet<>();
 		for (int i = 0; i < rowCount; i++) {

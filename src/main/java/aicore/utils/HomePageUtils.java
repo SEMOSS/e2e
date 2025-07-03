@@ -53,6 +53,9 @@ public class HomePageUtils {
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
 		}
+		// previously searched app remains visible when the user returns to the homepage
+		// This is a issue and will be removed once resolved.
+		page.reload();
 	}
 
 	public static void openMainMenu(Page page) {
