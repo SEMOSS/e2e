@@ -46,7 +46,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean isSearchBarPresent(Page page) {
-		return page.getByPlaceholder("Search").isVisible();
+		return page.getByTestId("SearchOutlinedIcon").isVisible();
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {

@@ -1,5 +1,7 @@
 package aicore.utils;
 
+import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +32,7 @@ public class HomePageUtils {
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	
 	public static final String VECTOR_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Vector')";
-	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
+	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='TokenRoundedIcon']";
 	
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
@@ -111,11 +113,13 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenStorage(Page page) {
-		page.click(OPEN_STORAGE_XPATH);
+		page.click(STORAGE_MENU_BUTTON_LABEL);
+		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenVector(Page page) {
-		page.click(OPEN_VECTOR_XPATH);
+		page.click(VECTOR_MENU_BUTTON_LABEL);
+		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
@@ -125,8 +129,16 @@ public class HomePageUtils {
 	}
 	
 	public static void logout(Page page) {
-		page.click(USER_PROFILE_ICON_XPATH);
+	Locator menuOpen = page.getByTestId("MenuOpenRoundedIcon");
+		if (!menuOpen.isVisible()) {
+			Locator locator = page.getByTestId("MenuRoundedIcon");
+			locator.click();
+			menuOpen.click();
+		}
+		page.getByTestId("PersonIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
+
+		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 
 	public static void clickOnOpenSettings(Page page) {
