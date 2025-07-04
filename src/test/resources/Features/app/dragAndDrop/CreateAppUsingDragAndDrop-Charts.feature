@@ -22,9 +22,9 @@ Feature: Create drag and drop app
   @DeleteCreatedCatalog
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     Given User is on Home page
-   	When User opens Main Menu
-   	And User clicks on Open Database
-		And User searches 'Test app' app in the app searchbox
+    When User opens Main Menu
+    And User clicks on Open Database
+    And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
     And User clicks on Blocks if it is not selected by default
@@ -63,3 +63,4 @@ Feature: Create drag and drop app
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure               | Select X Axis, Select Y Axis                               |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Pie Chart           | Age, BloodPressure               | Select Label, Select Value                                 |
