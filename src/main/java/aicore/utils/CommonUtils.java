@@ -39,6 +39,10 @@ public class CommonUtils {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
 	}
 
+	public static void removeTargetAttribute(Locator anchor) {
+		anchor.evaluate("element => element.setAttribute('target', '')");
+	}
+
 	public static String splitTrimValue(String keyValueString, String key) {
 		String actualName = null;
 		if (keyValueString != null && !keyValueString.isEmpty()) {
