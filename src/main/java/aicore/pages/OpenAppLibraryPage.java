@@ -1,7 +1,5 @@
 package aicore.pages;
 
-import java.util.List;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
@@ -18,29 +16,29 @@ public class OpenAppLibraryPage {
 		this.timestamp = timestamp;
 	}
 
-	public void clickOnCreateNewAppButton() {
-		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
-	}
+//	public void clickOnCreateNewAppButton() {
+//		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
+//	}
 
-	public void clickOnGetStartedButtonInDragAndDrop(String appType) {
-		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page, appType);
-	}
-
-	public void enterAppName(String appName) {
-		AppLibraryPageUtils.enterAppName(page, appName, timestamp);
-	}
-
-	public void enterAppDescription(String appDescription) {
-		AppLibraryPageUtils.enterAppDescription(page, appDescription);
-	}
-
-	public void enterTags(String tagName) {
-		AppLibraryPageUtils.enterTags(page, tagName);
-	}
-
-	public void clickOnCreateButton() {
-		AppLibraryPageUtils.clickOnCreateButton(page);
-	}
+//	public void clickOnGetStartedButtonInDragAndDrop(String appType) {
+//		AppLibraryPageUtils.clickOnGetStartedButtonInDragAndDrop(page, appType);
+//	}
+//
+//	public void enterAppName(String appName) {
+//		AppLibraryPageUtils.enterAppName(page, appName, timestamp);
+//	}
+//
+//	public void enterAppDescription(String appDescription) {
+//		AppLibraryPageUtils.enterAppDescription(page, appDescription);
+//	}
+//
+//	public void enterTags(String tagName) {
+//		AppLibraryPageUtils.enterTags(page, tagName);
+//	}
+//
+//	public void clickOnCreateButton() {
+//		AppLibraryPageUtils.clickOnCreateButton(page);
+//	}
 
 	public boolean verifyPage1IsVisible() {
 		return AppLibraryPageUtils.verifyPage1IsVisible(page);
@@ -62,13 +60,13 @@ public class OpenAppLibraryPage {
 		HomePageUtils.navigateToHomePage(page);
 	}
 
-	public void searchApp(String appName) {
-		AppLibraryPageUtils.searchApp(page, appName, timestamp);
-	}
-
-	public void clickOnSearchedApp(String appName) {
-		AppLibraryPageUtils.clickOnSearchedApp(page, appName, timestamp);
-	}
+//	public void searchApp(String appName) {
+//		AppLibraryPageUtils.searchApp(page, appName, timestamp);
+//	}
+//
+//	public void clickOnSearchedApp(String appName) {
+//		AppLibraryPageUtils.clickOnSearchedApp(page, appName, timestamp);
+//	}
 
 	public void clickOnEditButton() {
 		AppLibraryPageUtils.clickOnEditButton(page);
@@ -166,81 +164,81 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.navigateToPreviosPage(page);
 	}
 
-	public void clickOnNotebooksOption() {
-		AppLibraryPageUtils.clickOnNotebooksOption(page);
-	}
-
-	public void clickOnCreateNewNotebook() {
-		AppLibraryPageUtils.clickOnCreateNewNotebook(page);
-	}
-
-	public void enterQueryName(String queryName) {
-		AppLibraryPageUtils.enterQueryName(page, queryName);
-	}
-
-	public void clickOnQuerySubmitButton() {
-		AppLibraryPageUtils.clickOnQuerySubmitButton(page);
-	}
+//	public void clickOnNotebooksOption() {
+//		AppLibraryPageUtils.clickOnNotebooksOption(page);
+//	}
+//
+//	public void clickOnCreateNewNotebook() {
+//		AppLibraryPageUtils.clickOnCreateNewNotebook(page);
+//	}
+//
+//	public void enterQueryName(String queryName) {
+//		AppLibraryPageUtils.enterQueryName(page, queryName);
+//	}
+//
+//	public void clickOnQuerySubmitButton() {
+//		AppLibraryPageUtils.clickOnQuerySubmitButton(page);
+//	}
 
 	public void selectPage(String pageName) {
 		AppLibraryPageUtils.selectPage(page, pageName);
 	}
 
-	public void enterCodeInQuery(String code) {
-		AppLibraryPageUtils.enterCodeInQuery(page, code);
-	}
-
-	public void clickOnRunAllButton() {
-		AppLibraryPageUtils.clickOnRunAllButton(page);
-	}
+//	public void enterCodeInQuery(String code) {
+//		AppLibraryPageUtils.enterCodeInQuery(page, code);
+//	}
+//
+//	public void clickOnRunAllButton() {
+//		AppLibraryPageUtils.clickOnRunAllButton(page);
+//	}
 
 	public void selectQueryFromList(String queryName) {
 		AppLibraryPageUtils.selectQueryFromList(page, queryName);
 	}
 
-	public String getCodeOutput(String codeOutput) {
-		return AppLibraryPageUtils.getCodeOutput(page, codeOutput);
-	}
+//	public String getCodeOutput(String codeOutput) {
+//		return AppLibraryPageUtils.getCodeOutput(page, codeOutput);
+//	}
 
 	public void clickOnTerminalCard() {
 		AppLibraryPageUtils.clickOnTerminalCard(page);
 	}
 
-	public void mouseHoverOnNotebookHiddenOptions() {
-		AppLibraryPageUtils.mouseHoverOnNotebookHiddenOptions(page);
-	}
-
-	public void clickOnHiddenNotebookOption(String optionName) {
-		AppLibraryPageUtils.clickOnHiddenNotebookOption(page, optionName);
-	}
-
-	public void selectDataImportOption(String optionName) {
-		AppLibraryPageUtils.selectDataImportOption(page, optionName);
-	}
-
-	public void selectDatabaseFromDropdown(String databaseName) {
-		AppLibraryPageUtils.selectDatabaseFromDropdown(page, databaseName);
-	}
-
-	public void selectAllColumns() {
-		AppLibraryPageUtils.selectAllColumns(page);
-	}
-
-	public void clickOnImportButton() {
-		AppLibraryPageUtils.clickOnImportButton(page);
-	}
-
-	public void deleteFirstCell() {
-		AppLibraryPageUtils.deleteFirstCell(page);
-	}
-
-	public void clickOnRunCellButton() {
-		AppLibraryPageUtils.clickOnRunCellButton(page);
-	}
-
-	public String getFrameID() {
-		return AppLibraryPageUtils.getFrameID(page);
-	}
+//	public void mouseHoverOnNotebookHiddenOptions() {
+//		AppLibraryPageUtils.mouseHoverOnNotebookHiddenOptions(page);
+//	}
+//
+//	public void clickOnHiddenNotebookOption(String optionName) {
+//		AppLibraryPageUtils.clickOnHiddenNotebookOption(page, optionName);
+//	}
+//
+//	public void selectDataImportOption(String optionName) {
+//		AppLibraryPageUtils.selectDataImportOption(page, optionName);
+//	}
+//
+//	public void selectDatabaseFromDropdown(String databaseName) {
+//		AppLibraryPageUtils.selectDatabaseFromDropdown(page, databaseName);
+//	}
+//
+//	public void selectAllColumns() {
+//		AppLibraryPageUtils.selectAllColumns(page);
+//	}
+//
+//	public void clickOnImportButton() {
+//		AppLibraryPageUtils.clickOnImportButton(page);
+//	}
+//
+//	public void deleteFirstCell() {
+//		AppLibraryPageUtils.deleteFirstCell(page);
+//	}
+//
+//	public void clickOnRunCellButton() {
+//		AppLibraryPageUtils.clickOnRunCellButton(page);
+//	}
+//
+//	public String getFrameID() {
+//		return AppLibraryPageUtils.getFrameID(page);
+//	}
 
 	public void clickOnDataTab() {
 		AppLibraryPageUtils.clickOnDataTab(page);
@@ -258,51 +256,51 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.takeChartScreenshot(page, actualImagePath);
 	}
 
-	public List<String> checkColumnNamesOnUI() {
-		return AppLibraryPageUtils.checkColumnNamesOnUI(page);
-	}
+//	public List<String> checkColumnNamesOnUI() {
+//		return AppLibraryPageUtils.checkColumnNamesOnUI(page);
+//	}
 
 	public boolean verifyColumnDroppedInCorrectField(String columnName, String targetField) {
 		return AppLibraryPageUtils.verifyColumnDroppedInCorrectField(page, columnName, targetField);
 	}
 
-	public List<String> getNotebookOutputTableHeader() {
-		return AppLibraryPageUtils.getNotebookOutputTableHeader(page);
-	}
-
-	public int getTotalRowsFromPreviewCaption() {
-		return AppLibraryPageUtils.getTotalRowsFromPreviewCaption(page);
-	}
-
-	public boolean isColumnUniqueByHeader(String headerName) {
-		return AppLibraryPageUtils.isColumnUniqueByHeader(page, headerName);
-	}
-
-	public String validateJsonFieldValue(String frameId) {
-		return AppLibraryPageUtils.validateJsonFieldValue(page, frameId);
-	}
-
-	public void selectTypeFromDropdown(String type) {
-		AppLibraryPageUtils.selectTypeFromDropdown(page, type);
-	}
-
-	public void hoverAndClickOnCell() {
-		AppLibraryPageUtils.hoverAndClickOnCell(page);
-	}
-
-	public void checkPythonAsDefault() {
-		AppLibraryPageUtils.checkPythonAsDefaultLanguage(page);
-	}
-
-	public void changeToLanguage(String language) {
-		AppLibraryPageUtils.changeToLanguage(page, language);
-	}
-
-	public void getPixelOutput(String output) {
-		AppLibraryPageUtils.getPixelOutput(page, output);
-	}
-
-	public void getPythonOutput(String output) {
-		AppLibraryPageUtils.getPythonOutput(page, output);
-	}
+//	public List<String> getNotebookOutputTableHeader() {
+//		return AppLibraryPageUtils.getNotebookOutputTableHeader(page);
+//	}
+//
+//	public int getTotalRowsFromPreviewCaption() {
+//		return AppLibraryPageUtils.getTotalRowsFromPreviewCaption(page);
+//	}
+//
+//	public boolean isColumnUniqueByHeader(String headerName) {
+//		return AppLibraryPageUtils.isColumnUniqueByHeader(page, headerName);
+//	}
+//
+//	public String validateJsonFieldValue(String frameId) {
+//		return AppLibraryPageUtils.validateJsonFieldValue(page, frameId);
+//	}
+//
+//	public void selectTypeFromDropdown(String type) {
+//		AppLibraryPageUtils.selectTypeFromDropdown(page, type);
+//	}
+//
+//	public void hoverAndClickOnCell() {
+//		AppLibraryPageUtils.hoverAndClickOnCell(page);
+//	}
+//
+//	public void checkPythonAsDefault() {
+//		AppLibraryPageUtils.checkPythonAsDefaultLanguage(page);
+//	}
+//
+//	public void changeToLanguage(String language) {
+//		AppLibraryPageUtils.changeToLanguage(page, language);
+//	}
+//
+//	public void getPixelOutput(String output) {
+//		AppLibraryPageUtils.getPixelOutput(page, output);
+//	}
+//
+//	public void getPythonOutput(String output) {
+//		AppLibraryPageUtils.getPythonOutput(page, output);
+//	}
 }
