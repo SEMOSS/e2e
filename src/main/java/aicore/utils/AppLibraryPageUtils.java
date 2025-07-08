@@ -101,6 +101,7 @@ public class AppLibraryPageUtils {
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
+	private static final String NOTEBOOK_XPATH = "//p[text()='{notebookName}']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -456,15 +457,21 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void mouseHoverOnNotebookHiddenOptions(Page page) {
-		Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
-		moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
+		if (!page.getByTestId("data-key-pair").isVisible()) {
+			Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
+			moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
+		} else {
+			Locator dataKeyPair = page.getByTestId("data-key-pair");
+			dataKeyPair.scrollIntoViewIfNeeded();
+			moveMouseToCenterWithMargin(page, dataKeyPair, 60, 10);
+		}
 	}
 
 	public static void clickOnHiddenNotebookOption(Page page, String optionName) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(optionName)).click();
 	}
 
-	public static void selectDataImportOption(Page page, String optionName) {
+	public static void selectHiddenOptionDropdown(Page page, String optionName) {
 		page.locator(IMPORT_DATA_OPTIONS_XPATH.replace("{optionName}", optionName)).click();
 	}
 
@@ -652,5 +659,18 @@ public class AppLibraryPageUtils {
 		if (pythonOutput == null || !pythonOutput.contains(output)) {
 			throw new AssertionError("Expected Python output: " + output + ", but got: " + pythonOutput);
 		}
+	}
+
+	public static void verifyNotebookIsVisible(Page page, String notebookName) {
+		Locator notebook = page.locator(NOTEBOOK_XPATH.replace("{notebookName}", notebookName));
+		if (!notebook.isVisible()) {
+			throw new AssertionError("Notebook '" + notebookName + "' is not visible");
+		}
+	}
+
+	public static void clickOnNotebook(Page page, String notebookName) {
+		Locator notebook = page.locator(NOTEBOOK_XPATH.replace("{notebookName}", notebookName));
+		notebook.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		notebook.click();
 	}
 }

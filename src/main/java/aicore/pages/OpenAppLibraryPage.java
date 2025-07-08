@@ -214,8 +214,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.clickOnHiddenNotebookOption(page, optionName);
 	}
 
-	public void selectDataImportOption(String optionName) {
-		AppLibraryPageUtils.selectDataImportOption(page, optionName);
+	public void selectHiddenOptionDropdown(String optionName) {
+		AppLibraryPageUtils.selectHiddenOptionDropdown(page, optionName);
 	}
 
 	public void selectDatabaseFromDropdown(String databaseName) {
@@ -304,5 +304,13 @@ public class OpenAppLibraryPage {
 
 	public void getPythonOutput(String output) {
 		AppLibraryPageUtils.getPythonOutput(page, output);
+	}
+
+	public void verifyNotebookIsVisible(String notebookName) {
+		AppLibraryPageUtils.verifyNotebookIsVisible(page, notebookName);
+	}
+
+	public void clickOnNotebook(String notebookName) {
+		AppLibraryPageUtils.clickOnNotebook(page, notebookName);
 	}
 }

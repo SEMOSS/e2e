@@ -299,7 +299,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User selects {string} from the data import options")
 	public void user_selects_from_the_data_import_options(String optionName) {
-		openAppLibraryPage.selectDataImportOption(optionName);
+		openAppLibraryPage.selectHiddenOptionDropdown(optionName);
 	}
 
 	@And("User selects {string} from the dropdown list")
@@ -433,5 +433,15 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("User can see Python output as {string}")
 	public void user_can_see_python_output_as(String Output) {
 		openAppLibraryPage.getPythonOutput(Output);
+	}
+
+	@And("User Sees the Notebook {string} in the notebook list")
+	public void user_sees_the_notebook_in_the_notebook_list(String notebookName) {
+		openAppLibraryPage.verifyNotebookIsVisible(notebookName);
+	}
+
+	@And("User clicks on the Notebook {string}")
+	public void user_clicks_on_the_notebook(String notebookName) {
+		openAppLibraryPage.clickOnNotebook(notebookName);
 	}
 }
