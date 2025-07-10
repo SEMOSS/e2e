@@ -48,6 +48,7 @@ public class HomePageUtils {
 	
 	public static void navigateToHomePage(Page page) {
 		String homePage = UrlUtils.getUrl("#");
+		page.reload();
 		page.navigate(homePage);
 		try {
 			page.waitForURL(homePage);
