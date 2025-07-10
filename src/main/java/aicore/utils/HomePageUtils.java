@@ -35,6 +35,8 @@ public class HomePageUtils {
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
+	
+	private static final String USER_PROFILE_ICON_DATA_TESTID="PersonIcon";
 
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
@@ -126,7 +128,15 @@ public class HomePageUtils {
 	}
 
 	public static void logout(Page page) {
-		page.click(USER_PROFILE_ICON_XPATH);
+		//page.click(USER_PROFILE_ICON_XPATH); 
+		
+		Locator menuOpen = page.getByTestId("MenuOpenRoundedIcon");
+		if (!menuOpen.isVisible()) {
+			Locator locator = page.getByTestId("MenuRoundedIcon");
+			locator.click();
+			menuOpen.click();
+		}
+		page.getByTestId("PersonIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 	}
 
