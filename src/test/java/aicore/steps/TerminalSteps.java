@@ -7,7 +7,10 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.TerminalPage;
 import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.utils.CommonUtils;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class TerminalSteps {
 
@@ -27,14 +30,14 @@ public class TerminalSteps {
 
 	@Then("User run pixel command {string}")
 	public void user_run_pixel_command(String pixelCommand) {
-		terminalPage.runPixel(pixelCommand);
+		terminalPage.runCommand(pixelCommand);
 	}
 
-	@Then("User sees {string} in the output")
-	public void user_sees_in_the_output(String expectedPixelOutput) {
-		String ActualOutput = terminalPage.getActualPixelOutput();
+	@Then("User sees {string} output {string}")
+	public void user_sees_in_the_output(String language, String expectedPixelOutput) {
+		String ActualOutput = terminalPage.getActualPixelOutput(language);
 		Assertions.assertEquals(expectedPixelOutput, ActualOutput,
-				"Output is not correct or Pixel Command is not working");
+				"either Output is not correct or Command is not working as expected");
 	}
 
 	@Then("User sees Filename in the output as {string}")
@@ -63,4 +66,20 @@ public class TerminalSteps {
 		String expectedDate = CommonUtils.getTodayDateFormatted();
 		Assertions.assertEquals(actualDate, expectedDate, "Upload date is not present or either not same");
 	}
+
+	@Given("User is on Terminal page")
+	public void user_is_on_terminal_page() {
+		terminalPage.verifyUserIsOnTerminalPage();
+	}
+
+	@When("User run python command {string}")
+	public void user_run_python_command(String pixelCommand) {
+		terminalPage.runCommand(pixelCommand);
+	}
+
+	@And("User change the language to {string}")
+	public void user_changes_the_language_to(String language) {
+		terminalPage.changeToLanguage(language);
+	}
+
 }
