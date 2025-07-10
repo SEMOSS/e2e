@@ -23,7 +23,7 @@ Feature: Create drag and drop app
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     Given User is on Home page
     When User opens Main Menu
-    And User clicks on Open Database
+    And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
@@ -36,7 +36,7 @@ Feature: Create drag and drop app
     And User selects '<HIDDEN_OPTION>' from the hidden options
     And User selects '<DATA_IMPORT_OPTION>' from the data import options
     And User selects '<DATABASE_NAME>' from the dropdown list
-    Then User can see 'Age, BMI, BloodPressure, DIABETES_1_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, Glucose, Insulin, Outcome, Pregnancies, SkinThickness' columns under the fields column
+    Then User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
@@ -58,9 +58,10 @@ Feature: Create drag and drop app
     When User clicks on the database name 'TestDatabase' in the database catalog
 
     Examples: 
-      | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                     | FIELD_NAMES                                                |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose | Select Label, Select X Axis, Select Y Axis, Select Tooltip |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure               | Select X Axis, Select Y Axis                               |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Pie Chart           | Age, BloodPressure               | Select Label, Select Value                                 |
+      | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                                                    | FIELD_NAMES                                                                                          |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose                                | Select Label, Select X Axis, Select Y Axis, Select Tooltip                                           |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure                                              | Select X Axis, Select Y Axis                                                                         |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Pie Chart           | Age, BloodPressure                                              | Select Label, Select Value                                                                           |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Gantt Chart         | Task_Name, Start_Date, End_Date, Task_Group, Milestone, Tooltip | Select Task, Select Start Date, Select End Date, Select Task Group, Select MileStone, Select Tooltip |

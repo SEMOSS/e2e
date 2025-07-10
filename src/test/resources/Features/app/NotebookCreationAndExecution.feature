@@ -32,15 +32,16 @@ Feature: Create Notebook and execute it
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    Then User can see 'Age, BMI, BloodPressure, DIABETES_1_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, Glucose, Insulin, Outcome, Pregnancies, SkinThickness' columns under the fields column
+    Then User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
+    And User selects type as 'Python'
     And User clicks on Run cell button
     And User fetch the frame id
-    Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_1_UNIQUE_ROW_ID, DiabetesPedigreeFunction, Glucose, Insulin, Outcome, Pregnancies, SkinThickness'
+    Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
     And User can see total '20' rows
-    And User can see the 'DIABETES_1_UNIQUE_ROW_ID' column have unique values
+    And User can see the 'DIABETES_UNIQUE_ROW_ID' column have unique values
     And User can see name as frame id in JSON
     And User can see type as 'PY' for 'Python' in JSON
     When User clicks on the Save App icon

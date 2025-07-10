@@ -402,9 +402,13 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertEquals(frameID, cleanedActualFrameId, "Frame Id not matching");
 	}
 
+	@When("User selects type as {string}")
+	public void user_selects_type_as(String type) {
+		openAppLibraryPage.selectTypeFromDropdown(type);
+	}
+
 	@Then("User can see type as {string} for {string} in JSON")
 	public void user_can_see_type_as_for_in_json(String typeFieldValue, String type) {
-		openAppLibraryPage.selectTypeFromDropdown(type);
 		openAppLibraryPage.validateJsonFieldValue(typeFieldValue);
 	}
 

@@ -54,6 +54,7 @@ public class AppLibraryPageUtils {
 	private static final String BAR_CHART_BLOCK_XPATH = "//div[text()='Bar Chart']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
 	private static final String BAR_CHART_STACKED_BLOCK_XPATH = "//div[text()='Bar Chart - Stacked']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
 	private static final String PIE_CHART_BLOCK_XPATH = "//div[@aria-label='Show proportions of a whole']";
+	private static final String GANTT_CHART_BLOCK_XPATH = "//div[@aria-label='Gannt chart for task management']";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
@@ -261,6 +262,11 @@ public class AppLibraryPageUtils {
 			page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
 			page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
 			page.locator(PIE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Gantt Chart":
+			page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
+			page.locator(GANTT_CHART_BLOCK_XPATH).hover();
 			break;
 		default:
 			isValidBlock = false;
