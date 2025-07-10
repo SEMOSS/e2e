@@ -4,8 +4,8 @@ package aicore.steps;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.OpenAppLibraryPage;
 import aicore.pages.TerminalPage;
+import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -14,18 +14,18 @@ import io.cucumber.java.en.When;
 
 public class TerminalSteps {
 
-	private OpenAppLibraryPage openAppLibraryPage;
+	private DragAndDropBlocksPage blocksPage;
 	private TerminalPage terminalPage;
 
 	public TerminalSteps() {
-		openAppLibraryPage = new OpenAppLibraryPage(SetupHooks.getPage(), AddModelSteps.timestamp);
+		blocksPage = new DragAndDropBlocksPage(SetupHooks.getPage());
 		terminalPage = new TerminalPage(SetupHooks.getPage());
 
 	}
 
 	@Then("User clicks on Terminal card")
 	public void user_clicks_on_Terminal_card() {
-		openAppLibraryPage.clickOnTerminalCard();
+		blocksPage.clickOnTerminalCard();
 	}
 
 	@Then("User run pixel command {string}")
