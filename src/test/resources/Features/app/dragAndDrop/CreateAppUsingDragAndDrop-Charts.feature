@@ -16,7 +16,7 @@ Feature: Create drag and drop app
     And User enters app name as 'Test app'
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
-    And User clicks on Create button
+    And User clicks on Create button 	
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
 
   @DeleteCreatedCatalog
@@ -24,7 +24,7 @@ Feature: Create drag and drop app
     Given User is on Home page
    	When User opens Main Menu
    	And User clicks on Open Database
-		And User searches 'Test app' app in the app searchbox
+	And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
     And User clicks on Blocks if it is not selected by default
@@ -58,8 +58,10 @@ Feature: Create drag and drop app
     When User clicks on the database name 'TestDatabase' in the database catalog
 
     Examples: 
-      | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                     | FIELD_NAMES                                                |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose | Select Label, Select X Axis, Select Y Axis, Select Tooltip |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure               | Select X Axis, Select Y Axis                               |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
+       | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                     | FIELD_NAMES                                                |
+       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose | Select Label, Select X Axis, Select Y Axis, Select Tooltip |
+       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
+       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure               | Select X Axis, Select Y Axis                               |
+       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI          | Select X Axis, Select Y Axis, Select Tooltip               |
+	   | Test          | Import Data   | From Data Catalog  | TestDatabase  | Dendrogram Chart    | Age, BloodPressure               | Select Dimensions , Select Facet                           |
+	

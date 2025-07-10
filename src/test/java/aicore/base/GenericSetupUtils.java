@@ -161,7 +161,7 @@ public class GenericSetupUtils {
 	}
 
 	private static void makeAdminUserAdmin(Page page) {
-		page.getByLabel("Navigate to settings").click();
+		page.getByTestId("MenuRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
 		page.getByText("Member Settings").click();
 		try {

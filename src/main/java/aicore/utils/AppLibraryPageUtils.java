@@ -55,6 +55,7 @@ public class AppLibraryPageUtils {
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
+	private static final String DENDROGRAM_CHART_ON_PAGE_XPATH="//div[text()='Dendrogram Chart']/parent::p/following-sibling::div[div[@aria-label='Dendrogram chart']]";
 	// Block settings for Text elements
 	public static final String APP_SETTINGS_DATA_TEST_ID = "MenuIcon";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
@@ -245,6 +246,11 @@ public class AppLibraryPageUtils {
 				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
 				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
 				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
+				break;
+			case "Dendrogram Chart":
+				page.locator(DENDROGRAM_CHART_ON_PAGE_XPATH).scrollIntoViewIfNeeded();
+				page.locator(DENDROGRAM_CHART_ON_PAGE_XPATH).isVisible();
+				page.locator(DENDROGRAM_CHART_ON_PAGE_XPATH).hover();
 				break;
 			default:
 				isValidBlock = false;
