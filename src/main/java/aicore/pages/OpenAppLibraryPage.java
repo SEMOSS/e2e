@@ -214,8 +214,8 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.clickOnHiddenNotebookOption(page, optionName);
 	}
 
-	public void selectDataImportOption(String optionName) {
-		AppLibraryPageUtils.selectDataImportOption(page, optionName);
+	public void selectHiddenOptionDropdown(String optionName) {
+		AppLibraryPageUtils.selectHiddenOptionDropdown(page, optionName);
 	}
 
 	public void selectDatabaseFromDropdown(String databaseName) {
@@ -266,6 +266,26 @@ public class OpenAppLibraryPage {
 		return AppLibraryPageUtils.verifyColumnDroppedInCorrectField(page, columnName, targetField);
 	}
 
+	public List<String> getNotebookOutputTableHeader() {
+		return AppLibraryPageUtils.getNotebookOutputTableHeader(page);
+	}
+
+	public int getTotalRowsFromPreviewCaption() {
+		return AppLibraryPageUtils.getTotalRowsFromPreviewCaption(page);
+	}
+
+	public boolean isColumnUniqueByHeader(String headerName) {
+		return AppLibraryPageUtils.isColumnUniqueByHeader(page, headerName);
+	}
+
+	public String validateJsonFieldValue(String frameId) {
+		return AppLibraryPageUtils.validateJsonFieldValue(page, frameId);
+	}
+
+	public void selectTypeFromDropdown(String type) {
+		AppLibraryPageUtils.selectTypeFromDropdown(page, type);
+	}
+
 	public void hoverAndClickOnCell() {
 		AppLibraryPageUtils.hoverAndClickOnCell(page);
 	}
@@ -286,4 +306,11 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.getPythonOutput(page, output);
 	}
 
+	public void verifyNotebookIsVisible(String notebookName) {
+		AppLibraryPageUtils.verifyNotebookIsVisible(page, notebookName);
+	}
+
+	public void clickOnNotebook(String notebookName) {
+		AppLibraryPageUtils.clickOnNotebook(page, notebookName);
+	}
 }

@@ -2,7 +2,11 @@ package aicore.utils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
@@ -49,6 +53,8 @@ public class AppLibraryPageUtils {
 	private static final String SCATTER_PLOT_BLOCK_XPATH = "//div[text()='Scatter Plot']/parent::p/following-sibling::div[div[@aria-label='Show relationships between two variables']]";
 	private static final String BAR_CHART_BLOCK_XPATH = "//div[text()='Bar Chart']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
 	private static final String BAR_CHART_STACKED_BLOCK_XPATH = "//div[text()='Bar Chart - Stacked']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
+	private static final String PIE_CHART_BLOCK_XPATH = "//div[@aria-label='Show proportions of a whole']";
+	private static final String GANTT_CHART_BLOCK_XPATH = "//div[@aria-label='Gannt chart for task management']";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
@@ -88,9 +94,16 @@ public class AppLibraryPageUtils {
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
+	private static final String OUTPUT_TABLE_HEADER_XPATH = "//table//th";
+	private static final String OUTPUT_TABLE_ROW_XPATH = "//table//tbody//tr";
+	private static final String JSON_BODY_FIELD_VALUE_XPATH = "//div[contains(@class,'string-value MuiBox-root')]//span[text()='{fieldValue}']";
+	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//div[div[text()='Python']]";
+	private static final String SELECT_TYPE_LISTBOX_XPATH = "//li[text()='{type}']";
+	private static final String TOTAL_COUNT_OF_ROWS_XPATH = "(//span[contains(text(),'This is a preview of ingested data')])[1]";
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
+	private static final String NOTEBOOK_XPATH = "//p[text()='{notebookName}']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -158,16 +171,15 @@ public class AppLibraryPageUtils {
 		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
 		AICorePageUtils.waitFor(listbox);
 		String expectedText = appName + " " + timestamp;
-		
 		Locator button = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(expectedText));
 		AICorePageUtils.waitFor(button);
 		Locator anchor = page.locator("//span[text()='" + expectedText + "']/ancestor::a");
 		CommonUtils.removeTargetAttribute(anchor);
 		button.click();
-
 	}
 
 	public static void clickOnEditButton(Page page) {
+		page.locator(EDIT_BUTTON_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(EDIT_BUTTON_XPATH).click();
 	}
 
@@ -187,69 +199,79 @@ public class AppLibraryPageUtils {
 	public static void mouseHoverOnBlock(Page page, String blockName) {
 		boolean isValidBlock = true;
 		switch (blockName) {
-			case "Text (h1)":
-				page.locator(HEADING_1_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_1_BLOCK_XPATH).hover();
-				break;
-			case "Text (h2)":
-				page.locator(HEADING_2_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_2_BLOCK_XPATH).hover();
-				break;
-			case "Text (h3)":
-				page.locator(HEADING_3_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_3_BLOCK_XPATH).hover();
-				break;
-			case "Text (h4)":
-				page.locator(HEADING_4_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_4_BLOCK_XPATH).hover();
-				break;
-			case "Text (h5)":
-				page.locator(HEADING_5_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_5_BLOCK_XPATH).hover();
-				break;
-			case "Text (h6)":
-				page.locator(HEADING_6_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_6_BLOCK_XPATH).hover();
-				break;
-			case "Text":
-				page.locator(TEXT_BLOCK_XPATH).isVisible();
-				page.locator(TEXT_BLOCK_XPATH).hover();
-				break;
-			case "Link":
-				page.locator(LINK_BLOCK_XPATH).isVisible();
-				page.locator(LINK_BLOCK_XPATH).hover();
-				break;
-			case "Markdown":
-				page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
-				page.locator(MARKDOWN_BLOCK_XPATH).hover();
-				break;
-			case "Logs":
-				page.locator(LOGS_BLOCK_XPATH).isVisible();
-				page.locator(LOGS_BLOCK_XPATH).hover();
-				break;
-			case "Scatter Plot":
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
-				break;
-			case "Line Chart":
-				page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
-				page.locator(LINE_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Bar Chart":
-				page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
-				page.locator(BAR_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Bar Chart - Stacked":
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
-				break;
-			default:
-				isValidBlock = false;
-				System.out.println("Invalid block name: " + blockName);
+		case "Text (h1)":
+			page.locator(HEADING_1_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_1_BLOCK_XPATH).hover();
+			break;
+		case "Text (h2)":
+			page.locator(HEADING_2_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_2_BLOCK_XPATH).hover();
+			break;
+		case "Text (h3)":
+			page.locator(HEADING_3_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_3_BLOCK_XPATH).hover();
+			break;
+		case "Text (h4)":
+			page.locator(HEADING_4_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_4_BLOCK_XPATH).hover();
+			break;
+		case "Text (h5)":
+			page.locator(HEADING_5_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_5_BLOCK_XPATH).hover();
+			break;
+		case "Text (h6)":
+			page.locator(HEADING_6_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_6_BLOCK_XPATH).hover();
+			break;
+		case "Text":
+			page.locator(TEXT_BLOCK_XPATH).isVisible();
+			page.locator(TEXT_BLOCK_XPATH).hover();
+			break;
+		case "Link":
+			page.locator(LINK_BLOCK_XPATH).isVisible();
+			page.locator(LINK_BLOCK_XPATH).hover();
+			break;
+		case "Markdown":
+			page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
+			page.locator(MARKDOWN_BLOCK_XPATH).hover();
+			break;
+		case "Logs":
+			page.locator(LOGS_BLOCK_XPATH).isVisible();
+			page.locator(LOGS_BLOCK_XPATH).hover();
+			break;
+		case "Scatter Plot":
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
+			break;
+		case "Line Chart":
+			page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
+			page.locator(LINE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart":
+			page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart - Stacked":
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
+			break;
+		case "Pie Chart":
+			page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
+			page.locator(PIE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Gantt Chart":
+			page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
+			page.locator(GANTT_CHART_BLOCK_XPATH).hover();
+			break;
+		default:
+			isValidBlock = false;
+			System.out.println("Invalid block name: " + blockName);
 		}
 		if (isValidBlock) {
 			page.mouse().down();
@@ -339,21 +361,21 @@ public class AppLibraryPageUtils {
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
 		Locator textBlockLocator = null;
 		switch (blockName) {
-			case "Link":
-				textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
-				break;
-			case "Text":
-				textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
-				break;
-			case "Markdown":
-				textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
-				break;
-			case "Logs":
-				textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
-				break;
-			default:
-				textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
-				break;
+		case "Link":
+			textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
+			break;
+		case "Text":
+			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			break;
+		case "Markdown":
+			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			break;
+		case "Logs":
+			textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
+			break;
+		default:
+			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
+			break;
 		}
 		return textBlockLocator;
 	}
@@ -447,15 +469,21 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void mouseHoverOnNotebookHiddenOptions(Page page) {
-		Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
-		moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
+		if (!page.getByTestId("data-key-pair").isVisible()) {
+			Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
+			moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
+		} else {
+			Locator dataKeyPair = page.getByTestId("data-key-pair");
+			dataKeyPair.scrollIntoViewIfNeeded();
+			moveMouseToCenterWithMargin(page, dataKeyPair, 60, 10);
+		}
 	}
 
 	public static void clickOnHiddenNotebookOption(Page page, String optionName) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(optionName)).click();
 	}
 
-	public static void selectDataImportOption(Page page, String optionName) {
+	public static void selectHiddenOptionDropdown(Page page, String optionName) {
 		page.locator(IMPORT_DATA_OPTIONS_XPATH.replace("{optionName}", optionName)).click();
 	}
 
@@ -560,6 +588,62 @@ public class AppLibraryPageUtils {
 				new Mouse.MoveOptions().setSteps(steps));
 	}
 
+	public static List<String> getNotebookOutputTableHeader(Page page) {
+		return page.locator(OUTPUT_TABLE_HEADER_XPATH).allTextContents();
+	}
+
+	public static int getTotalRowsFromPreviewCaption(Page page) {
+		final String compilePattern = "Showing \\d+ of (\\d+)";
+		Locator previewCaption = page.locator(TOTAL_COUNT_OF_ROWS_XPATH);
+		previewCaption.scrollIntoViewIfNeeded();
+		String captionText = previewCaption.textContent();
+		Pattern pattern = Pattern.compile(compilePattern);
+		Matcher matcher = pattern.matcher(captionText);
+		if (matcher.find()) {
+			return Integer.parseInt(matcher.group(1)); // Extracts the second number
+		} else {
+			throw new RuntimeException("Failed to extract total row count from caption: " + captionText);
+		}
+	}
+
+	public static boolean isColumnUniqueByHeader(Page page, String headerName) {
+		Locator headers = page.locator(OUTPUT_TABLE_HEADER_XPATH);
+		int columnCount = headers.count();
+		int targetColumnIndex = -1;
+		for (int i = 0; i < columnCount; i++) {
+			String text = headers.nth(i).textContent().trim();
+			if (text.equalsIgnoreCase(headerName)) {
+				targetColumnIndex = i;
+				break;
+			}
+		}
+		if (targetColumnIndex == -1) {
+			throw new RuntimeException("Header with label '" + headerName + "' not found");
+		}
+		Locator rows = page.locator(OUTPUT_TABLE_ROW_XPATH);
+		int rowCount = rows.count();
+		Set<String> uniqueValues = new HashSet<>();
+		for (int i = 0; i < rowCount; i++) {
+			Locator cell = rows.nth(i).locator("td").nth(targetColumnIndex);
+			String cellText = cell.textContent().trim();
+			uniqueValues.add(cellText);
+		}
+		return uniqueValues.size() == rowCount;
+	}
+
+	public static String validateJsonFieldValue(Page page, String fieldValue) {
+		Locator jsonNameLocator = page.locator(JSON_BODY_FIELD_VALUE_XPATH.replace("{fieldValue}", fieldValue));
+		jsonNameLocator.isVisible();
+		return jsonNameLocator.textContent();
+	}
+
+	public static void selectTypeFromDropdown(Page page, String type) {
+		Locator dropdownArrow = page.locator(SELECT_TYPE_DROPDOWN_XPATH.replace("{type}", type)).first();
+		dropdownArrow.isVisible();
+		dropdownArrow.click();
+		page.locator(SELECT_TYPE_LISTBOX_XPATH.replace("{type}", type)).click();
+	}
+
 	public static void hoverAndClickOnCell(Page page) {
 		page.getByTitle("Cell", new Page.GetByTitleOptions().setExact(true)).hover();
 		page.getByTitle("Cell", new Page.GetByTitleOptions().setExact(true)).click();
@@ -589,4 +673,16 @@ public class AppLibraryPageUtils {
 		}
 	}
 
+	public static void verifyNotebookIsVisible(Page page, String notebookName) {
+		Locator notebook = page.locator(NOTEBOOK_XPATH.replace("{notebookName}", notebookName));
+		if (!notebook.isVisible()) {
+			throw new AssertionError("Notebook '" + notebookName + "' is not visible");
+		}
+	}
+
+	public static void clickOnNotebook(Page page, String notebookName) {
+		Locator notebook = page.locator(NOTEBOOK_XPATH.replace("{notebookName}", notebookName));
+		notebook.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		notebook.click();
+	}
 }

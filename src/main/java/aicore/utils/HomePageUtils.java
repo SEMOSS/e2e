@@ -22,16 +22,16 @@ public class HomePageUtils {
 	// TODO this changed for now need to use data test id
 	public static final String FUNCTION_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Function')";
 	private static final String OPEN_FUNCTION_DATA_TEST_ID_VALUE = "Function-icon";
-	
+
 	public static final String MODEL_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Model')";
 	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
-	
+
 	public static final String STORAGE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Storage')";
 	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
-	
+
 	public static final String VECTOR_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Vector')";
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
-	
+
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
@@ -47,7 +47,6 @@ public class HomePageUtils {
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
 
-	
 	public static void navigateToHomePage(Page page) {
 		String homePage = UrlUtils.getUrl("#");
 		page.navigate(homePage);
@@ -56,19 +55,22 @@ public class HomePageUtils {
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
 		}
+		// previously searched app remains visible when the user returns to the homepage
+		// This is a issue and will be removed once resolved.
+		page.reload();
 	}
-	
+
 	public static void openMainMenu(Page page) {
 		// check if menu is open
 		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
 		if (!menuOpen.isVisible()) {
 			Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
 			locator.click();
-			
+
 			menuOpen.click();
 		}
 	}
-	
+
 	public static void closeMainMenu(Page page) {
 		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
 		if (menuOpen.isVisible()) {
@@ -76,7 +78,6 @@ public class HomePageUtils {
 		}
 	}
 
-	
 	public static void closeInfoPopup(Page page) {
 		page.click(ACCEPT_BUTTON_XPATH);
 		page.click(CLOSE_POPUP_BUTTON_XPATH);
@@ -121,11 +122,11 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
-        Locator locator = page.locator(APP_MENU_BUTTON_LABEL);
-        locator.click();
+		Locator locator = page.locator(APP_MENU_BUTTON_LABEL);
+		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
-	
+
 	public static void logout(Page page) {
 		//page.click(USER_PROFILE_ICON_XPATH); 
 		
@@ -146,9 +147,9 @@ public class HomePageUtils {
 	public static void checkOnOpenSetting(Page page) {
 		page.locator(OPEN_SETTINGS_XPATH).isVisible();
 	}
-	
+
 	public static void clickOnOpenDatabase(Page page) {
-        Locator locator = page.locator(DATABASE_MENU_BUTTON_LABEL);
+		Locator locator = page.locator(DATABASE_MENU_BUTTON_LABEL);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
