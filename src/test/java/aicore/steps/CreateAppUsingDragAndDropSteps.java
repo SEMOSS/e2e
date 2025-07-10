@@ -1,10 +1,11 @@
 package aicore.steps;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -142,12 +143,12 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User enters {string} text as {string}")
 	public void user_enters_text_as(String blockName, String blockText) {
 		switch (blockName) {
-			case "Markdown":
-				openAppLibraryPage.enterMarkdown(blockText);
-				break;
-			default:
-				openAppLibraryPage.enterText(blockText);
-				break;
+		case "Markdown":
+			openAppLibraryPage.enterMarkdown(blockText);
+			break;
+		default:
+			openAppLibraryPage.enterText(blockText);
+			break;
 		}
 	}
 
@@ -181,12 +182,12 @@ public class CreateAppUsingDragAndDropSteps {
 		String BOLD_MARKDOWN_PATTERN = "\\*\\*(.*?)\\*\\*";
 		String BOLD_REPLACEMENT = "$1";
 		switch (blockName) {
-			case "Markdown":
-				this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
-				break;
-			default:
-				this.blockText = text;
-				break;
+		case "Markdown":
+			this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
+			break;
+		default:
+			this.blockText = text;
+			break;
 		}
 		String actualText = openAppLibraryPage.getBlockText(blockName, blockText);
 		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
@@ -374,6 +375,39 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
 	}
 
+	@Then("User can see header names as {string}")
+	public void user_can_see_header_names_as(String headerNames) {
+		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
+		List<String> actualHeaderNames = openAppLibraryPage.getNotebookOutputTableHeader();
+		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
+	}
+
+	@Then("User can see total {string} rows")
+	public void user_can_see_total_rows(String rowsCount) {
+		int actualRowsCount = openAppLibraryPage.getTotalRowsFromPreviewCaption();
+		int expectedRowsCount = Integer.parseInt(rowsCount);
+		Assertions.assertEquals(expectedRowsCount, actualRowsCount, "Rows count are not correct");
+	}
+
+	@Then("User can see the {string} column have unique values")
+	public void user_can_see_the_column_have_unique_values(String headerName) {
+		boolean isColumnUnique = openAppLibraryPage.isColumnUniqueByHeader(headerName);
+		Assertions.assertTrue(isColumnUnique, headerName + " have duplicate values");
+	}
+
+	@Then("User can see name as frame id in JSON")
+	public void user_can_see_name_as_frame_id_in_json() {
+		String jsonFrameId = openAppLibraryPage.validateJsonFieldValue(frameID);
+		String cleanedActualFrameId = jsonFrameId.replaceAll("^\"|\"$", "");
+		Assertions.assertEquals(frameID, cleanedActualFrameId, "Frame Id not matching");
+	}
+
+	@Then("User can see type as {string} for {string} in JSON")
+	public void user_can_see_type_as_for_in_json(String typeFieldValue, String type) {
+		openAppLibraryPage.selectTypeFromDropdown(type);
+		openAppLibraryPage.validateJsonFieldValue(typeFieldValue);
+	}
+
 	@And("User Sees Python as the default language")
 	public void user_sees_python_as_the_default_language() {
 		openAppLibraryPage.checkPythonAsDefault();
@@ -400,5 +434,4 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_python_output_as(String Output) {
 		openAppLibraryPage.getPythonOutput(Output);
 	}
-
 }
