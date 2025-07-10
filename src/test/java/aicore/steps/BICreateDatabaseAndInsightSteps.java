@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.BISystemAppPage;
 import aicore.pages.HomePage;
+import aicore.steps.app.CreateAppUsingDragAndDropSteps;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -31,9 +32,9 @@ public class BICreateDatabaseAndInsightSteps {
 	public void user_clicks_on_system_app() {
 		homePage.clickOnSystemApp();
 	}
-	
+
 	@And("User clicks on {string} app tab")
-	public void user_clicks_on_tab(String tabName ) {
+	public void user_clicks_on_tab(String tabName) {
 		homePage.clickOnTab(tabName);
 	}
 
@@ -71,7 +72,7 @@ public class BICreateDatabaseAndInsightSteps {
 	public void user_uploads_csv_file() {
 		biApp.uploadCSVFile();
 	}
-	
+
 	@And("User clicks on Next button")
 	public void user_clicks_on_next_button() {
 		biApp.clickOnNextButton();

@@ -14,8 +14,6 @@ import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
-import aicore.documentation.DocumentationConstants;
-import aicore.utils.AppLibraryPageUtils;
 import aicore.utils.ConfigUtils;
 
 public class DocumentationUtils {
@@ -37,7 +35,7 @@ public class DocumentationUtils {
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
 		GenericSetupUtils.setupLoggers(page);
-		
+
 		if (initialSetup) {
 			logger.info("Creating users");
 			GenericSetupUtils.createUsers(page);
@@ -47,47 +45,47 @@ public class DocumentationUtils {
 	}
 
 	public static Locator focusOnElement(Page page, String elementePath) {
-        Locator element = page.locator(elementePath);
-        formatElementFocus(element);
-        element.scrollIntoViewIfNeeded();
-        return element;
+		Locator element = page.locator(elementePath);
+		formatElementFocus(element);
+		element.scrollIntoViewIfNeeded();
+		return element;
 	}
-	
+
 	public static Locator focusOnDataTestId(Page page, String dataTestId) {
-        Locator element = page.getByTestId(dataTestId);
-        formatElementFocus(element);
-        element.scrollIntoViewIfNeeded();
-        return element;
+		Locator element = page.getByTestId(dataTestId);
+		formatElementFocus(element);
+		element.scrollIntoViewIfNeeded();
+		return element;
 	}
-	
+
 	public static void formatElementFocus(Locator element) {
-        element.evaluate("element => element.style.border = '3px solid red'");
+		element.evaluate("element => element.style.border = '3px solid red'");
 	}
-	
+
 	public static void removeElementFocus(Locator element) {
 		element.evaluate("element => element.style.border = ''");
 	}
-	
+
 	public static void screenshot(Page page, Path outputFile) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(outputFile));
+		page.screenshot(new Page.ScreenshotOptions().setPath(outputFile));
 		logger.info("screenshot captured:::");
 		logger.info(outputFile.toString());
 
 	}
-	
+
 	public static void screenshot(Locator element, Path outputFile) {
 		element.screenshot(new Locator.ScreenshotOptions().setPath(outputFile));
 		logger.info("screenshot captured:::");
 		logger.info(outputFile.toString());
 	}
 
-	public static void moveElementToTopOfScreen(Locator element ) {
+	public static void moveElementToTopOfScreen(Locator element) {
 		// this is not ideal, but it shows the element
 		element.evaluate("el => el.scrollIntoView({behavior: 'smooth', block: 'center'})");
 	}
-	
+
 	public static void zoomPage(Page page, int zoom) {
-		page.evaluate("document.body.style.zoom='"+zoom+"%'");
+		page.evaluate("document.body.style.zoom='" + zoom + "%'");
 	}
 
 }

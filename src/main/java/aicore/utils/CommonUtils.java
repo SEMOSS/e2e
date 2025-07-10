@@ -29,7 +29,9 @@ import org.apache.logging.log4j.Logger;
 import com.github.romankh3.image.comparison.ImageComparison;
 import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.BoundingBox;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
@@ -37,6 +39,10 @@ public class CommonUtils {
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
+	}
+
+	public static void removeTargetAttribute(Locator anchor) {
+		anchor.evaluate("element => element.setAttribute('target', '')");
 	}
 
 	public static String splitTrimValue(String keyValueString, String key) {
@@ -216,5 +222,16 @@ public class CommonUtils {
 		g2d.drawImage(resultingImage, 0, 0, null);
 		g2d.dispose();
 		return outputImage;
+	}
+
+	public static void moveMouseToCenter(Page page, Locator locator, int steps) {
+		BoundingBox box = locator.boundingBox();
+		page.mouse().move(box.x + (box.width / 2), (box.y + box.height / 2), new Mouse.MoveOptions().setSteps(steps));
+	}
+
+	public static void moveMouseToCenterWithMargin(Page page, Locator locator, int margin, int steps) {
+		BoundingBox box = locator.boundingBox();
+		page.mouse().move(box.x + (box.width / 2), (box.y + box.height + margin),
+				new Mouse.MoveOptions().setSteps(steps));
 	}
 }

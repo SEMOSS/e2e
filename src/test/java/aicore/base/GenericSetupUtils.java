@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -165,7 +164,8 @@ public class GenericSetupUtils {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
 		page.getByText("Member Settings").click();
 		try {
-			page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("A admin lastname")).getByLabel("Admin").check();
+			page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName("A admin lastname")).getByLabel("Admin")
+					.check();
 		} catch (Throwable t) {
 			logger.warn("This works, but throws anyway, just catch it and move on: {}", t.getMessage());
 		}
@@ -173,8 +173,13 @@ public class GenericSetupUtils {
 
 	public static void logout(Page page) {
 		// going to logout
-		page.locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^SEMOSS$")))
-				.getByRole(AriaRole.BUTTON).click();
+		Locator menuOpen = page.getByTestId("MenuOpenRoundedIcon");
+		if (!menuOpen.isVisible()) {
+			Locator locator = page.getByTestId("MenuRoundedIcon");
+			locator.click();
+			menuOpen.click();
+		}
+		page.getByTestId("PersonIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
@@ -212,7 +217,7 @@ public class GenericSetupUtils {
 			page.waitForURL(homePage);
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
-		}		
+		}
 	}
 
 	public static void loginWithMSuser(Page page, String Username, String Password) {
@@ -295,7 +300,7 @@ public class GenericSetupUtils {
 		visiblePasswords.get(1).fill(password);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Register")).click();
 
-		//page.waitForLoadState(LoadState.LOAD);
+		// page.waitForLoadState(LoadState.LOAD);
 		page.getByRole(AriaRole.ALERT).click();
 		assertThat(page.getByRole(AriaRole.ALERT)).containsText("Account registration successful. Log in below.");
 		logger.info("Account registration Done");
