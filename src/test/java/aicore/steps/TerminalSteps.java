@@ -1,27 +1,28 @@
 
 package aicore.steps;
 
+import org.junit.jupiter.api.Assertions;
+
 import aicore.hooks.SetupHooks;
-import aicore.pages.OpenAppLibraryPage;
 import aicore.pages.TerminalPage;
+import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.Then;
-import org.junit.jupiter.api.Assertions;
 
 public class TerminalSteps {
 
-	private OpenAppLibraryPage openAppLibraryPage;
+	private DragAndDropBlocksPage blocksPage;
 	private TerminalPage terminalPage;
 
 	public TerminalSteps() {
-		openAppLibraryPage = new OpenAppLibraryPage(SetupHooks.getPage(), AddModelSteps.timestamp);
+		blocksPage = new DragAndDropBlocksPage(SetupHooks.getPage());
 		terminalPage = new TerminalPage(SetupHooks.getPage());
 
 	}
 
 	@Then("User clicks on Terminal card")
 	public void user_clicks_on_Terminal_card() {
-		openAppLibraryPage.clickOnTerminalCard();
+		blocksPage.clickOnTerminalCard();
 	}
 
 	@Then("User run pixel command {string}")
@@ -39,11 +40,12 @@ public class TerminalSteps {
 	@Then("User sees Filename in the output as {string}")
 	public void user_sees_filename_in_the_output_as(String expectedFileName) {
 		String actualFileName = terminalPage.getActualFileName();
-		if(expectedFileName.contains("/")) {
-			String [] expectedFileNamePath = expectedFileName.split("/");
-			int fileNameIndex = expectedFileNamePath.length-1;
-			Assertions.assertEquals(expectedFileNamePath[fileNameIndex], actualFileName,"Name of file is not visible in the list");
-		}else {
+		if (expectedFileName.contains("/")) {
+			String[] expectedFileNamePath = expectedFileName.split("/");
+			int fileNameIndex = expectedFileNamePath.length - 1;
+			Assertions.assertEquals(expectedFileNamePath[fileNameIndex], actualFileName,
+					"Name of file is not visible in the list");
+		} else {
 			Assertions.assertEquals(actualFileName, expectedFileName, "Name of file is not visible in the list");
 		}
 	}
@@ -51,8 +53,8 @@ public class TerminalSteps {
 	@Then("User sees Filesize in the output as {string}")
 	public void user_sees_filesize_in_the_output_as(String filesize) {
 		double ActualFilesize = terminalPage.getActualFileSize();
-		int expectedFilesize = Integer.parseInt(filesize);		
-		Assertions.assertTrue(ActualFilesize == expectedFilesize ,"Upload date is not present or either not same");
+		int expectedFilesize = Integer.parseInt(filesize);
+		Assertions.assertTrue(ActualFilesize == expectedFilesize, "Upload date is not present or either not same");
 	}
 
 	@Then("User sees Last modified date in the output")

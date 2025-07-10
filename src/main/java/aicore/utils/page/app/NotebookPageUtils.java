@@ -14,7 +14,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 import aicore.utils.CommonUtils;
 
 public class NotebookPageUtils {
-	// Notebook section
+
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -38,7 +38,6 @@ public class NotebookPageUtils {
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
 
-	// Notebook section
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
 	}

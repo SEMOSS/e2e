@@ -9,11 +9,12 @@ import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
 import aicore.documentation.DocumentationConstants;
-import aicore.utils.AppLibraryPageUtils;
 import aicore.utils.ConfigUtils;
 import aicore.utils.HomePageUtils;
 import aicore.utils.page.app.AppPageUtils;
+import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
+import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 
 /**
  * create documentation pictures for Platform Naviation > App Library
@@ -56,9 +57,9 @@ public class AppLibrary {
 
 		// get image for browse templates
 		// Scroll the element to the top of the viewport
-		Locator element = DocumentationUtils.focusOnElement(page, AppLibraryPageUtils.BROWSE_TEMPLATES_XPATH);
+		Locator element = DocumentationUtils.focusOnElement(page, DragAndDropBlocksPageUtils.BROWSE_TEMPLATES_XPATH);
 		DocumentationUtils.moveElementToTopOfScreen(element);
-		DocumentationUtils.focusOnElement(page, AppLibraryPageUtils.BROWSE_TEMPLATES_XPATH);
+		DocumentationUtils.focusOnElement(page, DragAndDropBlocksPageUtils.BROWSE_TEMPLATES_XPATH);
 		DocumentationUtils.screenshot(page, DocumentationConstants.BROWSE_TEMPLATES_IMAGE);
 
 		// get image for new app popup
@@ -76,8 +77,9 @@ public class AppLibrary {
 
 		// get image for preview app
 		String appName = createTestApp(page);
-		AppLibraryPageUtils.verifyPage1IsVisible(page);
-		element = DocumentationUtils.focusOnDataTestId(page, AppLibraryPageUtils.PREVIEW_APP_BUTTON_DATA_TEST_ID);
+		DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
+		element = DocumentationUtils.focusOnDataTestId(page,
+				DragAndDropBlocksPageUtils.PREVIEW_APP_BUTTON_DATA_TEST_ID);
 		DocumentationUtils.zoomPage(page, 150);
 		DocumentationUtils.moveElementToTopOfScreen(element);
 		element.hover();
@@ -85,7 +87,7 @@ public class AppLibrary {
 		DocumentationUtils.removeElementFocus(element);
 
 		// get image for share app
-		element = DocumentationUtils.focusOnDataTestId(page, AppLibraryPageUtils.SHARE_APP_BUTTON_DATA_TEST_ID);
+		element = DocumentationUtils.focusOnDataTestId(page, DragAndDropBlocksPageUtils.SHARE_APP_BUTTON_DATA_TEST_ID);
 		DocumentationUtils.zoomPage(page, 150);
 		DocumentationUtils.moveElementToTopOfScreen(element);
 		element.hover();
@@ -93,7 +95,7 @@ public class AppLibrary {
 		DocumentationUtils.removeElementFocus(element);
 
 		// get image for save app
-		element = DocumentationUtils.focusOnDataTestId(page, AppLibraryPageUtils.SAVE_APP_BUTTON_DATA_TEST_ID);
+		element = DocumentationUtils.focusOnDataTestId(page, DragAndDropBlocksPageUtils.SAVE_APP_BUTTON_DATA_TEST_ID);
 		DocumentationUtils.zoomPage(page, 150);
 		DocumentationUtils.moveElementToTopOfScreen(element);
 		element.hover();
@@ -101,7 +103,7 @@ public class AppLibrary {
 		DocumentationUtils.removeElementFocus(element);
 
 		// get image for show app
-		element = DocumentationUtils.focusOnElement(page, AppLibraryPageUtils.SHOW_BUTTON_XPATH);
+		element = DocumentationUtils.focusOnElement(page, DragAndDropBlocksPageUtils.SHOW_BUTTON_XPATH);
 		DocumentationUtils.zoomPage(page, 150);
 		DocumentationUtils.moveElementToTopOfScreen(element);
 		element.hover();
@@ -109,20 +111,20 @@ public class AppLibrary {
 		DocumentationUtils.removeElementFocus(element);
 
 		// get image for app settings
-		element = DocumentationUtils.focusOnDataTestId(page, AppLibraryPageUtils.APP_SETTINGS_DATA_TEST_ID);
+		element = DocumentationUtils.focusOnDataTestId(page, BlockSettingsUtils.APP_SETTINGS_DATA_TEST_ID);
 		DocumentationUtils.zoomPage(page, 150);
 		DocumentationUtils.moveElementToTopOfScreen(element);
 		element.hover();
 		DocumentationUtils.screenshot(page, DocumentationConstants.APP_SETTINGS_IMAGE);
 		DocumentationUtils.removeElementFocus(element);
-		AppLibraryPageUtils.clickOnAppSettingsOption(page);
+		BlockSettingsUtils.clickOnAppSettingsOption(page);
 		DocumentationUtils.zoomPage(page, 100);
 
 		// get image for user permission settings for app
-		element = DocumentationUtils.focusOnDataTestId(page, AppLibraryPageUtils.PERMISSION_SETTINGS_DATA_TEST_ID);
-		element = AppLibraryPageUtils.clickOnAppSettingsOption(page);
+		element = DocumentationUtils.focusOnDataTestId(page, BlockSettingsUtils.PERMISSION_SETTINGS_DATA_TEST_ID);
+		element = BlockSettingsUtils.clickOnAppSettingsOption(page);
 		DocumentationUtils.formatElementFocus(element);
-		element = AppLibraryPageUtils.clickOnPermissionSettingsOption(page);
+		element = BlockSettingsUtils.clickOnPermissionSettingsOption(page);
 		DocumentationUtils.formatElementFocus(element);
 		DocumentationUtils.screenshot(page, DocumentationConstants.APP_ACCESS_PERMISSIONS_IMAGE);
 		DocumentationUtils.removeElementFocus(element);
