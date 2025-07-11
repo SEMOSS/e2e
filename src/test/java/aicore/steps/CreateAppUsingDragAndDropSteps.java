@@ -1,10 +1,12 @@
 package aicore.steps;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -142,12 +144,12 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User enters {string} text as {string}")
 	public void user_enters_text_as(String blockName, String blockText) {
 		switch (blockName) {
-			case "Markdown":
-				openAppLibraryPage.enterMarkdown(blockText);
-				break;
-			default:
-				openAppLibraryPage.enterText(blockText);
-				break;
+		case "Markdown":
+			openAppLibraryPage.enterMarkdown(blockText);
+			break;
+		default:
+			openAppLibraryPage.enterText(blockText);
+			break;
 		}
 	}
 
@@ -181,12 +183,12 @@ public class CreateAppUsingDragAndDropSteps {
 		String BOLD_MARKDOWN_PATTERN = "\\*\\*(.*?)\\*\\*";
 		String BOLD_REPLACEMENT = "$1";
 		switch (blockName) {
-			case "Markdown":
-				this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
-				break;
-			default:
-				this.blockText = text;
-				break;
+		case "Markdown":
+			this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
+			break;
+		default:
+			this.blockText = text;
+			break;
 		}
 		String actualText = openAppLibraryPage.getBlockText(blockName, blockText);
 		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
@@ -401,4 +403,83 @@ public class CreateAppUsingDragAndDropSteps {
 		openAppLibraryPage.getPythonOutput(Output);
 	}
 
+	// Area Chart
+	@And("User Click on the area chart on the page to view options")
+	public void user_Click_On_AreaChart_To_View_Options() {
+		openAppLibraryPage.clickOnAreaChartTOViewOptions();
+	}
+
+	@When("User can {string} Duplicate icon on area chart")
+	public void user_can_see_Duplicate_Icon(String action) {
+		boolean canSeeDuplicateIcon = openAppLibraryPage.canSeeDuplicateIcon();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(canSeeDuplicateIcon, " user cannot view the Duplicate Icon");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(canSeeDuplicateIcon, " user should not view the Duplicate Icon");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("User Click on Duplicate Icon")
+	public void user_Click_On_Duplicate_Icon() {
+		openAppLibraryPage.clickOnDuplicateIcon();
+	}
+
+	@And("Another Area Chart block should appear on the page")
+	public void duplicated_Area_Chart_Is_Visiable() {
+		int initialcount = 1;
+		boolean chartIsAdded = openAppLibraryPage.duplicatedChartIsVisiable(initialcount);
+		Assert.assertTrue("Expected : New Area Chart is added after Duplicateion", chartIsAdded);
+	}
+
+	@When("User can {string} Delete icon on area chart")
+	public void user_can_see_Delete_Icon(String action) {
+		boolean canSeeDelete = openAppLibraryPage.canSeeDeleteIcon();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(canSeeDelete, " user cannot view the Delete Icon");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(canSeeDelete, " user should not view the Delete Icon");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("User Click on Delete Icon")
+	public void user_Click_On_Delete_Icon() {
+		openAppLibraryPage.clickOnDeleteIcon();
+	}
+
+	@And("Area Chart should be Remove from the page")
+	public void area_Chart_Is_Removed() {
+		boolean chartIsRemoved = openAppLibraryPage.areaChartIsRemoved();
+		Assert.assertTrue("Expected : Area Chart is not removed after Delete", chartIsRemoved);
+	}
+
+	@And("User Clicks on Duplicate Icon {int} times")
+	public void user_Click_DuplicateIcon_Multiple_Times(int count) {
+		openAppLibraryPage.clickOnDuplicateIconMultipleTimes(count);
+	}
+
+	@And("User hovers over the Duplicate icon")
+	public void user_Hover_On_Duplicate_Icon() {
+		openAppLibraryPage.hoverOnDuplicateIcon();
+	}
+
+	@Then("Tooltip with text {string} should appear")
+	public void check_Tooltiop_Message_Of_Duplicate(String expected) {
+		boolean actual = openAppLibraryPage.checkTooltipMessageOfDuplicate(expected);
+		Assert.assertTrue("Hover Message is Not Match with expedted: ", actual);
+
+	}
+
+	@Then("Total {int} Area Chart blocks should be present on the page")
+	public void total_Area_Chart_Present_On_Page(int expectedcount) {
+		int actual = openAppLibraryPage.countcheck();
+
+		Assert.assertEquals("Not matched", expectedcount, actual);
+
+//		boolean totalcount = openAppLibraryPage.duplicatedChartIsVisiable(expectedcount);
+//		Assert.assertTrue("Expected : New Area Chart is added after Duplicateion", totalcount);
+	}
 }

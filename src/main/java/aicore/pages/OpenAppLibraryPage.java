@@ -286,4 +286,51 @@ public class OpenAppLibraryPage {
 		AppLibraryPageUtils.getPythonOutput(page, output);
 	}
 
+	// Area Chart
+	public void clickOnAreaChartTOViewOptions() {
+		AppLibraryPageUtils.clickOnAreaChartTOViewOptions(page);
+	}
+
+	public boolean canSeeDuplicateIcon() {
+		return AppLibraryPageUtils.CanseeDuplicateIcon(page);
+	}
+
+	public void clickOnDuplicateIcon() {
+		AppLibraryPageUtils.clickOnDuplicateIcon(page);
+	}
+
+	public boolean duplicatedChartIsVisiable(int expectedcount) {
+		return AppLibraryPageUtils.duplicatedChartIsVisiable(page, expectedcount);
+	}
+
+	public boolean canSeeDeleteIcon() {
+		return AppLibraryPageUtils.CanseeDeleteIcon(page);
+	}
+
+	public void clickOnDeleteIcon() {
+		AppLibraryPageUtils.clickOnDeleteIcon(page);
+	}
+
+	public boolean areaChartIsRemoved() {
+		return AppLibraryPageUtils.areaChartIsRemoved(page);
+	}
+
+	public void clickOnDuplicateIconMultipleTimes(int count) {
+		AppLibraryPageUtils.clickOnDuplicateIconMultipleTimes(count, page);
+
+	}
+
+	public int countcheck() {
+		return AppLibraryPageUtils.CountCheck(page);
+
+	}
+
+	public void hoverOnDuplicateIcon() {
+		AppLibraryPageUtils.hoverOnDuplicateIcon(page);
+	}
+
+	public boolean checkTooltipMessageOfDuplicate(String expectedString) {
+		return AppLibraryPageUtils.checkTooltipMessageOfDuplicate(page, expectedString);
+
+	}
 }
