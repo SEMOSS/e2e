@@ -2,6 +2,7 @@ package aicore.utils.page.app;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,6 +55,12 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
+	private static final String DATA_GRID_XPATH = "//div[@aria-label='Organize and display known data in a tabular format']";
+	private static final String COLUMN_HEADERS_XPATH = "//div[contains(@class,'MuiDataGrid-columnHeaderTitleContainerContent')]//div";
+	private static final String DELETE_COLUMN_BUTTON_XPATH = "//div[span[@title='{columnName}']]//following-sibling::div";
+	private static final String DATA_GRID_ROWS_COUNT_XPATH = "//div[contains(@role,'rowgroup')]//div[contains(@role,'row')]";
+	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
+	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -100,80 +107,85 @@ public class DragAndDropBlocksPageUtils {
 	public static void mouseHoverOnBlock(Page page, String blockName) {
 		boolean isValidBlock = true;
 		switch (blockName) {
-		case "Text (h1)":
-			page.locator(HEADING_1_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_1_BLOCK_XPATH).hover();
-			break;
-		case "Text (h2)":
-			page.locator(HEADING_2_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_2_BLOCK_XPATH).hover();
-			break;
-		case "Text (h3)":
-			page.locator(HEADING_3_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_3_BLOCK_XPATH).hover();
-			break;
-		case "Text (h4)":
-			page.locator(HEADING_4_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_4_BLOCK_XPATH).hover();
-			break;
-		case "Text (h5)":
-			page.locator(HEADING_5_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_5_BLOCK_XPATH).hover();
-			break;
-		case "Text (h6)":
-			page.locator(HEADING_6_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_6_BLOCK_XPATH).hover();
-			break;
-		case "Text":
-			page.locator(TEXT_BLOCK_XPATH).isVisible();
-			page.locator(TEXT_BLOCK_XPATH).hover();
-			break;
-		case "Link":
-			page.locator(LINK_BLOCK_XPATH).isVisible();
-			page.locator(LINK_BLOCK_XPATH).hover();
-			break;
-		case "Markdown":
-			page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
-			page.locator(MARKDOWN_BLOCK_XPATH).hover();
-			break;
-		case "Logs":
-			page.locator(LOGS_BLOCK_XPATH).isVisible();
-			page.locator(LOGS_BLOCK_XPATH).hover();
-			break;
-		case "Scatter Plot":
-			page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
-			page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
-			break;
-		case "Line Chart":
-			page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
-			page.locator(LINE_CHART_BLOCK_XPATH).hover();
-			break;
-		case "Bar Chart":
-			page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
-			page.locator(BAR_CHART_BLOCK_XPATH).hover();
-			break;
-		case "Bar Chart - Stacked":
-			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
-			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
-			break;
-		case "Pie Chart":
-			page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
-			page.locator(PIE_CHART_BLOCK_XPATH).hover();
-			break;
-		case "Gantt Chart":
-			page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
-			page.locator(GANTT_CHART_BLOCK_XPATH).hover();
-			break;
-		default:
-			isValidBlock = false;
-			logger.error("Invalid block name: " + blockName);
-			throw new IllegalArgumentException("Invalid block name: " + blockName);
+			case "Text (h1)":
+				page.locator(HEADING_1_BLOCK_XPATH).isVisible();
+				page.locator(HEADING_1_BLOCK_XPATH).hover();
+				break;
+			case "Text (h2)":
+				page.locator(HEADING_2_BLOCK_XPATH).isVisible();
+				page.locator(HEADING_2_BLOCK_XPATH).hover();
+				break;
+			case "Text (h3)":
+				page.locator(HEADING_3_BLOCK_XPATH).isVisible();
+				page.locator(HEADING_3_BLOCK_XPATH).hover();
+				break;
+			case "Text (h4)":
+				page.locator(HEADING_4_BLOCK_XPATH).isVisible();
+				page.locator(HEADING_4_BLOCK_XPATH).hover();
+				break;
+			case "Text (h5)":
+				page.locator(HEADING_5_BLOCK_XPATH).isVisible();
+				page.locator(HEADING_5_BLOCK_XPATH).hover();
+				break;
+			case "Text (h6)":
+				page.locator(HEADING_6_BLOCK_XPATH).isVisible();
+				page.locator(HEADING_6_BLOCK_XPATH).hover();
+				break;
+			case "Text":
+				page.locator(TEXT_BLOCK_XPATH).isVisible();
+				page.locator(TEXT_BLOCK_XPATH).hover();
+				break;
+			case "Link":
+				page.locator(LINK_BLOCK_XPATH).isVisible();
+				page.locator(LINK_BLOCK_XPATH).hover();
+				break;
+			case "Markdown":
+				page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
+				page.locator(MARKDOWN_BLOCK_XPATH).hover();
+				break;
+			case "Logs":
+				page.locator(LOGS_BLOCK_XPATH).isVisible();
+				page.locator(LOGS_BLOCK_XPATH).hover();
+				break;
+			case "Scatter Plot":
+				page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
+				page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
+				page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
+				break;
+			case "Line Chart":
+				page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+				page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
+				page.locator(LINE_CHART_BLOCK_XPATH).hover();
+				break;
+			case "Bar Chart":
+				page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+				page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
+				page.locator(BAR_CHART_BLOCK_XPATH).hover();
+				break;
+			case "Bar Chart - Stacked":
+				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
+				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
+				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
+				break;
+			case "Pie Chart":
+				page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+				page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
+				page.locator(PIE_CHART_BLOCK_XPATH).hover();
+				break;
+			case "Gantt Chart":
+				page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+				page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
+				page.locator(GANTT_CHART_BLOCK_XPATH).hover();
+				break;
+			case "Data Grid":
+				page.locator(DATA_GRID_XPATH).scrollIntoViewIfNeeded();
+				page.locator(DATA_GRID_XPATH).isVisible();
+				page.locator(DATA_GRID_XPATH).hover();
+				break;
+			default:
+				isValidBlock = false;
+				logger.error("Invalid block name: " + blockName);
+				throw new IllegalArgumentException("Invalid block name: " + blockName);
 		}
 		if (isValidBlock) {
 			page.mouse().down();
@@ -193,21 +205,21 @@ public class DragAndDropBlocksPageUtils {
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
 		Locator textBlockLocator = null;
 		switch (blockName) {
-		case "Link":
-			textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
-			break;
-		case "Text":
-			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
-			break;
-		case "Markdown":
-			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
-			break;
-		case "Logs":
-			textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
-			break;
-		default:
-			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
-			break;
+			case "Link":
+				textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
+				break;
+			case "Text":
+				textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+				break;
+			case "Markdown":
+				textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+				break;
+			case "Logs":
+				textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
+				break;
+			default:
+				textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
+				break;
 		}
 		return textBlockLocator;
 	}
@@ -268,5 +280,50 @@ public class DragAndDropBlocksPageUtils {
 		Path path = Paths.get(actualImagePath);
 		page.waitForTimeout(2000);
 		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
+	}
+
+	public static void clickOnSyncChangesButton(Page page) {
+		page.getByTestId("SyncIcon").click();
+	}
+
+	public static List<String> checkDataGridColumnNamesOnUI(Page page) {
+		Locator columnNames = page.locator(COLUMN_HEADERS_XPATH);
+		return columnNames.allTextContents();
+	}
+
+	public static void removeColumnFromDataGrid(Page page, String columnName) {
+		page.locator(DELETE_COLUMN_BUTTON_XPATH.replace("{columnName}", columnName)).isVisible();
+		page.locator(DELETE_COLUMN_BUTTON_XPATH.replace("{columnName}", columnName)).click();
+	}
+
+	public static void validatePaginationForRowsPerPageOptions(Page page, List<String> rowsPerPageOptions) {
+		for (String rowsPerPage : rowsPerPageOptions) {
+			page.locator(PAGINATION_DROP_DOWN_XPATH).click();
+			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(rowsPerPage).setExact(true)).click();
+			int actualRowsCount = page.locator(DATA_GRID_ROWS_COUNT_XPATH).count();
+			if (actualRowsCount > Integer.parseInt(rowsPerPage)) {
+				throw new AssertionError(
+						"Displayed record rows " + actualRowsCount + " exceed selected rows per page " + rowsPerPage);
+			}
+			String displayedRowsText = page.locator(DATA_GRID_INFO_XPATH).textContent().trim();
+			String[] parts = displayedRowsText.split("of");
+			String secondValue = parts[1].trim();
+			int totalRows = Integer.parseInt(secondValue);
+			// Calculate expected total pages
+			int expectedPages = (int) Math.ceil((double) totalRows / Integer.parseInt(rowsPerPage));
+
+			// Check forward navigation
+			for (int i = 1; i < expectedPages; i++) {
+				page.getByLabel("Go to previous page").isVisible();
+				page.getByLabel("Go to next page").isEnabled();
+				page.getByLabel("Go to next page").click();
+			}
+			// Check backward navigation
+			for (int i = 1; i < expectedPages; i++) {
+				page.getByLabel("Go to previous page").isVisible();
+				page.getByLabel("Go to previous page").isEnabled();
+				page.getByLabel("Go to previous page").click();
+			}
+		}
 	}
 }
