@@ -1,0 +1,125 @@
+package aicore.pages.app;
+
+import java.util.List;
+
+import com.microsoft.playwright.Page;
+
+import aicore.utils.page.app.NotebookPageUtils;
+
+public class NotebookPage {
+	private Page page;
+	private String timestamp;
+
+	public NotebookPage(Page page, String timestamp) {
+		this.page = page;
+		this.timestamp = timestamp;
+	}
+
+	public void clickOnNotebooksOption() {
+		NotebookPageUtils.clickOnNotebooksOption(page);
+	}
+
+	public void clickOnCreateNewNotebook() {
+		NotebookPageUtils.clickOnCreateNewNotebook(page);
+	}
+
+	public void enterQueryName(String queryName) {
+		NotebookPageUtils.enterQueryName(page, queryName);
+	}
+
+	public void clickOnQuerySubmitButton() {
+		NotebookPageUtils.clickOnQuerySubmitButton(page);
+	}
+
+	public void enterCodeInQuery(String code) {
+		NotebookPageUtils.enterCodeInQuery(page, code);
+	}
+
+	public void clickOnRunAllButton() {
+		NotebookPageUtils.clickOnRunAllButton(page);
+	}
+
+	public String getCodeOutput(String codeOutput) {
+		return NotebookPageUtils.getCodeOutput(page, codeOutput);
+	}
+
+	public void mouseHoverOnNotebookHiddenOptions() {
+		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
+	}
+
+	public void clickOnHiddenNotebookOption(String optionName) {
+		NotebookPageUtils.clickOnHiddenNotebookOption(page, optionName);
+	}
+
+	public void selectDataImportOption(String optionName) {
+		NotebookPageUtils.selectDataImportOption(page, optionName);
+	}
+
+	public void selectDatabaseFromDropdown(String databaseName) {
+		NotebookPageUtils.selectDatabaseFromDropdown(page, databaseName);
+	}
+
+	public void selectAllColumns() {
+		NotebookPageUtils.selectAllColumns(page);
+	}
+
+	public void clickOnImportButton() {
+		NotebookPageUtils.clickOnImportButton(page);
+	}
+
+	public void deleteFirstCell() {
+		NotebookPageUtils.deleteFirstCell(page);
+	}
+
+	public void clickOnRunCellButton() {
+		NotebookPageUtils.clickOnRunCellButton(page);
+	}
+
+	public String getFrameID() {
+		return NotebookPageUtils.getFrameID(page);
+	}
+
+	public List<String> checkColumnNamesOnUI() {
+		return NotebookPageUtils.checkColumnNamesOnUI(page);
+	}
+
+	public List<String> getNotebookOutputTableHeader() {
+		return NotebookPageUtils.getNotebookOutputTableHeader(page);
+	}
+
+	public int getTotalRowsFromPreviewCaption() {
+		return NotebookPageUtils.getTotalRowsFromPreviewCaption(page);
+	}
+
+	public boolean isColumnUniqueByHeader(String headerName) {
+		return NotebookPageUtils.isColumnUniqueByHeader(page, headerName);
+	}
+
+	public String validateJsonFieldValue(String frameId) {
+		return NotebookPageUtils.validateJsonFieldValue(page, frameId);
+	}
+
+	public void selectTypeFromDropdown(String type) {
+		NotebookPageUtils.selectTypeFromDropdown(page, type);
+	}
+
+	public void hoverAndClickOnCell() {
+		NotebookPageUtils.hoverAndClickOnCell(page);
+	}
+
+	public void checkPythonAsDefault() {
+		NotebookPageUtils.checkPythonAsDefaultLanguage(page);
+	}
+
+	public void changeToLanguage(String language) {
+		NotebookPageUtils.changeToLanguage(page, language);
+	}
+
+	public void getPixelOutput(String output) {
+		NotebookPageUtils.getPixelOutput(page, output);
+	}
+
+	public void getPythonOutput(String output) {
+		NotebookPageUtils.getPythonOutput(page, output);
+	}
+}

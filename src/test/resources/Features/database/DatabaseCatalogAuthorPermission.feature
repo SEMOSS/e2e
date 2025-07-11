@@ -2,13 +2,15 @@ Feature: Database Catalog permissions for Author
   Adding LLm to the Catlog
 
   Background: Create DataBase Using Zip File
-    Given User clicks on Open Database
-    When User clicks on Add Database
-    Then User selects database 'ZIP'
+    Given User opens Main Menu
+    When User clicks on Open Database
+    And User clicks on Add Database
+    And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
+    And User opens Main Menu
   	And User clicks on Open Database
-    And User sees the database name 'TestDatabase' in the database catalog
+    Then User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
 
   @DeleteCreatedCatalog
@@ -35,7 +37,7 @@ Feature: Database Catalog permissions for Author
     And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
-    #And User Search 'Editor' user from Access Control
+   And User Search 'Editor' user from Access Control
     And User deletes the 'Editor' user
 
   @DeleteCreatedCatalog
@@ -43,7 +45,7 @@ Feature: Database Catalog permissions for Author
     And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
-    #And User Search 'Read' user from Access Control
+    And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
   @DeleteCreatedCatalog

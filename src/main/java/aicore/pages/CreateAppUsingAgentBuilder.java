@@ -3,8 +3,8 @@ package aicore.pages;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AgentBuilderAppsUtils;
-import aicore.utils.AppLibraryPageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.page.app.AppPageUtils;
 
 public class CreateAppUsingAgentBuilder {
 	private Page page;
@@ -16,7 +16,7 @@ public class CreateAppUsingAgentBuilder {
 	}
 
 	public void clickOnCreateNewAppButton() {
-		AppLibraryPageUtils.clickOnCreateNewAppButton(page);
+		AppPageUtils.clickOnCreateNewAppButton(page);
 	}
 
 	public void enterName(String appName) {

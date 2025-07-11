@@ -170,9 +170,10 @@ public class AppLibraryPageUtils {
 		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
 		AICorePageUtils.waitFor(listbox);
 		String expectedText = appName + " " + timestamp;
-		// TODO this will open a new tab in the browser need to handle this new behavior
 		Locator button = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(expectedText));
 		AICorePageUtils.waitFor(button);
+		Locator anchor = page.locator("//span[text()='" + expectedText + "']/ancestor::a");
+		CommonUtils.removeTargetAttribute(anchor);
 		button.click();
 
 	}
