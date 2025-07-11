@@ -32,6 +32,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.AriaRole;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
@@ -45,7 +46,7 @@ public class CommonUtils {
 		anchor.evaluate("element => element.setAttribute('target', '')");
 	}
 
-	public static String splitTrimValue(String keyValueString, String key) {
+ 	public static String splitTrimValue(String keyValueString, String key) {
 		String actualName = null;
 		if (keyValueString != null && !keyValueString.isEmpty()) {
 			keyValueString = keyValueString.replaceAll("\\u00A0", " ");
