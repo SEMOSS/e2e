@@ -38,7 +38,6 @@ public class AddFunctionPageUtils {
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 
-
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
 		page.getByLabel(ADD_FUNCTION_BUTTON).click();
@@ -152,7 +151,6 @@ public class AddFunctionPageUtils {
 	}
 
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
-		page.getByTestId(OPEN_FUNCTIONS_XPATH).click();
 		if (catalogName.contains("{Timestamp}")) {
 			catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
 		}
@@ -249,7 +247,6 @@ public class AddFunctionPageUtils {
 	public static void clickOnDiscoverableFunctionsbutton(Page page) {
 		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
 	}
-
 
 	public static void searchFunctionCatalog(Page page, String catalogName) {
 		page.waitForSelector(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH);

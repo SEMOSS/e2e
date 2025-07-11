@@ -1,7 +1,8 @@
 Feature: View add function page
 
   Scenario: Verify the available options on add function page
-    Given User clicks on Open Function
+    Given User opens Main Menu
+    When User clicks on Open Function
     When User clicks on Add Function button
     Then User should see Search bar to filter function options
     And User should see the following function options with valid icons on the page
