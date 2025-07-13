@@ -17,6 +17,7 @@ import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -146,12 +147,12 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User enters {string} text as {string}")
 	public void user_enters_text_as(String blockName, String blockText) {
 		switch (blockName) {
-		case "Markdown":
-			blockSettings.enterMarkdown(blockText);
-			break;
-		default:
-			blockSettings.enterText(blockText);
-			break;
+			case "Markdown":
+				blockSettings.enterMarkdown(blockText);
+				break;
+			default:
+				blockSettings.enterText(blockText);
+				break;
 		}
 	}
 
@@ -185,12 +186,12 @@ public class CreateAppUsingDragAndDropSteps {
 		String BOLD_MARKDOWN_PATTERN = "\\*\\*(.*?)\\*\\*";
 		String BOLD_REPLACEMENT = "$1";
 		switch (blockName) {
-		case "Markdown":
-			this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
-			break;
-		default:
-			this.blockText = text;
-			break;
+			case "Markdown":
+				this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
+				break;
+			default:
+				this.blockText = text;
+				break;
 		}
 		String actualText = blocksPage.getBlockText(blockName, blockText);
 		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
@@ -286,5 +287,35 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.takeChartScreenshot(actualImagePath);
 		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
+	}
+
+	@Then("User clicks on the Sync icon")
+	public void user_clicks_on_the_sync_icon() {
+		blocksPage.clickOnSyncChangesButton();
+	}
+
+	@Then("User remove the {string} column from the Data Grid")
+	public void user_remove_the_column_from_the_data_grid(String columnName) {
+		blocksPage.removeColumnFromDataGrid(columnName);
+	}
+
+	@Then("User can see the Data Grid column names as {string}")
+	public void user_can_see_the_data_grid_column_names_as(String columnNames) {
+		List<String> expectedColumns = Arrays.asList(columnNames.split(", "));
+		List<String> uiColumns = blocksPage.checkDataGridColumnNamesOnUI();
+		Assertions.assertEquals(expectedColumns, uiColumns, "Data Grid columns are not matching");
+	}
+
+	@Then("User should not see the {string} column in the Data Grid")
+	public void user_should_not_see_the_column_in_the_data_grid(String columnName) {
+		List<String> uiColumns = blocksPage.checkDataGridColumnNamesOnUI();
+		Assertions.assertFalse(uiColumns.contains(columnName),
+				"Data Grid still contains the removed column " + columnName);
+	}
+
+	@Then("User validates pagination for the following rows per page options")
+	public void user_validates_pagination_for_the_following_rows_per_page_options(DataTable dataTable) {
+		List<String> rowsPerPageOptions = dataTable.asList(String.class);
+		blocksPage.validatePaginationForRowsPerPageOptions(rowsPerPageOptions);
 	}
 }
