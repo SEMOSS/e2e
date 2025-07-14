@@ -1,4 +1,4 @@
-Feature: Add Database Using ZIP
+Feature: Add Database
 
   Background: Create Database using ZIP file
     Given User opens Main Menu
@@ -9,7 +9,8 @@ Feature: Add Database Using ZIP
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin
+  @DeleteCreatedCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
    	And User clicks on Open Database
