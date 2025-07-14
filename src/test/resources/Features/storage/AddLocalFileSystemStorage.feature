@@ -2,6 +2,7 @@ Feature: Add Local File System Storage
 
   Background: Add Local File System Storage
     Given User is on Home page
+    When User opens Main Menu
     When User clicks on Open Storage engine
     And User clicks on Add Storage button
     And User selects 'Local File System' storage
@@ -14,6 +15,7 @@ Feature: Add Local File System Storage
   @LoginWithAdmin
   Scenario: Delete Local File System Storage
     Given User is on Home page
+    When User opens Main Menu
     When User clicks on Open Storage engine
     And User clicks on created storage 'Local File System Storage'
     And User clicks on Settings Tab for storage

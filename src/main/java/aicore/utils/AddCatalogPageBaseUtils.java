@@ -15,7 +15,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//h6[text()='{CatalogDescription}']";
-	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::span";
+	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div";
 	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";

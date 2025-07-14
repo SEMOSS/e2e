@@ -7,7 +7,6 @@ public class ViewStoragePage {
 
 	private Page page;
 	
-	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String STATIC_STORAGE_TITLE_XPATH = "//p[text()='Amazon S3 Test Storage']";
 	private static final String DYNAMIC_STORAGE_TITLE_XPATH = "//p[text()='{title}']";
 	private static final String STORAGE_DESCRIPTION_XPATH = "//p[text()='No description available']";
@@ -25,10 +24,6 @@ public class ViewStoragePage {
 
 	public ViewStoragePage(Page page) {
 		this.page = page;
-	}
-	
-	public void openStorageEngine() {
-		page.click(OPEN_STORAGE_XPATH);
 	}
 	
 	public boolean isStoragePresent() {
@@ -103,5 +98,9 @@ public class ViewStoragePage {
 		page.click(String.format(FILTER_OPTION_TOGGLE_XPATH, filterName));
 		
 	}
+
+    public void clickMakeDiscoverableButtonInStorageSettings() {
+       page.getByTitle("Make Storage discoverable").click();
+    }
 	
 }
