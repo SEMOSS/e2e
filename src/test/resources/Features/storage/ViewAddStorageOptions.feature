@@ -1,8 +1,11 @@
 Feature: View add Storage page
 
+  @LoginWithAdmin
   Scenario: Verify the available options on add storage page
-    Given User clicks on Open Storage engine
-    When User clicks on Add Storage button
+    Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open Storage engine
+    And User clicks on Add Storage button
     Then User should see Search bar to filter storage options
     And User should see the following storage options with valid icons on the page
       | GROUP        | STORAGE_OPTIONS                                                                                                                                                        |
