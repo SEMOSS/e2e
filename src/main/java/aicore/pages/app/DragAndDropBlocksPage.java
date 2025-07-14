@@ -1,0 +1,122 @@
+package aicore.pages.app;
+
+import java.util.List;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+
+import aicore.utils.HomePageUtils;
+import aicore.utils.page.app.DragAndDropBlocksPageUtils;
+
+public class DragAndDropBlocksPage {
+
+	private Page page;
+
+	public DragAndDropBlocksPage(Page page) {
+		this.page = page;
+	}
+
+	public boolean verifyPage1IsVisible() {
+		return DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
+	}
+
+	public boolean verifyWelcomeTextboxIsVisible() {
+		return DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page);
+	}
+
+	public String verifyWelcomeText() {
+		return DragAndDropBlocksPageUtils.verifyWelcomeText(page);
+	}
+
+	public void navigatesToHomePage() {
+		HomePageUtils.navigateToHomePage(page);
+	}
+
+	public void clickOnEditButton() {
+		DragAndDropBlocksPageUtils.clickOnEditButton(page);
+	}
+
+	public void clickOnBlocksOption() {
+		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
+	}
+
+	public void blockDropPosition() {
+		DragAndDropBlocksPageUtils.blockDropPosition(page);
+	}
+
+	public void mouseHoverOnBlock(String blockName) {
+		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
+	}
+
+	public String verifyHeadingBlockTextMessage() {
+		return DragAndDropBlocksPageUtils.verifyHeadingBlockTextMessage(page);
+	}
+
+	public void clickOnSaveAppButton() {
+		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
+	}
+
+	public Locator textSectionDragAndDroppedBlockLocator(String blockName, String blockText) {
+		return DragAndDropBlocksPageUtils.textSectionDragAndDroppedBlockLocator(page, blockName, blockText);
+	}
+
+	public String getBlockText(String blockName, String blockText) {
+		return DragAndDropBlocksPageUtils.getBlockText(page, blockName, blockText);
+	}
+
+	public String getBlockTextFont(String blockName, String blockText) {
+		return DragAndDropBlocksPageUtils.getBlockTextFont(page, blockName, blockText);
+	}
+
+	public String getBlockTextStyle(String blockName, String blockText) {
+		return DragAndDropBlocksPageUtils.getBlockTextStyle(page, blockName, blockText);
+	}
+
+	public String getBlockTextColor(String blockName, String blockText) {
+		return DragAndDropBlocksPageUtils.getBlockTextColor(page, blockName, blockText);
+	}
+
+	public String getBlockTextAlign(String blockName, String blockText) {
+		return DragAndDropBlocksPageUtils.getBlockTextAlign(page, blockName, blockText);
+	}
+
+	public void clickOnLink(String blockText) {
+		DragAndDropBlocksPageUtils.clickOnLink(page, blockText);
+	}
+
+	public String getDestinationUrl(String url) {
+		return DragAndDropBlocksPageUtils.getDestinationUrl(page, url);
+	}
+
+	public void navigateToPreviosPage() {
+		DragAndDropBlocksPageUtils.navigateToPreviosPage(page);
+	}
+
+	public void selectPage(String pageName) {
+		DragAndDropBlocksPageUtils.selectPage(page, pageName);
+	}
+
+	public void clickOnTerminalCard() {
+		DragAndDropBlocksPageUtils.clickOnTerminalCard(page);
+	}
+
+	public void takeChartScreenshot(String actualImagePath) {
+		DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath);
+	}
+
+	public void clickOnSyncChangesButton() {
+		DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
+	}
+
+	public List<String> checkDataGridColumnNamesOnUI() {
+		return DragAndDropBlocksPageUtils.checkDataGridColumnNamesOnUI(page);
+	}
+
+	public void removeColumnFromDataGrid(String columnName) {
+		DragAndDropBlocksPageUtils.removeColumnFromDataGrid(page, columnName);
+	}
+
+	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
+		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
+	}
+}

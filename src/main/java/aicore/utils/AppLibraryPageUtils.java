@@ -12,9 +12,9 @@ import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppLibraryPageUtils {
-	
-	public static final String CREATE_NEW_APP_BUTTON_XPATH = "//button[span[text()='Create New App']]";
-	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get Started']]";
+
+	public static final String CREATE_NEW_APP_DATA_TEST_ID = "home-create-app-btn";
+	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get started with our tools']]";
 	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -27,12 +27,11 @@ public class AppLibraryPageUtils {
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
 	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
-	public static final String SAVE_APP_BUTTON_DATA_TEST_ID="SaveOutlinedIcon";
+	public static final String SAVE_APP_BUTTON_DATA_TEST_ID = "SaveOutlinedIcon";
 	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
 
-
 	private static final String TERMINAL_XPATH = "//p[contains(text(),'Terminal')]";
-	public static final String BROWSE_TEMPLATES_XPATH = "text=Browse Templates";
+	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
@@ -67,7 +66,6 @@ public class AppLibraryPageUtils {
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
-	
 
 	// Block settings for charts
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
@@ -75,8 +73,8 @@ public class AppLibraryPageUtils {
 	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
-	
-  // Notebook section
+
+	// Notebook section
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -93,13 +91,22 @@ public class AppLibraryPageUtils {
 	private static final String QUERY_INPUT_FIELD_XPATH = "[data-mode-id='sql']>div>div>textarea";
 	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{Age}']";
 	private static final String QUERY_OUTPUT_FIELD1_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{BP}']";
+	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
+	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
+	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
 
 	public static void clickOnCreateNewAppButton(Page page) {
-		page.locator(CREATE_NEW_APP_BUTTON_XPATH).click();
+		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
 	}
 
 	public static void clickOnGetStartedButtonInDragAndDrop(Page page, String appType) {
-		page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
+		if (appType.toLowerCase().contains("agent")) {
+			page.getByTestId("new-app-agent-btn").click();
+		} else if (appType.toLowerCase().contains("drag and drop")) {
+			page.getByTestId("new-app-drag-btn").click();
+		} else {
+			page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
+		}
 	}
 
 	public static String enterAppName(Page page, String appName, String timestamp) {
@@ -150,7 +157,16 @@ public class AppLibraryPageUtils {
 	}
 
 	public static void clickOnSearchedApp(Page page, String appName, String timestamp) {
-		page.locator(SEARCHED_APP_XPATH.replace("{appName}", appName + " " + timestamp)).click();
+		// new search box
+		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
+		AICorePageUtils.waitFor(listbox);
+		String expectedText = appName + " " + timestamp;
+		Locator button = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(expectedText));
+		AICorePageUtils.waitFor(button);
+		Locator anchor = page.locator("//span[text()='" + expectedText + "']/ancestor::a");
+		CommonUtils.removeTargetAttribute(anchor);
+		button.click();
+
 	}
 
 	public static void clickOnEditButton(Page page) {
@@ -246,7 +262,7 @@ public class AppLibraryPageUtils {
 		String headingBlockTextMessage = page.locator(HEADING_BLOCK_HELLO_WORLD_XPATH).textContent().trim();
 		return headingBlockTextMessage;
 	}
-	
+
 	public static void clickOnBlockSettingsOption(Page page) {
 		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
 		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
@@ -267,13 +283,12 @@ public class AppLibraryPageUtils {
 		}
 		return locator;
 	}
-	
+
 	public static Locator clickOnPermissionSettingsOption(Page page) {
 		Locator locator = page.getByTestId(PERMISSION_SETTINGS_DATA_TEST_ID);
 		locator.click();
 		return locator;
 	}
-
 
 	public static void userSelectsTheAppearanceTab(Page page) {
 		page.getByText("Appearance").click();
@@ -387,7 +402,7 @@ public class AppLibraryPageUtils {
 		page.goBack(new Page.GoBackOptions().setTimeout(5000));
 	}
 
-// Notebook section
+	// Notebook section
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
 	}
@@ -559,4 +574,34 @@ public class AppLibraryPageUtils {
 		page.locator(QUERY_OUTPUT_FIELD1_XPATH.replace("{BP}", bp)).isVisible();
 		return true;
 	}
+
+	public static void hoverAndClickOnCell(Page page) {
+		page.getByTitle("Cell", new Page.GetByTitleOptions().setExact(true)).hover();
+		page.getByTitle("Cell", new Page.GetByTitleOptions().setExact(true)).click();
+	}
+
+	public static void checkPythonAsDefaultLanguage(Page page) {
+		page.locator(DEFAULT_LANGUAGE_XPATH).isVisible();
+		if (!page.locator(DEFAULT_LANGUAGE_XPATH).isVisible()) {
+			throw new AssertionError("Python is not selected as the default language option");
+		}
+	}
+
+	public static void changeToLanguage(Page page, String language) {
+		page.getByTitle("Select Language").click();
+		page.getByRole(AriaRole.LISTBOX).getByTitle(language).click();
+
+	}
+
+	public static void getPixelOutput(Page page, String output) {
+		page.locator(OUTPUT_XPATH.replace("{Output}", output)).isVisible();
+	}
+
+	public static void getPythonOutput(Page page, String output) {
+		String pythonOutput = page.locator(PYTHON_OUTPUT_XPATH).textContent();
+		if (pythonOutput == null || !pythonOutput.contains(output)) {
+			throw new AssertionError("Expected Python output: " + output + ", but got: " + pythonOutput);
+		}
+	}
+
 }

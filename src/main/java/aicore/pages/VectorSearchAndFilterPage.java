@@ -131,7 +131,7 @@ public class VectorSearchAndFilterPage {
 	public void inputName(String iName, String name) {
 		page.locator(INPUT_XPATH.replace("{inputName}", iName)).click();
 		page.locator(INPUT_XPATH.replace("{inputName}", iName)).fill(name);
-		page.locator(DIV_XPATH).click();
+		// page.locator(DIV_XPATH).click();
 	}
 
 	public void selectEmbedder(String name) {

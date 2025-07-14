@@ -1,9 +1,21 @@
-Feature: Terminal
+Feature: verify the Terminal command
+
+  Background: Navigate to Terminal
+    Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open App Library
+    When User clicks on System app
+    And User clicks on Terminal card
 
   @LoginWithAdmin
-  Scenario: Verify Pixel command output
-    Given User clicks on Open App Library
-    When User clicks on System app
-    Then User clicks on Terminal card
-    And User run pixel command '1+1'
-    And User sees '2' in the output
+  Scenario: Run Pixel command in Terminal
+    Given User is on Terminal page
+    When User run pixel command 'Hello'
+    Then User sees 'Pixel' output 'Hello'
+
+  @LoginWithAdmin
+  Scenario: Run Python command in Terminal
+    Given User is on Terminal page
+    When User change the language to 'Python'
+    And User run python command '1+1'
+    Then User sees 'Python' output '2'

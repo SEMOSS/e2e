@@ -39,7 +39,7 @@ Feature: Model Catalog Permission - Read
     
   Scenario: Model Catalog - Read - Member setting
    When 'Read' user can 'Not View' Access Control 
-   Then 'Read' user 'can not' see member setting  
+   Then 'Read' user 'can not' see Member Setting  
 
   Scenario: Model Catalog - Read -  Delete Model
     When 'Read' user can 'Not View' Access Control   

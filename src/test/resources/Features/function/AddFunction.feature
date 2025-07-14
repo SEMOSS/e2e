@@ -2,7 +2,8 @@ Feature: Add Function
  
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario Outline: Create function with all the required fields
-    Given User clicks on Open Function
+    Given User opens Main Menu
+    And User clicks on Open Function
     When User clicks on Add Function
     Then User selects function '<functionType>'
     And User sees astrisk mark on the required fields '<required_fields>'
@@ -28,7 +29,8 @@ Feature: Add Function
 #	this scenario does not create a valid test function, no need to delete afterwards
   @LoginWithAdmin
   Scenario Outline: Add Function with missing Form fields
-    Given User clicks on Open Function
+    Given User opens Main Menu
+    And User clicks on Open Function
     When User clicks on Add Function
     And User selects function '<functionType>'
     And User sees astrisk mark on the required fields '<required_fields>'
