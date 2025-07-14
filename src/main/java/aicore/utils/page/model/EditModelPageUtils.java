@@ -21,8 +21,8 @@ public class EditModelPageUtils {
 	private static final String DETAILS_TEXTBOX_XPATH = "//textarea[@class='inputarea monaco-mouse-cursor-text']";
 	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
 	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
-	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "(//input[@aria-autocomplete='list'])[3]";
-	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "(//input[@aria-autocomplete='list'])[4]";
+	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[text()='Data classification']/parent::div//input[@aria-autocomplete='list']";
+	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/parent::div//input[@aria-autocomplete='list']";
 	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
 	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";

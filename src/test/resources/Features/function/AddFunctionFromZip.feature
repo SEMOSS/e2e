@@ -1,12 +1,13 @@
 Feature: Add Function From Zip
 
   Background: Create Function using ZIP file
-    Given User clicks on Open Function
-    When User clicks on Add Function
-    Then User selects function 'ZIP'
+    Given User opens Main Menu
+    When User clicks on Open Function
+    And User clicks on Add Function
+    And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    And User sees the function name 'WeatherFunctionTest' in the function catalog
+    Then User sees the function name 'WeatherFunctionTest' in the function catalog
 
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Validate Change access popup
@@ -17,7 +18,8 @@ Feature: Add Function From Zip
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
-    Then User login as "Editor"
+    And User login as "Editor"
+    And User opens Main Menu
     And User clicks on Open Function
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
@@ -32,6 +34,7 @@ Feature: Add Function From Zip
     And User click on cancel button
     And User logs out from the application
     Then User login as "Admin"
+    And User opens Main Menu
     And User clicks on Open Function
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
@@ -46,6 +49,7 @@ Feature: Add Function From Zip
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
     Then User login as "Editor"
+    And User opens Main Menu
     And User clicks on Open Function
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
@@ -56,19 +60,21 @@ Feature: Add Function From Zip
     Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     And User logs out from the application
     And User login as "Admin"
+    And User opens Main Menu
     And User clicks on Open Function
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
 
-	@LoginWithAdmin
+  @LoginWithAdmin
   Scenario Outline: Delete Function
-    Given User clicks on Open Function
-    When User sees the function name '<function_name>' in the function catalog
+    //   Given User clicks on Open Function
+
+    Given User sees the function name '<function_name>' in the function catalog
     Then User clicks on the function name '<function_name>' in the function catalog
     And User clicks on Access Control Tab
     And User clicks on Delete button
     And User sees deleted function success toast message '<Toast_message>'
 
     Examples: 
-      | function_name           | Toast_message                 |
-      | WeatherFunctionTest     | Successfully deleted Function |
+      | function_name       | Toast_message                 |
+      | WeatherFunctionTest | Successfully deleted Function |
