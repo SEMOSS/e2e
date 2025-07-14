@@ -2,6 +2,7 @@ package aicore.utils.page.app;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,6 +55,12 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
+	private static final String DATA_GRID_XPATH = "//div[@aria-label='Organize and display known data in a tabular format']";
+	private static final String COLUMN_HEADERS_XPATH = "//div[contains(@class,'MuiDataGrid-columnHeaderTitleContainerContent')]//div";
+	private static final String DELETE_COLUMN_BUTTON_XPATH = "//div[span[@title='{columnName}']]//following-sibling::div";
+	private static final String DATA_GRID_ROWS_COUNT_XPATH = "//div[contains(@role,'rowgroup')]//div[contains(@role,'row')]";
+	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
+	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 
 	// Area Chart
 	private static final String AREA_CHART_XPATH = "//div[@aria-label='Show trends over time with cumulative data']";
@@ -182,6 +189,11 @@ public class DragAndDropBlocksPageUtils {
 			page.locator(AREA_CHART_XPATH).isVisible();
 			page.locator(AREA_CHART_XPATH).hover();
 			break;
+		case "Data Grid":
+			page.locator(DATA_GRID_XPATH).scrollIntoViewIfNeeded();
+			page.locator(DATA_GRID_XPATH).isVisible();
+			page.locator(DATA_GRID_XPATH).hover();
+			break;
 		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
@@ -282,7 +294,7 @@ public class DragAndDropBlocksPageUtils {
 		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
 
-	// Area Chart
+	// Duplicate and Delete Area Chart
 	public static void clickOnAreaChartTOViewOptions(Page page) {
 		page.locator(CLICK_ON_AREA_CHART_VIEW_OPTIONS).click();
 	}
@@ -406,10 +418,50 @@ public class DragAndDropBlocksPageUtils {
 		// Delete the selected text
 		page.keyboard().press("Backspace");
 
-		// Optionally remove a trailing comma or fix formatting
-		// page.keyboard().press("Backspace");
-
-		page.pause();
 	}
 
+	public static void clickOnSyncChangesButton(Page page) {
+		page.getByTestId("SyncIcon").click();
+	}
+
+	public static List<String> checkDataGridColumnNamesOnUI(Page page) {
+		Locator columnNames = page.locator(COLUMN_HEADERS_XPATH);
+		return columnNames.allTextContents();
+	}
+
+	public static void removeColumnFromDataGrid(Page page, String columnName) {
+		page.locator(DELETE_COLUMN_BUTTON_XPATH.replace("{columnName}", columnName)).isVisible();
+		page.locator(DELETE_COLUMN_BUTTON_XPATH.replace("{columnName}", columnName)).click();
+	}
+
+	public static void validatePaginationForRowsPerPageOptions(Page page, List<String> rowsPerPageOptions) {
+		for (String rowsPerPage : rowsPerPageOptions) {
+			page.locator(PAGINATION_DROP_DOWN_XPATH).click();
+			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(rowsPerPage).setExact(true)).click();
+			int actualRowsCount = page.locator(DATA_GRID_ROWS_COUNT_XPATH).count();
+			if (actualRowsCount > Integer.parseInt(rowsPerPage)) {
+				throw new AssertionError(
+						"Displayed record rows " + actualRowsCount + " exceed selected rows per page " + rowsPerPage);
+			}
+			String displayedRowsText = page.locator(DATA_GRID_INFO_XPATH).textContent().trim();
+			String[] parts = displayedRowsText.split("of");
+			String secondValue = parts[1].trim();
+			int totalRows = Integer.parseInt(secondValue);
+			// Calculate expected total pages
+			int expectedPages = (int) Math.ceil((double) totalRows / Integer.parseInt(rowsPerPage));
+
+			// Check forward navigation
+			for (int i = 1; i < expectedPages; i++) {
+				page.getByLabel("Go to previous page").isVisible();
+				page.getByLabel("Go to next page").isEnabled();
+				page.getByLabel("Go to next page").click();
+			}
+			// Check backward navigation
+			for (int i = 1; i < expectedPages; i++) {
+				page.getByLabel("Go to previous page").isVisible();
+				page.getByLabel("Go to previous page").isEnabled();
+				page.getByLabel("Go to previous page").click();
+			}
+		}
+	}
 }

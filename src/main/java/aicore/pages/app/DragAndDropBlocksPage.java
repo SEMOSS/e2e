@@ -1,5 +1,7 @@
 package aicore.pages.app;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
@@ -162,6 +164,22 @@ public class DragAndDropBlocksPage {
 
 	public void userClickOnSchema() {
 		DragAndDropBlocksPageUtils.userClickOnSchema(page);
+	}
+
+	public void clickOnSyncChangesButton() {
+		DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
+	}
+
+	public List<String> checkDataGridColumnNamesOnUI() {
+		return DragAndDropBlocksPageUtils.checkDataGridColumnNamesOnUI(page);
+	}
+
+	public void removeColumnFromDataGrid(String columnName) {
+		DragAndDropBlocksPageUtils.removeColumnFromDataGrid(page, columnName);
+	}
+
+	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
+		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
 
 	}
 }

@@ -17,6 +17,7 @@ import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -238,43 +239,6 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-//	@When("User clicks on Notebook")
-//	public void user_clicks_on_notebook() {
-//		blocksPage.clickOnNotebooksOption();
-//	}
-//
-//	@And("User clicks on Create new notebook")
-//	public void user_clicks_on_create_new_notebook() {
-//		blocksPage.clickOnCreateNewNotebook();
-//	}
-//
-//	@And("User enters New Query name as {string}")
-//	public void user_enters_new_query_name_as(String queryName) {
-//		blocksPage.enterQueryName(queryName);
-//	}
-//
-//	@When("User clicks on query Submit button")
-//	public void user_clicks_on_query_submit_button() {
-//		blocksPage.clickOnQuerySubmitButton();
-//	}
-//
-//	@When("User enters code as {string}")
-//	public void user_enters_code_as(String code) {
-//		blocksPage.enterCodeInQuery(code);
-//	}
-//
-//	@When("User clicks on Run this cell and below icon")
-//	public void user_clicks_on_run_this_cell_and_below_icon() {
-//		blocksPage.clickOnRunAllButton();
-//	}
-//
-//	@Then("User can see code output as {string}")
-//	public void user_can_see_code_output_as(String expectedCodeOutput) {
-//		String actualOutput = blocksPage.getCodeOutput(expectedCodeOutput);
-//		Assertions.assertEquals(expectedCodeOutput, actualOutput,
-//				"Mismatch between the expected and actual code output");
-//	}
-
 	@And("User clicks on Blocks")
 	public void user_clicks_on_blocks() {
 		blocksPage.clickOnBlocksOption();
@@ -289,51 +253,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_from_the_query_dropdown(String queryName) {
 		blockSettings.selectQueryFromList(queryName);
 	}
-
-//	@And("User mouse hover below the existing cell")
-//	public void user_mouse_hover_below_the_existing_cell() {
-//		blocksPage.mouseHoverOnNotebookHiddenOptions();
-//	}
-//
-//	@And("User selects {string} from the hidden options")
-//	public void user_selects_from_the_hidden_options(String optionName) {
-//		blocksPage.clickOnHiddenNotebookOption(optionName);
-//	}
-//
-//	@And("User selects {string} from the data import options")
-//	public void user_selects_from_the_data_import_options(String optionName) {
-//		blocksPage.selectDataImportOption(optionName);
-//	}
-//
-//	@And("User selects {string} from the dropdown list")
-//	public void user_selects_from_the_dropdown_list(String databaseName) {
-//		blocksPage.selectDatabaseFromDropdown(databaseName);
-//	}
-//
-//	@And("User selects all columns from database")
-//	public void user_selects_all_columns_from_database() {
-//		blocksPage.selectAllColumns();
-//	}
-//
-//	@And("User clicks on data Import button")
-//	public void user_clicks_on_data_import_button() {
-//		blocksPage.clickOnImportButton();
-//	}
-//
-//	@And("User deletes the previous cell")
-//	public void user_deletes_the_previous_cell() {
-//		blocksPage.deleteFirstCell();
-//	}
-//
-//	@When("User clicks on Run cell button")
-//	public void user_clicks_on_run_cell_button() throws InterruptedException {
-//		blocksPage.clickOnRunCellButton();
-//	}
-//
-//	@And("User fetch the frame id")
-//	public void user_fetch_the_frame_id() {
-//		frameID = blocksPage.getFrameID();
-//	}
 
 	@And("User clicks on Data tab")
 	public void user_clicks_on_data_tab() {
@@ -370,78 +289,7 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}
 
-//	@Then("User can see {string} columns under the fields column")
-//	public void user_can_see_columns_under_the_fields_column(String columnNames) {
-//		List<String> expectedColumns = Arrays.asList(columnNames.split(", "));
-//		List<String> uiColumns = blocksPage.checkColumnNamesOnUI();
-//		Assertions.assertEquals(expectedColumns, uiColumns, "columns are not matching");
-//	}
-//
-//	@Then("User can see header names as {string}")
-//	public void user_can_see_header_names_as(String headerNames) {
-//		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
-//		List<String> actualHeaderNames = blocksPage.getNotebookOutputTableHeader();
-//		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
-//	}
-//
-//	@Then("User can see total {string} rows")
-//	public void user_can_see_total_rows(String rowsCount) {
-//		int actualRowsCount = blocksPage.getTotalRowsFromPreviewCaption();
-//		int expectedRowsCount = Integer.parseInt(rowsCount);
-//		Assertions.assertEquals(expectedRowsCount, actualRowsCount, "Rows count are not correct");
-//	}
-//
-//	@Then("User can see the {string} column have unique values")
-//	public void user_can_see_the_column_have_unique_values(String headerName) {
-//		boolean isColumnUnique = blocksPage.isColumnUniqueByHeader(headerName);
-//		Assertions.assertTrue(isColumnUnique, headerName + " have duplicate values");
-//	}
-//
-//	@Then("User can see name as frame id in JSON")
-//	public void user_can_see_name_as_frame_id_in_json() {
-//		String jsonFrameId = blocksPage.validateJsonFieldValue(frameID);
-//		String cleanedActualFrameId = jsonFrameId.replaceAll("^\"|\"$", "");
-//		Assertions.assertEquals(frameID, cleanedActualFrameId, "Frame Id not matching");
-//	}
-//
-//	@When("User selects type as {string}")
-//	public void user_selects_type_as(String type) {
-//		blocksPage.selectTypeFromDropdown(type);
-//	}
-//
-//	@Then("User can see type as {string} for {string} in JSON")
-//	public void user_can_see_type_as_for_in_json(String typeFieldValue, String type) {
-//		blocksPage.validateJsonFieldValue(typeFieldValue);
-//	}
-//
-//	@And("User Sees Python as the default language")
-//	public void user_sees_python_as_the_default_language() {
-//		blocksPage.checkPythonAsDefault();
-//	}
-//
-//	@And("User changes the language to {string}")
-//	public void user_changes_the_language_to(String language) {
-//		blocksPage.changeToLanguage(language);
-//	}
-//
-//	@Then("User hovers and clicks on the cell")
-//	public void user_hovers_and_clicks_on_the_cell() {
-//		blocksPage.mouseHoverOnNotebookHiddenOptions();
-//		blocksPage.hoverAndClickOnCell();
-//	}
-//
-//	@Then("User can see Pixel output as {string}")
-//	public void user_can_see_pixel_output_as(String Output) {
-//		blocksPage.getPixelOutput(Output);
-//
-//	}
-//
-//	@Then("User can see Python output as {string}")
-//	public void user_can_see_python_output_as(String Output) {
-//		blocksPage.getPythonOutput(Output);
-//	}
-
-	// Area Chart
+	// Duplicate and Delete Area Chart
 	@And("User Click on the area chart on the page to view options")
 	public void user_Click_On_AreaChart_To_View_Options() {
 		blocksPage.clickOnAreaChartTOViewOptions();
@@ -538,4 +386,33 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.userClickOnSchema();
 	}
 
+	@Then("User clicks on the Sync icon")
+	public void user_clicks_on_the_sync_icon() {
+		blocksPage.clickOnSyncChangesButton();
+	}
+
+	@Then("User remove the {string} column from the Data Grid")
+	public void user_remove_the_column_from_the_data_grid(String columnName) {
+		blocksPage.removeColumnFromDataGrid(columnName);
+	}
+
+	@Then("User can see the Data Grid column names as {string}")
+	public void user_can_see_the_data_grid_column_names_as(String columnNames) {
+		List<String> expectedColumns = Arrays.asList(columnNames.split(", "));
+		List<String> uiColumns = blocksPage.checkDataGridColumnNamesOnUI();
+		Assertions.assertEquals(expectedColumns, uiColumns, "Data Grid columns are not matching");
+	}
+
+	@Then("User should not see the {string} column in the Data Grid")
+	public void user_should_not_see_the_column_in_the_data_grid(String columnName) {
+		List<String> uiColumns = blocksPage.checkDataGridColumnNamesOnUI();
+		Assertions.assertFalse(uiColumns.contains(columnName),
+				"Data Grid still contains the removed column " + columnName);
+	}
+
+	@Then("User validates pagination for the following rows per page options")
+	public void user_validates_pagination_for_the_following_rows_per_page_options(DataTable dataTable) {
+		List<String> rowsPerPageOptions = dataTable.asList(String.class);
+		blocksPage.validatePaginationForRowsPerPageOptions(rowsPerPageOptions);
+	}
 }
