@@ -21,12 +21,13 @@ Feature: Database Catalog permissions for Read user
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
-
+    
+#Uncomment first three line
   Scenario: Database Catalog - Read - View overview,Usage,Metadat
-  #	And User opens Main Menu
-    #And User clicks on Open Database
-    #And User searches the 'TestDatabase' in the database Catalog searchbox
-    #And User selects the 'TestDatabase' from the database catalog
+  	And User opens Main Menu
+    And User clicks on Open Database
+    And User searches the 'TestDatabase' in the database Catalog searchbox
+    And User selects the 'TestDatabase' from the database catalog
     Then 'Read' user can 'View' Overview
     Then 'Read' user can 'View' Usage
     Then 'Read' user can 'View' Metadata
