@@ -17,6 +17,7 @@ import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -290,6 +291,7 @@ public class CreateAppUsingDragAndDropSteps {
 	}
 
 	// duplicate and delete Area Chart
+
 	@And("User Click on the area chart on the page to view options")
 	public void user_Click_On_AreaChart_To_View_Options() {
 		blocksPage.clickOnAreaChartTOViewOptions();
@@ -311,7 +313,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_Click_On_Duplicate_Icon() {
 		int count = blocksPage.getInitialCount();
 		initialCount.set(count);
-		blocksPage.clickOnDuplicateIcon();
 	}
 
 	@And("Another Area Chart block should appear on the page")
@@ -337,7 +338,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_Click_On_Delete_Icon() {
 		int count = blocksPage.getInitialCount();
 		initialCount.set(count);
-		blocksPage.clickOnDeleteIcon();
 	}
 
 	@And("Area Chart should be Remove from the page")
@@ -380,4 +380,33 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertEquals(expectedcount, actual, "Not matched");
 	}
 
+	@Then("User clicks on the Sync icon")
+	public void user_clicks_on_the_sync_icon() {
+		blocksPage.clickOnSyncChangesButton();
+	}
+
+	@Then("User remove the {string} column from the Data Grid")
+	public void user_remove_the_column_from_the_data_grid(String columnName) {
+		blocksPage.removeColumnFromDataGrid(columnName);
+	}
+
+	@Then("User can see the Data Grid column names as {string}")
+	public void user_can_see_the_data_grid_column_names_as(String columnNames) {
+		List<String> expectedColumns = Arrays.asList(columnNames.split(", "));
+		List<String> uiColumns = blocksPage.checkDataGridColumnNamesOnUI();
+		Assertions.assertEquals(expectedColumns, uiColumns, "Data Grid columns are not matching");
+	}
+
+	@Then("User should not see the {string} column in the Data Grid")
+	public void user_should_not_see_the_column_in_the_data_grid(String columnName) {
+		List<String> uiColumns = blocksPage.checkDataGridColumnNamesOnUI();
+		Assertions.assertFalse(uiColumns.contains(columnName),
+				"Data Grid still contains the removed column " + columnName);
+	}
+
+	@Then("User validates pagination for the following rows per page options")
+	public void user_validates_pagination_for_the_following_rows_per_page_options(DataTable dataTable) {
+		List<String> rowsPerPageOptions = dataTable.asList(String.class);
+		blocksPage.validatePaginationForRowsPerPageOptions(rowsPerPageOptions);
+	}
 }

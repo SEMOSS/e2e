@@ -2,8 +2,9 @@
 Feature: View Function Details
 
   Background: Create Function using ZIP file
-    Given User clicks on Open Function
-    When User clicks on Add Function
+    Given User opens Main Menu
+    When User clicks on Open Function
+    And User clicks on Add Function
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button 
@@ -17,11 +18,17 @@ Feature: View Function Details
     And User can see 'N/A' as Date last updated
     And User can see ' No Markdown available' Markup with Function overview in Overview tab at the bottom of the page.
     And User clicks on Access Control Tab
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'read'
     And User logs out from the application
     Then User login as "read"
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on the function name 'WeatherFunctionTest' in the function catalog
     Then User sees 'Change Access' button
     And User logs out from the application
     Then User login as "native"
+    And User opens Main Menu
     And User clicks on Open Function
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     Then User clicks on the function name 'WeatherFunctionTest' in the function catalog

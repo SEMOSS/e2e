@@ -1,5 +1,4 @@
-Feature: Add Database Using ZIP
-
+Feature: Add Database
   Background: Create Database using ZIP file
     Given User opens Main Menu
     And User clicks on Open Database
@@ -31,9 +30,10 @@ Feature: Add Database Using ZIP
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
-  @LoginWithAdmin @DeleteCreatedCatalog
-  Scenario: View Database Overview
-    And User clicks on 'TestDatabase' in the database catalog
+
+	@LoginWithAdmin @DeleteCreatedCatalog
+	Scenario: View Database Overview
+   And User clicks on 'TestDatabase' in the database catalog
     And User sees the database name as 'TestDatabase'
     #And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
@@ -62,4 +62,4 @@ Feature: Add Database Using ZIP
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on MetaData tab
     Then User sees the table in the metadata tab
-    
+
