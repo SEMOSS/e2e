@@ -2,18 +2,17 @@ Feature: Add Database Using ZIP
 
   Background: Create Database using ZIP file
     Given User opens Main Menu
-   	And User clicks on Open Database
+    And User clicks on Open Database
     When User clicks on Add Database
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
 
-
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
-   	And User clicks on Open Database
+    And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on Usage tab for Database
@@ -22,7 +21,6 @@ Feature: Add Database Using ZIP
     And User sees an example of "How to use with Langchain API" with example code for Database
     And User sees an example of "How to use in Java" with example code for Database
 
-#changed the embedding xpath of last step
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: View Database Tags
     Given User sees the database name 'TestDatabase' in the database catalog
@@ -33,10 +31,9 @@ Feature: Add Database Using ZIP
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
-#last updated comment because we have defefct
-#	@LoginWithAdmin @DeleteCreatedCatalog
-	Scenario: View Database Overview
-   And User clicks on 'TestDatabase' in the database catalog
+  @LoginWithAdmin @DeleteCreatedCatalog
+  Scenario: View Database Overview
+    And User clicks on 'TestDatabase' in the database catalog
     And User sees the database name as 'TestDatabase'
     #And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
@@ -56,12 +53,13 @@ Feature: Add Database Using ZIP
     And User sees an Edit button that opens a pop-up to edit
     # used to close edit modal
     And User clicks on Close button
-    
+
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify MetaData for Database
     Given User opens Main Menu
-   	And User clicks on Open Database    
+    And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on MetaData tab
     Then User sees the table in the metadata tab
+    

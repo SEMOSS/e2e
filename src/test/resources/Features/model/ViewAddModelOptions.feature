@@ -1,7 +1,9 @@
 Feature: Available Models and Their Groupings
 
   Scenario: Verify the available models and their specific groupings
-    Given User clicks on Open Model
+   Given User is on Home page
+    And User opens Main Menu
+    And User clicks on Open Model
     When User clicks on Add Model
     Then User can view the following model options under their group
       | GROUP             | MODEL_OPTIONS                                                                                                                                                                                                                                                                                                                                                                                                                                         |

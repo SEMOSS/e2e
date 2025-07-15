@@ -155,13 +155,4 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.CountCheck(page);
 	}
 
-	//
-	public void FirstAreaChart() {
-		DragAndDropBlocksPageUtils.firstAreachart(page);
-	}
-
-	public void userClickOnSchema() {
-		DragAndDropBlocksPageUtils.userClickOnSchema(page);
-
-	}
 }
