@@ -13,7 +13,7 @@ import aicore.utils.CommonUtils;
 public class EditModelPageUtils {
 
 	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
-	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
+	private static final String SEARCHED_MODEL_XPATH = "//p[text()='{modelName}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -33,8 +33,8 @@ public class EditModelPageUtils {
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 
 	public static void searchModelCatalog(Page page, String modelName, String timestamp) {
-		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).fill(modelName + timestamp);
+		page.getByLabel("Search").click();
+		page.getByLabel("Search").fill(modelName + timestamp);
 	}
 
 	public static void selectModelFromSearchOptions(Page page, String modelName) {

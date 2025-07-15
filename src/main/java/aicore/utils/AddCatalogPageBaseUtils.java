@@ -6,7 +6,6 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
 	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
@@ -100,8 +99,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void waitForEditSuccessToastMessageToDisappear(Page page) {
-		page.locator(EDIT_SUCCESS_TOAST_MESSAGE)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		page.locator(EDIT_SUCCESS_TOAST_MESSAGE).isVisible();
+		page.getByTestId("CloseIcon").click();
+
 	}
 
 	public static List<String> verifyTagNames(Page page) {

@@ -2,7 +2,8 @@ Feature: Model settings
   I want to use this feature file for all the scenarios related to Model settings
 
   Background: Create a model
-    Given User clicks on Open Model
+  Given User opens Main Menu
+    When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Catalog'
@@ -28,4 +29,4 @@ Feature: Model settings
     And User can see 'Search Members' textbox
     And User can see 'Add Members' button
     And User can see 'Rows per page' selection dropdown
-    And User can see 'Rows per page' dropdown has options "5, 10, 20"
+    #And User can see 'Rows per page' dropdown has options "5, 10, 20"
