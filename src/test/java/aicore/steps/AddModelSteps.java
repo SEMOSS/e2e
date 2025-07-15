@@ -128,13 +128,14 @@ public class AddModelSteps {
 	}
 
 	@Then("User should see the {string} on the model catalog page")
-	public void user_should_see_the_on_the_model_catalog_page(String modelName) {
+	public void user_should_see_the_on_the_model_catalog_page(String modelName) throws InterruptedException {
+		openModelPage.searchModelCatalog(modelName);
 		boolean isModelDisplayed = openModelPage.verifyModelIsDisplayedOnCatalogPage(modelName);
 		Assertions.assertTrue(isModelDisplayed);
 	}
 
 	@And("User selects the {string} from the model catalog")
-	public void user_selects_the_from_the_model_catalog(String modelName) {
+	public void user_selects_the_from_the_model_catalog(String modelName) throws InterruptedException {
 		openModelPage.selectModelFromSearchOptions(modelName);
 	}
 
@@ -243,7 +244,7 @@ public class AddModelSteps {
 	public void user_clicks_on_submit_button() {
 		viewCatalogPage.clickOnSubmit();
 	}
-	
+
 	@When("User clicks on Close button")
 	public void user_clicks_on_close_button() {
 		viewCatalogPage.clickOnClose();

@@ -18,7 +18,6 @@ Feature: Add Model
     When User clicks on SMSS
     And User can see name in 'NAME' field as 'Model' in SMSS properties
     And User can see var name in 'VAR_NAME' field as 'Variable1' in SMSS properties
-    And User clicks on Open Model
 
   Scenario: Edit SMSS properties of Model - GPT-3.5
     Given User Can see the Model title as 'Model'
@@ -30,7 +29,6 @@ Feature: Add Model
     And User refresh the page
     And User can see updated value in 'KEEP_CONVERSATION_HISTORY' field as 'True'
     Then User can see updated value in 'VAR_NAME' field as 'New_Name'
-    And User clicks on Open Model
 
   Scenario: Adding tag to Model to catalog - GPT-3.5 - embeddings
     Given User Can see the Model title as 'Model'
@@ -39,15 +37,16 @@ Feature: Add Model
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
-    And User clicks on Open Model
 
   Scenario: View Existing Models in Model Catalog Page
-    Given User clicks on Open Model
-    When User searches the 'Model' in the model catalog searchbox
+    Given User opens Main Menu
+    When User clicks on Open Model
+    And User searches the 'Model' in the model catalog searchbox
     Then User should see the 'Model' on the model catalog page
 
   Scenario Outline: Edit Model Details
-    Given User clicks on Open Model
+    Given User opens Main Menu
+    When User clicks on Open Model
     When User searches the '<MODEL_NAME>' in the model catalog searchbox
     And User selects the '<MODEL_NAME>' from the model catalog
     And User clicks on Edit button
@@ -68,7 +67,7 @@ Feature: Add Model
     And User should see '<DATA_RESTRICTIONS>' in the overview Data restrictions section
 
     Examples: 
-      | MODEL_NAME               | DETAILS       | DESCRIPTION                | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
+      | MODEL_NAME | DETAILS       | DESCRIPTION                | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
       | Model      | GPT-3.5 model | This is GPT-3.5 test model | embeddings, Test1, Test2, Test3 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
   Scenario: Validate Model Catalog ID in Usage commands
