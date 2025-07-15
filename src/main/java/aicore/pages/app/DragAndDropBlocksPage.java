@@ -111,6 +111,10 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.CanseeDuplicateIcon(page);
 	}
 
+	public int getInitialCount() {
+		return DragAndDropBlocksPageUtils.getInitialcount(page);
+	}
+
 	public void clickOnDuplicateIcon() {
 		DragAndDropBlocksPageUtils.clickOnDuplicateIcon(page);
 	}
@@ -127,8 +131,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnDeleteIcon(page);
 	}
 
-	public boolean areaChartIsRemoved() {
-		return DragAndDropBlocksPageUtils.areaChartIsRemoved(page);
+	public boolean areaChartIsRemoved(int count) {
+		return DragAndDropBlocksPageUtils.areaChartIsRemoved(page, count);
 	}
 
 	public void hoverOnDuplicateIcon() {

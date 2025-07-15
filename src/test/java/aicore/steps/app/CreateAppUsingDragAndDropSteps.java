@@ -30,6 +30,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private BlockSettingsPage blockSettings;
 	public static String timestamp;
 	private String blockText;
+	private static ThreadLocal<Integer> initialCount = new ThreadLocal<>();
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -308,13 +309,15 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User Click on Duplicate Icon")
 	public void user_Click_On_Duplicate_Icon() {
+		int count = blocksPage.getInitialCount();
+		initialCount.set(count);
 		blocksPage.clickOnDuplicateIcon();
 	}
 
 	@And("Another Area Chart block should appear on the page")
 	public void duplicated_Area_Chart_Is_Visiable() {
-		int initialcount = 1;
-		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(initialcount);
+		int prevCount = initialCount.get();
+		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(prevCount);
 		Assertions.assertTrue(chartIsAdded, "Expected : New Area Chart is added after Duplicateion");
 	}
 
@@ -332,12 +335,15 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User Click on Delete Icon")
 	public void user_Click_On_Delete_Icon() {
+		int count = blocksPage.getInitialCount();
+		initialCount.set(count);
 		blocksPage.clickOnDeleteIcon();
 	}
 
 	@And("Area Chart should be Remove from the page")
 	public void area_Chart_Is_Removed() {
-		boolean chartIsRemoved = blocksPage.areaChartIsRemoved();
+		int prevCount = initialCount.get();
+		boolean chartIsRemoved = blocksPage.areaChartIsRemoved(prevCount);
 		Assertions.assertTrue(chartIsRemoved, "Expected : Area Chart is not removed after Delete");
 	}
 

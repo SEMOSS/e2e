@@ -290,25 +290,22 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(CLICK_ON_AREA_CHART_VIEW_OPTIONS).click();
 	}
 
+	public static int getInitialcount(Page page) {
+		return page.locator(AREA_CHART_COUNT_XPATH).count();
+	}
+
 	public static boolean CanseeDuplicateIcon(Page page) {
 		return page.locator(DUPLICATE_ICON_XPATH).isVisible();
 	}
 
-	// declare the variable for get the initial count
-	private static int initialChartCount;
-
 	public static void clickOnDuplicateIcon(Page page) {
-		initialChartCount = page.locator(AREA_CHART_COUNT_XPATH).count();
-		System.out.println("Intitial Count : " + initialChartCount);
 		page.locator(DUPLICATE_ICON_XPATH).click();
 	}
 
-	public static boolean duplicatedChartIsVisiable(Page page, int expectedCount) {
-		System.out.println(initialChartCount);
-		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == initialChartCount + 1);
+	public static boolean duplicatedChartIsVisiable(Page page, int previousCount) {
+		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == previousCount + 1);
 		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count(); // Count charts again
-		System.out.println("updarted count: " + updatedChartCount);
-		return updatedChartCount == initialChartCount + 1;
+		return updatedChartCount == previousCount + 1;
 	}
 
 	public static boolean CanseeDeleteIcon(Page page) {
@@ -316,16 +313,14 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnDeleteIcon(Page page) {
-		initialChartCount = page.locator(AREA_CHART_COUNT_XPATH).count();
-		System.out.println("Intitial Count : " + initialChartCount);
+		page.locator(AREA_CHART_COUNT_XPATH).count();
 		page.locator(DELETE_ICON_XPATH).click();
 	}
 
-	public static boolean areaChartIsRemoved(Page page) {
-		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == initialChartCount - 1);
+	public static boolean areaChartIsRemoved(Page page, int previousCount) {
+		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == previousCount - 1);
 		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count(); // Count charts again
-		System.out.println("updarted count: " + updatedChartCount);
-		return updatedChartCount == initialChartCount - 1;
+		return updatedChartCount == previousCount - 1;
 	}
 
 	public static void hoverOnDuplicateIcon(Page page) {
