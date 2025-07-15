@@ -1,7 +1,10 @@
 Feature: Validate storage creation form
 
+@LoginWithAdmin
   Scenario Outline: View and fill '<FUNCTION_NAME>' storage creation form
-    Given User clicks on Open Storage engine
+    Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open Storage engine
     When User clicks on Add Storage button
     And User selects '<FUNCTION_NAME>' storage
     And User can see '<FIELD_NAMES>' fields on the form
@@ -19,7 +22,9 @@ Feature: Validate storage creation form
       | Amazon S3     | Catalog Name, Region, Bucket, Access key, Secret key, Create Storage button | Catalog Name, Region, Bucket |
 
   Scenario: Submit and validate 'Amazon S3' storage creation form
-    Given User clicks on Open Storage engine
+    Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open Storage engine
     When User clicks on Add Storage button
     And User selects 'Amazon S3' storage
     When User enters value in below fields

@@ -3,22 +3,24 @@ package aicore.steps;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
+import aicore.pages.HomePage;
 import aicore.pages.ViewStoragePage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class ViewStorageSteps {
-
+		private HomePage homePage;
 	private ViewStoragePage viewStorage;
 
 	public ViewStorageSteps() {
+		homePage = new HomePage(SetupHooks.getPage());
 		this.viewStorage = new ViewStoragePage(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Storage Engine")
 	public void user_clicks_on_open_storage_engine() {
-		viewStorage.openStorageEngine();
+		homePage.clickOnOpenStorage();
 	}
 
 	@Given("User has added storages in the system")
@@ -146,5 +148,9 @@ public class ViewStorageSteps {
 	@When("User clicks on 'Discoverable Storages' tab")
 	public void user_clicks_on_discoverable_storages_tab() {
 		viewStorage.clickDiscoverableStoragesTab();
+	}
+	@When("User clicks on Make Discoverable button in storage settings")
+	public void user_clicks_on_make_discoverable_button_in_storage_settings() {
+		viewStorage.clickMakeDiscoverableButtonInStorageSettings();
 	}
 }

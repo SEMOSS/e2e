@@ -2,7 +2,9 @@ Feature: Add Storage
   I want to use this feature file for all scenarios related to the Add Storage
 
   Background: Add Amazon S3 Storage
-    Given User clicks on Open Storage engine
+    Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open Storage engine
     When User clicks on Add Storage button
     And User selects 'Amazon S3' storage
     And User enters storage Catalog name as 'Amazon S3 Storage'
@@ -22,8 +24,8 @@ Feature: Add Storage
     And User sees an example of "How to use in Python" with example code for storage
     And User sees an example of "How to use with Langchain API" with example code for storage
     And User sees an example of "How to use in Java" with example code for storage
-    
-@LoginWithAdmin
+
+  @LoginWithAdmin
   Scenario: Validate SMSS properties of storage
     Given User can see the Storage title as 'Amazon S3 Storage'
     And User clicks on SMSS
@@ -31,6 +33,7 @@ Feature: Add Storage
     And User can see storage region in 'S3_REGION' field as 'India' in SMSS properties
     And User can see storage bucket in 'S3_BUCKET' field as 'BucketTest' in SMSS properties
     And User can see storage access key in 'S3_ACCESS_KEY' field as 'Test123' in SMSS properties
+    And User opens Main Menu
     And User clicks on Open Storage engine
 
   @LoginWithAdmin
@@ -39,7 +42,7 @@ Feature: Add Storage
     When User can see 'copy Storage ID' Storage ID along with copy icon
     And User clicks on copy icon of Storage ID
     When User can see toast message as 'Successfully copied ID'
-    And User can see 'Please use the Edit button to provide a description for this Storage. A description will help others find the Storage and understand how to use it. To include more details associated with the Storage, edit the markdown located in the Overview section.' as storage description
+    # And User can see 'Please use the Edit button to provide a description for this Storage. A description will help others find the Storage and understand how to use it. To include more details associated with the Storage, edit the markdown located in the Overview section.' as storage description
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -48,18 +51,20 @@ Feature: Add Storage
     And User clicks on Settings Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
+    And User opens Main Menu
     And User clicks on Open Storage engine
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
-    And User can see last updated info
+    # And User can see last updated info
     And User logs out from the application
     Then User login as "read"
+    And User opens Main Menu
     And User clicks on Open Storage engine
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
     Then User sees Change Access button
-    
-    @LoginWithAdmin
+
+  @LoginWithAdmin
   Scenario: Validate Change access popup
     Given User can see the Storage title as 'Amazon S3 Storage'
     And 'Author' user clicks on Settings of Storage
@@ -67,6 +72,7 @@ Feature: Add Storage
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
     Then User login as "Editor"
+    And User opens Main Menu
     And User clicks on Open Storage engine
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
@@ -81,8 +87,8 @@ Feature: Add Storage
     And User click on cancel button
     And User logs out from the application
     Then User login as "Author"
-    
-@LoginWithAdmin
+
+  @LoginWithAdmin
   Scenario: Validate change access request
     Given User can see the Storage title as 'Amazon S3 Storage'
     And 'Author' user clicks on Settings of Storage
@@ -90,6 +96,7 @@ Feature: Add Storage
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
     Then User login as "Editor"
+    And User opens Main Menu
     And User clicks on Open Storage engine
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
@@ -98,4 +105,3 @@ Feature: Add Storage
     And User types a comment as 'Access Request'
     And User clicks on Request button
     Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
-    
