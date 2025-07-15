@@ -104,6 +104,68 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath);
 	}
 
+	// Area Chart
+	public void clickOnAreaChartTOViewOptions() {
+		DragAndDropBlocksPageUtils.clickOnAreaChartTOViewOptions(page);
+	}
+
+	public boolean canSeeDuplicateIcon() {
+		return DragAndDropBlocksPageUtils.CanseeDuplicateIcon(page);
+	}
+
+	public void clickOnDuplicateIcon() {
+		DragAndDropBlocksPageUtils.clickOnDuplicateIcon(page);
+	}
+
+	public boolean duplicatedChartIsVisiable(int expectedcount) {
+		return DragAndDropBlocksPageUtils.duplicatedChartIsVisiable(page, expectedcount);
+	}
+
+	public boolean canSeeDeleteIcon() {
+		return DragAndDropBlocksPageUtils.CanseeDeleteIcon(page);
+	}
+
+	public void clickOnDeleteIcon() {
+		DragAndDropBlocksPageUtils.clickOnDeleteIcon(page);
+	}
+
+	public boolean areaChartIsRemoved() {
+		return DragAndDropBlocksPageUtils.areaChartIsRemoved(page);
+	}
+
+	public void hoverOnDuplicateIcon() {
+		DragAndDropBlocksPageUtils.hoverOnDuplicateIcon(page);
+	}
+
+	public void hoverOnDeleteIcon() {
+		DragAndDropBlocksPageUtils.hoverOnDeleteIcon(page);
+	}
+
+	public boolean checkTooltipMessageOfDuplicate(String expectedString) {
+		return DragAndDropBlocksPageUtils.checkTooltipMessageOfDuplicate(page, expectedString);
+	}
+
+	public boolean checkTooltipMessageOfDelete(String expectedString) {
+		return DragAndDropBlocksPageUtils.checkTooltipMessageOfDeleteIcon(page, expectedString);
+	}
+
+	public void clickOnDuplicateIconMultipleTimes(int count) {
+		DragAndDropBlocksPageUtils.clickOnDuplicateIconMultipleTimes(count, page);
+	}
+
+	public int countcheck() {
+		return DragAndDropBlocksPageUtils.CountCheck(page);
+	}
+
+	//
+	public void FirstAreaChart() {
+		DragAndDropBlocksPageUtils.firstAreachart(page);
+	}
+
+	public void userClickOnSchema() {
+		DragAndDropBlocksPageUtils.userClickOnSchema(page);
+	}
+
 	public void clickOnSyncChangesButton() {
 		DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
 	}
@@ -118,5 +180,6 @@ public class DragAndDropBlocksPage {
 
 	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
 		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
+
 	}
 }

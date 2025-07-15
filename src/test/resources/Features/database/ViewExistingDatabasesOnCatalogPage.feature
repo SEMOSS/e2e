@@ -1,7 +1,8 @@
 Feature: View existing databases on database catalog page
 
   Background: Create and edit database
-    Given User clicks on Open Database
+   Given User opens Main Menu
+    And User clicks on Open Database
     When User clicks on Add Database
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
@@ -18,7 +19,8 @@ Feature: View existing databases on database catalog page
 
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: view and validate filter functionality - My Functions
-    Given User clicks on Open Database
+    Given User opens Main Menu
+    And User clicks on Open Database
     Then User sees the database name 'TestDatabase' in the database catalog
     When User clicks on Copy ID option of 'TestDatabase' database
     Then User can see a copy success toast message as 'Succesfully copied to clipboard'

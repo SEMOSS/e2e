@@ -1,7 +1,8 @@
 Feature: View add Database options on catalog page
 
   Scenario: Verify the available options on add database page
-    Given User clicks on Open Database
+   Given User opens Main Menu
+    And User clicks on Open Database
     When User clicks on Add Database
     Then User should see Search bar to filter database options
     And User should see the following database options with icons on the page

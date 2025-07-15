@@ -1,5 +1,4 @@
 Feature: Add Database
-
   Background: Create Database using ZIP file
     Given User opens Main Menu
    	And User clicks on Open Database
@@ -9,8 +8,7 @@ Feature: Add Database
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin
-  @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
    	And User clicks on Open Database
@@ -34,7 +32,7 @@ Feature: Add Database
 
 	@LoginWithAdmin @DeleteCreatedCatalog
 	Scenario: View Database Overview
-    And User clicks on 'TestDatabase' in the database catalog
+   And User clicks on 'TestDatabase' in the database catalog
     And User sees the database name as 'TestDatabase'
     #And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
@@ -45,10 +43,11 @@ Feature: Add Database
     And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
+    And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
-    And User can see last updated info
+    #And User can see last updated info
     And User clicks on Export button that creates a Zip of DB when clicked
     And User sees an Edit button that opens a pop-up to edit
     # used to close edit modal

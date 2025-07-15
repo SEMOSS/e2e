@@ -243,7 +243,7 @@ public class AddModelSteps {
 	public void user_clicks_on_submit_button() {
 		viewCatalogPage.clickOnSubmit();
 	}
-	
+
 	@When("User clicks on Close button")
 	public void user_clicks_on_close_button() {
 		viewCatalogPage.clickOnClose();
