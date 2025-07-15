@@ -175,7 +175,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User can see the Storage title as {string}")
 	public void user_can_see_the_storage_title_as(String storageTitle) {
-		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle);
+		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle+timestamp);
 	}
 
 	@Then("User can see {string} Storage ID along with copy icon")

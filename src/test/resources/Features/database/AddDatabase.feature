@@ -1,5 +1,4 @@
-Feature: Add Database Using ZIP
-
+Feature: Add Database
   Background: Create Database using ZIP file
     Given User opens Main Menu
    	And User clicks on Open Database
@@ -8,7 +7,6 @@ Feature: Add Database Using ZIP
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
-
 
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify Database Usage Examples
@@ -22,7 +20,6 @@ Feature: Add Database Using ZIP
     And User sees an example of "How to use with Langchain API" with example code for Database
     And User sees an example of "How to use in Java" with example code for Database
 
-#changed the embedding xpath of last step
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: View Database Tags
     Given User sees the database name 'TestDatabase' in the database catalog
@@ -33,8 +30,7 @@ Feature: Add Database Using ZIP
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
-#last updated comment because we have defefct
-#	@LoginWithAdmin @DeleteCreatedCatalog
+	@LoginWithAdmin @DeleteCreatedCatalog
 	Scenario: View Database Overview
    And User clicks on 'TestDatabase' in the database catalog
     And User sees the database name as 'TestDatabase'

@@ -289,6 +289,7 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}
 
+
 	// Duplicate and Delete Area Chart
 	@And("User Click on the area chart on the page to view options")
 	public void user_Click_On_AreaChart_To_View_Options() {
@@ -385,7 +386,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_Click_On_Schema() {
 		blocksPage.userClickOnSchema();
 	}
-
 	@Then("User clicks on the Sync icon")
 	public void user_clicks_on_the_sync_icon() {
 		blocksPage.clickOnSyncChangesButton();

@@ -39,7 +39,7 @@ public class AppLibraryPageUtils {
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 
 	// Blocks section
-	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Blocks']/parent::div";
+	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
 	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
 	private static final String HEADING_2_BLOCK_XPATH = "//div[@aria-label='Display Text in header 2']";
@@ -93,6 +93,9 @@ public class AppLibraryPageUtils {
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
+	private static final String QUERY_INPUT_FIELD_XPATH = "[data-mode-id='sql']>div>div>textarea";
+	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{Age}']";
+	private static final String QUERY_OUTPUT_FIELD1_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{BP}']";
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
@@ -184,7 +187,7 @@ public class AppLibraryPageUtils {
 
 	public static void clickOnBlocksOption(Page page) {
 		Locator blocksOption = page.locator(BLOCKS_OPTION_XPATH);
-		if (!blocksOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+		if (!blocksOption.getAttribute("class").contains("flexlayout__border_button_content--selected")) {
 			blocksOption.click();
 		}
 	}
@@ -575,6 +578,19 @@ public class AppLibraryPageUtils {
 		BoundingBox box = locator.boundingBox();
 		page.mouse().move(box.x + (box.width / 2), (box.y + box.height + margin),
 				new Mouse.MoveOptions().setSteps(steps));
+	}
+
+	public static boolean writeQuery(Page page, String query) {
+		page.locator(QUERY_INPUT_FIELD_XPATH).isVisible();
+		page.locator(QUERY_INPUT_FIELD_XPATH).clear();
+		page.locator(QUERY_INPUT_FIELD_XPATH).fill(query);
+		return true;
+	}
+
+	public static boolean validateQuery(Page page, String age, String bp) {
+		page.locator(QUERY_OUTPUT_FIELD_XPATH.replace("{Age}", age)).isVisible();
+		page.locator(QUERY_OUTPUT_FIELD1_XPATH.replace("{BP}", bp)).isVisible();
+		return true;
 	}
 
 	public static void hoverAndClickOnCell(Page page) {
