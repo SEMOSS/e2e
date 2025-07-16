@@ -113,6 +113,10 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.CanseeDuplicateIcon(page);
 	}
 
+	public int getInitialCount() {
+		return DragAndDropBlocksPageUtils.getInitialcount(page);
+	}
+
 	public void clickOnDuplicateIcon() {
 		DragAndDropBlocksPageUtils.clickOnDuplicateIcon(page);
 	}
@@ -129,8 +133,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnDeleteIcon(page);
 	}
 
-	public boolean areaChartIsRemoved() {
-		return DragAndDropBlocksPageUtils.areaChartIsRemoved(page);
+	public boolean areaChartIsRemoved(int count) {
+		return DragAndDropBlocksPageUtils.areaChartIsRemoved(page, count);
 	}
 
 	public void hoverOnDuplicateIcon() {
@@ -157,15 +161,6 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.CountCheck(page);
 	}
 
-	//
-	public void FirstAreaChart() {
-		DragAndDropBlocksPageUtils.firstAreachart(page);
-	}
-
-	public void userClickOnSchema() {
-		DragAndDropBlocksPageUtils.userClickOnSchema(page);
-	}
-
 	public void clickOnSyncChangesButton() {
 		DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
 	}
@@ -180,6 +175,6 @@ public class DragAndDropBlocksPage {
 
 	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
 		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
-
 	}
+
 }

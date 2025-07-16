@@ -31,6 +31,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private BlockSettingsPage blockSettings;
 	public static String timestamp;
 	private String blockText;
+	private int initialChartCount;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -289,8 +290,7 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}
 
-
-	// Duplicate and Delete Area Chart
+	// duplicate and delete Area Chart
 	@And("User Click on the area chart on the page to view options")
 	public void user_Click_On_AreaChart_To_View_Options() {
 		blocksPage.clickOnAreaChartTOViewOptions();
@@ -310,13 +310,13 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User Click on Duplicate Icon")
 	public void user_Click_On_Duplicate_Icon() {
+		initialChartCount = blocksPage.getInitialCount();
 		blocksPage.clickOnDuplicateIcon();
 	}
 
 	@And("Another Area Chart block should appear on the page")
 	public void duplicated_Area_Chart_Is_Visiable() {
-		int initialcount = 1;
-		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(initialcount);
+		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(initialChartCount);
 		Assertions.assertTrue(chartIsAdded, "Expected : New Area Chart is added after Duplicateion");
 	}
 
@@ -334,12 +334,13 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User Click on Delete Icon")
 	public void user_Click_On_Delete_Icon() {
+		initialChartCount = blocksPage.getInitialCount();
 		blocksPage.clickOnDeleteIcon();
 	}
 
 	@And("Area Chart should be Remove from the page")
 	public void area_Chart_Is_Removed() {
-		boolean chartIsRemoved = blocksPage.areaChartIsRemoved();
+		boolean chartIsRemoved = blocksPage.areaChartIsRemoved(initialChartCount);
 		Assertions.assertTrue(chartIsRemoved, "Expected : Area Chart is not removed after Delete");
 	}
 
@@ -376,16 +377,6 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertEquals(expectedcount, actual, "Not matched");
 	}
 
-	// New
-	@And("User Click on First Area Chart")
-	public void user_Click_First_Area_Chart() {
-		blocksPage.FirstAreaChart();
-	}
-
-	@And("User click on Schema and delete first line")
-	public void user_Click_On_Schema() {
-		blocksPage.userClickOnSchema();
-	}
 	@Then("User clicks on the Sync icon")
 	public void user_clicks_on_the_sync_icon() {
 		blocksPage.clickOnSyncChangesButton();

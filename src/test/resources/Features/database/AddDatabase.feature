@@ -1,7 +1,7 @@
 Feature: Add Database
   Background: Create Database using ZIP file
     Given User opens Main Menu
-   	And User clicks on Open Database
+    And User clicks on Open Database
     When User clicks on Add Database
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
@@ -11,7 +11,7 @@ Feature: Add Database
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
-   	And User clicks on Open Database
+    And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on Usage tab for Database
@@ -29,6 +29,7 @@ Feature: Add Database
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
+
 
 	@LoginWithAdmin @DeleteCreatedCatalog
 	Scenario: View Database Overview
@@ -52,12 +53,13 @@ Feature: Add Database
     And User sees an Edit button that opens a pop-up to edit
     # used to close edit modal
     And User clicks on Close button
-    
+
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify MetaData for Database
     Given User opens Main Menu
-   	And User clicks on Open Database    
+    And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on MetaData tab
     Then User sees the table in the metadata tab
+

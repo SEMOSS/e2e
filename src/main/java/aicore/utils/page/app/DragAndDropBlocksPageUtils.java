@@ -68,6 +68,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][@data-testid='DeleteOutlineIcon']";
 	private static final String CLICK_ON_AREA_CHART_VIEW_OPTIONS = "//div[@aria-label='Vega visualization']";
 	private static final String AREA_CHART_COUNT_XPATH = "//canvas[@class='marks']";
+	private static final String DUPLICATE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Duplicate']";
+	private static final String DELETE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Delete']";
+	private static final String CHART_COUNT_ON_PAGE_XPATH = "//canvas[@class='marks']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -194,6 +197,7 @@ public class DragAndDropBlocksPageUtils {
 			page.locator(DATA_GRID_XPATH).isVisible();
 			page.locator(DATA_GRID_XPATH).hover();
 			break;
+
 		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
@@ -294,35 +298,27 @@ public class DragAndDropBlocksPageUtils {
 		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
 
-	// Duplicate and Delete Area Chart
+	// Duplicate and delete Area Chart
 	public static void clickOnAreaChartTOViewOptions(Page page) {
 		page.locator(CLICK_ON_AREA_CHART_VIEW_OPTIONS).click();
+	}
+
+	public static int getInitialcount(Page page) {
+		return page.locator(AREA_CHART_COUNT_XPATH).count();
 	}
 
 	public static boolean CanseeDuplicateIcon(Page page) {
 		return page.locator(DUPLICATE_ICON_XPATH).isVisible();
 	}
 
-	// declare the variable for get the inatial count
-	private static int initialChartCount;
-
 	public static void clickOnDuplicateIcon(Page page) {
-		initialChartCount = page.locator(AREA_CHART_COUNT_XPATH).count();
-		System.out.println("Intitial Count : " + initialChartCount);
 		page.locator(DUPLICATE_ICON_XPATH).click();
 	}
 
-	public static boolean duplicatedChartIsVisiable(Page page, int expectedCount) {
-
-		System.out.println(initialChartCount);
-		// Wait for the new chart to be added (max 5 seconds)
-		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == initialChartCount + 1);
-
-		// Count charts again
-		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count();
-		System.out.println("updarted count: " + updatedChartCount);
-		return updatedChartCount == initialChartCount + 1;
-
+	public static boolean duplicatedChartIsVisiable(Page page, int previousCount) {
+		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == previousCount + 1);
+		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count(); // Count charts again
+		return updatedChartCount == previousCount + 1;
 	}
 
 	public static boolean CanseeDeleteIcon(Page page) {
@@ -330,19 +326,14 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnDeleteIcon(Page page) {
-		initialChartCount = page.locator(AREA_CHART_COUNT_XPATH).count();
-		System.out.println("Intitial Count : " + initialChartCount);
+		page.locator(AREA_CHART_COUNT_XPATH).count();
 		page.locator(DELETE_ICON_XPATH).click();
 	}
 
-	public static boolean areaChartIsRemoved(Page page) {
-
-		// Wait for the new chart to be added (max 5 seconds)
-		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == initialChartCount - 1);
-		// Count charts again
-		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count();
-		System.out.println("updarted count: " + updatedChartCount);
-		return updatedChartCount == initialChartCount - 1;
+	public static boolean areaChartIsRemoved(Page page, int previousCount) {
+		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == previousCount - 1);
+		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count(); // Count charts again
+		return updatedChartCount == previousCount - 1;
 	}
 
 	public static void hoverOnDuplicateIcon(Page page) {
@@ -350,8 +341,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static boolean checkTooltipMessageOfDuplicate(Page page, String expectedresult) {
-		String actualResult = page.locator("//div[contains(@class, 'MuiTooltip-tooltip') and text()='Duplicate']")
-				.textContent();
+		String actualResult = page.locator(DUPLICATE_TOOLTIP_MESSAGE_XPATH).textContent();
 		return actualResult != null && actualResult.contains(expectedresult);
 	}
 
@@ -360,64 +350,28 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static boolean checkTooltipMessageOfDeleteIcon(Page page, String expectedresult) {
-		String actualResult = page.locator("//div[contains(@class, 'MuiTooltip-tooltip') and text()='Delete']")
-				.textContent();
+		String actualResult = page.locator(DELETE_TOOLTIP_MESSAGE_XPATH).textContent();
 		return actualResult != null && actualResult.contains(expectedresult);
 	}
 
 	public static void clickOnDuplicateIconMultipleTimes(int count, Page page) {
 		for (int i = 0; i < count; i++) {
-			// Step 1: Click on Duplicate icon
-			Locator duplicateIcon = page.locator(DUPLICATE_ICON_XPATH); // replace with actual locator
+			Locator duplicateIcon = page.locator(DUPLICATE_ICON_XPATH); // Step 1: Click on Duplicate icon
 			duplicateIcon.waitFor(new Locator.WaitForOptions().setTimeout(5000));
 			duplicateIcon.click();
-
-			// Step 2: Wait a bit for UI to render new chart
-			page.waitForTimeout(500);
-
-			// Step 3: If not last iteration, click on Area Chart again to reactivate
-			// Duplicate icon
+			page.waitForTimeout(500); // Step 2: Wait for UI to new chart
 			if (i < count - 1) {
-				Locator firstChart = page.locator("//canvas[@class='marks']").first();
+				Locator firstChart = page.locator(CHART_COUNT_ON_PAGE_XPATH).first();
+
 				firstChart.waitFor(new Locator.WaitForOptions().setTimeout(5000));
 				firstChart.click();
 				page.waitForTimeout(300); // slight wait for UI response
 			}
 		}
-
 	}
 
 	public static int CountCheck(Page page) {
-		return page.locator("//canvas[@class='marks']").count();
-	}
-
-//
-	public static void firstAreachart(Page page) {
-		Locator firstChart = page.locator("//canvas[@class='marks']").first();
-		firstChart.waitFor(new Locator.WaitForOptions().setTimeout(5000));
-		firstChart.click();
-
-	}
-
-	public static void userClickOnSchema(Page page) {
-		page.locator("//div[@class='view-lines monaco-mouse-cursor-text']").click();
-
-		// Click directly on the '$schema' keyword
-		Locator schemaKey = page.locator("//span[@class='mtk20' and contains(text(),\"$schema\")]");
-		schemaKey.click();
-
-		// Slight pause to ensure focus
-		page.waitForTimeout(500);
-
-		page.keyboard().press("Home");
-		// Select the $schema key and value using keyboard
-		for (int i = 0; i < 61; i++) {
-			page.keyboard().press("Shift+ArrowRight"); // Extend selection character-by-character
-		}
-
-		// Delete the selected text
-		page.keyboard().press("Backspace");
-
+		return page.locator(CHART_COUNT_ON_PAGE_XPATH).count();
 	}
 
 	public static void clickOnSyncChangesButton(Page page) {
