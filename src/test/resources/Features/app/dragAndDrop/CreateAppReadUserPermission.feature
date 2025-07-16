@@ -43,6 +43,4 @@ Feature: Create App setting for Read permission
     And 'Read' user Make Public toggle should be 'Disable'
     And 'Read' user Make Discoverable toggle should be 'Disable'
     And 'Read' user can 'not view' Delete Model option
-    And User opens Main Menu
-    And User logs out from the application
    

@@ -111,8 +111,11 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnRunCellButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).isVisible();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).click();
+
+		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell"));
+		runCellButton.hover();
+		runCellButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		runCellButton.click();
 		page.getByTestId("CheckCircleIcon")
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 	}
