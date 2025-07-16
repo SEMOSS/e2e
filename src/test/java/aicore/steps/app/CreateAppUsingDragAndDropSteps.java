@@ -103,7 +103,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User clicks on {string} app from the My Apps")
 	public void user_clicks_on_app_from_the_my_apps(String appName) {
-		appPage.clickOnSearchedApp(appName);
+		appPage.clickOnAppCard(appName);
 	}
 
 	@And("User clicks on app Edit button")
