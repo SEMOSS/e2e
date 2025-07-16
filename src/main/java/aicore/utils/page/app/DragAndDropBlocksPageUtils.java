@@ -319,7 +319,6 @@ public class DragAndDropBlocksPageUtils {
 		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == previousCount + 1);
 		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count(); // Count charts again
 		return updatedChartCount == previousCount + 1;
-
 	}
 
 	public static boolean CanseeDeleteIcon(Page page) {
@@ -327,7 +326,6 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnDeleteIcon(Page page) {
-
 		page.locator(AREA_CHART_COUNT_XPATH).count();
 		page.locator(DELETE_ICON_XPATH).click();
 	}
@@ -343,9 +341,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static boolean checkTooltipMessageOfDuplicate(Page page, String expectedresult) {
-
 		String actualResult = page.locator(DUPLICATE_TOOLTIP_MESSAGE_XPATH).textContent();
-
 		return actualResult != null && actualResult.contains(expectedresult);
 	}
 
@@ -354,9 +350,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static boolean checkTooltipMessageOfDeleteIcon(Page page, String expectedresult) {
-
 		String actualResult = page.locator(DELETE_TOOLTIP_MESSAGE_XPATH).textContent();
-
 		return actualResult != null && actualResult.contains(expectedresult);
 	}
 

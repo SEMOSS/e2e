@@ -135,7 +135,6 @@ public class DragAndDropBlocksPage {
 
 	public boolean areaChartIsRemoved(int count) {
 		return DragAndDropBlocksPageUtils.areaChartIsRemoved(page, count);
-
 	}
 
 	public void hoverOnDuplicateIcon() {
@@ -176,7 +175,6 @@ public class DragAndDropBlocksPage {
 
 	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
 		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
-
 	}
 
 }

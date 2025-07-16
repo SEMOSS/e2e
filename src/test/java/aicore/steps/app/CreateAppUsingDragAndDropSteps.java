@@ -31,6 +31,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private BlockSettingsPage blockSettings;
 	public static String timestamp;
 	private String blockText;
+	private int initialChartCount;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -290,7 +291,6 @@ public class CreateAppUsingDragAndDropSteps {
 	}
 
 	// duplicate and delete Area Chart
-
 	@And("User Click on the area chart on the page to view options")
 	public void user_Click_On_AreaChart_To_View_Options() {
 		blocksPage.clickOnAreaChartTOViewOptions();
@@ -308,21 +308,15 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-	private int initialChartCount;
-
 	@And("User Click on Duplicate Icon")
 	public void user_Click_On_Duplicate_Icon() {
 		initialChartCount = blocksPage.getInitialCount();
-//		int count = blocksPage.getInitialCount();
-//		CommonUtils.manageInitialChartCount(count);
 		blocksPage.clickOnDuplicateIcon();
 	}
 
 	@And("Another Area Chart block should appear on the page")
 	public void duplicated_Area_Chart_Is_Visiable() {
 		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(initialChartCount);
-		// int prevCount = CommonUtils.manageInitialChartCount(null);
-		// boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(prevCount);
 		Assertions.assertTrue(chartIsAdded, "Expected : New Area Chart is added after Duplicateion");
 	}
 
@@ -340,15 +334,13 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User Click on Delete Icon")
 	public void user_Click_On_Delete_Icon() {
-		int count = blocksPage.getInitialCount();
-		CommonUtils.manageInitialChartCount(count);
+		initialChartCount = blocksPage.getInitialCount();
 		blocksPage.clickOnDeleteIcon();
 	}
 
 	@And("Area Chart should be Remove from the page")
 	public void area_Chart_Is_Removed() {
-		int prevCount = CommonUtils.manageInitialChartCount(null);
-		boolean chartIsRemoved = blocksPage.areaChartIsRemoved(prevCount);
+		boolean chartIsRemoved = blocksPage.areaChartIsRemoved(initialChartCount);
 		Assertions.assertTrue(chartIsRemoved, "Expected : Area Chart is not removed after Delete");
 	}
 
