@@ -289,6 +289,103 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}
 
+
+	// Duplicate and Delete Area Chart
+	@And("User Click on the area chart on the page to view options")
+	public void user_Click_On_AreaChart_To_View_Options() {
+		blocksPage.clickOnAreaChartTOViewOptions();
+	}
+
+	@When("User can {string} Duplicate icon on area chart")
+	public void user_can_see_Duplicate_Icon(String action) {
+		boolean canSeeDuplicateIcon = blocksPage.canSeeDuplicateIcon();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(canSeeDuplicateIcon, " user cannot view the Duplicate Icon");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(canSeeDuplicateIcon, " user should not view the Duplicate Icon");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("User Click on Duplicate Icon")
+	public void user_Click_On_Duplicate_Icon() {
+		blocksPage.clickOnDuplicateIcon();
+	}
+
+	@And("Another Area Chart block should appear on the page")
+	public void duplicated_Area_Chart_Is_Visiable() {
+		int initialcount = 1;
+		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(initialcount);
+		Assertions.assertTrue(chartIsAdded, "Expected : New Area Chart is added after Duplicateion");
+	}
+
+	@When("User can {string} Delete icon on area chart")
+	public void user_can_see_Delete_Icon(String action) {
+		boolean canSeeDelete = blocksPage.canSeeDeleteIcon();
+		if (action.equalsIgnoreCase("view")) {
+			Assertions.assertTrue(canSeeDelete, " user cannot view the Delete Icon");
+		} else if (action.equalsIgnoreCase("not view")) {
+			Assertions.assertFalse(canSeeDelete, " user should not view the Delete Icon");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("User Click on Delete Icon")
+	public void user_Click_On_Delete_Icon() {
+		blocksPage.clickOnDeleteIcon();
+	}
+
+	@And("Area Chart should be Remove from the page")
+	public void area_Chart_Is_Removed() {
+		boolean chartIsRemoved = blocksPage.areaChartIsRemoved();
+		Assertions.assertTrue(chartIsRemoved, "Expected : Area Chart is not removed after Delete");
+	}
+
+	@And("User hovers over the Duplicate icon")
+	public void user_Hover_On_Duplicate_Icon() {
+		blocksPage.hoverOnDuplicateIcon();
+	}
+
+	@Then("Tooltip with text {string} should appear")
+	public void check_Tooltiop_Message_Of_Duplicate(String expected) {
+		boolean actual = blocksPage.checkTooltipMessageOfDuplicate(expected);
+		Assertions.assertTrue(actual, "Hover Message is Not Match with expedted: ");
+	}
+
+	@And("User hovers over the Delete icon")
+	public void user_Hover_On_Delete_Icon() {
+		blocksPage.hoverOnDeleteIcon();
+	}
+
+	@And("Tooltip with text {string} should display")
+	public void check_Tooltiop_Message_Of_Delete(String expected) {
+		boolean actual = blocksPage.checkTooltipMessageOfDelete(expected);
+		Assertions.assertTrue(actual, "Hover Message is Not Match with expedted: ");
+	}
+
+	@And("User Clicks on Duplicate Icon {int} times")
+	public void user_Click_DuplicateIcon_Multiple_Times(int count) {
+		blocksPage.clickOnDuplicateIconMultipleTimes(count);
+	}
+
+	@Then("Total {int} Area Chart blocks should be present on the page")
+	public void total_Area_Chart_Present_On_Page(int expectedcount) {
+		int actual = blocksPage.countcheck();
+		Assertions.assertEquals(expectedcount, actual, "Not matched");
+	}
+
+	// New
+	@And("User Click on First Area Chart")
+	public void user_Click_First_Area_Chart() {
+		blocksPage.FirstAreaChart();
+	}
+
+	@And("User click on Schema and delete first line")
+	public void user_Click_On_Schema() {
+		blocksPage.userClickOnSchema();
+	}
 	@Then("User clicks on the Sync icon")
 	public void user_clicks_on_the_sync_icon() {
 		blocksPage.clickOnSyncChangesButton();

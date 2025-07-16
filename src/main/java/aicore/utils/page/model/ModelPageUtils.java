@@ -56,8 +56,8 @@ public class ModelPageUtils {
 	}
 
 	public static void waitForModelCreationToastMessageDisappear(Page page) {
-		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE))
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE)).isVisible();
+		page.getByTestId("CloseIcon").click();
 	}
 
 	public static String verifyModelTitle(Page page, String modelTitle) {
