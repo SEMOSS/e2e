@@ -21,7 +21,7 @@ public class AppPage {
 		AppPageUtils.searchApp(page, appName, timestamp);
 	}
 
-	public void clickOnSearchedApp(String appName) {
-		AppPageUtils.clickOnSearchedApp(page, appName, timestamp);
+	public void clickOnAppCard(String appName) {
+		AppPageUtils.clickOnAppCard(page, appName, timestamp);
 	}
 }

@@ -16,6 +16,7 @@ Feature: Create App setting for Editor permission
     And User logs out from the application
     Then User login as 'Editor'
     And User opens Main Menu
+    And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
 
@@ -28,6 +29,7 @@ Feature: Create App setting for Editor permission
     And 'Editor' user can 'view' Member
     And 'Editor' user can 'view' Pending Requests
     And 'Editor' user can 'view' Data Apps
+    And User opens Main Menu
     And User logs out from the application
     And User login as 'Admin'
 
@@ -38,6 +40,7 @@ Feature: Create App setting for Editor permission
     And 'Editor' user Make Discoverable toggle should be 'Disable'
     And 'Editor' user can 'not view' Delete Model option
     #And 'Editor' user can 'view' Export Icon
+    And User opens Main Menu
     And User logs out from the application
     And User login as 'Admin'
 
@@ -49,6 +52,7 @@ Feature: Create App setting for Editor permission
     And User adds one user and assigns them as 'Read'
     And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
+    And User opens Main Menu
     And User logs out from the application
     And User login as 'Admin'
 

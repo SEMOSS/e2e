@@ -20,7 +20,9 @@ Feature: Create Notebook and execute it
   @DeleteCreatedCatalog
   Scenario: Execute Import Data query
     Given User is on Home page
-    When User searches 'Test app' app in the app searchbox
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button
     And User clicks on Blocks if it is not selected by default

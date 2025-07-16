@@ -37,6 +37,10 @@ public class NotebookPageUtils {
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
+	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='{notebookName}']";
+	private static final String QUERY_INPUT_FIELD_XPATH = "[data-mode-id='sql']>div>div>textarea";
+	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{Age}']";
+	private static final String QUERY_OUTPUT_FIELD1_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{BP}']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -69,15 +73,21 @@ public class NotebookPageUtils {
 	}
 
 	public static void mouseHoverOnNotebookHiddenOptions(Page page) {
-		Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
-		CommonUtils.moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
+		if (!page.getByTestId("data-key-pair").isVisible()) {
+			Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
+			CommonUtils.moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
+		} else {
+			Locator dataKeyPair = page.getByTestId("data-key-pair");
+			dataKeyPair.scrollIntoViewIfNeeded();
+			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 60, 10);
+		}
 	}
 
 	public static void clickOnHiddenNotebookOption(Page page, String optionName) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(optionName)).click();
 	}
 
-	public static void selectDataImportOption(Page page, String optionName) {
+	public static void selectHiddenOptionDropdown(Page page, String optionName) {
 		page.locator(IMPORT_DATA_OPTIONS_XPATH.replace("{optionName}", optionName)).click();
 	}
 
@@ -101,6 +111,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnRunCellButton(Page page) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).isVisible();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).click();
 		page.getByTestId("CheckCircleIcon")
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -199,5 +210,29 @@ public class NotebookPageUtils {
 		if (pythonOutput == null || !pythonOutput.contains(output)) {
 			throw new AssertionError("Expected Python output: " + output + ", but got: " + pythonOutput);
 		}
+	}
+
+	public static void clickOnNotebook(Page page, String notebookName) {
+		page.locator(NOTEBOOK_NAME_XPATH.replace("{notebookName}", notebookName)).click();
+	}
+
+	public static void verifyNotebookIsPresentInList(Page page, String notebookName) {
+		Locator notebookLocator = page.locator(NOTEBOOK_NAME_XPATH.replace("{notebookName}", notebookName));
+		if (!notebookLocator.isVisible()) {
+			throw new AssertionError("Notebook '" + notebookName + "' is not present in the list");
+		}
+	}
+
+	public static boolean writeQuery(Page page, String query) {
+		page.locator(QUERY_INPUT_FIELD_XPATH).isVisible();
+		page.locator(QUERY_INPUT_FIELD_XPATH).clear();
+		page.locator(QUERY_INPUT_FIELD_XPATH).fill(query);
+		return true;
+	}
+
+	public static boolean validateQuery(Page page, String age, String bp) {
+		page.locator(QUERY_OUTPUT_FIELD_XPATH.replace("{Age}", age)).isVisible();
+		page.locator(QUERY_OUTPUT_FIELD1_XPATH.replace("{BP}", bp)).isVisible();
+		return true;
 	}
 }

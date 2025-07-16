@@ -102,7 +102,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User clicks on {string} app from the My Apps")
 	public void user_clicks_on_app_from_the_my_apps(String appName) {
-		appPage.clickOnSearchedApp(appName);
+		appPage.clickOnAppCard(appName);
 	}
 
 	@And("User clicks on app Edit button")
@@ -147,12 +147,12 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User enters {string} text as {string}")
 	public void user_enters_text_as(String blockName, String blockText) {
 		switch (blockName) {
-			case "Markdown":
-				blockSettings.enterMarkdown(blockText);
-				break;
-			default:
-				blockSettings.enterText(blockText);
-				break;
+		case "Markdown":
+			blockSettings.enterMarkdown(blockText);
+			break;
+		default:
+			blockSettings.enterText(blockText);
+			break;
 		}
 	}
 
@@ -186,12 +186,12 @@ public class CreateAppUsingDragAndDropSteps {
 		String BOLD_MARKDOWN_PATTERN = "\\*\\*(.*?)\\*\\*";
 		String BOLD_REPLACEMENT = "$1";
 		switch (blockName) {
-			case "Markdown":
-				this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
-				break;
-			default:
-				this.blockText = text;
-				break;
+		case "Markdown":
+			this.blockText = text.replaceAll(BOLD_MARKDOWN_PATTERN, BOLD_REPLACEMENT);
+			break;
+		default:
+			this.blockText = text;
+			break;
 		}
 		String actualText = blocksPage.getBlockText(blockName, blockText);
 		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");

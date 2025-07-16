@@ -132,7 +132,7 @@ public class AppLibrary {
 		// get image for app search
 		GenericSetupUtils.navigateToHomePage(page);
 		HomePageUtils.clickOnOpenAppLibrary(page);
-		element = DocumentationUtils.focusOnElement(page, AppPageUtils.APP_SEARCH_TEXTBOX_XPATH);
+		element = DocumentationUtils.focusOnElement(page, HomePageUtils.APP_SEARCH_TEXTBOX_XPATH);
 		DocumentationUtils.screenshot(page, DocumentationConstants.SEARCH_APP_LIBRARY_IMAGE);
 		DocumentationUtils.removeElementFocus(element);
 

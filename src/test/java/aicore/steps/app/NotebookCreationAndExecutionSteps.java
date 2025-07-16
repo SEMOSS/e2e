@@ -9,6 +9,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.app.NotebookPage;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -72,7 +73,7 @@ public class NotebookCreationAndExecutionSteps {
 
 	@And("User selects {string} from the data import options")
 	public void user_selects_from_the_data_import_options(String optionName) {
-		notebookPage.selectDataImportOption(optionName);
+		notebookPage.selectHiddenOptionDropdown(optionName);
 	}
 
 	@And("User selects {string} from the dropdown list")
@@ -173,5 +174,32 @@ public class NotebookCreationAndExecutionSteps {
 	@Then("User can see Python output as {string}")
 	public void user_can_see_python_output_as(String Output) {
 		notebookPage.getPythonOutput(Output);
+	}
+
+	@Given("User Sees the Notebook {string} in the notebook list")
+	public void user_Sees_The_Notebook_In_The_Notebook_List(String notebookName) {
+		notebookPage.verifyNotebookIsPresentInList(notebookName);
+	}
+
+	@When("User clicks on the Notebook {string}")
+	public void user_Clicks_On_The_Notebook(String notebookName) {
+		notebookPage.clickOnNotebook(notebookName);
+	}
+
+	@And("User selects {string} from the data filter options")
+	public void user_selects_from_the_data_filters_options(String optionName) {
+		notebookPage.selectHiddenOptionDropdown(optionName);
+	}
+
+	@When("User writes the query {string}")
+	public void user_writes_the_query(String query) {
+		boolean flag = notebookPage.writeQuery(query);
+		Assertions.assertTrue(flag, "query input box is not visible");
+	}
+
+	@Then("User sees the output of the executed query where Age is {string} and Bloodpressure is {string}")
+	public void user_sees_the_output_of_the_executed_query_where_age_is_and_bloodpressure_is(String age, String bp) {
+		boolean flag = notebookPage.validateQuery(age, bp);
+		Assertions.assertTrue(flag, "age and bp fields is not visible");
 	}
 }
