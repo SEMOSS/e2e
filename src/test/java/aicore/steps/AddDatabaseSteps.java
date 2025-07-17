@@ -198,4 +198,17 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_sees_the_table_in_the_metadata_tab() {
 		addDatabaseToCatalogPage.verifyMetaData();
 	}
+
+	// View Database Type on Connect To database page
+	@When("User enters {string} in the search box")
+	public void user_Search_Database_Type(String dbType) {
+		addDatabaseToCatalogPage.searchDatabaseType(dbType);
+	}
+
+	@Then("{string} should be visible under {string}")
+	public void user_See_Database_Type_On_DBConnectionPage(String dbType, String section) {
+		boolean isDBTypeVisiable = addDatabaseToCatalogPage.isDatabaseTypeVisiable(dbType, section);
+		Assertions.assertTrue(isDBTypeVisiable,
+				"Database type '" + dbType + "' should be visible under section '" + section + "'");
+	}
 }

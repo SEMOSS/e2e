@@ -25,6 +25,11 @@ public class AddCatalogPageBaseUtils {
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
 
+	// View Database Type on Connect To database page
+	private static final String SEARCH_INPUT_XPATH = "//div[@id='home__content']//input[@placeholder='Search' and @type='text']";
+	private static final String FILE_UPLOAD_DB_TYPE_XPATH = "//div[div[normalize-space(text())='File Uploads']]//p[normalize-space(text())='{DatabaseType}']";
+	private static final String CONNECTIONS_DB_TYPE_XPATH = "//div[div[normalize-space(text())='Connections']]//p[normalize-space(text())='{databaseType}']";
+
 	public static boolean verifySectionIsVisible(Page page, String sectionName) {
 		boolean isSectionVisible = page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
 		return isSectionVisible;
@@ -94,7 +99,7 @@ public class AddCatalogPageBaseUtils {
 	public static void clickOnSubmit(Page page) {
 		page.click(SUBMIT_BUTTON_XPATH);
 	}
-	
+
 	public static void clickOnClose(Page page) {
 		page.click(CLOSE_BUTTON_XPATH);
 	}
@@ -117,4 +122,24 @@ public class AddCatalogPageBaseUtils {
 		return toastMessage.textContent().trim();
 	}
 
+	// View Database Type on Connect To database page
+	public static void searchDatabaseType(Page page, String databaseType) {
+		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(SEARCH_INPUT_XPATH).click();
+		page.locator(SEARCH_INPUT_XPATH).fill(""); // Clear search box
+		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term
+		page.waitForTimeout(1000);
+	}
+
+	public static boolean isDatabaseTypeVisible(Page page, String databaseType, String section) {
+		String finddatabaseType;
+		if (section.equalsIgnoreCase("File Uploads")) {
+			finddatabaseType = FILE_UPLOAD_DB_TYPE_XPATH.replace("{DatabaseType}", databaseType);
+		} else if (section.equalsIgnoreCase("Connections")) {
+			finddatabaseType = CONNECTIONS_DB_TYPE_XPATH.replace("{DatabaseType}", databaseType);
+		} else {
+			throw new IllegalArgumentException("Invalid section name: " + section);
+		}
+		return page.locator(finddatabaseType).isVisible();
+	}
 }
