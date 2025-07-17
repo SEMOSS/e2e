@@ -244,14 +244,12 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
-		// search for the user and wait for search return
-		Locator memberSearchIcon = page.locator(SEARCH_ICON_XPATH);
-		memberSearchIcon.click();
-		page.fill(SEARCH_BUTTON_XPATH, role);
-		page.waitForTimeout(500);
-		// delete the user
-		page.click(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
-		page.click(CONFIRM_BUTTON_XPATH);
+		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
+		deleteIcon.scrollIntoViewIfNeeded();
+		deleteIcon.hover();
+		deleteIcon.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		deleteIcon.click();
+		page.locator(CONFIRM_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnUsageTab(Page page) {
