@@ -5,6 +5,7 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
@@ -17,22 +18,20 @@ public class SettingsModelPageUtils {
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
-	private static final String MAKE_PUBLIC_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//p[text()='{title}']";
-	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[1]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
-	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[1]//span[@class='MuiSwitch-track css-1ju1kxc']";
-	private static final String MAKE_DISCOVERABLE_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[2]//p[text()='{title}']";
-	private static final String MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[2]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
-	private static final String MAKE_DISCOVERABLE_TOGGLE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[2]//span[@class='MuiSwitch-track css-1ju1kxc']";
-	private static final String DELETE_SECTION_TITLE_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[3]//p[text()='{title}']";
-	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "(//div[contains(@class,'MuiGrid-root MuiGrid-item MuiGrid-grid')])[3]//p[contains(@class,'MuiTypography-root MuiTypography-body2')]";
-	private static final String DELETE_BUTTON_XPATH = "(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1udb513'])[3]//div[@class='MuiAlert-action css-1mzcepu']";
-	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//div[@class='css-aplv3o']//div[@class='css-163ryps']";
+	private static final String TILE_SECTION_TITLE_XPATH = "//p[text()='{title}']";
+	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Make Public']/parent::div/following-sibling::p";
+	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model public']";
+	private static final String MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Make Discoverable']/parent::div/following-sibling::p";
+	private static final String MAKE_DISCOVERABLE_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model discoverable']";
+	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Delete']/parent::div/following-sibling::p";
+	private static final String DELETE_BUTTON_XPATH = "//button//span[text()='Delete']";
+	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h6[text()='Pending Requests']";
 	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h6[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
-	private static final String MEMBER_SECTION_TITLE_XPATH = "//div[@class='css-1hk1ec8']//div[@class='css-163ryps']";
-	private static final String MEMBER_SEARCH_ICON_XPATH = "//*[name()='svg'][@data-testid='SearchIcon']";
+	private static final String MEMBER_SECTION_TITLE_XPATH = "//h6[text()='Members']";
+	private static final String MEMBER_SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBERS_SEARCHBOX_XPATH = "//div[contains(@class,'MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary')]";
-	private static final String ADD_MEMBERS_BUTTON_XPATH = "//div[@class='css-gm8qym']";
-	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//div[@class='MuiInputBase-root MuiInputBase-colorPrimary css-1tsucmk']";
+	private static final String ADD_MEMBERS_BUTTON_XPATH = "//div[text()='Add Members']";
+	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//*[name()='svg'][@data-testid='ArrowDropDownIcon']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li";
 	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	private static final String RADIO_BUTTON_XPATH = "//span[div[contains(text(),'{role}')]]/ancestor::div[contains(@class, 'MuiCardHeader-root')]//input[@type='radio']";
@@ -46,18 +45,16 @@ public class SettingsModelPageUtils {
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
-	
+
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
-	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
-	
-	
+	private static final String SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
 	}
 
 	public static boolean verifyMakePublicSectionIsVisible(Page page, String title) {
-		boolean isMakePublicSectionVisible = page.isVisible(MAKE_PUBLIC_SECTION_TITLE_XPATH.replace("{title}", title));
+		boolean isMakePublicSectionVisible = page.isVisible(TILE_SECTION_TITLE_XPATH.replace("{title}", title));
 		return isMakePublicSectionVisible;
 	}
 
@@ -72,8 +69,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyMakeDiscoverableSectionIsVisible(Page page, String title) {
-		boolean isMakeDiscoverableSectionVisible = page
-				.isVisible(MAKE_DISCOVERABLE_SECTION_TITLE_XPATH.replace("{title}", title));
+		boolean isMakeDiscoverableSectionVisible = page.isVisible(TILE_SECTION_TITLE_XPATH.replace("{title}", title));
 		return isMakeDiscoverableSectionVisible;
 	}
 
@@ -88,7 +84,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyDeleteSectionIsVisible(Page page, String title) {
-		boolean isDeleteSectionVisible = page.isVisible(DELETE_SECTION_TITLE_XPATH.replace("{title}", title));
+		boolean isDeleteSectionVisible = page.isVisible(TILE_SECTION_TITLE_XPATH.replace("{title}", title));
 		return isDeleteSectionVisible;
 	}
 
@@ -129,13 +125,18 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyRowsPerPageDropdownIsVisible(Page page) {
-		page.locator(ROWS_PER_PAGE_DROPDOWN_XPATH).scrollIntoViewIfNeeded();
-		boolean isRowsPerPageDropdownVisible = page.isVisible(ROWS_PER_PAGE_DROPDOWN_XPATH);
+		Locator ROWS_PER_PAGE_DROPDOWN = page.locator(ROWS_PER_PAGE_DROPDOWN_XPATH);
+		ROWS_PER_PAGE_DROPDOWN.scrollIntoViewIfNeeded();
+		boolean isRowsPerPageDropdownVisible = ROWS_PER_PAGE_DROPDOWN.isVisible();
 		return isRowsPerPageDropdownVisible;
 	}
 
 	public static List<String> verifyRowsPerPageDropdownOptions(Page page) {
-		page.click(ROWS_PER_PAGE_DROPDOWN_XPATH);
+		Locator ROWS_PER_PAGE_DROPDOWN = page.locator(ROWS_PER_PAGE_DROPDOWN_XPATH);
+		ROWS_PER_PAGE_DROPDOWN.scrollIntoViewIfNeeded();
+		ROWS_PER_PAGE_DROPDOWN.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		ROWS_PER_PAGE_DROPDOWN.click();
+		page.waitForTimeout(1000);
 		List<String> actualOptions = page.locator(ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH).allTextContents();
 		return actualOptions;
 	}
@@ -244,10 +245,8 @@ public class SettingsModelPageUtils {
 
 	public static void deleteAddedMember(Page page, String role) {
 		// search for the user and wait for search return
-		page.isVisible(SEARCH_ICON_XPATH);
-		page.click(SEARCH_ICON_XPATH);
-
-		page.click(SEARCH_BUTTON_XPATH);
+		Locator memberSearchIcon = page.locator(SEARCH_ICON_XPATH);
+		memberSearchIcon.click();
 		page.fill(SEARCH_BUTTON_XPATH, role);
 		page.waitForTimeout(500);
 		// delete the user

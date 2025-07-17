@@ -1,7 +1,5 @@
 package aicore.utils;
 
-import java.util.regex.Pattern;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +12,7 @@ public class HomePageUtils {
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
 
 	private static final String PAGE_TITLE_XPATH = "//a[@class='css-jnxb8i']";
-
+	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "MenuOpenRoundedIcon";
@@ -34,12 +32,12 @@ public class HomePageUtils {
 	public static final String VECTOR_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Vector')";
 
 	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='TokenRoundedIcon']";
-  
+
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
-	
-	private static final String USER_PROFILE_ICON_DATA_TESTID="PersonIcon";
+
+	private static final String USER_PROFILE_ICON_DATA_TESTID = "PersonIcon";
 
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
@@ -133,8 +131,8 @@ public class HomePageUtils {
 	}
 
 	public static void logout(Page page) {
-    
-	Locator menuOpen = page.getByTestId("MenuOpenRoundedIcon");
+
+		Locator menuOpen = page.getByTestId("MenuOpenRoundedIcon");
 
 		if (!menuOpen.isVisible()) {
 			Locator locator = page.getByTestId("MenuRoundedIcon");
@@ -159,5 +157,23 @@ public class HomePageUtils {
 		Locator locator = page.locator(DATABASE_MENU_BUTTON_LABEL);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
+	}
+
+	public static void searchApp(Page page, String appName, String timestamp) {
+		page.locator(APP_SEARCH_TEXTBOX_XPATH).fill(appName + " " + timestamp);
+		page.getByLabel("Search").click();
+		page.getByLabel("Search").fill(appName + " " + timestamp);
+	}
+
+	public static void clickOnSearchedApp(Page page, String appName, String timestamp) {
+		// new search box
+		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
+		AICorePageUtils.waitFor(listbox);
+		String expectedText = appName + " " + timestamp;
+		Locator button = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(expectedText));
+		AICorePageUtils.waitFor(button);
+		Locator anchor = page.locator("//span[text()='" + expectedText + "']/ancestor::a");
+		CommonUtils.removeTargetAttribute(anchor);
+		button.click();
 	}
 }

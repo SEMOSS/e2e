@@ -13,7 +13,7 @@ import aicore.utils.CommonUtils;
 public class EditModelPageUtils {
 
 	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
-	private static final String SEARCHED_MODEL_XPATH = "//div[@class='css-q5m5ti']//p[text()='{modelName}']";
+	private static final String SEARCHED_MODEL_XPATH = "//p[text()='{modelName}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -24,7 +24,7 @@ public class EditModelPageUtils {
 	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[text()='Data classification']/parent::div//input[@aria-autocomplete='list']";
 	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/parent::div//input[@aria-autocomplete='list']";
 	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
-	private static final String MODEL_TAGS_XPATH = "//h6[text()='Tag']/parent::h6/parent::div/parent::section//following-sibling::div//span";
+	private static final String MODEL_TAGS_XPATH = "//div[contains(@class,'MuiStack-root')]//div[contains(@class,'MuiChip-root MuiChip-outlined')]//span";
 	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
 	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Tag')]]/following-sibling::div";
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Domain')]]/following-sibling::div";
@@ -33,8 +33,8 @@ public class EditModelPageUtils {
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 
 	public static void searchModelCatalog(Page page, String modelName, String timestamp) {
-		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(MODEL_CATALOG_SEARCH_TEXTBOX_XPATH).fill(modelName + timestamp);
+		page.getByLabel("Search").click();
+		page.getByLabel("Search").fill(modelName + timestamp);
 	}
 
 	public static void selectModelFromSearchOptions(Page page, String modelName) {

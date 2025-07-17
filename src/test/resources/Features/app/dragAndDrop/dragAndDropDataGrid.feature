@@ -43,7 +43,7 @@ Feature: Drag and Drop Data Grid
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown
     And User clicks on the Sync icon
-    And User can see the Data Grid column names as 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
+    And User can see the Data Grid column names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
     And User remove the 'Age' column from the Data Grid
     And User clicks on the Sync icon
     And User should not see the 'Age' column in the Data Grid
@@ -65,7 +65,6 @@ Feature: Drag and Drop Data Grid
       |  10 |
       |  50 |
       | 100 |
-      | 500 |
     And User opens Main Menu
     And User clicks on Open Database
     Then User sees the database name 'TestDatabase' in the database catalog

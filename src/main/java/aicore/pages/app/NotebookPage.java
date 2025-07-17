@@ -51,8 +51,8 @@ public class NotebookPage {
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, optionName);
 	}
 
-	public void selectDataImportOption(String optionName) {
-		NotebookPageUtils.selectDataImportOption(page, optionName);
+	public void selectHiddenOptionDropdown(String optionName) {
+		NotebookPageUtils.selectHiddenOptionDropdown(page, optionName);
 	}
 
 	public void selectDatabaseFromDropdown(String databaseName) {
@@ -121,5 +121,21 @@ public class NotebookPage {
 
 	public void getPythonOutput(String output) {
 		NotebookPageUtils.getPythonOutput(page, output);
+	}
+
+	public void clickOnNotebook(String notebookName) {
+		NotebookPageUtils.clickOnNotebook(page, notebookName);
+	}
+
+	public void verifyNotebookIsPresentInList(String notebookName) {
+		NotebookPageUtils.verifyNotebookIsPresentInList(page, notebookName);
+	}
+
+	public boolean writeQuery(String query) {
+		return NotebookPageUtils.writeQuery(page, query);
+	}
+
+	public boolean validateQuery(String age, String bp) {
+		return NotebookPageUtils.validateQuery(page, age, bp);
 	}
 }

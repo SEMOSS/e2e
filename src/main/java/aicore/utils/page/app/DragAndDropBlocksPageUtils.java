@@ -62,6 +62,16 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 
+	// Area Chart
+	private static final String AREA_CHART_XPATH = "//div[@aria-label='Show trends over time with cumulative data']";
+	private static final String DUPLICATE_ICON_XPATH = "//*[name()='svg'][@data-testid='ContentCopyIcon']";
+	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][@data-testid='DeleteOutlineIcon']";
+	private static final String CLICK_ON_AREA_CHART_VIEW_OPTIONS = "//div[@aria-label='Vega visualization']";
+	private static final String AREA_CHART_COUNT_XPATH = "//canvas[@class='marks']";
+	private static final String DUPLICATE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Duplicate']";
+	private static final String DELETE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Delete']";
+	private static final String CHART_COUNT_ON_PAGE_XPATH = "//canvas[@class='marks']";
+
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
 		element.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -107,85 +117,91 @@ public class DragAndDropBlocksPageUtils {
 	public static void mouseHoverOnBlock(Page page, String blockName) {
 		boolean isValidBlock = true;
 		switch (blockName) {
-			case "Text (h1)":
-				page.locator(HEADING_1_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_1_BLOCK_XPATH).hover();
-				break;
-			case "Text (h2)":
-				page.locator(HEADING_2_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_2_BLOCK_XPATH).hover();
-				break;
-			case "Text (h3)":
-				page.locator(HEADING_3_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_3_BLOCK_XPATH).hover();
-				break;
-			case "Text (h4)":
-				page.locator(HEADING_4_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_4_BLOCK_XPATH).hover();
-				break;
-			case "Text (h5)":
-				page.locator(HEADING_5_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_5_BLOCK_XPATH).hover();
-				break;
-			case "Text (h6)":
-				page.locator(HEADING_6_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_6_BLOCK_XPATH).hover();
-				break;
-			case "Text":
-				page.locator(TEXT_BLOCK_XPATH).isVisible();
-				page.locator(TEXT_BLOCK_XPATH).hover();
-				break;
-			case "Link":
-				page.locator(LINK_BLOCK_XPATH).isVisible();
-				page.locator(LINK_BLOCK_XPATH).hover();
-				break;
-			case "Markdown":
-				page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
-				page.locator(MARKDOWN_BLOCK_XPATH).hover();
-				break;
-			case "Logs":
-				page.locator(LOGS_BLOCK_XPATH).isVisible();
-				page.locator(LOGS_BLOCK_XPATH).hover();
-				break;
-			case "Scatter Plot":
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
-				break;
-			case "Line Chart":
-				page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
-				page.locator(LINE_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Bar Chart":
-				page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
-				page.locator(BAR_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Bar Chart - Stacked":
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
-				break;
-			case "Pie Chart":
-				page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
-				page.locator(PIE_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Gantt Chart":
-				page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
-				page.locator(GANTT_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Data Grid":
-				page.locator(DATA_GRID_XPATH).scrollIntoViewIfNeeded();
-				page.locator(DATA_GRID_XPATH).isVisible();
-				page.locator(DATA_GRID_XPATH).hover();
-				break;
-			default:
-				isValidBlock = false;
-				logger.error("Invalid block name: " + blockName);
-				throw new IllegalArgumentException("Invalid block name: " + blockName);
+		case "Text (h1)":
+			page.locator(HEADING_1_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_1_BLOCK_XPATH).hover();
+			break;
+		case "Text (h2)":
+			page.locator(HEADING_2_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_2_BLOCK_XPATH).hover();
+			break;
+		case "Text (h3)":
+			page.locator(HEADING_3_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_3_BLOCK_XPATH).hover();
+			break;
+		case "Text (h4)":
+			page.locator(HEADING_4_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_4_BLOCK_XPATH).hover();
+			break;
+		case "Text (h5)":
+			page.locator(HEADING_5_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_5_BLOCK_XPATH).hover();
+			break;
+		case "Text (h6)":
+			page.locator(HEADING_6_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_6_BLOCK_XPATH).hover();
+			break;
+		case "Text":
+			page.locator(TEXT_BLOCK_XPATH).isVisible();
+			page.locator(TEXT_BLOCK_XPATH).hover();
+			break;
+		case "Link":
+			page.locator(LINK_BLOCK_XPATH).isVisible();
+			page.locator(LINK_BLOCK_XPATH).hover();
+			break;
+		case "Markdown":
+			page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
+			page.locator(MARKDOWN_BLOCK_XPATH).hover();
+			break;
+		case "Logs":
+			page.locator(LOGS_BLOCK_XPATH).isVisible();
+			page.locator(LOGS_BLOCK_XPATH).hover();
+			break;
+		case "Scatter Plot":
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
+			break;
+		case "Line Chart":
+			page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
+			page.locator(LINE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart":
+			page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart - Stacked":
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
+			break;
+		case "Pie Chart":
+			page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
+			page.locator(PIE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Gantt Chart":
+			page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
+			page.locator(GANTT_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Area Chart":
+			page.locator(AREA_CHART_XPATH).scrollIntoViewIfNeeded();
+			page.locator(AREA_CHART_XPATH).isVisible();
+			page.locator(AREA_CHART_XPATH).hover();
+			break;
+		case "Data Grid":
+			page.locator(DATA_GRID_XPATH).scrollIntoViewIfNeeded();
+			page.locator(DATA_GRID_XPATH).isVisible();
+			page.locator(DATA_GRID_XPATH).hover();
+			break;
+
+		default:
+			isValidBlock = false;
+			logger.error("Invalid block name: " + blockName);
+			throw new IllegalArgumentException("Invalid block name: " + blockName);
 		}
 		if (isValidBlock) {
 			page.mouse().down();
@@ -205,21 +221,21 @@ public class DragAndDropBlocksPageUtils {
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
 		Locator textBlockLocator = null;
 		switch (blockName) {
-			case "Link":
-				textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
-				break;
-			case "Text":
-				textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
-				break;
-			case "Markdown":
-				textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
-				break;
-			case "Logs":
-				textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
-				break;
-			default:
-				textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
-				break;
+		case "Link":
+			textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
+			break;
+		case "Text":
+			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			break;
+		case "Markdown":
+			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			break;
+		case "Logs":
+			textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
+			break;
+		default:
+			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
+			break;
 		}
 		return textBlockLocator;
 	}
@@ -280,6 +296,82 @@ public class DragAndDropBlocksPageUtils {
 		Path path = Paths.get(actualImagePath);
 		page.waitForTimeout(2000);
 		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
+	}
+
+	// Duplicate and delete Area Chart
+	public static void clickOnAreaChartTOViewOptions(Page page) {
+		page.locator(CLICK_ON_AREA_CHART_VIEW_OPTIONS).click();
+	}
+
+	public static int getInitialcount(Page page) {
+		return page.locator(AREA_CHART_COUNT_XPATH).count();
+	}
+
+	public static boolean CanseeDuplicateIcon(Page page) {
+		return page.locator(DUPLICATE_ICON_XPATH).isVisible();
+	}
+
+	public static void clickOnDuplicateIcon(Page page) {
+		page.locator(DUPLICATE_ICON_XPATH).click();
+	}
+
+	public static boolean duplicatedChartIsVisiable(Page page, int previousCount) {
+		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == previousCount + 1);
+		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count(); // Count charts again
+		return updatedChartCount == previousCount + 1;
+	}
+
+	public static boolean CanseeDeleteIcon(Page page) {
+		return page.locator(DELETE_ICON_XPATH).isVisible();
+	}
+
+	public static void clickOnDeleteIcon(Page page) {
+		page.locator(AREA_CHART_COUNT_XPATH).count();
+		page.locator(DELETE_ICON_XPATH).click();
+	}
+
+	public static boolean areaChartIsRemoved(Page page, int previousCount) {
+		page.waitForCondition(() -> page.locator(AREA_CHART_COUNT_XPATH).count() == previousCount - 1);
+		int updatedChartCount = page.locator(AREA_CHART_COUNT_XPATH).count(); // Count charts again
+		return updatedChartCount == previousCount - 1;
+	}
+
+	public static void hoverOnDuplicateIcon(Page page) {
+		page.locator(DUPLICATE_ICON_XPATH).hover();
+	}
+
+	public static boolean checkTooltipMessageOfDuplicate(Page page, String expectedresult) {
+		String actualResult = page.locator(DUPLICATE_TOOLTIP_MESSAGE_XPATH).textContent();
+		return actualResult != null && actualResult.contains(expectedresult);
+	}
+
+	public static void hoverOnDeleteIcon(Page page) {
+		page.locator(DELETE_ICON_XPATH).hover();
+	}
+
+	public static boolean checkTooltipMessageOfDeleteIcon(Page page, String expectedresult) {
+		String actualResult = page.locator(DELETE_TOOLTIP_MESSAGE_XPATH).textContent();
+		return actualResult != null && actualResult.contains(expectedresult);
+	}
+
+	public static void clickOnDuplicateIconMultipleTimes(int count, Page page) {
+		for (int i = 0; i < count; i++) {
+			Locator duplicateIcon = page.locator(DUPLICATE_ICON_XPATH); // Step 1: Click on Duplicate icon
+			duplicateIcon.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+			duplicateIcon.click();
+			page.waitForTimeout(500); // Step 2: Wait for UI to new chart
+			if (i < count - 1) {
+				Locator firstChart = page.locator(CHART_COUNT_ON_PAGE_XPATH).first();
+
+				firstChart.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+				firstChart.click();
+				page.waitForTimeout(300); // slight wait for UI response
+			}
+		}
+	}
+
+	public static int CountCheck(Page page) {
+		return page.locator(CHART_COUNT_ON_PAGE_XPATH).count();
 	}
 
 	public static void clickOnSyncChangesButton(Page page) {

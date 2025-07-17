@@ -12,6 +12,8 @@ Feature: Create drag and drop app
     And User clicks on Create button
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     When User is on Home page
+    And User opens Main Menu
+    And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     And User clicks on app Edit button

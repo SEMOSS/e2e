@@ -1,5 +1,6 @@
 Feature: View add Database options on catalog page
 
+
   #Scenario: Verify the available options on add database page
     #Given User clicks on Open Database
     #When User clicks on Add Database
@@ -38,3 +39,5 @@ Feature: View add Database options on catalog page
       #| DB2                | Connections     |
       #| Derby              | Connections     |
       #| Elastic Search     | Connections     |
+
+  

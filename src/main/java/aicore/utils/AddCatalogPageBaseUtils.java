@@ -14,8 +14,8 @@ public class AddCatalogPageBaseUtils {
 	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
 	// TODO need data-testid for catalog description
-	private static final String CATALOG_DESCRIPTION_XPATH = "//h6[text()='{CatalogDescription}']";
-	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div";
+	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
+	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::span";
 	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
@@ -105,8 +105,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void waitForEditSuccessToastMessageToDisappear(Page page) {
-		page.locator(EDIT_SUCCESS_TOAST_MESSAGE)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		page.locator(EDIT_SUCCESS_TOAST_MESSAGE).isVisible();
+		page.getByTestId("CloseIcon").click();
+
 	}
 
 	public static List<String> verifyTagNames(Page page) {

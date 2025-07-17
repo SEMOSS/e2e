@@ -1,8 +1,9 @@
 Feature: View existing models in model Catalog
 
   Background: Create a Model - GPT-3.5
-    Given User clicks on Open Model
-    When User clicks on Add Model
+    Given User opens Main Menu
+    When User clicks on Open Model
+    And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Model'
     And User enters open AI Key as 'Test@1234'
@@ -20,7 +21,8 @@ Feature: View existing models in model Catalog
 
   @LoginWithAdmin @DeleteCreatedCatalog
   Scenario: view and validate filter functionality - My Functions
-    Given User clicks on Open Model
+    Given User opens Main Menu
+    When User clicks on Open Model
     Then User should see the 'Model' on the model catalog page
     And User applies each filter and validate 'Model' catalog is visible on the 'model' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE      |
@@ -28,4 +30,5 @@ Feature: View existing models in model Catalog
       | Domain              | SAP, AI           |
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
-    When User selects the 'Model' from the model catalog
+    When User searches the 'Model' in the model catalog searchbox
+    And User selects the 'Model' from the model catalog

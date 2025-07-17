@@ -16,6 +16,7 @@ Feature: Create App setting for Read permission
     And User logs out from the application
     Then User login as 'Read'
     And User opens Main Menu
+    And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
 
@@ -23,6 +24,7 @@ Feature: Create App setting for Read permission
   Scenario: Create APP - Read Only user - Edit button is disable
     And 'Read' user Edit option should be 'Disable'
     And  User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    And User opens Main Menu
     And User logs out from the application
     And User login as 'Admin'
 
@@ -33,6 +35,7 @@ Feature: Create App setting for Read permission
     And 'Read' user can 'not view' Data Apps
     And 'Read' user can 'not view' Export Icon
     And 'Read' user 'can not' see Member Setting
+    And User opens Main Menu
     And User logs out from the application
     And User login as 'Admin'
 
@@ -40,5 +43,4 @@ Feature: Create App setting for Read permission
     And 'Read' user Make Public toggle should be 'Disable'
     And 'Read' user Make Discoverable toggle should be 'Disable'
     And 'Read' user can 'not view' Delete Model option
-    And User logs out from the application
    
