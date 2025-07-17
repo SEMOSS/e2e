@@ -35,7 +35,7 @@ public class HomePageUtils {
 
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='Settings-icon']";
+	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='SettingsIcon']";
 
 	private static final String USER_PROFILE_ICON_DATA_TESTID = "PersonIcon";
 

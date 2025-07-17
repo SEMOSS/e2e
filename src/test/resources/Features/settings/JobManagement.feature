@@ -1,7 +1,8 @@
 Feature: Job Management
 
   Background: Add Job
-    Given User clicks on Open Settings
+    Given User opens Main Menu
+    And User clicks on Open Settings
     And User clicks on Jobs
     And User clicks on Add Job button
     And User fills 'Test Job' in Name field

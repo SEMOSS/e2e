@@ -36,6 +36,11 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_opens_main_menu() {
 		homePage.openMainMenu();
 	}
+	
+	@Given("User closes Main Menu")
+	public void user_closes_main_menu() {
+		homePage.closeMainMenu();
+	}
 
 	@Given("User clicks on Open Database")
 	public void user_clicks_to_open_database() {
