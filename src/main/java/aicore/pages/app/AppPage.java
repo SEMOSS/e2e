@@ -24,4 +24,16 @@ public class AppPage {
 	public void clickOnAppCard(String appName) {
 		AppPageUtils.clickOnAppCard(page, appName, timestamp);
 	}
+
+	public void clickOnMoreVertIcon(String appName) {
+		AppPageUtils.clickOnMoreVertIcon(page, appName);
+	}
+
+	public void clickOnOption(String optionName) {
+		AppPageUtils.clickOnOption(page, optionName);
+	}
+
+	public String getAppIdCopiedToastMessage() {
+		return AppPageUtils.getAppIdCopiedToastMessage(page);
+	}
 }

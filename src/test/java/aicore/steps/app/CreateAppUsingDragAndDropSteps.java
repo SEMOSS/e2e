@@ -406,4 +406,21 @@ public class CreateAppUsingDragAndDropSteps {
 		List<String> rowsPerPageOptions = dataTable.asList(String.class);
 		blocksPage.validatePaginationForRowsPerPageOptions(rowsPerPageOptions);
 	}
+
+	@When("User clicks on more vertical icon of {string} app")
+	public void user_clicks_on_more_vertical_icon_of_app(String appName) {
+		appPage.clickOnMoreVertIcon(appName + " " + timestamp);
+	}
+
+	@When("User clicks on {string} option")
+	public void user_clicks_on_option(String optionName) {
+		appPage.clickOnOption(optionName);
+	}
+
+	@Then("User can see {string} toast message after copying the ID.")
+	public void user_can_see_toast_message_after_copying_the_id(String expectedToastMessage) {
+		String actualToastMessage = appPage.getAppIdCopiedToastMessage();
+		Assertions.assertEquals(expectedToastMessage, actualToastMessage, "Toast message text is incorrect");
+	}
+
 }
