@@ -205,9 +205,8 @@ public class CatlogAccessStep {
 	}
 
 	@And("User Search {string} user from Access Control")
-	public void search_the_user_basedonrole(String role) throws InterruptedException {
+	public void search_the_user_basedonrole(String role) {
 		catlogpermission.searchUserBasedOnRole(role);
-		Thread.sleep(2000);
 	}
 
 	@Then("{string} user can {string} export button")

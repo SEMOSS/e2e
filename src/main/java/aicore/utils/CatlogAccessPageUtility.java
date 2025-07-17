@@ -60,8 +60,12 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void searchUserBasedOnRole(Page page, String role) {
-		page.click(CLICK_ON_SEARCH_ICON_XPATH);
+		Locator searchIcon = page.locator(CLICK_ON_SEARCH_ICON_XPATH);
+		if (searchIcon.isVisible()) {
+			searchIcon.click();
+		}
 		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
+		page.waitForTimeout(1000);
 	}
 
 	public static boolean canViewExportOption(Page page) {

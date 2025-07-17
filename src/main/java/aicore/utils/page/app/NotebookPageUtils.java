@@ -227,7 +227,8 @@ public class NotebookPageUtils {
 	}
 
 	public static boolean writeQuery(Page page, String query) {
-		page.locator(QUERY_INPUT_FIELD_XPATH).isVisible();
+		page.locator(QUERY_INPUT_FIELD_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(QUERY_INPUT_FIELD_XPATH).clear();
 		page.locator(QUERY_INPUT_FIELD_XPATH).fill(query);
 		return true;
