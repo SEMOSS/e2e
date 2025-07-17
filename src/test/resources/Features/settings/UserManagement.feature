@@ -2,7 +2,9 @@ Feature: User Management
 
 	@LoginWithAdmin
   Scenario: Add New Native User
-    Given User clicks on Open Settings
+    Given User opens Main Menu
+    And User clicks on Open Settings
+    And User closes Main Menu
     When User enable admin mode
     And User clicks on 'Member Settings' Card
     Then User sees the Add User button
@@ -13,7 +15,9 @@ Feature: User Management
 
   @LoginWithAdmin
   Scenario: Edit Native User - Change Model Limit Restriction
-    Given User clicks on Open Settings
+    Given User opens Main Menu
+    And User clicks on Open Settings
+    And User closes Main Menu
     When User enable admin mode
     And User clicks on 'Member Settings' Card
     Then User sees the Add User button
@@ -32,7 +36,9 @@ Feature: User Management
 
    @LoginWithAdmin
   Scenario: Update Configuration Settings - access_keys_allowed - true - Adfs
-    Given User clicks on Open Settings
+    Given User opens Main Menu
+    And User clicks on Open Settings
+    And User closes Main Menu
     When User enable admin mode
     And User clicks on 'Configuration' Card
     And User clicks on 'access_keys_allowed' value 
@@ -42,7 +48,9 @@ Feature: User Management
     
     @LoginWithAdmin
   Scenario: Update Configuration Settings - access_keys_allowed - true - native
-    Given User clicks on Open Settings
+    Given User opens Main Menu
+    And User clicks on Open Settings
+    And User closes Main Menu
     When User enable admin mode
     And User clicks on 'Configuration' Card
     And User clicks on Authentication dropdown
@@ -54,7 +62,9 @@ Feature: User Management
    
   @LoginWithAdmin
   Scenario: Add New Native User with Unique Incremental Details - Validate profile info
+    Given User opens Main Menu
     And User clicks on Open Settings
+    And User closes Main Menu
     And User enables admin mode
     And User clicks on 'Member Settings' Card
     And User sees the Add User button

@@ -1,8 +1,9 @@
 Feature: Admin Settings
 
-	Background: View Admin Settings  
-    Given User clicks on Open Settings
-    And User enables admin mode
+	Background: View Admin Settings 
+   Given User opens Main Menu
+   And User clicks on Open Settings
+   And User enables admin mode
 
   @LoginWithAdmin
   Scenario: Check admin have access to each setting
