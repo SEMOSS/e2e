@@ -75,5 +75,9 @@ public class HomePage {
 	public void openMainMenu() {
 		HomePageUtils.openMainMenu(page);		
 	}
+	
+	public void closeMainMenu() {
+		HomePageUtils.closeMainMenu(page);
+	}
 
 }

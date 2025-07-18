@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class VectorSettingPageUtils {
 
-    	private static final String CLICK_SEARCH_XPATH = "//input[@placeholder='Search']";
+  	private static final String CLICK_SEARCH_XPATH = "[id ^='generated-id-'][placeholder='Search']";
     private static final String VECTOR_CARDS_XPATH = "//div[contains(@class,'MuiGrid-root MuiGrid-container')]";
     private static final String VECTOR_NAME_XPATH = "//p[contains(text(),'{vectorName}')]";
 

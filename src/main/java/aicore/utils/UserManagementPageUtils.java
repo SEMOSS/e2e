@@ -28,11 +28,13 @@ public class UserManagementPageUtils {
 	private static final String SELECT_ALL_BUTTON_XPATH = "//th//label//span//input[@type='checkbox']";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
-	private static final String SEARCH_ICON_XPATH = "[data-testid=\"SearchIcon\"]";
+	private static final String SEARCH_ICON_XPATH = "//div[@id='home__content']//*[@data-testid='SearchIcon']";
+	private static final String SEARCH_BAR_XPATH = "[id ^='generated-id-'][placeholder='Search']";
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
 	private static final String ADFS_TOAST_MESSAGE_XPATH = "Succesfully modified adfs properties";
+	
 
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
@@ -194,7 +196,7 @@ public class UserManagementPageUtils {
 
 	public static void searchAndSelectOption(Page page, String optionText) {
 		// Fill the search box
-		Locator searchInput = page.locator("//input[@placeholder='Search']");
+		Locator searchInput = page.locator(SEARCH_BAR_XPATH);
 		searchInput.fill("");
 		searchInput.fill(optionText);
 

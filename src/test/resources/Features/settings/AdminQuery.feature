@@ -2,7 +2,9 @@ Feature: Admin query
 
   @LoginWithAdmin
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query
-    Given User clicks on Open Settings
+    Given User opens Main Menu
+    And User clicks on Open Settings
+    And User closes Main Menu
     When User enables admin mode
     And User clicks on 'Admin Query' Card
     And User selects '<DATABASE_NAME>' from the database dropdown

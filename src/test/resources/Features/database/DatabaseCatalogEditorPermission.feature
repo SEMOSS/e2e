@@ -8,6 +8,7 @@ Feature: Database Catalog permissions for Editor user
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
+    And User opens Main Menu
   	And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog

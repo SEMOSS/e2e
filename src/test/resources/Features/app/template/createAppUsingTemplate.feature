@@ -22,5 +22,7 @@ Scenario: Create app using Template
     And User sees submit button in Preview App
     When User clicks on Close Preview button
     And User is on Home page
-    When User searches 'Test app' app in the app searchbox
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps

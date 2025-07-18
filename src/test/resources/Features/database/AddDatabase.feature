@@ -35,12 +35,11 @@ Feature: Add Database
 	Scenario: View Database Overview
    And User clicks on 'TestDatabase' in the database catalog
     And User sees the database name as 'TestDatabase'
-    #And User can see 'copy Database ID' Database ID
+    And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
     When User can see toast message as 'Successfully copied ID'
     #And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
     And User can see 'No Markdown available' as database description
-    #When User clicks on Edit button
     And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'

@@ -45,6 +45,7 @@ public class SettingsModelPageUtils {
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
+	private static final String SEARCH_BOX_XPATH =  "[id ^='generated-id-'][placeholder='Search']";
 
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
 	private static final String SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
@@ -184,9 +185,9 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnSearchBox(Page page, String string) {
-		page.getByPlaceholder("Search").isVisible();
-		page.getByPlaceholder("Search").click();
-		page.getByPlaceholder("Search").fill(string);
+		page.locator(SEARCH_BOX_XPATH).isVisible();
+		page.locator(SEARCH_BOX_XPATH).click();
+		page.locator(SEARCH_BOX_XPATH).fill(string);
 	}
 
 	public static void clickOnAccessControl(Page page) {
@@ -244,14 +245,12 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
-		// search for the user and wait for search return
-		Locator memberSearchIcon = page.locator(SEARCH_ICON_XPATH);
-		memberSearchIcon.click();
-		page.fill(SEARCH_BUTTON_XPATH, role);
-		page.waitForTimeout(500);
-		// delete the user
-		page.click(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
-		page.click(CONFIRM_BUTTON_XPATH);
+		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
+		deleteIcon.scrollIntoViewIfNeeded();
+		deleteIcon.hover();
+		deleteIcon.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		deleteIcon.click();
+		page.locator(CONFIRM_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnUsageTab(Page page) {
