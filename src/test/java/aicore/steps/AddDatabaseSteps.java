@@ -205,14 +205,15 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 
 		for (Map<String, String> row : rows) {
-			String dbType = row.get("DatabaseTypeOption");
 			String section = row.get("ExpectedSection");
+			String[] dbTypes = row.get("DatabaseTypeOption").split(",\\s*"); // Split on comma and optional space
 
-			addDatabaseToCatalogPage.searchDatabaseType(dbType);
-			boolean isVisible = addDatabaseToCatalogPage.isDatabaseTypeVisiable(dbType, section);
-			Assertions.assertTrue(isVisible,
-					"Database type '" + dbType + "' was not found under section '" + section + "'");
+			for (String dbType : dbTypes) {
+				addDatabaseToCatalogPage.searchDatabaseType(dbType);
+				boolean isVisible = addDatabaseToCatalogPage.isDatabaseTypeVisiable(dbType, section);
+				Assertions.assertTrue(isVisible,
+						"Database type '" + dbType + "' was not found under section '" + section + "'");
+			}
 		}
 	}
-
 }
