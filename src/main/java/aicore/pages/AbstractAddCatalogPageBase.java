@@ -36,7 +36,6 @@ public abstract class AbstractAddCatalogPageBase {
 
 	public boolean isDatabaseTypeVisiable(String dbType, String section) {
 		return AddCatalogPageBaseUtils.isDatabaseTypeVisible(page, dbType, section);
-
 	}
 
 }

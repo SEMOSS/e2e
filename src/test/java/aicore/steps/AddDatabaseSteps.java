@@ -200,15 +200,19 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	}
 
 	// View Database Type on Connect To database page
-	@When("User enters {string} in the search box")
-	public void user_Search_Database_Type(String dbType) {
-		addDatabaseToCatalogPage.searchDatabaseType(dbType);
+	@When("User searches database types and verifies visibility under respective sections")
+	public void userSearchesDatabaseTypesAndVerifiesVisibility(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+
+		for (Map<String, String> row : rows) {
+			String dbType = row.get("DatabaseTypeOption");
+			String section = row.get("ExpectedSection");
+
+			addDatabaseToCatalogPage.searchDatabaseType(dbType);
+			boolean isVisible = addDatabaseToCatalogPage.isDatabaseTypeVisiable(dbType, section);
+			Assertions.assertTrue(isVisible,
+					"Database type '" + dbType + "' was not found under section '" + section + "'");
+		}
 	}
 
-	@Then("{string} should be visible under {string}")
-	public void user_See_Database_Type_On_DBConnectionPage(String dbType, String section) {
-		boolean isDBTypeVisiable = addDatabaseToCatalogPage.isDatabaseTypeVisiable(dbType, section);
-		Assertions.assertTrue(isDBTypeVisiable,
-				"Database type '" + dbType + "' should be visible under section '" + section + "'");
-	}
 }

@@ -15,7 +15,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
-	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::span";
+	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div";
 	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
@@ -28,7 +28,7 @@ public class AddCatalogPageBaseUtils {
 	// View Database Type on Connect To database page
 	private static final String SEARCH_INPUT_XPATH = "//div[@id='home__content']//input[@placeholder='Search' and @type='text']";
 	private static final String FILE_UPLOAD_DB_TYPE_XPATH = "//div[div[normalize-space(text())='File Uploads']]//p[normalize-space(text())='{DatabaseType}']";
-	private static final String CONNECTIONS_DB_TYPE_XPATH = "//div[div[normalize-space(text())='Connections']]//p[normalize-space(text())='{databaseType}']";
+	private static final String CONNECTIONS_DB_TYPE_XPATH = "//div[div[normalize-space(text())='Connections']]//p[normalize-space(text())='{DatabaseType}']";
 
 	public static boolean verifySectionIsVisible(Page page, String sectionName) {
 		boolean isSectionVisible = page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
@@ -127,7 +127,6 @@ public class AddCatalogPageBaseUtils {
 	public static void searchDatabaseType(Page page, String databaseType) {
 		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(SEARCH_INPUT_XPATH).click();
-		page.locator(SEARCH_INPUT_XPATH).fill(""); // Clear search box
 		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term
 		page.waitForTimeout(1000);
 	}
@@ -143,4 +142,5 @@ public class AddCatalogPageBaseUtils {
 		}
 		return page.locator(finddatabaseType).isVisible();
 	}
+
 }
