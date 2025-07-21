@@ -138,4 +138,36 @@ public class NotebookPage {
 	public boolean validateQuery(String age, String bp) {
 		return NotebookPageUtils.validateQuery(page, age, bp);
 	}
+
+    public void clickOnRuleButton(String buttonName) {
+        NotebookPageUtils.clickOnRuleButton(page, buttonName);
+    }
+
+    public void selectColumnFromDropdown(String columnName) {
+        NotebookPageUtils.selectColumnFromDropdown(page, columnName);
+    }
+
+    public void selectOperatorFromDropdown(String operator) {
+        NotebookPageUtils.selectOperatorFromDropdown(page, operator);
+    }
+
+    public void enterValueInInput(String value) {
+        NotebookPageUtils.enterValueInInput(page, value);
+    }
+
+    public boolean isFilteredDataCorrect(String column, String value) {
+        return NotebookPageUtils.isFilteredDataCorrect(page, column, value);	
+    }
+
+	public void changeOperatorTo(String operator) {
+		NotebookPageUtils.changeOperatorTo(page, operator);
+	}
+
+    public void getDefaultOperator(String operator) {
+		 NotebookPageUtils.getDefaultOperator(page, operator);
+	}
+
+    public boolean isFilteredDataCorrectForColumns(List<String> columns, List<String> values, String operator) {
+		return NotebookPageUtils.isFilteredDataCorrectForColumns(page, columns, values, operator);
+	}
 }
