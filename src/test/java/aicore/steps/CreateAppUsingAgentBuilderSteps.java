@@ -50,5 +50,14 @@ public class CreateAppUsingAgentBuilderSteps {
 	public void user_clicks_on_create_app_button() {
 		createAppAgentBuilder.clickOnCreateAppButton();
 	}
+	@When("User selects {string} to set input in prompt")
+public void user_selects_to_set_input_in_prompt(String string) {
+	createAppAgentBuilder.setInputInPrompt(string);
+}
+@When("User selects InputType as {string} for {string}")
+public void user_selects_input_type_as_for(String string, String string2) {
+	createAppAgentBuilder.selectInputTypeForInput(string, string2);
+}
+
 
 }
