@@ -32,6 +32,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public static String timestamp;
 	private String blockText;
 	private int initialChartCount;
+	private String copyAppId;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -421,6 +422,49 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_toast_message_after_copying_the_id(String expectedToastMessage) {
 		String actualToastMessage = appPage.getAppIdCopiedToastMessage();
 		Assertions.assertEquals(expectedToastMessage, actualToastMessage, "Toast message text is incorrect");
+	}
+
+	@When("User searches copied id in the app searchbox")
+	public void user_searches_copied_id_in_the_app_searchbox() {
+		String appId = appPage.getCopiedId();
+		appPage.searchAppId(appId);
+	}
+
+	@When("User enters cloned app name as {string}")
+	public void user_enters_cloned_app_name_as(String appName) {
+		appPage.enterCloneAppName(appName);
+	}
+
+	@When("User enters cloned app description as {string}")
+	public void user_enters_cloned_app_description_as(String appDescription) {
+		appPage.enterCloneAppDescription(appDescription);
+	}
+
+	@When("User clicks on {string} button")
+	public void user_clicks_on_button(String buttonName) {
+		appPage.clickOnButton(buttonName);
+	}
+
+	@When("User click on Make Public button")
+	public void user_click_on_make_public_button() {
+		appPage.MakeAppPublic();
+	}
+
+	@Then("User can see {string} app on the page")
+	public void user_can_see_app_on_the_page(String appName) {
+		boolean isAppDisplayed = appPage.isAppDisplayedOnPage(appName);
+		Assertions.assertTrue(isAppDisplayed, "Application is not displayed on page");
+	}
+
+	@When("User click on {string} confirmation button")
+	public void user_click_on_confirmation_button(String buttonName) {
+		appPage.clickOnDeleteButton(buttonName);
+	}
+
+	@Then("User can not see {string} app on the page")
+	public void user_can_not_see_app_on_the_page(String appName) {
+		boolean isAppNotDisplayed = appPage.isAppNotDisplayedOnPage(appName);
+		Assertions.assertTrue(isAppNotDisplayed, "Application is displayed on page");
 	}
 
 }

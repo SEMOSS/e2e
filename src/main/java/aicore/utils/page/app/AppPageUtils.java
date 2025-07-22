@@ -3,6 +3,7 @@ package aicore.utils.page.app;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.microsoft.playwright.JSHandle;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -21,6 +22,9 @@ public class AppPageUtils {
 	public static final String MORE_VERTICAL_OPTIONS_ICON_XPATH = "//p[text()='{appName}']/ancestor::div[contains(@class,'MuiCardHeader-root')]/following-sibling::div[contains(@class,'MuiCardActions-root')]//*[name()='svg' and @data-testid='MoreVertIcon']";
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
 	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//div[text()='Succesfully copied to clipboard']";
+	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
+	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
+	private static String copiedId;
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -29,6 +33,11 @@ public class AppPageUtils {
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search").click();
 		page.getByLabel("Search").fill(appName + " " + timestamp);
+	}
+
+	public static void searchAppId(Page page, String appId) {
+		page.getByLabel("Search").click();
+		page.getByLabel("Search").fill(appId);
 	}
 
 	public static void clickOnAppCard(Page page, String appName, String timestamp) {
@@ -66,6 +75,14 @@ public class AppPageUtils {
 		Locator optionLocator = page.locator(MORE_VERTICAL_OPTION_XPATH.replace("{optionValue}", optionValue));
 		optionLocator.isVisible();
 		optionLocator.click();
+		if (optionName.equals("Copy App ID")) {
+			JSHandle handle = page.evaluateHandle("async () => await navigator.clipboard.readText()");
+			copiedId = handle.jsonValue().toString();
+		}
+	}
+
+	public static String getCopiedId() {
+		return copiedId;
 	}
 
 	public static String getAppIdCopiedToastMessage(Page page) {
@@ -73,4 +90,41 @@ public class AppPageUtils {
 		return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).textContent().trim();
 	}
 
+	public static void enterCloneAppName(Page page, String appName, String timestamp) {
+		page.getByLabel("Name").click();
+		page.getByLabel("Name").fill(appName + " " + timestamp);
+	}
+
+	public static void enterCloneAppDescription(Page page, String appDescription) {
+		page.getByLabel("Description").click();
+		page.getByLabel("Description").fill(appDescription);
+	}
+
+	public static void clickOnButton(Page page, String buttonName) {
+		AICorePageUtils.clickOnButton(page, buttonName);
+	}
+
+	public static void MakeAppPublic(Page page) {
+		page.locator(MAKE_PUBLIC_BUTTON_XPATH).isVisible();
+		page.locator(MAKE_PUBLIC_BUTTON_XPATH).click();
+	}
+
+	public static boolean isAppDisplayedOnPage(Page page, String appName, String timestamp) {
+		String expectedAppName = appName + " " + timestamp;
+		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
+		AICorePageUtils.waitFor(appCard);
+		return appCard.isVisible();
+	}
+
+	public static void clickOnDeleteButton(Page page, String buttonName) {
+		Locator deleteButton = page.locator(DELETE_APP_CONFIRMATION_BUTTON_XPATH.replace("{name}", buttonName));
+		deleteButton.isVisible();
+		deleteButton.click();
+	}
+
+	public static boolean isAppNotDisplayedOnPage(Page page, String appName, String timestamp) {
+		String expectedAppName = appName + " " + timestamp;
+		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
+		return !appCard.isVisible();
+	}
 }

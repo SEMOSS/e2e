@@ -65,6 +65,7 @@ Feature: Model Catalog Permission - Editor
     And 'Editor' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as "Read"
+    And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
   Scenario: Model Catalog - Editor -  Delete Model as Author
