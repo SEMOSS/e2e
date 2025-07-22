@@ -15,7 +15,7 @@ Feature: View add Database options on catalog page
     And User is on Home page
     And User clicks on Open Database
     And User clicks on Add Database
-    When User searches database types and verifies visibility under respective sections
-      | ExpectedSection | DatabaseTypeOption                                                                                                                                                                                                                                            |
-      | File Uploads    | ZIP, CSV, Excel, TSV, SQLite, H2, Neo4J, Tinker                                                                                                                                                                                                               |
-      | Connections     | Aster, Athena, BigQuery, Cassandra, Clickhouse, DATABRICKS, DataStax, DB2, Derby, Elastic Search, H2, Hive, Impala, MariaDB, MySQL, Open Search, Oracle, Phoenix, Postgres, Redshift, SAP Hana, SEMOSS, Snowflake, SQL Server, SQLITE, Teradata, Tibco, Trino |
+    Then User searches database types and verifies visibility under respective sections
+      | EXPECTED_SECTION | DATABASE_TYPE                                                                                                                                                                                                                                           |
+      | File Uploads     | ZIP, CSV, Excel, TSV, SQLite, H2, Neo4J, Tinker                                                                                                                                                                                                               |
+      | Connections      | Aster, Athena, BigQuery, Cassandra, Clickhouse, DATABRICKS, DataStax, DB2, Derby, Elastic Search, H2, Hive, Impala, MariaDB, MySQL, Open Search, Oracle, Phoenix, Postgres, Redshift, SAP Hana, SEMOSS, Snowflake, SQL Server, SQLITE, Teradata, Tibco, Trino |

@@ -128,19 +128,6 @@ public class AddCatalogPageBaseUtils {
 		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(SEARCH_INPUT_XPATH).click();
 		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term
-		page.waitForTimeout(1000);
-	}
-
-	public static boolean isDatabaseTypeVisible(Page page, String databaseType, String section) {
-		String finddatabaseType;
-		if (section.equalsIgnoreCase("File Uploads")) {
-			finddatabaseType = FILE_UPLOAD_DB_TYPE_XPATH.replace("{DatabaseType}", databaseType);
-		} else if (section.equalsIgnoreCase("Connections")) {
-			finddatabaseType = CONNECTIONS_DB_TYPE_XPATH.replace("{DatabaseType}", databaseType);
-		} else {
-			throw new IllegalArgumentException("Invalid section name: " + section);
-		}
-		return page.locator(finddatabaseType).isVisible();
 	}
 
 }

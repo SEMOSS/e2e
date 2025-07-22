@@ -83,6 +83,11 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName);
 	}
 
+	@And("User clicks on the database name {string} in the database catalog and Copy ID")
+	public void user_clicks_the_database_name_in_the_database_catalog_And_Copy_ID(String dbName) {
+		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalogAndCopyID(dbName);
+	}
+
 	@When("User clicks on Usage tab for Database")
 	public void user_clicks_on_usage_tab_for_database() {
 		viewUsagePage.clickOnUsageTab();
@@ -200,17 +205,17 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	}
 
 	// View Database Type on Connect To database page
-	@When("User searches database types and verifies visibility under respective sections")
+	@Then("User searches database types and verifies visibility under respective sections")
 	public void userSearchesDatabaseTypesAndVerifiesVisibility(DataTable dataTable) {
+		final String SECTION_NAME = "EXPECTED_SECTION";
+		final String OPTION_NAME = "DATABASE_TYPE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-
 		for (Map<String, String> row : rows) {
-			String section = row.get("ExpectedSection");
-			String[] dbTypes = row.get("DatabaseTypeOption").split(",\\s*"); // Split on comma and optional space
-
+			String section = row.get(SECTION_NAME);
+			String[] dbTypes = row.get(OPTION_NAME).split(",\\s*");
 			for (String dbType : dbTypes) {
 				addDatabaseToCatalogPage.searchDatabaseType(dbType);
-				boolean isVisible = addDatabaseToCatalogPage.isDatabaseTypeVisiable(dbType, section);
+				boolean isVisible = addDatabaseToCatalogPage.verifyOptionIsVisible(section, dbType);
 				Assertions.assertTrue(isVisible,
 						"Database type '" + dbType + "' was not found under section '" + section + "'");
 			}
