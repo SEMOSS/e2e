@@ -11,6 +11,7 @@ import aicore.pages.AddDatabasePage;
 import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
+import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -23,20 +24,21 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	private HomePage homePage;
 	private ViewUsagePage viewUsagePage;
 	private ViewCatalogPage viewCatalogPage;
-	protected static String timestamp;
+	private static String timestamp;
 
 	public AddDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
+		timestamp = CommonUtils.getTimeStampName();
 	}
 
 	@Given("User opens Main Menu")
 	public void user_opens_main_menu() {
 		homePage.openMainMenu();
 	}
-	
+
 	@Given("User closes Main Menu")
 	public void user_closes_main_menu() {
 		homePage.closeMainMenu();
@@ -50,6 +52,49 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@When("User clicks on Add Database")
 	public void user_clicks_on_add_database() {
 		addDatabaseToCatalogPage.clickOnAddDatabaseButton();
+	}
+
+	@And("User enters {string} as Catalog Name")
+	public void user_enters_catalog_name(String catalogName) {
+		addDatabaseToCatalogPage.enterCatalogName(catalogName + timestamp);
+	}
+
+	@And("User Upload {string} as Host Name")
+	public void user_upload_as_host_name(String fileName) {
+		addDatabaseToCatalogPage.uploadHostFile(fileName);
+	}
+
+	@When("User clicks on apply button")
+	public void user_clicks_on_apply_button() {
+		addDatabaseToCatalogPage.clickOnApplyButton();
+	}
+
+	@And("User clicks on apply database button")
+	public void user_clicks_on_apply_database_button() {
+		addDatabaseToCatalogPage.clickApplyDatabaseButton();
+	}
+
+	@Then("User selects database {string} from connection types")
+	public void user_selects_database_from_connection_types(String dbType) {
+		addDatabaseToCatalogPage.selectDatabaseFromConnectionTypes(dbType);
+	}
+
+	@Then("User can see the database title as {string}")
+	public void User_can_see_the_database_title_as(String dbName) {
+		boolean isTitleVisible = addDatabaseToCatalogPage.verifyDatabaseTitle(dbName + timestamp);
+		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+	}
+
+	@Given("User clicks on the database name {string} in  database catalog")
+	public void User_clicks_on_the_database_name_in_database_catalog(String dbName) {
+		String databaseNameInCatalog = addDatabaseToCatalogPage.verifyDatabaseNameInCatalog(dbName + timestamp);
+		boolean databaseNameFlag = databaseNameInCatalog.contains(dbName + timestamp);
+		Assertions.assertTrue(databaseNameFlag, "Database name is not visible in the database catalog");
+	}
+
+	@Given("User sees the database name {string} in database catalog")
+	public void User_sees_the_database_name_in_database_catalog(String dbName) {
+		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName + timestamp);
 	}
 
 	@Then("User selects database {string}")
