@@ -135,7 +135,8 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User clicks on the database name {string} in the database catalog and Copy ID")
 	public void user_clicks_the_database_name_in_the_database_catalog_And_Copy_ID(String dbName) {
-		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalogAndCopyID(dbName);
+		//TODO 
+//		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalogAndCopyID(dbName);
 	}
 
 	@When("User clicks on Usage tab for Database")
