@@ -2,6 +2,7 @@ package aicore.steps.app;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 
@@ -202,4 +203,55 @@ public class NotebookCreationAndExecutionSteps {
 		boolean flag = notebookPage.validateQuery(age, bp);
 		Assertions.assertTrue(flag, "age and bp fields is not visible");
 	}
+
+	@And("User clicks on {string} button")
+    public void user_clicks_on_button(String buttonName) {
+        notebookPage.clickOnRuleButton(buttonName);
+    }
+
+    @And("User selects {string} from the column dropdown")
+    public void user_selects_from_the_column_dropdown(String columnName) {
+        notebookPage.selectColumnFromDropdown(columnName);
+    }
+
+    @And("User selects {string} from the operator dropdown")
+    public void user_selects_from_the_operator_dropdown(String operator) {
+        notebookPage.selectOperatorFromDropdown(operator);
+    }
+
+    @And("User enters {string} from the value input")
+    public void user_enters_from_the_value_input(String value) {
+        notebookPage.enterValueInInput(value);
+    }
+
+    @Then("User can see the filtered data with {string} equals {string}")
+    public void user_can_see_the_filtered_data_with_column_equals_value(String column, String value) {
+        boolean isFilteredDataCorrect = notebookPage.isFilteredDataCorrect(column, value);
+        Assertions.assertTrue(isFilteredDataCorrect, "Filtered data is not correct for column: " + column + " with value: " + value);
+    }
+
+    @Then("User changes the operator to {string}")
+    public void user_changes_the_operator_to(String operator) {
+        notebookPage.changeOperatorTo(operator);
+    }
+
+    @Then("User sees {string} operator by default between the rules")
+    public void User_sees_operator_by_default_between_the_rules(String operator) {
+
+         notebookPage.getDefaultOperator(operator);
+    }
+
+    @Then("User can see the filtered data with {string} operator for columns {string} and values {string}")
+    public void user_can_see_filtered_data_with_operator(String operator, String columnsCsv, String valuesCsv) {
+        List<String> columns = Arrays.stream(columnsCsv.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        List<String> values = Arrays.stream(valuesCsv.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        boolean result;
+        result = notebookPage.isFilteredDataCorrectForColumns(columns, values, operator);
+		Assertions.assertTrue(result, "Filtered data does not match for columns: " + columns + " with values: " + values + " using operator: " + operator);
+    }
+
 }
