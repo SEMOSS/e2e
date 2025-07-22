@@ -6,6 +6,7 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
 	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
@@ -23,6 +24,11 @@ public class AddCatalogPageBaseUtils {
 	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
+
+	// View Database Type on Connect To database page
+	private static final String SEARCH_INPUT_XPATH = "//div[@id='home__content']//input[@placeholder='Search' and @type='text']";
+	private static final String FILE_UPLOAD_DB_TYPE_XPATH = "//div[div[normalize-space(text())='File Uploads']]//p[normalize-space(text())='{DatabaseType}']";
+	private static final String CONNECTIONS_DB_TYPE_XPATH = "//div[div[normalize-space(text())='Connections']]//p[normalize-space(text())='{DatabaseType}']";
 
 	public static boolean verifySectionIsVisible(Page page, String sectionName) {
 		boolean isSectionVisible = page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
@@ -115,6 +121,13 @@ public class AddCatalogPageBaseUtils {
 		Locator toastMessage = page.getByRole(AriaRole.ALERT)
 				.filter(new Locator.FilterOptions().setHasText(EDIT_SUCCESS_TOAST_MESSAGE));
 		return toastMessage.textContent().trim();
+	}
+
+	// View Database Type on Connect To database page
+	public static void searchDatabaseType(Page page, String databaseType) {
+		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(SEARCH_INPUT_XPATH).click();
+		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term
 	}
 
 }
