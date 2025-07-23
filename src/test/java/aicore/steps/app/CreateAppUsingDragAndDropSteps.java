@@ -32,7 +32,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public static String timestamp;
 	private String blockText;
 	private int initialChartCount;
-	private String copyAppId;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -440,8 +439,8 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.enterCloneAppDescription(appDescription);
 	}
 
-	@When("User clicks on {string} button")
-	public void user_clicks_on_button(String buttonName) {
+	@When("User clicks on {string} button of clone app popup")
+	public void user_clicks_on_button_of_clone_app_popup(String buttonName) {
 		appPage.clickOnButton(buttonName);
 	}
 
