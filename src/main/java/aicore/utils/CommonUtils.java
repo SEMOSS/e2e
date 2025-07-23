@@ -36,7 +36,6 @@ import com.microsoft.playwright.options.BoundingBox;
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
-	private static ThreadLocal<Integer> initialCount = new ThreadLocal<>();
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
@@ -236,10 +235,4 @@ public class CommonUtils {
 				new Mouse.MoveOptions().setSteps(steps));
 	}
 
-	public static Integer manageInitialChartCount(Integer value) {
-		if (value != null) {
-			initialCount.set(value);
-		}
-		return initialCount.get();
-	}
 }

@@ -22,7 +22,6 @@ Feature: Database Catalog permissions for Read user
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
 
-  #Uncomment first three line
   Scenario: Database Catalog - Read - View overview,Usage,Metadat
     And User opens Main Menu
     And User clicks on Open Database
