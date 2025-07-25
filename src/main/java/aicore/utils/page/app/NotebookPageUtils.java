@@ -125,6 +125,11 @@ public class NotebookPageUtils {
 		deleteIcon.click();
 	}
 
+	public static void selectDatabaseType(Page page, String databaseName) {
+		page.getByTitle("Select Database").click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
+	}
+
 	public static void clickOnRunCellButton(Page page) {
 		Locator block = page.locator(FILTER_SELECT_FRAME_BLOCK_XPATH);
 		if (block.isVisible()) {

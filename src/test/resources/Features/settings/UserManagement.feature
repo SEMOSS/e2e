@@ -11,7 +11,7 @@ Feature: User Management
     And User adds 11 members and can see toast message as 'Successfully added user' for all added members
     And User sees the search button
     And User searches for the created user
-    And User clicks on Delete Selected button 1 times
+    And User clicks on Delete Selected button 2 times
 
   @LoginWithAdmin
   Scenario: Edit Native User - Change Model Limit Restriction

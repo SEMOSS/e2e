@@ -24,7 +24,6 @@ public class AppPageUtils {
 	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//div[text()='Succesfully copied to clipboard']";
 	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
 	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
-	private static String copiedId;
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();

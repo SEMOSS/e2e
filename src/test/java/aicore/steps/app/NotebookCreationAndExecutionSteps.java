@@ -97,6 +97,11 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.deleteFirstCell();
 	}
 
+	@And("User selects {string} database from the dropdown")
+	public void user_selects_database_from_the_dropdown(String Database) {
+		notebookPage.selectDatabaseType(Database);
+	}
+
 	@When("User clicks on Run cell button")
 	public void user_clicks_on_run_cell_button() throws InterruptedException {
 		notebookPage.clickOnRunCellButton();

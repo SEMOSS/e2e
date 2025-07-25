@@ -2,9 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class UserManagementPageUtils {
@@ -142,36 +140,24 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchUser(Page page) {
-		String responseURL = ConfigUtils.getValue("baseUrl")
-				+ "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
-		page.waitForResponse(responseURL, () -> {
-			// Triggers the response
+		String Base = ConfigUtils.getValue("baseUrl");
+		if (Base.contains("8080")) {
+			String responseURL = Base + "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+			page.waitForResponse(responseURL, () -> {
+				// Triggers the response
+				page.fill(SEARCH_BUTTON_XPATH, "UserId");
+			});
+		} else {
 			page.fill(SEARCH_BUTTON_XPATH, "UserId");
-		});
+		}
 	}
 
-//	public static void clickSelectAllButton(Page page) {
-//		Locator checkbox = page.locator(SELECT_ALL_BUTTON_XPATH);
-//		AICorePageUtils.waitFor(checkbox);
-//		checkbox.scrollIntoViewIfNeeded();
-//		checkbox.click(new Locator.ClickOptions().setForce(true));
-//	}
 	public static void clickSelectAllButton(Page page) {
-		// Locate the outer span that behaves like the checkbox
-		Locator checkbox = page
-				.locator("//label[@id='userTable-checkbox-selectAll']//span[contains(@class,'MuiButtonBase-root')]");
-
-		// Wait until attached and visible
-		checkbox.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-
-		// Option 1: Try normal forced click (works on most UIs)
-		try {
-			checkbox.click(new Locator.ClickOptions().setForce(true));
-		} catch (PlaywrightException e) {
-			// Option 2: If still fails, fallback to mouse click using bounding box
-			BoundingBox box = checkbox.boundingBox();
-			page.mouse().click(box.x + box.width / 2, box.y + box.height / 2);
-		}
+		Locator checkbox = page.locator(SELECT_ALL_BUTTON_XPATH);
+		AICorePageUtils.waitFor(checkbox);
+		checkbox.scrollIntoViewIfNeeded();
+		checkbox.click();
+		page.waitForTimeout(2000);
 	}
 
 	public static void clickDeleteSelectedButton(Page page) {

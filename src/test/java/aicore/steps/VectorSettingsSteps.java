@@ -39,12 +39,12 @@ public class VectorSettingsSteps {
 
 	@Then("User searches for the vector {string}")
 	public void user_searches_for_the_vector(String catalogName) {
-		vectorSettingsPage.searchForVector(catalogName);
+		vectorSettingsPage.searchForVector(catalogName + AddVectorDatabaseSteps.timestamp);
 	}
 
 	@Then("User sees the {string} in the searched vector list")
 	public void user_sees_the_in_the_searched_vector_list(String catalogName) {
-		vectorSettingsPage.verifySearchedVector(catalogName);
+		vectorSettingsPage.verifySearchedVector(catalogName + AddVectorDatabaseSteps.timestamp);
 	}
 
 	@And("User clicks on created Vector card name as {string}")

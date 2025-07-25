@@ -25,7 +25,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	private HomePage homePage;
 	private OpenVectorPage vectorPage;
-	private String timestamp;
+	protected static String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
 	private ViewUsagePage viewUsagePage;
 	private ChangeAccessPopUpPage chnageAccessPopUpPage;
