@@ -100,7 +100,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnCreateVectorButton() {
-		page.click(CREATE_VECTOR_BUTTON_XPATH);
+		page.locator(CREATE_VECTOR_BUTTON_XPATH).scrollIntoViewIfNeeded();
+		page.locator(CREATE_VECTOR_BUTTON_XPATH).click();
 	}
 
 	public String verifyVectorCreatedToastMessage() {

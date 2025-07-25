@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
 
 public class BlockSettingsUtils {
@@ -119,8 +120,8 @@ public class BlockSettingsUtils {
 	public static void dragColumnToTargetField(Page page, String columnName, String targetField) {
 		// scroll to column
 		Locator sourceLocator = page.locator(DRAG_COLUMN_NAME_XPATH.replace("{columnName}", columnName));
-		sourceLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		sourceLocator.scrollIntoViewIfNeeded();
+		AICorePageUtils.waitFor(sourceLocator);
+		sourceLocator.evaluate("el => el.scrollIntoView({ block: 'center', behavior: 'instant' })");
 		page.waitForTimeout(300);
 		// Grab column
 		sourceLocator.hover();
@@ -129,8 +130,8 @@ public class BlockSettingsUtils {
 		page.waitForTimeout(300);
 		// scroll to target filed
 		Locator targetLocator = page.locator(DROP_FIELD_XPATH.replace("{fieldName}", targetField)).first();
-		targetLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		targetLocator.scrollIntoViewIfNeeded();
+		AICorePageUtils.waitFor(targetLocator);
+		targetLocator.evaluate("el => el.scrollIntoView({ block: 'center', behavior: 'instant' })");
 		page.waitForTimeout(300);
 		// refresh drag coordinates after scrolling
 		CommonUtils.moveMouseToCenter(page, sourceLocator, 0);
@@ -145,7 +146,7 @@ public class BlockSettingsUtils {
 	public static boolean verifyColumnDroppedInCorrectField(Page page, String columnName, String targetField) {
 		Locator tag = page.locator(
 				DROPPED_COLUMN_IN_FIELD_XPATH.replace("{fieldName}", targetField).replace("{columnName}", columnName));
-		tag.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(tag);
 		return tag.isVisible();
 	}
 

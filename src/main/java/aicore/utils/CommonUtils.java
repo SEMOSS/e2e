@@ -28,9 +28,11 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.romankh3.image.comparison.ImageComparison;
 import com.github.romankh3.image.comparison.model.ImageComparisonResult;
+import com.microsoft.playwright.JSHandle;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.BoundingBox;
 
 public class CommonUtils {
@@ -233,6 +235,15 @@ public class CommonUtils {
 		BoundingBox box = locator.boundingBox();
 		page.mouse().move(box.x + (box.width / 2), (box.y + box.height + margin),
 				new Mouse.MoveOptions().setSteps(steps));
+	}
+
+	public static String readCopiedTextFromClipboard(Page page) {
+		JSHandle handle = page.evaluateHandle("async () => await navigator.clipboard.readText()");
+		try {
+			return handle.jsonValue().toString();
+		} catch (PlaywrightException e) {
+			throw new RuntimeException("Failed to read text from clipboard", e);
+		}
 	}
 
 }

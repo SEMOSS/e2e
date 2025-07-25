@@ -12,7 +12,7 @@ public class SearchAndSelectCatalogPageUtils {
 	}
 
 	public static void searchCatalog(Page page, String catalogName, String timestamp) {
-		page.locator(STORAGE_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(STORAGE_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName + timestamp);
+		page.getByLabel("Search").click();
+		page.getByLabel("Search").fill(catalogName + timestamp);
 	}
 }

@@ -2,6 +2,7 @@ package aicore.pages;
 
 import java.nio.file.Paths;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -57,7 +58,7 @@ public class BISystemAppPage {
 			page.getByText("Accept").click();
 		} catch (Exception e) {
 		}
-		
+
 		// welcome popup
 		try {
 			boolean popUp = page.locator(WELCOME_POPUP_CLOSE_XPATH).isVisible();
@@ -90,7 +91,9 @@ public class BISystemAppPage {
 	}
 
 	public void enterDatabaseName(String databaseName) {
-		page.fill(ENTER_DATABASE_NAME_TEXTBOX_XPATH, databaseName + " " + timestamp);
+		Locator databaseNameTextbox = page.locator(ENTER_DATABASE_NAME_TEXTBOX_XPATH);
+		AICorePageUtils.waitFor(databaseNameTextbox);
+		databaseNameTextbox.fill(databaseName + " " + timestamp);
 	}
 
 	public void uploadCSVFile() {

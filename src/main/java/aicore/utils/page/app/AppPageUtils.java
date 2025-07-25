@@ -3,9 +3,9 @@ package aicore.utils.page.app;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.microsoft.playwright.JSHandle;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
@@ -44,19 +44,18 @@ public class AppPageUtils {
 		String expectedAppName = appName + " " + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
 		AICorePageUtils.waitFor(appCard);
-		Locator anchor = page.locator(OPEN_APP_LINK_XPATH.replace("{appName}", expectedAppName));
-		CommonUtils.removeTargetAttribute(anchor);
+//		Locator anchor = page.locator(OPEN_APP_LINK_XPATH.replace("{appName}", expectedAppName));
+//		CommonUtils.removeTargetAttribute(anchor);
 		appCard.click();
 	}
 
 	public static void clickOnMoreVertIcon(Page page, String appName) {
 		Locator iconLocator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH.replace("{appName}", appName));
-		iconLocator.scrollIntoViewIfNeeded();
 		iconLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		iconLocator.click();
 	}
 
-	public static void clickOnOption(Page page, String optionName) {
+	public static String clickOnOption(Page page, String optionName) {
 		String optionValue = null;
 		switch (optionName) {
 		case "Copy App ID":
@@ -72,17 +71,13 @@ public class AppPageUtils {
 			logger.error("Invalid option name: " + optionName);
 			throw new IllegalArgumentException("Invalid option name: " + optionName);
 		}
-		Locator optionLocator = page.locator(MORE_VERTICAL_OPTION_XPATH.replace("{optionValue}", optionValue));
+		Locator optionLocator = page.getByRole(AriaRole.MENUITEM, new Page.GetByRoleOptions().setName(optionValue));
 		optionLocator.isVisible();
 		optionLocator.click();
 		if (optionName.equals("Copy App ID")) {
-			JSHandle handle = page.evaluateHandle("async () => await navigator.clipboard.readText()");
-			copiedId = handle.jsonValue().toString();
+			return CommonUtils.readCopiedTextFromClipboard(page);
 		}
-	}
-
-	public static String getCopiedId() {
-		return copiedId;
+		return null;
 	}
 
 	public static String getAppIdCopiedToastMessage(Page page) {

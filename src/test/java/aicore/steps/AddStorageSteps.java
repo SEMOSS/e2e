@@ -175,7 +175,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User can see the Storage title as {string}")
 	public void user_can_see_the_storage_title_as(String storageTitle) {
-		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle+timestamp);
+		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle + timestamp);
 	}
 
 	@Then("User can see {string} Storage ID along with copy icon")
@@ -262,6 +262,11 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		String expectedMessage = storagePage.verifyDeleteToastMessage();
 		String actualMessage = toastMessage;
 		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
+	}
+
+	@And("User searches {string} storage in the storage searchbox")
+	public void user_searches_storage_in_the_storage_searchbox(String storageName) {
+		storagePage.searchStorage(storageName + timestamp);
 	}
 
 	@When("User clicks on created storage {string}")

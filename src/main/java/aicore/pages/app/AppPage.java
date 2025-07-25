@@ -33,12 +33,8 @@ public class AppPage {
 		AppPageUtils.clickOnMoreVertIcon(page, appName);
 	}
 
-	public void clickOnOption(String optionName) {
-		AppPageUtils.clickOnOption(page, optionName);
-	}
-
-	public String getCopiedId() {
-		return AppPageUtils.getCopiedId();
+	public String clickOnOption(String optionName) {
+		return AppPageUtils.clickOnOption(page, optionName);
 	}
 
 	public String getAppIdCopiedToastMessage() {

@@ -1,6 +1,9 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+
+import aicore.utils.AICorePageUtils;
 
 public class VectorSearchAndFilterPage {
 
@@ -9,9 +12,9 @@ public class VectorSearchAndFilterPage {
 
 	private static final String VECTOR_XPATH = "//a[@data-testid='Vector-icon']";
 	private static final String CLICK_SEARCH_XPATH = "//input[@placeholder='Search']";
-	private static final String SEARCHED_VECTOR_XPATH = "//div[@class='css-1icp1k8']//p[text()='{vectorName}']";
+	private static final String SEARCHED_VECTOR_XPATH = "//p[text()='{vectorName}']";
 	private static final String BOOKMAR_XPATH = "//button[@title='Bookmark {bookmark}']";
-	private static final String UNBOOKMAR_XPATH = "//h6[text()='Bookmarked']/following-sibling::div//button[@title='Unbookmark {bookmarked}']";
+	private static final String UNBOOKMAR_XPATH = "//button[@title='Unbookmark {bookmarked}']";
 	private static final String SEARCHBY_XPATH = "//input[@placeholder='Search by...']";
 	private static final String EDIT_XPATH = "//span[text()='{editButton}']";
 	private static final String FILTER_ADD_XPATH = "//label[text()='{filter}']/following-sibling::div//input";
@@ -89,9 +92,9 @@ public class VectorSearchAndFilterPage {
 	}
 
 	public boolean verifyVectorIsDisplayedOnCatalogPage(String vectorName) {
-		String vectorNameWithTimestamp = SEARCHED_VECTOR_XPATH.replace("{vectorName}", vectorName);
-		boolean isModelVisible = page.isVisible(vectorNameWithTimestamp);
-		return isModelVisible;
+		Locator vectorCard = page.locator(SEARCHED_VECTOR_XPATH.replace("{vectorName}", vectorName));
+		AICorePageUtils.waitFor(vectorCard);
+		return vectorCard.isVisible();
 	}
 
 	public void selectFilterBy() {
@@ -110,9 +113,14 @@ public class VectorSearchAndFilterPage {
 
 	}
 
+	public void UnBookmarkVector(String bookmark) {
+		Locator unbookmark = page.locator(UNBOOKMAR_XPATH.replace("{bookmarked}", bookmark)).first();
+		AICorePageUtils.waitFor(unbookmark);
+		unbookmark.click();
+	}
+
 	public boolean isBookmarked(String bookmarked) {
 		return page.locator(UNBOOKMAR_XPATH.replace("{bookmarked}", bookmarked)).isVisible();
-
 	}
 
 	public void discoverableTab(String myd) {

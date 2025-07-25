@@ -44,7 +44,7 @@ public class AddDatabasePageUtils {
 	private static final String CATALOG_NAME_XPATH = "importForm-textField-NAME";
 	private static final String APPLY_BUTTON_XPATH = "establish-connection-modal-apply-btn";
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
-	private static final String DB_CATALOG_XPATH = "//a[text()='{dbName}']";
+	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
 
 	public static void clickAddDatabaseButton(Page page) {

@@ -34,15 +34,19 @@ public class ModelPageUtils {
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
-		page.fill(CATALOG_NAME_XPATH, catalogName);
+//		page.fill(CATALOG_NAME_XPATH, catalogName);
+		page.getByTestId("importForm-textField-NAME").fill(catalogName);
 	}
 
 	public static void enterOpenAIKey(Page page, String openAIKey) {
-		page.fill(OPEN_AI_KEY_XPATH, openAIKey);
+//		page.fill(OPEN_AI_KEY_XPATH, openAIKey);
+		page.getByTestId("importForm-textField-OPEN_AI_KEY").fill(openAIKey);
 	}
 
 	public static void enterVariableName(Page page, String varName) {
-		page.fill(VARIABLE_NAME_ID, varName);
+//		page.fill(VARIABLE_NAME_ID, varName);
+		page.getByTestId("importForm-textField-VAR_NAME").fill(varName);
+
 	}
 
 	public static void createModel(Page page) {

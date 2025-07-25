@@ -2,7 +2,9 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class UserManagementPageUtils {
@@ -25,7 +27,7 @@ public class UserManagementPageUtils {
 	private static final String WEEKELY_VALUE_XPATH = "//li[text()='{dropdown_option}']";
 	private static final String MODEL_LIMIT_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td[text()='{limitValue}']";
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Users\"]";
-	private static final String SELECT_ALL_BUTTON_XPATH = "//th//label//span//input[@type='checkbox']";
+	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@id='userTable-checkbox-selectAll']";// "//th//label//span//input[@type='checkbox']";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
 	private static final String SEARCH_ICON_XPATH = "//div[@id='home__content']//*[@data-testid='SearchIcon']";
@@ -34,7 +36,6 @@ public class UserManagementPageUtils {
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
 	private static final String ADFS_TOAST_MESSAGE_XPATH = "Succesfully modified adfs properties";
-	
 
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
@@ -90,7 +91,7 @@ public class UserManagementPageUtils {
 	public static String userCreationToastMessage(Page page) {
 		page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.textContent(ADD_MEMBER_TOAST_MESSAGE_XPATH).trim();
+		String toastMessage = page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH).textContent().trim();
 		return toastMessage;
 	}
 
@@ -149,9 +150,28 @@ public class UserManagementPageUtils {
 		});
 	}
 
+//	public static void clickSelectAllButton(Page page) {
+//		Locator checkbox = page.locator(SELECT_ALL_BUTTON_XPATH);
+//		AICorePageUtils.waitFor(checkbox);
+//		checkbox.scrollIntoViewIfNeeded();
+//		checkbox.click(new Locator.ClickOptions().setForce(true));
+//	}
 	public static void clickSelectAllButton(Page page) {
-		page.isVisible(SELECT_ALL_BUTTON_XPATH);
-		page.click(SELECT_ALL_BUTTON_XPATH);
+		// Locate the outer span that behaves like the checkbox
+		Locator checkbox = page
+				.locator("//label[@id='userTable-checkbox-selectAll']//span[contains(@class,'MuiButtonBase-root')]");
+
+		// Wait until attached and visible
+		checkbox.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+
+		// Option 1: Try normal forced click (works on most UIs)
+		try {
+			checkbox.click(new Locator.ClickOptions().setForce(true));
+		} catch (PlaywrightException e) {
+			// Option 2: If still fails, fallback to mouse click using bounding box
+			BoundingBox box = checkbox.boundingBox();
+			page.mouse().click(box.x + box.width / 2, box.y + box.height / 2);
+		}
 	}
 
 	public static void clickDeleteSelectedButton(Page page) {

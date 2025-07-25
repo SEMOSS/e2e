@@ -67,7 +67,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
     And User selects the frame from the Selected Frame dropdown
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '30' from the value input
@@ -87,11 +87,11 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
     And User selects the frame from the Selected Frame dropdown
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '30' from the value input
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User sees 'AND' operator by default between the rules
     And User selects 'BloodPressure' from the column dropdown
     And User selects 'Equals' from the operator dropdown
@@ -112,11 +112,11 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
     And User selects the frame from the Selected Frame dropdown
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '30' from the value input
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User sees 'AND' operator by default between the rules
     And User changes the operator to 'OR'
     And User selects 'BloodPressure' from the column dropdown
@@ -138,16 +138,16 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
     And User selects the frame from the Selected Frame dropdown
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '30' from the value input
-    And User clicks on 'Add Nested Rule' button
+    And User clicks on the 'Add Nested Rule' option
     And User sees 'AND' operator by default between the rules
     And User selects 'BloodPressure' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '92' from the value input
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User sees 'AND' operator by default between the rules
     And User selects 'BMI' from the column dropdown
     And User selects 'Equals' from the operator dropdown
@@ -168,21 +168,21 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
     And User selects the frame from the Selected Frame dropdown
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '30' from the value input
-    And User clicks on 'Add Nested Rule' button
+    And User clicks on the 'Add Nested Rule' option
     And User sees 'AND' operator by default between the rules
     And User selects 'BloodPressure' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '92' from the value input
-    And User clicks on 'Add Nested Rule' button
+    And User clicks on the 'Add Nested Rule' option
     And User sees 'AND' operator by default between the rules
     And User selects 'BMI' from the column dropdown
     And User selects 'Equals' from the operator dropdown
     And User enters '37.6' from the value input
-    And User clicks on 'Add Rule' button
+    And User clicks on the 'Add Rule' option
     And User sees 'AND' operator by default between the rules
     And User selects 'Glucose' from the column dropdown
     And User selects 'Equals' from the operator dropdown

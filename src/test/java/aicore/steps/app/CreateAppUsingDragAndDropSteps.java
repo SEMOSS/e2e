@@ -1,7 +1,6 @@
 package aicore.steps.app;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +31,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public static String timestamp;
 	private String blockText;
 	private int initialChartCount;
+	private String copiedId;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -83,9 +83,9 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("User can see {string} with the text {string}")
 	public void user_can_see_with_the_text(String pageName, String expectedWelcomeTextMessage) {
 		boolean isPage1Visible = blocksPage.verifyPage1IsVisible();
-		assertTrue(isPage1Visible);
+		Assertions.assertTrue(isPage1Visible, "Page is not visible");
 		boolean isWelcomeTextboxVisible = blocksPage.verifyWelcomeTextboxIsVisible();
-		assertTrue(isWelcomeTextboxVisible);
+		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
 		String actualWelcomeTextMessage = blocksPage.verifyWelcomeText();
 		Assertions.assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage,
 				"Mismatch between the expected and actual message");
@@ -414,7 +414,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@When("User clicks on {string} option")
 	public void user_clicks_on_option(String optionName) {
-		appPage.clickOnOption(optionName);
+		copiedId = appPage.clickOnOption(optionName);
 	}
 
 	@Then("User can see {string} toast message after copying the ID.")
@@ -425,8 +425,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@When("User searches copied id in the app searchbox")
 	public void user_searches_copied_id_in_the_app_searchbox() {
-		String appId = appPage.getCopiedId();
-		appPage.searchAppId(appId);
+		appPage.searchAppId(copiedId);
 	}
 
 	@When("User enters cloned app name as {string}")
@@ -444,8 +443,8 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.clickOnButton(buttonName);
 	}
 
-	@When("User click on Make Public button")
-	public void user_click_on_make_public_button() {
+	@When("User click on Make Public toggle switch")
+	public void user_click_on_make_public_toggle_switch() {
 		appPage.MakeAppPublic();
 	}
 
