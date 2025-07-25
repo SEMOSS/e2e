@@ -47,12 +47,14 @@ Feature: Model catalog permission - Author
     And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
+    And User Search 'Editor' user from Access Control
     And User deletes the 'Editor' user
 
   Scenario: Model Catalog - Author - Delete read Member
     And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
+    And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
   Scenario: Model Catalog - Author - Delete Model

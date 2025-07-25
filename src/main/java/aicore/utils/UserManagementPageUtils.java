@@ -25,7 +25,7 @@ public class UserManagementPageUtils {
 	private static final String WEEKELY_VALUE_XPATH = "//li[text()='{dropdown_option}']";
 	private static final String MODEL_LIMIT_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td[text()='{limitValue}']";
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Users\"]";
-	private static final String SELECT_ALL_BUTTON_XPATH = "//th//label//span//input[@type='checkbox']";
+	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@id='userTable-checkbox-selectAll']";// "//th//label//span//input[@type='checkbox']";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
 	private static final String SEARCH_ICON_XPATH = "//div[@id='home__content']//*[@data-testid='SearchIcon']";
@@ -34,7 +34,6 @@ public class UserManagementPageUtils {
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
 	private static final String ADFS_TOAST_MESSAGE_XPATH = "Succesfully modified adfs properties";
-	
 
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
@@ -90,7 +89,7 @@ public class UserManagementPageUtils {
 	public static String userCreationToastMessage(Page page) {
 		page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.textContent(ADD_MEMBER_TOAST_MESSAGE_XPATH).trim();
+		String toastMessage = page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH).textContent().trim();
 		return toastMessage;
 	}
 
@@ -141,17 +140,24 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchUser(Page page) {
-		String responseURL = ConfigUtils.getValue("baseUrl")
-				+ "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
-		page.waitForResponse(responseURL, () -> {
-			// Triggers the response
+		String Base = ConfigUtils.getValue("baseUrl");
+		if (Base.contains("8080")) {
+			String responseURL = Base + "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+			page.waitForResponse(responseURL, () -> {
+				// Triggers the response
+				page.fill(SEARCH_BUTTON_XPATH, "UserId");
+			});
+		} else {
 			page.fill(SEARCH_BUTTON_XPATH, "UserId");
-		});
+		}
 	}
 
 	public static void clickSelectAllButton(Page page) {
-		page.isVisible(SELECT_ALL_BUTTON_XPATH);
-		page.click(SELECT_ALL_BUTTON_XPATH);
+		Locator checkbox = page.locator(SELECT_ALL_BUTTON_XPATH);
+		AICorePageUtils.waitFor(checkbox);
+		checkbox.scrollIntoViewIfNeeded();
+		checkbox.click();
+		page.waitForTimeout(2000);
 	}
 
 	public static void clickDeleteSelectedButton(Page page) {

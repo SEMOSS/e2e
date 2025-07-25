@@ -251,7 +251,7 @@ public class StoragePageUtils {
 	public static boolean verifyChangeAccessButton(Page page) {
 		return page.getByText(CHANGE_ACCESS_BUTTON_XPATH).isVisible();
 	}
-	
+
 	public static void clickOnCancelButton(Page page) {
 		page.click(CANCEL_BUTTON_XPATH);
 	}
@@ -259,8 +259,14 @@ public class StoragePageUtils {
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
 	}
+
 	public static void enterLocalPathPrefix(Page page, String path) {
 		page.getByTestId(LOCAL_PATH_PREFIX_DATATESTID).fill(path);
+	}
+
+	public static void searchStorage(Page page, String storageName) {
+		page.getByLabel("Search").click();
+		page.getByLabel("Search").fill(storageName);
 	}
 
 	public static void clickOnCreatedStorage(Page page, String storageName) {

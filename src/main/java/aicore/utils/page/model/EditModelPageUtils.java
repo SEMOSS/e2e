@@ -25,11 +25,11 @@ public class EditModelPageUtils {
 	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/parent::div//input[@aria-autocomplete='list']";
 	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
 	private static final String MODEL_TAGS_XPATH = "//div[contains(@class,'MuiStack-root')]//div[contains(@class,'MuiChip-root MuiChip-outlined')]//span";
-	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
-	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Tag')]]/following-sibling::div";
-	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Domain')]]/following-sibling::div";
-	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data classification')]]/following-sibling::div";
-	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6/h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
+	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
+	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Tag')]]/following-sibling::div";
+	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Domain')]]/following-sibling::div";
+	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data classification')]]/following-sibling::div";
+	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 
 	public static void searchModelCatalog(Page page, String modelName, String timestamp) {

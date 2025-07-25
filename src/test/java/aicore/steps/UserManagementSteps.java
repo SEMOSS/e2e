@@ -135,11 +135,11 @@ public class UserManagementSteps {
 
 	@And("User clicks on Delete Selected button {int} times")
 	public void user_clicks_on_delete_selected_button(int usercount) {
-		if (usercount <= 25) {
+		if (usercount <= 10) {
 			userpage.clickSelectAllButton();
 			userpage.clickDeleteSelectedButton();
 		} else {
-			for (int i = 1; i <= (int) Math.ceil((double) usercount / 25); i++) {
+			for (int i = 1; i <= (int) Math.ceil((double) usercount / 10); i++) {
 				userpage.clickSelectAllButton();
 				userpage.clickDeleteSelectedButton();
 			}

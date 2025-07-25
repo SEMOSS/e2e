@@ -79,7 +79,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCopyToastMessage(Page page, String toastMessage) {
-		return page.locator(COPY_TOAST_MESSAGE_XPATH.replace("{ToastMessage}", toastMessage)).isVisible();
+		Locator toastMessageLocator = page.locator(COPY_TOAST_MESSAGE_XPATH.replace("{ToastMessage}", toastMessage));
+		AICorePageUtils.waitFor(toastMessageLocator);
+		return toastMessageLocator.isVisible();
 	}
 
 	public static boolean checkEditIcon(Page page) {

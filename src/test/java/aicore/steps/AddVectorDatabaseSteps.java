@@ -2,9 +2,10 @@ package aicore.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Assertions;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
@@ -24,7 +25,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	private HomePage homePage;
 	private OpenVectorPage vectorPage;
-	private String timestamp;
+	protected static String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
 	private ViewUsagePage viewUsagePage;
 	private ChangeAccessPopUpPage chnageAccessPopUpPage;
