@@ -29,4 +29,8 @@ public abstract class AbstractAddCatalogPageBase {
 		return AddCatalogPageBaseUtils.isSearchBarPresent(page);
 	}
 
+	// View Database Type on Connect To database page
+	public void searchDatabaseType(String dbType) {
+		AddCatalogPageBaseUtils.searchDatabaseType(page, dbType);
+	}
 }

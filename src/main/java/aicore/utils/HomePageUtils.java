@@ -11,7 +11,7 @@ public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
 
-	private static final String PAGE_TITLE_XPATH = "//a[@class='css-jnxb8i']";
+	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue("applicationName") + "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";

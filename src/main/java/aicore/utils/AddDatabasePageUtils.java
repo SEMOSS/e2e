@@ -35,11 +35,17 @@ public class AddDatabasePageUtils {
 	private static final String EXPORT_BTN_XPATH = "Export";
 	private static final String EDIT_POPUP_XPATH = "//div[contains(text(),\"Edit\")]";
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
-	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//label//following-sibling::div//input[contains(@id ,'generated-id-')]";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
+	private static final String HOST_NAME_XPATH = "importForm-textField-hostname";
+	private static final String CATALOG_NAME_XPATH = "importForm-textField-NAME";
+	private static final String APPLY_BUTTON_XPATH = "establish-connection-modal-apply-btn";
+	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
+	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
+	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -49,6 +55,64 @@ public class AddDatabasePageUtils {
 	public static void selectDatabaseType(Page page, String dbType) {
 		page.getByText(dbType).isVisible();
 		page.getByText(dbType).click();
+	}
+
+	public static void selectDatabaseFromConnectionTypes(Page page, String dbType) {
+		Locator connectionDB = page.locator(DATABASE_CONNECTION_XPATH.replace("{ConnectionTypeDB}", dbType));
+		if (!connectionDB.isVisible()) {
+			throw new AssertionError("Database connection type '" + dbType + "' is not visible.");
+		}
+		connectionDB.click();
+	}
+
+	public static void clickOnApplyButton(Page page) {
+		Locator applyButton = page.getByTestId(APPLY_BUTTON_XPATH);
+		applyButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!applyButton.isVisible() || !applyButton.isEnabled()) {
+			throw new AssertionError("Apply button is not visible or enabled.");
+		}
+		applyButton.click();
+	}
+
+	public static void clickApplyDatabaseButton(Page page) {
+		Locator applyDatabaseButton = page.locator(APPLY_DATABASE_BUTTON_XPATH);
+		applyDatabaseButton.scrollIntoViewIfNeeded();
+		applyDatabaseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!applyDatabaseButton.isVisible() || !applyDatabaseButton.isEnabled()) {
+			throw new AssertionError("Apply button is not visible or enabled.");
+		}
+		applyDatabaseButton.click();
+	}
+
+	public static void enterHostName(Page page, String hostFilePath) {
+		String pathSeparator = FileSystems.getDefault().getSeparator();
+		Locator hostNameInput = page.getByTestId(HOST_NAME_XPATH);
+		// Get the current working directory (your project root)
+		String workspaceRoot = System.getProperty("user.dir");
+		// Build the path to the sqlite.db file
+		Path dbPath = Paths.get(workspaceRoot, "src", "test", "resources", "data", "Database", hostFilePath);
+		String hostFileAbsolutePath = dbPath.toAbsolutePath().toString();
+		if (hostFileAbsolutePath.contains("/")) {
+			hostFileAbsolutePath = hostFileAbsolutePath.replace("/", pathSeparator);
+		}
+		if (!hostNameInput.isVisible() && !hostNameInput.isEnabled()) {
+			throw new AssertionError("Host name input field is not visible.");
+		}
+		hostNameInput.fill(hostFileAbsolutePath);
+	}
+
+	public static void enterCatalogName(Page page, String catalogName) {
+		Locator catalogNameInput = page.getByTestId(CATALOG_NAME_XPATH);
+		if (!catalogNameInput.isVisible() && !catalogNameInput.isEnabled()) {
+			throw new AssertionError("Catalog name input field is not visible.");
+		}
+		catalogNameInput.fill(catalogName);
+	}
+
+	public static boolean verifyDatabaseTitle(Page page, String dbName) {
+		Locator actualDatabaseTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(dbName));
+		actualDatabaseTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return actualDatabaseTitle.isVisible();
 	}
 
 	public static String uploadDatabaseFile(Page page, String fileName) {
@@ -79,9 +143,13 @@ public class AddDatabasePageUtils {
 	}
 
 	public static String verifyDatabaseNameInCatalog(Page page, String dbName) {
-		page.getByText(dbName).isVisible();
-		String databaseNameInCatalog = page.getByText(dbName).textContent();
-		return databaseNameInCatalog;
+		Locator databaseName = page.locator(DB_CATALOG_XPATH.replace("{dbName}", dbName));
+		databaseName.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!databaseName.isVisible()) {
+			throw new AssertionError("Database name '" + dbName + "' is not visible in the catalog.");
+		}
+		return databaseName.textContent();
+
 	}
 
 	public static void clickOnDatabaseNameInCatalog(Page page, String dbName) {

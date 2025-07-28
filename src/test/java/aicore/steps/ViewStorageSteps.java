@@ -10,7 +10,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class ViewStorageSteps {
-		private HomePage homePage;
+	private HomePage homePage;
 	private ViewStoragePage viewStorage;
 
 	public ViewStorageSteps() {
@@ -51,9 +51,9 @@ public class ViewStorageSteps {
 		viewStorage.clickOnStorage(storageName + AddStorageSteps.timestamp);
 	}
 
-	@When("User clicks on 'Edit' button")
-	public void user_clicks_on_edit_button() {
-		viewStorage.clickEditButton();
+	@When("User clicks on {string} button")
+	public void user_clicks_on_edit_button(String buttonName) {
+		viewStorage.clickEditButton(buttonName);
 	}
 
 	@When("User enters {string} under 'Tag' and press enter")
@@ -65,11 +65,6 @@ public class ViewStorageSteps {
 	public void user_should_see_tag_in_overview_tab(String expectedTag) {
 		Assertions.assertTrue(viewStorage.isFilterValueVisibleInOverview(expectedTag),
 				"'" + expectedTag + "' not visible in Overview tab");
-	}
-
-	@When("User clicks on 'Submit' button")
-	public void user_clicks_on_submit_button() {
-		viewStorage.clickSubmitButton();
 	}
 
 	@When("User enters {string} under 'Domain' section and press enter")
@@ -149,6 +144,7 @@ public class ViewStorageSteps {
 	public void user_clicks_on_discoverable_storages_tab() {
 		viewStorage.clickDiscoverableStoragesTab();
 	}
+
 	@When("User clicks on Make Discoverable button in storage settings")
 	public void user_clicks_on_make_discoverable_button_in_storage_settings() {
 		viewStorage.clickMakeDiscoverableButtonInStorageSettings();

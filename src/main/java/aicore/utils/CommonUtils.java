@@ -28,15 +28,16 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.romankh3.image.comparison.ImageComparison;
 import com.github.romankh3.image.comparison.model.ImageComparisonResult;
+import com.microsoft.playwright.JSHandle;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.BoundingBox;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
-	private static ThreadLocal<Integer> initialCount = new ThreadLocal<>();
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
@@ -236,10 +237,13 @@ public class CommonUtils {
 				new Mouse.MoveOptions().setSteps(steps));
 	}
 
-	public static Integer manageInitialChartCount(Integer value) {
-		if (value != null) {
-			initialCount.set(value);
+	public static String readCopiedTextFromClipboard(Page page) {
+		JSHandle handle = page.evaluateHandle("async () => await navigator.clipboard.readText()");
+		try {
+			return handle.jsonValue().toString();
+		} catch (PlaywrightException e) {
+			throw new RuntimeException("Failed to read text from clipboard", e);
 		}
-		return initialCount.get();
 	}
+
 }

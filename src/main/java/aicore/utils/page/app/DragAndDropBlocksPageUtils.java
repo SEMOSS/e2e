@@ -21,7 +21,7 @@ public class DragAndDropBlocksPageUtils {
 
 	private static final String PAGE_1_ID = "#page-1";
 	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content' and text()='{pageName}']";
-	private static final String WELCOME_TEXT_BLOCK_XPATH = "//div[@id='page-1']//p[@data-block='welcome-text-block']";
+	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
 	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
@@ -64,7 +64,7 @@ public class DragAndDropBlocksPageUtils {
 
 	// Area Chart
 	private static final String AREA_CHART_XPATH = "//div[@aria-label='Show trends over time with cumulative data']";
-	private static final String DUPLICATE_ICON_XPATH = "//*[name()='svg'][@data-testid='ContentCopyIcon']";
+	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
 	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][@data-testid='DeleteOutlineIcon']";
 	private static final String CLICK_ON_AREA_CHART_VIEW_OPTIONS = "//div[@aria-label='Vega visualization']";
 	private static final String AREA_CHART_COUNT_XPATH = "//canvas[@class='marks']";
@@ -79,12 +79,12 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static boolean verifyWelcomeTextboxIsVisible(Page page) {
-		boolean isWelcomeTextboxVisible = page.locator(WELCOME_TEXT_BLOCK_XPATH).isVisible();
+		boolean isWelcomeTextboxVisible = page.getByText(WELCOME_TEXT_BLOCK_TEXT).isVisible();
 		return isWelcomeTextboxVisible;
 	}
 
 	public static String verifyWelcomeText(Page page) {
-		String actualWelcomeText = page.locator(WELCOME_TEXT_BLOCK_XPATH).textContent().trim();
+		String actualWelcomeText = page.getByText(WELCOME_TEXT_BLOCK_TEXT).textContent().trim();
 		return actualWelcomeText;
 	}
 
@@ -109,7 +109,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void blockDropPosition(Page page) {
-		Locator targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH);
+//		Locator targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH);
+		Locator targetBox = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
 		CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 10);
 		page.mouse().up();
 	}

@@ -42,6 +42,10 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.enterSecretKey(page, secretKey);
 	}
 
+	public void searchStorage(String storageName) {
+		StoragePageUtils.searchStorage(page, storageName);
+	}
+
 	public void clickOnCreateStorageButton() {
 		StoragePageUtils.clickOnCreateStorageButton(page);
 	}
@@ -125,6 +129,7 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 	public boolean verifyActualTime(String time) {
 		return StoragePageUtils.verifyActualTime(page, time);
 	}
+
 	public void clickOnCancelButton() {
 		StoragePageUtils.clickOnCancelButton(page);
 	}
@@ -150,7 +155,7 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnCreatedStorage(String storageName) {
-		 StoragePageUtils.clickOnCreatedStorage(page, storageName);
+		StoragePageUtils.clickOnCreatedStorage(page, storageName);
 	}
 
 }
