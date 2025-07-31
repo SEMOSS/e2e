@@ -38,6 +38,12 @@ import com.microsoft.playwright.options.BoundingBox;
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
+	private static final CommonUtils instance = new CommonUtils();
+	private String catalogType;
+	private String id;
+
+	private CommonUtils() {
+	}
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
@@ -243,6 +249,66 @@ public class CommonUtils {
 			return handle.jsonValue().toString();
 		} catch (PlaywrightException e) {
 			throw new RuntimeException("Failed to read text from clipboard", e);
+		}
+	}
+
+	// new logic vatalog
+	public static CommonUtils getInstance() {
+		return instance;
+	}
+
+	public String getType() {
+		return catalogType;
+	}
+
+	public void setType(String catalogType) {
+		this.catalogType = catalogType;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void clear() {
+		this.catalogType = null;
+		this.id = null;
+	}
+
+	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
+		try {
+			page.locator(MENU_ICON).click();
+			switch (catalogType) {
+			case "Database":
+				HomePageUtils.clickOnOpenDatabase(page);
+				break;
+			case "Model":
+				HomePageUtils.clickOnOpenModel(page);
+				break;
+			case "Vector":
+				HomePageUtils.clickOnOpenVector(page);
+				break;
+			case "Function":
+				HomePageUtils.clickOnOpenFunction(page);
+				break;
+			case "Storage":
+				HomePageUtils.clickOnOpenStorage(page);
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
+			}
+			page.getByLabel(SEARCH_CATALOG).fill(catalogId);
+			page.locator(CLICK_ON_CATALOG).click();
+			page.locator(ACCESS_CONTROL_XPATH).click();
+			page.locator(DELETE_BUTTON_XPATH).click();
+			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+			return page.locator(DELETE_TOAST_MESSAGE_XPATH).isVisible();
+		} catch (Exception e) {
+			logger.debug("Deletion failed due to exception", e);
+			return false;
 		}
 	}
 

@@ -206,20 +206,36 @@ public class SetupHooks {
 		return page;
 	}
 
+//	@After("@DeleteCreatedCatalog")
+//	public void deleteCatalog(Scenario scenario) {
+//		final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+//		final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+//		final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+//		final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
+//		boolean isDeleted = CommonUtils.deleteCatalog(page, ACCESS_CONTROL_XPATH, DELETE_BUTTON_XPATH,
+//				CONFIRMATION_POPUP_DELETE_BUTTON_XPATH, DELETE_TOAST_MESSAGE_XPATH);
+//
+//		if (isDeleted) {
+//			logger.info("Catalog deleted successfully after scenario", scenario.getName());
+//		} else {
+//			logger.warn("Failed to delete catalog after scenario", scenario.getName());
+//		}
+//	}
+
+	// new logic catalog
 	@After("@DeleteCreatedCatalog")
 	public void deleteCatalog(Scenario scenario) {
-		final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
-		final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-		final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
-		final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
-		boolean isDeleted = CommonUtils.deleteCatalog(page, ACCESS_CONTROL_XPATH, DELETE_BUTTON_XPATH,
-				CONFIRMATION_POPUP_DELETE_BUTTON_XPATH, DELETE_TOAST_MESSAGE_XPATH);
-
-		if (isDeleted) {
-			logger.info("Catalog deleted successfully after scenario", scenario.getName());
-		} else {
-			logger.warn("Failed to delete catalog after scenario", scenario.getName());
+		CommonUtils storeId = CommonUtils.getInstance();
+		String type = storeId.getType();
+		String id = storeId.getId();
+		if (type != null && id != null) {
+			boolean deleteCatalog = CommonUtils.navigateAndDeleteCatalog(page, type, id);
+			if (deleteCatalog) {
+				logger.info("Deleted catalog: Type = " + type + ", ID = " + id);
+				storeId.clear();
+			} else {
+				logger.warn("Failed to Delete catalog: Type = " + type + ", ID = " + id);
+			}
 		}
 	}
-
 }

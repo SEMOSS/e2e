@@ -156,6 +156,16 @@ public class AddDatabasePageUtils {
 		page.getByText(dbName).click();
 	}
 
+	public static void clickOnDatabaseNameInCatalogAndCopyID(Page page, String dbName, CommonUtils storeID) {
+		page.getByText(dbName).click();
+		page.click(CLICK_ON_COPYICON_XPATH);
+		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+		String key = page.innerText(CATALOG_TYPE_XPATH);
+		String CatalogType = key.trim().split("\\s+")[0];
+		storeID.setId(copiedId);
+		storeID.setType(CatalogType);
+	}
+
 	public static void clickOnMetadataTab(Page page) {
 		CatalogPageUtils.clickOnMetadataTab(page);
 	}
