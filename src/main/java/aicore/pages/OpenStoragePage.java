@@ -81,10 +81,13 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 	public void verifyAsteriskMarkOnFields(String fieldLabels) {
 		StoragePageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
 	}
-
-	public boolean verifyMissingInputField(String fieldName) {
-		return StoragePageUtils.verifyMissingInputField(page, fieldName);
+	public boolean verifyCreateStorageButtonDisabled() {
+		return StoragePageUtils.verifyCreateStorageButtonDisabled(page);
 	}
+
+	public boolean verifyCreateStorageButtonEnabled() {
+		return StoragePageUtils.verifyCreateStorageButtonEnabled(page);
+ 	}
 
 	public boolean verifyFieldIsVisible(String fieldname) {
 		return StoragePageUtils.verifyFieldIsVisible(page, fieldname);
