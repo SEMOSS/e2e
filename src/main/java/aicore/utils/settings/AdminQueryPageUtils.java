@@ -16,8 +16,8 @@ public class AdminQueryPageUtils {
 	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
 
 	public static void selectDatabase(Page page, String databaseName) {
-		Locator databaseDropdown = page.getByRole(AriaRole.BUTTON,
-				new Page.GetByRoleOptions().setName(DATABASE_DROPDOWN_NAME));
+		Locator databaseDropdown = page.locator("label:has-text('" + DATABASE_DROPDOWN_NAME + "')")
+				.locator("xpath=following-sibling::div//div");
 		databaseDropdown.isVisible();
 		databaseDropdown.click();
 		Locator databaseDropdownListOptions = page.getByRole(AriaRole.OPTION,
