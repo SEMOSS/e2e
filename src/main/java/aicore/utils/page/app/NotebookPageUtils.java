@@ -24,7 +24,7 @@ public class NotebookPageUtils {
 	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor textarea.inputarea";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//div[contains(@id,'notebook-cell-actions')]/child::div/span[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
-	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='button']";
+	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
 	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'MuiTable-root')]//tbody//tr[position()>1]//td[2]";
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";

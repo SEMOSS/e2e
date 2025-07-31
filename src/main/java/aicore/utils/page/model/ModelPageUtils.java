@@ -21,8 +21,8 @@ public class ModelPageUtils {
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 
 	public static void clickAddModelButton(Page page) {
-		// TODO switch to data-test-id
-		page.getByLabel("Navigate to import Model").click();
+		page.getByTestId("engine-catalog-add-btn").isVisible();
+		page.getByTestId("engine-catalog-add-btn").click();
 	}
 
 	public static void selectModel(Page page, String modelName) {
