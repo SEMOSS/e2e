@@ -19,7 +19,7 @@ public class CatalogFilterPageUtils {
 		filterValueLocator.click();
 	}
 
-	public static boolean verifyCatalogIsVisbileOnCatalogPage(Page page, String catalogName) {
+	public static boolean verifyCatalogIsVisibleOnCatalogPage(Page page, String catalogName) {
 		boolean isFunctionVisible = page.getByText(CATALOG_NAME.replace("{CatalogName}", catalogName)).isVisible();
 		return isFunctionVisible;
 	}
