@@ -229,7 +229,7 @@ public class DragAndDropBlocksPageUtils {
 			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
 			break;
 		case "Markdown":
-			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			textBlockLocator = page.locator("//div[contains(@data-block,'markdown')]");
 			break;
 		case "Logs":
 			textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
@@ -295,7 +295,7 @@ public class DragAndDropBlocksPageUtils {
 	public static void takeChartScreenshot(Page page, String actualImagePath) {
 		Locator chart = page.locator(CHART_XPATH);
 		Path path = Paths.get(actualImagePath);
-		page.waitForTimeout(2000);
+		page.waitForTimeout(3000);
 		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
 
@@ -358,13 +358,13 @@ public class DragAndDropBlocksPageUtils {
 	public static void clickOnDuplicateIconMultipleTimes(int count, Page page) {
 		for (int i = 0; i < count; i++) {
 			Locator duplicateIcon = page.locator(DUPLICATE_ICON_XPATH); // Step 1: Click on Duplicate icon
-			duplicateIcon.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+			duplicateIcon.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 			duplicateIcon.click();
 			page.waitForTimeout(500); // Step 2: Wait for UI to new chart
 			if (i < count - 1) {
 				Locator firstChart = page.locator(CHART_COUNT_ON_PAGE_XPATH).first();
 
-				firstChart.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+				firstChart.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 				firstChart.click();
 				page.waitForTimeout(300); // slight wait for UI response
 			}
