@@ -13,8 +13,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		this.timestamp = timestamp;
 	}
 
-	public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
-		return AddFunctionPageUtils.verifyFunctionIsVisbileInCatalog(page, functionName);
+	public boolean verifyFunctionIsVisibleInCatalog(String functionName) {
+		return AddFunctionPageUtils.verifyFunctionIsVisibleInCatalog(page, functionName);
 	}
 
 

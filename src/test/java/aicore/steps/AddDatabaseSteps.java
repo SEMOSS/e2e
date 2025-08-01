@@ -87,14 +87,14 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Given("User clicks on the database name {string} in  database catalog")
 	public void User_clicks_on_the_database_name_in_database_catalog(String dbName) {
-		String databaseNameInCatalog = addDatabaseToCatalogPage.verifyDatabaseNameInCatalog(dbName + timestamp);
-		boolean databaseNameFlag = databaseNameInCatalog.contains(dbName + timestamp);
-		Assertions.assertTrue(databaseNameFlag, "Database name is not visible in the database catalog");
+		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName + timestamp);
 	}
 
 	@Given("User sees the database name {string} in database catalog")
 	public void User_sees_the_database_name_in_database_catalog(String dbName) {
-		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName + timestamp);
+		String databaseNameInCatalog = addDatabaseToCatalogPage.verifyDatabaseNameInCatalog(dbName + timestamp);
+		boolean databaseNameFlag = databaseNameInCatalog.contains(dbName + timestamp);
+		Assertions.assertTrue(databaseNameFlag, "Database name is not visible in the database catalog");
 	}
 
 	@Then("User selects database {string}")
@@ -228,12 +228,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Given("User searches the {string} in the database Catalog searchbox")
 	public void user_searches_the_in_the_database_catalog_searchbox(String catalogName) {
-		addDatabaseToCatalogPage.searchFunctionCatalog(catalogName);
+		addDatabaseToCatalogPage.searchDatabaseCatalog(catalogName);
 	}
 
 	@Given("User selects the {string} from the database catalog")
 	public void user_selects_the_from_the_database_catalog(String catalogName) {
-		addDatabaseToCatalogPage.selectFunctionFromSearchOptions(catalogName);
+		addDatabaseToCatalogPage.selectDatabaseFromSearchOptions(catalogName);
 	}
 
 	@When("User clicks on MetaData tab")
