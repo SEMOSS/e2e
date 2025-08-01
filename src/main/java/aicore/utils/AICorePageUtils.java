@@ -37,7 +37,7 @@ public class AICorePageUtils {
 		buttonLocator.scrollIntoViewIfNeeded();
 		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 //		page.locator(NEXT_BUTTON_XPATH).click();
-		buttonLocator.click();
+		buttonLocator.click(); 
 	}
 	
 	public static void waitFor(Locator locator) {

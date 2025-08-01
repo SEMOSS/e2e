@@ -41,4 +41,3 @@ Feature: Create App Drag and Drop - Area chart
     When User can "view" Delete icon on area chart
     And User Click on Delete Icon
     And Area Chart should be Remove from the page
-
