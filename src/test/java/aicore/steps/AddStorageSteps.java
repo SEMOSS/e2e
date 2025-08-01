@@ -146,10 +146,16 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.verifyAsteriskMarkOnFields(requiredFields);
 	}
 
-	@Then("User redirects to the missing {string} input field")
-	public void user_redirects_to_the_missing_input_field(String fieldName) {
-		boolean missingFieldFlag = storagePage.verifyMissingInputField(fieldName);
-		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected " + fieldName);
+	@Then("User sees the Create Storage button disabled")
+	public void user_sees_the_create_storage_button_disabled() {
+		boolean isButtonDisabled = storagePage.verifyCreateStorageButtonDisabled();
+		Assertions.assertTrue(isButtonDisabled, "Create Storage button is not disabled");
+	}
+
+	@Then("User sees the Create Storage button is enabled")
+	public void user_sees_the_create_storage_button_is_enabled() {
+		boolean isButtonEnabled = storagePage.verifyCreateStorageButtonEnabled();
+		Assertions.assertTrue(isButtonEnabled, "Create Storage button is not enabled");
 	}
 
 	@When("User enters value in below fields")
