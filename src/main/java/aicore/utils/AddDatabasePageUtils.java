@@ -46,6 +46,8 @@ public class AddDatabasePageUtils {
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
+	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
+	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -156,14 +158,19 @@ public class AddDatabasePageUtils {
 		page.getByText(dbName).click();
 	}
 
-	public static void clickOnDatabaseNameInCatalogAndCopyID(Page page, String dbName, CommonUtils storeID) {
+	public static boolean clickOnDatabaseNameInCatalogAndCopyID(Page page, String dbName) {
 		page.getByText(dbName).click();
-		page.click(CLICK_ON_COPYICON_XPATH);
+		page.getByTestId(CLICK_ON_COPYICON_DATATESTID).click();
+		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
+		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		boolean isToastVisible = toastMessage.isVisible();
+
 		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
 		String key = page.innerText(CATALOG_TYPE_XPATH);
 		String CatalogType = key.trim().split("\\s+")[0];
-		storeID.setId(copiedId);
-		storeID.setType(CatalogType);
+		TestResourceTrackerHelper.getInstance().setCatalogId(CatalogType, copiedId);
+
+		return isToastVisible;
 	}
 
 	public static void clickOnMetadataTab(Page page) {

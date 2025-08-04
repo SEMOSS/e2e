@@ -38,12 +38,15 @@ import com.microsoft.playwright.options.BoundingBox;
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
-	private static final CommonUtils instance = new CommonUtils();
-	private String catalogType;
-	private String id;
 
-	private CommonUtils() {
-	}
+	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
+	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "MenuOpenRoundedIcon";
+	private static final String SEARCH_CATALOG_LABEL = "Search";
+	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
+	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
@@ -252,62 +255,30 @@ public class CommonUtils {
 		}
 	}
 
-	// new logic vatalog
-	public static CommonUtils getInstance() {
-		return instance;
-	}
-
-	public String getType() {
-		return catalogType;
-	}
-
-	public void setType(String catalogType) {
-		this.catalogType = catalogType;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void clear() {
-		this.catalogType = null;
-		this.id = null;
-	}
-
 	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
 		try {
-			page.locator(MENU_ICON).click();
-			switch (catalogType) {
-			case "Database":
-				HomePageUtils.clickOnOpenDatabase(page);
-				break;
-			case "Model":
-				HomePageUtils.clickOnOpenModel(page);
-				break;
-			case "Vector":
-				HomePageUtils.clickOnOpenVector(page);
-				break;
-			case "Function":
-				HomePageUtils.clickOnOpenFunction(page);
-				break;
-			case "Storage":
-				HomePageUtils.clickOnOpenStorage(page);
-				break;
-			default:
-				throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
+			Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
+			if (!menuOpen.isVisible()) {
+				Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
+				locator.click();
+				menuOpen.click();
 			}
-			page.getByLabel(SEARCH_CATALOG).fill(catalogId);
-			page.locator(CLICK_ON_CATALOG).click();
+			switch (catalogType) {
+			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
+			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
+			}
+			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
+			page.locator(CLICK_ON_CATALOG_XPATH).click();
 			page.locator(ACCESS_CONTROL_XPATH).click();
 			page.locator(DELETE_BUTTON_XPATH).click();
 			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			return page.locator(DELETE_TOAST_MESSAGE_XPATH).isVisible();
 		} catch (Exception e) {
-			logger.debug("Deletion failed due to exception", e);
+			logger.warn("Catalog deletion failed due to an exception", e);
 			return false;
 		}
 	}

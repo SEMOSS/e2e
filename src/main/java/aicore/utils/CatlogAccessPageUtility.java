@@ -14,7 +14,7 @@ public class CatlogAccessPageUtility {
 	// new database catalog
 	private static final String VIEW_ACCESSCONTROL_Text = "Access Control";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
-	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//div[@class='css-1hk1ec8']//div[@class='css-70qvj9']";
+	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//button[@type='button']//*[@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
 
@@ -52,6 +52,7 @@ public class CatlogAccessPageUtility {
 	public static boolean canViewAccessControl(Page page) {
 		return page.getByText(VIEW_ACCESSCONTROL_Text).isVisible();
 		// return page.isVisible(VIEW_ACCESSCONTROL_TAB_XPATH);
+
 	}
 
 	// new
