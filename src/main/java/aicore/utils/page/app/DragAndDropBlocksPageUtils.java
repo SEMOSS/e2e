@@ -358,7 +358,7 @@ public class DragAndDropBlocksPageUtils {
 	public static void clickOnDuplicateIconMultipleTimes(int count, Page page) {
 		for (int i = 0; i < count; i++) {
 			Locator duplicateIcon = page.locator(DUPLICATE_ICON_XPATH); // Step 1: Click on Duplicate icon
-			duplicateIcon.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+			duplicateIcon.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 			duplicateIcon.click();
 			page.waitForTimeout(500); // Step 2: Wait for UI to new chart
 			if (i < count - 1) {

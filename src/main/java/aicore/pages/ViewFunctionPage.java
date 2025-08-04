@@ -12,7 +12,7 @@ public class ViewFunctionPage {
 	private static final String DATE_LAST_UPDATED_XPATH = "//p[text()='{DateLastUpdated}']";
 	private static final String MARKUP_FUNCTION_XPATH = "//div[text()='{MarkupFunction}']";
 	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='{ChangeAccessButton}']";
-	private static final String USAGE_TAB_XPATH = "//button[text()='{UsageTab}']//span";
+	private static final String USAGE_TAB_XPATH = "//button[text()='{UsageTab}']";
 	private static final String USAGE_INSTRUCTIONS_SECTION_XPATH = "//h6[text()='{UsageInstructionsSection}']";
 
 	public ViewFunctionPage(Page page) {
@@ -44,7 +44,7 @@ public class ViewFunctionPage {
 	}
 
 	public void clickUsageTab(String usageTab) {
-		page.getByText(USAGE_TAB_XPATH.replace("{UsageTab}", usageTab)).isVisible();
+		page.locator(USAGE_TAB_XPATH.replace("{UsageTab}", usageTab)).isVisible();
 		page.locator(USAGE_TAB_XPATH.replace("{UsageTab}", usageTab)).click();
 	}
 
