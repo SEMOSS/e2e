@@ -83,6 +83,10 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.enterFunctionDescription(page, functionDescription);
 	}
 
+	public boolean verifyCreateFunctionButtonDisabled() {
+		return AddFunctionPageUtils.verifyCreateFunctionButtonDisabled(page);
+	}
+
 	public void selectFunctionType(String functionType) {
 		AddFunctionPageUtils.selectFunctionType(page, functionType);
 	}

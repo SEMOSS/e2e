@@ -18,7 +18,7 @@ public class AddFunctionSteps {
 
 	public AddFunctionSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName().substring(0, 5);
+		timestamp = CommonUtils.getTimeStampName();
 		addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 
@@ -104,6 +104,12 @@ public class AddFunctionSteps {
 	@And("User enters Function description as {string}")
 	public void user_enters_function_description_as(String functionDescription) {
 		addFunctionToCatalogPage.enterFunctionDescription(functionDescription);
+	}
+
+	@Then("User sees the Create function button is disabled")
+	public void user_sees_the_create_function_button_disabled() {
+		boolean isButtonDisabled = addFunctionToCatalogPage.verifyCreateFunctionButtonDisabled();
+		Assertions.assertTrue(isButtonDisabled, "Create Function button is not disabled");
 	}
 
 	@Then("User sees Create Function button")
