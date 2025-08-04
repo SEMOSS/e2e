@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class HomePageUtils {
 
@@ -15,24 +16,24 @@ public class HomePageUtils {
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "MenuOpenRoundedIcon";
-	public static final String APP_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Apps')";
-	public static final String DATABASE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Database')";
-
+	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "CloseIcon";
+//	public static final String APP_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Apps')";
+//	public static final String DATABASE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Database')";
+	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
+	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	// TODO this changed for now need to use data test id
-	public static final String FUNCTION_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Function')";
-	private static final String OPEN_FUNCTION_DATA_TEST_ID_VALUE = "Function-icon";
-
-	public static final String MODEL_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Model')";
-	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
-
-	public static final String STORAGE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Storage')";
-	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
-
-	public static final String VECTOR_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Vector')";
-
-	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='TokenRoundedIcon']";
-
+//	public static final String FUNCTION_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Function')";
+//	private static final String OPEN_FUNCTION_DATA_TEST_ID_VALUE = "Function-icon";
+	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
+//	public static final String MODEL_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Model')";
+//	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
+	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
+//	public static final String STORAGE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Storage')";
+//	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
+	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
+//	public static final String VECTOR_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Vector')";
+//	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='TokenRoundedIcon']";
+	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='SettingsIcon']";
@@ -66,9 +67,10 @@ public class HomePageUtils {
 		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
 		if (!menuOpen.isVisible()) {
 			Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
+			locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 			locator.click();
 
-			menuOpen.click();
+			// menuOpen.click();
 		}
 	}
 
@@ -100,7 +102,7 @@ public class HomePageUtils {
 	public static void clickOnOpenFunction(Page page) {
 		// TODO change back to id once fe is fixed
 //		Locator locator = page.getByTestId(OPEN_FUNCTION_DATA_TEST_ID_VALUE);
-		Locator locator = page.locator(FUNCTION_MENU_BUTTON_LABEL);
+		Locator locator = page.locator(FUNCTION_MENU_BUTTON_XPATH);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
@@ -110,22 +112,22 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenModel(Page page) {
-		page.click(MODEL_MENU_BUTTON_LABEL);
+		page.click(MODEL_MENU_BUTTON_XPATH);
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenStorage(Page page) {
-		page.click(STORAGE_MENU_BUTTON_LABEL);
+		page.click(STORAGE_MENU_BUTTON_XPATH);
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenVector(Page page) {
-		page.click(VECTOR_MENU_BUTTON_LABEL);
+		page.click(VECTOR_MENU_BUTTON_XPATH);
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
-		Locator locator = page.locator(APP_MENU_BUTTON_LABEL);
+		Locator locator = page.locator(APP_MENU_BUTTON_XPATH);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
@@ -154,7 +156,7 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenDatabase(Page page) {
-		Locator locator = page.locator(DATABASE_MENU_BUTTON_LABEL);
+		Locator locator = page.locator(DATABASE_MENU_BUTTON_XPATH);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}

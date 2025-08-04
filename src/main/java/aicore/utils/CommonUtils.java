@@ -257,12 +257,8 @@ public class CommonUtils {
 
 	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
 		try {
-			Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
-			if (!menuOpen.isVisible()) {
-				Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
-				locator.click();
-				menuOpen.click();
-			}
+			page.getByTestId(SEMOSS_MENU_DATA_TESID).click();
+			// HomePageUtils.openMainMenu(page);
 			switch (catalogType) {
 			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
 			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);

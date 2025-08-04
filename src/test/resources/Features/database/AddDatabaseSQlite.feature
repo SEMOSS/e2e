@@ -11,7 +11,7 @@ Feature: Add SQLITE Database
     And User clicks on apply button
     And User clicks on apply database button
     Then User can see the database title as 'SqliteDB'
-
+    
   #@LoginWithAdmin @DeleteCreatedCatalog
   #Scenario: Verify Sqlite database
     #Given User opens Main Menu
