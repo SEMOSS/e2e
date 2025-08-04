@@ -56,8 +56,8 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 	}
 
-	public boolean verifyDatabaseIsVisbileInCatalog(String dbName) {
-		return AddDatabasePageUtils.verifyDatabaseIsVisbileInCatalog(page, dbName);
+	public boolean verifyDatabaseIsVisibleInCatalog(String dbName) {
+		return AddDatabasePageUtils.verifyDatabaseIsVisibleInCatalog(page, dbName);
 	}
 
 	public void clickOnCopyID(String dbName) {
@@ -108,12 +108,12 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickOnEditButton(page);
 	}
 
-	public void searchFunctionCatalog(String catalogName) {
-		AddDatabasePageUtils.searchFunctionCatalog(page, catalogName);
+	public void searchDatabaseCatalog(String catalogName) {
+		AddDatabasePageUtils.searchDatabaseCatalog(page, catalogName);
 	}
 
-	public void selectFunctionFromSearchOptions(String catalogName) {
-		AddDatabasePageUtils.selectFunctionFromSearchOptions(page, catalogName);
+	public void selectDatabaseFromSearchOptions(String catalogName) {
+		AddDatabasePageUtils.selectDatabaseFromSearchOptions(page, catalogName);
 	}
 
 	public void clickDatabase(String databaseName) {

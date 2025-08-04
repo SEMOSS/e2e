@@ -211,7 +211,7 @@ public class AddFunctionPageUtils {
 		return missingFieldClass.contains("Mui-focused");
 	}
 
-	public static boolean verifyFunctionIsVisbileInCatalog(Page page, String functionName) {
+	public static boolean verifyFunctionIsVisibleInCatalog(Page page, String functionName) {
 		boolean isFunctionVisible = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
 				.isVisible();
 		return isFunctionVisible;
