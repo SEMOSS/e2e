@@ -35,8 +35,8 @@ public class AddDatabasePageUtils {
 	private static final String EXPORT_BTN_XPATH = "Export";
 	private static final String EDIT_POPUP_XPATH = "//div[contains(text(),\"Edit\")]";
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
-	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//label//following-sibling::div//input[contains(@id ,'generated-id-')]";
-	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
+	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH = "//label//following-sibling::div//input[contains(@id ,'generated-id-')]";
+	private static final String SEARCHED_DATABASE_XPATH = "//p[text()='{catalogName}']";
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
@@ -191,9 +191,9 @@ public class AddDatabasePageUtils {
 		}
 	}
 
-	public static boolean verifyDatabaseIsVisbileInCatalog(Page page, String dbName) {
-		boolean isFunctionVisible = page.getByText(dbName).isVisible();
-		return isFunctionVisible;
+	public static boolean verifyDatabaseIsVisibleInCatalog(Page page, String dbName) {
+		boolean isDatabaseVisible = page.getByText(dbName).isVisible();
+		return isDatabaseVisible;
 	}
 
 	public static void clickOnCopyID(Page page, String catalogName) {
@@ -274,15 +274,15 @@ public class AddDatabasePageUtils {
 
 	}
 
-	public static void searchFunctionCatalog(Page page, String catalogName) {
-		page.waitForSelector(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH);
-		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
+	public static void searchDatabaseCatalog(Page page, String catalogName) {
+		page.waitForSelector(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
+		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
 	}
 
-	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
-		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
-		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
+	public static void selectDatabaseFromSearchOptions(Page page, String catalogName) {
+		page.locator((SEARCHED_DATABASE_XPATH.replace("{catalogName}", catalogName))).isVisible();
+		page.locator(SEARCHED_DATABASE_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void clickDatabase(Page page, String databaseName) {

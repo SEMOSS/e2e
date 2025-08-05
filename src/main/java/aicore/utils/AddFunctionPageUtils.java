@@ -112,6 +112,11 @@ public class AddFunctionPageUtils {
 		page.getByTestId(FUNCTION_TYPE).fill(functionType);
 	}
 
+	public static boolean verifyCreateFunctionButtonDisabled(Page page) {
+		return page.getByText(CREATE_FUNCTION_BUTTON).isDisabled();
+	}
+
+
 	public static void enterFunctionRequiredParameters(Page page, String functionRequiredParameters) {
 		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).click();
 		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).fill(functionRequiredParameters);
@@ -211,7 +216,7 @@ public class AddFunctionPageUtils {
 		return missingFieldClass.contains("Mui-focused");
 	}
 
-	public static boolean verifyFunctionIsVisbileInCatalog(Page page, String functionName) {
+	public static boolean verifyFunctionIsVisibleInCatalog(Page page, String functionName) {
 		boolean isFunctionVisible = page.getByText(CATALOG_FUNCTION.replace("{FunctionName}", functionName))
 				.isVisible();
 		return isFunctionVisible;
