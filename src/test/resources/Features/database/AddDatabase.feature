@@ -33,7 +33,7 @@ Feature: Add Database
 
   @LoginWithAdmin @DeleteCreatedDatabaseCatalog
   Scenario: View Database Overview
-    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
+    Given User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
     And User sees the database name as 'TestDatabase'
     And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
@@ -50,7 +50,6 @@ Feature: Add Database
     #And User can see last updated info
     And User clicks on Export button that creates a Zip of DB when clicked
     And User sees an Edit button that opens a pop-up to edit
-    # used to close edit modal
     And User clicks on Close button
 
   @LoginWithAdmin @DeleteCreatedDatabaseCatalog

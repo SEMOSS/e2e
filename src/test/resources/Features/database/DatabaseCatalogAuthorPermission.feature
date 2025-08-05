@@ -16,42 +16,41 @@ Feature: Database Catalog permissions for Author
   @DeleteCreatedDatabaseCatalog
   Scenario: Database Catalog - Author - View Overview,Metadata,Usage,Access Control,SMSS deatils
     Then 'Author' user can 'View' Overview
-    Then 'Author' user can 'View' Metadata
-    Then 'Author' user can 'View' Usage
-    Then 'Author' user can 'View' Access Control
-    Then 'Author' user can 'View' SMSS Details
+    And 'Author' user can 'View' Metadata
+    And 'Author' user can 'View' Usage
+    And 'Author' user can 'View' Access Control
+    And 'Author' user can 'View' SMSS Details
 
-  #@DeleteCreatedDatabaseCatalog
-  #Scenario: Database Catalog - Author - View Edit SMSS
-    #And 'Author' user clicks on Access Control
-    #And User clicks on SMSS
-    #Then 'Author' user can 'View' Edit SMSS
+  @DeleteCreatedDatabaseCatalog
+  Scenario: Database Catalog - Author - View Edit SMSS
+    And User clicks on SMSS
+    Then 'Author' user can 'View' Edit SMSS
 
-  #@DeleteCreatedDatabaseCatalog
-  #Scenario: Database Catalog - Author - View Member setting
-    #And 'Author' user clicks on Access Control
-    #Then 'Author' user 'can' see Member Setting
-#
-  #@DeleteCreatedDatabaseCatalog
-  #Scenario: Database Catalog - Author - Add and Delete editor Member
-    #And 'Author' user clicks on Access Control
-    #And User clicks on Add Member button
-    #And User adds one user and assigns them as 'Editor'
-    #And User Search 'Editor' user from Access Control
-    #And User deletes the 'Editor' user
-#
-  #@DeleteCreatedDatabaseCatalog
-  #Scenario: Database Catalog - Author - Add and Delete read Member
-    #And 'Author' user clicks on Access Control
-    #And User clicks on Add Member button
-    #And User adds one user and assigns them as 'Read'
-    #And User Search 'Read' user from Access Control
-    #And User deletes the 'Read' user
-#
-  #@DeleteCreatedDatabaseCatalog
-  #Scenario: Database Catalog-Autor-View Export button
-    #Then 'Author' user can 'view' export button
-#
-  #Scenario: Database Catalog - Author - Delete Model
-    #And 'Author' user clicks on Access Control
-    #Then 'Author' user 'can' Delete Model
+  @DeleteCreatedDatabaseCatalog
+  Scenario: Database Catalog - Author - View Member setting
+    And 'Author' user clicks on Access Control
+    Then 'Author' user 'can' see Member Setting
+
+  @DeleteCreatedDatabaseCatalog
+  Scenario: Database Catalog - Author - Add and Delete editor Member
+    And 'Author' user clicks on Access Control
+    Then User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User Search 'Editor' user from Access Control
+    And User deletes the 'Editor' user
+
+  @DeleteCreatedDatabaseCatalog
+  Scenario: Database Catalog - Author - Add and Delete read Member
+    And 'Author' user clicks on Access Control
+    Then User clicks on Add Member button
+    And User adds one user and assigns them as 'Read'
+    And User Search 'Read' user from Access Control
+    And User deletes the 'Read' user
+
+  @DeleteCreatedDatabaseCatalog
+  Scenario: Database Catalog-Autor-View Export button
+    Then 'Author' user can 'view' export button
+
+  Scenario: Database Catalog - Author - Delete Model
+    And 'Author' user clicks on Access Control
+    Then 'Author' user 'can' Delete Model

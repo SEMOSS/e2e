@@ -164,12 +164,10 @@ public class AddDatabasePageUtils {
 		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
 		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		boolean isToastVisible = toastMessage.isVisible();
-
 		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
 		String key = page.innerText(CATALOG_TYPE_XPATH);
 		String CatalogType = key.trim().split("\\s+")[0];
 		TestResourceTrackerHelper.getInstance().setCatalogId(CatalogType, copiedId);
-
 		return isToastVisible;
 	}
 

@@ -257,8 +257,7 @@ public class CommonUtils {
 
 	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
 		try {
-			page.getByTestId(SEMOSS_MENU_DATA_TESID).click();
-			// HomePageUtils.openMainMenu(page);
+			HomePageUtils.openMainMenu(page);
 			switch (catalogType) {
 			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
 			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);

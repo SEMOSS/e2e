@@ -98,4 +98,9 @@ public class CatlogPermissionsPage {
 	public boolean canSeeSettingOtion() {
 		return CatlogAccessPageUtility.canSeeSettingOption(page);
 	}
+
+	public String editorUserSeeToastMessageText() {
+		return CatlogAccessPageUtility.editorUserSeeToastMessageText(page);
+
+	}
 }

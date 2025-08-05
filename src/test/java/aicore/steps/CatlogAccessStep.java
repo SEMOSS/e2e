@@ -156,6 +156,15 @@ public class CatlogAccessStep {
 		}
 	}
 
+	@Then("{string} user clicks on delete button and see the permission error toast message")
+	public void userClicksDeleteAndVerifiesToast(String userRole) {
+		openModelPage.clickOnDeleteButton();
+		String toastText = catlogpermission.editorUserSeeToastMessageText();
+		Assertions.assertTrue(toastText.contains(
+				"user does not have permissions to delete the engine. User must be the owner to perform this function."),
+				userRole + "Expected toast message not found. Actual message: " + toastText);
+	}
+
 	@Then("{string} user {string} see Member Setting")
 	public void user_see_member_setting(String userRole, String expectedOutcome) {
 		boolean isButtonVisible = openModelPage.isAddMemberButtonVisible();
