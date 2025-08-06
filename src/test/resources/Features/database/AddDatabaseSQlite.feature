@@ -6,7 +6,8 @@ Feature: Add SQLITE Database
     And User clicks on Add Database
     And User selects database 'SQLITE' from connection types
     And User enters 'SqliteDB' as Catalog Name
-    And User Upload 'sqlite.db' as Host Name
+    And User Upload 'localhost' as Host Name
+    And User add 'sqlite.db' as JDBC URL for 'sqlite' database
     And User clicks on Create Database button
     And User clicks on apply button
     And User clicks on apply database button
