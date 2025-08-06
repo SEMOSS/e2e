@@ -43,6 +43,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String VECTOR_TAGS_XPATH = "//h6[text()='Tag']/../../..//div//div//span[text()='{tagName}']";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
 	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
+	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[text()='Discoverable Vectors']";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -228,4 +229,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 			throw new AssertionError("Updated At does not match the current date: " + currentDate);
 		}
 	}
-};
+	public void clickOnDiscoverableVectorsButton() {
+		page.locator(DISCOVERABLE_VECTORS_XPATH).click();
+	}
+}

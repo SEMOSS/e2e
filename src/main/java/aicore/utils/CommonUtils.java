@@ -245,5 +245,21 @@ public class CommonUtils {
 			throw new RuntimeException("Failed to read text from clipboard", e);
 		}
 	}
+	
+	public static boolean getVersion(Page page) {
+		HomePageUtils.openMainMenu(page);
+		page.getByTestId("AccountCircleRoundedIcon").click();
+		String version = CaptureScreenShotUtils.versionCapture(page);
+		
+		logger.info("Version obtained: {}", version);
+		logger.info("Current version: {}", ConfigUtils.getValue("current_version"));
+		if (version.equals(ConfigUtils.getValue("current_version"))) {
+			logger.info("Version match: {}", version);
+			return true;
+		} else {
+			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue("current_version"), version);
+        return false;
+    }
+	}
 
 }

@@ -349,4 +349,8 @@ public class AddModelPage {
 	public String getFullSectionCodeByHeading(String headingText) {
 		return SettingsModelPageUtils.getFullSectionCodeByHeading(page, headingText);
 	}
+
+	public void clickOnDiscoverableModelsButton() {
+		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
+	}
 }

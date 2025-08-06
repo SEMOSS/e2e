@@ -32,7 +32,7 @@ public class AddFunctionPageUtils {
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
-	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make Function discoverable']/child::input[@type='checkbox']";
+	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make {catalogName} discoverable']/child::input[@type='checkbox']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
@@ -244,9 +244,10 @@ public class AddFunctionPageUtils {
 //		filterValueLocator.click();
 //	}
 
-	public static void clickOnMakeDiscoverableButton(Page page) {
-		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).isVisible();
-		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).click();
+	
+	public static void clickOnMakeDiscoverableButton(Page page, String catalogName) {
+		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH.replace("{catalogName}", catalogName)).isVisible();
+		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void clickOnDiscoverableFunctionsbutton(Page page) {

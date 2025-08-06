@@ -16,6 +16,9 @@ public class SettingsAdminQueryPage {
 	public void selectDatabase(String databaseName) {
 		AdminQueryPageUtils.selectDatabase(page, databaseName);
 	}
+	public void clickOnSelectDatabase() {
+		AdminQueryPageUtils.clickOnSelectDatabase(page);
+	}
 
 	public void enterQuery(String query) {
 		AdminQueryPageUtils.enterQuery(page, query);

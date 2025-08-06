@@ -8,7 +8,7 @@ public class ChangeAccessPopUpPageUtils {
 	private static final String READONLY_OPTION_XPATH = "//div[contains(@class,'MuiCardHeader-content')]//div[contains(., 'Read-Only')]/ancestor::div[contains(@class,'MuiCard-root')]//input[@type='radio']";
 	private static final String COMMENT_BOX_XPATH = "//textarea[not(@aria-hidden) and not(@readonly)]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[contains(., 'Cancel')]";
-	private static final String REQUEST_BUTTON_XPATH = "//button[contains(., 'Request')]";
+	private static final String REQUEST_BUTTON_XPATH = "//span[text()= 'Request']";
 	private static final String CHANGE_ACCESS_POPUP_XPATH = "//h2[text()='Change Access']";
 	private static final String REQUEST_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'Successfully requested access to engine')]";
 
