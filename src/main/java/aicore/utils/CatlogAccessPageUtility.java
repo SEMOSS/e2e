@@ -2,6 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class CatlogAccessPageUtility {
 
@@ -17,7 +18,8 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//button[@type='button']//*[@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
-
+	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//*[name()='svg' and @data-testid='ErrorOutlineIcon']/ancestor::div[contains(@class, 'MuiAlert-root')]//div[contains(@class, 'MuiAlert-message')]";
+	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
 	// create app variable declaration
 	private static final String CLICK_ON_SETTINGS_XPATH = "//div[@data-layout-path='/border/bottom/tb0']";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
@@ -52,6 +54,7 @@ public class CatlogAccessPageUtility {
 	public static boolean canViewAccessControl(Page page) {
 		return page.getByText(VIEW_ACCESSCONTROL_Text).isVisible();
 		// return page.isVisible(VIEW_ACCESSCONTROL_TAB_XPATH);
+
 	}
 
 	// new
@@ -160,5 +163,13 @@ public class CatlogAccessPageUtility {
 
 	public static boolean canSeeSettingOption(Page page) {
 		return page.locator(CLICK_ON_SETTINGS_XPATH).isVisible();
+	}
+
+	public static String editorUserSeeToastMessageText(Page page) {
+		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).innerText();
+		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
+		return toasterMessage;
 	}
 }

@@ -133,6 +133,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.clickOnDatabaseNameInCatalog(dbName);
 	}
 
+	@And("User clicks on the database name {string} in the database catalog and Copy ID")
+	public void user_clicks_the_database_name_in_the_database_catalog_And_Copy_ID(String dbName) {
+		boolean isVisiable = addDatabaseToCatalogPage.clickOnDatabaseNameInCatalogAndCopyID(dbName);
+		Assertions.assertTrue(isVisiable, "Successfully copied ID' toast was not visible after clicking copy icon.");
+	}
+
 	@When("User clicks on Usage tab for Database")
 	public void user_clicks_on_usage_tab_for_database() {
 		viewUsagePage.clickOnUsageTab();

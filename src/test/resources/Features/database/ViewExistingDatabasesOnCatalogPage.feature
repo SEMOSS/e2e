@@ -1,14 +1,14 @@
 Feature: View existing databases on database catalog page
 
   Background: Create and edit database
-   Given User opens Main Menu
+    Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'
@@ -17,7 +17,7 @@ Feature: View existing databases on database catalog page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
     And User clicks on Open Database
@@ -33,4 +33,4 @@ Feature: View existing databases on database catalog page
     When User clicks on bookmark button of 'TestDatabase' database
     Then User sees the database name 'TestDatabase' in the Bookmarked section
     When User clicks on bookmark button to unbookmark 'TestDatabase' database
-    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID

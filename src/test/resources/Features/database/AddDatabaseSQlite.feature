@@ -19,3 +19,5 @@ Feature: Add SQLITE Database
     And User searches the 'SqliteDB' in the database Catalog searchbox
     Then User sees the database name 'SqliteDB' in database catalog
     And User clicks on the database name 'SqliteDB' in  database catalog
+
+  

@@ -20,6 +20,7 @@ import aicore.base.GenericSetupUtils;
 import aicore.base.RunInfo;
 import aicore.utils.CommonUtils;
 import aicore.utils.ConfigUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.UrlUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
@@ -219,6 +220,32 @@ public class SetupHooks {
 			logger.info("Catalog deleted successfully after scenario", scenario.getName());
 		} else {
 			logger.warn("Failed to delete catalog after scenario", scenario.getName());
+		}
+	}
+
+	@After("@DeleteCreatedDatabaseCatalog")
+	public void deleteCatalogDatabase(Scenario scenario) {
+		String scenarioName = scenario.getName();
+		try {
+			TestResourceTrackerHelper tracker = TestResourceTrackerHelper.getInstance();
+			for (String type : TestResourceTrackerHelper.CATALOG_TYPES) {
+				String id = tracker.getCatalogId(type);
+				if (id != null && !id.isBlank()) {
+					boolean deleteCatalog = CommonUtils.navigateAndDeleteCatalog(page, type, id);
+					if (deleteCatalog) {
+						logger.info("Scenario Name: " + scenarioName + " : Catalog deleted successfully. Type: " + type
+								+ ", ID: " + id);
+					} else {
+						logger.warn("Scenario Name: " + scenarioName + " : Failed to Delete catalog: Type: " + type
+								+ ", ID = " + id);
+					}
+					break;
+				} else {
+					logger.warn("Scenario Name: " + scenarioName + " : Catalog ID not available for Type: " + type);
+				}
+			}
+		} finally {
+			TestResourceTrackerHelper.getInstance().clearCatalogResources();
 		}
 	}
 
