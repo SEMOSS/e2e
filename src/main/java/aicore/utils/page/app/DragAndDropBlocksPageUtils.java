@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.CommonUtils;
@@ -280,7 +281,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void navigateToPreviosPage(Page page) {
-		page.goBack(new Page.GoBackOptions().setTimeout(5000));
+		page.goBack();
+		page.waitForLoadState(LoadState.LOAD);
 	}
 
 	public static void selectPage(Page page, String pageName) {
@@ -381,6 +383,7 @@ public class DragAndDropBlocksPageUtils {
 
 	public static List<String> checkDataGridColumnNamesOnUI(Page page) {
 		Locator columnNames = page.locator(COLUMN_HEADERS_XPATH);
+		columnNames.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return columnNames.allTextContents();
 	}
 

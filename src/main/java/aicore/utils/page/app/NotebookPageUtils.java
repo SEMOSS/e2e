@@ -250,12 +250,15 @@ public class NotebookPageUtils {
 		}
 	}
 
-	public static boolean writeQuery(Page page, String query) {
-		page.locator(QUERY_INPUT_FIELD_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(QUERY_INPUT_FIELD_XPATH).clear();
-		page.locator(QUERY_INPUT_FIELD_XPATH).fill(query);
-		return true;
+	public static void writeQuery(Page page, String query) {
+		Locator editor = page.locator(".monaco-editor");
+		editor.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		editor.click();
+		Locator inputField = page.locator(CODE_ENTER_TEXTAREA);
+		inputField.focus();
+		page.keyboard().press("Control+A");
+		page.keyboard().press("Backspace");
+		inputField.pressSequentially(query);
 	}
 
 	public static boolean validateQuery(Page page, String age, String bp) {
