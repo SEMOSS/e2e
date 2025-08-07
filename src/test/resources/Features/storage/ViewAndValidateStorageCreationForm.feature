@@ -32,22 +32,25 @@ Feature: Validate storage creation form
       | Catalog Name |             |
       | Region       | India       |
       | Bucket       | BucketTest  |
-    When User clicks on Create Storage button
-    Then User redirects to the missing 'Catalog Name' input field
+    When User sees the Create Storage button disabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
       | Region       |                   |
       | Bucket       | BucketTest        |
-    When User clicks on Create Storage button
-    Then User redirects to the missing 'Region' input field
+    When User sees the Create Storage button disabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
       | Region       | India             |
       | Bucket       |                   |
-    When User clicks on Create Storage button
-    Then User redirects to the missing 'Bucket' input field
+    When User sees the Create Storage button disabled
+    When User enters value in below fields
+      | FIELD_NAME   | FIELD_VALUE       |
+      | Catalog Name | Amazon S3 Storage |
+      | Region       | India             |
+      | Bucket       | BucketTest        |
+    When User sees the Create Storage button is enabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |

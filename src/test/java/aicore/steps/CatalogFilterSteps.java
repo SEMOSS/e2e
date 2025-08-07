@@ -41,7 +41,7 @@ public class CatalogFilterSteps {
 			for (String filterValue : filterValuesArray) {
 				catalogFilterPage.searchFilterValue(filterValue);
 				catalogFilterPage.selectFilterValue(filterCategory, filterValue);
-				boolean isFunctionVisible = catalogFilterPage.verifyCatalogIsVisbileOnCatalogPage(catalogName);
+				boolean isFunctionVisible = catalogFilterPage.verifyCatalogIsVisibleOnCatalogPage(catalogName);
 				Assertions.assertTrue(isFunctionVisible, "Function is not present in the function catalog for " + " ' "
 						+ filterValue + " ' " + " filter value");
 				// To de-select selected filter we again call this method

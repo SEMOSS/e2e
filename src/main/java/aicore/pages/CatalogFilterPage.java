@@ -19,7 +19,7 @@ public class CatalogFilterPage {
 		CatalogFilterPageUtils.selectFilterValue(page, filterCategory, filterValue);
 	}
 
-	public boolean verifyCatalogIsVisbileOnCatalogPage(String catalogName) {
-		return CatalogFilterPageUtils.verifyCatalogIsVisbileOnCatalogPage(page, catalogName);
+	public boolean verifyCatalogIsVisibleOnCatalogPage(String catalogName) {
+		return CatalogFilterPageUtils.verifyCatalogIsVisibleOnCatalogPage(page, catalogName);
 	}
 }
