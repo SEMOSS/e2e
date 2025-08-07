@@ -45,7 +45,6 @@ Scenario: Create a Function
   And User login as 'admin'
   And User opens Main Menu    
   And User clicks on Open Function
-  And User clicks on Discoverable button
   Then User sees the function name 'TestFunction' in the function catalog
   And User clicks on the function name 'TestFunction' in the function catalog
   And User completes screenshot capture and triggers comparison for 'Function Catalog'
