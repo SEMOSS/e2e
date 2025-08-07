@@ -39,8 +39,6 @@ public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
-	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "MenuOpenRoundedIcon";
 	private static final String SEARCH_CATALOG_LABEL = "Search";
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
@@ -267,6 +265,7 @@ public class CommonUtils {
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
+			page.waitForTimeout(500);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
 			page.locator(ACCESS_CONTROL_XPATH).click();
 			page.locator(DELETE_BUTTON_XPATH).click();

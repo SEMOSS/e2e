@@ -36,4 +36,8 @@ public final class TestResourceTrackerHelper {
 		testCatalogResources.clear();
 	}
 
+	public Map<String, String> getCatalogType() {
+		return new HashMap<>(testCatalogResources);
+	}
+
 }
