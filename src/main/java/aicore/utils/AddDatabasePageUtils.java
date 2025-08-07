@@ -158,19 +158,6 @@ public class AddDatabasePageUtils {
 		page.getByText(dbName).click();
 	}
 
-	public static boolean clickOnDatabaseNameInCatalogAndCopyID(Page page, String dbName) {
-		page.getByText(dbName).click();
-		page.getByTestId(CLICK_ON_COPYICON_DATATESTID).click();
-		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
-		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		boolean isToastVisible = toastMessage.isVisible();
-		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
-		String key = page.innerText(CATALOG_TYPE_XPATH);
-		String CatalogType = key.trim().split("\\s+")[0];
-		TestResourceTrackerHelper.getInstance().setCatalogId(CatalogType, copiedId);
-		return isToastVisible;
-	}
-
 	public static void clickOnMetadataTab(Page page) {
 		CatalogPageUtils.clickOnMetadataTab(page);
 	}

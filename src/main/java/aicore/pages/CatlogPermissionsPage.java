@@ -101,6 +101,9 @@ public class CatlogPermissionsPage {
 
 	public String editorUserSeeToastMessageText() {
 		return CatlogAccessPageUtility.editorUserSeeToastMessageText(page);
+	}
 
+	public boolean getCatalogAndCopyId() {
+		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
 	}
 }

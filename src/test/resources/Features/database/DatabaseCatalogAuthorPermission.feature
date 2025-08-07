@@ -11,7 +11,8 @@ Feature: Database Catalog permissions for Author
     And User opens Main Menu
     And User clicks on Open Database
     Then User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
 
   @DeleteTestCatalog
   Scenario: Database Catalog - Author - View Overview,Metadata,Usage,Access Control,SMSS deatils

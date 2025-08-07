@@ -34,6 +34,8 @@ public class CatlogAccessPageUtility {
 	private static final String ClICK_ON_MAKE_PUBLIC_TOGGLE_XAPTH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'css-1mt6xn3-MuiButtonBase-root-MuiSwitch-switchBase')])[1]";
 	private static final String CLICK_ON_MAKE_DISCOVRABLE_XPATH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'css-1mt6xn3-MuiButtonBase-root-MuiSwitch-switchBase')])[2]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[text()='Edit']";
+	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
+	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -172,4 +174,17 @@ public class CatlogAccessPageUtility {
 		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
 		return toasterMessage;
 	}
+
+	public static boolean getCatalogAndCopyId(Page page) {
+		page.getByTestId(CLICK_ON_COPYICON_DATATESTID).click();
+		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
+		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		boolean isToastVisible = toastMessage.isVisible();
+		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
+		String catalogType = catalogTypeText.trim().split("\\s+")[0];
+		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
+		return isToastVisible;
+	}
+
 }

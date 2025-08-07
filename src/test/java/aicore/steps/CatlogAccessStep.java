@@ -366,4 +366,10 @@ public class CatlogAccessStep {
 			Assertions.fail("Invalid action: " + action);
 		}
 	}
+
+	@And("User clicks On Copy Catalog ID")
+	public void user_clicks_on_Copy_Catalog_ID() {
+		boolean isVisiable = catlogpermission.getCatalogAndCopyId();
+		Assertions.assertTrue(isVisiable, "Successfully copied ID' toast was not visible after clicking copy icon.");
+	}
 }

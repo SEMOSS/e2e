@@ -11,7 +11,8 @@ Feature: Database Catalog permissions for Editor user
     And User opens Main Menu
     And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     Then 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
