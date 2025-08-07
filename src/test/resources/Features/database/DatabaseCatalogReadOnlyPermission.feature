@@ -55,7 +55,7 @@ Feature: Database Catalog permissions for Read user
     Then 'Read' user can 'Not View' Access Control
     Then 'Read' user 'can not' see Member Setting
 
-  @DeleteCreatedDatabaseCatalog
+   @DeleteTestCatalog
   Scenario: Database Catalog - Read -  Delete Model
     And User opens Main Menu
     And User clicks on Open Database

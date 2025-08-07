@@ -51,7 +51,7 @@ Feature: Database Catalog permissions for Editor user
     And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
-  @DeleteCreatedDatabaseCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog - Editor - Delete Model
     And User opens Main Menu
     And User clicks on Open Database

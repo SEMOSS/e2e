@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -223,13 +224,15 @@ public class SetupHooks {
 		}
 	}
 
-	@After("@DeleteCreatedDatabaseCatalog")
-	public void deleteCatalogDatabase(Scenario scenario) {
+	@After("@DeleteTestCatalog")
+	public void deleteCatalogResources(Scenario scenario) {
 		String scenarioName = scenario.getName();
 		try {
 			TestResourceTrackerHelper tracker = TestResourceTrackerHelper.getInstance();
-			for (String type : TestResourceTrackerHelper.CATALOG_TYPES) {
-				String id = tracker.getCatalogId(type);
+			Map<String, String> catalogMap = tracker.getCatalogType();
+			for (Map.Entry<String, String> entry : catalogMap.entrySet()) {
+				String type = entry.getKey();
+				String id = entry.getValue();
 				if (id != null && !id.isBlank()) {
 					boolean deleteCatalog = CommonUtils.navigateAndDeleteCatalog(page, type, id);
 					if (deleteCatalog) {
@@ -239,7 +242,6 @@ public class SetupHooks {
 						logger.warn("Scenario Name: " + scenarioName + " : Failed to Delete catalog: Type: " + type
 								+ ", ID = " + id);
 					}
-					break;
 				} else {
 					logger.warn("Scenario Name: " + scenarioName + " : Catalog ID not available for Type: " + type);
 				}

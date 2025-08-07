@@ -267,6 +267,7 @@ public class CommonUtils {
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
+			page.waitForTimeout(500);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
 			page.locator(ACCESS_CONTROL_XPATH).click();
 			page.locator(DELETE_BUTTON_XPATH).click();

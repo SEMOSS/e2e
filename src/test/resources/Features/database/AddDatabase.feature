@@ -9,7 +9,7 @@ Feature: Add Database
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
     And User clicks on Open Database
@@ -21,7 +21,7 @@ Feature: Add Database
     And User sees an example of "How to use with Langchain API" with example code for Database
     And User sees an example of "How to use in Java" with example code for Database
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Tags
     Given User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
@@ -31,7 +31,7 @@ Feature: Add Database
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Overview
     Given User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
     And User sees the database name as 'TestDatabase'
@@ -52,7 +52,7 @@ Feature: Add Database
     And User sees an Edit button that opens a pop-up to edit
     And User clicks on Close button
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify MetaData for Database
     Given User opens Main Menu
     And User clicks on Open Database

@@ -13,7 +13,7 @@ Feature: Database Catalog permissions for Author
     Then User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
 
-  @DeleteCreatedDatabaseCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog - Author - View Overview,Metadata,Usage,Access Control,SMSS deatils
     Then 'Author' user can 'View' Overview
     And 'Author' user can 'View' Metadata
@@ -21,17 +21,17 @@ Feature: Database Catalog permissions for Author
     And 'Author' user can 'View' Access Control
     And 'Author' user can 'View' SMSS Details
 
-  @DeleteCreatedDatabaseCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog - Author - View Edit SMSS
     And User clicks on SMSS
     Then 'Author' user can 'View' Edit SMSS
 
-  @DeleteCreatedDatabaseCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog - Author - View Member setting
     And 'Author' user clicks on Access Control
     Then 'Author' user 'can' see Member Setting
 
-  @DeleteCreatedDatabaseCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog - Author - Add and Delete editor Member
     And 'Author' user clicks on Access Control
     Then User clicks on Add Member button
@@ -39,7 +39,7 @@ Feature: Database Catalog permissions for Author
     And User Search 'Editor' user from Access Control
     And User deletes the 'Editor' user
 
-  @DeleteCreatedDatabaseCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog - Author - Add and Delete read Member
     And 'Author' user clicks on Access Control
     Then User clicks on Add Member button
@@ -47,7 +47,7 @@ Feature: Database Catalog permissions for Author
     And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
-  @DeleteCreatedDatabaseCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog-Autor-View Export button
     Then 'Author' user can 'view' export button
 
