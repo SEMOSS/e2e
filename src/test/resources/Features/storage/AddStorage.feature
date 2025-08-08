@@ -14,9 +14,10 @@ Feature: Add Storage
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks On Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Storage'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate usage of storage
     Given User can see the Storage title as 'Amazon S3 Storage'
     When User clicks on Usage tab for storage
@@ -25,7 +26,7 @@ Feature: Add Storage
     And User sees an example of "How to use with Langchain API" with example code for storage
     And User sees an example of "How to use in Java" with example code for storage
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate SMSS properties of storage
     Given User can see the Storage title as 'Amazon S3 Storage'
     And User clicks on SMSS
@@ -36,7 +37,7 @@ Feature: Add Storage
     And User opens Main Menu
     And User clicks on Open Storage engine
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Storage Overview
     Given User can see the Storage title as 'Amazon S3 Storage'
     When User can see 'copy Storage ID' Storage ID along with copy icon
@@ -64,7 +65,7 @@ Feature: Add Storage
     And User selects the 'Amazon S3 Storage' from the storage catalog
     Then User sees Change Access button
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate Change access popup
     Given User can see the Storage title as 'Amazon S3 Storage'
     And 'Author' user clicks on Settings of Storage
@@ -88,7 +89,7 @@ Feature: Add Storage
     And User logs out from the application
     Then User login as "Author"
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate change access request
     Given User can see the Storage title as 'Amazon S3 Storage'
     And 'Author' user clicks on Settings of Storage
