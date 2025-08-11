@@ -38,7 +38,9 @@ Feature: Vector Overview
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
     And User login as "Editor"
+    And User opens Main Menu
     And User clicks on Open Vector
+    And User searches the 'FAISS Vector DB00' in the Vector Catalog searchbox
     And User clicks on the created Vector card name as 'FAISS Vector DB00'
     Then User can see the Vector title as 'FAISS Vector DB00'
     And User sees and copies the vector id

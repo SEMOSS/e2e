@@ -24,11 +24,6 @@ public class SettingsMyProfileSteps {
 		this.settings = new SettingsMyProfile(SetupHooks.getPage(), timestamp);
 	}
 
-//	@Given("User clicks on Open Settings")
-//	public void user_clicks_on_open_settings_icon() {
-//		HomePageUtils.clickOnOpenSettings(SetupHooks.getPage());
-//	}
-
 	@When("User clicks on My Profile")
 	public void user_clicks_on_my_profile() {
 		settings.clickOnMyProfileCard();

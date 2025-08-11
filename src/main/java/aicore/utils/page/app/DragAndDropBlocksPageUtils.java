@@ -33,7 +33,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
 
 	// Blocks section
-	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Blocks']/parent::div";
+	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
 	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
 	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
 	private static final String HEADING_2_BLOCK_XPATH = "//div[@aria-label='Display Text in header 2']";

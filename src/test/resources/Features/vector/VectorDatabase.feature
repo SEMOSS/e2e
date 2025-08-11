@@ -82,6 +82,7 @@ Feature: Vector Database
   Scenario: Filter by Tags
     When User clicks on Open Vector
     And User clicks on vector 'My Vectors' tab
+    And User searches 'FAISSCatalogeVector' vector in the vector searchbox
     And User clicks on search by under Filter By Section
     And User enters 'TestTag' in the search box and clicks on it under 'Tag'
     Then User should see the 'FAISSCatalogeVector' vector on the Vector Catalog page
@@ -89,6 +90,7 @@ Feature: Vector Database
   Scenario: Filter by Domain
     When User clicks on Open Vector
     And User clicks on vector 'My Vectors' tab
+    And User searches 'FAISSCatalogeVector' vector in the vector searchbox
     And User clicks on search by under Filter By Section
     And User enters 'TestDomain' in the search box and clicks on it under 'Domain'
     Then User should see the 'FAISSCatalogeVector' vector on the Vector Catalog page
@@ -96,6 +98,7 @@ Feature: Vector Database
   Scenario: Filter by Data Classification
     When User clicks on Open Vector
     And User clicks on vector 'My Vectors' tab
+    And User searches 'FAISSCatalogeVector' vector in the vector searchbox
     And User clicks on search by under Filter By Section
     And User enters 'PUBLIC' in the search box and clicks on it under 'Data Classification'
     Then User should see the 'FAISSCatalogeVector' vector on the Vector Catalog page
@@ -103,6 +106,7 @@ Feature: Vector Database
   Scenario: Filter by Data Restrictions
     When User clicks on Open Vector
     And User clicks on vector 'My Vectors' tab
+    And User searches 'FAISSCatalogeVector' vector in the vector searchbox
     And User clicks on search by under Filter By Section
     And User enters 'IP ALLOWED' in the search box and clicks on it under 'Data Restrictions'
     Then User should see the 'FAISSCatalogeVector' vector on the Vector Catalog page

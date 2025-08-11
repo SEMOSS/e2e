@@ -23,7 +23,6 @@ public class AddModelSteps {
 	private HomePage homePage;
 	private AddModelPage openModelPage;
 	protected static String timestamp;
-//	public static String timestamp = CommonUtils.getTimeStampName();;
 	private String expectedCatalogId;
 	private ViewCatalogPage viewCatalogPage;
 

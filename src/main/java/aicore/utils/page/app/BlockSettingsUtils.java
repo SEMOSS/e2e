@@ -3,7 +3,6 @@ package aicore.utils.page.app;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
@@ -110,7 +109,7 @@ public class BlockSettingsUtils {
 
 	public static void selectFrame(Page page, String frameId) {
 		Locator selectFrame = page.getByPlaceholder(SEARCH_FRAME_PLACEHOLDER);
-		selectFrame.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(selectFrame);
 		selectFrame.click();
 		selectFrame.fill(frameId);
 		selectFrame.press("ArrowDown");

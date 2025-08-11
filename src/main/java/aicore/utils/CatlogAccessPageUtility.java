@@ -17,7 +17,7 @@ public class CatlogAccessPageUtility {
 	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
 
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_XPATH = "//div[@data-layout-path='/border/bottom/tb0']";
+	private static final String CLICK_ON_SETTINGS_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Settings']";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
 	private static final String CLICK_ON_MEMBER_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Member')]";
@@ -49,7 +49,6 @@ public class CatlogAccessPageUtility {
 
 	public static boolean canViewAccessControl(Page page) {
 		return page.getByText(VIEW_ACCESSCONTROL_Text).isVisible();
-		// return page.isVisible(VIEW_ACCESSCONTROL_TAB_XPATH);
 	}
 
 	// new
@@ -76,9 +75,12 @@ public class CatlogAccessPageUtility {
 		// page.locator(CLICK_ON_SETTINGS_XPATH).click();
 		// As per New UI
 		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH);
-		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
-			settingOption.click();
-		}
+//		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+//			settingOption.click();
+//		}
+
+		// we have issue with Settings so for now we are commenting if statement
+		settingOption.click();
 	}
 
 	public static boolean userCanSeeDeleteModel(Page page) {
@@ -121,6 +123,28 @@ public class CatlogAccessPageUtility {
 			return false; // toggle state didn't update
 		}
 		return true; // already in correct state
+
+//		// Clickable element (not input, but span above it)
+//		Locator toggleWrapper = page.locator("(//span[contains(@class, 'MuiSwitch-switchBase')])[1]");
+//		Locator toggleInput = page.locator("(//span[contains(@class, 'MuiSwitch-switchBase')])[1]/input");
+//
+//		toggleInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+//		CommonUtils.moveMouseToCenter(page, toggleInput, 0);
+//		boolean isOn = toggleInput.isChecked();
+//
+//		if (isOn != expectedState) {
+//			toggleWrapper.click();
+//			for (int i = 0; i < 10; i++) {
+//				page.waitForTimeout(300);
+//				if (toggleInput.isChecked() == expectedState) {
+//					return true;
+//				}
+//			}
+//			return false;
+//		}
+//
+//	return true;
+
 	}
 
 	public static String getToasterMessage(Page page) {

@@ -34,7 +34,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
-	private static final String VECTOR_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
+	private static final String VECTOR_CARD_XPATH = "//p[text()='{catalogName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
 	private static final String VECTOR_ID = "//*[@data-testid=\"ContentCopyOutlinedIcon\"]/../..";
 	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
