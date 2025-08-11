@@ -26,3 +26,15 @@ Scenario: Create app using Template
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
+  
+   Scenario: Create app using Template - Landing page
+    Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User selects "Landing Page" from Template List
+    And User enters app name as 'Test app'
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
+    And User clicks on Create button
+    
