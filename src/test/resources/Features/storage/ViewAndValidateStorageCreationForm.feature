@@ -21,6 +21,7 @@ Feature: Validate storage creation form
       | FUNCTION_NAME | FIELD_NAMES                                                                 | REQUIRED_FIELDS              |
       | Amazon S3     | Catalog Name, Region, Bucket, Access key, Secret key, Create Storage button | Catalog Name, Region, Bucket |
 
+	@DeleteTestCatalog
   Scenario: Submit and validate 'Amazon S3' storage creation form
     Given User is on Home page
     When User opens Main Menu
@@ -60,4 +61,5 @@ Feature: Validate storage creation form
       | Secret key   | Test123           |
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks On Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Storage'

@@ -15,7 +15,8 @@ public class HomePageUtils {
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "CloseIcon";
+	private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
+	// private static final String SEMOSS_OPEN_MEN_DATA_TESID = "CloseIcon";
 	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
@@ -51,7 +52,7 @@ public class HomePageUtils {
 
 	public static void openMainMenu(Page page) {
 		// check if menu is open
-		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		page.waitForTimeout(1000);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
@@ -62,7 +63,7 @@ public class HomePageUtils {
 	}
 
 	public static void closeMainMenu(Page page) {
-		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
+		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		if (menuOpen.isVisible()) {
 			menuOpen.click();
 		}
@@ -120,7 +121,7 @@ public class HomePageUtils {
 	}
 
 	public static void logout(Page page) {
-		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESID);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
 		}

@@ -36,6 +36,8 @@ Feature: View Existing Discoverable Storage
     And User clicks on Open Storage engine
     And User clicks on 'Discoverable Storages' tab
     Then User should see the Storage title as 'Amazon S3 Test Storage'
+    And User logs out from the application
+    And User login as "Author"
       # And User should see the 'No description available' in the description
 		
 		@DeleteTestCatalog

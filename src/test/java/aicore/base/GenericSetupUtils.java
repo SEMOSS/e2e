@@ -173,7 +173,7 @@ public class GenericSetupUtils {
 	}
 
 	public static void logout(Page page) {
-		Locator isMenuOpen = page.getByTestId("CloseIcon");
+		Locator isMenuOpen = page.getByTestId("//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']");
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
 		}
