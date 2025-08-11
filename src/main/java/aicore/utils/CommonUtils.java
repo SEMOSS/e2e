@@ -39,11 +39,11 @@ public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
-	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "MenuOpenRoundedIcon";
 	private static final String SEARCH_CATALOG_LABEL = "Search";
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
+
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
@@ -269,7 +269,13 @@ public class CommonUtils {
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
 			page.waitForTimeout(500);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
-			page.locator(ACCESS_CONTROL_XPATH).click();
+
+			if (page.locator(ACCESS_CONTROL_XPATH).isVisible()) {
+				page.locator(ACCESS_CONTROL_XPATH).click();
+
+			} else if (page.locator(STORAGE_SETTING_XPATH).isVisible()) {
+				page.locator(STORAGE_SETTING_XPATH).click();
+			}
 			page.locator(DELETE_BUTTON_XPATH).click();
 			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			return page.locator(DELETE_TOAST_MESSAGE_XPATH).isVisible();
