@@ -3,7 +3,6 @@ package aicore.utils.page.app;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
@@ -23,7 +22,7 @@ public class BlockSettingsUtils {
 	// Block settings for charts
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
-	private static final String DROP_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div";
+	private static final String DROP_FIELD_XPATH = "//span[normalize-space()= '{fieldName}']/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
 
@@ -110,7 +109,7 @@ public class BlockSettingsUtils {
 
 	public static void selectFrame(Page page, String frameId) {
 		Locator selectFrame = page.getByPlaceholder(SEARCH_FRAME_PLACEHOLDER);
-		selectFrame.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(selectFrame);
 		selectFrame.click();
 		selectFrame.fill(frameId);
 		selectFrame.press("ArrowDown");
@@ -126,6 +125,7 @@ public class BlockSettingsUtils {
 		// Grab column
 		sourceLocator.hover();
 		CommonUtils.moveMouseToCenter(page, sourceLocator, 0);
+		page.waitForTimeout(200);
 		page.mouse().down();
 		page.waitForTimeout(300);
 		// scroll to target filed
@@ -136,6 +136,7 @@ public class BlockSettingsUtils {
 		// refresh drag coordinates after scrolling
 		CommonUtils.moveMouseToCenter(page, sourceLocator, 0);
 		// drop column to target filed--
+		targetLocator.scrollIntoViewIfNeeded();
 		CommonUtils.moveMouseToCenter(page, targetLocator, 20);
 		targetLocator.hover();
 		page.waitForTimeout(300);
@@ -146,7 +147,7 @@ public class BlockSettingsUtils {
 	public static boolean verifyColumnDroppedInCorrectField(Page page, String columnName, String targetField) {
 		Locator tag = page.locator(
 				DROPPED_COLUMN_IN_FIELD_XPATH.replace("{fieldName}", targetField).replace("{columnName}", columnName));
-		AICorePageUtils.waitFor(tag);
+		page.waitForTimeout(1000);
 		return tag.isVisible();
 	}
 

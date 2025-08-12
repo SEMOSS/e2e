@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.CommonUtils;
@@ -32,7 +33,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
 
 	// Blocks section
-	private static final String BLOCKS_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Blocks']/parent::div";
+	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
 	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
 	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
 	private static final String HEADING_2_BLOCK_XPATH = "//div[@aria-label='Display Text in header 2']";
@@ -229,7 +230,7 @@ public class DragAndDropBlocksPageUtils {
 			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
 			break;
 		case "Markdown":
-			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			textBlockLocator = page.locator("//div[contains(@data-block,'markdown')]");
 			break;
 		case "Logs":
 			textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
@@ -280,7 +281,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void navigateToPreviosPage(Page page) {
-		page.goBack(new Page.GoBackOptions().setTimeout(5000));
+		page.goBack();
+		page.waitForLoadState(LoadState.LOAD);
 	}
 
 	public static void selectPage(Page page, String pageName) {
@@ -295,7 +297,7 @@ public class DragAndDropBlocksPageUtils {
 	public static void takeChartScreenshot(Page page, String actualImagePath) {
 		Locator chart = page.locator(CHART_XPATH);
 		Path path = Paths.get(actualImagePath);
-		page.waitForTimeout(2000);
+		page.waitForTimeout(3000);
 		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
 
@@ -364,7 +366,7 @@ public class DragAndDropBlocksPageUtils {
 			if (i < count - 1) {
 				Locator firstChart = page.locator(CHART_COUNT_ON_PAGE_XPATH).first();
 
-				firstChart.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+				firstChart.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 				firstChart.click();
 				page.waitForTimeout(300); // slight wait for UI response
 			}
@@ -381,6 +383,7 @@ public class DragAndDropBlocksPageUtils {
 
 	public static List<String> checkDataGridColumnNamesOnUI(Page page) {
 		Locator columnNames = page.locator(COLUMN_HEADERS_XPATH);
+		columnNames.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return columnNames.allTextContents();
 	}
 

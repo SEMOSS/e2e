@@ -15,7 +15,6 @@ public class HomePageUtils {
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 	private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
-	// private static final String SEMOSS_OPEN_MEN_DATA_TESID = "CloseIcon";
 	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
@@ -24,7 +23,7 @@ public class HomePageUtils {
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	private static final String OPEN_SETTINGS_XPATH = "//*[name()='svg'][@data-testid='SettingsIcon']";
+	private static final String SETTINGS_MENU_BUTTON_DATA_TESTID = "SettingsIcon";
 	private static final String USER_PROFILE_ICON_DATA_TESTID = "PersonIcon";
 
 	// system apps
@@ -44,15 +43,12 @@ public class HomePageUtils {
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
 		}
-		// previously searched app remains visible when the user returns to the homepage
-		// This is a issue and will be removed once resolved.
-		page.reload();
 	}
 
 	public static void openMainMenu(Page page) {
 		// check if menu is open
 		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
-		page.waitForTimeout(1000);
+		page.waitForTimeout(300);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
 		}
@@ -134,12 +130,12 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenSettings(Page page) {
-		page.locator(OPEN_SETTINGS_XPATH).click();
+		page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TESTID).click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void checkOnOpenSetting(Page page) {
-		page.locator(OPEN_SETTINGS_XPATH).isVisible();
+		page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static void clickOnOpenDatabase(Page page) {

@@ -32,7 +32,7 @@ Feature: App landing page
     And User enters cloned app description as 'cloned app'
     And User clicks on 'Next' button of clone app popup
     And User click on Make Public toggle switch
-    And User clicks on 'Upload' button of clone app popup
+    And User clicks on 'Clone' button of clone app popup
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'App clone' app in the app searchbox

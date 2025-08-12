@@ -311,7 +311,7 @@ public class AddDatabasePageUtils {
 
 	public static void clickDatabase(Page page, String databaseName) {
 		Locator locator = page.locator(DATABASE_NAME_XPATH.replace("{DatabaseName}", databaseName));
-		boolean isVisible = locator.isVisible();
+		locator.isVisible();
 		locator.click();
 	}
 

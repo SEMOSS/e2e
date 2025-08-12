@@ -1,16 +1,13 @@
 package aicore.steps;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.HomePage;
 import aicore.pages.ViewFunctionPage;
 import io.cucumber.java.en.Then;
 
 public class ViewFunctionSteps {
-	private HomePage homePage;
 	private ViewFunctionPage viewFunction;
 
 	public ViewFunctionSteps() {
-		homePage = new HomePage(SetupHooks.getPage());
 		viewFunction = new ViewFunctionPage(SetupHooks.getPage());
 	}
 

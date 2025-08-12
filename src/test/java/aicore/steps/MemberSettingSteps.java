@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.HomePage;
 import aicore.pages.SettingPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -13,13 +12,11 @@ import io.cucumber.java.en.When;
 
 public class MemberSettingSteps {
 
-	private HomePage homePage;
 	private SettingPage settingPage;
 	private static final Logger logger = LogManager.getLogger(MemberSettingSteps.class);
 	int NumberOfUser = 0;
 
 	public MemberSettingSteps() {
-		this.homePage = new HomePage(SetupHooks.getPage());
 		this.settingPage = new SettingPage(SetupHooks.getPage());
 	}
 

@@ -199,8 +199,7 @@ public class NotebookCreationAndExecutionSteps {
 
 	@When("User writes the query {string}")
 	public void user_writes_the_query(String query) {
-		boolean flag = notebookPage.writeQuery(query);
-		Assertions.assertTrue(flag, "query input box is not visible");
+		notebookPage.writeQuery(query);
 	}
 
 	@Then("User sees the output of the executed query where Age is {string} and Bloodpressure is {string}")

@@ -36,15 +36,13 @@ public class AICorePageUtils {
 				new Page.GetByRoleOptions().setName(buttonLabel).setExact(true));
 		buttonLocator.scrollIntoViewIfNeeded();
 		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-//		page.locator(NEXT_BUTTON_XPATH).click();
-		buttonLocator.click(); 
+		buttonLocator.click();
 	}
-	
+
 	public static void waitFor(Locator locator) {
 		if (!locator.isVisible()) {
 			locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		}
 	}
-
 
 }
