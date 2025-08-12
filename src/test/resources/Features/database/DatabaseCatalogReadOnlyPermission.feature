@@ -12,11 +12,12 @@ Feature: Database Catalog permissions for Read user
     And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     Then 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User logs out from the application
-    Then User login as 'Read'
+    And User login as 'Read'
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
@@ -28,8 +29,8 @@ Feature: Database Catalog permissions for Read user
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
     Then 'Read' user can 'View' Overview
-    Then 'Read' user can 'View' Usage
-    Then 'Read' user can 'View' Metadata
+    And 'Read' user can 'View' Usage
+    And 'Read' user can 'View' Metadata
 
   Scenario: Database Catalog - Read - Not View SMSS Details,Access Control
     And User opens Main Menu
@@ -37,7 +38,7 @@ Feature: Database Catalog permissions for Read user
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
     Then 'Read' user can 'Not View' SMSS Details
-    Then 'Read' user can 'Not View' Access Control
+    And 'Read' user can 'Not View' Access Control
 
   Scenario: Database Catalog - Read - Not View Edit SMSS
     And User opens Main Menu
@@ -52,12 +53,15 @@ Feature: Database Catalog permissions for Read user
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
-    When 'Read' user can 'Not View' Access Control
+    Then 'Read' user can 'Not View' Access Control
     Then 'Read' user 'can not' see Member Setting
 
+   @DeleteTestCatalog
   Scenario: Database Catalog - Read -  Delete Model
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
-    When 'Read' user can 'Not View' Access Control
+    Then 'Read' user can 'Not View' Access Control
+    And User logs out from the application
+    And User login as 'Author'

@@ -12,10 +12,11 @@ Feature: Add SQLITE Database
     And User clicks on apply database button
     Then User can see the database title as 'SqliteDB'
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+@LoginWithAdmin @DeleteCreatedCatalog
   Scenario: Verify Sqlite database
     Given User opens Main Menu
     When User clicks on Open Database
     And User searches the 'SqliteDB' in the database Catalog searchbox
     Then User sees the database name 'SqliteDB' in database catalog
     And User clicks on the database name 'SqliteDB' in  database catalog
+

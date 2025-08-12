@@ -25,7 +25,6 @@ public class HomePageUtils {
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String SETTINGS_MENU_BUTTON_DATA_TESTID = "SettingsIcon";
-
 	private static final String USER_PROFILE_ICON_DATA_TESTID = "PersonIcon";
 
 	// system apps
@@ -50,6 +49,7 @@ public class HomePageUtils {
 	public static void openMainMenu(Page page) {
 		// check if menu is open
 		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
+		page.waitForTimeout(300);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
 		}
