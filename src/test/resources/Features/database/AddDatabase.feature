@@ -9,31 +9,34 @@ Feature: Add Database
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
     And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     When User clicks on Usage tab for Database
     Then User sees an example of "How to use in Javascript" with example code for Database
     And User sees an example of "How to use in Python" with example code for Database
     And User sees an example of "How to use with Langchain API" with example code for Database
     And User sees an example of "How to use in Java" with example code for Database
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Tags
     Given User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Overview
-    Given User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
+    Given User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     And User sees the database name as 'TestDatabase'
     And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
@@ -52,11 +55,12 @@ Feature: Add Database
     And User sees an Edit button that opens a pop-up to edit
     And User clicks on Close button
 
-  @LoginWithAdmin @DeleteCreatedDatabaseCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify MetaData for Database
     Given User opens Main Menu
     And User clicks on Open Database
     And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog and Copy ID
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     When User clicks on MetaData tab
     Then User sees the table in the metadata tab

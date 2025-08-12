@@ -64,10 +64,6 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		return AddDatabasePageUtils.verifyDatabaseIsVisibleInCatalog(page, dbName);
 	}
 
-	public boolean clickOnDatabaseNameInCatalogAndCopyID(String dbName) {
-		return AddDatabasePageUtils.clickOnDatabaseNameInCatalogAndCopyID(page, dbName);
-	}
-
 	public void clickOnCopyID(String dbName) {
 		AddDatabasePageUtils.clickOnCopyID(page, dbName);
 	}
