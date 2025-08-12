@@ -116,7 +116,6 @@ public class AddFunctionPageUtils {
 		return page.getByText(CREATE_FUNCTION_BUTTON).isDisabled();
 	}
 
-
 	public static void enterFunctionRequiredParameters(Page page, String functionRequiredParameters) {
 		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).click();
 		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).fill(functionRequiredParameters);
@@ -232,17 +231,6 @@ public class AddFunctionPageUtils {
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
 	}
-
-//	public static void searchFilterValue(Page page,String filterValue) {
-//		page.getByPlaceholder("Search by...").fill(filterValue);
-//	}
-//
-//	public static void selectFilterValue(Page page,String filterCategory, String filterValue) {
-//		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
-//				.replace("{filterValue}", filterValue));
-//		filterValueLocator.waitFor();
-//		filterValueLocator.click();
-//	}
 
 	public static void clickOnMakeDiscoverableButton(Page page) {
 		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).isVisible();

@@ -149,7 +149,6 @@ public class BISystemAppPage {
 
 	public void selectProjectName(String projectName) {
 		page.click(PROJECT_NAME_DROPDOWN_XPATH);
-		// TODO we need to add an existing project to search for
 		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, projectName + " " + timestamp);
 		page.waitForSelector(PROJECT_SEARCH_LIST_XPATH);
 		page.click(PROJECT_SEARCH_LIST_XPATH);

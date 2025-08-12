@@ -135,8 +135,8 @@ public class NotebookPage {
 		NotebookPageUtils.verifyNotebookIsPresentInList(page, notebookName);
 	}
 
-	public boolean writeQuery(String query) {
-		return NotebookPageUtils.writeQuery(page, query);
+	public void writeQuery(String query) {
+		NotebookPageUtils.writeQuery(page, query);
 	}
 
 	public boolean validateQuery(String age, String bp) {

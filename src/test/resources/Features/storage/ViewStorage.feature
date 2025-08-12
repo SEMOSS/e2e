@@ -25,7 +25,6 @@ Feature: View Storage
     And User searches 'Amazon S3 Test Storage' storage in the storage searchbox
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
-  # And User should see the 'No description available' in the description
   @DeleteTestCatalog
   Scenario: Apply 'Tag' Filter to my storage
     Given User opens Main Menu
@@ -40,7 +39,8 @@ Feature: View Storage
     ### Scenario filter by the test tag on the main page
     And User opens Main Menu
     Given User clicks on Open Storage Engine
-    And User expands 'Filter By' section
+    #And User expands 'Filter By' section
+    And User searches 'Amazon S3 Test Storage' storage in the storage searchbox
     And User selects 'Test Tag' under 'Tag' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
@@ -58,6 +58,7 @@ Feature: View Storage
     #### filter by domain on the main page
     When User opens Main Menu
     And User clicks on Open Storage Engine
+    And User searches 'Amazon S3 Test Storage' storage in the storage searchbox
     And User selects 'Test Domain' under 'Domain' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
@@ -75,6 +76,7 @@ Feature: View Storage
     ### filter by data classification on the main page
     When User opens Main Menu
     And User clicks on Open Storage Engine
+    And User searches 'Amazon S3 Test Storage' storage in the storage searchbox
     And User selects 'CONFIDENTIAL' under 'Data Classification' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
@@ -92,5 +94,6 @@ Feature: View Storage
     ###Scenario: Filter my storage by 'Data Restrictions' on the main page
     When User opens Main Menu
     And User clicks on Open Storage Engine
+    And User searches 'Amazon S3 Test Storage' storage in the storage searchbox
     And User selects 'CONFIDENTIAL ALLOWED' under 'Data Restrictions' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'

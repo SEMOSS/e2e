@@ -3,6 +3,8 @@ package aicore.pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import aicore.utils.AICorePageUtils;
+
 public class ViewStoragePage {
 
 	private Page page;
@@ -18,7 +20,7 @@ public class ViewStoragePage {
 	private static final String DATA_RESTRICTIONS_INPUT_XPATH = "//label[text()='Data restrictions']/following-sibling::div//input";
 	private static final String OVERVIEW_FILTER_VALUE_XPATH = "//div[@class='MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-wx0gzd-MuiChip-root']/span[text()='{title}']";
 	private static final String FILTER_BY_SECTION_XPATH = "//h6[text()='Filter By']";
-	private static final String FILTER_OPTION_TOGGLE_XPATH = "//p[text()='%s']";
+	private static final String FILTER_OPTION_TOGGLE_XPATH = "//p[text()='{optionName}']";
 	private static final String DISCOVERABLE_STORAGES_TAB_XPATH = "//button[text()='Discoverable Storages']";
 
 	public ViewStoragePage(Page page) {
@@ -50,8 +52,9 @@ public class ViewStoragePage {
 	}
 
 	public String getStorageTitle(String storageTitle) {
-		String actualtitle = page.textContent(DYNAMIC_STORAGE_TITLE_XPATH.replace("{title}", storageTitle)).trim();
-		return actualtitle;
+		Locator actualtitle = page.locator(DYNAMIC_STORAGE_TITLE_XPATH.replace("{title}", storageTitle));
+		page.waitForTimeout(500);
+		return actualtitle.textContent().trim();
 	}
 
 	public String getStorageDescription() {
@@ -94,8 +97,10 @@ public class ViewStoragePage {
 	}
 
 	public void toggleFilter(String filterName) {
-		page.click(String.format(FILTER_OPTION_TOGGLE_XPATH, filterName));
-
+		page.getByPlaceholder("Search by...").fill(filterName);
+		Locator filterValue = page.locator(FILTER_OPTION_TOGGLE_XPATH.replace("{optionName}", filterName));
+		AICorePageUtils.waitFor(filterValue);
+		filterValue.click();
 	}
 
 	public void clickMakeDiscoverableButtonInStorageSettings() {
