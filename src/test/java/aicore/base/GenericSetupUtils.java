@@ -27,6 +27,7 @@ import com.microsoft.playwright.Tracing.StartOptions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.ConfigUtils;
 import aicore.utils.UrlUtils;
 import e2e.HttpLogger;
@@ -172,18 +173,21 @@ public class GenericSetupUtils {
 	}
 
 	public static void logout(Page page) {
-		// going to logout
-		Locator menuOpen = page.getByTestId("MenuOpenRoundedIcon");
-		if (!menuOpen.isVisible()) {
-			Locator locator = page.getByTestId("MenuRoundedIcon");
-			locator.click();
-			menuOpen.click();
+		Locator isMenuOpen = page.getByTestId("//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']");
+		if (isMenuOpen.isVisible()) {
+			isMenuOpen.click();
 		}
-		page.getByTestId("PersonIcon").click();
+		Locator locator = page.getByTestId("MenuRoundedIcon");
+		AICorePageUtils.waitFor(locator);
+		locator.click();
+
+		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
-		assertEquals(UrlUtils.getUrl("#/login"), page.url());
+		String loginPage = UrlUtils.getUrl("#/login");
+		page.waitForURL(loginPage);
+		assertEquals(loginPage, page.url());
 	}
 
 	public static String login(Page page, String user, String password) {
