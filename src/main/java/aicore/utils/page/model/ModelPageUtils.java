@@ -19,7 +19,7 @@ public class ModelPageUtils {
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
-
+	
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engine-catalog-add-btn").isVisible();
 		page.getByTestId("engine-catalog-add-btn").click();
