@@ -23,9 +23,10 @@ Feature: View Existing Discoverable Storage
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks On Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Test Storage'
    
-    @LoginWithAuthor
+    @LoginWithAuthor @DeleteTestCatalog
     Scenario: View discoverable storages under 'Discoverable Storages' tab
     And User clicks on Settings Tab
     And User clicks on Make Discoverable button in storage settings
@@ -35,8 +36,11 @@ Feature: View Existing Discoverable Storage
     And User clicks on Open Storage engine
     And User clicks on 'Discoverable Storages' tab
     Then User should see the Storage title as 'Amazon S3 Test Storage'
+    And User logs out from the application
+    And User login as "Author"
       # And User should see the 'No description available' in the description
 		
+		@DeleteTestCatalog
     Scenario: Filter discoverable storage by 'Data Classification'
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
@@ -46,6 +50,7 @@ Feature: View Existing Discoverable Storage
     And User selects 'CONFIDENTIAL' under 'Data Classification' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
    
+   @DeleteTestCatalog
     Scenario: Filter discoverable storage by 'Data Restrictions'
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL' under 'Data restrictions' section

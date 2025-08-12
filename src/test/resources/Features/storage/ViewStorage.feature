@@ -14,9 +14,10 @@ Feature: View Storage
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks On Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Test Storage'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: View my storages under 'My Storages' tab
     When User opens Main Menu
     And User clicks on Open Storage engine
@@ -25,6 +26,7 @@ Feature: View Storage
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
   # And User should see the 'No description available' in the description
+  @DeleteTestCatalog
   Scenario: Apply 'Tag' Filter to my storage
     Given User opens Main Menu
     When User clicks on Open Storage engine
@@ -42,6 +44,7 @@ Feature: View Storage
     And User selects 'Test Tag' under 'Tag' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
+  @DeleteTestCatalog
   Scenario: Apply 'Domain' Filter to my storage
     Given User opens Main Menu
     When User clicks on Open Storage engine
@@ -58,6 +61,7 @@ Feature: View Storage
     And User selects 'Test Domain' under 'Domain' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
+  @DeleteTestCatalog
   Scenario: Apply 'Data Classification' Filter to my storage
     When User opens Main Menu
     And User clicks on Open Storage engine
@@ -74,6 +78,7 @@ Feature: View Storage
     And User selects 'CONFIDENTIAL' under 'Data Classification' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
 
+  @DeleteTestCatalog
   Scenario: Apply 'Data Restrictions' Filter to discoverable storage
     When User opens Main Menu
     And User clicks on Open Storage engine

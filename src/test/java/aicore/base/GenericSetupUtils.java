@@ -173,21 +173,13 @@ public class GenericSetupUtils {
 	}
 
 	public static void logout(Page page) {
-		// going to logout
-//		Locator menuOpen = page.getByTestId("CloseIcon");
-//		if (!menuOpen.isVisible()) {
-//			Locator locator = page.getByTestId("MenuRoundedIcon");
-//			locator.click();
-//			menuOpen.click();
-//		}
-		Locator isMenuOpen = page.getByTestId("CloseIcon");
+		Locator isMenuOpen = page.getByTestId("//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']");
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
 		}
 		Locator locator = page.getByTestId("MenuRoundedIcon");
 		AICorePageUtils.waitFor(locator);
 		locator.click();
- 
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
  

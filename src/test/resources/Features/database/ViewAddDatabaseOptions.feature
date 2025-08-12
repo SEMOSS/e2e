@@ -12,8 +12,7 @@ Feature: View add Database options on catalog page
 
   Scenario: Verify the Database Type is search on Connect To Database Page
     Given User opens Main Menu
-    And User is on Home page
-    And User clicks on Open Database
+    When User clicks on Open Database
     And User clicks on Add Database
     Then User searches database types and verifies visibility under respective sections
       | EXPECTED_SECTION | DATABASE_TYPE                                                                                                                                                                                                                                           |

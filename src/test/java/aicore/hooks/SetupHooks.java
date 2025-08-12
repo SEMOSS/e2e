@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +23,7 @@ import aicore.base.RunInfo;
 import aicore.utils.CaptureScreenShotUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.ConfigUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.UrlUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
@@ -223,7 +225,6 @@ public class SetupHooks {
 			logger.warn("Failed to delete catalog after scenario", scenario.getName());
 		}
 	}
-
 	
 	@AfterAll
 	public static void updateVersion() {
@@ -238,6 +239,32 @@ public class SetupHooks {
             if (isVersionMatched==true) {
                 throw new AssumptionViolatedException("Skipping scenario due to version match.");
             }      
+
+	@After("@DeleteTestCatalog")
+	public void deleteCatalogResources(Scenario scenario) {
+		String scenarioName = scenario.getName();
+		try {
+			TestResourceTrackerHelper tracker = TestResourceTrackerHelper.getInstance();
+			Map<String, String> catalogMap = tracker.getCatalogType();
+			for (Map.Entry<String, String> entry : catalogMap.entrySet()) {
+				String type = entry.getKey();
+				String id = entry.getValue();
+				if (id != null && !id.isBlank()) {
+					boolean deleteCatalog = CommonUtils.navigateAndDeleteCatalog(page, type, id);
+					if (deleteCatalog) {
+						logger.info("Scenario Name: " + scenarioName + " : Catalog deleted successfully. Type: " + type
+								+ ", ID: " + id);
+					} else {
+						logger.warn("Scenario Name: " + scenarioName + " : Failed to Delete catalog: Type: " + type
+								+ ", ID = " + id);
+					}
+				} else {
+					logger.warn("Scenario Name: " + scenarioName + " : Catalog ID not available for Type: " + type);
+				}
+			}
+		} finally {
+			TestResourceTrackerHelper.getInstance().clearCatalogResources();
+		}
 	}
 
 }

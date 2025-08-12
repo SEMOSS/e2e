@@ -31,15 +31,19 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void uploadHostFile(String hostNameFilePath) {
 		AddDatabasePageUtils.enterHostName(page, hostNameFilePath);
 	}
+
 	public void clickOnApplyButton() {
 		AddDatabasePageUtils.clickOnApplyButton(page);
 	}
+
 	public void clickApplyDatabaseButton() {
 		AddDatabasePageUtils.clickApplyDatabaseButton(page);
 	}
+
 	public boolean verifyDatabaseTitle(String dbName) {
 		return AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 	}
+
 	public String uploadDatabaseFile(String fileName) {
 		return AddDatabasePageUtils.uploadDatabaseFile(page, fileName);
 	}
@@ -120,11 +124,11 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickDatabase(page, databaseName);
 	}
 
-    public void clickOnMetaDataTab() {
-        AddDatabasePageUtils.clickOnMetadataTab(page);
-    }
+	public void clickOnMetaDataTab() {
+		AddDatabasePageUtils.clickOnMetadataTab(page);
+	}
 
-    public void verifyMetaData() {
-        AddDatabasePageUtils.verifyMetaData(page);
-    }
+	public void verifyMetaData() {
+		AddDatabasePageUtils.verifyMetaData(page);
+	}
 }

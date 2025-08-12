@@ -2,6 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class CatlogAccessPageUtility {
 
@@ -17,7 +18,8 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//button[@type='button']//*[@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
-
+	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//*[name()='svg' and @data-testid='ErrorOutlineIcon']/ancestor::div[contains(@class, 'MuiAlert-root')]//div[contains(@class, 'MuiAlert-message')]";
+	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
 	// create app variable declaration
 	private static final String CLICK_ON_SETTINGS_XPATH = "//div[@data-layout-path='/border/bottom/tb0']";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
@@ -32,6 +34,8 @@ public class CatlogAccessPageUtility {
 	private static final String ClICK_ON_MAKE_PUBLIC_TOGGLE_XAPTH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'css-1mt6xn3-MuiButtonBase-root-MuiSwitch-switchBase')])[1]";
 	private static final String CLICK_ON_MAKE_DISCOVRABLE_XPATH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'css-1mt6xn3-MuiButtonBase-root-MuiSwitch-switchBase')])[2]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[text()='Edit']";
+	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
+	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -52,6 +56,7 @@ public class CatlogAccessPageUtility {
 	public static boolean canViewAccessControl(Page page) {
 		return page.getByText(VIEW_ACCESSCONTROL_Text).isVisible();
 		// return page.isVisible(VIEW_ACCESSCONTROL_TAB_XPATH);
+
 	}
 
 	// new
@@ -161,4 +166,25 @@ public class CatlogAccessPageUtility {
 	public static boolean canSeeSettingOption(Page page) {
 		return page.locator(CLICK_ON_SETTINGS_XPATH).isVisible();
 	}
+
+	public static String editorUserSeeToastMessageText(Page page) {
+		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).innerText();
+		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
+		return toasterMessage;
+	}
+
+	public static boolean getCatalogAndCopyId(Page page) {
+		page.getByTestId(CLICK_ON_COPYICON_DATATESTID).click();
+		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
+		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		boolean isToastVisible = toastMessage.isVisible();
+		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
+		String catalogType = catalogTypeText.trim().split("\\s+")[0];
+		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
+		return isToastVisible;
+	}
+
 }
