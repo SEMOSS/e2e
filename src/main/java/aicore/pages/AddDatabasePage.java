@@ -28,8 +28,24 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.enterCatalogName(page, catalogName);
 	}
 
-	public void uploadHostFile(String hostNameFilePath) {
-		AddDatabasePageUtils.enterHostName(page, hostNameFilePath);
+	public void enterHostName(String hostName) {
+		AddDatabasePageUtils.enterHostName(page, hostName);
+	}
+
+	public void clearPortNumber() {
+		AddDatabasePageUtils.clearPortNumber(page);
+	}
+
+	public void enterSchemaName(String schemaName) {
+		AddDatabasePageUtils.enterSchemaName(page, schemaName);
+	}
+
+	public void addUserName(String userName) {
+		AddDatabasePageUtils.enterUserName(page, userName);
+	}
+
+	public void addJDBCUrl(String jdbcUrl, String dbType) {
+		AddDatabasePageUtils.enterJDBCUrl(page, jdbcUrl, dbType);
 	}
 
 	public void clickOnApplyButton() {
