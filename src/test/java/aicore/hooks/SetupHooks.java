@@ -266,5 +266,4 @@ public class SetupHooks {
 			TestResourceTrackerHelper.getInstance().clearCatalogResources();
 		}
 	}
-
 }
