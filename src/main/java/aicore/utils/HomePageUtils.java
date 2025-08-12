@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
@@ -128,15 +127,15 @@ public class HomePageUtils {
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
 		AICorePageUtils.waitFor(locator);
 		locator.click();
-
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
+ 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 
 	public static void clickOnOpenSettings(Page page) {
 		page.locator(OPEN_SETTINGS_XPATH).click();
+		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void checkOnOpenSetting(Page page) {

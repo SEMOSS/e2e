@@ -180,10 +180,9 @@ public class GenericSetupUtils {
 		Locator locator = page.getByTestId("MenuRoundedIcon");
 		AICorePageUtils.waitFor(locator);
 		locator.click();
-
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
+ 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 		String loginPage = UrlUtils.getUrl("#/login");
 		page.waitForURL(loginPage);

@@ -15,11 +15,14 @@ public class AdminQueryPageUtils {
 	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Run";
 	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
 
-	public static void selectDatabase(Page page, String databaseName) {
+	public static void clickOnSelectDatabase(Page page) {
 		Locator databaseDropdown = page.locator("label:has-text('" + DATABASE_DROPDOWN_NAME + "')")
 				.locator("xpath=following-sibling::div//div");
 		databaseDropdown.isVisible();
 		databaseDropdown.click();
+	}
+
+	public static void selectDatabase(Page page, String databaseName) {
 		Locator databaseDropdownListOptions = page.getByRole(AriaRole.OPTION,
 				new Page.GetByRoleOptions().setName(databaseName));
 		databaseDropdownListOptions.click();
