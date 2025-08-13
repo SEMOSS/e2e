@@ -24,6 +24,7 @@ public class AppPageUtils {
 	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//div[text()='Succesfully copied to clipboard']";
 	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
 	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
+	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -122,5 +123,16 @@ public class AppPageUtils {
 		String expectedAppName = appName + " " + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
 		return !appCard.isVisible();
+	}
+
+	public static void searchFilterValueOnAppPage(Page page, String filterValue) {
+		page.getByPlaceholder("Search by...").fill(filterValue);
+	}
+
+	public static void selectFilterValueOnAppPage(Page page, String filterCategory, String filterValue) {
+		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
+				.replace("{filterValue}", filterValue));
+		filterValueLocator.waitFor();
+		filterValueLocator.click();
 	}
 }

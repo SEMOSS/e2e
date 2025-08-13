@@ -176,5 +176,4 @@ public class DragAndDropBlocksPage {
 	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
 		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
 	}
-
 }
