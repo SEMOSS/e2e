@@ -238,7 +238,8 @@ public class SetupHooks {
 		boolean isVersionMatched = CommonUtils.getVersion(page);
             if (isVersionMatched==true) {
                 throw new AssumptionViolatedException("Skipping scenario due to version match.");
-            }      
+            } 
+	}
 
 	@After("@DeleteTestCatalog")
 	public void deleteCatalogResources(Scenario scenario) {
