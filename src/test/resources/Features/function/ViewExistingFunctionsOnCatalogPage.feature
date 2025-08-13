@@ -37,7 +37,7 @@ Feature: View existing functions on Function Catalog Page
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
     And User clicks on Access Control Tab
-    And User clicks Make Discoverable button
+    And User clicks Make 'Function' Discoverable button
     And User logs out from the application
     And User login as 'editor'
     And User opens Main Menu
