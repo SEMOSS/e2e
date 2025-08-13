@@ -18,7 +18,7 @@ public class AddFunctionSteps {
 
 	public AddFunctionSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName().substring(0, 5);
+		timestamp = CommonUtils.getTimeStampName();
 		addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 
@@ -106,6 +106,12 @@ public class AddFunctionSteps {
 		addFunctionToCatalogPage.enterFunctionDescription(functionDescription);
 	}
 
+	@Then("User sees the Create function button is disabled")
+	public void user_sees_the_create_function_button_disabled() {
+		boolean isButtonDisabled = addFunctionToCatalogPage.verifyCreateFunctionButtonDisabled();
+		Assertions.assertTrue(isButtonDisabled, "Create Function button is not disabled");
+	}
+
 	@Then("User sees Create Function button")
 	public void user_sees_create_Funtion_button() {
 		addFunctionToCatalogPage.checkCreateFunctionButton();
@@ -155,13 +161,14 @@ public class AddFunctionSteps {
 		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected");
 	}
 
-	@When("User clicks Make Discoverable button")
-	public void user_clicks_make_discoverable_button() {
-		addFunctionToCatalogPage.clickOnMakeDiscoverableButton();
+	
+	@When("User clicks Make {string} Discoverable button")
+	public void user_clicks_make_discoverable_button(String catalogName) {
+		addFunctionToCatalogPage.clickOnMakeDiscoverableButton(catalogName);
 	}
 
-	@And("User clicks on Discoverable Functions button")
-	public void user_clicks_on_discoverable_functions_button() {
+	@And("User clicks on Discoverable button")
+	public void user_clicks_on_discoverable_button() {
 		addFunctionToCatalogPage.clickOnDiscoverableFunctionsbutton();
 	}
 

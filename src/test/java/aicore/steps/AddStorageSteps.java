@@ -70,7 +70,16 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		catalogName = catalogName + timestamp;
 		storagePage.enterCatalogName(catalogName);
 	}
+	@And("User enter storage Catalog name as {string}")
+	public void user_enter_storage_catalog_name_as(String catalogName) {
+		storagePage.enterCatalogName(catalogName);
+	}
 
+	@Then("User can see the Storage title {string}")
+	public void user_can_see_the_storage_title(String storageTitle) {
+		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle);
+		Assertions.assertTrue(flag, "Storage title is not visible");
+	}
 	@And("User enters Region as {string}")
 	public void user_enters_region_as(String regionName) {
 		storagePage.enterRegionName(regionName);
@@ -79,6 +88,12 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@And("User enters Bucket as {string}")
 	public void user_enters_bucket_as(String regionName) {
 		storagePage.enterBucket(regionName);
+	}
+
+	
+	@Then("User select the {string} from the storage catalog")
+	public void user_select_the_from_the_storage_catalog(String catalogName) {
+		catalogPage.selectCatalogFromSearchOptions(catalogName);
 	}
 
 	@And("User enters Access Key as {string}")
@@ -146,10 +161,16 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.verifyAsteriskMarkOnFields(requiredFields);
 	}
 
-	@Then("User redirects to the missing {string} input field")
-	public void user_redirects_to_the_missing_input_field(String fieldName) {
-		boolean missingFieldFlag = storagePage.verifyMissingInputField(fieldName);
-		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected " + fieldName);
+	@Then("User sees the Create Storage button disabled")
+	public void user_sees_the_create_storage_button_disabled() {
+		boolean isButtonDisabled = storagePage.verifyCreateStorageButtonDisabled();
+		Assertions.assertTrue(isButtonDisabled, "Create Storage button is not disabled");
+	}
+
+	@Then("User sees the Create Storage button is enabled")
+	public void user_sees_the_create_storage_button_is_enabled() {
+		boolean isButtonEnabled = storagePage.verifyCreateStorageButtonEnabled();
+		Assertions.assertTrue(isButtonEnabled, "Create Storage button is not enabled");
 	}
 
 	@When("User enters value in below fields")
@@ -233,12 +254,12 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User searches the {string} in the storage Catalog searchbox")
 	public void user_searches_the_in_the_storage_catalog_searchbox(String catalogName) {
-		catalogPage.searchCatalog(catalogName, timestamp);
+		catalogPage.searchCatalog(catalogName+ timestamp);
 	}
 
 	@Then("User selects the {string} from the storage catalog")
 	public void user_selects_the_from_the_storage_catalog(String catalogName) {
-		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
+		catalogPage.selectCatalogFromSearchOptions(catalogName+timestamp);
 	}
 
 	@When("User enters Path Prefix as {string}")

@@ -22,7 +22,10 @@ public class AdminQuerySteps {
 		settingPage = new SettingPage(SetupHooks.getPage());
 		adminQuery = new SettingsAdminQueryPage(SetupHooks.getPage());
 	}
-
+	@And("User clicks on Database dropdown")
+	public void user_clicks_on_database_dropdown() {
+		adminQuery.clickOnSelectDatabase();
+	}
 	@And("User selects {string} from the database dropdown")
 	public void user_selects_from_the_database_dropdown(String databaseName) {
 		adminQuery.selectDatabase(databaseName);

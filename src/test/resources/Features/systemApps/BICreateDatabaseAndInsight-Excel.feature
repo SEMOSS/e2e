@@ -34,5 +34,5 @@ Feature: Create Database and Insight to BI System app- Excel
     And User mouse hover on database frame and click on Visualize this data option
     And User clicks on Save button
     And User enters 'Test Automation' as the insight name, selects the 'Test App' project, and clicks the Save button
-    #Then User can see Insight created toast message as 'Successfully saved insight(s)'
+    Then User can see Insight created toast message as 'Successfully saved insight(s)'
  

@@ -4,8 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 /**
- * Every Catalog shares same behavior
- * need to move similar utils here
+ * Every Catalog shares same behavior need to move similar utils here
  */
 public class CatalogPageUtils {
 
@@ -13,7 +12,7 @@ public class CatalogPageUtils {
 		// TODO need datatestid
 		Locator locator = page.locator("button.MuiTab-root:has-text('Metadata')");
 		AICorePageUtils.waitFor(locator);
-		boolean isVisible = locator.isVisible();
+		locator.isVisible();
 		locator.click();
 	}
 }

@@ -28,18 +28,38 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.enterCatalogName(page, catalogName);
 	}
 
-	public void uploadHostFile(String hostNameFilePath) {
-		AddDatabasePageUtils.enterHostName(page, hostNameFilePath);
+	public void enterHostName(String hostName) {
+		AddDatabasePageUtils.enterHostName(page, hostName);
 	}
+
+	public void clearPortNumber() {
+		AddDatabasePageUtils.clearPortNumber(page);
+	}
+
+	public void enterSchemaName(String schemaName) {
+		AddDatabasePageUtils.enterSchemaName(page, schemaName);
+	}
+
+	public void addUserName(String userName) {
+		AddDatabasePageUtils.enterUserName(page, userName);
+	}
+
+	public void addJDBCUrl(String jdbcUrl, String dbType) {
+		AddDatabasePageUtils.enterJDBCUrl(page, jdbcUrl, dbType);
+	}
+
 	public void clickOnApplyButton() {
 		AddDatabasePageUtils.clickOnApplyButton(page);
 	}
+
 	public void clickApplyDatabaseButton() {
 		AddDatabasePageUtils.clickApplyDatabaseButton(page);
 	}
+
 	public boolean verifyDatabaseTitle(String dbName) {
 		return AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 	}
+
 	public String uploadDatabaseFile(String fileName) {
 		return AddDatabasePageUtils.uploadDatabaseFile(page, fileName);
 	}
@@ -56,8 +76,8 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 	}
 
-	public boolean verifyDatabaseIsVisbileInCatalog(String dbName) {
-		return AddDatabasePageUtils.verifyDatabaseIsVisbileInCatalog(page, dbName);
+	public boolean verifyDatabaseIsVisibleInCatalog(String dbName) {
+		return AddDatabasePageUtils.verifyDatabaseIsVisibleInCatalog(page, dbName);
 	}
 
 	public void clickOnCopyID(String dbName) {
@@ -108,23 +128,23 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickOnEditButton(page);
 	}
 
-	public void searchFunctionCatalog(String catalogName) {
-		AddDatabasePageUtils.searchFunctionCatalog(page, catalogName);
+	public void searchDatabaseCatalog(String catalogName) {
+		AddDatabasePageUtils.searchDatabaseCatalog(page, catalogName);
 	}
 
-	public void selectFunctionFromSearchOptions(String catalogName) {
-		AddDatabasePageUtils.selectFunctionFromSearchOptions(page, catalogName);
+	public void selectDatabaseFromSearchOptions(String catalogName) {
+		AddDatabasePageUtils.selectDatabaseFromSearchOptions(page, catalogName);
 	}
 
 	public void clickDatabase(String databaseName) {
 		AddDatabasePageUtils.clickDatabase(page, databaseName);
 	}
 
-    public void clickOnMetaDataTab() {
-        AddDatabasePageUtils.clickOnMetadataTab(page);
-    }
+	public void clickOnMetaDataTab() {
+		AddDatabasePageUtils.clickOnMetadataTab(page);
+	}
 
-    public void verifyMetaData() {
-        AddDatabasePageUtils.verifyMetaData(page);
-    }
+	public void verifyMetaData() {
+		AddDatabasePageUtils.verifyMetaData(page);
+	}
 }

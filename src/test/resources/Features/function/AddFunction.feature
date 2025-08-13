@@ -44,8 +44,7 @@ Feature: Add Function
     And User enters Function required parameters as '<functionRequiredParameters>'
     And User enters Function name as '<functionName>'
     And User enters Function description as '<functionDescription>'
-    Then User clicks on Create Function button
-    And User redirects to the missing input field
+    Then User sees the Create function button is disabled
 
     Examples: 
       | functionType | catalogName             | httpMethod | postBodyMessage | headers                | functionParameters                                                                                                                                                                                | functionRequiredParameters | functionName    | functionDescription                              | functionTitle | Create_Funtion  | Toast_message                          | required_fields                                                                                                                                                             |

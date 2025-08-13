@@ -13,8 +13,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		this.timestamp = timestamp;
 	}
 
-	public boolean verifyFunctionIsVisbileInCatalog(String functionName) {
-		return AddFunctionPageUtils.verifyFunctionIsVisbileInCatalog(page, functionName);
+	public boolean verifyFunctionIsVisibleInCatalog(String functionName) {
+		return AddFunctionPageUtils.verifyFunctionIsVisibleInCatalog(page, functionName);
 	}
 
 
@@ -30,9 +30,10 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnSettings(page);
 	}
   
-	public void clickOnMakeDiscoverableButton() {
-		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page);
+	public void clickOnMakeDiscoverableButton(String catalogName) {
+		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page, catalogName);
 	}
+
 
 	public void clickOnDiscoverableFunctionsbutton() {
 		AddFunctionPageUtils.clickOnDiscoverableFunctionsbutton(page);
@@ -81,6 +82,10 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
 	public void enterFunctionDescription(String functionDescription) {
 		AddFunctionPageUtils.enterFunctionDescription(page, functionDescription);
+	}
+
+	public boolean verifyCreateFunctionButtonDisabled() {
+		return AddFunctionPageUtils.verifyCreateFunctionButtonDisabled(page);
 	}
 
 	public void selectFunctionType(String functionType) {

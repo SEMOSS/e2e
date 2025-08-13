@@ -21,6 +21,7 @@ Feature: Validate storage creation form
       | FUNCTION_NAME | FIELD_NAMES                                                                 | REQUIRED_FIELDS              |
       | Amazon S3     | Catalog Name, Region, Bucket, Access key, Secret key, Create Storage button | Catalog Name, Region, Bucket |
 
+	@DeleteTestCatalog
   Scenario: Submit and validate 'Amazon S3' storage creation form
     Given User is on Home page
     When User opens Main Menu
@@ -32,22 +33,25 @@ Feature: Validate storage creation form
       | Catalog Name |             |
       | Region       | India       |
       | Bucket       | BucketTest  |
-    When User clicks on Create Storage button
-    Then User redirects to the missing 'Catalog Name' input field
+    When User sees the Create Storage button disabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
       | Region       |                   |
       | Bucket       | BucketTest        |
-    When User clicks on Create Storage button
-    Then User redirects to the missing 'Region' input field
+    When User sees the Create Storage button disabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
       | Region       | India             |
       | Bucket       |                   |
-    When User clicks on Create Storage button
-    Then User redirects to the missing 'Bucket' input field
+    When User sees the Create Storage button disabled
+    When User enters value in below fields
+      | FIELD_NAME   | FIELD_VALUE       |
+      | Catalog Name | Amazon S3 Storage |
+      | Region       | India             |
+      | Bucket       | BucketTest        |
+    When User sees the Create Storage button is enabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
@@ -57,4 +61,5 @@ Feature: Validate storage creation form
       | Secret key   | Test123           |
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks On Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Storage'

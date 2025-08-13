@@ -133,25 +133,14 @@ public class StoragePageUtils {
 		}
 	}
 
-	public static boolean verifyMissingInputField(Page page, String fieldName) {
-		Locator missingFieldParent = null;
-		switch (fieldName) {
-		case "Catalog Name":
-			missingFieldParent = page.getByTestId(CATALOG_NAME_TEXTBOX_DATATESTID).locator("..");
-			break;
-		case "Region":
-			missingFieldParent = page.getByTestId(REGION_TEXTBOX_DATATESTID).locator("..");
-			break;
-		case "Bucket":
-			missingFieldParent = page.getByTestId(BUCKET_TEXTBOX_DATATESTID).locator("..");
-			break;
+	public static boolean verifyCreateStorageButtonDisabled(Page page) {
+		Locator createStorageButton = page.locator(CREATE_STORAGE_BUTTON);
+		return createStorageButton.isDisabled();
+	}
 
-		default:
-			System.out.println("Invalid Field name" + fieldName);
-		}
-		missingFieldParent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String missingFieldClass = missingFieldParent.getAttribute("class");
-		return missingFieldClass.contains("Mui-focused");
+	public static boolean verifyCreateStorageButtonEnabled(Page page) {
+		Locator createStorageButton = page.locator(CREATE_STORAGE_BUTTON);
+		return createStorageButton.isEnabled();
 	}
 
 	public static boolean verifyFieldIsVisible(Page page, String fieldName) {

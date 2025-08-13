@@ -44,6 +44,10 @@ public class UserManagementSteps {
 		settingpage.clickOnCard(cardName);
 
 	}
+	@And("User Clicks on Add User button")
+	public void user_clicks_on_add_user_button() {
+		userpage.clickAddUserButton();
+	}
 
 	@Then("User Management sees the Add User button")
 	public void user_sees_the_add_user_button() {

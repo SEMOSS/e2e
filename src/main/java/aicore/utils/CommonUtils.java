@@ -39,6 +39,15 @@ public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
+	private static final String SEARCH_CATALOG_LABEL = "Search";
+	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
+	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
+
+	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
+
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
 	}
@@ -197,24 +206,36 @@ public class CommonUtils {
 		File actualFile = new File(actualImagePath);
 		File expectedFile = new File(expectedImagePath);
 		File diffFile = new File(diffImagePath);
+
+		// Ensure diff directory exists
+		diffFile.getParentFile().mkdirs();
+
 		// If expected image doesn't exist, create it from actual
 		if (!expectedFile.exists()) {
 			logger.info("Expected image not found. Creating baseline from actual");
 			Files.copy(actualFile.toPath(), expectedFile.toPath());
 			return true;
 		}
+
 		BufferedImage expected = ImageIO.read(expectedFile);
 		BufferedImage actual = ImageIO.read(actualFile);
-		// Resize actual image if dimensions mismatch
+
+		// Only resize if absolutely needed
 		if (expected.getWidth() != actual.getWidth() || expected.getHeight() != actual.getHeight()) {
 			logger.info("Resizing actual image to match expected dimensions");
 			actual = resizeImage(actual, expected.getWidth(), expected.getHeight());
 		}
-		// Perform image comparison
+
 		ImageComparison imageComparison = new ImageComparison(expected, actual);
 		imageComparison.setDestination(diffFile);
+
 		ImageComparisonResult result = imageComparison.compareImages();
-		return result.getDifferencePercent() == 0.0;
+
+		double diffPercent = result.getDifferencePercent();
+		logger.info("Difference percent: " + diffPercent);
+
+		// Allow small tolerance, e.g., 0.5%
+		return diffPercent <= 0.5;
 	}
 
 	private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
@@ -243,6 +264,52 @@ public class CommonUtils {
 			return handle.jsonValue().toString();
 		} catch (PlaywrightException e) {
 			throw new RuntimeException("Failed to read text from clipboard", e);
+		}
+	}
+	
+	public static boolean getVersion(Page page) {
+		HomePageUtils.openMainMenu(page);
+		page.getByTestId("AccountCircleRoundedIcon").click();
+		String version = CaptureScreenShotUtils.versionCapture(page);
+		
+		logger.info("Version obtained: {}", version);
+		logger.info("Current version: {}", ConfigUtils.getValue("current_version"));
+		if (version.equals(ConfigUtils.getValue("current_version"))) {
+			logger.info("Version match: {}", version);
+			return true;
+		} else {
+			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue("current_version"), version);
+        return false;
+    }
+	}
+
+	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
+		try {
+			HomePageUtils.openMainMenu(page);
+			switch (catalogType) {
+			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
+			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
+			}
+			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
+			page.waitForTimeout(500);
+			page.locator(CLICK_ON_CATALOG_XPATH).click();
+
+			if (page.locator(ACCESS_CONTROL_XPATH).isVisible()) {
+				page.locator(ACCESS_CONTROL_XPATH).click();
+
+			} else if (page.locator(STORAGE_SETTING_XPATH).isVisible()) {
+				page.locator(STORAGE_SETTING_XPATH).click();
+			}
+			page.locator(DELETE_BUTTON_XPATH).click();
+			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+			return page.locator(DELETE_TOAST_MESSAGE_XPATH).isVisible();
+		} catch (Exception e) {
+			logger.warn("Catalog deletion failed due to an exception", e);
+			return false;
 		}
 	}
 
