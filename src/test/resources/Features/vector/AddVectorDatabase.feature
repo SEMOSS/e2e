@@ -46,6 +46,7 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 
+
   #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate usage of storage
@@ -85,6 +86,7 @@ Feature: Add Vector Database
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
     Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+
     And User clicks On Copy Catalog ID
     And 'Author' user clicks on Settings
     And User clicks on Add Member button

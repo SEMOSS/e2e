@@ -51,6 +51,25 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_create_new_app_button() {
 		appPage.clickOnCreateNewAppButton();
 	}
+	@When("User clicks on Upload button")
+	public void user_clicks_on_upload_button() {
+		appCreatePopup.clickOnUploadButton();
+	}
+
+	@Then("User clicks on Share App button")
+	public void user_clicks_on_share_app_button() {
+		appCreatePopup.clickOnShareAppButton();
+	}
+
+	@And("User clicks on IFrame button")
+	public void user_clicks_on_iframe_button() {
+		appCreatePopup.clickOnIframeButton();
+	}
+
+	@Then("User Clicks on close button")
+	public void user_clicks_on_close_button() {
+		appCreatePopup.clickOnCloseButton();
+	}
 
 	@When("User clicks on Get Started button in {string}")
 	public void user_clicks_on_get_started_button_in(String appType) {
@@ -60,6 +79,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User enters app name as {string}")
 	public void user_enters_app_name_as(String appName) {
 		appCreatePopup.enterAppName(appName);
+	}
+	
+	@Then("User can selects {string} on the page")
+	public void user_can_selects_on_the_page(String appName) {
+		appCreatePopup.selectApp(appName);
 	}
 
 	@And("User enters description as {string}")

@@ -23,7 +23,6 @@ public class AddModelSteps {
 	private HomePage homePage;
 	private AddModelPage openModelPage;
 	protected static String timestamp;
-//	public static String timestamp = CommonUtils.getTimeStampName();;
 	private String expectedCatalogId;
 	private ViewCatalogPage viewCatalogPage;
 
@@ -329,6 +328,11 @@ public class AddModelSteps {
 		String expectedMessage = openModelPage.verifyDeleteToastMessage();
 		String actualMessage = toastMessage;
 		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
+	}
+
+	@And("User clicks on Discoverable Models button")
+	public void user_clicks_on_discoverable_models_button() {
+		openModelPage.clickOnDiscoverableModelsButton();
 	}
 
 }

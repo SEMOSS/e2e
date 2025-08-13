@@ -161,13 +161,14 @@ public class AddFunctionSteps {
 		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected");
 	}
 
-	@When("User clicks Make Discoverable button")
-	public void user_clicks_make_discoverable_button() {
-		addFunctionToCatalogPage.clickOnMakeDiscoverableButton();
+	
+	@When("User clicks Make {string} Discoverable button")
+	public void user_clicks_make_discoverable_button(String catalogName) {
+		addFunctionToCatalogPage.clickOnMakeDiscoverableButton(catalogName);
 	}
 
-	@And("User clicks on Discoverable Functions button")
-	public void user_clicks_on_discoverable_functions_button() {
+	@And("User clicks on Discoverable button")
+	public void user_clicks_on_discoverable_button() {
 		addFunctionToCatalogPage.clickOnDiscoverableFunctionsbutton();
 	}
 

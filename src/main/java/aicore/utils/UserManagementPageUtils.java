@@ -146,9 +146,11 @@ public class UserManagementPageUtils {
 			page.waitForResponse(responseURL, () -> {
 				// Triggers the response
 				page.fill(SEARCH_BUTTON_XPATH, "UserId");
+				page.waitForTimeout(1000);
 			});
 		} else {
 			page.fill(SEARCH_BUTTON_XPATH, "UserId");
+			page.waitForTimeout(1000);
 		}
 	}
 

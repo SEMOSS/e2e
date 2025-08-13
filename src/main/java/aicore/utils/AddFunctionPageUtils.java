@@ -32,7 +32,7 @@ public class AddFunctionPageUtils {
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
-	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make Function discoverable']/child::input[@type='checkbox']";
+	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make {catalogName} discoverable']/child::input[@type='checkbox']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
@@ -115,7 +115,6 @@ public class AddFunctionPageUtils {
 	public static boolean verifyCreateFunctionButtonDisabled(Page page) {
 		return page.getByText(CREATE_FUNCTION_BUTTON).isDisabled();
 	}
-
 
 	public static void enterFunctionRequiredParameters(Page page, String functionRequiredParameters) {
 		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).click();
@@ -232,17 +231,6 @@ public class AddFunctionPageUtils {
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
 	}
-
-//	public static void searchFilterValue(Page page,String filterValue) {
-//		page.getByPlaceholder("Search by...").fill(filterValue);
-//	}
-//
-//	public static void selectFilterValue(Page page,String filterCategory, String filterValue) {
-//		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
-//				.replace("{filterValue}", filterValue));
-//		filterValueLocator.waitFor();
-//		filterValueLocator.click();
-//	}
 
 	public static void clickOnMakeDiscoverableButton(Page page) {
 		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).isVisible();

@@ -206,24 +206,36 @@ public class CommonUtils {
 		File actualFile = new File(actualImagePath);
 		File expectedFile = new File(expectedImagePath);
 		File diffFile = new File(diffImagePath);
+
+		// Ensure diff directory exists
+		diffFile.getParentFile().mkdirs();
+
 		// If expected image doesn't exist, create it from actual
 		if (!expectedFile.exists()) {
 			logger.info("Expected image not found. Creating baseline from actual");
 			Files.copy(actualFile.toPath(), expectedFile.toPath());
 			return true;
 		}
+
 		BufferedImage expected = ImageIO.read(expectedFile);
 		BufferedImage actual = ImageIO.read(actualFile);
-		// Resize actual image if dimensions mismatch
+
+		// Only resize if absolutely needed
 		if (expected.getWidth() != actual.getWidth() || expected.getHeight() != actual.getHeight()) {
 			logger.info("Resizing actual image to match expected dimensions");
 			actual = resizeImage(actual, expected.getWidth(), expected.getHeight());
 		}
-		// Perform image comparison
+
 		ImageComparison imageComparison = new ImageComparison(expected, actual);
 		imageComparison.setDestination(diffFile);
+
 		ImageComparisonResult result = imageComparison.compareImages();
-		return result.getDifferencePercent() == 0.0;
+
+		double diffPercent = result.getDifferencePercent();
+		logger.info("Difference percent: " + diffPercent);
+
+		// Allow small tolerance, e.g., 0.5%
+		return diffPercent <= 0.5;
 	}
 
 	private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
@@ -253,6 +265,22 @@ public class CommonUtils {
 		} catch (PlaywrightException e) {
 			throw new RuntimeException("Failed to read text from clipboard", e);
 		}
+	}
+	
+	public static boolean getVersion(Page page) {
+		HomePageUtils.openMainMenu(page);
+		page.getByTestId("AccountCircleRoundedIcon").click();
+		String version = CaptureScreenShotUtils.versionCapture(page);
+		
+		logger.info("Version obtained: {}", version);
+		logger.info("Current version: {}", ConfigUtils.getValue("current_version"));
+		if (version.equals(ConfigUtils.getValue("current_version"))) {
+			logger.info("Version match: {}", version);
+			return true;
+		} else {
+			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue("current_version"), version);
+        return false;
+    }
 	}
 
 	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {

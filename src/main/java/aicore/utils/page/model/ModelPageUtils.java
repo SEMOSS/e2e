@@ -9,9 +9,9 @@ public class ModelPageUtils {
 
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
-	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
-	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
-	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
+	private static final String CATALOG_NAME_DATA_TESTID = "importForm-textField-NAME";
+	private static final String OPEN_AI_KEY_DATA_TESTID = "importForm-textField-OPEN_AI_KEY";
+	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-textField-VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	// SMSS field
@@ -19,7 +19,7 @@ public class ModelPageUtils {
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
-
+	
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engine-catalog-add-btn").isVisible();
 		page.getByTestId("engine-catalog-add-btn").click();
@@ -34,18 +34,15 @@ public class ModelPageUtils {
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
-//		page.fill(CATALOG_NAME_XPATH, catalogName);
-		page.getByTestId("importForm-textField-NAME").fill(catalogName);
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
 	}
 
 	public static void enterOpenAIKey(Page page, String openAIKey) {
-//		page.fill(OPEN_AI_KEY_XPATH, openAIKey);
-		page.getByTestId("importForm-textField-OPEN_AI_KEY").fill(openAIKey);
+		page.getByTestId(OPEN_AI_KEY_DATA_TESTID).fill(openAIKey);
 	}
 
 	public static void enterVariableName(Page page, String varName) {
-//		page.fill(VARIABLE_NAME_ID, varName);
-		page.getByTestId("importForm-textField-VAR_NAME").fill(varName);
+		page.getByTestId(VARIABLE_NAME_DATA_TESTID).fill(varName);
 
 	}
 

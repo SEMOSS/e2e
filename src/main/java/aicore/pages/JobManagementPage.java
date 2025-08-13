@@ -23,7 +23,7 @@ public class JobManagementPage {
 	}
 
 	public void fillName(String value) {
-		JobPageUtils.fillName(page, value + " " + timestamp);
+		JobPageUtils.fillName(page, value);
 	}
 
 	public void fillPixel(String value) {
