@@ -1,4 +1,4 @@
-@DeleteCreatedCatalog
+@DeleteTestCatalog
 Feature: View Function Details
 
   Background: Create Function using ZIP file
@@ -12,6 +12,7 @@ Feature: View Function Details
 
   Scenario: View overview details in "Overview" tab for selected Function
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    And User clicks On Copy Catalog ID
     Then User can see 'WeatherFunctionTest' as function name
     And User can see function ID
     And User can see 'Please use the Edit button to provide a description for this Function. A description will help others find the Function and understand how to use it. To include more details associated with the Function, edit the markdown located in the Overview section.' as function description
@@ -35,6 +36,7 @@ Feature: View Function Details
 
   Scenario: View usage details in "Usage" tab for selected Function
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    And User clicks On Copy Catalog ID
     When User selects 'Usage' tab
     And User can see 'How to use in Javascript' usage instructions section
     And User can see 'How to use in Python' usage instructions section
