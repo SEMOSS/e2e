@@ -19,12 +19,12 @@ public class DockerUtils {
 		int i = 0;
 		boolean successful = false;
 		String apiStringEndpoint = UrlUtils.getApi("api/config");
-		logger.info("attempting to ping: {}", apiStringEndpoint);
-		while (i < 10) {
+		logger.warn("attempting to ping: {}", apiStringEndpoint);
+		while (i < 200) {
 			try {
 				HttpURLConnection conn = (HttpURLConnection) new URL(apiStringEndpoint).openConnection();
 				conn.setRequestMethod("GET");
-				conn.setConnectTimeout(1000);
+				conn.setConnectTimeout(5000);
 				int code = conn.getResponseCode();
 				if (code == 200) {
 					logger.info("Successful ping");
@@ -32,11 +32,16 @@ public class DockerUtils {
 					break;
 				} else {
 					logger.warn("Unsuccessful ping, sleeping");
-					Thread.sleep(500);
+					Thread.sleep(5000);
 				}
 			} catch (Exception e) {
 				logger.error("Could not ping api or sleep", e);
-			}
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
 			i++;
 		}
 		if (!successful) {

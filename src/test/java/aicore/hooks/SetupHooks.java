@@ -87,10 +87,10 @@ public class SetupHooks {
 
 		GenericSetupUtils.setupLoggers(page);
 
-		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
-			logger.info("Creating users");
-			GenericSetupUtils.createUsers(page);
-		}
+//		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
+//			logger.info("Creating users");
+//			GenericSetupUtils.createUsers(page);
+//		}
 
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
 
