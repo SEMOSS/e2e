@@ -330,4 +330,9 @@ public class AddModelSteps {
 		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
 	}
 
+	@And("User clicks on Discoverable Models button")
+	public void user_clicks_on_discoverable_models_button() {
+		openModelPage.clickOnDiscoverableModelsButton();
+	}
+
 }

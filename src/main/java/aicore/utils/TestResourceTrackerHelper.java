@@ -39,5 +39,4 @@ public final class TestResourceTrackerHelper {
 	public void clearCatalogResources() {
 		testCatalogResources.clear();
 	}
-
 }

@@ -91,12 +91,12 @@ public class AddModelPage {
 		return ModelPageUtils.verifyModelTitle(page, modelTitle + timestamp);
 	}
 
-	public void clickOnSMSSTab() {
-		ModelPageUtils.clickOnSMSSTab(page);
-	}
-
 	public String getExpectedCatalogTitle(String modelTitle) {
 		return ModelPageUtils.getExpectedCatalogTitle(modelTitle + timestamp);
+	}
+
+	public void clickOnSMSSTab() {
+		ModelPageUtils.clickOnSMSSTab(page);
 	}
 
 	public String verifyNameInSMSS() {
@@ -322,7 +322,7 @@ public class AddModelPage {
 		return SettingsModelPageUtils.isAddMemberButtonVisible(page);
 	}
 
-	public void deleteAddedMember(String role)  {
+	public void deleteAddedMember(String role) {
 		SettingsModelPageUtils.deleteAddedMember(page, role);
 	}
 
@@ -348,5 +348,9 @@ public class AddModelPage {
 
 	public String getFullSectionCodeByHeading(String headingText) {
 		return SettingsModelPageUtils.getFullSectionCodeByHeading(page, headingText);
+	}
+
+	public void clickOnDiscoverableModelsButton() {
+		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
 	}
 }

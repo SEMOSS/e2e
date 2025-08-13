@@ -30,8 +30,8 @@ Feature: View Existing Discoverable Storage
     When User logs out from the application
     And User login as "Admin"
 
-  @LoginWithAdmin @DeleteTestCatalog
-  Scenario: Filter discoverable storage by 'Data Classification'
+		@LoginWithAdmin @DeleteTestCatalog
+    Scenario: Filter discoverable storage by 'Data Classification'
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
     And User clicks on 'Submit' button
@@ -48,8 +48,8 @@ Feature: View Existing Discoverable Storage
     When User logs out from the application
     And User login as "Admin"
 
-  @LoginWithAdmin @DeleteTestCatalog
-  Scenario: Filter discoverable storage by 'Data Restrictions'
+   @LoginWithAdmin @DeleteTestCatalog
+    Scenario: Filter discoverable storage by 'Data Restrictions'
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL ALLOWED' under 'Data restrictions' section
     And User clicks on 'Submit' button

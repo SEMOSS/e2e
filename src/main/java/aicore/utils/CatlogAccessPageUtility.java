@@ -207,5 +207,4 @@ public class CatlogAccessPageUtility {
 		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
 		return isToastVisible;
 	}
-
 }

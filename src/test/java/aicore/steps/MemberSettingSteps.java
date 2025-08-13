@@ -116,4 +116,9 @@ public class MemberSettingSteps {
 		Assertions.assertTrue(updatedCountOfUser - this.NumberOfUser == addedNumberOfUser);
 	}
 
+	@When("User click on {string} tab")
+	public void user_clicks_on_tab(String tabName) {
+		settingPage.clickOnTab(tabName);
+	}
+
 }

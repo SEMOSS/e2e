@@ -8,6 +8,8 @@ public class CreateAppPopupUtils {
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
 	private static final String CREATE_BUTTON_XPATH = "//button[span[text()='Create']]";
+	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
+	private static final String SELECT_APP_XPATH = "//span[text()='{Select_App}']";
 
 	public static void clickOnGetStartedButton(Page page, String appType) {
 		if (appType.toLowerCase().contains("agent")) {
@@ -24,6 +26,12 @@ public class CreateAppPopupUtils {
 		page.locator(NAME_TEXTBOX_XPATH).fill(appNameTesting);
 		return appNameTesting;
 	}
+	public static void selectApp(Page page, String appName, String timestamp) {
+		String appNameTesting = appName + " " + timestamp;
+		page.getByPlaceholder("Project").click();
+		page.getByPlaceholder("Project").fill(appNameTesting);
+		page.locator(SELECT_APP_XPATH.replace("{Select_App}", appNameTesting)).click();
+	}
 
 	public static void enterAppDescription(Page page, String appDescription) {
 		page.locator(DESCRIPTION_TEXTBOX_XPATH).fill(appDescription);
@@ -36,5 +44,18 @@ public class CreateAppPopupUtils {
 
 	public static void clickOnCreateButton(Page page) {
 		page.locator(CREATE_BUTTON_XPATH).click();
+	}
+
+	public static void clickOnUploadButton(Page page) {
+		page.getByTestId("new-app-upload-btn").click();
+	}
+	public static void clickOnShareAppButton(Page page) {
+		page.getByTestId("ShareRoundedIcon").click();
+	}
+	public static void clickOnIframeButton(Page page) {
+		page.locator(IFRAME_BUTTON_XPATH).click();
+	}
+	public static void clickOnCloseButton(Page page) {
+		page.getByTestId("ClearIcon").click();
 	}
 }

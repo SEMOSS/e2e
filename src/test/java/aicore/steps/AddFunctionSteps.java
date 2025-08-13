@@ -175,7 +175,7 @@ public class AddFunctionSteps {
 	public void user_clicks_on_settings_tab() {
 		addFunctionToCatalogPage.clickOnSettings();
 	}
-	
+
 	@Given("User searches the {string} in the function Catalog searchbox")
 	public void user_searches_the_in_the_function_catalog_searchbox(String catalogName) {
 		addFunctionToCatalogPage.searchFunctionCatalog(catalogName);

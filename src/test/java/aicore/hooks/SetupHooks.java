@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.AssumptionViolatedException;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
@@ -19,6 +20,7 @@ import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
 import aicore.base.RunInfo;
+import aicore.utils.CaptureScreenShotUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.ConfigUtils;
 import aicore.utils.TestResourceTrackerHelper;
@@ -224,6 +226,21 @@ public class SetupHooks {
 		}
 	}
 
+	@AfterAll
+	public static void updateVersion() {
+		String version = CaptureScreenShotUtils.version;
+		ConfigUtils.setValue("current_version", version);
+	}
+
+	@Before("@SkipIfVersionMatch")
+	public void compareVersion(Scenario scenario) {
+		logger.info("Getting version for app");
+		boolean isVersionMatched = CommonUtils.getVersion(page);
+		if (isVersionMatched == true) {
+			throw new AssumptionViolatedException("Skipping scenario due to version match.");
+		}
+	}
+
 	@After("@DeleteTestCatalog")
 	public void deleteCatalogResources(Scenario scenario) {
 		String scenarioName = scenario.getName();
@@ -250,5 +267,4 @@ public class SetupHooks {
 			TestResourceTrackerHelper.getInstance().clearCatalogResources();
 		}
 	}
-
 }

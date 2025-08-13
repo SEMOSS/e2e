@@ -1,11 +1,10 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
@@ -218,6 +217,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 					option + " is not visible in Change Access popup");
 		}
 	}
+	
 
 	@Then("User selects {string} access")
 	public void user_selects_access(String accessType) {
@@ -240,15 +240,20 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		boolean toastVisible = chnageAccessPopUpPage.isRequestSuccessToastVisible();
 		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
 	}
+	@And("User clicks on Discoverable vectors button")
+	public void user_clicks_on_discoverable_vectors_button() {
+		vectorPage.clickOnDiscoverableVectorsButton();
+	}
+
 
 	@Then("User searches the {string} in the Vector Catalog searchbox")
 	public void user_searches_the_in_the_vector_catalog_searchbox(String catalogName) {
-		catalogPage.searchCatalog(catalogName, timestamp);
+		catalogPage.searchCatalog(catalogName + timestamp);
 	}
 
 	@Then("User selects the {string} from the Vector catalog")
 	public void user_selects_the_from_the_vector_catalog(String catalogName) {
-		catalogPage.selectCatalogFromSearchOptions(catalogName, timestamp);
+		catalogPage.selectCatalogFromSearchOptions(catalogName + timestamp);
 	}
 
 	@Then("User should see Search bar to filter vector options")
@@ -289,5 +294,10 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User sees the Change Access button")
 	public void user_sees_the_change_access_button() {
 		vectorPage.verifyChangeAccessButton();
+	}
+
+	@Then("User click on the Request Access button")
+	public void user_click_on_the_request_access_button() {
+		embedDocumentPage.clickOnRequestAccessButton();
 	}
 }

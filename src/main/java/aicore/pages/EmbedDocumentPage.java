@@ -73,4 +73,8 @@ public class EmbedDocumentPage {
 		page.locator(CHANGE_ACCESS_XPATH).click();
 	}
 
+	public void clickOnRequestAccessButton() {
+		page.getByTestId("AddIcon").click();
+	}
+
 }
