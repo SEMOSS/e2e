@@ -17,7 +17,6 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return AddFunctionPageUtils.verifyFunctionIsVisibleInCatalog(page, functionName);
 	}
 
-
 	public void searchFilterValue(String filterValue) {
 		AddFunctionPageUtils.searchFilterValue(page, filterValue);
 	}
@@ -25,15 +24,14 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	public void selectFilterValue(String filterCategory, String filterValue) {
 		AddFunctionPageUtils.selectFilterValue(page, filterCategory, filterValue);
 	}
- 
+
 	public void clickOnSettings() {
 		AddFunctionPageUtils.clickOnSettings(page);
 	}
-  
-	public void clickOnMakeDiscoverableButton(String catalogName) {
-		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page, catalogName);
-	}
 
+	public void clickOnMakeDiscoverableButton() {
+		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page);
+	}
 
 	public void clickOnDiscoverableFunctionsbutton() {
 		AddFunctionPageUtils.clickOnDiscoverableFunctionsbutton(page);
@@ -138,7 +136,7 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return Toast_message;
 	}
 
-  public boolean verifyMissingInputField() {
+	public boolean verifyMissingInputField() {
 		return AddFunctionPageUtils.verifyMissingInputField(page);
 	}
 

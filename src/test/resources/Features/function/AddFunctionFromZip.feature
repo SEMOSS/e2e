@@ -39,43 +39,42 @@ Feature: Add Function From Zip
     And User clicks on Open Function
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
-    #
-  #@LoginWithAdmin @DeleteTestCatalog
-  #Scenario: Validate change access request
-    #Given User sees the function name 'WeatherFunctionTest' in the function catalog
-    #And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    #And User selects the 'WeatherFunctionTest' from the function catalog
-    #And User clicks On Copy Catalog ID
-    #When 'Admin' user clicks on Settings
-    #And User clicks on Add Member button
-    #And User adds one user and assigns them as 'Editor'
-    #And User logs out from the application
-    #Then User login as "Editor"
-    #And User opens Main Menu
-    #And User clicks on Open Function
-    #And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    #And User selects the 'WeatherFunctionTest' from the function catalog
-    #And User click on the Change Access button
-    #And User selects 'author' access
-    #And User types a comment as 'Access Request'
-    #And User clicks on Request button
-    #Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
-    #And User logs out from the application
-    #And User login as "Admin"
-    #And User opens Main Menu
-    #And User clicks on Open Function
-    #And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    #And User selects the 'WeatherFunctionTest' from the function catalog
-#
-  #@LoginWithAdmin
-  #Scenario Outline: Delete Function
-    #   Given User clicks on Open Function
-    #Given User sees the function name '<function_name>' in the function catalog
-    #Then User clicks on the function name '<function_name>' in the function catalog
-    #And User clicks on Access Control Tab
-    #And User clicks on Delete button
-    #And User sees deleted function success toast message '<Toast_message>'
-#
-    #Examples: 
-      #| function_name       | Toast_message                 |
-      #| WeatherFunctionTest | Successfully deleted Function |
+
+  @LoginWithAdmin @DeleteTestCatalog
+  Scenario: Validate change access request
+    Given User sees the function name 'WeatherFunctionTest' in the function catalog
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    And User selects the 'WeatherFunctionTest' from the function catalog
+    And User clicks On Copy Catalog ID
+    When 'Admin' user clicks on Settings
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    And User selects the 'WeatherFunctionTest' from the function catalog
+    And User click on the Change Access button
+    And User selects 'author' access
+    And User types a comment as 'Access Request'
+    And User clicks on Request button
+    Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
+    And User logs out from the application
+    And User login as "Admin"
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    And User selects the 'WeatherFunctionTest' from the function catalog
+
+  @LoginWithAdmin
+  Scenario Outline: Delete Function
+    Given User sees the function name '<function_name>' in the function catalog
+    Then User clicks on the function name '<function_name>' in the function catalog
+    And User clicks on Access Control Tab
+    And User clicks on Delete button
+    And User sees deleted function success toast message '<Toast_message>'
+
+    Examples: 
+      | function_name       | Toast_message                 |
+      | WeatherFunctionTest | Successfully deleted Function |

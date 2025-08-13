@@ -18,18 +18,18 @@ Feature: View existing functions on Function Catalog Page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  #@LoginWithAdmin @DeleteTestCatalog
-  #Scenario: view and validate filter functionality - My Functions
-    #Given User opens Main Menu
-    #When User clicks on Open Function
-    #Then User sees the function name 'WeatherFunctionTest' in the function catalog
-    #And User applies each filter and validate 'WeatherFunctionTest' catalog is visible on the 'function' catalog page
-      #| FILTER_CATEGORY     | FILTER_VALUE      |
-      #| Tag                 | embeddings, Test1 |
-      #| Domain              | SAP, AI           |
-      #| Data Classification | IP                |
-      #| Data Restrictions   | IP ALLOWED        |
-    #When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+  @LoginWithAdmin @DeleteTestCatalog
+  Scenario: view and validate filter functionality - My Functions
+    Given User opens Main Menu
+    When User clicks on Open Function
+    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    And User applies each filter and validate 'WeatherFunctionTest' catalog is visible on the 'function' catalog page
+      | FILTER_CATEGORY     | FILTER_VALUE      |
+      | Tag                 | embeddings, Test1 |
+      | Domain              | SAP, AI           |
+      | Data Classification | IP                |
+      | Data Restrictions   | IP ALLOWED        |
+    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
 
  @DeleteTestCatalog
   Scenario: view and validate filter functionality - Discoverable Functions
@@ -43,7 +43,7 @@ Feature: View existing functions on Function Catalog Page
     And User login as 'editor'
     And User opens Main Menu
     And User clicks on Open Function
-    And User clicks on Discoverable Functions button
+    And User clicks on Discoverable button
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     And User applies each filter and validate 'WeatherFunctionTest' catalog is visible on the 'function' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE |
