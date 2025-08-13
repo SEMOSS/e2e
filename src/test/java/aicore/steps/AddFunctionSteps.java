@@ -166,8 +166,8 @@ public class AddFunctionSteps {
 		addFunctionToCatalogPage.clickOnMakeDiscoverableButton();
 	}
 
-	@And("User clicks on Discoverable Functions button")
-	public void user_clicks_on_discoverable_functions_button() {
+	@And("User clicks on Discoverable button")
+	public void user_clicks_on_discoverable_button() {
 		addFunctionToCatalogPage.clickOnDiscoverableFunctionsbutton();
 	}
 

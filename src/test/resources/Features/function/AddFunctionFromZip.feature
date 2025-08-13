@@ -67,8 +67,6 @@ Feature: Add Function From Zip
 
   @LoginWithAdmin
   Scenario Outline: Delete Function
-    //   Given User clicks on Open Function
-
     Given User sees the function name '<function_name>' in the function catalog
     Then User clicks on the function name '<function_name>' in the function catalog
     And User clicks on Access Control Tab
