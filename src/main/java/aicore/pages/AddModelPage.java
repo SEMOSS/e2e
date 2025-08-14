@@ -51,8 +51,8 @@ public class AddModelPage {
 		ModelPageUtils.enterVariableName(page, varName);
 	}
 
-	public void createModel() {
-		ModelPageUtils.createModel(page);
+	public void clickOnCreateModelButton() {
+		ModelPageUtils.clickOnCreateModelButton(page);
 	}
 
 	public String enterFilePath(String fileName) {
@@ -109,6 +109,10 @@ public class AddModelPage {
 
 	public String verifyKeepConversationHistoryValueInSMSS(String fieldName) {
 		return ModelPageUtils.verifyKeepConversationHistoryValueInSMSS(page, fieldName);
+	}
+
+	public void createModel(String modelName, String catalogName, String openAIKey, String varName) {
+		ModelPageUtils.createModel(page, modelName, catalogName, openAIKey, varName);
 	}
 
 	// Edit model
