@@ -19,7 +19,7 @@ public class AppPageUtils {
 	public static final String APP_CARD_XPATH = "//p[text()='{appName}']";
 	public static final String OPEN_APP_LINK_XPATH = "//p[text()='{appName}']/ancestor::div[contains(@class,'MuiCardHeader-root')]/following-sibling::div//a";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
-	public static final String MORE_VERTICAL_OPTIONS_ICON_XPATH = "//p[text()='{appName}']/ancestor::div[contains(@class,'MuiCardHeader-root')]/following-sibling::div[contains(@class,'MuiCardActions-root')]//*[name()='svg' and @data-testid='MoreVertIcon']";
+	public static final String MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID = "MoreVertIcon";
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
 	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//div[text()='Succesfully copied to clipboard']";
 	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
@@ -52,7 +52,7 @@ public class AppPageUtils {
 	public static void clickOnMoreVertIcon(Page page, String appName) {
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", appName)));
 		AICorePageUtils.waitFor(appCard);
-		Locator iconLocator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH.replace("{appName}", appName));
+		Locator iconLocator = page.getByTestId(MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID);
 		iconLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		iconLocator.click();
 	}
