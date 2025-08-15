@@ -68,4 +68,12 @@ public class AppPage {
 	public boolean isAppNotDisplayedOnPage(String appName) {
 		return AppPageUtils.isAppNotDisplayedOnPage(page, appName, timestamp);
 	}
+
+	public void searchFilterValueOnAppPage(String filterValue) {
+		AppPageUtils.searchFilterValueOnAppPage(page, filterValue);
+	}
+
+	public void selectFilterValueOnAppPage(String filterCategory, String filterValue) {
+		AppPageUtils.selectFilterValueOnAppPage(page, filterCategory, filterValue);
+	}
 }

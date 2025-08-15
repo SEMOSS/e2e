@@ -46,3 +46,11 @@ Feature: App landing page
     And User clicks on 'Delete App' option
     And User click on 'Delete' confirmation button
     Then User can not see 'Test app' app on the page
+
+  Scenario: Filter apps
+    Given User opens Main Menu
+    When User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
+    And User applies each filter and validate 'Test app' app is visible on the page
+      | FILTER_CATEGORY | FILTER_VALUE |
+      | Tag             | Test1, Test2 |

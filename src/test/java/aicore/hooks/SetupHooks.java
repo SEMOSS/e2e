@@ -225,7 +225,7 @@ public class SetupHooks {
 			logger.warn("Failed to delete catalog after scenario", scenario.getName());
 		}
 	}
-	
+
 	@AfterAll
 	public static void updateVersion() {
 		String version = CaptureScreenShotUtils.version;
@@ -236,9 +236,9 @@ public class SetupHooks {
 	public void compareVersion(Scenario scenario) {
 		logger.info("Getting version for app");
 		boolean isVersionMatched = CommonUtils.getVersion(page);
-            if (isVersionMatched==true) {
-                throw new AssumptionViolatedException("Skipping scenario due to version match.");
-            } 
+		if (isVersionMatched == true) {
+			throw new AssumptionViolatedException("Skipping scenario due to version match.");
+		}
 	}
 
 	@After("@DeleteTestCatalog")
