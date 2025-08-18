@@ -1,4 +1,4 @@
-Feature: capture screenshot and highlight button
+Feature: Function documentation
 
 @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedCatalog
 Scenario: Create a Function

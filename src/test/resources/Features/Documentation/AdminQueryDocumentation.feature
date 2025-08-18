@@ -2,8 +2,9 @@ Feature: Admin query
 
   @LoginWithAdmin @SkipIfVersionMatch
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query
-    Given User captures documentation screenshot for 'Admin query'
+    Given User captures documentation screenshot for 'Admin Query'
     Given User opens Main Menu
+    And User captures a 'button' and highlights the 'Settings'
     And User clicks on Open Settings
     When User enables admin mode
     And User captures a 'button' and highlights the 'Admin On'
@@ -13,7 +14,6 @@ Feature: Admin query
     And User captures a 'List Item' and highlights the '<DATABASE_NAME>'
     And User selects '<DATABASE_NAME>' from the database dropdown
     And User enters '<QUERY>' in the query textbox
-    And User captures a 'button' and highlights the 'Run'
     And User clicks on Run button
     Then User can see table with '<COLUMN_COUNT>' columns:'<COLUMN_NAMES>'
     And User captures screenshot for "<DATABASE_NAME>Query Results"
