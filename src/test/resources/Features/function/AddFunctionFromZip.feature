@@ -9,11 +9,12 @@ Feature: Add Function From Zip
     And User clicks on Create Function button
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate Change access popup
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
+    And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -39,11 +40,12 @@ Feature: Add Function From Zip
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate change access request
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
+    And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'

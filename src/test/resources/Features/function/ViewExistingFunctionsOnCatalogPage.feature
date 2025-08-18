@@ -9,6 +9,7 @@ Feature: View existing functions on Function Catalog Page
     And User clicks on Create Function button
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'
@@ -17,7 +18,7 @@ Feature: View existing functions on Function Catalog Page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
     When User clicks on Open Function
@@ -30,7 +31,7 @@ Feature: View existing functions on Function Catalog Page
       | Data Restrictions   | IP ALLOWED        |
     When User clicks on the function name 'WeatherFunctionTest' in the function catalog
 
-  @DeleteCreatedCatalog
+ @DeleteTestCatalog
   Scenario: view and validate filter functionality - Discoverable Functions
     Given User opens Main Menu
     When User clicks on Open Function

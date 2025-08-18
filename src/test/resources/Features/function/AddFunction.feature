@@ -1,6 +1,6 @@
 Feature: Add Function
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario Outline: Create function with all the required fields
     Given User opens Main Menu
     When User clicks on Open Function
@@ -19,6 +19,7 @@ Feature: Add Function
     And User sees Create Function button
     And User clicks on Create Function button
     And User sees success toast message '<Toast_message>'
+    And User clicks On Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open Function
     Then User sees the function name '<catalogName>' in the function catalog
