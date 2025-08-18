@@ -6,6 +6,7 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
+import aicore.utils.HomePageUtils;
 
 public class JobPageUtils {
 
@@ -164,4 +165,13 @@ public class JobPageUtils {
 		return (page.locator(xpath).isDisabled());
 	}
 
+	public static void createJob(Page page, String name, String value) {
+		HomePageUtils.openMainMenu(page);
+		HomePageUtils.clickOnOpenSettings(page);
+		page.locator(JOBS_TILE_XPATH).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+		page.locator(NAME_XPATH).fill(name);
+		page.locator(PIXEL_XPATH).fill(value);
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+	}
 }

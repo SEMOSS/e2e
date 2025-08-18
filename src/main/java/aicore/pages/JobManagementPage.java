@@ -102,4 +102,7 @@ public class JobManagementPage {
 		return JobPageUtils.isResumeButtonReverted(page);
 	}
 
+	public void createJob(String name, String value) {
+		JobPageUtils.createJob(page, name, value);
+	}
 }

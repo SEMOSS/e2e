@@ -66,7 +66,7 @@ public class AddModelSteps {
 
 	@When("User clicks on Create Model button")
 	public void user_clicks_on_create_model_button() throws InterruptedException {
-		openModelPage.createModel();
+		openModelPage.clickOnCreateModelButton();
 	}
 
 	@Given("User uploads a file {string}")
