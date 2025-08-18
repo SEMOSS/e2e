@@ -35,4 +35,9 @@ public final class TestResourceTrackerHelper {
 	public void clearCatalogResources() {
 		testCatalogResources.clear();
 	}
+
+	public Map<String, String> getCatalogType() {
+		// TODO Auto-generated method stub
+		return new HashMap<>();
+	}
 }
