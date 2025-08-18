@@ -56,4 +56,13 @@ public class AppTemplatePage {
     public void verifyPageWithTitleInPreview(String title) {
         AppTemplatePageUtils.verifyPageWithTitleInPreview(title, page);
     }
+    public void verifyPageWithtitleText(String titleText) {
+        AppTemplatePageUtils.verifyPageWithtitleText(titleText, page);
+    }
+    public void verifyDescriptionBelowTitle(String description) {
+        AppTemplatePageUtils.verifyDescriptionBelowTitle(description, page);
+    }
+    public void verifyHyperlink(String text, String url) {
+        AppTemplatePageUtils.verifyHyperlink(text, url, page);
+    }
  }

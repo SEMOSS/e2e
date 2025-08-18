@@ -66,5 +66,16 @@ public class createAppUsingTemplateSteps {
     public void User_sees_the_title_in_Preview_App(String title) {
         appTemplatePage.verifyPageWithTitleInPreview(title);
     }
-
+@Then("User sees the title as {string}")
+public void user_sees_the_title_as(String titleText) {
+    appTemplatePage.verifyPageWithtitleText(titleText);
+}
+@Then("User views description as {string}")
+public void user_views_description_as(String description) {
+    appTemplatePage.verifyDescriptionBelowTitle(description);
+}
+@Then("User sees the hyperlink with text {string} should point to {string}")
+public void user_sees_the_hyperlink_with_text_should_point_to(String text, String url) {
+    appTemplatePage.verifyHyperlink(text, url);
+}
 }

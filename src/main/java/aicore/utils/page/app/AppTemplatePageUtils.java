@@ -7,6 +7,8 @@ public class AppTemplatePageUtils {
     private static final String DESCRIPTION_XPATH = "//p[@data-block='description']";
     private static final String SUBMIT_BUTTON_XPATH = "//div[@data-block='submit']";
     private static final String TITLE_XPATH = "//p[@data-block='title']";
+    private static final String LANDING_PAGE_TITLE_TEXT_XPATH = "//p[@data-block='text--5552']";
+    private static final String DESCRIPTION_BELOW_TITLE_XPATH = "//p[@data-block='text--6096']";
     private static final String INPUT_BOX_XPATH = "//div[@data-block='question']";
     private static final String INPUT_BOX_LABEL_XPATH = "//div[@data-block='question']//label";
     private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//div[@role='dialog']//p[@data-block='description']";
@@ -109,5 +111,25 @@ public class AppTemplatePageUtils {
         page.getByText("Cancel").isVisible();
         page.getByText("Cancel").click();
 
+    }
+
+    public static void verifyPageWithtitleText(String titleText, Page page) {
+        String pageTitle = page.locator(LANDING_PAGE_TITLE_TEXT_XPATH).textContent();
+        if (!pageTitle.equals(titleText)) {
+            throw new AssertionError("Page title '" + titleText + "' is not visible");
+        }
+    }
+    public static void verifyDescriptionBelowTitle(String description, Page page) {
+       String pageDespriptionBelowTitle = page.locator(DESCRIPTION_BELOW_TITLE_XPATH).textContent();  
+        if (!pageDespriptionBelowTitle.equals(description)) {
+            throw new AssertionError("Description below title does not match");
+        }
+    }
+    public static void verifyHyperlink(String text, String url, Page page) {
+        page.getByText(text).isVisible();
+        String href = page.getByText(text).getAttribute("href");
+        if (!href.equals(url)) {
+            throw new AssertionError("Hyperlink with text '" + text + "' does not point to '" + url + "'");
+        }
     }
 }
