@@ -5,6 +5,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
+import aicore.utils.HomePageUtils;
+
 public class JobPageUtils {
 
 	private static final String JOBS_TILE_XPATH = "//span[text()='Jobs']";
@@ -49,6 +52,8 @@ public class JobPageUtils {
 
 	public static String verifyJobTitle(Page page, String jobTitle) {
 		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle));
+		AICorePageUtils.waitFor(actualJobTitle);
+		actualJobTitle.scrollIntoViewIfNeeded();
 		return actualJobTitle.textContent().trim();
 	}
 
@@ -160,4 +165,13 @@ public class JobPageUtils {
 		return (page.locator(xpath).isDisabled());
 	}
 
+	public static void createJob(Page page, String name, String value) {
+		HomePageUtils.openMainMenu(page);
+		HomePageUtils.clickOnOpenSettings(page);
+		page.locator(JOBS_TILE_XPATH).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+		page.locator(NAME_XPATH).fill(name);
+		page.locator(PIXEL_XPATH).fill(value);
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+	}
 }

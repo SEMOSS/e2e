@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
@@ -15,28 +14,16 @@ public class HomePageUtils {
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-	private static final String SEMOSS_OPEN_MEN_DATA_TESID = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
-//	public static final String APP_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Apps')";
-//	public static final String DATABASE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Database')";
+	private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
 	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
-	// TODO this changed for now need to use data test id
-//	public static final String FUNCTION_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Function')";
-//	private static final String OPEN_FUNCTION_DATA_TEST_ID_VALUE = "Function-icon";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
-//	public static final String MODEL_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Model')";
-//	private static final String OPEN_MODEL_XPATH = "//a[@data-testid='Model-icon']";
 	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
-//	public static final String STORAGE_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Storage')";
-//	private static final String OPEN_STORAGE_XPATH = "//a[@data-testid='Storage-icon']";
 	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
-//	public static final String VECTOR_MENU_BUTTON_LABEL = "div.MuiButtonBase-root:has-text('Vector')";
-//	private static final String OPEN_VECTOR_XPATH = "//a[@data-testid='TokenRoundedIcon']";
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	private static final String SETTINGS_MENU_BUTTON_XPATH = "//div[@aria-label='Settings']";
-
+	private static final String SETTINGS_MENU_BUTTON_DATA_TESTID = "SettingsIcon";
 	private static final String USER_PROFILE_ICON_DATA_TESTID = "PersonIcon";
 
 	// system apps
@@ -56,15 +43,12 @@ public class HomePageUtils {
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
 		}
-		// previously searched app remains visible when the user returns to the homepage
-		// This is a issue and will be removed once resolved.
-		// page.reload();
 	}
 
 	public static void openMainMenu(Page page) {
 		// check if menu is open
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_TESID);
-//		page.waitForTimeout(1000);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
+		page.waitForTimeout(300);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
 		}
@@ -74,7 +58,7 @@ public class HomePageUtils {
 	}
 
 	public static void closeMainMenu(Page page) {
-		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_TESID);
+		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		if (menuOpen.isVisible()) {
 			menuOpen.click();
 		}
@@ -132,27 +116,26 @@ public class HomePageUtils {
 	}
 
 	public static void logout(Page page) {
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_TESID);
-//		page.waitForTimeout(1000);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.click();
 		}
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
 		AICorePageUtils.waitFor(locator);
 		locator.click();
-
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
+ 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 
 	public static void clickOnOpenSettings(Page page) {
-		page.locator(SETTINGS_MENU_BUTTON_XPATH).click();
+		page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TESTID).click();
+		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void checkOnOpenSetting(Page page) {
-		page.locator(SETTINGS_MENU_BUTTON_XPATH).isVisible();
+		page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static void clickOnOpenDatabase(Page page) {

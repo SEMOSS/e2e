@@ -1,0 +1,51 @@
+Feature: Database Catalog Documentation
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedCatalog
+  Scenario: Database Catalog Documentation
+    Given User captures documentation screenshot for 'Database Catalog'
+    When User opens Main Menu
+    And User captures a 'button' and highlights the 'Database'
+    And User clicks on Open Database
+    And User captures a 'button' and highlights the 'Add Database'
+    And User clicks on Add Database
+    And User captures a 'List Item' and highlights the 'Postgres'
+    Then User selects database 'Postgres'
+    And User captures screenshot for "Postgres Database"
+    Given User opens Main Menu
+    When User clicks on Open Database
+    And User clicks on Add Database
+    Then User selects database 'ZIP'
+    And User uploads database file 'Database/TestDatabase.zip'
+    And User clicks on Create Database button
+    And User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User captures a 'button' and highlights the 'Export'
+    And User captures a 'button' and highlights the 'Edit'
+    And User clicks on 'Edit' button
+    And User captures screenshot for "View Tabs"
+    And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
+    And User captures a 'button' and highlights the 'Submit'
+    And User clicks on 'Submit' button
+    And User clicks on Access Control Tab
+    And User clicks Make 'Database' Discoverable button
+    And User logs out from the application
+    And User login as 'editor'
+    And User opens Main Menu
+    And User clicks on Open Database
+    And User captures a 'button' and highlights the 'Discoverable Databases'
+    And User click on 'Discoverable Databases' tab
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User captures a 'button' and highlights the 'Request Access'
+    And User click on the Request Access button
+    And User selects 'author' access
+    And User captures screenshot for "Access Request"
+    And User clicks on Request button
+    And User completes screenshot capture and triggers comparison for 'Database Catalog'
+    And User logs out from the application
+    Then User login as "admin"
+    When User opens Main Menu
+    And User clicks on Open Database
+    Then User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User completes screenshot capture and triggers comparison for 'Database Catalog'
+

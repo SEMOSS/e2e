@@ -24,7 +24,8 @@ public class SettingsPageUtils {
 	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
 	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
 	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
-	
+	private static final String TAB_XPATH = "//button[text()='{tabName}'] |//p[text()='{tabName}']";
+
 	public static boolean checkAdminButton(Page page) {
 		return page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible();
 	}
@@ -56,7 +57,7 @@ public class SettingsPageUtils {
 	public static int checkCountOfUsers(Page page) {
 		page.locator(MEMBER_COUNT_XPATH).isVisible();
 		String countOfUser = page.locator(MEMBER_COUNT_XPATH).textContent();
-		String[] numberOfUser = CommonUtils.splitStringBySpace(countOfUser,0);
+		String[] numberOfUser = CommonUtils.splitStringBySpace(countOfUser, 0);
 		int totalUser = Integer.parseInt(numberOfUser[0]);
 		return totalUser;
 
@@ -96,7 +97,7 @@ public class SettingsPageUtils {
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).isVisible();
 		page.locator(ROWS_FILTER_UNIT_VALUE_XPATH.replace("{unitValue}", rowsPerPageValue)).click();
 	}
-	
+
 	public static void clickOnSearchButton(Page page) {
 		page.locator(SEARCH_BUTTON_XPATH).isVisible();
 		page.locator(SEARCH_BUTTON_XPATH).click();
@@ -117,5 +118,8 @@ public class SettingsPageUtils {
 	public static String checkUsername(Page page, String username) {
 		return page.locator(USERLIST_XPATH.replace("{userName}", username)).textContent();
 	}
-	
+
+	public static void clickOnTab(Page page, String tabName) {
+		page.locator(TAB_XPATH.replace("{tabName}", tabName)).click();
+	}
 }

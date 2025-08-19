@@ -17,8 +17,8 @@ import aicore.utils.CommonUtils;
 
 public class NotebookPageUtils {
 
-	private static final String NOTEBOOK_OPTION_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Notebooks']";
-	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "NoteAddOutlinedIcon";
+	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
+	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
 	private static final String QUERY_SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
 	private static final String NOTEBOOK_QUERY_ID_LABEL = "Id";
 	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor textarea.inputarea";
@@ -64,11 +64,14 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterQueryName(Page page, String queryName) {
-		page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL)).fill(queryName);
+		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX,
+				new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL));
+		AICorePageUtils.waitFor(queryTextbox);
+		queryTextbox.fill(queryName);
 	}
 
 	public static void clickOnQuerySubmitButton(Page page) {
-		page.locator(QUERY_SUBMIT_BUTTON_XPATH).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
 	}
 
 	public static void enterCodeInQuery(Page page, String code) {
@@ -117,8 +120,10 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnImportButton(Page page) {
-		page.locator(IMPORT_BUTTON_XPATH).scrollIntoViewIfNeeded();
-		page.locator(IMPORT_BUTTON_XPATH).click();
+		Locator importButtonLocator = page.locator(IMPORT_BUTTON_XPATH);
+		importButtonLocator.scrollIntoViewIfNeeded();
+		AICorePageUtils.waitFor(importButtonLocator);
+		importButtonLocator.click();
 	}
 
 	public static void deleteFirstCell(Page page) {
@@ -138,10 +143,11 @@ public class NotebookPageUtils {
 			block.hover();
 		}
 		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell"));
-		runCellButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(runCellButton);
 		runCellButton.click();
-		page.getByTestId("CheckCircleIcon")
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		Locator checkCircle = page.getByTestId("CheckCircleIcon");
+		AICorePageUtils.waitFor(checkCircle);
+		checkCircle.isVisible();
 	}
 
 	public static String getFrameID(Page page) {

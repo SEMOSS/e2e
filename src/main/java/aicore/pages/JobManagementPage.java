@@ -23,7 +23,7 @@ public class JobManagementPage {
 	}
 
 	public void fillName(String value) {
-		JobPageUtils.fillName(page, value + " " + timestamp);
+		JobPageUtils.fillName(page, value);
 	}
 
 	public void fillPixel(String value) {
@@ -102,4 +102,7 @@ public class JobManagementPage {
 		return JobPageUtils.isResumeButtonReverted(page);
 	}
 
+	public void createJob(String name, String value) {
+		JobPageUtils.createJob(page, name, value);
+	}
 }

@@ -17,6 +17,10 @@ public class SettingsAdminQueryPage {
 		AdminQueryPageUtils.selectDatabase(page, databaseName);
 	}
 
+	public void clickOnSelectDatabase() {
+		AdminQueryPageUtils.clickOnSelectDatabase(page);
+	}
+
 	public void enterQuery(String query) {
 		AdminQueryPageUtils.enterQuery(page, query);
 	}
@@ -36,4 +40,13 @@ public class SettingsAdminQueryPage {
 	public String verifyQueryExecutedToastMessage() {
 		return AdminQueryPageUtils.verifyQueryExecutedToastMessage(page);
 	}
+
+	public void enterRowCount(String count) {
+		AdminQueryPageUtils.enterRowCount(page, count);
+	}
+
+	public int totalCountOfRows() {
+		return AdminQueryPageUtils.totalCountOfRows(page);
+	}
+
 }

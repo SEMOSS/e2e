@@ -156,6 +156,15 @@ public class CatlogAccessStep {
 		}
 	}
 
+	@Then("{string} user clicks on delete button and see the permission error toast message")
+	public void userClicksDeleteAndVerifiesToast(String userRole) {
+		openModelPage.clickOnDeleteButton();
+		String toastText = catlogpermission.editorUserSeeToastMessageText();
+		Assertions.assertTrue(toastText.contains(
+				"user does not have permissions to delete the engine. User must be the owner to perform this function."),
+				userRole + "Expected toast message not found. Actual message: " + toastText);
+	}
+
 	@Then("{string} user {string} see Member Setting")
 	public void user_see_member_setting(String userRole, String expectedOutcome) {
 		boolean isButtonVisible = openModelPage.isAddMemberButtonVisible();
@@ -356,5 +365,11 @@ public class CatlogAccessStep {
 		} else {
 			Assertions.fail("Invalid action: " + action);
 		}
+	}
+
+	@And("User clicks On Copy Catalog ID")
+	public void user_clicks_on_Copy_Catalog_ID() {
+		boolean isVisiable = catlogpermission.getCatalogAndCopyId();
+		Assertions.assertTrue(isVisiable, "Successfully copied ID' toast was not visible after clicking copy icon.");
 	}
 }

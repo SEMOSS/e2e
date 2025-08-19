@@ -11,6 +11,7 @@ Feature: Vector Overview
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
+    And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -25,9 +26,10 @@ Feature: Vector Overview
     And User enters value of Content Overlap as '17'
     And User clicks on Create Vector button
     Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And User clicks On Copy Catalog ID
     And User can see the Vector title as 'FAISS Vector DB00'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate vector overview page
     Given User can see the Vector title as 'FAISS Vector DB00'
     When User clicks on vector Edit button
@@ -38,7 +40,9 @@ Feature: Vector Overview
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
     And User login as "Editor"
+    And User opens Main Menu
     And User clicks on Open Vector
+    And User searches the 'FAISS Vector DB00' in the Vector Catalog searchbox
     And User clicks on the created Vector card name as 'FAISS Vector DB00'
     Then User can see the Vector title as 'FAISS Vector DB00'
     And User sees and copies the vector id
@@ -49,3 +53,5 @@ Feature: Vector Overview
     And User sees the Change Access button
     # And User sees Updated By as 'Admin' and Updated At as current date
     # Note: Updated By and Updated At are not visible in the UI, so this step is commented out
+     And User logs out from the application
+    Then User login as "Author"

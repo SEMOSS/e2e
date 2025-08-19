@@ -34,7 +34,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
-	private static final String VECTOR_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
+	private static final String VECTOR_CARD_XPATH = "//p[text()='{catalogName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
 	private static final String VECTOR_ID = "//*[@data-testid=\"ContentCopyOutlinedIcon\"]/../..";
 	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
@@ -43,6 +43,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String VECTOR_TAGS_XPATH = "//h6[text()='Tag']/../../..//div//div//span[text()='{tagName}']";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
 	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
+	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[text()='Discoverable Vectors']";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -228,4 +229,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 			throw new AssertionError("Updated At does not match the current date: " + currentDate);
 		}
 	}
-};
+	public void clickOnDiscoverableVectorsButton() {
+		page.locator(DISCOVERABLE_VECTORS_XPATH).click();
+	}
+}

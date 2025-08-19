@@ -42,10 +42,16 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
 	private static final String HOST_NAME_XPATH = "importForm-textField-hostname";
 	private static final String CATALOG_NAME_XPATH = "importForm-textField-NAME";
+	private static final String PORT_NUMBER_XPATH = "importForm-textField-port";
+	private static final String SCHEMA_NAME_XPATH = "importForm-textField-schema";
+	private static final String JDBC_URL_XPATH = "importForm-textField-CONNECTION_URL";
+	private static final String USER_NAME_XPATH = "importForm-textField-USERNAME";
 	private static final String APPLY_BUTTON_XPATH = "establish-connection-modal-apply-btn";
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
+	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
+	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -84,21 +90,54 @@ public class AddDatabasePageUtils {
 		applyDatabaseButton.click();
 	}
 
-	public static void enterHostName(Page page, String hostFilePath) {
-		String pathSeparator = FileSystems.getDefault().getSeparator();
+	public static void enterHostName(Page page, String hostName) {
 		Locator hostNameInput = page.getByTestId(HOST_NAME_XPATH);
-		// Get the current working directory (your project root)
+		hostNameInput.scrollIntoViewIfNeeded();
+		hostNameInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!hostNameInput.isVisible() || !hostNameInput.isEnabled()) {
+			throw new AssertionError("Host name input field is not visible or enabled.");
+		}
+		hostNameInput.fill(hostName);
+	}
+	public static void clearPortNumber(Page page) {
+		Locator portNumberInput = page.getByTestId(PORT_NUMBER_XPATH);
+		portNumberInput.scrollIntoViewIfNeeded();
+		portNumberInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!portNumberInput.isVisible() || !portNumberInput.isEnabled()) {
+			throw new AssertionError("Port number input field is not visible or enabled.");
+		}
+		portNumberInput.fill("");
+	}
+
+	public static void enterSchemaName(Page page, String schemaName) {
+		Locator schemaNameInput = page.getByTestId(SCHEMA_NAME_XPATH);
+		schemaNameInput.scrollIntoViewIfNeeded();
+		schemaNameInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!schemaNameInput.isVisible() || !schemaNameInput.isEnabled()) {
+			throw new AssertionError("Schema name input field is not visible or enabled.");
+		}
+		schemaNameInput.fill(schemaName);
+	}
+
+	public static void enterJDBCUrl(Page page, String jdbcUrl, String dbType) {
+		Locator jdbcUrlInput = page.getByTestId(JDBC_URL_XPATH);
+		String jdbcUrlPrefix = "jdbc:" + dbType + ":";
 		String workspaceRoot = System.getProperty("user.dir");
-		// Build the path to the sqlite.db file
-		Path dbPath = Paths.get(workspaceRoot, "src", "test", "resources", "data", "Database", hostFilePath);
-		String hostFileAbsolutePath = dbPath.toAbsolutePath().toString();
-		if (hostFileAbsolutePath.contains("/")) {
-			hostFileAbsolutePath = hostFileAbsolutePath.replace("/", pathSeparator);
+		Path dbPath = Paths.get(workspaceRoot, "src", "test", "resources", "data", "Database", jdbcUrl);
+		String dbAbsolutePath = dbPath.toAbsolutePath().toString().replace("\\", "/");
+
+		if (!jdbcUrlInput.isVisible() || !jdbcUrlInput.isEnabled()) {
+			throw new AssertionError("JDBC URL input field is not visible or enabled.");
 		}
-		if (!hostNameInput.isVisible() && !hostNameInput.isEnabled()) {
-			throw new AssertionError("Host name input field is not visible.");
+		jdbcUrlInput.fill(jdbcUrlPrefix + dbAbsolutePath);
+	}
+
+	public static void enterUserName(Page page, String userName) {
+		Locator userNameInput = page.getByTestId(USER_NAME_XPATH);
+		if (!userNameInput.isVisible() && !userNameInput.isEnabled()) {
+			throw new AssertionError("User name input field is not visible.");
 		}
-		hostNameInput.fill(hostFileAbsolutePath);
+		userNameInput.fill(userName);
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
@@ -272,7 +311,7 @@ public class AddDatabasePageUtils {
 
 	public static void clickDatabase(Page page, String databaseName) {
 		Locator locator = page.locator(DATABASE_NAME_XPATH.replace("{DatabaseName}", databaseName));
-		boolean isVisible = locator.isVisible();
+		locator.isVisible();
 		locator.click();
 	}
 

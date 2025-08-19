@@ -51,8 +51,8 @@ public class AddModelPage {
 		ModelPageUtils.enterVariableName(page, varName);
 	}
 
-	public void createModel() {
-		ModelPageUtils.createModel(page);
+	public void clickOnCreateModelButton() {
+		ModelPageUtils.clickOnCreateModelButton(page);
 	}
 
 	public String enterFilePath(String fileName) {
@@ -91,12 +91,12 @@ public class AddModelPage {
 		return ModelPageUtils.verifyModelTitle(page, modelTitle + timestamp);
 	}
 
-	public void clickOnSMSSTab() {
-		ModelPageUtils.clickOnSMSSTab(page);
-	}
-
 	public String getExpectedCatalogTitle(String modelTitle) {
 		return ModelPageUtils.getExpectedCatalogTitle(modelTitle + timestamp);
+	}
+
+	public void clickOnSMSSTab() {
+		ModelPageUtils.clickOnSMSSTab(page);
 	}
 
 	public String verifyNameInSMSS() {
@@ -109,6 +109,10 @@ public class AddModelPage {
 
 	public String verifyKeepConversationHistoryValueInSMSS(String fieldName) {
 		return ModelPageUtils.verifyKeepConversationHistoryValueInSMSS(page, fieldName);
+	}
+
+	public void createModel(String modelName, String catalogName, String openAIKey, String varName) {
+		ModelPageUtils.createModel(page, modelName, catalogName, openAIKey, varName);
 	}
 
 	// Edit model
@@ -322,7 +326,7 @@ public class AddModelPage {
 		return SettingsModelPageUtils.isAddMemberButtonVisible(page);
 	}
 
-	public void deleteAddedMember(String role)  {
+	public void deleteAddedMember(String role) {
 		SettingsModelPageUtils.deleteAddedMember(page, role);
 	}
 
@@ -348,5 +352,9 @@ public class AddModelPage {
 
 	public String getFullSectionCodeByHeading(String headingText) {
 		return SettingsModelPageUtils.getFullSectionCodeByHeading(page, headingText);
+	}
+
+	public void clickOnDiscoverableModelsButton() {
+		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
 	}
 }

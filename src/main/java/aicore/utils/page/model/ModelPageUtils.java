@@ -5,13 +5,15 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.HomePageUtils;
+
 public class ModelPageUtils {
 
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
-	private static final String CATALOG_NAME_XPATH = "//label[@id='NAME-label']";
-	private static final String OPEN_AI_KEY_XPATH = "//input[@id='OPEN_AI_KEY']";
-	private static final String VARIABLE_NAME_ID = "#VAR_NAME";
+	private static final String CATALOG_NAME_DATA_TESTID = "importForm-textField-NAME";
+	private static final String OPEN_AI_KEY_DATA_TESTID = "importForm-textField-OPEN_AI_KEY";
+	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-textField-VAR_NAME";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	// SMSS field
@@ -34,22 +36,19 @@ public class ModelPageUtils {
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
-//		page.fill(CATALOG_NAME_XPATH, catalogName);
-		page.getByTestId("importForm-textField-NAME").fill(catalogName);
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
 	}
 
 	public static void enterOpenAIKey(Page page, String openAIKey) {
-//		page.fill(OPEN_AI_KEY_XPATH, openAIKey);
-		page.getByTestId("importForm-textField-OPEN_AI_KEY").fill(openAIKey);
+		page.getByTestId(OPEN_AI_KEY_DATA_TESTID).fill(openAIKey);
 	}
 
 	public static void enterVariableName(Page page, String varName) {
-//		page.fill(VARIABLE_NAME_ID, varName);
-		page.getByTestId("importForm-textField-VAR_NAME").fill(varName);
+		page.getByTestId(VARIABLE_NAME_DATA_TESTID).fill(varName);
 
 	}
 
-	public static void createModel(Page page) {
+	public static void clickOnCreateModelButton(Page page) {
 		page.click(CREATE_MODEL_BUTTON_XPATH);
 	}
 
@@ -92,6 +91,19 @@ public class ModelPageUtils {
 		String varNameInSMSSProperties = page
 				.textContent(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
 		return varNameInSMSSProperties;
+	}
+
+	public static void createModel(Page page, String modelName, String catalogName, String openAIKey, String varName) {
+		HomePageUtils.openMainMenu(page);
+		HomePageUtils.clickOnOpenModel(page);
+		page.getByTestId("engine-catalog-add-btn").click();
+		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
+		page.getByTestId(OPEN_AI_KEY_DATA_TESTID).fill(openAIKey);
+		page.getByTestId(VARIABLE_NAME_DATA_TESTID).fill(varName);
+		Locator createButton = page.locator(CREATE_MODEL_BUTTON_XPATH);
+		createButton.scrollIntoViewIfNeeded();
+		createButton.click();
 	}
 
 }

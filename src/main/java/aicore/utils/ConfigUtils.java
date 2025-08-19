@@ -1,6 +1,7 @@
 package aicore.utils;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,5 +51,33 @@ public final class ConfigUtils {
 		}
 		return value;
 	}
+	public static void setValue(String key, String value) {
+    Path pathToProps = Paths.get("src", "main", "resources", "local.properties");
+    if (!Files.exists(pathToProps)) {
+        pathToProps = Paths.get("src", "main", "resources", "config.properties");
+    }
+
+    try {
+        java.util.List<String> lines = Files.readAllLines(pathToProps);
+
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            String trimmedLine = line.trim();
+            if (!trimmedLine.startsWith("#") && !trimmedLine.startsWith("##") && !trimmedLine.isEmpty() && trimmedLine.contains("=")) {
+                String[] parts = trimmedLine.split("=", 2);
+                String currentKey = parts[0].trim();
+                if (currentKey.equals(key)) {
+                    String leading = line.substring(0, line.indexOf(parts[0]));
+                    lines.set(i, leading + key + "=" + value);
+                    Files.write(pathToProps, lines);
+                    logger.info("Updated key: {} with value: {}", key, value);
+                    break;
+                }
+            }
+        }
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+}
 
 }

@@ -1,17 +1,7 @@
-############Scenario: View discoverable storages under 'Discoverable Storages' tab
-#### for this to work we need to:
-##### create a storage as an author
-##### go to access control/settings
-##### click on make discoverable
-#### login as editor
-#### go to discoverable storages
-#### user should see the storage the author created
-
 Feature: View Existing Discoverable Storage
-  # I want to use this feature file for all scenarios related to View Existing Storage
 
   Background: Add Amazon S3 Storage
-   Given User is on Home page
+    Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Storage engine
     And User clicks on Add Storage button
@@ -23,9 +13,10 @@ Feature: View Existing Discoverable Storage
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks On Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Test Storage'
-   
-    @LoginWithAuthor
+
+    @LoginWithAdmin @DeleteTestCatalog
     Scenario: View discoverable storages under 'Discoverable Storages' tab
     And User clicks on Settings Tab
     And User clicks on Make Discoverable button in storage settings
@@ -34,23 +25,41 @@ Feature: View Existing Discoverable Storage
     When User opens Main Menu
     And User clicks on Open Storage engine
     And User clicks on 'Discoverable Storages' tab
+    And User searches the 'Amazon S3 Test Storage' in the storage Catalog searchbox
     Then User should see the Storage title as 'Amazon S3 Test Storage'
-      # And User should see the 'No description available' in the description
-		
+    When User logs out from the application
+    And User login as "Admin"
+
+		@LoginWithAdmin @DeleteTestCatalog
     Scenario: Filter discoverable storage by 'Data Classification'
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
     And User clicks on 'Submit' button
+    And User clicks on Settings Tab
+    And User clicks on Make Discoverable button in storage settings
+    And User logs out from the application
+    Then User login as "editor"
     And User opens Main Menu
     And User clicks on Open Storage engine
+    And User clicks on 'Discoverable Storages' tab
+    And User searches the 'Amazon S3 Test Storage' in the storage Catalog searchbox
     And User selects 'CONFIDENTIAL' under 'Data Classification' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
-   
+    When User logs out from the application
+    And User login as "Admin"
+
+   @LoginWithAdmin @DeleteTestCatalog
     Scenario: Filter discoverable storage by 'Data Restrictions'
     When User clicks on 'Edit' button
-    And User enters and selects 'CONFIDENTIAL' under 'Data restrictions' section
+    And User enters and selects 'CONFIDENTIAL ALLOWED' under 'Data restrictions' section
     And User clicks on 'Submit' button
+    And User clicks on Settings Tab
+    And User clicks on Make Discoverable button in storage settings
+    And User logs out from the application
+    Then User login as "editor"
     And User opens Main Menu
     And User clicks on Open Storage engine
+    And User clicks on 'Discoverable Storages' tab
+    And User searches the 'Amazon S3 Test Storage' in the storage Catalog searchbox
     And User selects 'CONFIDENTIAL ALLOWED' under 'Data Restrictions' section
     Then User should see the Storage title as 'Amazon S3 Test Storage'
