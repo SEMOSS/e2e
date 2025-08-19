@@ -1,6 +1,6 @@
 Feature:Create app using Template 
 
-@LoginWithAdmin
+@LoginWithAdmin @DeleteCreatedTestApp
 Scenario: Create app using Template
     Given User is on Home page
     When User opens Main Menu
@@ -11,6 +11,7 @@ Scenario: Create app using Template
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
     Then User sees the title 'Ask LLM'
     And User sees description as 'Ask an LLM a question'
     And User sees input field with With label 'Question'

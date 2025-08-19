@@ -44,6 +44,11 @@ public class CommonUtils {
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
+	private static final String APP_DELETE_BUTTON_XPATH = "//li[@value='delete']";
+	private static final String APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialogActions-root')]//button[normalize-space()='Delete']";
+	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
+
+	private static final String THREE_DOT_ICON_DATATESTID = "MoreVertIcon";
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
@@ -266,12 +271,12 @@ public class CommonUtils {
 			throw new RuntimeException("Failed to read text from clipboard", e);
 		}
 	}
-	
+
 	public static boolean getVersion(Page page) {
 		HomePageUtils.openMainMenu(page);
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		String version = CaptureScreenShotUtils.versionCapture(page);
-		
+
 		logger.info("Version obtained: {}", version);
 		logger.info("Current version: {}", ConfigUtils.getValue("current_version"));
 		if (version.equals(ConfigUtils.getValue("current_version"))) {
@@ -279,12 +284,13 @@ public class CommonUtils {
 			return true;
 		} else {
 			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue("current_version"), version);
-        return false;
-    }
+			return false;
+		}
 	}
 
 	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
 		try {
+			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			switch (catalogType) {
 			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
@@ -312,4 +318,23 @@ public class CommonUtils {
 			return false;
 		}
 	}
+
+	public static boolean navigateAndDeleteApp(Page page, String appName) {
+		try {
+			page.navigate(UrlUtils.getUrl("#/"));
+			HomePageUtils.openMainMenu(page);
+			HomePageUtils.clickOnOpenAppLibrary(page);
+			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
+			page.waitForTimeout(500);
+			page.getByTestId(THREE_DOT_ICON_DATATESTID).click();
+			page.locator(APP_DELETE_BUTTON_XPATH).click();
+			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+			boolean deleted = page.locator(APP_DELETE_TOAST_MESSAGE_XPATH).isVisible();
+			return deleted;
+		} catch (Exception e) {
+			logger.warn("App deletion failed due to an exception", e);
+			return false;
+		}
+	}
+
 }

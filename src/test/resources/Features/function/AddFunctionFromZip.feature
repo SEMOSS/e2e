@@ -35,11 +35,7 @@ Feature: Add Function From Zip
     And User click on cancel button
     And User logs out from the application
     Then User login as "Admin"
-    And User opens Main Menu
-    And User clicks on Open Function
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
-
+    
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate change access request
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
@@ -62,10 +58,7 @@ Feature: Add Function From Zip
     Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     And User logs out from the application
     And User login as "Admin"
-    And User opens Main Menu
-    And User clicks on Open Function
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
+   
 
   @LoginWithAdmin
   Scenario Outline: Delete Function

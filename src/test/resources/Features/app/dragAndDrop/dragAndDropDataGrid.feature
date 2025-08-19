@@ -1,3 +1,4 @@
+@DeleteTestCatalog @DeleteCreatedTestApp
 Feature: Drag and Drop Data Grid
 
   Background: Create Drag and Drop app and navigate to Blocks option
@@ -9,6 +10,8 @@ Feature: Drag and Drop Data Grid
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     Then User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -17,6 +20,7 @@ Feature: Drag and Drop Data Grid
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     When User clicks on Blocks if it is not selected by default
     And User clicks on Notebook
@@ -34,7 +38,7 @@ Feature: Drag and Drop Data Grid
     And User clicks on Run cell button
     And User fetch the frame id
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin 
   Scenario: Drag and Drop Data Grid block and validate the column names with removed column
     When User clicks on 'page-1' page
     And User clicks on Blocks
@@ -47,12 +51,8 @@ Feature: Drag and Drop Data Grid
     And User remove the 'Age' column from the Data Grid
     And User clicks on the Sync icon
     And User should not see the 'Age' column in the Data Grid
-    And User opens Main Menu
-    And User clicks on Open Database
-    Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on the database name 'TestDatabase' in the database catalog
-
-  @LoginWithAdmin @DeleteCreatedCatalog
+   
+  @LoginWithAdmin 
   Scenario: validate the pagination on the Data Grid
     When User clicks on 'page-1' page
     And User clicks on Blocks
@@ -65,7 +65,4 @@ Feature: Drag and Drop Data Grid
       |  10 |
       |  50 |
       | 100 |
-    And User opens Main Menu
-    And User clicks on Open Database
-    Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on the database name 'TestDatabase' in the database catalog
+    

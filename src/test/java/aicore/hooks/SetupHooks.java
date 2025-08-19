@@ -267,4 +267,25 @@ public class SetupHooks {
 			TestResourceTrackerHelper.getInstance().clearCatalogResources();
 		}
 	}
+
+	@After("@DeleteCreatedTestApp")
+	public void deleteCreatedApp(Scenario scenario) {
+		String scenarioName = scenario.getName();
+		try {
+			String appName = TestResourceTrackerHelper.getInstance().getAppName();
+			if (appName != null && !appName.isBlank()) {
+				boolean deleted = CommonUtils.navigateAndDeleteApp(page, appName);
+				if (deleted) {
+					logger.info("Scenario Name: " + scenarioName + " : App deleted successfully. Name: " + appName);
+				} else {
+					logger.warn("Scenario Name: " + scenarioName + " : Failed to delete App: " + appName);
+				}
+			} else {
+				logger.warn("Scenario Name: " + scenarioName + " : App name not available for deletion.");
+			}
+		} finally {
+			TestResourceTrackerHelper.getInstance().setAppName(null);
+		}
+	}
+
 }

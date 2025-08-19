@@ -46,9 +46,15 @@ public class CreateAppUsingAgentBuilder {
 	public void clickOnCreateAppButton() {
 		AgentBuilderAppsUtils.clickOnCreateAppButton(page);
 	}
+
+	public String userFetchAppName() {
+		return AgentBuilderAppsUtils.userFetchAppName(page);
+	}
+
 	public void setInputInPrompt(String input) {
 		AgentBuilderAppsUtils.setInputInPrompt(page, input);
 	}
+
 	public void selectInputTypeForInput(String inputType, String setInput) {
 		AgentBuilderAppsUtils.selectInputTypeForInput(page, inputType, setInput);
 	}
