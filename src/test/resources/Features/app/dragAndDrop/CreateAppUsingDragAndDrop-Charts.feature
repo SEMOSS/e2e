@@ -9,6 +9,8 @@ Feature: Create drag and drop app
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     Then User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -17,9 +19,10 @@ Feature: Create drag and drop app
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
 
-  @DeleteCreatedCatalog
+  @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     Given User is on Home page
     When User opens Main Menu
@@ -51,12 +54,7 @@ Feature: Create drag and drop app
     And User drag and drop the '<COLUMN_NAMES>' columns to '<FIELD_NAMES>' fields
     Then User can see '<BLOCK_NAME>' chart same as baseline chart
     When User clicks on the Save App icon
-    And User is on Home page
-    And User opens Main Menu
-    And User clicks on Open Database
-    Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on the database name 'TestDatabase' in the database catalog
-
+       
     Examples: 
       | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                                                    | FIELD_NAMES                                                                                          |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose                                | Select Label, Select X Axis, Select Y Axis, Select Tooltip                                           |

@@ -15,6 +15,8 @@ public final class TestResourceTrackerHelper {
 
 	private final Map<String, String> testCatalogResources = new HashMap<>();
 
+	private String appName;
+
 	public static final String CATALOG_TYPE_DATABASE = "Database";
 	public static final String CATALOG_TYPE_MODEL = "Model";
 	public static final String CATALOG_TYPE_VECTOR = "Vector";
@@ -37,7 +39,14 @@ public final class TestResourceTrackerHelper {
 	}
 
 	public Map<String, String> getCatalogType() {
-		// TODO Auto-generated method stub
-		return new HashMap<>();
+		return new HashMap<>(testCatalogResources);
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+
+	public String getAppName() {
+		return appName;
 	}
 }

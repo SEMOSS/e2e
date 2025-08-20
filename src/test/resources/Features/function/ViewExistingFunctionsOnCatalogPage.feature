@@ -51,6 +51,4 @@ Feature: View existing functions on Function Catalog Page
       | Data Restrictions   | IP ALLOWED   |
     When User logs out from the application
     And User login as 'admin'
-    And User opens Main Menu
-    And User clicks on Open Function
-    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+   

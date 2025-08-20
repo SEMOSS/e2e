@@ -1,3 +1,4 @@
+@DeleteCreatedTestApp
 Feature: App landing page
 
   Background: Create Drag and Drop app
@@ -9,6 +10,7 @@ Feature: App landing page
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
 
   Scenario: User copies the App Id successfully
     Given User opens Main Menu

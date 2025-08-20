@@ -52,6 +52,7 @@ public class AppPageUtils {
 	public static void clickOnMoreVertIcon(Page page, String appName) {
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", appName)));
 		AICorePageUtils.waitFor(appCard);
+		appCard.scrollIntoViewIfNeeded();
 		Locator iconLocator = page.getByTestId(MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID);
 		iconLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		iconLocator.click();
