@@ -16,7 +16,7 @@ Feature: App landing page
     And User searches 'Test app' app in the app searchbox
     And User clicks on more vertical icon of 'Test app' app
     And User clicks on 'Copy App ID' option
-    Then User can see 'Succesfully copied to clipboard' toast message after copying the ID.
+    Then User can see 'Successfully copied to clipboard' toast message after copying the ID.
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches copied id in the app searchbox

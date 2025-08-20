@@ -42,7 +42,7 @@ Feature: App landing page
     And User clicks on 'App Settings' Card
     When User enables admin mode
     And User captures screenshot for "App Settings Page"
-    Then User can selects 'Test app' on the page
+    Then User can selects 'Travel Itinerary' on the page
     And User captures a 'button' and highlights the 'Delete'
     And User completes screenshot capture and triggers comparison for 'Settings Overview'
 
