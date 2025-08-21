@@ -17,6 +17,9 @@ public class AppTemplatePageUtils {
 	private static final String PREVIEW_APP_TITLE_XPATH = "//div[@role='dialog']//p[@data-block='title']";
 	private static final String PREVIEW_APP_SUBMIT_BUTTON_XPATH = "//div[@role='dialog']//div[@data-block='submit']";
 	private static final String SELECT_TEMPLATE_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
+	private static final String APP_TITLE_XPATH = "#page-1>h1";
+	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
+	private static final String APP_SUB_TITLE_XPATH = "#page-1>h5";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -114,4 +117,35 @@ public class AppTemplatePageUtils {
 		cancelButton.isVisible();
 		cancelButton.click();
 	}
+
+	 public static void verifyAppPageTitle(String title, Page page) {
+        String pageTitle = page.locator(APP_TITLE_XPATH).textContent();
+        if (!pageTitle.equals(title)) {
+            throw new AssertionError("App page title '" + title + "' is not visible");
+        }
+    }
+	 public static void clickOnAppPageTitle(String title, Page page) {
+        String pageTitle = page.locator(APP_TITLE_XPATH).textContent();
+        if (!pageTitle.equals(title)) {
+            throw new AssertionError("App page title '" + title + "' is not visible");
+        }
+        page.locator(APP_TITLE_XPATH).click();
+    }
+	 public static void changeAppPageTitle(String oldTitle, String newTitle, Page page) {
+        Locator pageTitle = page.locator(APP_BLOCK_TITLE_XPATH.replace("{text}", oldTitle));
+        if (!pageTitle.isVisible()) {
+            throw new AssertionError("App page title '" + oldTitle + "' is not visible");
+        }
+       	pageTitle.click();
+		page.locator(APP_BLOCK_TITLE_XPATH.replace("{text}", oldTitle)).fill(newTitle);
+		page.locator(APP_BLOCK_TITLE_XPATH.replace("{text}", newTitle)).press("Enter");
+    }
+
+	 public static void verifyAppPageSubTitle(String title, Page page) {
+        String pageTitle = page.locator(APP_SUB_TITLE_XPATH).textContent();
+        System.out.println(pageTitle);
+        if (!pageTitle.equals(title)) {
+            throw new AssertionError("App page sub title '" + title + "' is not visible");
+        }
+    }
 }

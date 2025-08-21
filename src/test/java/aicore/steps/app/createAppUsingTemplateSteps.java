@@ -67,4 +67,23 @@ public class createAppUsingTemplateSteps {
         appTemplatePage.verifyPageWithTitleInPreview(title);
     }
 
+     @Then("User sees the title as {string}")
+    public void user_sees_the_title_as(String title) {
+        appTemplatePage.verifyAppPageTitle(title);
+    }
+
+    @Then("User change title {string} with {string}")
+    public void user_change_the_title_as(String oldTitle, String newTitle) {
+        appTemplatePage.changeAppPageTitle(oldTitle,newTitle);
+    }
+    @And("User clicks on the title as {string}")
+    public void user_clicks_on_the_title_as(String title) {
+        appTemplatePage.clickOnAppPageTitle(title);
+    }
+
+    @Then("User sees the sub title as {string}")
+    public void user_sees_the_sub_title_as(String title) {
+        appTemplatePage.verifyAppPageSubTitle(title);
+    }
+
 }

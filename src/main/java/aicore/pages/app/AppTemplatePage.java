@@ -56,4 +56,18 @@ public class AppTemplatePage {
     public void verifyPageWithTitleInPreview(String title) {
         AppTemplatePageUtils.verifyPageWithTitleInPreview(title, page);
     }
+
+     public void verifyAppPageTitle(String title) {
+        AppTemplatePageUtils.verifyAppPageTitle(title,page);
+    }
+     public void clickOnAppPageTitle(String title) {
+        AppTemplatePageUtils.clickOnAppPageTitle(title,page);
+    }
+    public void changeAppPageTitle(String oldTitle, String newTitle) {
+        AppTemplatePageUtils.changeAppPageTitle(oldTitle,newTitle,page);
+    }
+
+     public void verifyAppPageSubTitle(String title) {
+        AppTemplatePageUtils.verifyAppPageSubTitle(title,page);
+    }
  }
