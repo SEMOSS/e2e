@@ -1,12 +1,9 @@
 package aicore.utils.page.app;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppTemplatePageUtils {
 
@@ -25,8 +22,12 @@ public class AppTemplatePageUtils {
 	private static final String SELECT_TEMPLATE_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
 	private static final String TEXT_XPATH = "//a[text()='{text}']";
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
-     private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
-	 private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
+	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
+	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
+	private static final String APP_TITLE_XPATH = "#page-1>h1";
+	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
+	private static final String APP_SUB_TITLE_XPATH = "#page-1>h5";
+
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
 		String actualDescription = descriptionLocator.textContent();
@@ -126,7 +127,8 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyDescriptionBelowTitle(String description, Page page) {
-		String pageDespriptionBelowTitle = page.locator(DESCRIPTION_BELOW_TITLE_XPATH.replace("{descriptionText}", description)).textContent();
+		String pageDespriptionBelowTitle = page
+				.locator(DESCRIPTION_BELOW_TITLE_XPATH.replace("{descriptionText}", description)).textContent();
 		if (!pageDespriptionBelowTitle.equals(description)) {
 			throw new AssertionError("Description below title does not match");
 		}
@@ -134,50 +136,91 @@ public class AppTemplatePageUtils {
 
 	public static void verifyHyperlink(String text, String link, Page page) {
 		Locator textLocator = page.locator(TEXT_XPATH.replace("{text}", text));
-		textLocator.dblclick(); 
+		textLocator.dblclick();
 		page.waitForTimeout(1000);
 	}
-	 public static String getCurrentUrl(Page page) {
-        return page.url();
-    }
+
+	public static String getCurrentUrl(Page page) {
+		return page.url();
+	}
 
 	public static void clickClosePreviewButton(Page page) {
 		Locator cancelButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel"));
 		cancelButton.isVisible();
 		cancelButton.click();
 	}
+
 	public static void getBackPage(Page page) {
 		page.goBack();
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 	}
+
 	public static void verifyDescriptionBelowTitleOfBlock(String blockTitle, String description, Page page) {
-		Locator blockDescriptionXPath = page.locator(BLOCK_DESCRIPTION_XPATH.replace("{blockTitle}", blockTitle).replace("{description}", description));
+		Locator blockDescriptionXPath = page.locator(
+				BLOCK_DESCRIPTION_XPATH.replace("{blockTitle}", blockTitle).replace("{description}", description));
 		if (!blockDescriptionXPath.isVisible()) {
 			throw new AssertionError("Description for the block with title '" + blockTitle + "' does not match");
 		}
 	}
 
-public static void verifyHyperlinkText(String text, String blockTitle, String url, Page page) {
-	Locator hyperlinkLocator = page.locator(HYPERLINK_TEXT_FOR_BLOCK_XPATH.replace("{title}", blockTitle).replace("{hyperlinkText}", text));
-	hyperlinkLocator.scrollIntoViewIfNeeded();
-	hyperlinkLocator.dblclick(); 
-	page.waitForTimeout(1000);
+	public static void verifyHyperlinkText(String text, String blockTitle, String url, Page page) {
+		Locator hyperlinkLocator = page.locator(
+				HYPERLINK_TEXT_FOR_BLOCK_XPATH.replace("{title}", blockTitle).replace("{hyperlinkText}", text));
+		hyperlinkLocator.scrollIntoViewIfNeeded();
+		hyperlinkLocator.dblclick();
+		page.waitForTimeout(1000);
 	}
 
-public static void clickOnHyperlinkText(String text, Page page) {
-	Locator textLocator = page.locator(TEXT_XPATH.replace("{text}", text));
-		textLocator.click(); 
+	public static void clickOnHyperlinkText(String text, Page page) {
+		Locator textLocator = page.locator(TEXT_XPATH.replace("{text}", text));
+		textLocator.click();
 		page.waitForTimeout(1000);
-}
-public static void fillDestinationUrl(String url, Page page) {
+	}
+
+	public static void fillDestinationUrl(String url, Page page) {
 		Locator urlInputField = page.locator(DESTINATION_URL_INPUT_FIELD_XPATH);
 		urlInputField.fill(url);
 		page.waitForTimeout(1000);
-}
-public static void clickSaveButtonOfTheApp(Page page) {
+	}
+
+	public static void clickSaveButtonOfTheApp(Page page) {
 		Locator saveButton = page.getByTestId("SaveRoundedIcon");
 		saveButton.isVisible();
 		saveButton.click();
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 	}
+
+	public static void verifyAppPageTitle(String title, Page page) {
+		String pageTitle = page.locator(APP_TITLE_XPATH).textContent();
+		if (!pageTitle.equals(title)) {
+			throw new AssertionError("App page title '" + title + "' is not visible");
+		}
+	}
+
+	public static void clickOnAppPageTitle(String title, Page page) {
+		String pageTitle = page.locator(APP_TITLE_XPATH).textContent();
+		if (!pageTitle.equals(title)) {
+			throw new AssertionError("App page title '" + title + "' is not visible");
+		}
+		page.locator(APP_TITLE_XPATH).click();
+	}
+
+	public static void changeAppPageTitle(String oldTitle, String newTitle, Page page) {
+		Locator pageTitle = page.locator(APP_BLOCK_TITLE_XPATH.replace("{text}", oldTitle));
+		if (!pageTitle.isVisible()) {
+			throw new AssertionError("App page title '" + oldTitle + "' is not visible");
+		}
+		pageTitle.click();
+		page.locator(APP_BLOCK_TITLE_XPATH.replace("{text}", oldTitle)).fill(newTitle);
+		page.locator(APP_BLOCK_TITLE_XPATH.replace("{text}", newTitle)).press("Enter");
+	}
+
+	public static void verifyAppPageSubTitle(String title, Page page) {
+		String pageTitle = page.locator(APP_SUB_TITLE_XPATH).textContent();
+		System.out.println(pageTitle);
+		if (!pageTitle.equals(title)) {
+			throw new AssertionError("App page sub title '" + title + "' is not visible");
+		}
+	}
+
 }

@@ -159,6 +159,10 @@ public class AddFunctionSteps {
 		boolean missingFieldFlag = addFunctionToCatalogPage.verifyMissingInputField();
 		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected");
 	}
+//	@When("User clicks Make Discoverable button")
+//	public void user_clicks_make_discoverable_button() {
+//		addFunctionToCatalogPage.clickOnMakeDiscoverableButton();
+//	}
 
 	@When("User clicks Make {string} Discoverable button")
 	public void user_clicks_make_discoverable_button(String catalogName) {

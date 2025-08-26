@@ -1,3 +1,4 @@
+@DeleteTestCatalog @DeleteCreatedTestApp
 Feature: Create Agent builder app
 
   Background: Create a Model - GPT-3.5
@@ -10,11 +11,12 @@ Feature: Create Agent builder app
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
+    And User clicks On Copy Catalog ID
     Then User Can see the Model title as 'Model'
 
   Scenario: Create Agent builder app and navigate to Blocks option
     Given User is on Home page
-		When User opens Main Menu
+    When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Construct an agent"
@@ -28,10 +30,11 @@ Feature: Create Agent builder app
     And User clicks on Next button
     And User clicks on Preview button
     And User clicks on Create App button
+    And User fetch the app name for agent builder app
 
- Scenario: Create Agent builder app using global prompt and navigate to Blocks option 
+  Scenario: Create Agent builder app using global prompt and navigate to Blocks option
     Given User is on Home page
-		When User opens Main Menu
+    When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Construct an agent"
@@ -47,9 +50,10 @@ Feature: Create Agent builder app
     And User clicks on Next button
     And User selects InputType as 'User Text' for '90 day'
     And User selects InputType as 'User Text' for 'Federal Health.'
-    And User selects InputType as 'User Text' for 'software development,' 
-    And User selects InputType as 'User Text' for 'team training,' 
-    And User selects InputType as 'User Text' for 'stakeholder presentations.'    
-     And User clicks on Next button
-     And User clicks on Preview button
-     And User clicks on Create App button
+    And User selects InputType as 'User Text' for 'software development,'
+    And User selects InputType as 'User Text' for 'team training,'
+    And User selects InputType as 'User Text' for 'stakeholder presentations.'
+    And User clicks on Next button
+    And User clicks on Preview button
+    And User clicks on Create App button
+    And User fetch the app name for agent builder app

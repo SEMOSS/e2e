@@ -52,6 +52,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_create_new_app_button() {
 		appPage.clickOnCreateNewAppButton();
 	}
+
 	@When("User clicks on Upload button")
 	public void user_clicks_on_upload_button() {
 		appCreatePopup.clickOnUploadButton();
@@ -81,7 +82,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_enters_app_name_as(String appName) {
 		appCreatePopup.enterAppName(appName);
 	}
-	
+
 	@Then("User can selects {string} on the page")
 	public void user_can_selects_on_the_page(String appName) {
 		appCreatePopup.selectApp(appName);
@@ -103,6 +104,12 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on Create button")
 	public void user_clicks_on_create_button() {
 		appCreatePopup.clickOnCreateButton();
+	}
+
+	@And("User fetch the app name for drag and drop app")
+	public void user_fetch_app_name() {
+		String fetchName = appCreatePopup.userFetchAppName();
+		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
 	}
 
 	@Then("User can see {string} with the text {string}")

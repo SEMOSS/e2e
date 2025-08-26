@@ -8,6 +8,7 @@ Feature: Database Catalog Documentation
     And User clicks on Open Database
     And User captures a 'button' and highlights the 'Add Database'
     And User clicks on Add Database
+    And User captures screenshot for "Database Options"
     And User captures a 'List Item' and highlights the 'Postgres'
     Then User selects database 'Postgres'
     And User captures screenshot for "Postgres Database"
@@ -35,6 +36,7 @@ Feature: Database Catalog Documentation
     And User captures a 'button' and highlights the 'Discoverable Databases'
     And User click on 'Discoverable Databases' tab
     And User clicks on the database name 'TestDatabase' in the database catalog
+   	And User captures screenshot for "Database Resource"
     And User captures a 'button' and highlights the 'Request Access'
     And User click on the Request Access button
     And User selects 'author' access

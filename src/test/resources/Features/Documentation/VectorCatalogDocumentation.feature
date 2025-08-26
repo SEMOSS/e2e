@@ -1,4 +1,4 @@
-Feature: capture screenshot and highlight button
+Feature: Vector documentation
 
   @LoginWithAdmin @SkipIfVersionMatch
   Scenario: Create a Vector 

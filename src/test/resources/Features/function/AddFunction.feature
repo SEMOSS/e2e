@@ -1,6 +1,6 @@
 Feature: Add Function
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario Outline: Create function with all the required fields
     Given User opens Main Menu
     When User clicks on Open Function
@@ -19,11 +19,8 @@ Feature: Add Function
     And User sees Create Function button
     And User clicks on Create Function button
     And User sees success toast message '<Toast_message>'
-    And User opens Main Menu
-    And User clicks on Open Function
-    Then User sees the function name '<catalogName>' in the function catalog
-    When User clicks on the function name '<catalogName>' in the function catalog
-
+    And User clicks On Copy Catalog ID
+   
     Examples: 
       | functionType | catalogName             | url                                   | httpMethod | postBodyMessage | headers                | functionParameters                                                                                                                                                                                | functionRequiredParameters | functionName    | functionDescription                              | functionTitle | Create_Funtion  | Toast_message                          | required_fields                                                                                                                                                             |
       | REST         | TestFunction{Timestamp} | https://api.api-ninjas.com/v1/weather | GET        | json            | {"X-Api-Key": "myKey"} | [{"parameterName":"lat","parameterType":"String","parameterDescription":"The lat of the location"},{"parameterName":"lon","parameterType":"String","parameterDescription":"lon of the location"}] | ["lat", "lon"]             | WeatherFunction | a function to call weather based on lat and long | catalog_name  | Create function | Successfully added function to catalog | Function Type,Catalog Name,URL,Http Method,POST Message Body Type,Function Parameters,Function Required Parameters,Function Name (metadata),Function Description (metadata) |
