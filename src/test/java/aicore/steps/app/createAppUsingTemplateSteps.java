@@ -172,6 +172,15 @@ public class createAppUsingTemplateSteps {
 
 	}
 
+	@Then("User click on the {string} hyperlink should point to {string}")
+	public void user_click_on_the_hyperlink_should_point_to(String text, String expectedUrl) {
+		appTemplatePage.verifyHyperlink(text, expectedUrl);
+		String currentUrl = appTemplatePage.getCurrentUrl();
+		String actualRelativePath = UrlUtils.extractRelativePath(currentUrl);
+		assertTrue(actualRelativePath.matches(expectedUrl),
+				"URL mismatch!\nExpected pattern: " + expectedUrl + "\nActual URL: " + actualRelativePath);
+	}
+
 	@And("User drags the {string} block and drops it on the landing page")
 	public void user_drop_chart_on_landing_page(String blockName) {
 		blocksPage.mouseHoverOnBlock(blockName);
