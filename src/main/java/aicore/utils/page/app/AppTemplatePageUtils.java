@@ -3,6 +3,7 @@ package aicore.utils.page.app;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
 import aicore.utils.CommonUtils;
 
@@ -156,7 +157,6 @@ public class AppTemplatePageUtils {
 
 	public static void verifyAppPageSubTitle(String title, Page page) {
 		String pageTitle = page.locator(APP_SUB_TITLE_XPATH).textContent();
-		System.out.println(pageTitle);
 		if (!pageTitle.equals(title)) {
 			throw new AssertionError("App page sub title '" + title + "' is not visible");
 		}
@@ -190,7 +190,7 @@ public class AppTemplatePageUtils {
 
 	public static void getBackPage(Page page) {
 		page.goBack();
-		// page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 	}
 
 	public static String getCurrentUrl(Page page) {
