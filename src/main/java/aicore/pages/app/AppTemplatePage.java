@@ -56,6 +56,46 @@ public class AppTemplatePage {
 		AppTemplatePageUtils.verifyPageWithTitleInPreview(title, page);
 	}
 
+	public void verifyPageWithtitleText(String titleText) {
+		AppTemplatePageUtils.verifyPageWithtitleText(titleText, page);
+	}
+
+	public void verifyDescriptionBelowTitle(String description) {
+		AppTemplatePageUtils.verifyDescriptionBelowTitle(description, page);
+	}
+
+	public void verifyHyperlink(String text, String url) {
+		AppTemplatePageUtils.verifyHyperlink(text, url, page);
+	}
+
+	public String getCurrentUrl() {
+		return AppTemplatePageUtils.getCurrentUrl(page);
+	}
+
+	public void getBackPage() {
+		AppTemplatePageUtils.getBackPage(page);
+	}
+
+	public void verifyDescriptionBelowTitleOfBlock(String blockTitle, String description) {
+		AppTemplatePageUtils.verifyDescriptionBelowTitleOfBlock(blockTitle, description, page);
+	}
+
+	public void verifyHyperlinkText(String text, String blockTitle, String url) {
+		AppTemplatePageUtils.verifyHyperlinkText(text, blockTitle, url, page);
+	}
+
+	public void clickOnHyperlinkText(String text) {
+		AppTemplatePageUtils.clickOnHyperlinkText(text, page);
+	}
+
+	public void fillDestinationUrl(String url) {
+		AppTemplatePageUtils.fillDestinationUrl(url, page);
+	}
+
+	public void clickSaveButtonOfTheApp() {
+		AppTemplatePageUtils.clickSaveButtonOfTheApp(page);
+	}
+
 	public void verifyAppPageTitle(String title) {
 		AppTemplatePageUtils.verifyAppPageTitle(title, page);
 	}
