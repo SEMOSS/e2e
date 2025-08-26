@@ -21,4 +21,14 @@ public class UrlUtils {
 		return x;
 	}
 
+	public static String extractRelativePath(String fullUrl) {
+        // Example: http://localhost:5173/SemossWeb/packages/client/dist/
+        // Split into [ "http://localhost:5173", "SemossWeb/packages/client/dist/" ]
+        String[] parts = fullUrl.split("5173/"); // split on port or domain separator
+        if (parts.length > 1) {
+            return parts[1]; // return only relative path
+        }
+        return "";
+    }
+
 }
