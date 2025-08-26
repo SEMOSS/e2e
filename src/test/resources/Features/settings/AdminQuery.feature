@@ -6,6 +6,7 @@ Feature: Admin query
     And User clicks on Open Settings
     When User enables admin mode
     And User clicks on 'Admin Query' Card
+    And User clicks on Database dropdown
     And User selects '<DATABASE_NAME>' from the database dropdown
     And User enters '<QUERY>' in the query textbox
     And User clicks on Run button

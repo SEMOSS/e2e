@@ -23,7 +23,7 @@ public class AddDatabasePageUtils {
 	private static final String CREATE_DATABASE_BUTTON_LABEL = "Create database";
 	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
-	private static final String COPY_ID_OPTION_TEXT = "Copy";
+	private static final String COPY_ID_OPTION_TEXT = "copy";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
 	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
@@ -50,8 +50,7 @@ public class AddDatabasePageUtils {
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
-	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
-	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
+	private static final String COPY_ID_XPATH = "//div[text()='{message}']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -99,6 +98,7 @@ public class AddDatabasePageUtils {
 		}
 		hostNameInput.fill(hostName);
 	}
+
 	public static void clearPortNumber(Page page) {
 		Locator portNumberInput = page.getByTestId(PORT_NUMBER_XPATH);
 		portNumberInput.scrollIntoViewIfNeeded();
@@ -221,14 +221,13 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnCopyID(Page page, String catalogName) {
+		page.waitForTimeout(300);
 		page.locator(VERTICAL_OPTIONS_XPATH.replace("{catalogName}", catalogName)).click();
 		page.getByRole(AriaRole.MENUITEM, new Page.GetByRoleOptions().setName(COPY_ID_OPTION_TEXT)).click();
 	}
 
 	public static String verifyCopyIdSuccessToastMessage(Page page, String toastMessage) {
-		Locator toastAlert = page.getByRole(AriaRole.ALERT)
-				.filter(new Locator.FilterOptions().setHasText(toastMessage));
-		toastAlert.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		Locator toastAlert = page.locator(COPY_ID_XPATH.replace("{message}", toastMessage));
 		return toastAlert.textContent().trim();
 	}
 
@@ -252,7 +251,10 @@ public class AddDatabasePageUtils {
 	}
 
 	public static boolean verifyCatalogDisplayedUnderBookmarkedSection(Page page, String catalogName) {
-		return page.locator(CATALOG_UNDER_BOOKMARKED_SECTION_XPATH.replace("{catalogName}", catalogName)).isVisible();
+		Locator bookmarkedSectio = page
+				.locator(CATALOG_UNDER_BOOKMARKED_SECTION_XPATH.replace("{catalogName}", catalogName));
+		AICorePageUtils.waitFor(bookmarkedSectio);
+		return bookmarkedSectio.isVisible();
 	}
 
 	public static void verifyDatabaseName(Page page, String databaseName) {

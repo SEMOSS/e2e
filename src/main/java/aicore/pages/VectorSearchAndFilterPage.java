@@ -28,7 +28,6 @@ public class VectorSearchAndFilterPage {
 	private static final String RECORD_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[3]";
 	private static final String SELECT_XPATH = "//div//ul//li[text()='{selectName}']";
 	private static final String CREATE_VECTOR_XPATH = "//div//button//span[text()='Create vector']";
-	private static final String DIV_XPATH = "//div[@class='css-155d4xt']";
 
 	public VectorSearchAndFilterPage(Page page, String timestamp) {
 		this.page = page;

@@ -63,10 +63,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_upload_as_host_name(String fileName) {
 		addDatabaseToCatalogPage.enterHostName(fileName);
 	}
+
 	@And("User clear the Port Number")
 	public void user_clear_the_port_number() {
 		addDatabaseToCatalogPage.clearPortNumber();
 	}
+
 	@And("User Upload {string} as Schema Name")
 	public void user_upload_as_schema_name(String schemaName) {
 		addDatabaseToCatalogPage.enterSchemaName(schemaName);
@@ -76,9 +78,10 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_add_as_username(String userName) {
 		addDatabaseToCatalogPage.addUserName(userName);
 	}
+
 	@And("User add {string} as JDBC URL for {string} database")
 	public void user_add_as_jdbc_url_for_database(String jdbcUrl, String dbType) {
-		addDatabaseToCatalogPage.addJDBCUrl(jdbcUrl,dbType);
+		addDatabaseToCatalogPage.addJDBCUrl(jdbcUrl, dbType);
 	}
 
 	@When("User clicks on apply button")

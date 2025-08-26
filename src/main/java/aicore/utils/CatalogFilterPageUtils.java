@@ -15,12 +15,13 @@ public class CatalogFilterPageUtils {
 	public static void selectFilterValue(Page page, String filterCategory, String filterValue) {
 		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
 				.replace("{filterValue}", filterValue));
-		filterValueLocator.waitFor();
+		AICorePageUtils.waitFor(filterValueLocator);
 		filterValueLocator.click();
 	}
 
 	public static boolean verifyCatalogIsVisibleOnCatalogPage(Page page, String catalogName) {
-		boolean isFunctionVisible = page.getByText(CATALOG_NAME.replace("{CatalogName}", catalogName)).isVisible();
-		return isFunctionVisible;
+		Locator catalogLocator = page.getByText(CATALOG_NAME.replace("{CatalogName}", catalogName));
+		AICorePageUtils.waitFor(catalogLocator);
+		return catalogLocator.isVisible();
 	}
 }

@@ -16,18 +16,18 @@ Feature: Model settings
  @DeleteCreatedDatabaseCatalog
   Scenario: Validate Model Settings page
     When User clicks on Model Setting tab
-    Then User can see 'Make Public' section
-    And User can see text message in 'Make Public' section as 'Show Model to all users and automatically give them read-only access. Users can request elevated access.'
-    And User can see toggle button in 'Make Public' section
-    And User can see 'Make Discoverable' section
-    And User can see text message in 'Make Discoverable' section as 'Allow users that do not currently have access to the Model to discover the Model, view Model details, and request access.'
-    And User can see toggle button in 'Make Discoverable' section
-    And User can see 'Delete' section
-    And User can see text message in 'Delete' section as 'Delete Model from catalog.'
-    And User can see Delete button in 'Delete' section
+    Then User can see 'Private' section
+    And User can see text message in 'Private' section as 'No one outside of the specified member group can access'
+    And User can see toggle button in 'Private' section
+    And User can see 'Non Discoverable' section
+    And User can see text message in 'Non Discoverable' section as 'Users cannot request access to this database if private'
+    And User can see toggle button in 'Non Discoverable' section
+    And User can see 'Delete Database' section
+    And User can see text message in 'Delete Database' section as 'Users cannot request access to this database if private'
+    And User can see Delete button in 'Delete Database' section
     And User can see 'Pending Requests' section
     And User can see 'Pending Requests' section contains 'pending request' or 'pending requests' text with count
-    And User can see 'Members' section
+    And User can see 'Permissions' section
     And User can see 'Search Members' textbox
     And User can see 'Add Members' button
     And User can see 'Rows per page' selection dropdown

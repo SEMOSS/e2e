@@ -33,7 +33,7 @@ public class UserManagementPageUtils {
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
-	private static final String ADFS_TOAST_MESSAGE_XPATH = "Succesfully modified adfs properties";
+	private static final String ADFS_TOAST_MESSAGE_XPATH = "//div[text()='{message}']";
 
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
@@ -188,8 +188,8 @@ public class UserManagementPageUtils {
 	}
 
 	public static String getToastMessage(Page page, String expectedMessage) {
-		Locator toast = page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(expectedMessage));
-		toast.waitFor(new Locator.WaitForOptions().setTimeout(5000)); // wait until visible
+		Locator toast = page.locator(ADFS_TOAST_MESSAGE_XPATH.replace("{message}", expectedMessage));
+		AICorePageUtils.waitFor(toast);
 		return toast.textContent().trim();
 	}
 
