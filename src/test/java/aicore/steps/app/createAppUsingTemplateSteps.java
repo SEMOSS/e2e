@@ -1,9 +1,12 @@
 package aicore.steps.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.app.AppTemplatePage;
+import aicore.pages.app.DragAndDropBlocksPage;
+
 import aicore.utils.UrlUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -11,9 +14,11 @@ import io.cucumber.java.en.When;
 
 public class createAppUsingTemplateSteps {
 	private AppTemplatePage appTemplatePage;
+	private DragAndDropBlocksPage blocksPage;
 
 	public createAppUsingTemplateSteps() {
 		appTemplatePage = new AppTemplatePage(SetupHooks.getPage());
+		blocksPage = new DragAndDropBlocksPage(SetupHooks.getPage());
 	}
 
 	@Then("User selects {string} from Template List")
@@ -77,7 +82,7 @@ public class createAppUsingTemplateSteps {
 	}
 
 	@Then("User sees title of the block as {string}")
-	public void user_sees_title_as(String title) {
+	public void user_sees_title_of_the_block_as(String title) {
 		appTemplatePage.verifyAppPageTitle(title);
 	}
 
@@ -147,5 +152,59 @@ public class createAppUsingTemplateSteps {
 	public void user_sees_the_url_as(String expectedUrl) {
 		String actualUrl = appTemplatePage.getCurrentUrl();
 		assertEquals(expectedUrl, actualUrl, "Expected URL does not match the current page URL.");
+  }
+  
+	@And("User see the {string}")
+	public void user_see_Page1(String expectedText) {
+		String actualText = appTemplatePage.userSeePage1();
+		assertEquals(actualText, expectedText, "Expected and Actual Text is do not match");
+	}
+
+	@And("User see the {string} block")
+	public void user_see_landing_page_block(String expectedblock) {
+		String actualBlock = appTemplatePage.userSeeLandingPageBlock();
+		assertEquals(actualBlock, expectedblock, "Expected and Actual Block is do not match");
+	}
+
+	@And("User see the {string} hyperlink")
+	public void user_see_hyperlink(String hrefValue) {
+		boolean isVisible = appTemplatePage.userSeeTheHyperlink(hrefValue);
+		assertTrue(isVisible, "Hyperlink is not visible to the user");
+
+	}
+
+	@Then("User click on the {string} hyperlink should point to {string}")
+	public void user_sees_the_hyperlink_with_text_should_point_to(String text, String expectedUrl) {
+		appTemplatePage.verifyHyperlink(text, expectedUrl);
+		String currentUrl = appTemplatePage.getCurrentUrl();
+		String actualRelativePath = UrlUtils.extractRelativePath(currentUrl);
+		assertTrue(actualRelativePath.matches(expectedUrl),
+				"URL mismatch!\nExpected pattern: " + expectedUrl + "\nActual URL: " + actualRelativePath);
+	}
+
+	@And("User drags the {string} block and drops it on the landing page")
+	public void user_drop_chart_on_landing_page(String blockName) {
+		blocksPage.mouseHoverOnBlock(blockName);
+		boolean isVisiable = appTemplatePage.dropChartOnLandingPage();
+		assertTrue(isVisiable, "Expected: Chart should be visible on the Landing Page after drag-and-drop. "
+				+ "But it was not found.");
+	}
+
+	@Then("User navigates to back page")
+	public void user_navigates_to_back_page() {
+		appTemplatePage.getBackPage();
+	}
+
+	@And("User see the {string} title after clicking resources hyperlink")
+	public void user_see_resource_title(String expectedTitle) {
+		String actualTitle = appTemplatePage.userSeeResourceTitle();
+		assertEquals(expectedTitle, actualTitle, "Page title does not match.");
+	}
+
+	@And("User see the {string} title after clicking about hyperlink")
+	public void user_see_about_title(String expectedTitle) {
+		String actualTitle = appTemplatePage.userSeeAboutTitle();
+		assertEquals(expectedTitle, actualTitle, "Page title does not match.");
 	}
 }
+

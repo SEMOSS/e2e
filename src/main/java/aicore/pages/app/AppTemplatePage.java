@@ -111,4 +111,40 @@ public class AppTemplatePage {
 	public void verifyAppPageSubTitle(String title) {
 		AppTemplatePageUtils.verifyAppPageSubTitle(title, page);
 	}
+
+	public String userSeePage1() {
+		return AppTemplatePageUtils.userSeePage1(page);
+	}
+
+	public String userSeeLandingPageBlock() {
+		return AppTemplatePageUtils.userSeeLandingPageBlock(page);
+	}
+
+	public boolean userSeeTheHyperlink(String hyperlink) {
+		return AppTemplatePageUtils.userSeeTheHyperlink(page, hyperlink);
+	}
+
+	public void verifyHyperlink(String text, String url) {
+		AppTemplatePageUtils.verifyHyperlink(text, url, page);
+	}
+
+	public boolean dropChartOnLandingPage() {
+		return AppTemplatePageUtils.dropChartOnLandingPage(page);
+	}
+
+	public void getBackPage() {
+		AppTemplatePageUtils.getBackPage(page);
+	}
+
+	public String getCurrentUrl() {
+		return AppTemplatePageUtils.getCurrentUrl(page);
+	}
+
+	public String userSeeResourceTitle() {
+		return AppTemplatePageUtils.userSeeResourceTitle(page);
+	}
+
+	public String userSeeAboutTitle() {
+		return AppTemplatePageUtils.userSeeAboutTitle(page);
+	}
 }

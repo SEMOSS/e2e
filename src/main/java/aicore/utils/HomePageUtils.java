@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
@@ -14,7 +15,9 @@ public class HomePageUtils {
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	// menu options
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-	private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
+	private static final String SEMOSS_OPEN_MEN_DATATESTID = "MenuOpenRoundedIcon";
+	// private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go
+	// Home']/parent::div//*[@data-testid='CloseIcon']";
 	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
@@ -47,10 +50,11 @@ public class HomePageUtils {
 
 	public static void openMainMenu(Page page) {
 		// check if menu is open
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
+		// Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
+		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATATESTID);
 		page.waitForTimeout(300);
 		if (isMenuOpen.isVisible()) {
-			isMenuOpen.click();
+			isMenuOpen.dblclick();
 		}
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
 		AICorePageUtils.waitFor(locator);
@@ -58,9 +62,9 @@ public class HomePageUtils {
 	}
 
 	public static void closeMainMenu(Page page) {
-		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
+		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATATESTID);// page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		if (menuOpen.isVisible()) {
-			menuOpen.click();
+			menuOpen.dblclick();
 		}
 	}
 
@@ -116,16 +120,16 @@ public class HomePageUtils {
 	}
 
 	public static void logout(Page page) {
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
+		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATATESTID);// page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		if (isMenuOpen.isVisible()) {
-			isMenuOpen.click();
+			isMenuOpen.dblclick();
 		}
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
 		AICorePageUtils.waitFor(locator);
 		locator.click();
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
- 
+
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 

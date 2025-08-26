@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+import aicore.utils.CommonUtils;
 
 public class AppTemplatePageUtils {
 
@@ -27,6 +28,15 @@ public class AppTemplatePageUtils {
 	private static final String APP_TITLE_XPATH = "#page-1>h1";
 	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
 	private static final String APP_SUB_TITLE_XPATH = "#page-1>h5";
+
+	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content' and normalize-space(text())='page-1']";
+	private static final String MULI_PAGE_APP_LANDING_BLOCK_XPATH = "//div[@id='page-1']//h1";
+	private static final String MULI_PAGE_APP_HYPERLINK_XAPTH = "//a[normalize-space(text())='%s']";
+	private static final String TEXT_XPATH = "//a[text()='{text}']";
+	private static final String LANDING_PAGE_TEXT = "Landing Page";
+	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
+	private static final String RESOURCE_TITLE_TEXT = "Resources";
+	private static final String ABOUT_TITLE_TEXT = "About";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -60,7 +70,6 @@ public class AppTemplatePageUtils {
 			throw new AssertionError("Template " + templateName + " is not visible in the list");
 		}
 		page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName)).click();
-
 	}
 
 	public static void verifyInputFieldWithLabel(String label, Page page) {
@@ -72,7 +81,6 @@ public class AppTemplatePageUtils {
 		if (!inputBoxLabel.contains(label)) {
 			throw new AssertionError("Input field label " + label + " does not match with expected label ");
 		}
-
 	}
 
 	public static void verifyPageWithTitle(String title, Page page) {
@@ -96,7 +104,6 @@ public class AppTemplatePageUtils {
 		if (!page.locator(PREVIEW_APP_SUBMIT_BUTTON_XPATH).first().isVisible()) {
 			throw new AssertionError("Ask button in preview is not visible");
 		}
-
 	}
 
 	public static void verifyInputFieldWithLabelInPreview(String label, Page page) {
@@ -217,10 +224,46 @@ public class AppTemplatePageUtils {
 
 	public static void verifyAppPageSubTitle(String title, Page page) {
 		String pageTitle = page.locator(APP_SUB_TITLE_XPATH).textContent();
-		System.out.println(pageTitle);
 		if (!pageTitle.equals(title)) {
 			throw new AssertionError("App page sub title '" + title + "' is not visible");
 		}
 	}
+	public static String userSeePage1(Page page) {
+		return page.locator(MULI_PAGE_APP_PAGE1_XAPTH).textContent();
+	}
 
+	public static String userSeeLandingPageBlock(Page page) {
+		return page.locator(MULI_PAGE_APP_LANDING_BLOCK_XPATH).textContent();
+	}
+
+	public static boolean userSeeTheHyperlink(Page page, String hrefValue) {
+		String locator = String.format(MULI_PAGE_APP_HYPERLINK_XAPTH, hrefValue);
+		return page.isVisible(locator);
+	}
+
+	public static void verifyHyperlink(String text, String link, Page page) {
+		Locator textLocator = page.locator(TEXT_XPATH.replace("{text}", text));
+		textLocator.dblclick();
+	}
+
+	public static boolean dropChartOnLandingPage(Page page) {
+		Locator targetBox = page.getByText(LANDING_PAGE_TEXT);
+		CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 10);
+		page.mouse().up();
+		return page.isVisible(AREA_CHART_SEE_ON_LANDING_PAGE_XPATH);
+	}
+
+	public static String getCurrentUrl(Page page) {
+		return page.url();
+	}
+
+	public static String userSeeResourceTitle(Page page) {
+		String actualTitle = page.getByText(RESOURCE_TITLE_TEXT).textContent();
+		return actualTitle;
+	}
+
+	public static String userSeeAboutTitle(Page page) {
+		String actualTitle = page.getByText(ABOUT_TITLE_TEXT).textContent();
+		return actualTitle;
+	}
 }
