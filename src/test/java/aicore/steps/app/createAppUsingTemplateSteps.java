@@ -76,7 +76,7 @@ public class createAppUsingTemplateSteps {
 		appTemplatePage.verifyPageWithtitleText(titleText);
 	}
 
-	@Then("User sees title as {string}")
+	@Then("User sees title of the block as {string}")
 	public void user_sees_title_as(String title) {
 		appTemplatePage.verifyAppPageTitle(title);
 	}
