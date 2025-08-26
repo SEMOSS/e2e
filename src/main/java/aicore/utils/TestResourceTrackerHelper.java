@@ -49,4 +49,5 @@ public final class TestResourceTrackerHelper {
 	public String getAppName() {
 		return appName;
 	}
+
 }
