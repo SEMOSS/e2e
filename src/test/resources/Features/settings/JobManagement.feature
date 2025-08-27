@@ -10,6 +10,7 @@ Feature: Job Management
     And User clicks Add button
     Then User can see 'Test Job' in the list
 
+  @LoginWithAdmin
   Scenario: Edit Job
     When User clicks on Edit Icon for added 'Test Job'
     And User edit Tags as 2
@@ -24,7 +25,7 @@ Feature: Job Management
   Scenario: Run Job
     When User selects the checkbox next to 'Test Job'
     Then 'Test Job' will start running and Pause button will be enabled
-    
+
   Scenario: Pause a Running Job
     When User clicks the checkbox of "Test Job"
     And User clicks the green Pause button
