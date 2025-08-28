@@ -20,12 +20,14 @@ public class Resource {
     private String feature = "";
     private int featureNumber = 0;
 
-    public Resource(String url) {
+    private int resourceNumber;
+
+    public Resource(String url, int resourceNumber) {
         this.url = url;
     }
 
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
     public void setUrl(String url) {
@@ -33,7 +35,7 @@ public class Resource {
     }
 
     public String getScenarioName() {
-        return scenarioName;
+        return this.scenarioName;
     }
 
     public void setScenarioName(String scenarioName) {
@@ -41,7 +43,7 @@ public class Resource {
     }
 
     public Playwright getPlaywright() {
-        return playwright;
+        return this.playwright;
     }
 
     public void setPlaywright(Playwright playwright) {
@@ -49,7 +51,7 @@ public class Resource {
     }
 
     public Browser getBrowser() {
-        return browser;
+        return this.browser;
     }
 
     public void setBrowser(Browser browser) {
@@ -57,7 +59,7 @@ public class Resource {
     }
 
     public BrowserContext getContext() {
-        return context;
+        return this.context;
     }
 
     public void setContext(BrowserContext context) {
@@ -65,7 +67,7 @@ public class Resource {
     }
 
     public Page getPage() {
-        return page;
+        return this.page;
     }
 
     public void setPage(Page page) {
@@ -73,50 +75,54 @@ public class Resource {
     }
 
     public int getStep() {
-        return step;
+        return this.step;
     }
 
     public void setStep(int step) {
-        step = step;
+        this.step = step;
     }
 
     public int getScenarioNumberOfFeatureFile() {
-        return scenarioNumberOfFeatureFile;
+        return this.scenarioNumberOfFeatureFile;
     }
 
     public void setScenarioNumberOfFeatureFile(int scenarioNumberOfFeatureFile) {
-        scenarioNumberOfFeatureFile = scenarioNumberOfFeatureFile;
+        this.scenarioNumberOfFeatureFile = scenarioNumberOfFeatureFile;
     }
 
     public String getFeature() {
-        return feature;
+        return this.feature;
     }
 
     public void setFeature(String feature) {
-        feature = feature;
+        this.feature = feature;
     }
 
     public int getFeatureNumber() {
-        return featureNumber;
+        return this.featureNumber;
     }
 
     public void setFeatureNumber(int featureNumber) {
-        featureNumber = featureNumber;
+        this.featureNumber = featureNumber;
     }
 
     public void resetScenarioNumberOfFeatureFile() {
-        scenarioNumberOfFeatureFile = 0;
+        this.scenarioNumberOfFeatureFile = 0;
     }
 
     public void incrementScenarioNumberOfFeatureFile() {
-        scenarioNumberOfFeatureFile++;
+        this.scenarioNumberOfFeatureFile++;
     }
 
     public void incrementFeatureNumber() {
-        featureNumber++;
+        this.featureNumber++;
     }
 
     public void resetStep() {
-        step = 0;
+        this.step = 0;
+    }
+
+    public int getResourceNumber() {
+        return resourceNumber;
     }
 }

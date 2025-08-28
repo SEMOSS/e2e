@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import aicore.hooks.SetupHooks;
 import aicore.pages.app.AppTemplatePage;
 import aicore.pages.app.DragAndDropBlocksPage;
-import aicore.utils.UrlUtils;
+import aicore.framework.UrlUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

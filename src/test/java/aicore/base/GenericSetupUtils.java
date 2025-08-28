@@ -140,7 +140,7 @@ public class GenericSetupUtils {
 		List<Resource> resources = new ArrayList<>();
 		for (int i = 0; i < parallelCount; i++) {
 			String url = urls.get(i);
-			Resource r = new Resource(url);
+			Resource r = new Resource(url, i);
 			resources.add(r);
 		}
 
@@ -269,14 +269,14 @@ public class GenericSetupUtils {
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 
-		String loginPage = UrlUtils.getUrl("packages/client/dist/#/login");
+		String loginPage = UrlUtils.getUrl("#/login");
 		page.waitForURL(loginPage);
 		assertEquals(loginPage, page.url());
 	}
 
 	public static String login(Page page, String user, String password) {
 		// going to login
-		String url = UrlUtils.getUrl("packages/client/dist/#/login");
+		String url = UrlUtils.getUrl("#/login");
 		page.navigate(url);
 		try {
 			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
@@ -307,7 +307,7 @@ public class GenericSetupUtils {
 	}
 
 	public static void navigateToHomePage(Page page) {
-		String homePage = UrlUtils.getUrl("packages/client/dist/#/");
+		String homePage = UrlUtils.getUrl("#/");
 		page.navigate(homePage);
 		try {
 			page.waitForURL(homePage);
@@ -317,7 +317,7 @@ public class GenericSetupUtils {
 	}
 
 	public static void loginWithMSuser(Page page, String Username, String Password) {
-		String url = UrlUtils.getUrl("packages/client/dist/#/login");
+		String url = UrlUtils.getUrl("#/login");
 		page.navigate(url);
 		page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
 		Page page1 = page.waitForPopup(() -> {
@@ -354,7 +354,7 @@ public class GenericSetupUtils {
 	}
 
 	private static void registerUser(Page page, String userName, String password) {
-		String url = UrlUtils.getUrl("packages/client/dist/#/login");
+		String url = UrlUtils.getUrl("#/login");
 		page.navigate(url);
 		page.waitForURL(url);
 		page.reload();

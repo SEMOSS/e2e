@@ -5,10 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
-import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;

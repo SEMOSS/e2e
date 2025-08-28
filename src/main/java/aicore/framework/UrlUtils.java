@@ -4,7 +4,7 @@ public class UrlUtils {
 
 	private static String api = ConfigUtils.getValue("baseUrl") + "Monolith/";
 	private static String baseUrl = ConfigUtils.getValue("baseUrl") + "SemossWeb/";
-	private static String url = baseUrl + "packages/client/dist/";
+	private static String newWebRoute = "packages/client/dist/";
 
 	public static String getApi(String path) {
 		String base = ResourcePool.get().getUrl();
@@ -14,7 +14,7 @@ public class UrlUtils {
 
 	public static String getUrl(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + "SemossWeb/" + path;
+		String x = base + "SemossWeb/" + newWebRoute + path;
 		return x;
 	}
 
