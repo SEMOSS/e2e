@@ -77,12 +77,12 @@ public class createAppUsingTemplateSteps {
 
 	@Then("User sees the title as {string}")
 	public void user_sees_the_title_as(String titleText) {
-		appTemplatePage.verifyPageWithtitleText(titleText);
+		appTemplatePage.verifyAppPageTitle(titleText);
 	}
 
 	@Then("User sees title of the block as {string}")
 	public void user_sees_title_of_the_block_as(String title) {
-		appTemplatePage.verifyAppPageTitle(title);
+		appTemplatePage.verifyPageWithtitleText(title);
 	}
 
 	@Then("User change title {string} with {string}")
@@ -105,8 +105,8 @@ public class createAppUsingTemplateSteps {
 		appTemplatePage.verifyDescriptionBelowTitle(description);
 	}
 
-	@Then("User sees the hyperlink with text {string} should point to {string}")
-	public void user_sees_the_hyperlink_with_text_should_point_to(String text, String url) {
+	@Then("User sees the hyperlink with text {string} should point to the url {string}")
+	public void user_sees_the_hyperlink_with_text_should_point_to_the_url(String text, String url) {
 		appTemplatePage.verifyHyperlink(text, url);
 		String currentUrl = appTemplatePage.getCurrentUrl();
 		String actualRelativePath = UrlUtils.extractRelativePath(currentUrl);

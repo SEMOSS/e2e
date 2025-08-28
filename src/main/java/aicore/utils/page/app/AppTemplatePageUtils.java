@@ -26,9 +26,9 @@ public class AppTemplatePageUtils {
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
 	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String APP_TITLE_XPATH = "#page-1>h1";
+	private static final String APP_TITLE_XPATH = "//*[@id='page-1']//h1";
 	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
-	private static final String APP_SUB_TITLE_XPATH = "#page-1>h5";
+	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
 
 	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content' and normalize-space(text())='page-1']";
 	private static final String MULI_PAGE_APP_LANDING_BLOCK_XPATH = "//div[@id='page-1']//h1";
