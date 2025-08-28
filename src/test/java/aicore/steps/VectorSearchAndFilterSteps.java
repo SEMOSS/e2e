@@ -66,9 +66,8 @@ public class VectorSearchAndFilterSteps {
 	}
 
 	@When("User searches {string} vector in the vector searchbox")
-	public void user_searches_vector_in_the_vector_searchbox(String vectorName) throws InterruptedException {
+	public void user_searches_vector_in_the_vector_searchbox(String vectorName) {
 		storagePage.searchStorage(vectorName);
-		Thread.sleep(3000);
 	}
 
 	@Then("User should see the {string} vector on the Vector Catalog page")
@@ -93,7 +92,7 @@ public class VectorSearchAndFilterSteps {
 		assertTrue(isVectorDisplayed);
 	}
 
-	@When("User clicks on Bookmark icon of {string} then the vector is bookmarked")
+	@When("User clicks on Bookmark  icon of {string} then the vector is bookmarked")
 	public void user_clicks_on_bookmark_icon(String bookmark) {
 		openVectorPage.bookmarkVector(bookmark);
 	}

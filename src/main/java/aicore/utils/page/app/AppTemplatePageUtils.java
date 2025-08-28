@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+
 import aicore.utils.CommonUtils;
 
 public class AppTemplatePageUtils {
@@ -25,14 +26,13 @@ public class AppTemplatePageUtils {
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
 	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String APP_TITLE_XPATH = "#page-1>h1";
+	private static final String APP_TITLE_XPATH = "//*[@id='page-1']//h1";
 	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
-	private static final String APP_SUB_TITLE_XPATH = "#page-1>h5";
+	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
 
 	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content' and normalize-space(text())='page-1']";
 	private static final String MULI_PAGE_APP_LANDING_BLOCK_XPATH = "//div[@id='page-1']//h1";
 	private static final String MULI_PAGE_APP_HYPERLINK_XAPTH = "//a[normalize-space(text())='%s']";
-	private static final String TEXT_XPATH = "//a[text()='{text}']";
 	private static final String LANDING_PAGE_TEXT = "Landing Page";
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
@@ -228,6 +228,7 @@ public class AppTemplatePageUtils {
 			throw new AssertionError("App page sub title '" + title + "' is not visible");
 		}
 	}
+
 	public static String userSeePage1(Page page) {
 		return page.locator(MULI_PAGE_APP_PAGE1_XAPTH).textContent();
 	}
@@ -241,20 +242,11 @@ public class AppTemplatePageUtils {
 		return page.isVisible(locator);
 	}
 
-	public static void verifyHyperlink(String text, String link, Page page) {
-		Locator textLocator = page.locator(TEXT_XPATH.replace("{text}", text));
-		textLocator.dblclick();
-	}
-
 	public static boolean dropChartOnLandingPage(Page page) {
 		Locator targetBox = page.getByText(LANDING_PAGE_TEXT);
 		CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 10);
 		page.mouse().up();
 		return page.isVisible(AREA_CHART_SEE_ON_LANDING_PAGE_XPATH);
-	}
-
-	public static String getCurrentUrl(Page page) {
-		return page.url();
 	}
 
 	public static String userSeeResourceTitle(Page page) {

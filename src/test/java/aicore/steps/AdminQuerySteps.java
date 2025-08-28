@@ -67,8 +67,8 @@ public class AdminQuerySteps {
 	@And("User can see success toast message as {string}")
 	public void user_can_see_success_toast_message_as(String expectedToastMessage) {
 		String actualToastMessage = adminQuery.verifyQueryExecutedToastMessage();
-		System.out.println(actualToastMessage);
 		Assertions.assertEquals(expectedToastMessage, actualToastMessage, "Toast message is incorrect");
+		adminQuery.closeQueryExecutedToastMessage();
 	}
 
 	@When("User enters {string} in the Max Rows to Collected textbox")

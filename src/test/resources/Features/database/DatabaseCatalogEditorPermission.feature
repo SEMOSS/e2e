@@ -10,6 +10,7 @@ Feature: Database Catalog permissions for Editor user
     And User clicks on Create Database button
     And User opens Main Menu
     And User clicks on Open Database
+    And User searches the 'TestDatabase' in the database Catalog searchbox
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     And User clicks On Copy Catalog ID

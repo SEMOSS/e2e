@@ -41,7 +41,7 @@ Feature: User Management
     And User clicks on 'access_keys_allowed' value
     And User change value of the key to 'true'
     And User clicks on Save button of the configuration
-    Then User can see a toast message after updating values of 'Adfs' as "Succesfully modified adfs properties"
+    Then User can see a toast message after updating values of 'Adfs' as "Successfully modified adfs properties"
 
   @LoginWithAdmin
   Scenario: Update Configuration Settings - access_keys_allowed - true - native
@@ -54,7 +54,7 @@ Feature: User Management
     And User clicks on 'access_keys_allowed' value
     And User change value of the key to 'true'
     And User clicks on Save button of the configuration
-    And User can see a toast message after updating values of 'Native' as "Succesfully modified native properties"
+    And User can see a toast message after updating values of 'Native' as "Successfully modified native properties"
 
   @LoginWithAdmin
   Scenario: Add New Native User with Unique Incremental Details - Validate profile info

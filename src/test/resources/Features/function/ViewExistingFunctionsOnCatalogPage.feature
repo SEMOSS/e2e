@@ -29,7 +29,6 @@ Feature: View existing functions on Function Catalog Page
       | Domain              | SAP, AI           |
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
-    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
 
  @DeleteTestCatalog
   Scenario: view and validate filter functionality - Discoverable Functions

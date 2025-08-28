@@ -124,20 +124,8 @@ public class AppTemplatePage {
 		return AppTemplatePageUtils.userSeeTheHyperlink(page, hyperlink);
 	}
 
-	public void verifyHyperlink(String text, String url) {
-		AppTemplatePageUtils.verifyHyperlink(text, url, page);
-	}
-
 	public boolean dropChartOnLandingPage() {
 		return AppTemplatePageUtils.dropChartOnLandingPage(page);
-	}
-
-	public void getBackPage() {
-		AppTemplatePageUtils.getBackPage(page);
-	}
-
-	public String getCurrentUrl() {
-		return AppTemplatePageUtils.getCurrentUrl(page);
 	}
 
 	public String userSeeResourceTitle() {

@@ -1,4 +1,3 @@
-@DeleteCreatedTestApp
 Feature: App landing page
 
   Background: Create Drag and Drop app
@@ -12,6 +11,7 @@ Feature: App landing page
     And User clicks on Create button
     And User fetch the app name for drag and drop app
 
+  @DeleteCreatedTestApp
   Scenario: User copies the App Id successfully
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -24,6 +24,7 @@ Feature: App landing page
     And User searches copied id in the app searchbox
     Then User can see 'Test app' app on the page
 
+  @DeleteCreatedTestApp
   Scenario: User clones app successfully
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -49,6 +50,7 @@ Feature: App landing page
     And User click on 'Delete' confirmation button
     Then User can not see 'Test app' app on the page
 
+  @DeleteCreatedTestApp
   Scenario: Filter apps
     Given User opens Main Menu
     When User clicks on Open App Library

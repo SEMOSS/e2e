@@ -44,6 +44,7 @@ public class UserManagementSteps {
 		settingpage.clickOnCard(cardName);
 
 	}
+
 	@And("User Clicks on Add User button")
 	public void user_clicks_on_add_user_button() {
 		userpage.clickAddUserButton();
@@ -242,7 +243,6 @@ public class UserManagementSteps {
 	public void user_can_see_toast_message(String sectionName, String expectedToastMessage) {
 		String actualMessage = userpage.getToastMessage(expectedToastMessage);
 		Assertions.assertEquals(expectedToastMessage, actualMessage, sectionName + " update failed");
-		userpage.waitForToastMessageToDisappear(expectedToastMessage);
 	}
 
 	@When("User clicks on Save button of the configuration")

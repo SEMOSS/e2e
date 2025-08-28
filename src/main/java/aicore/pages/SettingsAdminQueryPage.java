@@ -41,6 +41,10 @@ public class SettingsAdminQueryPage {
 		return AdminQueryPageUtils.verifyQueryExecutedToastMessage(page);
 	}
 
+	public void closeQueryExecutedToastMessage() {
+		AdminQueryPageUtils.closeQueryExecutedToastMessage(page);
+	}
+
 	public void enterRowCount(String count) {
 		AdminQueryPageUtils.enterRowCount(page, count);
 	}

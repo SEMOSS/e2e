@@ -19,17 +19,17 @@ public class SettingsModelPageUtils {
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
 	private static final String TILE_SECTION_TITLE_XPATH = "//p[text()='{title}']";
-	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Make Public']/parent::div/following-sibling::p";
+	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Private']/following-sibling::p";
 	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model public']";
-	private static final String MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Make Discoverable']/parent::div/following-sibling::p";
+	private static final String MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Non Discoverable']/following-sibling::p";
 	private static final String MAKE_DISCOVERABLE_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model discoverable']";
-	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Delete']/parent::div/following-sibling::p";
+	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Delete Database']/following-sibling::p";
 	private static final String DELETE_BUTTON_XPATH = "//button//span[text()='Delete']";
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h6[text()='Pending Requests']";
 	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h6[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
-	private static final String MEMBER_SECTION_TITLE_XPATH = "//h6[text()='Members']";
-	private static final String MEMBER_SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
-	private static final String SEARCH_MEMBERS_SEARCHBOX_XPATH = "//div[contains(@class,'MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary')]";
+	private static final String MEMBER_SECTION_TITLE_XPATH = "//h6[text()='Permissions']";
+	private static final String MEMBER_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
+	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String ADD_MEMBERS_BUTTON_XPATH = "//div[text()='Add Members']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//*[name()='svg'][@data-testid='ArrowDropDownIcon']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li";
@@ -45,9 +45,8 @@ public class SettingsModelPageUtils {
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
-	private static final String SEARCH_BOX_XPATH =  "[id ^='generated-id-'][placeholder='Search']";
+	private static final String SEARCH_BOX_XPATH = "[id ^='generated-id-'][placeholder='Search']";
 	private static final String DISCOVERABLE_MODELS_BUTTON_XPATH = "//button[text()='Discoverable Models']";
-
 
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
 	private static final String SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
@@ -118,7 +117,7 @@ public class SettingsModelPageUtils {
 
 	public static boolean verifySearchMembersSearchBoxIsVisible(Page page) {
 		page.click(MEMBER_SEARCH_ICON_XPATH);
-		boolean isSearchMembersTextBoxVisible = page.isVisible(SEARCH_MEMBERS_SEARCHBOX_XPATH);
+		boolean isSearchMembersTextBoxVisible = page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).isVisible();
 		return isSearchMembersTextBoxVisible;
 	}
 

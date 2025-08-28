@@ -13,7 +13,7 @@ public class CatlogAccessPageUtility {
 	// new database catalog
 	private static final String VIEW_ACCESSCONTROL_Text = "Access Control";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
-	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//button[@type='button']//*[@data-testid='SearchIcon']";
+	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//*[name()='svg' and @data-testid='ErrorOutlineIcon']/ancestor::div[contains(@class, 'MuiAlert-root')]//div[contains(@class, 'MuiAlert-message')]";
@@ -26,11 +26,9 @@ public class CatlogAccessPageUtility {
 	private static final String CIICK_ON_PENDING_REQUESTS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Pending Requests')]";
 	private static final String CLICK_ON_DATA_APPS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Data Apps')]";
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
-	private static final String MAKE_PUBLIC_TOOGLE_ENABLE_XPATH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'MuiSwitch-track')])[1]";
-	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'MuiSwitch-track')])[2]";
+	private static final String MAKE_PUBLIC_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
+	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//span[contains(@title,'discoverable')]";
 	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
-	private static final String ClICK_ON_MAKE_PUBLIC_TOGGLE_XAPTH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'css-1mt6xn3-MuiButtonBase-root-MuiSwitch-switchBase')])[1]";
-	private static final String CLICK_ON_MAKE_DISCOVRABLE_XPATH = "(//div[contains(., 'Make Public')]//span[contains(@class, 'css-1mt6xn3-MuiButtonBase-root-MuiSwitch-switchBase')])[2]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[text()='Edit']";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
