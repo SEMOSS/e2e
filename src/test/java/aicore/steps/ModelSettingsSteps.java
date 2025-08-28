@@ -3,9 +3,9 @@ package aicore.steps;
 import java.util.Arrays;
 import java.util.List;
 
-import aicore.hooks.SetupHooks;
 import org.assertj.core.api.SoftAssertions;
 
+import aicore.hooks.SetupHooks;
 import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.AddModelPage;
 import aicore.utils.CommonUtils;
@@ -23,7 +23,7 @@ public class ModelSettingsSteps {
 		modelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		softAssert = SoftAssertionHooks.getSoftAssertions();
 	}
-	
+
 	@When("User clicks on Model Setting tab")
 	public void user_clicks_on_model_setting_tab() {
 		modelPage.clickOnSettingsTab();
@@ -33,23 +33,14 @@ public class ModelSettingsSteps {
 	public void user_can_see_section(String sectionName) {
 		boolean isSectionVisible = false;
 		switch (sectionName) {
-		case "Make Public":
-			isSectionVisible = modelPage.verifyMakePublicSectionIsVisible(sectionName);
-			break;
-		case "Make Discoverable":
-			isSectionVisible = modelPage.verifyMakeDiscoverableSectionIsVisible(sectionName);
-			break;
-		case "Delete":
-			isSectionVisible = modelPage.verifyDeleteSectionIsVisible(sectionName);
-			break;
 		case "Pending Requests":
 			isSectionVisible = modelPage.verifyPendingRequestsSectionIsVisible();
 			break;
-		case "Members":
+		case "Permissions":
 			isSectionVisible = modelPage.verifyMembersSectionIsVisible();
 			break;
 		default:
-			System.out.println("Invalid section name: " + sectionName);
+			isSectionVisible = modelPage.verifyMakePublicSectionIsVisible(sectionName);
 		}
 		softAssert.assertThat(isSectionVisible).isTrue();
 	}
@@ -58,13 +49,13 @@ public class ModelSettingsSteps {
 	public void user_can_see_text_message_in_section_as(String sectionName, String textMessage) {
 		String actualTextMessage = null;
 		switch (sectionName) {
-		case "Make Public":
+		case "Private":
 			actualTextMessage = modelPage.verifyMakePublicSectionTextMessage();
 			break;
-		case "Make Discoverable":
+		case "Non Discoverable":
 			actualTextMessage = modelPage.verifyMakeDiscoverableSectionTextMessage();
 			break;
-		case "Delete":
+		case "Delete Database":
 			actualTextMessage = modelPage.verifyDeleteSectionTextMessage();
 			break;
 		default:
@@ -77,10 +68,10 @@ public class ModelSettingsSteps {
 	public void user_can_see_toggle_button_in_section(String sectionName) {
 		boolean isToggleButtonVisible = false;
 		switch (sectionName) {
-		case "Make Public":
+		case "Private":
 			isToggleButtonVisible = modelPage.verifyMakePublicToggleButtonIsVisible();
 			break;
-		case "Make Discoverable":
+		case "Non Discoverable":
 			isToggleButtonVisible = modelPage.verifyMakeDiscoverableToggleButtonIsVisible();
 			break;
 		default:
@@ -93,7 +84,7 @@ public class ModelSettingsSteps {
 	public void user_can_see_delete_button_in_section(String sectionName) {
 		boolean isDeleteButtonVisible = false;
 		switch (sectionName) {
-		case "Delete":
+		case "Delete Database":
 			isDeleteButtonVisible = modelPage.verifyDeleteButtonIsVisible();
 			break;
 		default:

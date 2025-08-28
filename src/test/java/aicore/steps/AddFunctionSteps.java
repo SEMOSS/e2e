@@ -33,9 +33,8 @@ public class AddFunctionSteps {
 	}
 
 	@Then("User selects function {string}")
-	public void user_selects_function(String functionType) throws InterruptedException {
+	public void user_selects_function(String functionType) {
 		addFunctionToCatalogPage.selectFunction(functionType);
-		Thread.sleep(3000);
 	}
 
 	@Then("User uploads function file {string}")
@@ -160,8 +159,11 @@ public class AddFunctionSteps {
 		boolean missingFieldFlag = addFunctionToCatalogPage.verifyMissingInputField();
 		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected");
 	}
+//	@When("User clicks Make Discoverable button")
+//	public void user_clicks_make_discoverable_button() {
+//		addFunctionToCatalogPage.clickOnMakeDiscoverableButton();
+//	}
 
-	
 	@When("User clicks Make {string} Discoverable button")
 	public void user_clicks_make_discoverable_button(String catalogName) {
 		addFunctionToCatalogPage.clickOnMakeDiscoverableButton(catalogName);
@@ -176,7 +178,7 @@ public class AddFunctionSteps {
 	public void user_clicks_on_settings_tab() {
 		addFunctionToCatalogPage.clickOnSettings();
 	}
-	
+
 	@Given("User searches the {string} in the function Catalog searchbox")
 	public void user_searches_the_in_the_function_catalog_searchbox(String catalogName) {
 		addFunctionToCatalogPage.searchFunctionCatalog(catalogName);

@@ -1,3 +1,4 @@
+@DeleteTestCatalog @DeleteCreatedTestApp
 Feature: Create drag and drop app And verify Data filters in the app
 
   Background: Create Drag and Drop app
@@ -9,6 +10,8 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -17,6 +20,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     When User clicks on Notebook
     And User clicks on Create new notebook
@@ -40,7 +44,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User can see type as 'PY' for 'Python' in JSON
     And User clicks on the Save App icon
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin
   Scenario: Verify Unfilter Data in the app
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -53,13 +57,8 @@ Feature: Create drag and drop app And verify Data filters in the app
     Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
     And User can see total '20' rows
     And User can see the 'DIABETES_UNIQUE_ROW_ID' column have unique values
-    And User is on Home page
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin
   Scenario: Verify filter Data in the app
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -74,12 +73,8 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User deletes the previous cell
     And User clicks on Run cell button
     Then User can see the filtered data with 'Age' equals '30'
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin
   Scenario: Verify filter Data in the app with AND operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -99,12 +94,8 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User deletes the previous cell
     And User clicks on Run cell button
     Then User can see the filtered data with "AND" operator for columns "Age, BloodPressure" and values "30,92"
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin
   Scenario: Verify filter data with OR operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -125,12 +116,8 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User deletes the previous cell
     And User clicks on Run cell button
     Then User can see the filtered data with "OR" operator for columns "Age, BloodPressure" and values "30,92"
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin
   Scenario: Verify Nested Rule filter data with AND operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -155,12 +142,8 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User deletes the previous cell
     And User clicks on Run cell button
     Then User can see the filtered data with "AND" operator for columns "Age, BloodPressure, BMI" and values "30,92,37.6"
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin  @DeleteCreatedCatalog
+  @LoginWithAdmin
   Scenario: Verify Nested Rule within Nested rule filter data
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -190,7 +173,3 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User deletes the previous cell
     And User clicks on Run cell button
     Then User can see the filtered data with "AND" operator for columns "Age, BloodPressure, BMI, Glucose" and values "30,92,37.6,110"
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog

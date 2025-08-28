@@ -199,7 +199,6 @@ public class DragAndDropBlocksPageUtils {
 			page.locator(DATA_GRID_XPATH).isVisible();
 			page.locator(DATA_GRID_XPATH).hover();
 			break;
-
 		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);

@@ -1,7 +1,7 @@
-Feature: Member Setting documentation
+Feature: Job Settings documentation
 
 @LoginWithAdmin @SkipIfVersionMatch
-  Scenario: Settings - My Profile Page
+  Scenario: Settings - Jobs Page
    Given User captures documentation screenshot for 'Jobs Management'
     Given User opens Main Menu
     And User captures a 'button' and highlights the 'Settings'

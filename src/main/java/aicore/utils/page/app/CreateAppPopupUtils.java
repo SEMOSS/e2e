@@ -1,6 +1,10 @@
 package aicore.utils.page.app;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+
+import aicore.utils.AICorePageUtils;
+import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
 	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get started with our tools']]";
@@ -10,6 +14,7 @@ public class CreateAppPopupUtils {
 	private static final String CREATE_BUTTON_XPATH = "//button[span[text()='Create']]";
 	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
 	private static final String SELECT_APP_XPATH = "//span[text()='{Select_App}']";
+	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//h6[contains(@class,'MuiTypography-subtitle1')]";
 
 	public static void clickOnGetStartedButton(Page page, String appType) {
 		if (appType.toLowerCase().contains("agent")) {
@@ -26,6 +31,7 @@ public class CreateAppPopupUtils {
 		page.locator(NAME_TEXTBOX_XPATH).fill(appNameTesting);
 		return appNameTesting;
 	}
+
 	public static void selectApp(Page page, String appName, String timestamp) {
 		String appNameTesting = appName + " " + timestamp;
 		page.getByPlaceholder("Project").click();
@@ -46,15 +52,26 @@ public class CreateAppPopupUtils {
 		page.locator(CREATE_BUTTON_XPATH).click();
 	}
 
+	public static String userFetchAppName(Page page) {
+		Locator getAppName = page.locator(USER_FETCH_APP_NAME_XPATH);
+		AICorePageUtils.waitFor(getAppName);
+		String actualAppName = getAppName.textContent().trim();
+		TestResourceTrackerHelper.getInstance().setAppName(actualAppName);
+		return actualAppName;
+	}
+
 	public static void clickOnUploadButton(Page page) {
 		page.getByTestId("new-app-upload-btn").click();
 	}
+
 	public static void clickOnShareAppButton(Page page) {
 		page.getByTestId("ShareRoundedIcon").click();
 	}
+
 	public static void clickOnIframeButton(Page page) {
 		page.locator(IFRAME_BUTTON_XPATH).click();
 	}
+
 	public static void clickOnCloseButton(Page page) {
 		page.getByTestId("ClearIcon").click();
 	}

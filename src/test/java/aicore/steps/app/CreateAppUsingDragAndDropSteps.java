@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
@@ -51,6 +52,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_create_new_app_button() {
 		appPage.clickOnCreateNewAppButton();
 	}
+
 	@When("User clicks on Upload button")
 	public void user_clicks_on_upload_button() {
 		appCreatePopup.clickOnUploadButton();
@@ -80,7 +82,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_enters_app_name_as(String appName) {
 		appCreatePopup.enterAppName(appName);
 	}
-	
+
 	@Then("User can selects {string} on the page")
 	public void user_can_selects_on_the_page(String appName) {
 		appCreatePopup.selectApp(appName);
@@ -102,6 +104,12 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on Create button")
 	public void user_clicks_on_create_button() {
 		appCreatePopup.clickOnCreateButton();
+	}
+
+	@And("User fetch the app name for drag and drop app")
+	public void user_fetch_app_name() {
+		String fetchName = appCreatePopup.userFetchAppName();
+		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
 	}
 
 	@Then("User can see {string} with the text {string}")
@@ -487,6 +495,28 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_not_see_app_on_the_page(String appName) {
 		boolean isAppNotDisplayed = appPage.isAppNotDisplayedOnPage(appName);
 		Assertions.assertTrue(isAppNotDisplayed, "Application is displayed on page");
+	}
+
+	@When("User applies each filter and validate {string} app is visible on the page")
+	public void user_applies_each_filter_and_validate_app_is_visible_on_the_page(String appName, DataTable dataTable) {
+		final String FILTER_CATEGORY_NAME = "FILTER_CATEGORY";
+		final String FILTER_VALUE_NAME = "FILTER_VALUE";
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String filterCategory = row.get(FILTER_CATEGORY_NAME);
+			String filterValues = row.get(FILTER_VALUE_NAME);
+
+			String[] filterValuesArray = filterValues.split(", ");
+			for (String filterValue : filterValuesArray) {
+				appPage.searchFilterValueOnAppPage(filterValue);
+				appPage.selectFilterValueOnAppPage(filterCategory, filterValue);
+				boolean isappVisible = appPage.isAppDisplayedOnPage(appName);
+				Assertions.assertTrue(isappVisible,
+						"App is not present in the list for " + " ' " + filterValue + " ' " + " filter value");
+				// To de-select selected filter we again call this method
+				appPage.selectFilterValueOnAppPage(filterCategory, filterValue);
+			}
+		}
 	}
 
 }

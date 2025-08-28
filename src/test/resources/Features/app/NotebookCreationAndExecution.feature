@@ -1,3 +1,4 @@
+@DeleteTestCatalog @DeleteCreatedTestApp
 Feature: Create Notebook and execute it
 
   Background: Create database and notebook
@@ -8,6 +9,9 @@ Feature: Create Notebook and execute it
     And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
+    Then User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -16,8 +20,8 @@ Feature: Create Notebook and execute it
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
 
-  @DeleteCreatedCatalog
   Scenario: Execute Import Data query
     Given User is on Home page
     When User opens Main Menu
@@ -47,8 +51,3 @@ Feature: Create Notebook and execute it
     And User can see name as frame id in JSON
     And User can see type as 'PY' for 'Python' in JSON
     When User clicks on the Save App icon
-    And User is on Home page
-    And User opens Main Menu
-    And User clicks on Open Database
-    Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on the database name 'TestDatabase' in the database catalog

@@ -20,7 +20,7 @@ public class CreateAppPopupPage {
 	public void enterAppName(String appName) {
 		CreateAppPopupUtils.enterAppName(page, appName, timestamp);
 	}
-	
+
 	public void selectApp(String appName) {
 		CreateAppPopupUtils.selectApp(page, appName, timestamp);
 	}
@@ -35,6 +35,10 @@ public class CreateAppPopupPage {
 
 	public void clickOnCreateButton() {
 		CreateAppPopupUtils.clickOnCreateButton(page);
+	}
+
+	public String userFetchAppName() {
+		return CreateAppPopupUtils.userFetchAppName(page);
 	}
 	public void clickOnUploadButton() {
 		CreateAppPopupUtils.clickOnUploadButton(page);

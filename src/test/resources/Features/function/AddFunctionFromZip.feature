@@ -9,11 +9,12 @@ Feature: Add Function From Zip
     And User clicks on Create Function button
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate Change access popup
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
+    And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -34,16 +35,13 @@ Feature: Add Function From Zip
     And User click on cancel button
     And User logs out from the application
     Then User login as "Admin"
-    And User opens Main Menu
-    And User clicks on Open Function
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
-
-  @LoginWithAdmin @DeleteCreatedCatalog
+    
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate change access request
     Given User sees the function name 'WeatherFunctionTest' in the function catalog
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
     And User selects the 'WeatherFunctionTest' from the function catalog
+    And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -60,15 +58,10 @@ Feature: Add Function From Zip
     Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     And User logs out from the application
     And User login as "Admin"
-    And User opens Main Menu
-    And User clicks on Open Function
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
+   
 
   @LoginWithAdmin
   Scenario Outline: Delete Function
-    //   Given User clicks on Open Function
-
     Given User sees the function name '<function_name>' in the function catalog
     Then User clicks on the function name '<function_name>' in the function catalog
     And User clicks on Access Control Tab

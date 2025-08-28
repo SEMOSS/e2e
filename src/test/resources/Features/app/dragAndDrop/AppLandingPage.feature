@@ -9,19 +9,22 @@ Feature: App landing page
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
 
+  @DeleteCreatedTestApp
   Scenario: User copies the App Id successfully
     Given User opens Main Menu
     When User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on more vertical icon of 'Test app' app
     And User clicks on 'Copy App ID' option
-    Then User can see 'Succesfully copied to clipboard' toast message after copying the ID.
+    Then User can see 'Successfully copied to clipboard' toast message after copying the ID.
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches copied id in the app searchbox
     Then User can see 'Test app' app on the page
 
+  @DeleteCreatedTestApp
   Scenario: User clones app successfully
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -46,3 +49,12 @@ Feature: App landing page
     And User clicks on 'Delete App' option
     And User click on 'Delete' confirmation button
     Then User can not see 'Test app' app on the page
+
+  @DeleteCreatedTestApp
+  Scenario: Filter apps
+    Given User opens Main Menu
+    When User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
+    And User applies each filter and validate 'Test app' app is visible on the page
+      | FILTER_CATEGORY | FILTER_VALUE |
+      | Tag             | Test1, Test2 |

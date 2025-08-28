@@ -235,7 +235,7 @@ public class SetupHooks {
 			logger.warn("Failed to delete catalog after scenario", scenario.getName());
 		}
 	}
-	
+
 	@AfterAll
 	public static void updateVersion() {
 		String version = CaptureScreenShotUtils.version;
@@ -247,9 +247,9 @@ public class SetupHooks {
 		logger.info("Getting version for app");
 		Page page = ResourcePool.get().getPage();
 		boolean isVersionMatched = CommonUtils.getVersion(page);
-            if (isVersionMatched==true) {
-                throw new AssumptionViolatedException("Skipping scenario due to version match.");
-            } 
+		if (isVersionMatched == true) {
+			throw new AssumptionViolatedException("Skipping scenario due to version match.");
+		}
 	}
 
 	@After("@DeleteTestCatalog")
@@ -279,5 +279,27 @@ public class SetupHooks {
 			TestResourceTrackerHelper.getInstance().clearCatalogResources();
 		}
 	}
+
+	@After("@DeleteCreatedTestApp")
+	public void deleteCreatedApp(Scenario scenario) {
+		String scenarioName = scenario.getName();
+		try {
+			String appName = TestResourceTrackerHelper.getInstance().getAppName();
+			if (appName != null && !appName.isBlank()) {
+				Page page = ResourcePool.get().getPage();
+				boolean deleted = CommonUtils.navigateAndDeleteApp(page, appName);
+				if (deleted) {
+					logger.info("Scenario Name: " + scenarioName + " : App deleted successfully. Name: " + appName);
+				} else {
+					logger.warn("Scenario Name: " + scenarioName + " : Failed to delete App: " + appName);
+				}
+			} else {
+				logger.warn("Scenario Name: " + scenarioName + " : App name not available for deletion.");
+			}
+		} finally {
+			TestResourceTrackerHelper.getInstance().setAppName(null);
+		}
+	}
+
 
 }

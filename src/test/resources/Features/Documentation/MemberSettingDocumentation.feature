@@ -1,7 +1,7 @@
-Feature: Member Setting documentation
+Feature: Member Settings documentation
 
 @LoginWithAdmin @SkipIfVersionMatch
-  Scenario: Settings - My Profile Page
+  Scenario: Settings - Member Settings
    Given User captures documentation screenshot for 'Member Settings'
     Given User opens Main Menu
     And User captures a 'button' and highlights the 'Settings'

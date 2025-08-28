@@ -1,4 +1,4 @@
-Feature: capture screenshot and highlight button
+Feature: Model Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch
   Scenario: Create a Model
