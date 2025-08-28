@@ -14,7 +14,7 @@ import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 
 public class DocumentationUtils {
 	private static final Logger logger = LogManager.getLogger(DocumentationUtils.class);

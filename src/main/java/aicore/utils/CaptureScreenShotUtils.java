@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
+import aicore.framework.ConfigUtils;
 import com.github.romankh3.image.comparison.ImageComparison;
 import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.microsoft.playwright.Locator;

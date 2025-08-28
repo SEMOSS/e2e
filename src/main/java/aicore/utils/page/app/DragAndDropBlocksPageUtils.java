@@ -14,7 +14,7 @@ import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.CommonUtils;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 
 public class DragAndDropBlocksPageUtils {
 

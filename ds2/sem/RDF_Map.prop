@@ -1,7 +1,7 @@
 #This section is for properties
 
 ENGINE_WATCHER	SMSSWatcher
-ENGINE_WEB_WATCHER	SMSSWebWatcher;SMSSStorageWatcher;SMSSModelWatcher;SMSSVectorWatcher;SMSSFunctionWatcher;SMSSGuardrailWatcher;SMSSBrowserWatcher
+ENGINE_WEB_WATCHER	SMSSWebWatcher;SMSSStorageWatcher;SMSSModelWatcher;SMSSVectorWatcher;SMSSFunctionWatcher;SMSSGuardrailWatcher
 PROJECT_WATCHER	ProjectWatcher
 
 INSIGHT_CACHE_DIR /app/Semoss/InsightCache
@@ -32,11 +32,6 @@ SMSSFunctionWatcher_DIR	/app/Semoss/function
 SMSSFunctionWatcher_EXT	.smss
 SMSSFunctionWatcher_ETYPE	FUNCTION
 
-SMSSBrowserWatcher	prerna.util.SMSSNoInitEngineWatcher
-SMSSBrowserWatcher_DIR	/app/Semoss/browser
-SMSSBrowserWatcher_EXT	.smss
-SMSSBrowserWatcher_ETYPE	BROWSER
-
 SMSSGuardrailWatcher	prerna.util.SMSSNoInitEngineWatcher
 SMSSGuardrailWatcher_DIR	/app/Semoss/guardrail
 SMSSGuardrailWatcher_EXT	.smss
@@ -56,7 +51,7 @@ ProjectWatcher_EXT	.smss
 #JobSchedulerWatcher_EXT	.json
 #rpa.config.directory /app/Semoss/rpa
 
-BaseFolder	/app/Semoss/
+BaseFolder	/app/Semoss
 ADDITIONAL_REACTORS /app/Semoss/reactors.json
 ADDITIONAL_REACTOR_PACKAGES
 SOCIAL	/app/Semoss/social.properties
@@ -79,14 +74,16 @@ NETTY_R false
 NETTY_PYTHON true
 NATIVE_PY_SERVER true
 
-PYTHONHOME /test
+PYTHONHOME /usr/lib/python/semossvenv
 TCP_WORKER prerna.tcp.SocketServer
 TCP_CLIENT prerna.tcp.client.NativePySocketClient
 
 USE_PYTHON true
-PY_WORKER prerna.pyserve.FileBasedPyWorker
-LD_LIBRARY_PATH	/test
-USE_PY_FILE	TRUE
+#LD_LIBRARY_PATH	/usr/lib/python/semossvenv/lib/python3.12/site-packages
+USE_PY_FILE	false
+
+PY_WORKER	prerna.pyserve.TCPPyWorker
+PY_WORKER_CP	fst-2.56.jar;jep-3.9.0.jar;log4j-1.2.17.jar;commons-io-2.4.jar;objenesis-2.5.1.jar;jackson-core-2.9.5.jar;javassist-3.20.0-GA.jar;netty-all-4.1.47.Final.jar;classes;
 
 USE_R true
 R_CONNECTION_JRI	false

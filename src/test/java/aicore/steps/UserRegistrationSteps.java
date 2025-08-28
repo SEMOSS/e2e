@@ -10,7 +10,7 @@ import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.pages.UserRegistrationPage;
 import aicore.utils.CommonUtils;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

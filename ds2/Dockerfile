@@ -78,7 +78,7 @@ RUN apt-get -y install apt-transport-https ca-certificates git wget dirmngr gnup
 	&& chmod 777 /opt/apache-maven-3.8.5/bin/*.cmd \
 	&& apt-get clean all
 
-RUN apt-get update && apt-get install -y curl gnupg2 lsb-release
+RUN apt-get update && apt-get install -y curl gnupg2 lsb-release unzip
 
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y nodejs
@@ -99,6 +99,7 @@ RUN mkdir /app/buildfiles/db/security/
 
 WORKDIR /app/buildfiles
 
+
 # git clone semoss again so I can replace directories on run for Semoss Resources
 RUN git clone https://github.com/SEMOSS/Semoss.git
 
@@ -113,6 +114,73 @@ RUN mv semoss-ui SemossWeb
 
 WORKDIR /app
 
+
+COPY BusinessInsider/bi-build.zip /tmp/bi-build.zip
+RUN unzip /tmp/bi-build.zip -d /opt/apache-tomcat-9.0.102/webapps/SemossWeb/packages/legacy/
+
 COPY scripts.sh /app/
 RUN chmod 777 scripts.sh
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    ca-certificates \
+    build-essential \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libffi-dev \
+    git \
+    clang \
+    # python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# installing rust as some python packages now require it for compiling
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Set environment variables for uv
+ENV UV_LINK_MODE=copy \
+UV_COMPILE_BYTECODE=1 \
+UV_NO_CACHE=1
+
+# we will install python inside /usr/lib/python/semossvenv
+# it is done here to carry forward and limit the duplicated chowns in opt
+ENV VIRTUAL_ENV="/usr/lib/python/semossvenv"
+ENV UV_PYTHON_INSTALL_DIR="/usr/lib/python"
+ENV UV_INSTALL_DIR="/usr/lib/uv/"
+ENV PATH=$UV_INSTALL_DIR:$PATH
+ENV PATH=$VIRTUAL_ENV/bin:$PATH
+
+# Install uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+ARG PYTHON_VERSION=3.12
+
+ARG PYTHON_VERSION
+ENV PYTHON_VERSION=${PYTHON_VERSION}
+
+ARG COMPUTE_TYPE
+ENV COMPUTE_TYPE=${COMPUTE_TYPE}
+
+RUN uv python install ${PYTHON_VERSION} --default --preview
+RUN uv venv --seed $VIRTUAL_ENV
+
+
+RUN cd /tmp && \
+curl -o pyproject.toml https://raw.githubusercontent.com/SEMOSS/Semoss/refs/heads/dev/py/install_config/pyproject.toml && \
+uv pip install -r pyproject.toml
+
+ENV VIRTUAL_ENV="/usr/lib/python/semossvenv"
+ENV PATH=$VIRTUAL_ENV/bin:$PATH
+
+# Install additional dependencies
+RUN apt-get update \
+    && apt-get install -y tesseract-ocr \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/*
+
+
+WORKDIR /app
 CMD ["/app/scripts.sh"]

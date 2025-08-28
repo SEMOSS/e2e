@@ -232,8 +232,8 @@ public class AddFunctionPageUtils {
 		filterValueLocator.click();
 	}
 
-	public static void clickOnMakeDiscoverableButton(Page page) {
-		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).isVisible();
+	public static void clickOnMakeDiscoverableButton(Page page, String catalogName) {
+		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH.replace("{catalogName}", catalogName)).isVisible();
 		page.locator(MAKE_DISCOVERABLE_BUTTON_XPATH).click();
 	}
 

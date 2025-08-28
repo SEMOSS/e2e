@@ -1,5 +1,7 @@
 package aicore.utils;
 
+import aicore.framework.ConfigUtils;
+import aicore.framework.UrlUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

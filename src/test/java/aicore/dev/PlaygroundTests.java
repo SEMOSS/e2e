@@ -3,22 +3,19 @@ package aicore.dev;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.base.GenericSetupUtils;
 import aicore.documentation.platformNavigation.DocumentationUtils;
-import aicore.utils.ConfigUtils;
-import aicore.utils.UrlUtils;
+import aicore.framework.ConfigUtils;
+import aicore.framework.UrlUtils;
 
 /**
  * Creating main method to test all models in playground

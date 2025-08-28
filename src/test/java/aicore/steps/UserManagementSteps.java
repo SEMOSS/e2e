@@ -9,7 +9,7 @@ import aicore.pages.HomePage;
 import aicore.pages.SettingPage;
 import aicore.pages.UserManagementPage;
 import aicore.utils.LastCreatedUser;
-import aicore.utils.RestCaller;
+import aicore.framework.RestCaller;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

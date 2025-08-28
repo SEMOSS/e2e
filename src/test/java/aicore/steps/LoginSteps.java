@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
