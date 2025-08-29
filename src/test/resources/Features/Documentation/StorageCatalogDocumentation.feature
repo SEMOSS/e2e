@@ -25,9 +25,12 @@ Feature: Storage Catalog Documentation
     And User captures screenshot for "View Tabs"
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
     And User captures a 'button' and highlights the 'Submit'
-    And User clicks on 'Submit' button
+    And User clicks on 'Close' button
     And User clicks on Settings Tab
     And User clicks on Make Discoverable button in storage settings
+    And User opens Main Menu
+  	And User clicks on Open Storage engine
+  	And User captures screenshot for "Storage Catalog"
     And User logs out from the application
     Then User login as "editor"
     When User opens Main Menu

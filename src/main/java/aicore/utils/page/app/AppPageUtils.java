@@ -25,6 +25,7 @@ public class AppPageUtils {
 	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
 	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
+	private static final String VIEW_DETAILS_BUTTON_XPATH = "//p[text()='View Details']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -135,5 +136,9 @@ public class AppPageUtils {
 				.replace("{filterValue}", filterValue));
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
+	}
+
+	public static void clickOnViewDetails(Page page) {
+		page.locator(VIEW_DETAILS_BUTTON_XPATH).click();
 	}
 }

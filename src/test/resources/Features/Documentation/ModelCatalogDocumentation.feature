@@ -22,7 +22,7 @@ Feature: Model Documentation
     And User captures screenshot for "View Tabs"
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
     And User captures a 'button' and highlights the 'Submit'
-    And User clicks on 'Submit' button
+    And User clicks on 'Close' button
     And User clicks on Access Control Tab
     And User clicks Make 'Model' Discoverable button
     And User logs out from the application

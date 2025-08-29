@@ -519,4 +519,8 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
+	@Then("User clicks on View Details button")
+	public void User_clicks_on_View_Details_button() {
+		appPage.clickOnViewDetails();
+	}
 }
