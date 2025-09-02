@@ -41,7 +41,6 @@ public class SetupHooks {
 	@BeforeAll
 	public static void beforeAll() throws IOException {
 		logger.info("BEFORE ALL");
-		System.out.println("BEFORE ALL");
 		GenericSetupUtils.initialize();
 		// not sure how this works with parallel?
 		// before all runs outside of parallelization but what about in between features?
