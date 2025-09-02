@@ -124,9 +124,11 @@ public class AppTemplatePage {
 		return AppTemplatePageUtils.userSeeTheHyperlink(page, hyperlink);
 	}
 
+
 	public boolean dropChartOnLandingPage() {
 		return AppTemplatePageUtils.dropChartOnLandingPage(page);
 	}
+
 
 	public String userSeeResourceTitle() {
 		return AppTemplatePageUtils.userSeeResourceTitle(page);
