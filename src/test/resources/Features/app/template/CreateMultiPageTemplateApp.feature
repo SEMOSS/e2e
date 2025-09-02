@@ -1,7 +1,7 @@
-Feature: Create app using Template
+Feature: Create Multi Page App using Template
 
   @LoginWithAdmin @DeleteCreatedTestApp
-  Scenario: Create app using Template
+  Scenario: Create Multi Page App using Template
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
@@ -23,5 +23,5 @@ Feature: Create app using Template
     And User see the 'About' title after clicking about hyperlink
     And User navigates to back page
     And User clicks on Blocks if it is not selected by default
-    And User drags the 'Area Chart' block and drops it on the landing page
+    And User drags the 'Area Chart' block and drops it on the 'landing page'
     And User clicks on the Save App icon

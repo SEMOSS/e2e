@@ -31,12 +31,17 @@ public class AppTemplatePageUtils {
 	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
 
 	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content' and normalize-space(text())='page-1']";
-	private static final String MULI_PAGE_APP_LANDING_BLOCK_XPATH = "//div[@id='page-1']//h1";
+	private static final String TEAMPLATE_APP_PAGE_TITLE_XPATH = "//div[@id='page-1']/h1[contains(@data-block,'text')]";
 	private static final String MULI_PAGE_APP_HYPERLINK_XAPTH = "//a[normalize-space(text())='%s']";
-	private static final String LANDING_PAGE_TEXT = "Landing Page";
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
+
+	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
+	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'MuiAutocomplete')]]";
+	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
+	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
+	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -229,12 +234,13 @@ public class AppTemplatePageUtils {
 		}
 	}
 
+	// MultiPage App
 	public static String userSeePage1(Page page) {
 		return page.locator(MULI_PAGE_APP_PAGE1_XAPTH).textContent();
 	}
 
-	public static String userSeeLandingPageBlock(Page page) {
-		return page.locator(MULI_PAGE_APP_LANDING_BLOCK_XPATH).textContent();
+	public static String userSeeTeamplatePageTitle(Page page) {
+		return page.locator(TEAMPLATE_APP_PAGE_TITLE_XPATH).textContent();
 	}
 
 	public static boolean userSeeTheHyperlink(Page page, String hrefValue) {
@@ -242,8 +248,9 @@ public class AppTemplatePageUtils {
 		return page.isVisible(locator);
 	}
 
-	public static boolean dropChartOnLandingPage(Page page) {
-		Locator targetBox = page.getByText(LANDING_PAGE_TEXT);
+	public static boolean dropChartOnPage(Page page, String titleOfPage) {
+		Locator targetBox = page.getByText(TEAMPLATE_APP_TITLE_TEXT.replace("{title}", titleOfPage));
+		targetBox.scrollIntoViewIfNeeded();
 		CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 10);
 		page.mouse().up();
 		return page.isVisible(AREA_CHART_SEE_ON_LANDING_PAGE_XPATH);
@@ -257,5 +264,35 @@ public class AppTemplatePageUtils {
 	public static String userSeeAboutTitle(Page page) {
 		String actualTitle = page.getByText(ABOUT_TITLE_TEXT).textContent();
 		return actualTitle;
+	}
+
+	// Variable Guide App
+	public static String userSeeVariableGuideBlocksTitle(Page page, String blockTitle) {
+		Locator actualBlockTitles = page.locator(VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH.replace("{blockTitle}", blockTitle));
+		return actualBlockTitles.textContent();
+	}
+
+	public static boolean userSeeTheFontStyleAndSizeBlock(Page page, String block) {
+		page.locator(VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH.replace("{blockTitle}", block)).click();
+		return page.locator(FONT_STYLE_SIZE_BLOCK_XAPTH).isVisible();
+	}
+
+	public static void selectFontStyle(Page page, String fontName) {
+		page.locator(VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH).click();
+		page.getByText(fontName).click();
+	}
+
+	public static String getSelectedFont(Page page) {
+		return page.locator(VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH).inputValue();
+	}
+
+	public static void changeFontSize(Page page, String size) {
+		Locator size1 = page.locator(VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH);
+		size1.fill("");
+		size1.fill(size);
+	}
+
+	public static String getFontSize(Page page) {
+		return page.locator(VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH).inputValue();
 	}
 }
