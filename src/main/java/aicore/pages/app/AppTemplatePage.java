@@ -108,6 +108,7 @@ public class AppTemplatePage {
 		AppTemplatePageUtils.changeAppPageTitle(oldTitle, newTitle, page);
 	}
 
+	// MultiPage App
 	public void verifyAppPageSubTitle(String title) {
 		AppTemplatePageUtils.verifyAppPageSubTitle(title, page);
 	}
@@ -116,19 +117,17 @@ public class AppTemplatePage {
 		return AppTemplatePageUtils.userSeePage1(page);
 	}
 
-	public String userSeeLandingPageBlock() {
-		return AppTemplatePageUtils.userSeeLandingPageBlock(page);
+	public String userSeeTeamplatePageTitle() {
+		return AppTemplatePageUtils.userSeeTeamplatePageTitle(page);
 	}
 
 	public boolean userSeeTheHyperlink(String hyperlink) {
 		return AppTemplatePageUtils.userSeeTheHyperlink(page, hyperlink);
 	}
 
-
-	public boolean dropChartOnLandingPage() {
-		return AppTemplatePageUtils.dropChartOnLandingPage(page);
+	public boolean dropChartOnPage(String titleOfPage) {
+		return AppTemplatePageUtils.dropChartOnPage(page, titleOfPage);
 	}
-
 
 	public String userSeeResourceTitle() {
 		return AppTemplatePageUtils.userSeeResourceTitle(page);
@@ -136,5 +135,30 @@ public class AppTemplatePage {
 
 	public String userSeeAboutTitle() {
 		return AppTemplatePageUtils.userSeeAboutTitle(page);
+	}
+
+	// Variable Guide App
+	public String userSeeVariableGuideBlocksTitle(String blockTitle) {
+		return AppTemplatePageUtils.userSeeVariableGuideBlocksTitle(page, blockTitle);
+	}
+
+	public boolean userSeeTheFontStyleAndSizeBlock(String block) {
+		return AppTemplatePageUtils.userSeeTheFontStyleAndSizeBlock(page, block);
+	}
+
+	public void selectFontStyle(String fontName) {
+		AppTemplatePageUtils.selectFontStyle(page, fontName);
+	}
+
+	public void changeFontSize(String size) {
+		AppTemplatePageUtils.changeFontSize(page, size);
+	}
+
+	public String getSelectedFont() {
+		return AppTemplatePageUtils.getSelectedFont(page);
+	}
+
+	public String getFontSize() {
+		return AppTemplatePageUtils.getFontSize(page);
 	}
 }
