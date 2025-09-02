@@ -548,6 +548,11 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
+	@Then("User clicks on View Details button")
+	public void User_clicks_on_View_Details_button() {
+		appPage.clickOnViewDetails();
+	}
+
 	@And("User get the CatalogName for variable")
 	public void user_get_the_catalog_name_for_variable() {
 		copiedCatalogName = appVariablePage.getCatalogNameForVariable();
@@ -603,6 +608,4 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_sees_the_variable_in_the_variable_list(String variableName, String variableType) {
 		appVariablePage.verifyVariablePresentInList(variableName, variableType);
 	}
-
-
 }
