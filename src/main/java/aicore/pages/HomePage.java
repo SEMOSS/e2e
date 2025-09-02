@@ -52,6 +52,22 @@ public class HomePage {
 		HomePageUtils.clickOnOpenAppLibrary(page);
 	}
 
+	public void clickOnBuildButton() {
+		HomePageUtils.clickOnBuildButton(page);
+	}
+
+	public void verifyBuildPageButton(String buttonName) {
+		HomePageUtils.verifyBuildPageButton(page, buttonName);
+	}
+
+	public void verifyBuildPageButtons(String buttonName) {
+		HomePageUtils.verifyBuildPageButtons(page, buttonName);
+	}
+
+	public void verifyTitleIsVisible(String titleName) {
+		HomePageUtils.verifyTitleIsVisible(page, titleName);
+	}
+
 	public void logout() {
 		HomePageUtils.logout(page);
 	}
