@@ -128,6 +128,31 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.navigatesToHomePage();
 	}
 
+	@Given("User clicks on Build button")
+	public void user_navigates_to_build_button() {
+		homePage.clickOnBuildButton();
+	}
+
+	@And("User able to see the {string} button")
+	public void user_able_to_see_the_button(String buttonName) {
+		homePage.verifyBuildPageButtons(buttonName);
+	}
+
+	@Then("User able to see the following Buttons:")
+	public void user_able_to_see_the_buttons(io.cucumber.datatable.DataTable dataTable) {
+		List<String> buttons = dataTable.asList(String.class);
+		for (String buttonName : buttons) {
+			homePage.verifyBuildPageButton(buttonName);
+		}
+	}
+	@Then("User able to see the following Titles:")
+	public void user_able_to_see_the_titles(io.cucumber.datatable.DataTable dataTable) {
+		List<String> titles = dataTable.asList(String.class);
+		for (String titleName : titles) {
+			homePage.verifyTitleIsVisible(titleName);
+		}
+	}
+
 	@And("User searches {string} app in the app searchbox")
 	public void user_searches_app_in_the_app_searchbox(String appName) {
 		appPage.searchApp(appName);
