@@ -37,6 +37,10 @@ public class CaptureScreenShotPage {
             case "searchbar":
                 locators = CaptureElementUtils.captureSearchElementScreenshot(page, elementName);
                 break;
+             case "copycta":
+                String elementName1 = "Copy";
+                locators = CaptureElementUtils.captureCopyCTAScreenshot(page, elementName1);
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported element type: " + elementType);
         }

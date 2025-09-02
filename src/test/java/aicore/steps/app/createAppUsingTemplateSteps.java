@@ -160,8 +160,8 @@ public class createAppUsingTemplateSteps {
 	}
 
 	@And("User see the {string} block")
-	public void user_see_landing_page_block(String expectedblock) {
-		String actualBlock = appTemplatePage.userSeeLandingPageBlock();
+	public void user_see_template_page_title(String expectedblock) {
+		String actualBlock = appTemplatePage.userSeeTeamplatePageTitle();
 		assertEquals(actualBlock, expectedblock, "Expected and Actual Block is do not match");
 	}
 
@@ -181,12 +181,12 @@ public class createAppUsingTemplateSteps {
 				"URL mismatch!\nExpected pattern: " + expectedUrl + "\nActual URL: " + actualRelativePath);
 	}
 
-	@And("User drags the {string} block and drops it on the landing page")
-	public void user_drop_chart_on_landing_page(String blockName) {
+	@And("User drags the {string} block and drops it on the {string}")
+	public void user_drop_chart_on_page(String blockName, String titleOfPage) {
 		blocksPage.mouseHoverOnBlock(blockName);
-		boolean isVisiable = appTemplatePage.dropChartOnLandingPage();
-		assertTrue(isVisiable, "Expected: Chart should be visible on the Landing Page after drag-and-drop. "
-				+ "But it was not found.");
+		boolean isVisiable = appTemplatePage.dropChartOnPage(titleOfPage);
+		assertTrue(isVisiable,
+				"Expected: Chart should be visible on the Page after drag-and-drop. " + "But it was not found.");
 	}
 
 	@And("User see the {string} title after clicking resources hyperlink")
@@ -199,5 +199,37 @@ public class createAppUsingTemplateSteps {
 	public void user_see_about_title(String expectedTitle) {
 		String actualTitle = appTemplatePage.userSeeAboutTitle();
 		assertEquals(expectedTitle, actualTitle, "Page title does not match.");
+	}
+
+	// Variable Guide App
+	@And("User can see the {string} block")
+	public void user_see_variable_guide_blocks_Title(String blockTitle) {
+		String actualBlockTitle = appTemplatePage.userSeeVariableGuideBlocksTitle(blockTitle);
+		assertEquals(blockTitle, actualBlockTitle, "Variable Guide Block title does not match.");
+	}
+
+	@And("User can click on the {string} block and see the Fonts Style and Size")
+	public void user_see_font_style_and_size_block(String block) {
+		boolean isVisiable = appTemplatePage.userSeeTheFontStyleAndSizeBlock(block);
+		assertTrue(isVisiable, "Expected: After clicking on block '" + block
+				+ "', the Font Style and Size options should be visible, but they were not found.");
+	}
+
+	@When("User selects {string} font style")
+	public void user_selects_font_style(String fontName) {
+		appTemplatePage.selectFontStyle(fontName);
+	}
+
+	@And("User changes font size to {string}")
+	public void user_changes_font_size(String size) {
+		appTemplatePage.changeFontSize(size);
+	}
+
+	@Then("The font style should be {string} and size should be {string}")
+	public void the_font_style_should_be_and_size_should_be(String expectedFont, String expectedSize) {
+		String actualFont = appTemplatePage.getSelectedFont();
+		String actualSize = appTemplatePage.getFontSize();
+		assertEquals(expectedFont, actualFont, "Font style does not match!");
+		assertEquals(expectedSize, actualSize, "Font size does not match!");
 	}
 }

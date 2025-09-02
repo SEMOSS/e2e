@@ -1,4 +1,4 @@
-Feature: App landing page
+Feature: App Library page Documentation
 
 @LoginWithAdmin @SkipIfVersionMatch
   Scenario: Create Drag and Drop app
@@ -20,14 +20,23 @@ Feature: App landing page
     And User captures a 'button' and highlights the 'Preview App'
     And User captures a 'button' and highlights the 'Save App'
     And User captures a 'button' and highlights the 'Share App'
-    # multiple copy buttons need to resolve
-    #And User clicks on Share App button
-    #And User captures a 'button' and highlights the 'Copy'
-    #And User clicks on IFrame button
-    #And User captures a 'button' and highlights the 'Copy'
-    #And User Clicks on close button
-    # this does not exist any more?
-    #And User captures a 'button' and highlights the 'Show'
+    And User clicks on Share App button
+    And User captures a 'button' and highlights the 'Copy'
+    And User clicks on IFrame button
+    And User captures a 'copycta' and highlights the 'CopyURL'
+    And User Clicks on close button
+    When User opens Main Menu
+    And User clicks on Open App Library
+		And User searches 'Travel Itinerary' app in the app searchbox
+    Then User can see 'Travel Itinerary' app on the page
+		And User clicks on View Details button
+		And User captures a 'button' and highlights the 'Export'
+    And User captures a 'button' and highlights the 'Edit'
+    And User clicks on 'Edit' button
+    And User captures screenshot for "View Tabs"
+    And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
+    And User captures a 'button' and highlights the 'Save'
+    And User clicks on 'Cancel' button
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button

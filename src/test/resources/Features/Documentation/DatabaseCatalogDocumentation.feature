@@ -26,7 +26,7 @@ Feature: Database Catalog Documentation
     And User captures screenshot for "View Tabs"
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
     And User captures a 'button' and highlights the 'Submit'
-    And User clicks on 'Submit' button
+    And User clicks on 'Close' button
     And User clicks on Access Control Tab
     And User clicks Make 'Database' Discoverable button
     And User logs out from the application
@@ -37,7 +37,7 @@ Feature: Database Catalog Documentation
     And User click on 'Discoverable Databases' tab
     And User clicks on the database name 'TestDatabase' in the database catalog
    	And User captures screenshot for "Database Resource"
-    And User captures a 'button' and highlights the 'Request Access'
+    And User captures screenshot for "Request Access"
     And User click on the Request Access button
     And User selects 'author' access
     And User captures screenshot for "Access Request"

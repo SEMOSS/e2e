@@ -8,9 +8,10 @@ public abstract class CaptureElementUtils {
 	private static final String CTA_ELEMENT_XPATH = "//span[contains(normalize-space(),'{ButtonName}')]/..  | //button[contains(normalize-space(),'{ButtonName}')] ";
 	private static final String LIST_ITEM_ELEMENT_XPATH = "//li[contains(normalize-space(),'{Element}')] | //p[contains(normalize-space(),'{Element}')]/..";
 	private static final String SEARCH_ELEMENT_XPATH = "//label[contains(normalize-space(),'{ButtonName}')]";
+	private static final String COPY_ELEMENT_XPATH="(//span[contains(normalize-space(),'{ButtonName}')]/..) | (//button[contains(normalize-space(),'{ButtonName}')]) ";
 
 	public static Locator captureButtonScreenshot(Page page, String buttonName) {
-		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
+		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName)).first();
 		if (!locator.isVisible()) {
 			locator = page.locator("//*[contains(@aria-label,'" + buttonName + "')]");
 		}
@@ -39,6 +40,11 @@ public abstract class CaptureElementUtils {
 		if (!locator.isVisible()) {
 			locator = page.locator("//input[contains(@placeholder,'" + buttonName + "')]");
 		}
+		return locator;
+	}
+
+	public static Locator captureCopyCTAScreenshot(Page page, String buttonName) {
+		Locator locator = page.locator(COPY_ELEMENT_XPATH.replace("{ButtonName}", buttonName)).nth(1);
 		return locator;
 	}
 }

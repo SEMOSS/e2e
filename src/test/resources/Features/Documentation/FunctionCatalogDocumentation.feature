@@ -8,6 +8,7 @@ Scenario: Create a Function
   When User clicks on Open Function
   And User captures a 'button' and highlights the 'Add Function'
   When User clicks on Add Function
+  And User captures screenshot for "Function Options"  
   And User selects function 'REST'
   And User enters Catalog name 'TestFunction'
   And User enters Url as 'https://api.api-ninjas.com/v1/weather'
@@ -26,24 +27,32 @@ Scenario: Create a Function
   And User captures screenshot for "View Tabs"
   And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
   And User captures a 'button' and highlights the 'Submit'
-  And User clicks on 'Submit' button
+  And User clicks on 'Close' button
   And User clicks on Access Control Tab
+  And User captures a 'button' and highlights the 'Access Control'
   And User clicks Make 'Function' Discoverable button
   And User logs out from the application
   And User login as 'editor'
   And User opens Main Menu    
   And User clicks on Open Function
   And User clicks on Discoverable button
+  And User captures a 'button' and highlights the 'Discoverable Functions'
   Then User sees the function name 'TestFunction' in the function catalog
   And User clicks on the function name 'TestFunction' in the function catalog
-  And User captures a 'button' and highlights the 'Request Access'
+  And User captures screenshot for "Request Access"
   And User click on the Request Access button
   And User selects 'author' access
   And User captures screenshot for "Access Request"
   And User clicks on Request button
   And User logs out from the application
   And User login as 'admin'
-  And User opens Main Menu    
+  And User opens Main Menu
+  And User clicks on Open Function
+  When User clicks on Add Function
+  And User selects function 'ZIP'
+  And User uploads function file 'Function/weatherFunctionTest.zip'
+  And User captures screenshot for "Function ZIP"
+  And User opens Main Menu
   And User clicks on Open Function
   Then User sees the function name 'TestFunction' in the function catalog
   And User clicks on the function name 'TestFunction' in the function catalog
