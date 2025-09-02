@@ -13,6 +13,7 @@ import com.microsoft.playwright.Locator;
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.app.AppPage;
+import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
@@ -33,10 +34,13 @@ public class CreateAppUsingDragAndDropSteps {
 	private String blockText;
 	private int initialChartCount;
 	private String copiedId;
+	private AppVariablePage appVariablePage;
+	private String copiedCatalogName;
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
+		appVariablePage = new AppVariablePage(SetupHooks.getPage());
 		blocksPage = new DragAndDropBlocksPage(SetupHooks.getPage());
 		appPage = new AppPage(SetupHooks.getPage(), timestamp);
 		appCreatePopup = new CreateAppPopupPage(SetupHooks.getPage(), timestamp);
@@ -126,6 +130,31 @@ public class CreateAppUsingDragAndDropSteps {
 	@When("User is on Home page")
 	public void user_is_on_home_page() {
 		blocksPage.navigatesToHomePage();
+	}
+
+	@Given("User clicks on Build button")
+	public void user_navigates_to_build_button() {
+		homePage.clickOnBuildButton();
+	}
+
+	@And("User able to see the {string} button")
+	public void user_able_to_see_the_button(String buttonName) {
+		homePage.verifyBuildPageButtons(buttonName);
+	}
+
+	@Then("User able to see the following Buttons:")
+	public void user_able_to_see_the_buttons(io.cucumber.datatable.DataTable dataTable) {
+		List<String> buttons = dataTable.asList(String.class);
+		for (String buttonName : buttons) {
+			homePage.verifyBuildPageButton(buttonName);
+		}
+	}
+	@Then("User able to see the following Titles:")
+	public void user_able_to_see_the_titles(io.cucumber.datatable.DataTable dataTable) {
+		List<String> titles = dataTable.asList(String.class);
+		for (String titleName : titles) {
+			homePage.verifyTitleIsVisible(titleName);
+		}
 	}
 
 	@And("User searches {string} app in the app searchbox")
@@ -522,5 +551,61 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("User clicks on View Details button")
 	public void User_clicks_on_View_Details_button() {
 		appPage.clickOnViewDetails();
+	}
+
+	@And("User get the CatalogName for variable")
+	public void user_get_the_catalog_name_for_variable() {
+		copiedCatalogName = appVariablePage.getCatalogNameForVariable();
+	}
+
+	
+	@When("User clicks on Variable")
+	public void user_clicks_on_variable() {
+		appVariablePage.clickOnVariablesOption();
+	}
+
+	@When("User clicks on Add Variable button")
+	public void user_clicks_on_add_variable_button() {
+		appVariablePage.clickOnAddVariableButton();
+	}
+
+	@When("User enters variable name as {string}")
+	public void user_enters_variable_name_as(String variableName) {
+		appVariablePage.enterVariableName(variableName);
+	}
+
+	@When("User selects variable type as {string}")
+	public void user_selects_variable_type_as(String variableType) {
+		appVariablePage.selectVariableType(variableType);
+	}
+
+	@When("User enters variable value")
+	public void user_enters_variable_value() {
+		appVariablePage.setVariableValue(copiedCatalogName);
+	}
+
+	@When("User enters variable value as {string}")
+	public void user_enters_variable_value_as(String variableValue) {
+		appVariablePage.enterVariableValue(variableValue);
+	}
+
+	@When("User enter variable value as {string}")
+	public void user_enter_variable_value_as(String variableValue) {
+		appVariablePage.enterVariable(variableValue);
+	}
+
+	@When("User clicks on Create Variable button")
+	public void user_clicks_on_create_variable_button() {
+		appVariablePage.clickOnCreateVariableButton();
+	}
+
+	@Then("User sees Toast message of variable creation {string}")
+	public void user_sees_toast_message_of_variable_creation(String variableName) {
+		appVariablePage.validateSuccessToastMessage(variableName);
+	}
+
+	@Then("User sees the variable with name {string} and type {string} in the variable list")
+	public void user_sees_the_variable_in_the_variable_list(String variableName, String variableType) {
+		appVariablePage.verifyVariablePresentInList(variableName, variableType);
 	}
 }
