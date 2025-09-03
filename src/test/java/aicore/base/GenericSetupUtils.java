@@ -131,6 +131,7 @@ public class GenericSetupUtils {
 				urls.add(s);
 			}
 		} else {
+			// Generate URLS based off of how docker containers are generated
 			String urlStart = "http:///e2e-semoss-";
 			String urlEnd = ":8080/";
 			for (int i = 1; i <= parallelCount; i++) {
