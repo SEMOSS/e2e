@@ -95,7 +95,15 @@ public class GenericSetupUtils {
 	}
 
 	private static void loadEnv() throws IOException {
-		Map<String, String> projectEnvironment = Files.readAllLines(Paths.get(".env")).stream()
+		Path file;
+		Path local = Paths.get(".env.local");
+		if (Files.exists(local)) {
+			file = local;
+		} else {
+			file = Paths.get(".env");
+		}
+
+		Map<String, String> projectEnvironment = Files.readAllLines(file).stream()
 				.map(String::trim)
 				.filter(s -> !s.isEmpty())
 				.filter(s -> !s.startsWith("#"))

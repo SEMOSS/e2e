@@ -12,3 +12,4 @@ state.json
 src/main/resources/local.properties
 /results
 src/test/resources/data/screenshots/
+.env.local
