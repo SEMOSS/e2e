@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 
 public class OpenVectorPage extends AbstractAddCatalogPageBase {
 

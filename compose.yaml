@@ -2,18 +2,18 @@ name: e2e
 services:
   semoss:
     build:
-      context: dockersemoss
+      context: ds2
     ports:
       - "9091:8080"
-    environment:
-      - SETSOCIAL=true
-      - ENABLE_NATIVE=true
-      - ENABLE_NATIVE_REGISTRATION=true
-    command: /bin/bash -c "runCS.sh"
+#    environment:
+#      - SETSOCIAL=true
+#      - ENABLE_NATIVE=true
+#      - ENABLE_NATIVE_REGISTRATION=true
+    command: /bin/bash -c "/app/scripts.sh"
     networks:
       - tnet
-    volumes:
-      - ./results/coverage:/opt/testresults/
+#    volumes:
+#      - ./results/coverage:/opt/testresults/
     restart: always
     
   test:

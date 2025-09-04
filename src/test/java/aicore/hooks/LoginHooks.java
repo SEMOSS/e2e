@@ -11,7 +11,7 @@
 //import aicore.base.AICoreTestManager;
 //import aicore.base.GenericSetupUtils;
 //import aicore.base.RunInfo;
-//import aicore.utils.ConfigUtils;
+//import aicore.framework.ConfigUtils;
 //import io.cucumber.java.AfterAll;
 //import io.cucumber.java.Before;
 //import io.cucumber.java.Scenario;

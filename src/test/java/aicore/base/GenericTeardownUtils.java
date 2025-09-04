@@ -12,7 +12,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StopOptions;
 
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 import io.cucumber.java.Scenario;
 
 public class GenericTeardownUtils {

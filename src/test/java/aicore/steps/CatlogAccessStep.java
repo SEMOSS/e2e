@@ -14,7 +14,7 @@ import aicore.pages.CatlogPermissionsPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.CommonUtils;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

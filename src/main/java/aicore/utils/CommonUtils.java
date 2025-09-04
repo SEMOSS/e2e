@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import aicore.framework.ConfigUtils;
+import aicore.framework.UrlUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

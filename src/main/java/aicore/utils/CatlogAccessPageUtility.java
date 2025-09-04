@@ -164,7 +164,7 @@ public class CatlogAccessPageUtility {
 		Locator toggleCheckbox = page.locator("input.MuiSwitch-input[type='checkbox']").nth(1);
 		// Get current state: if 'checked' attribute exists
 		boolean isOn = toggleCheckbox.getAttribute("checked") != null;
-		if (expectedState != isOn) {
+		if (expectedState == isOn) {
 			toggleCheckbox.click();
 			for (int i = 0; i < 10; i++) {
 				page.waitForTimeout(300);

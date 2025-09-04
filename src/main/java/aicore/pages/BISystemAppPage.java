@@ -8,7 +8,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import aicore.utils.AICorePageUtils;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 
 public class BISystemAppPage {
 

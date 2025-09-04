@@ -9,7 +9,7 @@ import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
 import aicore.documentation.DocumentationConstants;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 import aicore.utils.HomePageUtils;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;

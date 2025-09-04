@@ -1,11 +1,14 @@
 package aicore.utils;
 
+import aicore.framework.ConfigUtils;
+import aicore.framework.UrlUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
 public class HomePageUtils {
 
@@ -14,6 +17,12 @@ public class HomePageUtils {
 	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue("applicationName") + "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	// menu options
+	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
+	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
+	private static final String BUILD_PAGE_BUTTON = "new-app-{Button}-btn";
+	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//button//span[text()='Browse Templates']";
+	private static final String BUILD_PAGE_POPUP_XPATH = "//div[@role='presentation']//div[@role='presentation']";
+	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 //	private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
 	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
@@ -121,6 +130,62 @@ public class HomePageUtils {
 		Locator locator = page.locator(APP_MENU_BUTTON_XPATH);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
+	}
+	
+	public static void clickOnBuildButton(Page page) {
+		Locator BuildButton = page.locator(BUILD_BUTTON_XPATH);
+		if (!BuildButton.isVisible()) {
+			throw new RuntimeException("Build button is not visible");
+		} else {
+			BuildButton.click();
+		}
+	}
+	public static void verifyBuildPageButton(Page page, String buttonName) {
+		String BUILD_PAGE_BUTTON_XPATH = BUILD_PAGE_BUTTON.replace("{Button}", buttonName);
+		Locator button = page.getByTestId(BUILD_PAGE_BUTTON_XPATH);
+		if (!button.isVisible()) {
+			throw new RuntimeException("Get Started button for " + buttonName + " is not visible");
+		}else{
+			button.click();
+			if (buttonName.equalsIgnoreCase("drag") || buttonName.equalsIgnoreCase("code")) {
+				if (!page.locator(BUILD_PAGE_POPUP_XPATH).isVisible()) {
+					throw new RuntimeException("POP-Up is not showing after clicking on " + buttonName);
+				} else {
+					page.locator(BUILD_PAGE_POPUP_CLOSE_XPATH).click();
+				}
+			} else {
+				String currentUrl = page.url();
+				page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+				if (!currentUrl.contains("prompt")) {
+					throw new RuntimeException("Browser Prompt page is not opened");
+				} else {
+					page.goBack();
+				}
+			}
+
+		}
+	}
+
+	public static void verifyBuildPageButtons(Page page, String buttonName) {
+		Locator button = page.locator(BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH);
+		if (!button.isVisible()) {
+			throw new RuntimeException("Browser Template Button is not visible");
+		}else{
+			button.click();
+			String currentUrl = page.url();
+			page.waitForLoadState(LoadState.LOAD);
+			if (!currentUrl.contains("template")) {
+   				 throw new RuntimeException("Browser Template page is not opened");
+			} else {
+    			page.goBack(); 
+				}
+		}
+	}
+	public static void verifyTitleIsVisible(Page page, String titleName) {
+		Locator title = page.locator(BUILD_PAGE_TITLE_XPATH.replace("{title}", titleName));
+		if (!title.isVisible()) {
+			throw new RuntimeException(" the title with name " + titleName + " is not visible");
+		}
 	}
 
 	public static void clickOnHome(Page page) {

@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 
+import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,12 +20,11 @@ import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
-import aicore.base.RunInfo;
 import aicore.utils.CaptureScreenShotUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.ConfigUtils;
+import aicore.framework.ConfigUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.UrlUtils;
+import aicore.framework.UrlUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
@@ -37,64 +37,68 @@ public class SetupHooks {
 
 	private static final Logger logger = LogManager.getLogger(SetupHooks.class);
 
-	private static Page page;
-	private static BrowserContext context;
-	private static Browser browser;
-	private static Playwright playwright;
-
-	private static int step = 0;
-	private static int scenarioNumberOfFeatureFile = 0;
-	private static String feature = "";
-	private static int featureNumber = 0;
 
 	@BeforeAll
 	public static void beforeAll() throws IOException {
 		logger.info("BEFORE ALL");
 		GenericSetupUtils.initialize();
-		scenarioNumberOfFeatureFile = 0;
-
-		playwright = Playwright.create();
-		browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-
+		// not sure how this works with parallel?
+		// before all runs outside of parallelization but what about in between features?
+		//scenarioNumberOfFeatureFile = 0;
 	}
 
 	@Before
 	public void before(Scenario scenario) throws IOException {
-		logger.info("BEFORE: {}", scenario.getName());
+		logger.info("Thread:Scenario {}:{}", Thread.currentThread().getName(), scenario.getName());
 		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
+		String feature = ResourcePool.get().getFeature();
 		if (!tempFeature.equals(feature)) {
-			scenarioNumberOfFeatureFile = 0;
+			Playwright playwright = ResourcePool.get().getPlaywright();
+			if (playwright != null) {
+				GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+				logoutAndSave();
+				playwright.close();
+			}
+			playwright = Playwright.create();
+			Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+			ResourcePool.get().setPlaywright(playwright);
+			ResourcePool.get().setBrowser(browser);
+
+			ResourcePool.get().resetScenarioNumberOfFeatureFile();
 			setupFirstScenarioOfFeature(scenario);
-			featureNumber++;
+			ResourcePool.get().incrementFeatureNumber();
 		}
-		feature = tempFeature;
-		scenarioNumberOfFeatureFile++;
-		step = 0;
+		ResourcePool.get().setFeature(tempFeature);
+		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
+		ResourcePool.get().resetStep();
 	}
 
 	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
-		if (featureNumber != 0) {
-			GenericSetupUtils.navigateToHomePage(page);
+		if (ResourcePool.get().getFeatureNumber() != 0) {
+			GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
 			logoutAndSave();
 		}
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1); // ensures DPI/zoom consistency;
-		context = browser.newContext(newContextOptions);
+		Browser browser = ResourcePool.get().getBrowser();
+		BrowserContext context = browser.newContext(newContextOptions);
+		ResourcePool.get().setContext(context);
 
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 
 		Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
 		context.tracing().start(startOptions);
 
-		page = context.newPage();
+		Page page = context.newPage();
+		ResourcePool.get().setPage(page);
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
 		GenericSetupUtils.setupLoggers(page);
 
-		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
-			logger.info("Creating users");
-			GenericSetupUtils.createUsers(page);
-		}
+//		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
+//			logger.info("Creating users");
+//			GenericSetupUtils.createUsers(page);
+//		}
 
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
 
@@ -142,7 +146,9 @@ public class SetupHooks {
 
 	@BeforeStep
 	public void beforeStep(Scenario scenario) {
+		int step = ResourcePool.get().getStep();
 		logger.info("BEFORE STEP: {}, {}", scenario.getName(), step++);
+		ResourcePool.get().setStep(step);
 	}
 
 	@AfterStep
@@ -153,18 +159,18 @@ public class SetupHooks {
 	@After
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
-		GenericSetupUtils.navigateToHomePage(page);
+		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
 	}
 
 	@AfterAll
 	public static void afterAll() throws IOException {
 		logger.info("AFTER ALL");
-		GenericSetupUtils.navigateToHomePage(page);
-		logoutAndSave();
-		playwright.close();
 	}
 
 	private static void logoutAndSave() throws IOException {
+		Page page = ResourcePool.get().getPage();
+		BrowserContext context = ResourcePool.get().getContext();
+		String feature = ResourcePool.get().getFeature();
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
 			GenericSetupUtils.logout(page);
@@ -207,11 +213,12 @@ public class SetupHooks {
 	}
 
 	public static Page getPage() {
-		return page;
+		return ResourcePool.get().getPage();
 	}
 
 	@After("@DeleteCreatedCatalog")
 	public void deleteCatalog(Scenario scenario) {
+		Page page = ResourcePool.get().getPage();
 		final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 		final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 		final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
@@ -235,6 +242,7 @@ public class SetupHooks {
 	@Before("@SkipIfVersionMatch")
 	public void compareVersion(Scenario scenario) {
 		logger.info("Getting version for app");
+		Page page = ResourcePool.get().getPage();
 		boolean isVersionMatched = CommonUtils.getVersion(page);
 		if (isVersionMatched == true) {
 			throw new AssumptionViolatedException("Skipping scenario due to version match.");
@@ -244,6 +252,7 @@ public class SetupHooks {
 	@After("@DeleteTestCatalog")
 	public void deleteCatalogResources(Scenario scenario) {
 		String scenarioName = scenario.getName();
+		Page page = ResourcePool.get().getPage();
 		try {
 			TestResourceTrackerHelper tracker = TestResourceTrackerHelper.getInstance();
 			Map<String, String> catalogMap = tracker.getCatalogType();
@@ -274,6 +283,7 @@ public class SetupHooks {
 		try {
 			String appName = TestResourceTrackerHelper.getInstance().getAppName();
 			if (appName != null && !appName.isBlank()) {
+				Page page = ResourcePool.get().getPage();
 				boolean deleted = CommonUtils.navigateAndDeleteApp(page, appName);
 				if (deleted) {
 					logger.info("Scenario Name: " + scenarioName + " : App deleted successfully. Name: " + appName);
@@ -287,5 +297,6 @@ public class SetupHooks {
 			TestResourceTrackerHelper.getInstance().setAppName(null);
 		}
 	}
+
 
 }

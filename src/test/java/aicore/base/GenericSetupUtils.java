@@ -11,26 +11,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import aicore.framework.Resource;
+import aicore.framework.ResourcePool;
+import com.microsoft.playwright.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Response;
-import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StartOptions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
 import aicore.utils.AICorePageUtils;
-import aicore.utils.ConfigUtils;
-import aicore.utils.UrlUtils;
+import aicore.framework.ConfigUtils;
+import aicore.framework.UrlUtils;
 import e2e.HttpLogger;
+import org.junit.jupiter.api.parallel.Isolated;
 
 public class GenericSetupUtils {
 
@@ -51,14 +51,17 @@ public class GenericSetupUtils {
 	private static void doInit() throws IOException {
 		logCheck();
 
+		loadEnv();
+		loadUrls();
+
 		useDocker = Boolean.parseBoolean(ConfigUtils.getValue("use_docker"));
 		useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
 		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
 
-		if (useDocker) {
-			DockerUtils.startup();
-		}
+		// shouldn't matter if this is docker or not, should still just ping server you're trying
+		// to connect to
+		DockerUtils.startup();
 
 		if (useVideo) {
 			Path p = Paths.get("videos");
@@ -77,6 +80,8 @@ public class GenericSetupUtils {
 				FileUtils.cleanDirectory(trace.toFile());
 			}
 		}
+
+		initializeResources();
 	}
 
 	public static void logCheck() {
@@ -87,6 +92,59 @@ public class GenericSetupUtils {
 		logger.error("ERROR");
 		logger.fatal("FATAL");
 		logger.info("Log check end");
+	}
+
+	private static void loadEnv() throws IOException {
+		Map<String, String> projectEnvironment = Files.readAllLines(Paths.get(".env")).stream()
+				.map(String::trim)
+				.filter(s -> !s.isEmpty())
+				.filter(s -> !s.startsWith("#"))
+				.filter(s -> s.contains("="))
+				.map(s -> s.split("=", 2))
+				.collect(Collectors.toMap(s -> s[0].trim(),
+						s -> s.length > 1 ? s[1].trim() : ""));
+
+		RunInfo.setEnvVariables(projectEnvironment);
+	}
+
+	private static void loadUrls() {
+		String environmentUrls = RunInfo.getEnvVariables().get("URLS");
+		List<String> urls = new ArrayList<>();
+		int parallelCount = RunInfo.getParallelism();
+		// Check to see if urls were set manually. If so, use them
+		if (environmentUrls != null && !environmentUrls.isEmpty()) {
+			logger.info("Environment urls were set manually: {}", environmentUrls);
+			String[] arr = environmentUrls.split(",");
+			for (int i = 0; i < parallelCount; i++) {
+				String s = arr[i].trim();
+				if (!s.endsWith("/")) {
+					s = s + "/";
+				}
+				urls.add(s);
+			}
+		} else {
+			String urlStart = "http:///e2e-semoss-";
+			String urlEnd = ":8080/";
+			for (int i = 1; i <= parallelCount; i++) {
+				String url = urlStart + i + urlEnd;
+				urls.add(url);
+			}
+		}
+
+		RunInfo.setURLS(urls);
+	}
+
+	private static void initializeResources() {
+		int parallelCount = RunInfo.getParallelism();
+		List<String> urls = RunInfo.getUrls();
+		List<Resource> resources = new ArrayList<>();
+		for (int i = 0; i < parallelCount; i++) {
+			String url = urls.get(i);
+			Resource r = new Resource(url, i);
+			resources.add(r);
+		}
+
+		ResourcePool.init(resources);
 	}
 
 	public static LaunchOptions getLaunchOptions() {
@@ -127,6 +185,10 @@ public class GenericSetupUtils {
 
 		// response handling
 		page.onResponse(HttpLogger::logResponse);
+
+	}
+
+	public static void reset() {
 
 	}
 
@@ -206,6 +268,7 @@ public class GenericSetupUtils {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
+
 		String loginPage = UrlUtils.getUrl("#/login");
 		page.waitForURL(loginPage);
 		assertEquals(loginPage, page.url());
@@ -213,13 +276,21 @@ public class GenericSetupUtils {
 
 	public static String login(Page page, String user, String password) {
 		// going to login
-		page.navigate(UrlUtils.getUrl("#/login"));
-		page.getByLabel("Username").click();
-		page.getByLabel("Username").fill(user);
-		page.getByLabel("Username").press("Tab");
-		page.locator("input[type=\"password\"]").fill(password);
+		String url = UrlUtils.getUrl("#/login");
+		page.navigate(url);
+		try {
+			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
+
+		} catch (Error | Exception e) {
+			logger.info(e.getMessage());
+		}
+		page.getByTestId("loginPage-textField-username").click();
+
+		page.getByTestId("loginPage-textField-username").fill(user);
+		page.getByTestId("loginPage-textField-password").click();
+		page.getByTestId("loginPage-textField-password").fill(password);
 		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
-				() -> page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click());
+				() -> page.getByTestId("loginPage-button-login").click());
 
 		assertEquals(200, response.status());
 
@@ -236,7 +307,7 @@ public class GenericSetupUtils {
 	}
 
 	public static void navigateToHomePage(Page page) {
-		String homePage = UrlUtils.getUrl("#");
+		String homePage = UrlUtils.getUrl("#/");
 		page.navigate(homePage);
 		try {
 			page.waitForURL(homePage);
@@ -246,7 +317,8 @@ public class GenericSetupUtils {
 	}
 
 	public static void loginWithMSuser(Page page, String Username, String Password) {
-		page.navigate(UrlUtils.getUrl("#/login"));
+		String url = UrlUtils.getUrl("#/login");
+		page.navigate(url);
 		page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
 		Page page1 = page.waitForPopup(() -> {
 			page.locator("//span[(text()='Deloitte Login')]").click();
@@ -282,8 +354,9 @@ public class GenericSetupUtils {
 	}
 
 	private static void registerUser(Page page, String userName, String password) {
-		page.navigate(UrlUtils.getUrl("#/login"));
-		page.waitForURL(UrlUtils.getUrl("#/login"));
+		String url = UrlUtils.getUrl("#/login");
+		page.navigate(url);
+		page.waitForURL(url);
 		page.reload();
 		page.getByText("Log in below").click();
 		assertThat(page.getByRole(AriaRole.PARAGRAPH)).containsText("Log in below");
