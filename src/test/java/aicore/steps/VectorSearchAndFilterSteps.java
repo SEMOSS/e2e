@@ -119,9 +119,12 @@ public class VectorSearchAndFilterSteps {
 
 	@And("User selects {string} from embedder field")
 	public void user_selects_input_field_embedder(String name) {
-		if (name.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
+		switch (name) {
+		case "TextEmbeddings BAAI-Large-En-V1.5":
+		case "Test Model":
 			openVectorPage.selectEmbedder(name);
-		} else {
+			break;
+		default:
 			openVectorPage.selectEmbedder(name + AddModelSteps.timestamp);
 		}
 	}

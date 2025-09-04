@@ -27,12 +27,14 @@ public class HomePageUtils {
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String SETTINGS_MENU_BUTTON_DATA_TESTID = "SettingsIcon";
 	private static final String USER_PROFILE_ICON_DATA_TESTID = "PersonIcon";
-
+	private static final String HOME_MENU_BUTTON_DATA_TESTID = "HomeIcon";
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String APP_TAB_XPATH = "//button[text()='{tab}']";
 	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
-
+	// Create app
+	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";
+	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
 	// pop ups
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
@@ -121,6 +123,11 @@ public class HomePageUtils {
 		HomePageUtils.closeMainMenu(page);
 	}
 
+	public static void clickOnHome(Page page) {
+		page.getByTestId(HOME_MENU_BUTTON_DATA_TESTID).click();
+		HomePageUtils.closeMainMenu(page);
+	}
+
 	public static void logout(Page page) {
 //		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
@@ -152,10 +159,23 @@ public class HomePageUtils {
 		HomePageUtils.closeMainMenu(page);
 	}
 
-	public static void searchApp(Page page, String appName, String timestamp) {
-		page.locator(APP_SEARCH_TEXTBOX_XPATH).fill(appName + " " + timestamp);
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(appName + " " + timestamp);
+	public static void searchCatalog(Page page, String searchData) {
+		page.locator(APP_SEARCH_TEXTBOX_XPATH).click();
+		page.locator(APP_SEARCH_TEXTBOX_XPATH).fill(searchData);
+	}
+
+	public static void selectSearchResultFilterOption(Page page, String optionName) {
+		Locator option = page.getByRole(AriaRole.BUTTON,
+				new Page.GetByRoleOptions().setName(optionName).setExact(true));
+		AICorePageUtils.waitFor(option);
+		option.click();
+	}
+
+	public static boolean verifySearchResultIsVisible(Page page, String catalogName) {
+		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
+		AICorePageUtils.waitFor(listbox);
+		Locator searchCard = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(catalogName));
+		return searchCard.isVisible();
 	}
 
 	public static void clickOnSearchedApp(Page page, String appName, String timestamp) {
@@ -168,5 +188,15 @@ public class HomePageUtils {
 		Locator anchor = page.locator("//span[text()='" + expectedText + "']/ancestor::a");
 		CommonUtils.removeTargetAttribute(anchor);
 		button.click();
+	}
+
+	// Created below 2 method to provide name without timestamp to verify home
+	// search functionality
+	public static void enterAppNameToCreateApp(Page page, String appName) {
+		page.locator(APP_NAME_TEXTBOX_XPATH).fill(appName);
+	}
+
+	public static void enterCatalogNameToCreateCatalog(Page page, String catalogName) {
+		page.getByTestId(CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
 	}
 }

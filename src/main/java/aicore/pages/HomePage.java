@@ -23,7 +23,7 @@ public class HomePage {
 	public void clickOnSystemApp() {
 		HomePageUtils.clickOnSystemApp(page);
 	}
-	
+
 	public void clickOnTab(String tabName) {
 		HomePageUtils.clickOnTab(page, tabName);
 	}
@@ -73,11 +73,34 @@ public class HomePage {
 	}
 
 	public void openMainMenu() {
-		HomePageUtils.openMainMenu(page);		
+		HomePageUtils.openMainMenu(page);
 	}
-	
+
 	public void closeMainMenu() {
 		HomePageUtils.closeMainMenu(page);
 	}
 
+	public void clickOnHome() {
+		HomePageUtils.clickOnHome(page);
+	}
+
+	public void searchCatalog(String searchData) {
+		HomePageUtils.searchCatalog(page, searchData);
+	}
+
+	public void selectSearchResultFilterOption(String optionName) {
+		HomePageUtils.selectSearchResultFilterOption(page, optionName);
+	}
+
+	public boolean verifySearchResultIsVisible(String searchResult) {
+		return HomePageUtils.verifySearchResultIsVisible(page, searchResult);
+	}
+
+	public void enterAppNameToCreateApp(String appName) {
+		HomePageUtils.enterAppNameToCreateApp(page, appName);
+	}
+
+	public void enterCatalogNameToCreateCatalog(String catalogName) {
+		HomePageUtils.enterCatalogNameToCreateCatalog(page, catalogName);
+	}
 }

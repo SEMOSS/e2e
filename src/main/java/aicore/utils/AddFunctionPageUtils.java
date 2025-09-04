@@ -10,16 +10,16 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class AddFunctionPageUtils {
 
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
-	private static final String CATALOG_NAME = "importForm-textField-NAME";
-	private static final String URL = "importForm-textField-URL";
-	private static final String HTTP_METHOD = "importForm-selectField-HTTP_METHOD";
-	private static final String POST_BODY_MESSAGE = "importForm-selectField-CONTENT_TYPE";
-	private static final String HEADERS = "importForm-textField-HEADERS";
-	private static final String FUNCTION_PARAMETERS = "importForm-textField-FUNCTION_PARAMETERS";
-	private static final String FUNCTION_REQUIRED_PARAMETERS = "importForm-textField-FUNCTION_REQUIRED_PARAMETERS";
-	private static final String FUNCTION_NAME = "importForm-textField-FUNCTION_NAME";
-	private static final String FUNCTION_DESCRIPTION = "importForm-textField-FUNCTION_DESCRIPTION";
-	private static final String FUNCTION_TYPE = "importForm-selectField-FUNCTION_TYPE";
+	private static final String CATALOG_NAME = "importForm-NAME-textField";
+	private static final String URL = "importForm-URL-textField";
+	private static final String HTTP_METHOD = "importForm-HTTP_METHOD-select";
+	private static final String POST_BODY_MESSAGE = "importForm-CONTENT_TYPE-select";
+	private static final String HEADERS = "importForm-HEADERS-textField";
+	private static final String FUNCTION_PARAMETERS = "importForm-FUNCTION_PARAMETERS-textField";
+	private static final String FUNCTION_REQUIRED_PARAMETERS = "importForm-FUNCTION_REQUIRED_PARAMETERS-textField";
+	private static final String FUNCTION_NAME = "importForm-FUNCTION_NAME-textField";
+	private static final String FUNCTION_DESCRIPTION = "importForm-FUNCTION_DESCRIPTION-textField";
+	private static final String FUNCTION_TYPE = "importForm-FUNCTION_TYPE-textField";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CREATE_FUNCTION_BUTTON = "Create Function";

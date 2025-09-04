@@ -40,12 +40,12 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
-	private static final String HOST_NAME_XPATH = "importForm-textField-hostname";
-	private static final String CATALOG_NAME_XPATH = "importForm-textField-NAME";
-	private static final String PORT_NUMBER_XPATH = "importForm-textField-port";
-	private static final String SCHEMA_NAME_XPATH = "importForm-textField-schema";
-	private static final String JDBC_URL_XPATH = "importForm-textField-CONNECTION_URL";
-	private static final String USER_NAME_XPATH = "importForm-textField-USERNAME";
+	private static final String HOST_NAME_XPATH = "importForm-hostname-textField";
+	private static final String CATALOG_NAME_XPATH = "importForm-NAME-textField";
+	private static final String PORT_NUMBER_XPATH = "importForm-port-textField";
+	private static final String SCHEMA_NAME_XPATH = "importForm-schema-textField";
+	private static final String JDBC_URL_XPATH = "importForm-CONNECTION_URL-textField";
+	private static final String USER_NAME_XPATH = "importForm-USERNAME-textField";
 	private static final String APPLY_BUTTON_XPATH = "establish-connection-modal-apply-btn";
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
