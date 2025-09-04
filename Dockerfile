@@ -18,5 +18,6 @@ COPY src src
 COPY tester.sh tester.sh
 COPY testNRM.sh testNRM.sh
 COPY state.json state.json
+COPY .env .env
 
 CMD ["mvn", "clean", "-Dtest=aicore.**", "test", "-e"]
