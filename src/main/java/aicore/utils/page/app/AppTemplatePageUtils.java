@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+
 import aicore.utils.CommonUtils;
 
 public class AppTemplatePageUtils {
@@ -25,13 +26,14 @@ public class AppTemplatePageUtils {
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
 	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String APP_TITLE_XPATH = "#page-1>h1";
+	private static final String APP_TITLE_XPATH = "//*[@id='page-1']//h1";
 	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
-	private static final String APP_SUB_TITLE_XPATH = "#page-1>h5";
+	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
 
 	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content' and normalize-space(text())='page-1']";
 	private static final String TEAMPLATE_APP_PAGE_TITLE_XPATH = "//div[@id='page-1']/h1[contains(@data-block,'text')]";
 	private static final String MULI_PAGE_APP_HYPERLINK_XAPTH = "//a[normalize-space(text())='%s']";
+	private static final String LANDING_PAGE_TEXT = "Landing Page";
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
@@ -232,6 +234,7 @@ public class AppTemplatePageUtils {
 			throw new AssertionError("App page sub title '" + title + "' is not visible");
 		}
 	}
+
 	// MultiPage App
 	public static String userSeePage1(Page page) {
 		return page.locator(MULI_PAGE_APP_PAGE1_XAPTH).textContent();
