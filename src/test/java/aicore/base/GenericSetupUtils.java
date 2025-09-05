@@ -317,8 +317,9 @@ public class GenericSetupUtils {
 
 	public static void navigateToHomePage(Page page) {
 		String homePage = UrlUtils.getUrl("#/");
-		page.navigate(homePage);
 		try {
+			logger.info("Navigating to : {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
+			page.navigate(homePage);
 			page.waitForURL(homePage);
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());

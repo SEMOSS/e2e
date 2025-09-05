@@ -52,16 +52,16 @@ public class SetupHooks {
 		logger.info("Thread:Scenario {}:{}", Thread.currentThread().getName(), scenario.getName());
 		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
 		String feature = ResourcePool.get().getFeature();
+		
+		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
 			Playwright playwright = ResourcePool.get().getPlaywright();
 			if (playwright != null) {
-				GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
-				logoutAndSave();
-				playwright.close();
+				teardown(playwright);
 			}
-			playwright = Playwright.create();
-			Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-			ResourcePool.get().setPlaywright(playwright);
+			Playwright newPlaywright = Playwright.create();
+			Browser browser = newPlaywright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+			ResourcePool.get().setPlaywright(newPlaywright);
 			ResourcePool.get().setBrowser(browser);
 
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
@@ -71,6 +71,20 @@ public class SetupHooks {
 		ResourcePool.get().setFeature(tempFeature);
 		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
 		ResourcePool.get().resetStep();
+	}
+
+	private void teardown(Playwright playwright) {
+		try {
+			try {
+				GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+				logoutAndSave();
+			} catch (Exception | Error e) {
+				logger.error("Could not navigate to home and close", e);
+			}
+			playwright.close();
+		} catch (Exception | Error e) {
+			logger.error("Could not close playwright", e);
+		}
 	}
 
 	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {

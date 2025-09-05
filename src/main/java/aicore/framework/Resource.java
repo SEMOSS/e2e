@@ -20,10 +20,11 @@ public class Resource {
     private String feature = "";
     private int featureNumber = 0;
 
-    private int resourceNumber;
+    private final int resourceNumber;
 
     public Resource(String url, int resourceNumber) {
         this.url = url;
+        this.resourceNumber = resourceNumber;
     }
 
     public String getUrl() {
@@ -123,6 +124,6 @@ public class Resource {
     }
 
     public int getResourceNumber() {
-        return resourceNumber;
+        return this.resourceNumber;
     }
 }
