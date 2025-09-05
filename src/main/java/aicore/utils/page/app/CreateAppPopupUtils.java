@@ -7,7 +7,7 @@ import aicore.utils.AICorePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
-	private static final String GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH = "//div[h6[text()='{appType}']]/following-sibling::div/button[span[text()='Get started with our tools']]";
+	private static final String CODE_APP_GET_STARTED_BUTTON_DATA_TESTID = "createAppSection-new-app-code-btn-btn";
 	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -20,9 +20,9 @@ public class CreateAppPopupUtils {
 		if (appType.toLowerCase().contains("agent")) {
 			page.getByTestId("new-app-agent-btn").click();
 		} else if (appType.toLowerCase().contains("drag and drop")) {
-			page.getByTestId("new-app-drag-btn").click();
+			page.getByTestId("createAppSection-new-app-drag-btn-btn").click();
 		} else {
-			page.locator(GET_STARTED_BUTTON_IN_DRAG_AND_DROP_XPATH.replace("{appType}", appType)).click();
+			page.getByTestId(CODE_APP_GET_STARTED_BUTTON_DATA_TESTID).click();
 		}
 	}
 

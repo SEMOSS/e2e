@@ -3,10 +3,10 @@ package aicore.steps.app;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import aicore.framework.UrlUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.app.AppTemplatePage;
 import aicore.pages.app.DragAndDropBlocksPage;
-import aicore.framework.UrlUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

@@ -15,7 +15,7 @@ public class AppPageUtils {
 
 	private static final Logger logger = LogManager.getLogger(AppPageUtils.class);
 
-	public static final String CREATE_NEW_APP_DATA_TEST_ID = "home-create-app-btn";
+	public static final String CREATE_NEW_APP_DATA_TEST_ID = "appCatalogPage-create-new-app-btn";
 	public static final String APP_CARD_XPATH = "//p[text()='{appName}']";
 	public static final String OPEN_APP_LINK_XPATH = "//p[text()='{appName}']/ancestor::div[contains(@class,'MuiCardHeader-root')]/following-sibling::div//a";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";

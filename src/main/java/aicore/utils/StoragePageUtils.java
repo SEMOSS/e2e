@@ -10,7 +10,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class StoragePageUtils {
 
-	private static final String ADD_STORAGE_BUTTON_XPATH = "[aria-label=\"Navigate to import Storage\"]";
+	private static final String ADD_STORAGE_BUTTON_XPATH = "//button[@aria-label='Navigate to import Storage']";
 	private static final String CREATE_STORAGE_BUTTON = "//span[text()='Create storage']";
 	private static final String STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added to catalog storage']";
 	private static final String STORAGE_TITLE_XPATH = "//h4[text()='{title}']";
@@ -19,11 +19,11 @@ public class StoragePageUtils {
 	private static final String S3_REGION_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_REGION')]";
 	private static final String S3_BUCKET_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_BUCKET')]";
 	private static final String S3_ACCESS_KEY_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_ACCESS_KEY')]";
-	private static final String CATALOG_NAME_TEXTBOX_DATATESTID = "importForm-textField-NAME";
-	private static final String REGION_TEXTBOX_DATATESTID = "importForm-textField-S3_REGION";
-	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-textField-S3_BUCKET";
-	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_ACCESS_KEY";
-	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-textField-S3_SECRET_KEY";
+	private static final String CATALOG_NAME_TEXTBOX_DATATESTID = "importForm-NAME-textField";
+	private static final String REGION_TEXTBOX_DATATESTID = "importForm-S3_REGION-textField";
+	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-S3_BUCKET-textField";
+	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-S3_ACCESS_KEY-textField";
+	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-S3_SECRET_KEY-textField";
 	private static final String VIEW_STORAGE_XPATH = "//button[@aria-label=\"copy Storage ID\"]/parent::span";
 	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
 	private static final String STORAGE_DESCRIPTION_XPATH = "//h6[text()='{StorageDescription}']";

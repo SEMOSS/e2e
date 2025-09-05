@@ -5,15 +5,16 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.HomePageUtils;
 
 public class ModelPageUtils {
 
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
-	private static final String CATALOG_NAME_DATA_TESTID = "importForm-textField-NAME";
-	private static final String OPEN_AI_KEY_DATA_TESTID = "importForm-textField-OPEN_AI_KEY";
-	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-textField-VAR_NAME";
+	private static final String CATALOG_NAME_DATA_TESTID = "importForm-NAME-textField";
+	private static final String OPEN_AI_KEY_DATA_TESTID = "importForm-OPEN_AI_KEY-textField";
+	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	// SMSS field
@@ -23,8 +24,8 @@ public class ModelPageUtils {
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 
 	public static void clickAddModelButton(Page page) {
-		page.getByTestId("engine-catalog-add-btn").isVisible();
-		page.getByTestId("engine-catalog-add-btn").click();
+		page.getByTestId("engineIndex-add-Model-btn").isVisible();
+		page.getByTestId("engineIndex-add-Model-btn").click();
 	}
 
 	public static void selectModel(Page page, String modelName) {
@@ -45,11 +46,13 @@ public class ModelPageUtils {
 
 	public static void enterVariableName(Page page, String varName) {
 		page.getByTestId(VARIABLE_NAME_DATA_TESTID).fill(varName);
-
 	}
 
 	public static void clickOnCreateModelButton(Page page) {
-		page.click(CREATE_MODEL_BUTTON_XPATH);
+		Locator createButtonLocator = page.locator(CREATE_MODEL_BUTTON_XPATH);
+		AICorePageUtils.waitFor(createButtonLocator);
+		createButtonLocator.scrollIntoViewIfNeeded();
+		createButtonLocator.click();
 	}
 
 	public static String modelCreationToastMessage(Page page) {
