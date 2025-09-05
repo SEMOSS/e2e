@@ -55,53 +55,46 @@ public class SetupHooks {
 		
 		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
-			Playwright playwright = ResourcePool.get().getPlaywright();
-			if (playwright != null) {
-				teardown(playwright);
-			}
-			Playwright newPlaywright = Playwright.create();
-			Browser browser = newPlaywright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-			ResourcePool.get().setPlaywright(newPlaywright);
-			ResourcePool.get().setBrowser(browser);
-
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
 			setupFirstScenarioOfFeature(scenario);
 			ResourcePool.get().incrementFeatureNumber();
 		}
+
 		ResourcePool.get().setFeature(tempFeature);
 		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
 		ResourcePool.get().resetStep();
 	}
 
-	private void teardown(Playwright playwright) {
-		try {
+	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
+		// Not First scenario, reset page
+		if (ResourcePool.get().getFeatureNumber() != 0) {
 			try {
 				GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
 				logoutAndSave();
 			} catch (Exception | Error e) {
-				logger.error("Could not navigate to home and close", e);
+				logger.error("ATTEMPTING TO LOGOUT AND SAVE", e);
 			}
-			playwright.close();
-		} catch (Exception | Error e) {
-			logger.error("Could not close playwright", e);
+			ResourcePool.get().getPlaywright().close();
 		}
-	}
 
-	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
-		if (ResourcePool.get().getFeatureNumber() != 0) {
-			GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
-			logoutAndSave();
-		}
+
+		Playwright playwright = Playwright.create();
+		ResourcePool.get().setPlaywright(playwright);
+
+		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+		ResourcePool.get().setBrowser(browser);
+
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1); // ensures DPI/zoom consistency;
-		Browser browser = ResourcePool.get().getBrowser();
 		BrowserContext context = browser.newContext(newContextOptions);
 		ResourcePool.get().setContext(context);
 
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 
-		Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
-		context.tracing().start(startOptions);
+		if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+			Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
+			context.tracing().start(startOptions);
+		}
 
 		Page page = context.newPage();
 		ResourcePool.get().setPage(page);
