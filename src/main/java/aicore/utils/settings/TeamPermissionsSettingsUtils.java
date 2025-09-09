@@ -11,6 +11,12 @@ public class TeamPermissionsSettingsUtils {
     private static final String TEAM_NAME_XPATH = "//legend/span[text()='Name*']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
     private static final String DESCRIPTION_XPATH = "//legend/span[normalize-space()='Description']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
     private static final String ADD_BUTTON_XPATH = "//button[.//span[normalize-space()='{buttonName}']]";
+    private static final String TEAM_BUTTON_XPATH = "//button//span[contains(text(), 'Add Members')]";
+    private static final String LIST_MEMBER_XPATH = "//*[contains(text(), '{Member}')]";
+    private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
+    private static final String LIST_DROPDOWN= "ArrowDropDownIcon";
+    private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message')]";
+    private static final String MEMBER_XPATH = "//div//p[contains(text(),'NATIVE ID: {member}')]";
     private static final String NAME_XPATH = "//p[normalize-space()='{Name}']";
     private static final String GENERATED_DESCRIPTION_XPATH = "//p[normalize-space()='{description}']";
 
@@ -34,6 +40,49 @@ public class TeamPermissionsSettingsUtils {
 
     public static void clickOnAddButton(Page page, String button) {
         page.click(ADD_BUTTON_XPATH.replace("{buttonName}", button));
+    }
+
+    public static void clickOnAddMemberButton(Page page, String button) {
+        page.click(ADD_BUTTON_XPATH.replace("{buttonName}", button));
+    }
+
+    public static void clickOnAddTeamButton(Page page, String button) {
+        page.click(TEAM_BUTTON_XPATH.replace("{buttonName}", button));
+    }
+
+    public static void selectMemberFromList(Page page, String member) {
+        Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+        AICorePageUtils.waitFor(dropdownLocator);
+        dropdownLocator.click();
+        Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member));
+        AICorePageUtils.waitFor(listMember);
+        listMember.click();
+
+    }
+
+    public static void validateToastMessage(Page page, String expectedMessage) {
+        Locator toastMessage = page.locator(TOAST_MESSAGE_XPATH);
+        AICorePageUtils.waitFor(toastMessage);
+        String actualMessage = toastMessage.textContent().trim();
+        if (!actualMessage.equals(expectedMessage)) {
+            throw new AssertionError("Expected toast message: " + expectedMessage + ", but got: " + actualMessage);
+        }
+    }
+
+    public static void checkMemberCard(Page page, String member) {
+        Locator memberCard = page.locator(MEMBER_CARD_XPATH);
+        AICorePageUtils.waitFor(memberCard);
+        String actualMember = memberCard.textContent().trim();
+        if (!actualMember.equals(member)) {
+            throw new AssertionError("Expected member card: " + member + ", but got: " + actualMember);
+        }
+    }
+
+    public static void checkMemberInList(Page page, String member) {
+        Locator memberCard = page.locator(MEMBER_XPATH.replace("{member}", member));
+        if (!memberCard.isVisible()) {
+            throw new AssertionError("Expected " + member + " not present in the list: ");
+        }
     }
 
     public static String verifyName(Page page, String name) {
