@@ -149,6 +149,7 @@ public class CreateAppUsingDragAndDropSteps {
 			homePage.verifyBuildPageButton(buttonName);
 		}
 	}
+
 	@Then("User able to see the following Titles:")
 	public void user_able_to_see_the_titles(io.cucumber.datatable.DataTable dataTable) {
 		List<String> titles = dataTable.asList(String.class);
@@ -558,7 +559,6 @@ public class CreateAppUsingDragAndDropSteps {
 		copiedCatalogName = appVariablePage.getCatalogNameForVariable();
 	}
 
-	
 	@When("User clicks on Variable")
 	public void user_clicks_on_variable() {
 		appVariablePage.clickOnVariablesOption();
@@ -608,4 +608,42 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_sees_the_variable_in_the_variable_list(String variableName, String variableType) {
 		appVariablePage.verifyVariablePresentInList(variableName, variableType);
 	}
+	// bookmark the app
+
+	@When("User clicks on the Bookmark icon for {string} App")
+	public void user_click_on_bookmark_icon(String appName) {
+		blocksPage.userClickOnBookmarkIcon(appName);
+	}
+
+	@When("User clicks on the Unbookmark icon for {string} App")
+	public void user_clicks_on_bookmark_icon_to_unbookmark_app(String appName) {
+		blocksPage.clickOnUnbookmarkforApp(appName);
+	}
+
+	@Then("User see the Bookmarked section")
+	public void user_see_bookmark_section() {
+		boolean isVisible = blocksPage.userSeeBookMarkSection();
+		Assertions.assertTrue(isVisible, "The user is unable to see the Bookmark section after Bookmark the App");
+	}
+
+	@And("The app should appear in the bookmarked section")
+	public void bookmark_app_see_on_bookmarksection() {
+		boolean isappDisplayedUnderBookmarkedSection = blocksPage.bookmarkAppSeeOnTheBookmarkSection();
+		Assertions.assertTrue(isappDisplayedUnderBookmarkedSection,
+				"Bookmarked section does not contain the expected app");
+	}
+
+	@Then("The {string} should be removed from the bookmarked section")
+	public void app_should_be_removed_from_bookmarked_section(String appName) {
+		boolean isRemoved = blocksPage.isAppRemovedFromBookmarkSection(appName);
+		Assertions.assertTrue(isRemoved, "App is still visible under the bookmarked section after removal.");
+	}
+
+	@And("If no apps remain bookmarked the {string} section should not be visible")
+	public void bookmarked_section_should_not_be_visible(String sectionName) {
+		boolean isNotVisible = blocksPage.isBookmarkedSectionNotVisible();
+		Assertions.assertTrue(isNotVisible,
+				sectionName + " Section is still visible even though no apps are bookmarked.");
+	}
+
 }
