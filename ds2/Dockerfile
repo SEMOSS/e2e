@@ -119,6 +119,7 @@ COPY BusinessInsider/bi-build.zip /tmp/bi-build.zip
 RUN unzip /tmp/bi-build.zip -d /opt/apache-tomcat-9.0.102/webapps/SemossWeb/packages/legacy/
 
 COPY scripts.sh /app/
+RUN sed -i 's/\r$//' scripts.sh
 RUN chmod 777 scripts.sh
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
