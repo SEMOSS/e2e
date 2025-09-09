@@ -30,6 +30,30 @@ public class TeamPermissionsSettingsPage {
     public void clickOnAddButton(String button) {
         TeamPermissionsSettingsUtils.clickOnAddButton(page, button);
     }
+    
+public void clickOnAddTeamButton(String button) {
+        TeamPermissionsSettingsUtils.clickOnAddTeamButton(page, button);
+    }
+
+    public void selectMemberFromList(String member) {
+        TeamPermissionsSettingsUtils.selectMemberFromList(page, member);
+    }
+
+    public void clickOnSaveMemberButton(String button) {
+        TeamPermissionsSettingsUtils.clickOnAddMemberButton(page, button);
+    }
+
+    public void validateToastMessage(String expectedMessage) {
+        TeamPermissionsSettingsUtils.validateToastMessage(page, expectedMessage);
+    }
+
+    public void checkMemberCard(String member) {
+        TeamPermissionsSettingsUtils.checkMemberCard(page, member);
+    }
+
+    public void checkMemberInList(String member) {
+        TeamPermissionsSettingsUtils.checkMemberInList(page, member);
+    }
 
     public String verifyName(String name) {
         return TeamPermissionsSettingsUtils.verifyName(page, name + " " + timestamp);
