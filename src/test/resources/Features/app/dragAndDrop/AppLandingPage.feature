@@ -58,3 +58,22 @@ Feature: App landing page
     And User applies each filter and validate 'Test app' app is visible on the page
       | FILTER_CATEGORY | FILTER_VALUE |
       | Tag             | Test1, Test2 |
+
+  @DeleteCreatedTestApp
+  Scenario: Bookmark an app successfully
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
+    When User clicks on the Bookmark icon for 'Test app' App
+    Then User see the Bookmarked section
+    And The app should appear in the bookmarked section
+
+  @DeleteCreatedTestApp
+  Scenario: Remove app from bookmarks
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
+    When User clicks on the Bookmark icon for 'Test app' App
+    And User clicks on the Unbookmark icon for 'Test app' App
+    Then The 'Test app' should be removed from the bookmarked section
+    And If no apps remain bookmarked the "Bookmarked" section should not be visible

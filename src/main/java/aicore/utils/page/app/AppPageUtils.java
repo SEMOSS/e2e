@@ -51,6 +51,7 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnMoreVertIcon(Page page, String appName) {
+		page.waitForTimeout(200);
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", appName)));
 		AICorePageUtils.waitFor(appCard);
 		appCard.scrollIntoViewIfNeeded();

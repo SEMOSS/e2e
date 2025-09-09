@@ -64,8 +64,11 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterQueryName(Page page, String queryName) {
-		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX,
-				new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL));
+//		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX,
+//				new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL));
+//		AICorePageUtils.waitFor(queryTextbox);
+//		queryTextbox.fill(queryName);
+		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX);
 		AICorePageUtils.waitFor(queryTextbox);
 		queryTextbox.fill(queryName);
 	}

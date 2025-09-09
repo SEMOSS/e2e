@@ -39,7 +39,7 @@ public class StoragePageUtils {
 	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[span[text()='Cancel']]";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
-	private static final String LOCAL_PATH_PREFIX_DATATESTID = "importForm-textField-PATH_PREFIX";
+	private static final String LOCAL_PATH_PREFIX_DATATESTID = "importForm-PATH_PREFIX-textField";
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";

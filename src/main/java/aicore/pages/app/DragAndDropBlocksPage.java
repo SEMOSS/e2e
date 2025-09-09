@@ -176,4 +176,31 @@ public class DragAndDropBlocksPage {
 	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
 		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
 	}
+
+	// bookmarksection
+	public void userClickOnBookmarkIcon(String appName) {
+		DragAndDropBlocksPageUtils.clickBookmarkIcon(page, appName);
+	}
+
+	public void clickOnUnbookmarkforApp(String appName) {
+		DragAndDropBlocksPageUtils.clickOnUnbookmarkforApp(page, appName);
+
+	}
+
+	public boolean userSeeBookMarkSection() {
+		return DragAndDropBlocksPageUtils.isBookmarkedSectionVisible(page);
+	}
+
+	public boolean bookmarkAppSeeOnTheBookmarkSection() {
+		return DragAndDropBlocksPageUtils.bookmarkAppSeeOnTheBookmarkSection(page);
+	}
+
+	public boolean isAppRemovedFromBookmarkSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppRemovedFromBookmarkSection(page, appName);
+	}
+
+	public boolean isBookmarkedSectionNotVisible() {
+		return DragAndDropBlocksPageUtils.isBookmarkedSectionNotVisible(page);
+	}
+
 }
