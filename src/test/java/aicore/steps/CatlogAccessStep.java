@@ -32,7 +32,6 @@ public class CatlogAccessStep {
 		timestamp = CommonUtils.getTimeStampName();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		this.catlogpermission = new CatlogPermissionsPage(SetupHooks.getPage());
-
 	}
 
 	@Then("{string} user can {string} Overview")
