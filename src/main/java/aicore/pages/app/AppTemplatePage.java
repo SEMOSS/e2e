@@ -48,6 +48,10 @@ public class AppTemplatePage {
 		AppTemplatePageUtils.verifyInputFieldWithLabelInPreview(label, page);
 	}
 
+	public void closePreviewWindow() {
+		AppTemplatePageUtils.closePreviewWindow(page);
+	}
+
 	public void verifySubmitButtonInPreview() {
 		AppTemplatePageUtils.verifySubmitButtonInPreview(page);
 	}

@@ -13,6 +13,7 @@ public class AppTemplatePageUtils {
 	private static final String SUBMIT_BUTTON_XPATH = "//div[@data-block='submit']";
 	private static final String TITLE_XPATH = "//p[@data-block='title']";
 	private static final String INPUT_BOX_XPATH = "//div[@data-block='question']";
+	private static final String PREVIEW_APP_CANCEL_XPATH = "(//button//span[contains(text(),'Cancel')])[2]";
 	private static final String INPUT_BOX_LABEL_XPATH = "//div[@data-block='question']//label";
 	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
 	private static final String PREVIEW_APP_INPUT_BOX_XPATH = "//div[@role='dialog']//div[@data-block='question']";
@@ -111,6 +112,15 @@ public class AppTemplatePageUtils {
 			throw new AssertionError("Ask button in preview is not visible");
 		}
 	}
+
+	public static void closePreviewWindow(Page page) {
+		boolean isPreviewButtonVisible = page.locator(PREVIEW_APP_CANCEL_XPATH).isVisible();
+		if (!isPreviewButtonVisible) {
+			throw new AssertionError("Preview button is not visible");
+		}
+		page.locator(PREVIEW_APP_CANCEL_XPATH).click();
+	}
+
 
 	public static void verifyInputFieldWithLabelInPreview(String label, Page page) {
 		boolean inputBoxVisible = page.locator(PREVIEW_APP_INPUT_BOX_XPATH).first().isVisible();

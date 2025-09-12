@@ -27,6 +27,34 @@ public class NotebookPage {
 		NotebookPageUtils.enterQueryName(page, queryName);
 	}
 
+	public void clickOnQueryName(String queryName) {
+		NotebookPageUtils.clickOnQueryName(page, queryName);
+	}
+
+	public void clickOnRunCellButtonDatabase() {
+		NotebookPageUtils.clickOnRunCellButtonDatabase(page);
+	}
+
+	public void checkDatabaseOutput() {
+		NotebookPageUtils.checkDatabaseOutput(page);
+	}
+
+	public void modifySqlQuery(String newQuery) {
+		NotebookPageUtils.modifySqlQuery(page, newQuery);
+	}
+	
+	public void addValueInField(String fieldName, String value) {
+		NotebookPageUtils.addValueInField(page, fieldName, value);
+	}
+
+	public void clickOnAddRecordButton() {
+		NotebookPageUtils.clickOnAddRecordButton(page);
+	}
+
+	public void checkSuccessMessage(String successMessage) {
+		NotebookPageUtils.checkSuccessMessage(page, successMessage);
+	}
+
 	public void clickOnQuerySubmitButton() {
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 	}
