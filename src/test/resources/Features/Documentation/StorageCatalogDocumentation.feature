@@ -1,6 +1,6 @@
 Feature: Storage Catalog Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
   Scenario: Storage Catalog Documentation
     Given User captures documentation screenshot for 'Storage Catalog'
     When User opens Main Menu
@@ -19,12 +19,11 @@ Feature: Storage Catalog Documentation
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
     And User can see the Storage title 'Test Storage'
+    And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User clicks on 'Edit' button
-    And User captures screenshot for "View Tabs"
-    And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
-    And User captures a 'button' and highlights the 'Submit'
+    And User captures screenshot for "Edit Storage Options"
     And User clicks on 'Close' button
     And User clicks on Settings Tab
     And User clicks on Make Discoverable button in storage settings

@@ -123,19 +123,19 @@ public class AddModelSteps {
 
 	@When("User searches the {string} in the model catalog searchbox")
 	public void user_searches_the_in_the_model_catalog_searchbox(String modelName) {
-		openModelPage.searchModelCatalog(modelName);
+		openModelPage.searchModelCatalog(modelName + timestamp);
 	}
 
 	@Then("User should see the {string} on the model catalog page")
 	public void user_should_see_the_on_the_model_catalog_page(String modelName) throws InterruptedException {
-		openModelPage.searchModelCatalog(modelName);
-		boolean isModelDisplayed = openModelPage.verifyModelIsDisplayedOnCatalogPage(modelName);
+		openModelPage.searchModelCatalog(modelName + timestamp);
+		boolean isModelDisplayed = openModelPage.verifyModelIsDisplayedOnCatalogPage(modelName + timestamp);
 		Assertions.assertTrue(isModelDisplayed);
 	}
 
 	@And("User selects the {string} from the model catalog")
 	public void user_selects_the_from_the_model_catalog(String modelName) throws InterruptedException {
-		openModelPage.selectModelFromSearchOptions(modelName);
+		openModelPage.selectModelFromSearchOptions(modelName + timestamp);
 	}
 
 	@And("User enters the details as {string}")
@@ -333,6 +333,16 @@ public class AddModelSteps {
 	@And("User clicks on Discoverable Models button")
 	public void user_clicks_on_discoverable_models_button() {
 		openModelPage.clickOnDiscoverableModelsButton();
+	}
+
+	@And("User searches {string} in the model catalog searchbox")
+	public void user_searches_text_embeddings_baa_large_en_v1_5_in_the_model_catalog_searchbox(String modelName) {
+		openModelPage.searchModelCatalog(modelName);
+	}
+
+	@And("User selects {string} from the model catalog")
+	public void user_selects_text_embeddings_baa_large_en_v1_5_from_the_model_catalog(String modelName) {
+		openModelPage.selectModelFromSearchOptions(modelName);
 	}
 
 }

@@ -1,6 +1,6 @@
 Feature: Model Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
   Scenario: Create a Model
     Given User captures documentation screenshot for 'Model Catalog'
     When User opens Main Menu
@@ -8,7 +8,7 @@ Feature: Model Documentation
     When User clicks on Open Model
     And User captures a 'button' and highlights the 'Add Model'
     When User clicks on Add Model
-    And User captures a 'list item' and highlights the 'GPT-3.5'
+    And User captures screenshot for "Model Options"
     And User selects 'GPT-3.5'
     And User enters Catalog name as 'Model'
     And User enters open AI Key as 'Test@1234'
@@ -16,20 +16,21 @@ Feature: Model Documentation
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
     Then User Can see the Model title as 'Model'
+    And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User clicks on 'Edit' button
-    And User captures screenshot for "View Tabs"
-    And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
-    And User captures a 'button' and highlights the 'Submit'
+    And User captures screenshot for form "Edit Model Options"
     And User clicks on 'Close' button
     And User clicks on Access Control Tab
+    And User captures a 'button' and highlights the 'Access Control'
     And User clicks Make 'Model' Discoverable button
     And User logs out from the application
     And User login as 'editor'
     And User opens Main Menu    
     When User clicks on Open Model
     And User clicks on Discoverable Models button
+    And User captures a 'button' and highlights the 'Discoverable Models'
     And User searches the 'Model' in the model catalog searchbox
     And User selects the 'Model' from the model catalog
     And User Can see the Model title as 'Model'
@@ -38,4 +39,6 @@ Feature: Model Documentation
     And User selects 'author' access
     And User captures screenshot for "Access Request"
     And User clicks on Request button
+    And User logs out from the application
+    And User login as 'admin'
     And User completes screenshot capture and triggers comparison for 'Model Catalog'
