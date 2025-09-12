@@ -55,6 +55,11 @@ public class createAppUsingTemplateSteps {
 		appTemplatePage.verifyInputFieldWithLabelInPreview(label);
 	}
 
+	@When("User close the Preview app window")
+	public void user_close_the_preview_app_window() {
+		appTemplatePage.closePreviewWindow();
+	}
+
 	@Then("User sees description as {string} in Preview App")
 	public void User_sees_description_as_in_Preview_App(String description) {
 		appTemplatePage.verifyDescriptionInPreview(description);
