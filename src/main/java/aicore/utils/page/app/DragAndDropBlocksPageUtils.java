@@ -79,10 +79,11 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_BOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkBorderIcon']";
 	private static final String APP_UNBOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkIcon']";
 	private static final String APP_BOOKMARK_SECTION_TEXT = "Bookmarked";
-	private static final String APP_BOOKMARK_TEXT = "Bookmark ";
-	private static final String APP_UNBOOKMARK_TEXT = "Unbookmark ";
-
 	private static final String CATALOG_SEE_ON_BOOKMARKSECTIONXPATH = "//h6[normalize-space(text())='Bookmarked']/following-sibling::div[@class='css-uncsel']";
+	// App section
+	private static final String APP_DISPALY_APP_SECTION = "//div[@data-testid='appTileCard-App-clone-10123302-tile']//a[@rel='noopener noreferrer']";
+	private static final String APP_DISCOVRABLE_SECTION_DATATESTID = "appCatalogPage-discoverable-btn";
+	private static final String CREAYED_APP_DISPLAY_DISCOVRABLE_SECTION_DATATESTID = "appTileCard-Discoverable-app-tile";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -476,6 +477,24 @@ public class DragAndDropBlocksPageUtils {
 	public static boolean isBookmarkedSectionNotVisible(Page page) {
 		Locator bookmarkSection = page.getByText(APP_BOOKMARK_SECTION_TEXT);
 		return bookmarkSection.isHidden();
+	}
+
+	// created app display in all apps section
+	public static boolean isAppDisplayedInAllAppsSection(Page page, String appName) {
+		Locator appInAllAppsSection = page.locator(APP_DISPALY_APP_SECTION);
+		AICorePageUtils.waitFor(appInAllAppsSection);
+		return appInAllAppsSection.isVisible();
+	}
+
+	public static void clickOnDiscovrableApps(Page page) {
+		Locator discovrableApp = page.getByTestId(APP_DISCOVRABLE_SECTION_DATATESTID);
+		discovrableApp.isVisible();
+		discovrableApp.click();
+	}
+
+	public static boolean createdAppDisplayInDiscoverableApp(Page page) {
+		Locator appDispalyInDiscoverable = page.getByTestId(CREAYED_APP_DISPLAY_DISCOVRABLE_SECTION_DATATESTID);
+		return appDispalyInDiscoverable.isVisible();
 	}
 
 }

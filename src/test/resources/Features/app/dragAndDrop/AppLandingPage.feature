@@ -77,3 +77,32 @@ Feature: App landing page
     And User clicks on the Unbookmark icon for 'Test app' App
     Then The 'Test app' should be removed from the bookmarked section
     And If no apps remain bookmarked the "Bookmarked" section should not be visible
+
+   #@DeleteCreatedTestApp
+    #Scenario: Created app is displayed in All Apps section
+      #Given User opens Main Menu
+      #And User clicks on Open App Library
+      #When User searches 'Test app' app in the app searchbox
+      #Then User can see 'Test app' app in the All Apps section
+      
+    #@DeleteCreatedTestApp
+    #Scenario: Verify app is display under Discoverable 
+     #Given User opens Main Menu
+      #And User clicks on Open App Library
+      #And User searches 'Test app' app in the app searchbox
+       #Then User can see 'Test app' app on the page
+     #	And User clicks on View Details button
+      #And User clicks on Access Control Tab
+    #	And 'Author' user Make Public toggle should be 'Enable'
+    #	And 'Author' turn ON the 'Make Discoverable' option
+    #	And User logs out from the application
+    #	And User login as 'Editor'
+    #	And User opens Main Menu
+      #And User clicks on Open App Library
+      #And User searches 'Test app' app in the app searchbox
+      #And User click on Discoverable Apps
+    #	Then The newly created app should be displayed in the discoverable apps list
+   #		#And the app should be accessible by clicking on it
+      
+    
+    

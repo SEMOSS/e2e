@@ -203,4 +203,17 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.isBookmarkedSectionNotVisible(page);
 	}
 
+	// created app display in all apps section
+	public boolean isAppDisplayedInAllAppsSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppDisplayedInAllAppsSection(page, appName);
+	}
+
+	public void clickOnDiscovrableApps() {
+		DragAndDropBlocksPageUtils.clickOnDiscovrableApps(page);
+	}
+
+	public boolean createdAppDisplayInDiscoverableApp() {
+		return DragAndDropBlocksPageUtils.createdAppDisplayInDiscoverableApp(page);
+	}
+
 }
