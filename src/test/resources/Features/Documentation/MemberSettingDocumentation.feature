@@ -13,8 +13,5 @@ Feature: Member Settings documentation
     And User captures a 'button' and highlights the 'Add Member'
     And User captures screenshot for "MemberSettingsPage"
     And User Clicks on Add User button
-    And User captures screenshot for "AddMemberform"
+    And User captures screenshot for form "AddMemberform"
     And User completes screenshot capture and triggers comparison for 'Member Settings'
-
-
-

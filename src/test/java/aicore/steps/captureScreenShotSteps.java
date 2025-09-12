@@ -42,4 +42,10 @@ public class captureScreenShotSteps {
         captureScreenShotPage.capturePageScreenshot(folderName, fullPath);
     }
 
+     @And("User captures screenshot for form {string}")
+    public void user_captures_screenshot_for_form(String formName) throws IOException {
+        String fullPath = currentFolder;
+        captureScreenShotPage.captureFormScreenshot(formName, fullPath);
+    }
+
 }

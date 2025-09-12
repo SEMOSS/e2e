@@ -117,15 +117,15 @@ public class AddModelPage {
 
 	// Edit model
 	public void searchModelCatalog(String modelName) {
-		EditModelPageUtils.searchModelCatalog(page, modelName, timestamp);
+		EditModelPageUtils.searchModelCatalog(page, modelName);
 	}
 
 	public void selectModelFromSearchOptions(String modelName) {
-		EditModelPageUtils.selectModelFromSearchOptions(page, modelName + timestamp);
+		EditModelPageUtils.selectModelFromSearchOptions(page, modelName);
 	}
 
 	public boolean verifyModelIsDisplayedOnCatalogPage(String modelName) {
-		return EditModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelName + timestamp);
+		return EditModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelName);
 	}
 
 	public void clickOnEditButton() {

@@ -54,6 +54,11 @@ public class CaptureScreenShotPage {
         CaptureScreenShotUtils.captureScreenshot(page, path);
     }
 
+     public void captureFormScreenshot(String formName, String folderName) throws IOException {
+        Path path = Paths.get(folderName, formName + ".png");
+        CaptureScreenShotUtils.captureFormScreenshot(page, path);
+    }
+
     public void compareAndStoreResultsIfReady(String catalogName) throws IOException, Exception {
         CaptureScreenShotUtils.compareAndStoreResultsIfReady(page, catalogName);
     }

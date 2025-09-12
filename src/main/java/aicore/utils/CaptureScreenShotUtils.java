@@ -27,6 +27,7 @@ import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.Clip;
 
 public class CaptureScreenShotUtils {
 
@@ -47,8 +48,7 @@ public class CaptureScreenShotUtils {
         page.waitForTimeout(1000);
         Path screenshotPath = Paths.get(path.toString());
         button.scrollIntoViewIfNeeded();
-
-        page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath));
+        page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true));
         String screenshotPathStr = screenshotPath.toString();
         if (button.isVisible()) {
             button.scrollIntoViewIfNeeded();
@@ -191,10 +191,19 @@ public class CaptureScreenShotUtils {
     }
 
     public static void captureScreenshot(Page page, Path path) {
+        if (page.getByTestId("CloseIcon").isVisible()) {
+            page.getByTestId("CloseIcon").click();
+        }
         page.waitForTimeout(1000);
         Path screenshotPath = Paths.get(path.toString());
-        page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath));
-
+        page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true));
     }
 
+    public static void captureFormScreenshot(Page page, Path path) throws IOException {
+        page.waitForTimeout(1000);
+        Path screenshotPath = Paths.get(path.toString());
+        page.evaluate("document.body.style.zoom='0.6'");
+        page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true).setClip(new Clip(0, 0, 1280, 720)));
+        page.evaluate("document.body.style.zoom='1'");
+    }
 }

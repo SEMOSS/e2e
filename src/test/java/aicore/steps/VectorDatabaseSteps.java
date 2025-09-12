@@ -84,4 +84,9 @@ public class VectorDatabaseSteps {
 		Assertions.assertEquals(actualToastMessage, expectedToastMessage, "Vector Id is not copied successfully");
 	}
 
+	
+	@Then("User clicks on Q&A button")
+	public void user_clicks_on_qa_button() {
+		vectorPage.clickOnQnAButton();
+	}
 }

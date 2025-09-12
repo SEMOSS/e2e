@@ -37,6 +37,7 @@ public class AddFunctionPageUtils {
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
+	private static final String HTTP_METHOD_TYPE_TESTID = "importForm-{type}-item";
 
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
@@ -63,15 +64,15 @@ public class AddFunctionPageUtils {
 	public static void selectHttpMethod(Page page, String httpMethod) {
 		page.getByTestId(HTTP_METHOD).isVisible();
 		page.getByTestId(HTTP_METHOD).click();
-		page.getByTestId(httpMethod).isVisible();
-		page.getByTestId(httpMethod).click();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", httpMethod)).isVisible();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", httpMethod)).click();
 	}
 
 	public static void selectPostBodyMessage(Page page, String postBodyMessage) {
 		page.getByTestId(POST_BODY_MESSAGE).isVisible();
 		page.getByTestId(POST_BODY_MESSAGE).click();
-		page.getByTestId(postBodyMessage).isVisible();
-		page.getByTestId(postBodyMessage).click();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", postBodyMessage)).isVisible();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", postBodyMessage)).click();
 	}
 
 	public static void verifyAsteriskMarkOnFields(Page page, String fieldLabels) {
