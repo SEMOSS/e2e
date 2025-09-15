@@ -104,3 +104,11 @@ Feature: App landing page
     Then The newly created 'Test app' should be displayed in the discoverable apps list
     And User logs out from the application
     And User login as 'Author'
+
+  @DeleteCreatedTestApp
+  Scenario: Verify BI and Terminal apps are displayed under System apps
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    When User click on System Apps
+    Then User can see 'BI' app in the System Apps section
+    And User can see 'Terminal' app in the System Apps section

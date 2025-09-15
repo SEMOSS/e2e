@@ -215,5 +215,11 @@ public class DragAndDropBlocksPage {
 	public boolean createdAppDisplayInDiscoverableApp(String appName) {
 		return DragAndDropBlocksPageUtils.createdAppDisplayInDiscoverableApp(page, appName);
 	}
+	public void clickOnSystemApps() {
+		DragAndDropBlocksPageUtils.clickOnSystemApps(page);
+	}
+	public boolean isAppDisplayedInSystemAppsSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page,appName);
+	}
 
 }

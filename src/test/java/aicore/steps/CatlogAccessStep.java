@@ -284,23 +284,22 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@Then("{string} user Make Public toggle should be {string}")
-	public void user_Can_See_MakePulic_Toggle_Enable(String role, String action) {
-		boolean viewMakePubleToogle = catlogpermission.userCanSeeMakePublicToggleEnable();
+	@Then("{string} user Private toggle should be {string}")
+	public void user_Can_See_Private_Toggle_Enable(String role, String action) {
+		boolean viewMakePrivateToogle = catlogpermission.userCanSeeAndEnablePrivateToggle();
 		if (action.equalsIgnoreCase("Enable")) {
-			Assertions.assertTrue(viewMakePubleToogle,
-					role + " user can not see the Make see Make Public Toggle is Enabled");
+			Assertions.assertTrue(viewMakePrivateToogle,
+					role + " user can not see the Make see Private Toggle is Enabled");
 		} else if (action.equalsIgnoreCase("Disable")) {
-			Assertions.assertFalse(viewMakePubleToogle, role + " user should not Enable Make see Make Public Toggle");
+			Assertions.assertFalse(viewMakePrivateToogle, role + " user should not Enable Make see Private Toggle");
 		} else {
 			Assertions.fail("Invalid action: " + action);
 		}
 	}
 
-	@And("'Author' turn ON the 'Make Public' option")
-	public void author_TurnON_MakePublic() {
-		boolean toggled = catlogpermission.setToggleStateForMakePublic(true); // true = turn ON
-		assertTrue(toggled, "Toggle was not turned ON as expected");
+	@And("User turn ON the Private option")
+	public void user_TurnON_Private() {
+		catlogpermission.setToggleStateForPrivate();
 	}
 
 	@And("{string} user can see toaster message is {string}")
@@ -310,21 +309,20 @@ public class CatlogAccessStep {
 				+ "User can turn ON the Toogle - Expected pattern: " + expectedPattern + ", but got: " + actualMessage);
 	}
 
-	@And("'Author' turn OFF the 'Make Public' option")
-	public void author_TurnOFF_MakePublic() {
-		boolean toggled = catlogpermission.setToggleStateForMakePublic(false); // true = turn ON
-		assertTrue(toggled, "Toggle was not turned ON as expected");
+	@And("User turn OFF the Private option")
+	public void author_TurnOFF_Private() {
+		catlogpermission.setToggleStateForPrivate();
 	}
 
-	@Then("{string} user Make Discoverable toggle should be {string}")
-	public void user_Can_See_MakeDiscoverable_Toggle_Enable(String role, String action) {
-		boolean viewMakeDiscovrableToogle = catlogpermission.userCanSeeMakeDiscovrableToggleEnable();
+	@Then("{string} user Non-Discoverable toggle should be {string}")
+	public void user_Can_See_Non_Discoverable_Toggle_Enable(String role, String action) {
+		boolean viewNonDiscovrableToogle = catlogpermission.userCanSeeAndEnableNonDiscovrableToggle();
 		if (action.equalsIgnoreCase("Enable")) {
-			Assertions.assertTrue(viewMakeDiscovrableToogle,
-					role + " user can't see the Make see Make Discovrable Toggle is Enabled");
+			Assertions.assertTrue(viewNonDiscovrableToogle,
+					role + " user can't see the Make see Non- Discovrable Toggle is Enabled");
 		} else if (action.equalsIgnoreCase("Disable")) {
-			Assertions.assertFalse(viewMakeDiscovrableToogle,
-					role + " user should not Enable Make see Make Discovrable Toggle");
+			Assertions.assertFalse(viewNonDiscovrableToogle,
+					role + " user should not Enable Make see Non- Discovrable Toggle");
 		} else {
 			Assertions.fail("Invalid action: " + action);
 		}
@@ -332,12 +330,12 @@ public class CatlogAccessStep {
 
 	@And("User turn ON the Non Discoverable option")
 	public void user_TurnOn_NonDiscoverable() {
-		catlogpermission.setToggleStateForMakeDiscovrable(); // true = turn ON
+		catlogpermission.setToggleStateForNonDiscovrable();
 	}
 
 	@And("User turn OFF the Non Discoverable option")
 	public void user_TurnOFF_NonDiscoverable() {
-		catlogpermission.setToggleStateForMakeDiscovrable(); // true = turn ON
+		catlogpermission.setToggleStateForNonDiscovrable();
 	}
 
 	@Then("{string} user can {string} Delete Model option")

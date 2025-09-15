@@ -1,11 +1,10 @@
 package aicore.steps.app;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -664,4 +663,15 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(appDispalyInDiscoverable,
 				"Created Application is not displayed in Discovrable Apps section");
 	}
+	@When("User click on System Apps")
+	public void user_click_on_system_apps() {
+		blocksPage.clickOnSystemApps();
+	}
+
+	@Then("User can see {string} app in the System Apps section")
+	public void user_see_the_created_app_in_system_apps_section(String appName) {
+		boolean isAppDisplayed = blocksPage.isAppDisplayedInSystemAppsSection(appName);
+		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in System Apps section");
+	}	
+
 }
