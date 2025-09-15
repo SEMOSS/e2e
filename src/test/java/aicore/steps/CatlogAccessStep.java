@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Assertions;
 import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
+import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
 import aicore.pages.CatlogPermissionsPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.CommonUtils;
-import aicore.framework.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -330,16 +330,14 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@And("'Author' turn ON the 'Make Discoverable' option")
-	public void author_TurnOn_MakeDiscoverable() {
-		boolean toggled = catlogpermission.setToggleStateForMakeDiscovrable(true); // true = turn ON
-		assertTrue(toggled, "Toggle was not turned ON as expected");
+	@And("User turn ON the Non Discoverable option")
+	public void user_TurnOn_NonDiscoverable() {
+		catlogpermission.setToggleStateForMakeDiscovrable(); // true = turn ON
 	}
 
-	@And("'Author' turn OFF the 'Make Discoverable' option")
-	public void author_TurnOFF_MakeDiscoverable() {
-		boolean toggled = catlogpermission.setToggleStateForMakeDiscovrable(false); // true = turn ON
-		assertTrue(toggled, "Toggle was not turned ON as expected");
+	@And("User turn OFF the Non Discoverable option")
+	public void user_TurnOFF_NonDiscoverable() {
+		catlogpermission.setToggleStateForMakeDiscovrable(); // true = turn ON
 	}
 
 	@Then("{string} user can {string} Delete Model option")

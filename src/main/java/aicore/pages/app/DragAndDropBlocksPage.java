@@ -212,8 +212,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnDiscovrableApps(page);
 	}
 
-	public boolean createdAppDisplayInDiscoverableApp() {
-		return DragAndDropBlocksPageUtils.createdAppDisplayInDiscoverableApp(page);
+	public boolean createdAppDisplayInDiscoverableApp(String appName) {
+		return DragAndDropBlocksPageUtils.createdAppDisplayInDiscoverableApp(page, appName);
 	}
 
 }

@@ -10,7 +10,7 @@ Feature: Add Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User sees the database name 'TestDatabase' in the database catalog
 
-  @LoginWithAdmin @DeleteTestCatalog
+ @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
     And User clicks on Open Database

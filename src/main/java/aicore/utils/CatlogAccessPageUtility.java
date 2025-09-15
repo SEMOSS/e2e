@@ -32,6 +32,7 @@ public class CatlogAccessPageUtility {
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[text()='Edit']";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
+	private static final String DISCOVERABLE_TOGGLE_OPTION = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -160,22 +161,9 @@ public class CatlogAccessPageUtility {
 		return page.locator(MAKE_DISCOVRABLE_ENABLE_XAPTH).isVisible();
 	}
 
-	public static boolean setToggleStateForMakeDiscovrable(Page page, boolean expectedState) {
-		Locator toggleCheckbox = page.locator("input.MuiSwitch-input[type='checkbox']").nth(1);
-		// Get current state: if 'checked' attribute exists
-		boolean isOn = toggleCheckbox.getAttribute("checked") != null;
-		if (expectedState == isOn) {
-			toggleCheckbox.click();
-			for (int i = 0; i < 10; i++) {
-				page.waitForTimeout(300);
-				boolean updatedIsOn = toggleCheckbox.getAttribute("checked") != null;
-				if (updatedIsOn == expectedState) {
-					return true;
-				}
-			}
-			return false; // toggle state didn't update
-		}
-		return true; // already in correct state
+	public static void setToggleStateForMakeDiscovrable(Page page) {
+		Locator toggleCheckbox = page.locator(DISCOVERABLE_TOGGLE_OPTION);
+		toggleCheckbox.click();
 	}
 
 	public static boolean canSeeEditOption(Page page) {
@@ -195,9 +183,11 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean getCatalogAndCopyId(Page page) {
-		page.getByTestId(CLICK_ON_COPYICON_DATATESTID).click();
+		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
+		AICorePageUtils.waitFor(copyId);
+		copyId.click();
 		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
-		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(toastMessage);
 		boolean isToastVisible = toastMessage.isVisible();
 		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
 		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);

@@ -658,9 +658,9 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnDiscovrableApps();
 	}
 
-	@And("The newly created app should be displayed in the discoverable apps list")
-	public void created_app_display_in_discoverable_app() {
-		boolean appDispalyInDiscoverable = blocksPage.createdAppDisplayInDiscoverableApp();
+	@And("The newly created {string} should be displayed in the discoverable apps list")
+	public void created_app_display_in_discoverable_app(String appName) {
+		boolean appDispalyInDiscoverable = blocksPage.createdAppDisplayInDiscoverableApp(appName);
 		Assertions.assertTrue(appDispalyInDiscoverable,
 				"Created Application is not displayed in Discovrable Apps section");
 	}

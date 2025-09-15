@@ -87,8 +87,8 @@ public class CatlogPermissionsPage {
 		return CatlogAccessPageUtility.user_Can_See_And_Enable_Make_Discoverable_Toggle(page);
 	}
 
-	public boolean setToggleStateForMakeDiscovrable(boolean expepcted) {
-		return CatlogAccessPageUtility.setToggleStateForMakeDiscovrable(page, expepcted);
+	public void setToggleStateForMakeDiscovrable() {
+		CatlogAccessPageUtility.setToggleStateForMakeDiscovrable(page);
 	}
 
 	public boolean canSeeEditOtion() {

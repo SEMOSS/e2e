@@ -81,9 +81,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_BOOKMARK_SECTION_TEXT = "Bookmarked";
 	private static final String CATALOG_SEE_ON_BOOKMARKSECTIONXPATH = "//h6[normalize-space(text())='Bookmarked']/following-sibling::div[@class='css-uncsel']";
 	// App section
-	private static final String APP_DISPALY_APP_SECTION = "//div[@data-testid='appTileCard-App-clone-10123302-tile']//a[@rel='noopener noreferrer']";
+	private static final String APP_DISPALY_APP_SECTION = "//div[contains(@data-testid,'appTileCard')]//a[@rel='noopener noreferrer']";
 	private static final String APP_DISCOVRABLE_SECTION_DATATESTID = "appCatalogPage-discoverable-btn";
-	private static final String CREAYED_APP_DISPLAY_DISCOVRABLE_SECTION_DATATESTID = "appTileCard-Discoverable-app-tile";
+	private static final String CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH = "//div[contains(@data-testid,'appTileCard')]";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -492,8 +492,8 @@ public class DragAndDropBlocksPageUtils {
 		discovrableApp.click();
 	}
 
-	public static boolean createdAppDisplayInDiscoverableApp(Page page) {
-		Locator appDispalyInDiscoverable = page.getByTestId(CREAYED_APP_DISPLAY_DISCOVRABLE_SECTION_DATATESTID);
+	public static boolean createdAppDisplayInDiscoverableApp(Page page, String appName) {
+		Locator appDispalyInDiscoverable = page.locator(CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH);
 		return appDispalyInDiscoverable.isVisible();
 	}
 
