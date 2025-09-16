@@ -1,11 +1,10 @@
 package aicore.steps.app;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -645,5 +644,34 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(isNotVisible,
 				sectionName + " Section is still visible even though no apps are bookmarked.");
 	}
+
+	// created app display in all apps section
+	@Then("User can see {string} app in the All Apps section")
+	public void user_see_the_created_app_in_all_apps_section(String appName) {
+		boolean isAppDisplayed = blocksPage.isAppDisplayedInAllAppsSection(appName);
+		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in All Apps section");
+	}
+
+	@And("User click on Discoverable Apps")
+	public void user_click_discoverable_app() {
+		blocksPage.clickOnDiscovrableApps();
+	}
+
+	@And("The newly created {string} should be displayed in the discoverable apps list")
+	public void created_app_display_in_discoverable_app(String appName) {
+		boolean appDispalyInDiscoverable = blocksPage.createdAppDisplayInDiscoverableApp(appName);
+		Assertions.assertTrue(appDispalyInDiscoverable,
+				"Created Application is not displayed in Discovrable Apps section");
+	}
+	@When("User click on System Apps")
+	public void user_click_on_system_apps() {
+		blocksPage.clickOnSystemApps();
+	}
+
+	@Then("User can see {string} app in the System Apps section")
+	public void user_see_the_created_app_in_system_apps_section(String appName) {
+		boolean isAppDisplayed = blocksPage.isAppDisplayedInSystemAppsSection(appName);
+		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in System Apps section");
+	}	
 
 }

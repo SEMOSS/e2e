@@ -71,24 +71,24 @@ public class CatlogPermissionsPage {
 		return CatlogAccessPageUtility.userCanSeeExportIcon(page);
 	}
 
-	public boolean userCanSeeMakePublicToggleEnable() {
-		return CatlogAccessPageUtility.userCanSeeAndEnableMakePublicToggle(page);
+	public boolean userCanSeeAndEnablePrivateToggle() {
+		return CatlogAccessPageUtility.userCanSeeAndEnablePrivateToggle(page);
 	}
 
-	public boolean setToggleStateForMakePublic(boolean expepcted) {
-		return CatlogAccessPageUtility.setToggleStateForMakePublic(page, expepcted);
+	public void setToggleStateForPrivate() {
+		CatlogAccessPageUtility.setToggleStateForPrivate(page);
 	}
 
 	public String getToasterMessage() {
 		return CatlogAccessPageUtility.getToasterMessage(page);
 	}
 
-	public boolean userCanSeeMakeDiscovrableToggleEnable() {
-		return CatlogAccessPageUtility.user_Can_See_And_Enable_Make_Discoverable_Toggle(page);
+	public boolean userCanSeeAndEnableNonDiscovrableToggle() {
+		return CatlogAccessPageUtility.userCanSeeAndEnableNonDiscoverableToggle(page);
 	}
 
-	public boolean setToggleStateForMakeDiscovrable(boolean expepcted) {
-		return CatlogAccessPageUtility.setToggleStateForMakeDiscovrable(page, expepcted);
+	public void setToggleStateForNonDiscovrable() {
+		CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page);
 	}
 
 	public boolean canSeeEditOtion() {

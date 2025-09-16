@@ -42,7 +42,7 @@ Feature: Create App setting for Read permission
     And User login as 'Admin'
 
   Scenario: Create App - Read user - Not View Export Icon, Make public, Make Discoverable and Delete toggle button
-    And 'Read' user Make Public toggle should be 'Disable'
-    And 'Read' user Make Discoverable toggle should be 'Disable'
+    And 'Read' user Private toggle should be 'Disable'
+    And 'Read' user Non-Discoverable toggle should be 'Disable'
     And 'Read' user can 'not view' Delete Model option
    

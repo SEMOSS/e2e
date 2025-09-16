@@ -79,10 +79,13 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_BOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkBorderIcon']";
 	private static final String APP_UNBOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkIcon']";
 	private static final String APP_BOOKMARK_SECTION_TEXT = "Bookmarked";
-	private static final String APP_BOOKMARK_TEXT = "Bookmark ";
-	private static final String APP_UNBOOKMARK_TEXT = "Unbookmark ";
-
 	private static final String CATALOG_SEE_ON_BOOKMARKSECTIONXPATH = "//h6[normalize-space(text())='Bookmarked']/following-sibling::div[@class='css-uncsel']";
+	// App section
+	private static final String APP_DISPALY_APP_SECTION = "//div[contains(@data-testid,'appTileCard')]//a[@rel='noopener noreferrer']";
+	private static final String APP_DISCOVRABLE_SECTION_DATATESTID = "appCatalogPage-discoverable-btn";
+	private static final String CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH = "//div[contains(@data-testid,'appTileCard')]";
+	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
+	private static final String APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID = "appTileCard-{appName}-tile";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -440,7 +443,6 @@ public class DragAndDropBlocksPageUtils {
 
 	// bookmarksection
 	public static void clickBookmarkIcon(Page page, String appName) {
-		page.waitForTimeout(200);
 		Locator bookmarkIcon = page.locator(APP_BOOKMARK_XPATH).first();
 		AICorePageUtils.waitFor(bookmarkIcon);
 		bookmarkIcon.scrollIntoViewIfNeeded();
@@ -461,7 +463,6 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnUnbookmarkforApp(Page page, String appName) {
-		page.waitForTimeout(200);
 		Locator unbookmarkIcon = page.locator(APP_UNBOOKMARK_XPATH).first();
 		AICorePageUtils.waitFor(unbookmarkIcon);
 		unbookmarkIcon.scrollIntoViewIfNeeded();
@@ -478,4 +479,29 @@ public class DragAndDropBlocksPageUtils {
 		return bookmarkSection.isHidden();
 	}
 
+	// created app display in all apps section
+	public static boolean isAppDisplayedInAllAppsSection(Page page, String appName) {
+		Locator appInAllAppsSection = page.locator(APP_DISPALY_APP_SECTION);
+		AICorePageUtils.waitFor(appInAllAppsSection);
+		return appInAllAppsSection.isVisible();
+	}
+
+	public static void clickOnDiscovrableApps(Page page) {
+		Locator discovrableApp = page.getByTestId(APP_DISCOVRABLE_SECTION_DATATESTID);
+		discovrableApp.isVisible();
+		discovrableApp.click();
+	}
+
+	public static boolean createdAppDisplayInDiscoverableApp(Page page, String appName) {
+		Locator appDispalyInDiscoverable = page.locator(CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH);
+		return appDispalyInDiscoverable.isVisible();
+	}
+
+	public static void clickOnSystemApps(Page page) {
+		page.getByTestId(APP_SYSTEM_SECTION_DATATESTID).click();
+	}
+
+	public static boolean isAppDisplayedInSystemAppsSection(Page page, String appName) {
+		return page.getByTestId(APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID.replace("{appName}", appName)).isVisible();
+	}
 }

@@ -34,6 +34,7 @@ public class AppPageUtils {
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search").click();
 		page.getByLabel("Search").fill(appName + " " + timestamp);
+		page.waitForTimeout(500);
 	}
 
 	public static void searchAppId(Page page, String appId) {
