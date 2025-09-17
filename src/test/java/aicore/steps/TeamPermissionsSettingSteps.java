@@ -90,13 +90,13 @@ public class TeamPermissionsSettingSteps {
 	}
 
 	@And("User clicks on {string} button in Team Permission page")
-	public void user_clicks_on_button_in_team_permission_page(String addEngine) {
-		teamPermissionsSettings.userClickOnAddEngineButton();
+	public void user_clicks_on_button_in_team_permission_page(String addcatalogName) {
+		teamPermissionsSettings.userClickOnAddEngineButton(addcatalogName);
 	}
 
-	@And("User select the {string} in the Engine field of Add Engine form")
-	public void user_select_the_in_the_engine_field_of_add_engine_form(String databaseName) {
-		teamPermissionsSettings.userSelectEngineFromList(databaseName, timestamp);
+	@And("User select the {string} in the {string} field of Add Engine form")
+	public void user_select_the_in_the_engine_field_of_add_engine_form(String catalogName, String selectCatalog) {
+		teamPermissionsSettings.userSelectEngineFromList(catalogName, timestamp, selectCatalog);
 	}
 
 	@And("User select the engine access as {string}")

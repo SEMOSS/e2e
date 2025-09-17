@@ -73,9 +73,9 @@ public class CreateAppPopupUtils {
 		page.waitForTimeout(500);
 		Locator iframeButton = page.locator(IFRAME_BUTTON_XPATH).first();
 		iframeButton.click(new Locator.ClickOptions().setForce(true));
- 	}
- 
- 	public static void clickOnCloseButton(Page page) {
+	}
+
+	public static void clickOnCloseButton(Page page) {
 		page.getByTestId("ClearIcon").nth(1).click(new Locator.ClickOptions().setForce(true));
- 	}
+	}
 }
