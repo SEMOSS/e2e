@@ -58,15 +58,19 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_modify_the_sql_query(String newQuery) throws InterruptedException {
 		notebookPage.modifySqlQuery(newQuery);
 	}
+	@Then("user selects {string} from {string} dropdown")
+	public void user_selects_from_dropdown(String optionName, String dropdownName) throws InterruptedException {
+		notebookPage.selectValueFromDropdown(optionName, dropdownName);
+	}
 
 	@Then("user add value {string} in {string} field")
 	public void user_add_value_in_field(String value, String fieldName) throws InterruptedException {
 		notebookPage.addValueInField(fieldName, value);
 	}
 
-	@Then("User click on Add Record button")
-	public void user_click_on_add_record_button() throws InterruptedException {
-		notebookPage.clickOnAddRecordButton();
+	@Then("User click on {string} Record button")
+	public void user_click_on_add_record_button(String buttonName) throws InterruptedException {
+		notebookPage.clickOnRecordButton(buttonName);
 	}
 	@Then("User sees the success message {string}")
 	public void user_sees_the_success_message(String successMessage) throws InterruptedException {

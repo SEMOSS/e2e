@@ -58,6 +58,9 @@ public class NotebookPageUtils {
 	private static final String FILTER_SELECT_DATABASE_BLOCK_XPATH = "//div[@title ='Select Database']";
 	private static final String QUERY_XPATH = "(//div[contains(@class,'view-line')]//div[contains(@class,'view-line')]//span//span)[1]";
 	private static final String ADD_VALUE_IN_FIELD_XPATH = "(//div[contains(@role,'dialog')]//div//div[contains(@data-block,'input--')]//label[contains(text(),'{fieldName}')]//..//div//input)[2]";
+	private static final String PROGRESS_BAR_IN_FIELD_XPATH = "(//label[contains(text(),'UNIQUE_ROW_ID')]/../div//div//span)[1]";
+	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "(//*[@data-testid='ArrowDropDownIcon'])[2]";
+	private static final String INPUT_BAR_XPATH = "(//label[contains(text(),'UNIQUE_ROW_ID')]/..//div/input)[2]";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -114,13 +117,27 @@ public class NotebookPageUtils {
 			appFieldLocator.fill(value);
 		}
 	}
+	public static void selectValueFromDropdown(Page page, String value, String fieldName) {
+		Locator progressBar = page.locator(PROGRESS_BAR_IN_FIELD_XPATH);
+		page.waitForCondition(progressBar::isHidden, new Page.WaitForConditionOptions().setTimeout(10000));
+		Locator appFieldLocator = page.locator(UNIQUE_ROW_ID_FIELD_XPATH);
+		AICorePageUtils.waitFor(appFieldLocator);
+		appFieldLocator.scrollIntoViewIfNeeded();
+		if(!appFieldLocator.isVisible()) {
+			throw new AssertionError(fieldName + " field is not visible");
+		}else{
+			appFieldLocator.click(new Locator.ClickOptions().setForce(true));
+			page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value)).click(new Locator.ClickOptions().setForce(true));
+		}
+		
+	}
 
-	public static void clickOnAddRecordButton(Page page) {
-		Locator addRecordButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add record"));
+	public static void clickOnRecordButton(Page page, String buttonName) {
+		Locator addRecordButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName+" Record"));
 		AICorePageUtils.waitFor(addRecordButton);
 		addRecordButton.scrollIntoViewIfNeeded();
 		if(!addRecordButton.isVisible()) {
-			throw new AssertionError("Add Record button is not visible/available");
+			throw new AssertionError(buttonName + " Record button is not visible/available");
 		}else{
 			addRecordButton.click();
 		}
