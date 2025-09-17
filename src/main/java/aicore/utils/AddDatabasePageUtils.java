@@ -242,21 +242,6 @@ public class AddDatabasePageUtils {
 		filterValueLocator.click();
 	}
 
-	public static void clickOnBookmark(Page page, String catalogName) {
-		page.locator(BOOKMARK_ICON_XPATH.replace("{catalogName}", catalogName)).click();
-	}
-
-	public static void clickOnUnbookmark(Page page, String catalogName) {
-		page.locator(BOOKMARK_ICON_XPATH.replace("{catalogName}", catalogName)).first().click();
-	}
-
-	public static boolean verifyCatalogDisplayedUnderBookmarkedSection(Page page, String catalogName) {
-		Locator bookmarkedSectio = page
-				.locator(CATALOG_UNDER_BOOKMARKED_SECTION_XPATH.replace("{catalogName}", catalogName));
-		AICorePageUtils.waitFor(bookmarkedSectio);
-		return bookmarkedSectio.isVisible();
-	}
-
 	public static void verifyDatabaseName(Page page, String databaseName) {
 		page.locator(DATABASE_NAME_XPATH.replace("{DbName}", databaseName)).isVisible();
 	}

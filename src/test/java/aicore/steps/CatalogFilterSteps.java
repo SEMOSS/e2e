@@ -9,6 +9,8 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogFilterPage;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class CatalogFilterSteps {
 	private CatalogFilterPage filterPage;
@@ -24,11 +26,35 @@ public class CatalogFilterSteps {
 		case "model":
 			catalogName = catalogName + AddModelSteps.timestamp;
 			break;
+		case "storage":
+			catalogName = catalogName + AddStorageSteps.timestamp;
+			break;
+		case "vector":
+			catalogName = catalogName + AddVectorDatabaseSteps.timestamp;
+			break;
 		}
 		final String FILTER_CATEGORY_NAME = "FILTER_CATEGORY";
 		final String FILTER_VALUE_NAME = "FILTER_VALUE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		validateCatalogFilters(catalogName, FILTER_CATEGORY_NAME, FILTER_VALUE_NAME, rows, filterPage);
+	}
+
+	@When("User clicks on bookmark button of {string} catalog")
+	public void user_clicks_on_bookmark_button_of_catalog(String catalogName) {
+		filterPage.clickOnBookmark(catalogName);
+	}
+
+	@Then("User sees the catalog name {string} in the Bookmarked section")
+	public void user_sees_the_catalog_name_in_the_bookmarked_section(String catalogName) {
+		boolean iscatalogDisplayedUnderBookmarkedSection = filterPage
+				.verifyCatalogDisplayedUnderBookmarkedSection(catalogName);
+		Assertions.assertTrue(iscatalogDisplayedUnderBookmarkedSection,
+				catalogName + " " + "not dispaled under bookmarked section");
+	}
+
+	@When("User clicks on bookmark button to unbookmark {string} catalog")
+	public void user_clicks_on_bookmark_button_ot_unbookmark_catalog(String catalogName) {
+		filterPage.clickOnUnbookmark(catalogName);
 	}
 
 	private void validateCatalogFilters(final String catalogName, final String filterCategoryName,
@@ -41,12 +67,13 @@ public class CatalogFilterSteps {
 			for (String filterValue : filterValuesArray) {
 				catalogFilterPage.searchFilterValue(filterValue);
 				catalogFilterPage.selectFilterValue(filterCategory, filterValue);
-				boolean isFunctionVisible = catalogFilterPage.verifyCatalogIsVisibleOnCatalogPage(catalogName);
-				Assertions.assertTrue(isFunctionVisible, "Function is not present in the function catalog for " + "'"
-						+ filterValue + "'" + " filter value");
+				boolean isCatalogVisible = catalogFilterPage.verifyCatalogIsVisibleOnCatalogPage(catalogName);
+				Assertions.assertTrue(isCatalogVisible,
+						"Catalog is not present for " + "'" + filterValue + "'" + " filter value");
 				// To de-select selected filter we again call this method
 				catalogFilterPage.selectFilterValue(filterCategory, filterValue);
 			}
 		}
 	}
+
 }

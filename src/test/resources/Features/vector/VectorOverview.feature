@@ -30,9 +30,9 @@ Feature: Vector Overview
   @LoginWithAdmin
   Scenario: Validate vector overview page
     Given User can see the Vector title as 'FAISS Vector DB00'
-    When User clicks on vector Edit button
+    When User clicks on Edit button
     And User add tags 'TestTag' and presses Enter
-    And User clicks on the 'Submit' button
+    And User clicks on Submit button
     And 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'

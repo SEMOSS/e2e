@@ -33,8 +33,8 @@ Feature: View existing databases on database catalog page
       | Domain              | SAP, AI           |
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
-    #When User clicks on bookmark button of 'TestDatabase' database
-    #Then User sees the database name 'TestDatabase' in the Bookmarked section
-    #When User clicks on bookmark button to unbookmark 'TestDatabase' database
+    #When User clicks on bookmark button of 'TestDatabase' catalog
+    #Then User sees the catalog name 'TestDatabase' in the Bookmarked section
+    #When User clicks on bookmark button to unbookmark 'TestDatabase' catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     And User clicks On Copy Catalog ID

@@ -4,7 +4,7 @@ Feature: Add Storage
   Background: Add Amazon S3 Storage
     Given User is on Home page
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     When User clicks on Add Storage button
     And User selects 'Amazon S3' storage
     And User enters storage Catalog name as 'Amazon S3 Storage'
@@ -51,14 +51,14 @@ Feature: Add Storage
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
     #And User can see last updated info
     And User logs out from the application
     Then User login as "read"
     And User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
     Then User sees Change Access button
@@ -74,7 +74,7 @@ Feature: Add Storage
     And User logs out from the application
     Then User login as "Editor"
     And User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
     And User click on the Change Access button
@@ -98,7 +98,7 @@ Feature: Add Storage
     And User logs out from the application
     Then User login as "Editor"
     And User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
     And User click on the Change Access button

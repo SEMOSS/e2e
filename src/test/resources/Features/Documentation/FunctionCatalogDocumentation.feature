@@ -34,7 +34,7 @@ Scenario: Create a Function
   And User login as 'editor'
   And User opens Main Menu    
   And User clicks on Open Function
-  And User clicks on Discoverable button
+  And User clicks on Discoverable Functions button
   And User captures a 'button' and highlights the 'Discoverable Functions'
   Then User sees the function name 'TestFunction' in the function catalog
   And User clicks on the function name 'TestFunction' in the function catalog
