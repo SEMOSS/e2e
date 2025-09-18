@@ -40,6 +40,43 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.enterQueryName(queryName);
 	}
 
+	@And("User clicks on Query name as {string}")
+	public void user_click_on_query_name_as(String queryName) {
+		notebookPage.clickOnQueryName(queryName);
+	}
+	
+	@When("User clicks on Run cell button of database cell")
+	public void user_clicks_on_run_cell_button_of_database_cell() throws InterruptedException {
+		notebookPage.clickOnRunCellButtonDatabase();
+	}
+
+	@Then("User can see the output for database cell")
+	public void user_can_see_the_output_for_database_cell() throws InterruptedException {
+		notebookPage.checkDatabaseOutput();
+	}
+	@Then("User modify the Sql query {string}")
+	public void user_modify_the_sql_query(String newQuery) throws InterruptedException {
+		notebookPage.modifySqlQuery(newQuery);
+	}
+	@Then("user selects {string} from {string} dropdown")
+	public void user_selects_from_dropdown(String optionName, String dropdownName) throws InterruptedException {
+		notebookPage.selectValueFromDropdown(optionName, dropdownName);
+	}
+
+	@Then("user add value {string} in {string} field")
+	public void user_add_value_in_field(String value, String fieldName) throws InterruptedException {
+		notebookPage.addValueInField(fieldName, value);
+	}
+
+	@Then("User click on {string} Record button")
+	public void user_click_on_add_record_button(String buttonName) throws InterruptedException {
+		notebookPage.clickOnRecordButton(buttonName);
+	}
+	@Then("User sees the success message {string}")
+	public void user_sees_the_success_message(String successMessage) throws InterruptedException {
+		notebookPage.checkSuccessMessage(successMessage);
+	}
+
 	@When("User clicks on query Submit button")
 	public void user_clicks_on_query_submit_button() {
 		notebookPage.clickOnQuerySubmitButton();
@@ -202,10 +239,10 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.writeQuery(query);
 	}
 
-	@Then("User sees the output of the executed query where Age is {string} and Bloodpressure is {string}")
-	public void user_sees_the_output_of_the_executed_query_where_age_is_and_bloodpressure_is(String age, String bp) {
-		boolean flag = notebookPage.validateQuery(age, bp);
-		Assertions.assertTrue(flag, "age and bp fields is not visible");
+	@Then("User sees the output of the executed query where {string} is {string}")
+	public void user_sees_the_output_of_the_executed_query_where_is(String queryLocator, String value) {
+		boolean flag = notebookPage.validateQuery(queryLocator, value);
+		Assertions.assertTrue(flag, "Query output is not visible");
 	}
 
 	@And("User clicks on the {string} option")

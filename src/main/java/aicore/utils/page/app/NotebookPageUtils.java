@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -41,8 +42,8 @@ public class NotebookPageUtils {
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
 	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='{notebookName}']";
 	private static final String QUERY_INPUT_FIELD_XPATH = "[data-mode-id='sql']>div>div>textarea";
-	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{Age}']";
-	private static final String QUERY_OUTPUT_FIELD1_XPATH = "//tr[@class=\"MuiTableRow-root css-5lw8r7-MuiTableRow-root\"]//td[text()='{BP}']";
+	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
+	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
 	private static final String CHECK_DEFAULT_OPERATOR_XPATH = "(//div[text()='{operator}'])";
 	private static final String CHANGE_DEFAULT_OPERATOR_XPATH = "(//li[text()='{operator}'])";
 	private static final String COLOUMN_SELECTOR_XPATH = "(//div[@title='Select Header'])";
@@ -54,6 +55,12 @@ public class NotebookPageUtils {
 	private static final String DATA_SPAN_SELECTOR_XPATH = "(//label[text()='Select Data']/..//div//div[@role='button']//span)";
 	private static final String RULE_BUTTON_XPATH = "//span[contains(normalize-space(),'{buttonName}')]";
 	private static final String FILTER_SELECT_FRAME_BLOCK_XPATH = "//input[@placeholder='Select Frame']";
+	private static final String FILTER_SELECT_DATABASE_BLOCK_XPATH = "//div[@title ='Select Database']";
+	private static final String QUERY_XPATH = "(//div[contains(@class,'view-line')]//div[contains(@class,'view-line')]//span//span)[1]";
+	private static final String ADD_VALUE_IN_FIELD_XPATH = "(//div[contains(@role,'dialog')]//div//div[contains(@data-block,'input--')]//label[contains(text(),'{fieldName}')]//..//div//input)[2]";
+	private static final String PROGRESS_BAR_IN_FIELD_XPATH = "(//label[contains(text(),'UNIQUE_ROW_ID')]/../div//div//span)[1]";
+	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "(//*[@data-testid='ArrowDropDownIcon'])[2]";
+	private static final String INPUT_BAR_XPATH = "(//label[contains(text(),'UNIQUE_ROW_ID')]/..//div/input)[2]";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -64,10 +71,105 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterQueryName(Page page, String queryName) {
-		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX,
-				new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL));
+//		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX,
+//				new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL));
+//		AICorePageUtils.waitFor(queryTextbox);
+//		queryTextbox.fill(queryName);
+		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX);
 		AICorePageUtils.waitFor(queryTextbox);
 		queryTextbox.fill(queryName);
+	}
+
+	public static void clickOnQueryName(Page page, String queryName) {
+		Locator queryTextbox = page.locator(NOTEBOOK_NAME_XPATH.replace("{notebookName}", queryName));
+		AICorePageUtils.waitFor(queryTextbox);
+		queryTextbox.click();
+	}
+
+	public static void clickOnRunCellButtonDatabase(Page page) {
+		Locator block = page.locator(FILTER_SELECT_DATABASE_BLOCK_XPATH);
+		if (block.isVisible()) {
+			block.hover();
+		}
+		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell"));
+		AICorePageUtils.waitFor(runCellButton);
+		runCellButton.click();
+		Locator checkCircle = page.getByTestId("CheckCircleIcon");
+		AICorePageUtils.waitFor(checkCircle);
+		checkCircle.isVisible();
+	}
+
+	public static void checkDatabaseOutput(Page page) {
+		Locator databaseblock = page.getByTestId("CheckCircleIcon");
+		AICorePageUtils.waitFor(databaseblock);
+		if (!databaseblock.isVisible()) {
+			throw new AssertionError("Database command not executed successfully");
+		}
+	}
+
+	public static void addValueInField(Page page, String fieldName, String value) {
+		Locator appFieldLocator = page.locator(ADD_VALUE_IN_FIELD_XPATH.replace("{fieldName}", fieldName));
+		AICorePageUtils.waitFor(appFieldLocator);
+		appFieldLocator.scrollIntoViewIfNeeded();
+		if(!appFieldLocator.isVisible()) {
+			throw new AssertionError(fieldName + " field is not visible");
+		}else{
+			appFieldLocator.fill(value);
+		}
+	}
+	public static void selectValueFromDropdown(Page page, String value, String fieldName) {
+		Locator progressBar = page.locator(PROGRESS_BAR_IN_FIELD_XPATH);
+		page.waitForCondition(progressBar::isHidden, new Page.WaitForConditionOptions().setTimeout(10000));
+		Locator appFieldLocator = page.locator(UNIQUE_ROW_ID_FIELD_XPATH);
+		AICorePageUtils.waitFor(appFieldLocator);
+		appFieldLocator.scrollIntoViewIfNeeded();
+		if(!appFieldLocator.isVisible()) {
+			throw new AssertionError(fieldName + " field is not visible");
+		}else{
+			appFieldLocator.click(new Locator.ClickOptions().setForce(true));
+			page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value)).click(new Locator.ClickOptions().setForce(true));
+		}
+		
+	}
+
+	public static void clickOnRecordButton(Page page, String buttonName) {
+		Locator addRecordButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName+" Record"));
+		AICorePageUtils.waitFor(addRecordButton);
+		addRecordButton.scrollIntoViewIfNeeded();
+		if(!addRecordButton.isVisible()) {
+			throw new AssertionError(buttonName + " Record button is not visible/available");
+		}else{
+			addRecordButton.click();
+		}
+	}
+
+	public static void modifySqlQuery(Page page, String newQuery) {
+		Locator QueryTextArea = page.locator(QUERY_XPATH);
+        QueryTextArea.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
+        if (QueryTextArea.isVisible()) {
+            QueryTextArea.click();
+             String textContent = QueryTextArea.textContent();
+             QueryTextArea.press("ArrowDown");
+
+            // Press backspace until the text content is empty
+            while (textContent != null && !textContent.isEmpty()) {
+                QueryTextArea.press("Backspace");
+                // Small delay to let the DOM update
+                page.waitForTimeout(50);
+                textContent = QueryTextArea.textContent();
+            }
+            page.keyboard().type(newQuery, new Keyboard.TypeOptions().setDelay(200));
+        } else {
+            throw new RuntimeException("Query Text Area is not visible");
+        }
+	}
+
+	public static void checkSuccessMessage(Page page, String successMessage) {
+		Locator successMessageLocator = page.getByText("true");
+		AICorePageUtils.waitFor(successMessageLocator);
+		if(!successMessageLocator.isVisible() || !successMessageLocator.textContent().trim().equalsIgnoreCase(successMessage)) {
+			throw new AssertionError("Success message is not visible");
+		}
 	}
 
 	public static void clickOnQuerySubmitButton(Page page) {
@@ -267,9 +369,12 @@ public class NotebookPageUtils {
 		inputField.pressSequentially(query);
 	}
 
-	public static boolean validateQuery(Page page, String age, String bp) {
-		page.locator(QUERY_OUTPUT_FIELD_XPATH.replace("{Age}", age)).isVisible();
-		page.locator(QUERY_OUTPUT_FIELD1_XPATH.replace("{BP}", bp)).isVisible();
+	public static boolean validateQuery(Page page, String queryLocator, String value) {
+		boolean isColumnVisible = page.locator(QUERY_OUTPUT_COLUMN_XPATH.replace("{queryLocator}", queryLocator)).isVisible();
+		boolean isFieldVisible = page.locator(QUERY_OUTPUT_FIELD_XPATH.replace("{queryLocator}", value)).isVisible();
+		if(!isFieldVisible && !isColumnVisible) {
+			throw new AssertionError("Column with header " + queryLocator + " and value " + value + " is not visible in the output");
+		}
 		return true;
 	}
 

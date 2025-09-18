@@ -13,8 +13,9 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import aicore.utils.CommonUtils;
 import aicore.framework.ConfigUtils;
+import aicore.utils.AICorePageUtils;
+import aicore.utils.CommonUtils;
 
 public class DragAndDropBlocksPageUtils {
 
@@ -74,6 +75,18 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DELETE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Delete']";
 	private static final String CHART_COUNT_ON_PAGE_XPATH = "//canvas[@class='marks']";
 
+	// Bookmark app
+	private static final String APP_BOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkBorderIcon']";
+	private static final String APP_UNBOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkIcon']";
+	private static final String APP_BOOKMARK_SECTION_TEXT = "Bookmarked";
+	private static final String CATALOG_SEE_ON_BOOKMARKSECTIONXPATH = "//h6[normalize-space(text())='Bookmarked']/following-sibling::div[@class='css-uncsel']";
+	// App section
+	private static final String APP_DISPALY_APP_SECTION = "//div[contains(@data-testid,'appTileCard')]//a[@rel='noopener noreferrer']";
+	private static final String APP_DISCOVRABLE_SECTION_DATATESTID = "appCatalogPage-discoverable-btn";
+	private static final String CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH = "//div[contains(@data-testid,'appTileCard')]";
+	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
+	private static final String APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID = "appTileCard-{appName}-tile";
+
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
 		element.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -120,95 +133,95 @@ public class DragAndDropBlocksPageUtils {
 	public static void mouseHoverOnBlock(Page page, String blockName) {
 		boolean isValidBlock = true;
 		switch (blockName) {
-			case "Text (h1)":
-				page.locator(HEADING_1_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_1_BLOCK_XPATH).hover();
-				break;
-			case "Text (h2)":
-				page.locator(HEADING_2_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_2_BLOCK_XPATH).hover();
-				break;
-			case "Text (h3)":
-				page.locator(HEADING_3_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_3_BLOCK_XPATH).hover();
-				break;
-			case "Text (h4)":
-				page.locator(HEADING_4_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_4_BLOCK_XPATH).hover();
-				break;
-			case "Text (h5)":
-				page.locator(HEADING_5_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_5_BLOCK_XPATH).hover();
-				break;
-			case "Text (h6)":
-				page.locator(HEADING_6_BLOCK_XPATH).isVisible();
-				page.locator(HEADING_6_BLOCK_XPATH).hover();
-				break;
-			case "Text":
-				page.locator(TEXT_BLOCK_XPATH).isVisible();
-				page.locator(TEXT_BLOCK_XPATH).hover();
-				break;
-			case "Link":
-				page.locator(LINK_BLOCK_XPATH).isVisible();
-				page.locator(LINK_BLOCK_XPATH).hover();
-				break;
-			case "Markdown":
-				page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
-				page.locator(MARKDOWN_BLOCK_XPATH).hover();
-				break;
-			case "Logs":
-				page.locator(LOGS_BLOCK_XPATH).isVisible();
-				page.locator(LOGS_BLOCK_XPATH).hover();
-				break;
-			case "Scatter Plot":
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
-				page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
-				break;
-			case "Line Chart":
-				page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
-				page.locator(LINE_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Bar Chart":
-				page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
-				page.locator(BAR_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Bar Chart - Stacked":
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
-				page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
-				break;
-			case "Pie Chart":
-				page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
-				page.locator(PIE_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Gantt Chart":
-				page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
-				page.locator(GANTT_CHART_BLOCK_XPATH).hover();
-				break;
-			case "Area Chart":
-				page.locator(AREA_CHART_XPATH).scrollIntoViewIfNeeded();
-				page.locator(AREA_CHART_XPATH).isVisible();
-				page.locator(AREA_CHART_XPATH).hover();
-				break;
-			case "Data Grid":
-				page.locator(DATA_GRID_XPATH).scrollIntoViewIfNeeded();
-				page.locator(DATA_GRID_XPATH).isVisible();
-				page.locator(DATA_GRID_XPATH).hover();
-				break;
-			case "Input":
-				page.locator(INPUT_BLOCK_XPATH).scrollIntoViewIfNeeded();
-				page.locator(INPUT_BLOCK_XPATH).isVisible();
-				page.locator(INPUT_BLOCK_XPATH).hover();
-				break;
-			default:
-				isValidBlock = false;
-				logger.error("Invalid block name: " + blockName);
-				throw new IllegalArgumentException("Invalid block name: " + blockName);
+		case "Text (h1)":
+			page.locator(HEADING_1_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_1_BLOCK_XPATH).hover();
+			break;
+		case "Text (h2)":
+			page.locator(HEADING_2_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_2_BLOCK_XPATH).hover();
+			break;
+		case "Text (h3)":
+			page.locator(HEADING_3_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_3_BLOCK_XPATH).hover();
+			break;
+		case "Text (h4)":
+			page.locator(HEADING_4_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_4_BLOCK_XPATH).hover();
+			break;
+		case "Text (h5)":
+			page.locator(HEADING_5_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_5_BLOCK_XPATH).hover();
+			break;
+		case "Text (h6)":
+			page.locator(HEADING_6_BLOCK_XPATH).isVisible();
+			page.locator(HEADING_6_BLOCK_XPATH).hover();
+			break;
+		case "Text":
+			page.locator(TEXT_BLOCK_XPATH).isVisible();
+			page.locator(TEXT_BLOCK_XPATH).hover();
+			break;
+		case "Link":
+			page.locator(LINK_BLOCK_XPATH).isVisible();
+			page.locator(LINK_BLOCK_XPATH).hover();
+			break;
+		case "Markdown":
+			page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
+			page.locator(MARKDOWN_BLOCK_XPATH).hover();
+			break;
+		case "Logs":
+			page.locator(LOGS_BLOCK_XPATH).isVisible();
+			page.locator(LOGS_BLOCK_XPATH).hover();
+			break;
+		case "Scatter Plot":
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
+			page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
+			break;
+		case "Line Chart":
+			page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
+			page.locator(LINE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart":
+			page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Bar Chart - Stacked":
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
+			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
+			break;
+		case "Pie Chart":
+			page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
+			page.locator(PIE_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Gantt Chart":
+			page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
+			page.locator(GANTT_CHART_BLOCK_XPATH).hover();
+			break;
+		case "Area Chart":
+			page.locator(AREA_CHART_XPATH).scrollIntoViewIfNeeded();
+			page.locator(AREA_CHART_XPATH).isVisible();
+			page.locator(AREA_CHART_XPATH).hover();
+			break;
+		case "Data Grid":
+			page.locator(DATA_GRID_XPATH).scrollIntoViewIfNeeded();
+			page.locator(DATA_GRID_XPATH).isVisible();
+			page.locator(DATA_GRID_XPATH).hover();
+			break;
+		case "Input":
+			page.locator(INPUT_BLOCK_XPATH).scrollIntoViewIfNeeded();
+			page.locator(INPUT_BLOCK_XPATH).isVisible();
+			page.locator(INPUT_BLOCK_XPATH).hover();
+			break;
+		default:
+			isValidBlock = false;
+			logger.error("Invalid block name: " + blockName);
+			throw new IllegalArgumentException("Invalid block name: " + blockName);
 		}
 		if (isValidBlock) {
 			page.mouse().down();
@@ -228,21 +241,21 @@ public class DragAndDropBlocksPageUtils {
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
 		Locator textBlockLocator = null;
 		switch (blockName) {
-			case "Link":
-				textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
-				break;
-			case "Text":
-				textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
-				break;
-			case "Markdown":
-				textBlockLocator = page.locator("//div[contains(@data-block,'markdown')]");
-				break;
-			case "Logs":
-				textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
-				break;
-			default:
-				textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
-				break;
+		case "Link":
+			textBlockLocator = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
+			break;
+		case "Text":
+			textBlockLocator = page.locator("p", new Page.LocatorOptions().setHasText(blockText));
+			break;
+		case "Markdown":
+			textBlockLocator = page.locator("//div[contains(@data-block,'markdown')]");
+			break;
+		case "Logs":
+			textBlockLocator = page.locator(LOGS_BLOCK_ON_PAGE_XPATH.replace("{logsText}", blockText));
+			break;
+		default:
+			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
+			break;
 		}
 		return textBlockLocator;
 	}
@@ -426,5 +439,69 @@ public class DragAndDropBlocksPageUtils {
 				page.getByLabel("Go to previous page").click();
 			}
 		}
+	}
+
+	// bookmarksection
+	public static void clickBookmarkIcon(Page page, String appName) {
+		Locator bookmarkIcon = page.locator(APP_BOOKMARK_XPATH).first();
+		AICorePageUtils.waitFor(bookmarkIcon);
+		bookmarkIcon.scrollIntoViewIfNeeded();
+		bookmarkIcon.click();
+	}
+
+	public static boolean isBookmarkedSectionVisible(Page page) {
+		Locator bookmarkSection = page.getByRole(AriaRole.HEADING,
+				new Page.GetByRoleOptions().setName(APP_BOOKMARK_SECTION_TEXT));
+		AICorePageUtils.waitFor(bookmarkSection);
+		return bookmarkSection.isVisible();
+	}
+
+	public static boolean bookmarkAppSeeOnTheBookmarkSection(Page page) {
+		Locator bookmarkedSection = page.locator(CATALOG_SEE_ON_BOOKMARKSECTIONXPATH).first();
+		AICorePageUtils.waitFor(bookmarkedSection);
+		return bookmarkedSection.isVisible();
+	}
+
+	public static void clickOnUnbookmarkforApp(Page page, String appName) {
+		Locator unbookmarkIcon = page.locator(APP_UNBOOKMARK_XPATH).first();
+		AICorePageUtils.waitFor(unbookmarkIcon);
+		unbookmarkIcon.scrollIntoViewIfNeeded();
+		unbookmarkIcon.click();
+	}
+
+	public static boolean isAppRemovedFromBookmarkSection(Page page, String appName) {
+		Locator bookmarkedApp = page.locator(CATALOG_SEE_ON_BOOKMARKSECTIONXPATH).first();
+		return bookmarkedApp.isHidden();
+	}
+
+	public static boolean isBookmarkedSectionNotVisible(Page page) {
+		Locator bookmarkSection = page.getByText(APP_BOOKMARK_SECTION_TEXT);
+		return bookmarkSection.isHidden();
+	}
+
+	// created app display in all apps section
+	public static boolean isAppDisplayedInAllAppsSection(Page page, String appName) {
+		Locator appInAllAppsSection = page.locator(APP_DISPALY_APP_SECTION);
+		AICorePageUtils.waitFor(appInAllAppsSection);
+		return appInAllAppsSection.isVisible();
+	}
+
+	public static void clickOnDiscovrableApps(Page page) {
+		Locator discovrableApp = page.getByTestId(APP_DISCOVRABLE_SECTION_DATATESTID);
+		discovrableApp.isVisible();
+		discovrableApp.click();
+	}
+
+	public static boolean createdAppDisplayInDiscoverableApp(Page page, String appName) {
+		Locator appDispalyInDiscoverable = page.locator(CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH);
+		return appDispalyInDiscoverable.isVisible();
+	}
+
+	public static void clickOnSystemApps(Page page) {
+		page.getByTestId(APP_SYSTEM_SECTION_DATATESTID).click();
+	}
+
+	public static boolean isAppDisplayedInSystemAppsSection(Page page, String appName) {
+		return page.getByTestId(APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID.replace("{appName}", appName)).isVisible();
 	}
 }

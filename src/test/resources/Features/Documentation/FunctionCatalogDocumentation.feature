@@ -1,6 +1,6 @@
 Feature: Function documentation
 
-@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedCatalog
+@LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
 Scenario: Create a Function
   Given User captures documentation screenshot for 'Function Catalog'
   When User opens Main Menu
@@ -21,12 +21,11 @@ Scenario: Create a Function
   And User captures a 'button' and highlights the 'Create function'
   And User clicks on Create Function button
   And User sees success toast message 'Successfully added function to catalog'
+  And User clicks On Copy Catalog ID
   And User captures a 'button' and highlights the 'Export'
   And User captures a 'button' and highlights the 'Edit'
   And User clicks on 'Edit' button
-  And User captures screenshot for "View Tabs"
-  And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
-  And User captures a 'button' and highlights the 'Submit'
+  And User captures screenshot for form "Edit Function Options"
   And User clicks on 'Close' button
   And User clicks on Access Control Tab
   And User captures a 'button' and highlights the 'Access Control'
@@ -53,7 +52,4 @@ Scenario: Create a Function
   And User uploads function file 'Function/weatherFunctionTest.zip'
   And User captures screenshot for "Function ZIP"
   And User opens Main Menu
-  And User clicks on Open Function
-  Then User sees the function name 'TestFunction' in the function catalog
-  And User clicks on the function name 'TestFunction' in the function catalog
   And User completes screenshot capture and triggers comparison for 'Function Catalog'

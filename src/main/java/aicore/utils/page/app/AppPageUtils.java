@@ -34,6 +34,7 @@ public class AppPageUtils {
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search").click();
 		page.getByLabel("Search").fill(appName + " " + timestamp);
+		page.waitForTimeout(500);
 	}
 
 	public static void searchAppId(Page page, String appId) {
@@ -51,6 +52,7 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnMoreVertIcon(Page page, String appName) {
+		page.waitForTimeout(200);
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", appName)));
 		AICorePageUtils.waitFor(appCard);
 		appCard.scrollIntoViewIfNeeded();

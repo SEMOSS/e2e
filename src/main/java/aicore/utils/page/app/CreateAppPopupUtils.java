@@ -18,7 +18,7 @@ public class CreateAppPopupUtils {
 
 	public static void clickOnGetStartedButton(Page page, String appType) {
 		if (appType.toLowerCase().contains("agent")) {
-			page.getByTestId("new-app-agent-btn").click();
+			page.getByTestId("createAppSection-new-app-agent-btn-btn").click();
 		} else if (appType.toLowerCase().contains("drag and drop")) {
 			page.getByTestId("createAppSection-new-app-drag-btn-btn").click();
 		} else {
@@ -61,7 +61,8 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void clickOnUploadButton(Page page) {
-		page.getByTestId("new-app-upload-btn").click();
+//		page.getByTestId("new-app-upload-btn").click();
+		page.getByTestId("createAppSection-upload-btn").click();
 	}
 
 	public static void clickOnShareAppButton(Page page) {

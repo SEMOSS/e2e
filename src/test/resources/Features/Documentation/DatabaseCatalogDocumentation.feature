@@ -1,6 +1,6 @@
 Feature: Database Catalog Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedCatalog
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
   Scenario: Database Catalog Documentation
     Given User captures documentation screenshot for 'Database Catalog'
     When User opens Main Menu
@@ -20,12 +20,11 @@ Feature: Database Catalog Documentation
     And User clicks on Create Database button
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User clicks on 'Edit' button
-    And User captures screenshot for "View Tabs"
-    And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
-    And User captures a 'button' and highlights the 'Submit'
+    And User captures screenshot for form "Database Edit Options"
     And User clicks on 'Close' button
     And User clicks on Access Control Tab
     And User clicks Make 'Database' Discoverable button
@@ -47,7 +46,4 @@ Feature: Database Catalog Documentation
     Then User login as "admin"
     When User opens Main Menu
     And User clicks on Open Database
-    Then User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
     And User completes screenshot capture and triggers comparison for 'Database Catalog'
-

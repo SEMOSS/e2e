@@ -26,12 +26,14 @@ public class CatlogAccessPageUtility {
 	private static final String CIICK_ON_PENDING_REQUESTS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Pending Requests')]";
 	private static final String CLICK_ON_DATA_APPS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Data Apps')]";
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
-	private static final String MAKE_PUBLIC_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
+	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
 	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//span[contains(@title,'discoverable')]";
 	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[text()='Edit']";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
+	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
+	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -77,12 +79,14 @@ public class CatlogAccessPageUtility {
 		// page.locator(CLICK_ON_SETTINGS_XPATH).click();
 		// As per New UI
 		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH);
+		AICorePageUtils.waitFor(settingOption);
 //		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 //			settingOption.click();
 //		}
 
 		// we have issue with Settings so for now we are commenting if statement
 		settingOption.click();
+		
 	}
 
 	public static boolean userCanSeeDeleteModel(Page page) {
@@ -105,77 +109,30 @@ public class CatlogAccessPageUtility {
 		return page.locator(CLICK_ON_EXPORT_ICON_XAPTH).isVisible();
 	}
 
-	public static boolean userCanSeeAndEnableMakePublicToggle(Page page) {
-		return page.locator(MAKE_PUBLIC_TOOGLE_ENABLE_XPATH).isVisible();
+	public static boolean userCanSeeAndEnablePrivateToggle(Page page) {
+		Locator privateToggle = page.locator(MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH);
+		return privateToggle.isVisible();
 	}
 
-	public static boolean setToggleStateForMakePublic(Page page, boolean expectedState) {
-		Locator toggleCheckbox = page.locator("input.MuiSwitch-input[type='checkbox']").nth(0);
-		// Get current state: if 'checked' attribute exists
-		boolean isOn = toggleCheckbox.getAttribute("checked") != null;
-		if (expectedState != isOn) {
-			toggleCheckbox.click();
-			for (int i = 0; i < 10; i++) {
-				page.waitForTimeout(300);
-				boolean updatedIsOn = toggleCheckbox.getAttribute("checked") != null;
-				if (updatedIsOn == expectedState) {
-					return true;
-				}
-			}
-			return false; // toggle state didn't update
-		}
-		return true; // already in correct state
-
-//		// Clickable element (not input, but span above it)
-//		Locator toggleWrapper = page.locator("(//span[contains(@class, 'MuiSwitch-switchBase')])[1]");
-//		Locator toggleInput = page.locator("(//span[contains(@class, 'MuiSwitch-switchBase')])[1]/input");
-//
-//		toggleInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
-//		CommonUtils.moveMouseToCenter(page, toggleInput, 0);
-//		boolean isOn = toggleInput.isChecked();
-//
-//		if (isOn != expectedState) {
-//			toggleWrapper.click();
-//			for (int i = 0; i < 10; i++) {
-//				page.waitForTimeout(300);
-//				if (toggleInput.isChecked() == expectedState) {
-//					return true;
-//				}
-//			}
-//			return false;
-//		}
-//
-//	return true;
-
+	public static void setToggleStateForPrivate(Page page) {
+		Locator toggleCheckboxForPrivate = page.locator(PRIVATE_TOOGLE_OPTION_XPATH);
+		toggleCheckboxForPrivate.click();
 	}
 
 	public static String getToasterMessage(Page page) {
 		// Wait for toaster to appear and return text
 		Locator toasterMessage = page.locator(TOASTER_MEASSAGE_XAPTH);
-		toasterMessage.waitFor(new Locator.WaitForOptions().setTimeout(3000));
+		AICorePageUtils.waitFor(toasterMessage);
 		return toasterMessage.textContent();
 	}
 
-	public static boolean user_Can_See_And_Enable_Make_Discoverable_Toggle(Page page) {
+	public static boolean userCanSeeAndEnableNonDiscoverableToggle(Page page) {
 		return page.locator(MAKE_DISCOVRABLE_ENABLE_XAPTH).isVisible();
 	}
 
-	public static boolean setToggleStateForMakeDiscovrable(Page page, boolean expectedState) {
-		Locator toggleCheckbox = page.locator("input.MuiSwitch-input[type='checkbox']").nth(1);
-		// Get current state: if 'checked' attribute exists
-		boolean isOn = toggleCheckbox.getAttribute("checked") != null;
-		if (expectedState == isOn) {
-			toggleCheckbox.click();
-			for (int i = 0; i < 10; i++) {
-				page.waitForTimeout(300);
-				boolean updatedIsOn = toggleCheckbox.getAttribute("checked") != null;
-				if (updatedIsOn == expectedState) {
-					return true;
-				}
-			}
-			return false; // toggle state didn't update
-		}
-		return true; // already in correct state
+	public static void setToggleStateForNonDiscovrable(Page page) {
+		Locator toggleCheckbox = page.locator(DISCOVERABLE_TOGGLE_OPTION_XPATH);
+		toggleCheckbox.click();
 	}
 
 	public static boolean canSeeEditOption(Page page) {
@@ -195,9 +152,11 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean getCatalogAndCopyId(Page page) {
-		page.getByTestId(CLICK_ON_COPYICON_DATATESTID).click();
+		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
+		AICorePageUtils.waitFor(copyId);
+		copyId.click(new Locator.ClickOptions().setForce(true));
 		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
-		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(toastMessage);
 		boolean isToastVisible = toastMessage.isVisible();
 		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
 		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);

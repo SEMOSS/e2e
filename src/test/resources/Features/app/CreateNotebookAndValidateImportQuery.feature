@@ -40,4 +40,5 @@ Feature: Create Notebook and Validate Import Query
     And User selects 'TestDatabase' database from the dropdown
     And User writes the query 'SELECT * FROM DIABETES where AGE = 50 AND BLOODPRESSURE = 90'
     And User clicks on Run cell button
-    Then User sees the output of the executed query where Age is '50' and Bloodpressure is '90'
+    Then User sees the output of the executed query where 'AGE' is '50'
+    And User sees the output of the executed query where 'BLOODPRESSURE' is '90'

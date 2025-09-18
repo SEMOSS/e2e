@@ -38,10 +38,9 @@ Feature: Create App setting for Editor permission
   Scenario: Create App - Editor user - Not View Export Icon, Make public, Make Discoverable and Delete toggle button
     And User clicks on app Edit button
     And User click on Settings
-    And 'Editor' user Make Public toggle should be 'Disable'
-    And 'Editor' user Make Discoverable toggle should be 'Disable'
+    And 'Editor' user Private toggle should be 'Disable'
+    And 'Editor' user Non-Discoverable toggle should be 'Disable'
     And 'Editor' user can 'not view' Delete Model option
-    #And 'Editor' user can 'view' Export Icon
     And User opens Main Menu
     And User logs out from the application
     And User login as 'Admin'

@@ -32,9 +32,9 @@ public class EditModelPageUtils {
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 
-	public static void searchModelCatalog(Page page, String modelName, String timestamp) {
+	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(modelName + timestamp);
+		page.getByLabel("Search").fill(modelName);
 	}
 
 	public static void selectModelFromSearchOptions(Page page, String modelName) {

@@ -232,4 +232,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	public void clickOnDiscoverableVectorsButton() {
 		page.locator(DISCOVERABLE_VECTORS_XPATH).click();
 	}
+
+	public void clickOnQnAButton() {
+		page.getByTestId("engineLayout-Q&A-tab").click();
+	}
 }

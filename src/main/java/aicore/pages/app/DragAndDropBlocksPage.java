@@ -176,4 +176,50 @@ public class DragAndDropBlocksPage {
 	public void validatePaginationForRowsPerPageOptions(List<String> rowsPerPageOptions) {
 		DragAndDropBlocksPageUtils.validatePaginationForRowsPerPageOptions(page, rowsPerPageOptions);
 	}
+
+	// bookmarksection
+	public void userClickOnBookmarkIcon(String appName) {
+		DragAndDropBlocksPageUtils.clickBookmarkIcon(page, appName);
+	}
+
+	public void clickOnUnbookmarkforApp(String appName) {
+		DragAndDropBlocksPageUtils.clickOnUnbookmarkforApp(page, appName);
+
+	}
+
+	public boolean userSeeBookMarkSection() {
+		return DragAndDropBlocksPageUtils.isBookmarkedSectionVisible(page);
+	}
+
+	public boolean bookmarkAppSeeOnTheBookmarkSection() {
+		return DragAndDropBlocksPageUtils.bookmarkAppSeeOnTheBookmarkSection(page);
+	}
+
+	public boolean isAppRemovedFromBookmarkSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppRemovedFromBookmarkSection(page, appName);
+	}
+
+	public boolean isBookmarkedSectionNotVisible() {
+		return DragAndDropBlocksPageUtils.isBookmarkedSectionNotVisible(page);
+	}
+
+	// created app display in all apps section
+	public boolean isAppDisplayedInAllAppsSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppDisplayedInAllAppsSection(page, appName);
+	}
+
+	public void clickOnDiscovrableApps() {
+		DragAndDropBlocksPageUtils.clickOnDiscovrableApps(page);
+	}
+
+	public boolean createdAppDisplayInDiscoverableApp(String appName) {
+		return DragAndDropBlocksPageUtils.createdAppDisplayInDiscoverableApp(page, appName);
+	}
+	public void clickOnSystemApps() {
+		DragAndDropBlocksPageUtils.clickOnSystemApps(page);
+	}
+	public boolean isAppDisplayedInSystemAppsSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page,appName);
+	}
+
 }

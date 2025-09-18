@@ -1,21 +1,18 @@
 Feature: Vector documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
   Scenario: Create a Vector 
     Given User captures documentation screenshot for 'Vector Catalog'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-    And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Catalog'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    Then User selects 'ZIP'
+    And User uploads a file 'VectorDatabase/Text_Embedding_model.zip'
     And User clicks on Create Model button
-    Then User can see a toast message as 'Successfully added LLM to catalog'
-    When User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
-    And User clicks on Submit button
+    And User searches 'TextEmbeddings BAAI-Large-En-V1.5' in the model catalog searchbox
+    And User selects 'TextEmbeddings BAAI-Large-En-V1.5' from the model catalog
+    And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Vector' 
     And User clicks on Open Vector
@@ -24,20 +21,29 @@ Feature: Vector documentation
     And User captures a 'List Item' and highlights the 'FAISS'
     And User selects 'FAISS' connection
     And User enters vector database Catalog name as 'FAISS Vector DB01'
-    And User selects 'Catalog' from Embedder field
+    And User selects 'TextEmbeddings BAAI-Large-En-V1.5' from Embedder field
     And User selects 'Token' from Chunking Strategy field
     And User enters value of Content Length as '510'
     And User enters value of Content Overlap as '17'
     And User captures a 'button' and highlights the 'Create vector' 
     And User clicks on Create Vector button
+    And User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     When User clicks on Edit button 
-    And User captures screenshot for "View Tabs"
-    And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
-    And User captures a 'button' and highlights the 'Submit'
-    And User clicks on 'Submit' button
+    And User captures screenshot for form "Edit Options"
+    And User clicks on 'Close' button
+    And User clicks on files
+    And User clicks on Embed New Document
+    And User captures screenshot for "Embed New Document"
+    And User uploads a file 'VectorDatabase/Vector_Embed_file.pdf'
+    And User clicks on Embed button
+    Then User sees file embeded success toast message 'Successfully added document'
+    And User captures screenshot for "File List"
+    And User clicks on Q&A button
     And User clicks on Access Control Tab
+    And User captures a 'button' and highlights the 'Access Control'
     And User clicks Make 'Vector' Discoverable button
     And User logs out from the application
     And User login as 'editor'
@@ -51,4 +57,6 @@ Feature: Vector documentation
     And User selects 'author' access
     And User captures screenshot for "Access Request"
     And User clicks on Request button
+    And User logs out from the application
+    And User login as 'admin'
     And User completes screenshot capture and triggers comparison for 'Vector Catalog'

@@ -1,6 +1,6 @@
 Feature: App Library page Documentation
 
-@LoginWithAdmin @SkipIfVersionMatch
+@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp
   Scenario: Create Drag and Drop app
     Given User captures documentation screenshot for 'App Library'
     When User opens Main Menu
@@ -17,6 +17,7 @@ Feature: App Library page Documentation
     And User enters tags 'travel planner, itinerary creator' and presses Enter
     And User captures screenshot for "New App Popup"
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
     And User captures a 'button' and highlights the 'Preview App'
     And User captures a 'button' and highlights the 'Save App'
     And User captures a 'button' and highlights the 'Share App'
@@ -33,9 +34,7 @@ Feature: App Library page Documentation
 		And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User clicks on 'Edit' button
-    And User captures screenshot for "View Tabs"
-    And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
-    And User captures a 'button' and highlights the 'Save'
+    And User captures screenshot for form "App Edit Options"
     And User clicks on 'Cancel' button
     When User opens Main Menu
     And User clicks on Open App Library
@@ -54,9 +53,3 @@ Feature: App Library page Documentation
     Then User can selects 'Travel Itinerary' on the page
     And User captures a 'button' and highlights the 'Delete'
     And User completes screenshot capture and triggers comparison for 'Settings Overview'
-
-
-
-
-
-
