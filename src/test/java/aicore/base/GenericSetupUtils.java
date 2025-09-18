@@ -13,24 +13,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import aicore.framework.Resource;
-import aicore.framework.ResourcePool;
-import com.microsoft.playwright.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
+import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StartOptions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
-import aicore.utils.AICorePageUtils;
 import aicore.framework.ConfigUtils;
+import aicore.framework.Resource;
+import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
+import aicore.utils.AICorePageUtils;
 import e2e.HttpLogger;
-import org.junit.jupiter.api.parallel.Isolated;
 
 public class GenericSetupUtils {
 
@@ -59,7 +62,8 @@ public class GenericSetupUtils {
 		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
 		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
 
-		// shouldn't matter if this is docker or not, should still just ping server you're trying
+		// shouldn't matter if this is docker or not, should still just ping server
+		// you're trying
 		// to connect to
 		DockerUtils.startup();
 
@@ -103,14 +107,10 @@ public class GenericSetupUtils {
 			file = Paths.get(".env");
 		}
 
-		Map<String, String> projectEnvironment = Files.readAllLines(file).stream()
-				.map(String::trim)
-				.filter(s -> !s.isEmpty())
-				.filter(s -> !s.startsWith("#"))
-				.filter(s -> s.contains("="))
+		Map<String, String> projectEnvironment = Files.readAllLines(file).stream().map(String::trim)
+				.filter(s -> !s.isEmpty()).filter(s -> !s.startsWith("#")).filter(s -> s.contains("="))
 				.map(s -> s.split("=", 2))
-				.collect(Collectors.toMap(s -> s[0].trim(),
-						s -> s.length > 1 ? s[1].trim() : ""));
+				.collect(Collectors.toMap(s -> s[0].trim(), s -> s.length > 1 ? s[1].trim() : ""));
 
 		RunInfo.setEnvVariables(projectEnvironment);
 	}
@@ -287,12 +287,20 @@ public class GenericSetupUtils {
 		// going to login
 		String url = UrlUtils.getUrl("#/login");
 		page.navigate(url);
-		try {
-			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
-
-		} catch (Error | Exception e) {
-			logger.info(e.getMessage());
+		Locator acceptBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept"));
+		if (acceptBtn.isVisible()) {
+			try {
+				acceptBtn.click();
+			} catch (Error | Exception e) {
+				logger.info("Failed to click Accept button: " + e.getMessage());
+			}
 		}
+//		try {
+//			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
+//
+//		} catch (Error | Exception e) {
+//			logger.info(e.getMessage());
+//		}
 		page.getByTestId("loginPage-textField-username").click();
 
 		page.getByTestId("loginPage-textField-username").fill(user);
