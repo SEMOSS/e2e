@@ -7,9 +7,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
-import aicore.framework.ConfigUtils;
 
 public class SettingsModelPageUtils {
 
@@ -210,7 +210,7 @@ public class SettingsModelPageUtils {
 			// page.click(ADD_MEMBER_XPATH);
 			page.fill(ADD_MEMBER_XPATH, username);
 //			page.getByText(username).click();
-			page.waitForTimeout(500);
+			page.waitForTimeout(800);
 			page.locator(ADD_MEMBER_XPATH).press("ArrowDown");
 			page.locator(ADD_MEMBER_XPATH).press("Enter");
 		}
