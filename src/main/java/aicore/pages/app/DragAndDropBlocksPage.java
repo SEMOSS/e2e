@@ -203,4 +203,23 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.isBookmarkedSectionNotVisible(page);
 	}
 
+	// created app display in all apps section
+	public boolean isAppDisplayedInAllAppsSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppDisplayedInAllAppsSection(page, appName);
+	}
+
+	public void clickOnDiscovrableApps() {
+		DragAndDropBlocksPageUtils.clickOnDiscovrableApps(page);
+	}
+
+	public boolean createdAppDisplayInDiscoverableApp(String appName) {
+		return DragAndDropBlocksPageUtils.createdAppDisplayInDiscoverableApp(page, appName);
+	}
+	public void clickOnSystemApps() {
+		DragAndDropBlocksPageUtils.clickOnSystemApps(page);
+	}
+	public boolean isAppDisplayedInSystemAppsSection(String appName) {
+		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page,appName);
+	}
+
 }

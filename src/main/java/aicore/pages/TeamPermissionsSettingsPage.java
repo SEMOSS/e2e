@@ -2,7 +2,6 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.settings.MyProfilePageUtils;
 import aicore.utils.settings.TeamPermissionsSettingsUtils;
 
 public class TeamPermissionsSettingsPage {
@@ -63,5 +62,23 @@ public void clickOnAddTeamButton(String button) {
 	public String validateDescription(String description) {
 		return TeamPermissionsSettingsUtils.validateDescription(page, description + " " + timestamp);
 	}	
+     // add engine to all catalog with different roles
+    public void userClickOnCreatedTeamName(String teamName,String timestamp) {
+        TeamPermissionsSettingsUtils.userClickOnCreatedTeamName(page, teamName,timestamp);
+     }
+    public void userClickOnAddEngineButton(){
+        TeamPermissionsSettingsUtils.userClickOnAddEngineButton(page);
+    }
+
+    public void userSelectEngineFromList(String catalogName,String timestamp) {
+        TeamPermissionsSettingsUtils.userSelectEngineFromList(page, catalogName,timestamp);
+     }
+    public boolean userSeeAddedEngineInTheList(String catalogName, String role) {
+        return TeamPermissionsSettingsUtils.userSeeAddedEngineInTheList(page, catalogName, role);
+     }
+    public void userSelectEngineAccessRole(String role) {
+        TeamPermissionsSettingsUtils.userSelectEngineAccessRole(page, role);
+     }
+
 
 }

@@ -73,7 +73,42 @@ Feature: App landing page
     Given User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
+    And User can see 'Test app' app on the page
     When User clicks on the Bookmark icon for 'Test app' App
     And User clicks on the Unbookmark icon for 'Test app' App
     Then The 'Test app' should be removed from the bookmarked section
     And If no apps remain bookmarked the "Bookmarked" section should not be visible
+
+  @DeleteCreatedTestApp @LoginWithAuthor
+  Scenario: Created app is displayed in All Apps section
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    When User searches 'Test app' app in the app searchbox
+    Then User can see 'Test app' app in the All Apps section
+
+  @DeleteCreatedTestApp @LoginWithAuthor
+  Scenario: Verify app is display under Discoverable
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
+    Then User can see 'Test app' app on the page
+    And User clicks on View Details button
+    And User clicks on Access Control Tab
+    And User turn OFF the Non Discoverable option
+    And User logs out from the application
+    And User login as 'Editor'
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User click on Discoverable Apps
+    And User searches 'Test app' app in the app searchbox
+    Then The newly created 'Test app' should be displayed in the discoverable apps list
+    And User logs out from the application
+    And User login as 'Author'
+
+  @DeleteCreatedTestApp
+  Scenario: Verify BI and Terminal apps are displayed under System apps
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    When User click on System Apps
+    Then User can see 'BI' app in the System Apps section
+    And User can see 'Terminal' app in the System Apps section

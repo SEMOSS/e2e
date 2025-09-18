@@ -46,9 +46,12 @@ public class NotebookPage {
 	public void addValueInField(String fieldName, String value) {
 		NotebookPageUtils.addValueInField(page, fieldName, value);
 	}
+	public void selectValueFromDropdown(String value, String fieldName) {
+		NotebookPageUtils.selectValueFromDropdown(page, value, fieldName);
+	}
 
-	public void clickOnAddRecordButton() {
-		NotebookPageUtils.clickOnAddRecordButton(page);
+	public void clickOnRecordButton(String buttonName) {
+		NotebookPageUtils.clickOnRecordButton(page, buttonName);
 	}
 
 	public void checkSuccessMessage(String successMessage) {
