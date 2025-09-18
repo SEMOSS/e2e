@@ -46,7 +46,7 @@ Feature: Add Vector Database
       #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
  
   @LoginWithAdmin
-  Scenario: Validate usage of storage
+  Scenario: Validate usage of vector
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Vector
