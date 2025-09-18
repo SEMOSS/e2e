@@ -71,9 +71,14 @@ public class TeamPermissionsSettingsPage {
 		TeamPermissionsSettingsUtils.userClickOnAddEngineButton(page, addCatalogName);
 	}
 
-	public void userSelectEngineFromList(String catalogName, String timestamp, String selectCatalog) {
-		TeamPermissionsSettingsUtils.userSelectEngineFromList(page, catalogName, timestamp, selectCatalog);
+	public void userSelectEngineFromList(String catalogName, String timestamp, String selectCatalog,
+			String catlogType) {
+		TeamPermissionsSettingsUtils.userSelectEngineFromList(page, catalogName, timestamp, selectCatalog, catlogType);
 	}
+	public void userSelectAppFromList(String catalogType, String selectCatalog) {
+		TeamPermissionsSettingsUtils.userSelectAppFromList(page, catalogType, selectCatalog, catalogType, timestamp);
+	}
+	
 
 	public boolean userSeeAddedEngineInTheList(String catalogName, String role) {
 		return TeamPermissionsSettingsUtils.userSeeAddedEngineInTheList(page, catalogName, role);
