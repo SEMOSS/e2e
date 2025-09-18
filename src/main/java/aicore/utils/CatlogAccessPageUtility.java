@@ -2,6 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class CatlogAccessPageUtility {
@@ -153,6 +154,7 @@ public class CatlogAccessPageUtility {
 
 	public static boolean getCatalogAndCopyId(Page page) {
 		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
+		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 		AICorePageUtils.waitFor(copyId);
 		copyId.click();
 		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
