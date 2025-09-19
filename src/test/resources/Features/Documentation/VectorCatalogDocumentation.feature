@@ -31,7 +31,7 @@ Feature: Vector documentation
     And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
-    When User clicks on Edit button 
+    When User clicks on 'Edit' button 
     And User captures screenshot for form "Edit Options"
     And User clicks on 'Close' button
     And User clicks on files
@@ -49,7 +49,7 @@ Feature: Vector documentation
     And User login as 'editor'
     And User opens Main Menu    
     And User clicks on Open Vector
-    And User clicks on Discoverable vectors button
+    And User clicks on Discoverable Vectors button
     And User searches the 'FAISS Vector DB01' in the Vector Catalog searchbox
     And User selects the 'FAISS Vector DB01' from the Vector catalog
     And User captures a 'button' and highlights the 'Request Access'

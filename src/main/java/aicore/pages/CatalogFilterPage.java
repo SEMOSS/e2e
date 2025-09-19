@@ -22,4 +22,16 @@ public class CatalogFilterPage {
 	public boolean verifyCatalogIsVisibleOnCatalogPage(String catalogName) {
 		return CatalogFilterPageUtils.verifyCatalogIsVisibleOnCatalogPage(page, catalogName);
 	}
+
+	public void clickOnBookmark(String catalogName) {
+		CatalogFilterPageUtils.clickOnBookmark(page, catalogName);
+	}
+
+	public void clickOnUnbookmark(String catalogName) {
+		CatalogFilterPageUtils.clickOnUnbookmark(page, catalogName);
+	}
+
+	public boolean verifyCatalogDisplayedUnderBookmarkedSection(String catalaogName) {
+		return CatalogFilterPageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
+	}
 }
