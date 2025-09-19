@@ -3,7 +3,7 @@ Feature: Add Local File System Storage
   Background: Add Local File System Storage
     Given User is on Home page
     When User opens Main Menu
-    When User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User clicks on Add Storage button
     And User selects 'Local File System' storage
     And User enters storage Catalog name as 'Local File System Storage'
@@ -17,7 +17,7 @@ Feature: Add Local File System Storage
   Scenario: Delete Local File System Storage
     Given User is on Home page
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User searches 'Local File System Storage' storage in the storage searchbox
     And User clicks on created storage 'Local File System Storage'
     And User clicks on Settings Tab for storage

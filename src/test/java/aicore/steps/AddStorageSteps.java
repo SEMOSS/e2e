@@ -37,8 +37,8 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		catalogPage = new CatalogPage(SetupHooks.getPage());
 	}
 
-	@Given("User clicks on Open Storage engine")
-	public void user_clicks_on_open_storage_engine() {
+	@Given("User clicks on Open Storage")
+	public void user_clicks_on_open_storage() {
 		homePage.clickOnOpenStorage();
 	}
 
@@ -70,6 +70,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		catalogName = catalogName + timestamp;
 		storagePage.enterCatalogName(catalogName);
 	}
+
 	@And("User enter storage Catalog name as {string}")
 	public void user_enter_storage_catalog_name_as(String catalogName) {
 		storagePage.enterCatalogName(catalogName);
@@ -80,6 +81,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle);
 		Assertions.assertTrue(flag, "Storage title is not visible");
 	}
+
 	@And("User enters Region as {string}")
 	public void user_enters_region_as(String regionName) {
 		storagePage.enterRegionName(regionName);
@@ -90,7 +92,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.enterBucket(regionName);
 	}
 
-	
 	@Then("User select the {string} from the storage catalog")
 	public void user_select_the_from_the_storage_catalog(String catalogName) {
 		catalogPage.selectCatalogFromSearchOptions(catalogName);
@@ -254,12 +255,12 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User searches the {string} in the storage Catalog searchbox")
 	public void user_searches_the_in_the_storage_catalog_searchbox(String catalogName) {
-		catalogPage.searchCatalog(catalogName+ timestamp);
+		catalogPage.searchCatalog(catalogName + timestamp);
 	}
 
 	@Then("User selects the {string} from the storage catalog")
 	public void user_selects_the_from_the_storage_catalog(String catalogName) {
-		catalogPage.selectCatalogFromSearchOptions(catalogName+timestamp);
+		catalogPage.selectCatalogFromSearchOptions(catalogName + timestamp);
 	}
 
 	@When("User enters Path Prefix as {string}")
@@ -294,5 +295,20 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	public void User_clicks_on_created_storage(String storageName) {
 		storageName = storageName + timestamp;
 		storagePage.clickOnCreatedStorage(storageName);
+	}
+
+	@And("User clicks on Discoverable Storages button")
+	public void user_clicks_on_discoverable_vector_button() {
+		storagePage.clickOnDiscoverableStoragesButton();
+	}
+
+	@When("User clicks on 'Discoverable Storages' tab")
+	public void user_clicks_on_discoverable_storages_tab() {
+		storagePage.clickOnDiscoverableStoragesButton();
+	}
+
+	@When("User clicks on {string} button")
+	public void user_clicks_on_edit_button(String buttonName) {
+		storagePage.clickOnButton(buttonName);
 	}
 }

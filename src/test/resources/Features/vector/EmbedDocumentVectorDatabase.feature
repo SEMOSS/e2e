@@ -4,12 +4,12 @@
 #
   #@LoginWithAdmin
   #Scenario Outline: Add Model and Vector database
-    #Given User navigates to Open Model
+    #Given User clicks on Open Model
     #When User clicks on Add Model
     #Then User selects 'ZIP'
     #And User uploads a file '<file_Name>'
     #And User clicks on Create Model button
-    #And User clicks on Open Vector engine
+    #And User clicks on Open Vector
     #And User clicks on Add Vector button
     #And User selects '<connection>' connection
     #And User enters vector database Catalog name as '<catalog_name>'
@@ -30,7 +30,7 @@
 #
   #@LoginWithAdmin
   #Scenario Outline: Embed a document in Vector DB
-    #Given User clicks on Open Vector engine
+    #Given User clicks on Open Vector
     #When User clicks on the created Vector card name as '<catalog_name>'
     #And User clicks on files
     #And User clicks on Embed New Document
@@ -41,7 +41,7 @@
     #And User sees date of upload in the file list
     #And User sees file size '<file_Size>' in the file list
     #And User sees delete icon in the file list
-    #And User clicks on Open Vector engine
+    #And User clicks on Open Vector
 #
     #Examples: 
       #| catalog_name       | file_Name                            | file_Size |
@@ -49,12 +49,12 @@
 #
   #@LoginWithAdmin
   #Scenario Outline: Verifying Document List in Vector Database using Pixel
-    #Given User clicks on Open Vector engine
+    #Given User clicks on Open Vector
     #When User clicks on the created Vector card name as '<catalog_name>'
     #Then User can see the Vector title as '<catalog_name>'
     #And User copies the vector id
     #And User sees the copied success toast message 'Successfully copied ID'
-    #And User navigates to Open App Library
+    #And User clicks on Open App Library
     #And User clicks on '<tab_Name>' app tab
     #And User clicks on Terminal card
     #And User run pixel command '<pixel_Command>'
@@ -68,12 +68,12 @@
 #
   #@LoginWithAdmin
   #Scenario Outline: Delete created vector and model
-    #Given User clicks on Open Vector engine
+    #Given User clicks on Open Vector
     #When User clicks on the created Vector card name as '<catalog_name>'
     #Then User clicks on Access Control
     #And User clicks on delete icon
     #And User sees deleted Vector success toast message 'Successfully deleted Vector'
-    #And User navigates to Open Model
+    #And User clicks on Open Model
     #And User clicks on the created Model card name as '<model_name>'
     #And User clicks on Access Control
     #And User clicks on delete icon

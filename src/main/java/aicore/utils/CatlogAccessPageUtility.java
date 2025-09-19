@@ -87,7 +87,7 @@ public class CatlogAccessPageUtility {
 
 		// we have issue with Settings so for now we are commenting if statement
 		settingOption.click();
-		
+
 	}
 
 	public static boolean userCanSeeDeleteModel(Page page) {
@@ -156,7 +156,7 @@ public class CatlogAccessPageUtility {
 		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 		AICorePageUtils.waitFor(copyId);
-		copyId.click(new Locator.ClickOptions().setForce(true));
+		copyId.click();
 		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
 		AICorePageUtils.waitFor(toastMessage);
 		boolean isToastVisible = toastMessage.isVisible();
