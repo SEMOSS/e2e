@@ -1,0 +1,32 @@
+name: e2e
+services:
+  semoss:
+    build:
+      context: ds2
+    ports:
+      - "9091:8080"
+    #    environment:
+    #      - SETSOCIAL=true
+    #      - ENABLE_NATIVE=true
+    #      - ENABLE_NATIVE_REGISTRATION=true
+    command: /bin/bash -c "/app/scripts.sh"
+    networks:
+      - tnet
+    #    volumes:
+    #      - ./results/coverage:/opt/testresults/
+
+  test:
+    build: .
+    depends_on:
+      - semoss
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    networks:
+      - tnet
+    user: "${UID}:${GID}"  # Run the container as the current user
+
+networks:
+  tnet:
+
+

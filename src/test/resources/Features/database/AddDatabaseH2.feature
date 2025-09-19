@@ -16,9 +16,10 @@ Feature: Add H2 Database
     And User clicks on apply database button
     Then User can see the database title as 'H2'
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify H2 database
     Given User opens Main Menu
     And User clicks on Open Database
     And User searches the 'H2' in the database Catalog searchbox
     And User clicks on the database name 'H2' in  database catalog
+    And User clicks On Copy Catalog ID
