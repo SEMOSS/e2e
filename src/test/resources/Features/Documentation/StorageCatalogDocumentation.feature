@@ -5,7 +5,7 @@ Feature: Storage Catalog Documentation
     Given User captures documentation screenshot for 'Storage Catalog'
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Storage'
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User captures a 'button' and highlights the 'Add Storage'
     When User clicks on Add Storage button
     And User captures a 'list item' and highlights the 'Amazon S3'
@@ -26,14 +26,14 @@ Feature: Storage Catalog Documentation
     And User captures screenshot for "Edit Storage Options"
     And User clicks on 'Close' button
     And User clicks on Settings Tab
-    And User clicks on Make Discoverable button in storage settings
+    And User clicks Make 'Storage' Discoverable button
     And User opens Main Menu
-  	And User clicks on Open Storage engine
+  	And User clicks on Open Storage
   	And User captures screenshot for "Storage Catalog"
     And User logs out from the application
     Then User login as "editor"
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User captures a 'button' and highlights the 'Discoverable Storages'
     And User clicks on 'Discoverable Storages' tab
     And User select the 'Test Storage' from the storage catalog
@@ -45,7 +45,7 @@ Feature: Storage Catalog Documentation
     And User logs out from the application
     Then User login as "admin"
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     And User select the 'Test Storage' from the storage catalog
     And User clicks on Settings Tab for storage
     And User clicks on Delete button for storage

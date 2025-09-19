@@ -4,9 +4,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
-import aicore.framework.ConfigUtils;
 
 public class OpenVectorPage extends AbstractAddCatalogPageBase {
 
@@ -229,6 +229,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 			throw new AssertionError("Updated At does not match the current date: " + currentDate);
 		}
 	}
+
 	public void clickOnDiscoverableVectorsButton() {
 		page.locator(DISCOVERABLE_VECTORS_XPATH).click();
 	}

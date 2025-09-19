@@ -1,10 +1,11 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
@@ -62,9 +63,18 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User selects {string} from Embedder field")
 	public void user_selects_from_embedder_field(String modelName) {
-		if (modelName.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
+//		if (modelName.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
+//			vectorPage.selectModelfromEmbedderDropdown(modelName);
+//		} else {
+//			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
+//		}
+		switch (modelName) {
+		case "TextEmbeddings BAAI-Large-En-V1.5":
+		case "Test Model":
 			vectorPage.selectModelfromEmbedderDropdown(modelName);
-		} else {
+			;
+			break;
+		default:
 			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
 		}
 	}
@@ -123,9 +133,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		String fullText = vectorPage.verifyNameFiledInSMSS();
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedName = name + timestamp;
-		System.out.println(expectedName);
-		System.out.println(actualName);
-
 		assertEquals(actualName, expectedName, "Name is not matching");
 	}
 
@@ -217,7 +224,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 					option + " is not visible in Change Access popup");
 		}
 	}
-	
 
 	@Then("User selects {string} access")
 	public void user_selects_access(String accessType) {
@@ -240,11 +246,11 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		boolean toastVisible = chnageAccessPopUpPage.isRequestSuccessToastVisible();
 		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
 	}
-	@And("User clicks on Discoverable vectors button")
+
+	@And("User clicks on Discoverable Vectors button")
 	public void user_clicks_on_discoverable_vectors_button() {
 		vectorPage.clickOnDiscoverableVectorsButton();
 	}
-
 
 	@Then("User searches the {string} in the Vector Catalog searchbox")
 	public void user_searches_the_in_the_vector_catalog_searchbox(String catalogName) {
