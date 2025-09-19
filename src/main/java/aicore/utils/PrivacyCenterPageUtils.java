@@ -2,6 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PrivacyCenterPageUtils {
 	private static final String PRIVACY_CENTER_BUTTON_DATA_TESTID = "settingsLayout-privacy-btn";
@@ -16,6 +17,10 @@ public class PrivacyCenterPageUtils {
 
 	public static boolean isPrivacyPopupVisible(Page page) {
 		return page.locator(PRIVACY_POPUP_XPATH).isVisible();
+	}
+
+	public static void waitForPopupClose(Page page) {
+		page.locator(PRIVACY_POPUP_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
 	public static void clickOnCloseIcon(Page page) {

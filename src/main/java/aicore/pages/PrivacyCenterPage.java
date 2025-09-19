@@ -19,6 +19,10 @@ public class PrivacyCenterPage {
 		return PrivacyCenterPageUtils.isPrivacyPopupVisible(page);
 	}
 
+	public void waitForPopupClose() {
+		PrivacyCenterPageUtils.waitForPopupClose(page);
+	}
+
 	public void clickOnCloseIcon() {
 		PrivacyCenterPageUtils.clickOnCloseIcon(page);
 	}

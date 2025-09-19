@@ -44,9 +44,9 @@ public class PrivacyCenterSteps {
 	}
 
 	@Then("Privacy popup should close")
-	public void privacy_popup_should_close() throws InterruptedException {
+	public void privacy_popup_should_close() {
+		privacyCenterPage.waitForPopupClose();
 		boolean isPrivacyPopupVisible = privacyCenterPage.isPrivacyPopupVisible();
-		Thread.sleep(5000);
 		Assertions.assertFalse(isPrivacyPopupVisible, "Privacy popup is still visible");
 	}
 
