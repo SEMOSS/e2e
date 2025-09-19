@@ -287,13 +287,20 @@ public class GenericSetupUtils {
 		// going to login
 		String url = UrlUtils.getUrl("#/login");
 		page.navigate(url);
-		Locator acceptButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept"));
-		if (acceptButton.isVisible()) {
-			acceptButton.click();
-
+		Locator acceptBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept"));
+		if (acceptBtn.isVisible()) {
+			try {
+				acceptBtn.click();
+			} catch (Error | Exception e) {
+				logger.info("Failed to click Accept button: " + e.getMessage());
+			}
+		}
+//		try {
+//			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
+//
 //		} catch (Error | Exception e) {
 //			logger.info(e.getMessage());
-		}
+//		}
 		page.getByTestId("loginPage-textField-username").click();
 
 		page.getByTestId("loginPage-textField-username").fill(user);

@@ -15,23 +15,23 @@ Feature: Database Catalog permissions for Author
     And User clicks on the database name 'TestDatabase' in the database catalog
     And User clicks On Copy Catalog ID
 
-  #@DeleteTestCatalog
-  #Scenario: Database Catalog - Author - View Overview,Metadata,Usage,Access Control,SMSS deatils
-    #Then 'Author' user can 'View' Overview
-    #And 'Author' user can 'View' Metadata
-    #And 'Author' user can 'View' Usage
-    #And 'Author' user can 'View' Access Control
-    #And 'Author' user can 'View' SMSS Details
-#
-  #@DeleteTestCatalog
-  #Scenario: Database Catalog - Author - View Edit SMSS
-    #And User clicks on SMSS
-    #Then 'Author' user can 'View' Edit SMSS
-#
-  #@DeleteTestCatalog
-  #Scenario: Database Catalog - Author - View Member setting
-    #And 'Author' user clicks on Access Control
-    #Then 'Author' user 'can' see Member Setting
+  @DeleteTestCatalog
+  Scenario: Database Catalog - Author - View Overview,Metadata,Usage,Access Control,SMSS deatils
+    Then 'Author' user can 'View' Overview
+    And 'Author' user can 'View' Metadata
+    And 'Author' user can 'View' Usage
+    And 'Author' user can 'View' Access Control
+    And 'Author' user can 'View' SMSS Details
+
+  @DeleteTestCatalog
+  Scenario: Database Catalog - Author - View Edit SMSS
+    And User clicks on SMSS
+    Then 'Author' user can 'View' Edit SMSS
+
+  @DeleteTestCatalog
+  Scenario: Database Catalog - Author - View Member setting
+    And 'Author' user clicks on Access Control
+    Then 'Author' user 'can' see Member Setting
 
   @DeleteTestCatalog
   Scenario: Database Catalog - Author - Add and Delete editor Member
