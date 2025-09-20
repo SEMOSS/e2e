@@ -11,7 +11,7 @@ Feature: Privacy Center Popup Validation
       | Close Icon   |                           |
       | Close button |                           |
     When User clicks on Close icon
-   Then Privacy popup should close
+    Then Privacy popup should close
     And User clicks on Privacy Center button
     When User clicks on 'Close' button
     Then Privacy popup should close
