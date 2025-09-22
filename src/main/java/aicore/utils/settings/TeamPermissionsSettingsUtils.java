@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 
 public class TeamPermissionsSettingsUtils {
@@ -55,11 +56,12 @@ public class TeamPermissionsSettingsUtils {
 		page.click(TEAM_BUTTON_XPATH.replace("{buttonName}", button));
 	}
 
-	public static void selectMemberFromList(Page page, String member) {
+	public static void selectMemberFromList(Page page, String role) {
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
-		Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member));
+		Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", username));
 		AICorePageUtils.waitFor(listMember);
 		listMember.click();
 
@@ -74,12 +76,13 @@ public class TeamPermissionsSettingsUtils {
 		}
 	}
 
-	public static void checkMemberCard(Page page, String member) {
+		public static void checkMemberCard(Page page, String role) {
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		Locator memberCard = page.locator(MEMBER_CARD_XPATH);
 		AICorePageUtils.waitFor(memberCard);
 		String actualMember = memberCard.textContent().trim();
-		if (!actualMember.equals(member)) {
-			throw new AssertionError("Expected member card: " + member + ", but got: " + actualMember);
+		if (!actualMember.equals(username)) {
+			throw new AssertionError("Expected member card: " + username + ", but got: " + actualMember);
 		}
 	}
 

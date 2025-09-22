@@ -50,6 +50,11 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.clickOnRunCellButtonDatabase();
 	}
 
+	@Then("User sees the output of the executed query with empty result")
+	public void user_can_see_the_output_of_the_executed_query_with_empty_result() {
+		notebookPage.checkDatabaseQueryOutput();
+	}
+
 	@Then("User can see the output for database cell")
 	public void user_can_see_the_output_for_database_cell() throws InterruptedException {
 		notebookPage.checkDatabaseOutput();
