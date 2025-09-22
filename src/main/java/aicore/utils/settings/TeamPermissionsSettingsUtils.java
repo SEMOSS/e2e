@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 
 public class TeamPermissionsSettingsUtils {
@@ -21,8 +22,8 @@ public class TeamPermissionsSettingsUtils {
 	private static final String NAME_XPATH = "//p[normalize-space()='{Name}']";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//p[normalize-space()='{description}']";
 	private static final String SELECT_ENGINE_ROLE_XPATH = "//input[@value='{role}']";
-	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//label[text()='Select Engine']";
-    private static final String  CLICK_ON_ADD_ENGINE_TEXT ="Add Engines";
+	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//label[text()='{selectCatalog}']";
+	private static final String CLICK_ON_ADD_CATALOG_TEXT = "{addCatalogName}";
 
 	public static void selectTypeFromDropdown(Page page, String type) {
 		Locator selectTypeFromDropdown = page.locator(SELECT_TYPE_DROPDOWN_XPATH);
@@ -55,11 +56,12 @@ public class TeamPermissionsSettingsUtils {
 		page.click(TEAM_BUTTON_XPATH.replace("{buttonName}", button));
 	}
 
-	public static void selectMemberFromList(Page page, String member) {
+	public static void selectMemberFromList(Page page, String role) {
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
-		Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member));
+		Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", username));
 		AICorePageUtils.waitFor(listMember);
 		listMember.click();
 
@@ -74,12 +76,13 @@ public class TeamPermissionsSettingsUtils {
 		}
 	}
 
-	public static void checkMemberCard(Page page, String member) {
+		public static void checkMemberCard(Page page, String role) {
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		Locator memberCard = page.locator(MEMBER_CARD_XPATH);
 		AICorePageUtils.waitFor(memberCard);
 		String actualMember = memberCard.textContent().trim();
-		if (!actualMember.equals(member)) {
-			throw new AssertionError("Expected member card: " + member + ", but got: " + actualMember);
+		if (!actualMember.equals(username)) {
+			throw new AssertionError("Expected member card: " + username + ", but got: " + actualMember);
 		}
 	}
 
@@ -109,12 +112,27 @@ public class TeamPermissionsSettingsUtils {
 		page.getByText(teamName + " " + timestamp).click();
 	}
 
-	public static void userClickOnAddEngineButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(CLICK_ON_ADD_ENGINE_TEXT)).click();
+	public static void userClickOnAddEngineButton(Page page, String addCatalogName) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+				.setName(CLICK_ON_ADD_CATALOG_TEXT.replace("{addCatalogName}", addCatalogName))).click();
 	}
 
-	public static void userSelectEngineFromList(Page page, String catalogName, String timestamp) {
-		Locator dropdownLocator = page.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH);
+	public static void userSelectEngineFromList(Page page, String catalogName, String timestamp, String selectCatalog,
+			String catalogType) {
+		// String catalogId =
+		// TestResourceTrackerHelper.getInstance().getCatalogId(catalogType);
+		Locator dropdownLocator = page
+				.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
+		dropdownLocator.press("Enter");
+		page.keyboard().press("Control+V");
+		AICorePageUtils.waitFor(dropdownLocator);
+		page.getByText(catalogName).click();
+	}
+
+	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog, String catalogType,
+			String timestamp) {
+		Locator dropdownLocator = page
+				.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
 		dropdownLocator.fill(catalogName + " " + timestamp);
 		AICorePageUtils.waitFor(dropdownLocator);

@@ -4,7 +4,7 @@ Feature: Validate storage creation form
   Scenario Outline: View and fill '<FUNCTION_NAME>' storage creation form
     Given User is on Home page
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     When User clicks on Add Storage button
     And User selects '<FUNCTION_NAME>' storage
     And User can see '<FIELD_NAMES>' fields on the form
@@ -25,7 +25,7 @@ Feature: Validate storage creation form
   Scenario: Submit and validate 'Amazon S3' storage creation form
     Given User is on Home page
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     When User clicks on Add Storage button
     And User selects 'Amazon S3' storage
     When User enters value in below fields

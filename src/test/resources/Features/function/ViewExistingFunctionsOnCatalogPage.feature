@@ -41,7 +41,7 @@ Feature: View existing functions on Function Catalog Page
     And User login as 'editor'
     And User opens Main Menu
     And User clicks on Open Function
-    And User clicks on Discoverable button
+    And User clicks on Discoverable Functions button
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     And User applies each filter and validate 'WeatherFunctionTest' catalog is visible on the 'function' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE |

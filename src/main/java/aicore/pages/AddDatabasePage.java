@@ -96,18 +96,6 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.selectFilterValue(page, filterCategory, filterValue);
 	}
 
-	public void clickOnBookmark(String catalogName) {
-		AddDatabasePageUtils.clickOnBookmark(page, catalogName);
-	}
-
-	public void clickOnUnbookmark(String catalogName) {
-		AddDatabasePageUtils.clickOnUnbookmark(page, catalogName);
-	}
-
-	public boolean verifyCatalogDisplayedUnderBookmarkedSection(String catalaogName) {
-		return AddDatabasePageUtils.verifyCatalogDisplayedUnderBookmarkedSection(page, catalaogName);
-	}
-
 	public void verifyDatabaseName(String databaseName) {
 		AddDatabasePageUtils.verifyDatabaseName(page, databaseName);
 	}

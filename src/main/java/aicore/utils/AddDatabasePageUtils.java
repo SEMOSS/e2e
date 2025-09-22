@@ -46,7 +46,7 @@ public class AddDatabasePageUtils {
 	private static final String SCHEMA_NAME_XPATH = "importForm-schema-textField";
 	private static final String JDBC_URL_XPATH = "importForm-CONNECTION_URL-textField";
 	private static final String USER_NAME_XPATH = "importForm-USERNAME-textField";
-	private static final String APPLY_BUTTON_XPATH = "establish-connection-modal-apply-btn";
+	private static final String APPLY_BUTTON_XPATH = "establishConnectionPage-modal-apply-btn";
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
@@ -183,7 +183,9 @@ public class AddDatabasePageUtils {
 
 	public static String verifyDatabaseNameInCatalog(Page page, String dbName) {
 		Locator databaseName = page.locator(DB_CATALOG_XPATH.replace("{dbName}", dbName));
-		databaseName.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(databaseName);
+		// databaseName.waitFor(new
+		// Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!databaseName.isVisible()) {
 			throw new AssertionError("Database name '" + dbName + "' is not visible in the catalog.");
 		}
@@ -242,21 +244,6 @@ public class AddDatabasePageUtils {
 		filterValueLocator.click();
 	}
 
-	public static void clickOnBookmark(Page page, String catalogName) {
-		page.locator(BOOKMARK_ICON_XPATH.replace("{catalogName}", catalogName)).click();
-	}
-
-	public static void clickOnUnbookmark(Page page, String catalogName) {
-		page.locator(BOOKMARK_ICON_XPATH.replace("{catalogName}", catalogName)).first().click();
-	}
-
-	public static boolean verifyCatalogDisplayedUnderBookmarkedSection(Page page, String catalogName) {
-		Locator bookmarkedSectio = page
-				.locator(CATALOG_UNDER_BOOKMARKED_SECTION_XPATH.replace("{catalogName}", catalogName));
-		AICorePageUtils.waitFor(bookmarkedSectio);
-		return bookmarkedSectio.isVisible();
-	}
-
 	public static void verifyDatabaseName(Page page, String databaseName) {
 		page.locator(DATABASE_NAME_XPATH.replace("{DbName}", databaseName)).isVisible();
 	}
@@ -301,9 +288,14 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void searchDatabaseCatalog(Page page, String catalogName) {
-		page.waitForSelector(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
-		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
+//		page.waitForSelector(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
+//		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).click();
+//		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
+		Locator searchcatalog = page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
+		AICorePageUtils.waitFor(searchcatalog);
+		searchcatalog.click();
+		searchcatalog.fill(catalogName);
+
 	}
 
 	public static void selectDatabaseFromSearchOptions(Page page, String catalogName) {

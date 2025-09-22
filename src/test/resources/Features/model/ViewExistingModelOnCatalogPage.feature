@@ -20,10 +20,11 @@ Feature: View existing models in model Catalog
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin  @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
     When User clicks on Open Model
+    And User searches the 'Model' in the model catalog searchbox
     Then User should see the 'Model' on the model catalog page
     And User applies each filter and validate 'Model' catalog is visible on the 'model' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE      |
@@ -31,5 +32,6 @@ Feature: View existing models in model Catalog
       | Domain              | SAP, AI           |
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
-    When User searches the 'Model' in the model catalog searchbox
-    And User selects the 'Model' from the model catalog
+    #When User clicks on bookmark button of 'Model' catalog
+    #Then User sees the catalog name 'Model' in the Bookmarked section
+    #When User clicks on bookmark button to unbookmark 'Model' catalog

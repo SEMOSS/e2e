@@ -35,6 +35,10 @@ public class NotebookPage {
 		NotebookPageUtils.clickOnRunCellButtonDatabase(page);
 	}
 
+	public void checkDatabaseQueryOutput() {
+		NotebookPageUtils.checkDatabaseQueryOutput(page);
+	}
+
 	public void checkDatabaseOutput() {
 		NotebookPageUtils.checkDatabaseOutput(page);
 	}

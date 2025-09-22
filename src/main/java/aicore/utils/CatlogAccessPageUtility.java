@@ -2,6 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class CatlogAccessPageUtility {
@@ -86,7 +87,7 @@ public class CatlogAccessPageUtility {
 
 		// we have issue with Settings so for now we are commenting if statement
 		settingOption.click();
-		
+
 	}
 
 	public static boolean userCanSeeDeleteModel(Page page) {

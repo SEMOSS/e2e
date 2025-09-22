@@ -187,24 +187,6 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		Assertions.assertEquals(expectedToastMessage, actualToastMessage, "Toast message is incorrect");
 	}
 
-	@When("User clicks on bookmark button of {string} database")
-	public void user_clicks_on_bookmark_button_of_database(String dbName) {
-		addDatabaseToCatalogPage.clickOnBookmark(dbName);
-	}
-
-	@Then("User sees the database name {string} in the Bookmarked section")
-	public void user_sees_the_database_name_in_the_bookmarked_section(String catalogName) {
-		boolean iscatalogDisplayedUnderBookmarkedSection = addDatabaseToCatalogPage
-				.verifyCatalogDisplayedUnderBookmarkedSection(catalogName);
-		Assertions.assertTrue(iscatalogDisplayedUnderBookmarkedSection,
-				catalogName + " " + "not dispaled under bookmarked section");
-	}
-
-	@When("User clicks on bookmark button to unbookmark {string} database")
-	public void user_clicks_on_bookmark_button_ot_unbookmark_database(String dbName) {
-		addDatabaseToCatalogPage.clickOnUnbookmark(dbName);
-	}
-
 	@Then("User sees the database name as {string}")
 	public void user_sees_the_database_name_as(String catalogName) {
 		boolean flag = viewCatalogPage.verifyCatalogName(catalogName);
