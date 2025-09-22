@@ -66,7 +66,9 @@ public class TeamPermissionsSettingSteps {
 
 	@Then("User can see the new member {string} added in the team member list")
 	public void user_can_see_the_new_member_added_in_the_team_member_list(String member) {
-		teamPermissionsSettings.checkMemberInList(member);
+		boolean isMemberPresent = teamPermissionsSettings.checkMemberInList(member);
+		Assertions.assertTrue(isMemberPresent, "Member is not present in the team member list.");
+		// teamPermissionsSettings.checkMemberInList(member);
 	}
 
 	@Then("User can see team name as {string} in the list")
@@ -99,12 +101,13 @@ public class TeamPermissionsSettingSteps {
 			String catlogType) {
 		teamPermissionsSettings.userSelectEngineFromList(catalogName, timestamp, selectCatalog, catlogType);
 	}
+
 	@And("User select the {string} in the {string} field of Add App form")
-	public void user_select_the_in_the_app_field_of_add_app_form(String catalogName, String selectCatalog){
+	public void user_select_the_in_the_app_field_of_add_app_form(String catalogName, String selectCatalog) {
 		teamPermissionsSettings.userSelectAppFromList(catalogName, selectCatalog);
-				
+
 	}
-	
+
 	@And("User select the engine access as {string}")
 	public void user_select_the_engine_access_as(String role) {
 		teamPermissionsSettings.userSelectEngineAccessRole(role);
@@ -114,6 +117,43 @@ public class TeamPermissionsSettingSteps {
 	public void user_sees_the_with_role_added_in_the_list(String catalogName, String role) {
 		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(catalogName, role);
 		Assertions.assertTrue(isEnginePresent, "Engine with the specified role is not present in the list.");
+	}
+
+	// delete team memeber
+	@When("User clicks on {string} icon on the {string} card")
+	public void user_clicks_on_icon_for_the_member_in_the(String icon, String member) {
+		teamPermissionsSettings.userClickOnDeleteIcon(icon, member);
+	}
+
+	@And("User clicks on {string} button in the confirmation modal")
+	public void user_clicks_on_button_in_the_confirmation_modal(String button) {
+		teamPermissionsSettings.userClickOnDeleteConfirmButton(button);
+	}
+
+	@And("User should not see the {string} card in the team member list")
+	public void user_should_not_see_the_card_in_the_team_member_list(String member) {
+		boolean isMemberPresent = teamPermissionsSettings.checkMemberInList(member);
+		Assertions.assertFalse(isMemberPresent, "Member is still present in the team member list.");
+	}
+
+	@And("User selects multiple members {string} and {string} from the team list")
+	public void user_selects_multiple_members_and_from_the_team_list(String member1, String member2) {
+		teamPermissionsSettings.selectMultipleMembersFromList(member1, member2);
+	}
+
+	@And("User click on checkbox to select all member")
+	public void user_select_all_added_member() {
+		teamPermissionsSettings.userSelectAllMember();
+	}
+
+	@And("User Click on {string} Option")
+	public void user_click_on_option(String string) {
+		teamPermissionsSettings.userClickOnOption(string);
+	}
+
+	@And("User Search the member name as {string}")
+	public void user_search_the_member_name_as(String member) {
+		teamPermissionsSettings.userSearchMemberName(member);
 	}
 
 }
