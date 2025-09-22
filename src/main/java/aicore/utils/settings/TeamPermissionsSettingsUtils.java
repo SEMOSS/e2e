@@ -23,6 +23,9 @@ public class TeamPermissionsSettingsUtils {
 	private static final String SELECT_ENGINE_ROLE_XPATH = "//input[@value='{role}']";
 	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//label[text()='{selectCatalog}']";
 	private static final String CLICK_ON_ADD_CATALOG_TEXT = "{addCatalogName}";
+	private static final String CLICK_ON_DELETE_ICON_DATATESTID = "DeleteRoundedIcon";
+	private static final String CLICK_ON_CONFIRM_BUTTON_XPATH = "//span[text()='{confirm}']";
+	private static final String CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH = "//th//input[@type='checkbox']";
 
 	public static void selectTypeFromDropdown(Page page, String type) {
 		Locator selectTypeFromDropdown = page.locator(SELECT_TYPE_DROPDOWN_XPATH);
@@ -83,11 +86,13 @@ public class TeamPermissionsSettingsUtils {
 		}
 	}
 
-	public static void checkMemberInList(Page page, String member) {
+	public static boolean checkMemberInList(Page page, String member) {
 		Locator memberCard = page.locator(MEMBER_XPATH.replace("{member}", member));
-		if (!memberCard.isVisible()) {
-			throw new AssertionError("Expected " + member + " not present in the list: ");
-		}
+		return memberCard.isVisible();
+		// if (!memberCard.isVisible()) {
+		// throw new AssertionError("Expected " + member + " not present in the list:
+		// ");
+		// }
 	}
 
 	public static String verifyName(Page page, String name) {
@@ -146,6 +151,49 @@ public class TeamPermissionsSettingsUtils {
 		addedEngine.check();
 		AICorePageUtils.waitFor(addedEngine);
 		return addedEngine.isVisible();
+	}
+
+	// delete team member
+	public static void userClickOnDeleteIcon(Page page, String icon, String member) {
+		Locator searchmember = page.getByPlaceholder("Search Members");
+		searchmember.fill(member);
+		AICorePageUtils.waitFor(searchmember);
+		page.getByTestId(CLICK_ON_DELETE_ICON_DATATESTID).click();
+
+	}
+
+	public static void userClickOnDeleteConfirmButton(Page page, String button) {
+		page.locator(CLICK_ON_CONFIRM_BUTTON_XPATH.replace("{confirm}", button)).click();
+	}
+
+	public static void selectMultipleMembersFromList(Page page, String member1, String member2) {
+		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+		AICorePageUtils.waitFor(dropdownLocator);
+		dropdownLocator.click();
+		Locator listMember1 = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member1));
+		AICorePageUtils.waitFor(listMember1);
+		listMember1.click();
+		dropdownLocator.click();
+		Locator listMember2 = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member2));
+		AICorePageUtils.waitFor(listMember2);
+		listMember2.click();
+
+	}
+
+	public static void userSelectAllMember(Page page) {
+		Locator selelctAllMember = page.locator(CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH);
+		AICorePageUtils.waitFor(selelctAllMember);
+		selelctAllMember.check();
+	}
+
+	public static void userClickOnOption(Page page, String option) {
+		page.getByText("Delete Selected").click();
+	}
+
+	public static void userSearchMemberName(Page page, String member) {
+		Locator searchmember = page.getByPlaceholder("Search Members");
+		AICorePageUtils.waitFor(searchmember);
+		searchmember.fill(member);
 	}
 
 }
