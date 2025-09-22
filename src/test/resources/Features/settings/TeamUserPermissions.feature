@@ -71,8 +71,4 @@ Feature: Team Permissions - add User
     And User clicks on 'Confirm' button in the confirmation modal
     Then User sees the message 'Successfully removed users' is displayed
    
-    
-    
-    
-   
    
