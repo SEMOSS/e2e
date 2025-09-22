@@ -108,7 +108,14 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnBIApp(Page page) {
-		page.click(BI_APP_XPATH);
+		String useDocker = ConfigUtils.getValue("use_docker");
+		if (useDocker.equals("true")) {
+			page.click(BI_APP_XPATH);
+		} else {
+			page.navigate("http://localhost:9090/SemossWeb/packages/legacy/dist/#!/");
+		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		}
 	}
 
 	public static void clickOnOpenModel(Page page) {

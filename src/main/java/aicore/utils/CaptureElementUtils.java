@@ -12,6 +12,7 @@ public abstract class CaptureElementUtils {
 
 	public static Locator captureButtonScreenshot(Page page, String buttonName) {
 		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName)).first();
+		page.waitForTimeout(500);
 		if (!locator.isVisible()) {
 			locator = page.locator("//*[contains(@aria-label,'" + buttonName + "')]");
 		}

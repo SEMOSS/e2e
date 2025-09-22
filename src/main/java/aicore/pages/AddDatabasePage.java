@@ -147,4 +147,12 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void verifyMetaData() {
 		AddDatabasePageUtils.verifyMetaData(page);
 	}
+
+	public void clickOnRefreshButton() {
+		AddDatabasePageUtils.clickOnRefreshButton(page);
+	}
+
+	public void selectDatabaseFromDropdown(String dbName) {
+		AddDatabasePageUtils.selectDatabaseFromDropdown(page, dbName);
+	}
 }

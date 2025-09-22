@@ -20,6 +20,6 @@ Feature: Add Local File System Storage
     And User clicks on Open Storage engine
     And User searches 'Local File System Storage' storage in the storage searchbox
     And User clicks on created storage 'Local File System Storage'
-    And User clicks on Settings Tab for storage
+    And User clicks on Access Control Tab
     And User clicks on Delete button for storage
     Then User sees deleted storage success toast message 'Successfully deleted Storage'

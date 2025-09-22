@@ -288,10 +288,11 @@ public class GenericSetupUtils {
 		String url = UrlUtils.getUrl("#/login");
 		page.navigate(url);
 		try {
-			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
-
-		} catch (Error | Exception e) {
-			logger.info(e.getMessage());
+			if(page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).isVisible()) {
+				page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
+			}
+		} catch (Throwable t) {
+			logger.warn("Failed to click Accept button: {}", t.getMessage());
 		}
 		page.getByTestId("loginPage-textField-username").click();
 

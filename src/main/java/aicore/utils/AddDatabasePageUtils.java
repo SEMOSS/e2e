@@ -317,4 +317,16 @@ public class AddDatabasePageUtils {
 		locator.click();
 	}
 
+	public static void clickOnRefreshButton(Page page) {
+		page.getByText("Refresh Data").isVisible();
+		page.getByText("Refresh Data").click();
+	}
+
+	public static void selectDatabaseFromDropdown(Page page, String dbName) {
+		int checkboxCount = page.getByTestId("CheckBoxOutlineBlankIcon").count();
+		if (checkboxCount > 0) {
+			page.getByText(dbName).isVisible();
+			page.getByText(dbName).click();
+		}
+	}
 }

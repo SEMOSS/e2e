@@ -18,7 +18,7 @@ Feature: View Existing Discoverable Storage
 
     @LoginWithAdmin @DeleteTestCatalog
     Scenario: View discoverable storages under 'Discoverable Storages' tab
-    And User clicks on Settings Tab
+    And User clicks on Access Control Tab
     And User clicks on Make Discoverable button in storage settings
     And User logs out from the application
     Then User login as "editor"
@@ -35,7 +35,7 @@ Feature: View Existing Discoverable Storage
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL' under 'Data classification' section
     And User clicks on 'Submit' button
-    And User clicks on Settings Tab
+    And User clicks on Access Control Tab
     And User clicks on Make Discoverable button in storage settings
     And User logs out from the application
     Then User login as "editor"
@@ -53,7 +53,7 @@ Feature: View Existing Discoverable Storage
     When User clicks on 'Edit' button
     And User enters and selects 'CONFIDENTIAL ALLOWED' under 'Data restrictions' section
     And User clicks on 'Submit' button
-    And User clicks on Settings Tab
+    And User clicks on Access Control Tab
     And User clicks on Make Discoverable button in storage settings
     And User logs out from the application
     Then User login as "editor"

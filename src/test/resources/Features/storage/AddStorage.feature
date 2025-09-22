@@ -47,7 +47,7 @@ Feature: Add Storage
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
-    And User clicks on Settings Tab
+    And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User opens Main Menu

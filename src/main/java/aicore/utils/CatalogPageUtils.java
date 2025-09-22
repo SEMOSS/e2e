@@ -10,7 +10,7 @@ public class CatalogPageUtils {
 
 	public static void clickOnMetadataTab(Page page) {
 		// TODO need datatestid
-		Locator locator = page.locator("button.MuiTab-root:has-text('Metadata')");
+		Locator locator = page.getByTestId("engineLayout-Metadata-tab");
 		AICorePageUtils.waitFor(locator);
 		locator.isVisible();
 		locator.click();

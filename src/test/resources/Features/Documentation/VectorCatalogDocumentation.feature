@@ -10,8 +10,8 @@ Feature: Vector documentation
     Then User selects 'ZIP'
     And User uploads a file 'VectorDatabase/Text_Embedding_model.zip'
     And User clicks on Create Model button
-    And User searches 'TextEmbeddings BAAI-Large-En-V1.5' in the model catalog searchbox
-    And User selects 'TextEmbeddings BAAI-Large-En-V1.5' from the model catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'TestDatabase'
     And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Vector' 
