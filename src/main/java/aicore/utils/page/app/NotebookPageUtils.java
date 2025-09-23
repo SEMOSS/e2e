@@ -44,6 +44,7 @@ public class NotebookPageUtils {
 	private static final String QUERY_INPUT_FIELD_XPATH = "[data-mode-id='sql']>div>div>textarea";
 	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
 	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
+	private static final String QUERY_CODE_RUN_NULL_OUTPUT_XPATH = "//tbody//td[contains(text(),'There was an issue generating a preview.')]";
 	private static final String CHECK_DEFAULT_OPERATOR_XPATH = "(//div[text()='{operator}'])";
 	private static final String CHANGE_DEFAULT_OPERATOR_XPATH = "(//li[text()='{operator}'])";
 	private static final String COLOUMN_SELECTOR_XPATH = "(//div[@title='Select Header'])";
@@ -97,6 +98,15 @@ public class NotebookPageUtils {
 		Locator checkCircle = page.getByTestId("CheckCircleIcon");
 		AICorePageUtils.waitFor(checkCircle);
 		checkCircle.isVisible();
+	}
+
+	
+	public static void checkDatabaseQueryOutput(Page page) {
+		Locator outputResult = page.locator(QUERY_CODE_RUN_NULL_OUTPUT_XPATH);
+		AICorePageUtils.waitFor(outputResult);
+		if(!outputResult.isVisible()) {
+			throw new AssertionError("There was an issue generating a preview, output is not visible");
+		}
 	}
 
 	public static void checkDatabaseOutput(Page page) {

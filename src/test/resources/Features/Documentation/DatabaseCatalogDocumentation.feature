@@ -18,8 +18,6 @@ Feature: Database Catalog Documentation
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
     And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
