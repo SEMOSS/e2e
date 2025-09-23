@@ -270,6 +270,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User clicks on Settings Tab for storage")
 	public void user_clicks_on_settings_tab_for_storage() {
+		//TODO cucumber should be clicks on access control
 		storagePage.clickOnSettingsTab();
 	}
 
