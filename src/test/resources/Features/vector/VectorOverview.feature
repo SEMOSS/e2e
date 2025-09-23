@@ -11,6 +11,7 @@ Feature: Vector Overview
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
+     And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -27,7 +28,7 @@ Feature: Vector Overview
     Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as 'FAISS Vector DB00'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate vector overview page
     Given User can see the Vector title as 'FAISS Vector DB00'
     When User clicks on Edit button
