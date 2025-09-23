@@ -65,7 +65,7 @@ public class BICreateDatabaseAndInsightSteps {
 
 	@When("User enter the database name as {string}")
 	public void user_enter_the_database_name_as(String databaseName) {
-		biApp.enterDatabaseName(databaseName);
+		biApp.enterDatabaseName(databaseName + ' ' + timestamp);
 	}
 
 	@And("User uploads CSV file")
@@ -104,6 +104,11 @@ public class BICreateDatabaseAndInsightSteps {
 
 	@And("User search {string} database and select")
 	public void user_search_database_and_select(String createdDatabaseName) {
+		biApp.searchDatabaseName(createdDatabaseName + ' ' + timestamp);
+	}
+
+	@And("User search {string} created database and select")
+	public void user_search_created_database_and_select(String createdDatabaseName) {
 		biApp.searchDatabaseName(createdDatabaseName);
 	}
 
@@ -139,7 +144,46 @@ public class BICreateDatabaseAndInsightSteps {
 	@Then("User can see Insight created toast message as {string}")
 	public void user_can_see_insight_created_toast_message_as(String expectedMessage) {
 		String actualMessage = biApp.verifySavedInsightSuccessMsg();
-		assertEquals(actualMessage, expectedMessage, "Insights creation failed");
+		assertEquals("Insights creation failed", actualMessage, expectedMessage);
 	}
 
+	@And("User clicks on New project button")
+	public void user_clicks_on_new_project_button() {
+		biApp.clickOnNewProjectButton();
+	}
+
+	@And("User selects {string} from the Visualization type options")
+	public void user_selects_bar_from_the_visualization_type_options(String visualizationType) {
+		biApp.selectVisualizationType(visualizationType);
+	}
+
+	@And("User drags the {string} field to the {string}")
+	public void user_drags_the_field_to_the_x_axis(String fieldName, String axis) {
+		biApp.dragFieldToXAxis(fieldName, axis);
+	}
+
+	@And("User clicks on the Tools option")
+	public void user_clicks_on_the_tools_option() {
+		biApp.clickOnToolsOption();
+	}
+
+	@And("User selects {string} from the Tools options")
+	public void user_selects_from_the_tools_options(String toolOption) {
+		biApp.selectToolOption(toolOption);
+	}
+
+	@And("User hovers Add Panel and selects {string}")
+	public void user_hovers_add_panel_and_selects_add_chart(String panelType) {
+		biApp.hoverAddPanelAndSelectAddChart(panelType);
+	}
+
+	@And("User Clicks on Presentation Mode option")
+	public void user_clicks_on_presentation_mode_option() {
+		biApp.clickOnPresentationModeOption();
+	}
+
+	@And("User clicks on Export option from the side menu")
+	public void user_clicks_on_export_option_from_the_side_menu() {
+		biApp.clickOnSideMenuOption();
+	}
 }

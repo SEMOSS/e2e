@@ -8,10 +8,10 @@ Feature: View Function Details
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button 
-    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    And User can see the Catalog title as 'WeatherFunctionTest'
 
   Scenario: View overview details in "Overview" tab for selected Function
-    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks On Copy Catalog ID
     Then User can see 'WeatherFunctionTest' as function name
     And User can see function ID
@@ -35,7 +35,7 @@ Feature: View Function Details
     Then User clicks on the function name 'WeatherFunctionTest' in the function catalog
 
   Scenario: View usage details in "Usage" tab for selected Function
-    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    When User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks On Copy Catalog ID
     When User selects 'Usage' tab
     And User can see 'How to use in Javascript' usage instructions section

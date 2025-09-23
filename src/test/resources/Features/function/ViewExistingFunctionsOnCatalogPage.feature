@@ -7,8 +7,7 @@ Feature: View existing functions on Function Catalog Page
     Then User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    Then User sees the function name 'WeatherFunctionTest' in the function catalog
-    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    And User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter

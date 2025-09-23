@@ -7,9 +7,8 @@ Feature: View existing databases on database catalog page
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    Then User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'TestDatabase'
     And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
