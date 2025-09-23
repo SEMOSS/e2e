@@ -25,7 +25,7 @@ Feature: Storage Catalog Documentation
     And User clicks on 'Edit' button
     And User captures screenshot for "Edit Storage Options"
     And User clicks on 'Close' button
-    And User clicks on Settings Tab
+    And User clicks on Access Control Tab
     And User clicks Make 'Storage' Discoverable button
     And User opens Main Menu
   	And User clicks on Open Storage
@@ -47,7 +47,7 @@ Feature: Storage Catalog Documentation
     When User opens Main Menu
     And User clicks on Open Storage
     And User select the 'Test Storage' from the storage catalog
-    And User clicks on Settings Tab for storage
+    And User clicks on Access Control Tab
     And User clicks on Delete button for storage
     Then User sees deleted storage success toast message 'Successfully deleted Storage'
     And User completes screenshot capture and triggers comparison for 'Storage Catalog'

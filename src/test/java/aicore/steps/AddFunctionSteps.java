@@ -176,7 +176,8 @@ public class AddFunctionSteps {
 
 	@Then("User clicks on Settings Tab")
 	public void user_clicks_on_settings_tab() {
-		addFunctionToCatalogPage.clickOnSettings();
+		// TODO cucumber step should be user clicks on access control
+		addFunctionToCatalogPage.clickOnAccessControl();
 	}
 
 	@Given("User searches the {string} in the function Catalog searchbox")
