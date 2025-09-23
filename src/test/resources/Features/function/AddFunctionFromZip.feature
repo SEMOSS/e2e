@@ -7,13 +7,12 @@ Feature: Add Function From Zip
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'WeatherFunctionTest'
 
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate Change access popup
-    Given User sees the function name 'WeatherFunctionTest' in the function catalog
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
+    Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
@@ -38,9 +37,7 @@ Feature: Add Function From Zip
     
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate change access request
-    Given User sees the function name 'WeatherFunctionTest' in the function catalog
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
+    Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
@@ -62,8 +59,7 @@ Feature: Add Function From Zip
 
   @LoginWithAdmin
   Scenario Outline: Delete Function
-    Given User sees the function name '<function_name>' in the function catalog
-    Then User clicks on the function name '<function_name>' in the function catalog
+    Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Access Control Tab
     And User clicks on Delete button
     And User sees deleted function success toast message '<Toast_message>'

@@ -268,4 +268,14 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 			}
 		}
 	}
+
+	@And("User clicks on Refresh button")
+	public void user_clicks_on_refresh_button() {
+		addDatabaseToCatalogPage.clickOnRefreshButton();
+	}
+
+	@And("User selects the {string} from the dropdown")
+	public void user_selects_the_from_the_dropdown(String dbName) {
+		addDatabaseToCatalogPage.selectDatabaseFromDropdown(dbName);
+	}
 }

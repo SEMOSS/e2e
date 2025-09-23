@@ -10,6 +10,7 @@ import com.microsoft.playwright.Page;
 import aicore.base.GenericSetupUtils;
 import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
+import aicore.pages.AddDatabasePage;
 import aicore.pages.AddModelPage;
 import aicore.pages.CatlogPermissionsPage;
 import aicore.pages.HomePage;
@@ -25,13 +26,15 @@ public class CatlogAccessStep {
 	protected static String timestamp;
 	private CatlogPermissionsPage catlogpermission;
 	private AddModelPage openModelPage;
-
+	private AddDatabasePage addDatabaseToCatalogPage;
+	
 	public CatlogAccessStep() {
 		new LoginPage(SetupHooks.getPage());
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = CommonUtils.getTimeStampName();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		this.catlogpermission = new CatlogPermissionsPage(SetupHooks.getPage());
+		this.addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
 	}
 
 	@Then("{string} user can {string} Overview")
@@ -366,5 +369,11 @@ public class CatlogAccessStep {
 	public void user_clicks_on_Copy_Catalog_ID() {
 		boolean isVisiable = catlogpermission.getCatalogAndCopyId();
 		Assertions.assertTrue(isVisiable, "Successfully copied ID' toast was not visible after clicking copy icon.");
+	}
+
+	@Then("User can see the Catalog title as {string}")
+	public void User_can_see_the_Catalog_title_as(String dbName) {
+		boolean isTitleVisible = addDatabaseToCatalogPage.verifyDatabaseTitle(dbName);
+		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
 	}
 }
