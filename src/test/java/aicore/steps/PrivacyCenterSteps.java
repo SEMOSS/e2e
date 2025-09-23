@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
+import com.microsoft.playwright.Page;
+
 import aicore.hooks.SetupHooks;
 import aicore.pages.PrivacyCenterPage;
 import io.cucumber.datatable.DataTable;
@@ -14,6 +16,7 @@ import io.cucumber.java.en.When;
 public class PrivacyCenterSteps {
 
 	private PrivacyCenterPage privacyCenterPage;
+	private Page newTab;
 
 	public PrivacyCenterSteps() {
 		privacyCenterPage = new PrivacyCenterPage(SetupHooks.getPage());
@@ -29,12 +32,28 @@ public class PrivacyCenterSteps {
 		List<Map<String, String>> elements = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : elements) {
 			String element = row.get("ELEMENT");
-			String result = row.get("EXPECTED_RESULT");
-			if (result == null) {
-				result = "";
+			String name = row.get("EXPECTED_NAME");
+			if (name == null) {
+				name = "";
 			}
-			boolean isElementVisible = privacyCenterPage.isElemnetVisible(element, result);
+			boolean isElementVisible = privacyCenterPage.isElemnetVisible(element, name);
 			Assertions.assertTrue(isElementVisible, element + " is not visible");
+		}
+	}
+
+	@Then("User should see the following cookie details")
+	public void user_should_see_the_following_cookie_details(DataTable dataTable) {
+		List<Map<String, String>> cookies = dataTable.asMaps(String.class, String.class);
+		String[] fields = { "NAME", "HOST", "DURATION", "TYPE", "CATEGORY", "DESCRIPTION" };
+		for (Map<String, String> cookie : cookies) {
+			String cookieName = cookie.get("NAME");
+			for (String field : fields) {
+				String expectedValue = cookie.get(field);
+				String actualValue = privacyCenterPage.getCookieFieldValue(cookieName,
+						field.charAt(0) + field.substring(1).toLowerCase());
+				Assertions.assertEquals(expectedValue, actualValue,
+						"Mismatch in " + field + " for cookie: " + cookieName);
+			}
 		}
 	}
 
@@ -50,4 +69,16 @@ public class PrivacyCenterSteps {
 		Assertions.assertFalse(isPrivacyPopupVisible, "Privacy popup is still visible");
 	}
 
+	@When("User clicks on Cookie policy link")
+	public void user_clicks_on_cookie_policy_link() {
+		newTab = privacyCenterPage.clickOnCookiePolicyLink();
+		newTab.waitForLoadState();
+	}
+
+	@Then("User navigates to {string} page")
+	public void user_navigates_to_page(String destination) {
+		String actualUrl = newTab.url();
+		Assertions.assertEquals(destination, actualUrl, "Mismatch between the expected and actual link destination");
+		newTab.close();
+	}
 }

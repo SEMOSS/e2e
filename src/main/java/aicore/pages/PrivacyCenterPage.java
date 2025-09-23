@@ -30,4 +30,12 @@ public class PrivacyCenterPage {
 	public boolean isElemnetVisible(String element, String title) {
 		return PrivacyCenterPageUtils.isElemnetVisible(page, element, title);
 	}
+
+	public String getCookieFieldValue(String cookieName, String fieldLabel) {
+		return PrivacyCenterPageUtils.getCookieFieldValue(page, cookieName, fieldLabel);
+	}
+
+	public Page clickOnCookiePolicyLink() {
+		return PrivacyCenterPageUtils.clickOnCookiePolicyLink(page);
+	}
 }
