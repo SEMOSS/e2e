@@ -57,7 +57,7 @@ public class PrivacyCenterSteps {
 		}
 	}
 
-	@When("User clicks on Close icon")
+	@When("User clicks on close icon")
 	public void user_clicks_on_close_icon() {
 		privacyCenterPage.clickOnCloseIcon();
 	}

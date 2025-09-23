@@ -30,7 +30,7 @@ Feature: Privacy Center Popup Validation
       #| esctx                 | login.microsoftonline.com                         | Session       | Third Party | Strictly necessary cookies | Session context cookie information. For CSRF protection. Binds a request to a specific browser instance so the request can't be replayed outside the browser. No user information.                                                                                                                                                                                                                                                                                                                                                                  |
     #When User clicks on Cookie policy link
     #Then User navigates to 'https://cookienotice.deloitte.com/' page
-    When User clicks on Close icon
+    When User clicks on close icon
     Then Privacy popup should close
     And User clicks on Privacy Center button
     When User clicks on 'Close' button
