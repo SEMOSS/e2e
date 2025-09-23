@@ -40,7 +40,7 @@ Feature: View existing Storages on storage Catalog Page
     When User clicks on Open Storage
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     And User selects the 'Amazon S3 Storage' from the storage catalog
-    And User clicks on Settings Tab
+    And User clicks on Access Control Tab
     And User clicks Make 'Storage' Discoverable button
     And User logs out from the application
     And User login as 'editor'
