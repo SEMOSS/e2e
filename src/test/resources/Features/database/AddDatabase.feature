@@ -7,8 +7,8 @@ Feature: Add Database
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User sees the database name 'TestDatabase' in the database catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'TestDatabase'
 
  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify Database Usage Examples
@@ -26,8 +26,7 @@ Feature: Add Database
 
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Tags
-    Given User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
+    Given User can see the Catalog title as 'TestDatabase'
     And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
@@ -37,7 +36,7 @@ Feature: Add Database
 
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Overview
-    Given User clicks on the database name 'TestDatabase' in the database catalog
+    Given User can see the Catalog title as 'TestDatabase'
     And User clicks On Copy Catalog ID
     And User sees the database name as 'TestDatabase'
     And User can see 'copy Database ID' Database ID

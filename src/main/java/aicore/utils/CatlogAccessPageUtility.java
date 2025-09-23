@@ -154,9 +154,8 @@ public class CatlogAccessPageUtility {
 
 	public static boolean getCatalogAndCopyId(Page page) {
 		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
-		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-		AICorePageUtils.waitFor(copyId);
-		copyId.click();
+		page.waitForTimeout(500);
+		copyId.click(new Locator.ClickOptions().setForce(true));
 		Locator toastMessage = page.locator("//div[contains(text(),'Successfully copied ID')]");
 		AICorePageUtils.waitFor(toastMessage);
 		boolean isToastVisible = toastMessage.isVisible();

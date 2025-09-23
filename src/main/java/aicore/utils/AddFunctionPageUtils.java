@@ -180,8 +180,9 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void clickOnSettings(Page page) {
-		page.locator(SETTINGS_TAB_XPATH).isVisible();
-		page.locator(SETTINGS_TAB_XPATH).click();
+		Locator settingsTab = page.locator(SETTINGS_TAB_XPATH);
+		AICorePageUtils.waitFor(settingsTab);
+		settingsTab.click();
 	}
 
 	public static void clickOnDeleteButton(Page page) {

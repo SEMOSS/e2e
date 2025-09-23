@@ -1,3 +1,4 @@
+@LoginWithAuthor
 @DeleteCreatedTestApp
 Feature: Create App setting for Editor permission
   Adding LLm to the Catlog

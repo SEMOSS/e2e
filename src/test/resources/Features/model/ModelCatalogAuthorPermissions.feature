@@ -1,3 +1,4 @@
+@LoginWithAuthor
 Feature: Model catalog permission - Author
   Adding LLM to the catalog
 
