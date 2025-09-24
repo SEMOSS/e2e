@@ -70,6 +70,11 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_iframe_button() {
 		appCreatePopup.clickOnIframeButton();
 	}
+	
+	@When("User clicks on Access Control button")
+	public void user_clicks_on_access_control_button() {
+		appPage.clickOnAccessControlButton();
+	}
 
 	@Then("User Clicks on close button")
 	public void user_clicks_on_close_button() {

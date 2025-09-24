@@ -1,4 +1,4 @@
-Feature: Vector documentation
+Feature: Vector Catalog documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
   Scenario: Create a Vector 
@@ -11,7 +11,7 @@ Feature: Vector documentation
     And User uploads a file 'VectorDatabase/Text_Embedding_model.zip'
     And User clicks on Create Model button
     And User sees success toast message 'ZIP uploaded successfully'
-    And User can see the Catalog title as 'TestDatabase'
+    And User can see the Catalog title as 'TextEmbeddings BAAI-Large-En-V1.5'
     And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Vector' 
@@ -31,19 +31,14 @@ Feature: Vector documentation
     And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
+    And User clicks on Usage tab
+    And User captures a 'tab' and highlights the 'Usage'
     When User clicks on 'Edit' button 
     And User captures screenshot for form "Edit Options"
     And User clicks on 'Close' button
-    And User clicks on files
-    And User clicks on Embed New Document
-    And User captures screenshot for "Embed New Document"
-    And User uploads a file 'VectorDatabase/Vector_Embed_file.pdf'
-    And User clicks on Embed button
-    Then User sees file embeded success toast message 'Successfully added document'
-    And User captures screenshot for "File List"
-    And User clicks on Q&A button
     And User clicks on Access Control Tab
     And User captures a 'button' and highlights the 'Access Control'
+    And User captures a 'Heading' and highlights the 'Pending Requests'
     And User clicks Make 'Vector' Discoverable button
     And User logs out from the application
     And User login as 'editor'
@@ -59,4 +54,16 @@ Feature: Vector documentation
     And User clicks on Request button
     And User logs out from the application
     And User login as 'admin'
+    And User opens Main Menu    
+    And User clicks on Open Vector
+    And User searches the 'FAISS Vector DB01' in the Vector Catalog searchbox
+    And User selects the 'FAISS Vector DB01' from the Vector catalog
+    And User clicks on files
+    And User clicks on Embed New Document
+    And User captures screenshot for "Embed New Document"
+    And User uploads a file 'VectorDatabase/Vector_Embed_file.pdf'
+    And User clicks on Embed button
+    Then User sees file embeded success toast message 'Successfully added document'
+    And User captures screenshot for "File List"
+    And User clicks on Q&A button
     And User completes screenshot capture and triggers comparison for 'Vector Catalog'

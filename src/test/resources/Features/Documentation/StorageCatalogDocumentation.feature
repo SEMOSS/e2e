@@ -22,6 +22,11 @@ Feature: Storage Catalog Documentation
     And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
+    And User captures a 'button' and highlights the 'Access Control'
+    And User clicks on Access Control button
+    And User captures a 'Heading' and highlights the 'Pending Requests'
+    And User clicks on Usage tab
+    And User captures a 'tab' and highlights the 'Usage'
     And User clicks on 'Edit' button
     And User captures screenshot for "Edit Storage Options"
     And User clicks on 'Close' button

@@ -16,6 +16,10 @@ public class AppPage {
 	public void clickOnCreateNewAppButton() {
 		AppPageUtils.clickOnCreateNewAppButton(page);
 	}
+	
+	public void clickOnAccessControlButton() {
+		AppPageUtils.clickOnAccessControlButton(page);
+	}
 
 	public void searchApp(String appName) {
 		AppPageUtils.searchApp(page, appName, timestamp);
