@@ -35,30 +35,31 @@ public class DragAndDropBlocksPageUtils {
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
-	private static final String LINK_BLOCK_XPATH = "//div[@aria-label='Access a webpage through a clickable URL']";
-	private static final String HEADING_1_BLOCK_XPATH = "//div[@aria-label='Display Text in header 1']";
-	private static final String HEADING_2_BLOCK_XPATH = "//div[@aria-label='Display Text in header 2']";
-	private static final String HEADING_3_BLOCK_XPATH = "//div[@aria-label='Display Text in header 3']";
-	private static final String HEADING_4_BLOCK_XPATH = "//div[@aria-label='Display Text in header 4']";
-	private static final String HEADING_5_BLOCK_XPATH = "//div[@aria-label='Display Text in header 5']";
-	private static final String HEADING_6_BLOCK_XPATH = "//div[@aria-label='Display Text in header 6']";
-	private static final String TEXT_BLOCK_XPATH = "//div[@aria-label='Show text in a regular paragraph style']";
-	private static final String LOGS_BLOCK_XPATH = "//div[@aria-label='Show logs from the notebook']";
-	private static final String MARKDOWN_BLOCK_XPATH = "//div[@aria-label='Show text in markdown format']";
-	private static final String LINE_CHART_BLOCK_XPATH = "//div[text()='Line Chart']/parent::p/following-sibling::div[div[@aria-label='Show relationships between two variables']]";
-	private static final String SCATTER_PLOT_BLOCK_XPATH = "//div[text()='Scatter Plot']/parent::p/following-sibling::div[div[@aria-label='Show relationships between two variables']]";
-	private static final String BAR_CHART_BLOCK_XPATH = "//div[text()='Bar Chart']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
-	private static final String BAR_CHART_STACKED_BLOCK_XPATH = "//div[text()='Bar Chart - Stacked']/parent::p/following-sibling::div[div[@aria-label='Compare cumulative totals and individual segments across categories']]";
-	private static final String PIE_CHART_BLOCK_XPATH = "//div[@aria-label='Show proportions of a whole']";
-	private static final String GANTT_CHART_BLOCK_XPATH = "//div[@aria-label='Gannt chart for task management']";
+	private static final String LINK_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Link";
+	private static final String HEADING_1_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text-(h1)";
+	private static final String HEADING_2_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text-(h2)";
+	private static final String HEADING_3_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text-(h3)";
+	private static final String HEADING_4_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text-(h4)";
+	private static final String HEADING_5_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text-(h5)";
+	private static final String HEADING_6_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text-(h6)";
+	private static final String TEXT_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text";
+	private static final String LOGS_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Logs";
+	private static final String MARKDOWN_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Markdown";
+	private static final String LINE_CHART_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Line-Chart";
+	private static final String SCATTER_PLOT_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Scatter-Plot";
+	private static final String BAR_CHART_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Bar-Chart";
+	private static final String BAR_CHART_STACKED_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Bar-Chart---Stacked";
+	private static final String PIE_CHART_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Pie-Chart";
+	private static final String GANTT_CHART_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Gantt-Chart";
+	private static final String DENDROGRAM_CHART_DATA_TESTID = "blockMenuCardContent-card-Dendrogram-Chart";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
-	private static final String INPUT_BLOCK_XPATH = "//div[@aria-label='Add an input box for typing text']";
-	private static final String DATA_GRID_XPATH = "//div[@aria-label='Organize and display known data in a tabular format']";
+	private static final String INPUT_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Input";
+	private static final String DATA_GRID_DATA_TESTID = "blockMenuCardContent-card-Data-Grid";
 	private static final String COLUMN_HEADERS_XPATH = "//div[contains(@class,'MuiDataGrid-columnHeaderTitleContainerContent')]//div";
 	private static final String DELETE_COLUMN_BUTTON_XPATH = "//div[span[@title='{columnName}']]//following-sibling::div";
 	private static final String DATA_GRID_ROWS_COUNT_XPATH = "//div[contains(@role,'rowgroup')]//div[contains(@role,'row')]";
@@ -66,7 +67,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 
 	// Area Chart
-	private static final String AREA_CHART_XPATH = "//div[@aria-label='Show trends over time with cumulative data']";
+	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
 	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][@data-testid='DeleteOutlineIcon']";
 	private static final String CLICK_ON_AREA_CHART_VIEW_OPTIONS = "//div[@aria-label='Vega visualization']";
@@ -130,99 +131,127 @@ public class DragAndDropBlocksPageUtils {
 		page.mouse().up();
 	}
 
-	public static void mouseHoverOnBlock(Page page, String blockName) {
-		boolean isValidBlock = true;
+	public static void clickOnDroppedBlock(Page page, String blockName) {
+		Locator DroppedBlockLocator = null;
 		switch (blockName) {
 		case "Text (h1)":
-			page.locator(HEADING_1_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_1_BLOCK_XPATH).hover();
-			break;
 		case "Text (h2)":
-			page.locator(HEADING_2_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_2_BLOCK_XPATH).hover();
-			break;
 		case "Text (h3)":
-			page.locator(HEADING_3_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_3_BLOCK_XPATH).hover();
-			break;
 		case "Text (h4)":
-			page.locator(HEADING_4_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_4_BLOCK_XPATH).hover();
-			break;
 		case "Text (h5)":
-			page.locator(HEADING_5_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_5_BLOCK_XPATH).hover();
-			break;
 		case "Text (h6)":
-			page.locator(HEADING_6_BLOCK_XPATH).isVisible();
-			page.locator(HEADING_6_BLOCK_XPATH).hover();
+			DroppedBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Hello world"));
 			break;
 		case "Text":
-			page.locator(TEXT_BLOCK_XPATH).isVisible();
-			page.locator(TEXT_BLOCK_XPATH).hover();
+			DroppedBlockLocator = page.locator("//p[text()='Hello world']");
 			break;
 		case "Link":
-			page.locator(LINK_BLOCK_XPATH).isVisible();
-			page.locator(LINK_BLOCK_XPATH).hover();
+			DroppedBlockLocator = page.locator("//a[text()='Insert text']");
 			break;
 		case "Markdown":
-			page.locator(MARKDOWN_BLOCK_XPATH).isVisible();
-			page.locator(MARKDOWN_BLOCK_XPATH).hover();
+			DroppedBlockLocator = page.locator("//p[strong[text()='Hello world']]");
 			break;
 		case "Logs":
-			page.locator(LOGS_BLOCK_XPATH).isVisible();
-			page.locator(LOGS_BLOCK_XPATH).hover();
-			break;
-		case "Scatter Plot":
-			page.locator(SCATTER_PLOT_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(SCATTER_PLOT_BLOCK_XPATH).isVisible();
-			page.locator(SCATTER_PLOT_BLOCK_XPATH).hover();
-			break;
-		case "Line Chart":
-			page.locator(LINE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(LINE_CHART_BLOCK_XPATH).isVisible();
-			page.locator(LINE_CHART_BLOCK_XPATH).hover();
-			break;
-		case "Bar Chart":
-			page.locator(BAR_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(BAR_CHART_BLOCK_XPATH).isVisible();
-			page.locator(BAR_CHART_BLOCK_XPATH).hover();
-			break;
-		case "Bar Chart - Stacked":
-			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).isVisible();
-			page.locator(BAR_CHART_STACKED_BLOCK_XPATH).hover();
-			break;
-		case "Pie Chart":
-			page.locator(PIE_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(PIE_CHART_BLOCK_XPATH).isVisible();
-			page.locator(PIE_CHART_BLOCK_XPATH).hover();
-			break;
-		case "Gantt Chart":
-			page.locator(GANTT_CHART_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(GANTT_CHART_BLOCK_XPATH).isVisible();
-			page.locator(GANTT_CHART_BLOCK_XPATH).hover();
-			break;
-		case "Area Chart":
-			page.locator(AREA_CHART_XPATH).scrollIntoViewIfNeeded();
-			page.locator(AREA_CHART_XPATH).isVisible();
-			page.locator(AREA_CHART_XPATH).hover();
-			break;
-		case "Data Grid":
-			page.locator(DATA_GRID_XPATH).scrollIntoViewIfNeeded();
-			page.locator(DATA_GRID_XPATH).isVisible();
-			page.locator(DATA_GRID_XPATH).hover();
+			DroppedBlockLocator = page.locator("//div[text()='Attach Query']");
 			break;
 		case "Input":
-			page.locator(INPUT_BLOCK_XPATH).scrollIntoViewIfNeeded();
-			page.locator(INPUT_BLOCK_XPATH).isVisible();
-			page.locator(INPUT_BLOCK_XPATH).hover();
+			DroppedBlockLocator = page.locator("//label[text()='Example Input']");
+			break;
+		case "Scatter Plot":
+		case "Line Chart":
+		case "Bar Chart":
+		case "Bar Chart - Stacked":
+		case "Pie Chart":
+		case "Gantt Chart":
+		case "Dendrogram Chart":
+			DroppedBlockLocator = page.locator(CHART_XPATH);
+			break;
+		case "Data Grid":
+			DroppedBlockLocator = page.locator("//div[text()='No rows']");
+			break;
+		case "Area Chart":
+			DroppedBlockLocator = page.locator("//div[@class='vega-embed']");
+			break;
+		default:
+			logger.error("Invalid block name: " + blockName);
+			throw new IllegalArgumentException("Invalid block name: " + blockName);
+		}
+		AICorePageUtils.waitFor(DroppedBlockLocator);
+		DroppedBlockLocator.click();
+	}
+
+	public static void mouseHoverOnBlock(Page page, String blockName) {
+		boolean isValidBlock = true;
+		Locator blockLocator = null;
+		switch (blockName) {
+		case "Text (h1)":
+			blockLocator = page.getByTestId(HEADING_1_BLOCK_DATA_TESTID);
+			break;
+		case "Text (h2)":
+			blockLocator = page.getByTestId(HEADING_2_BLOCK_DATA_TESTID);
+			break;
+		case "Text (h3)":
+			blockLocator = page.getByTestId(HEADING_3_BLOCK_DATA_TESTID);
+			break;
+		case "Text (h4)":
+			blockLocator = page.getByTestId(HEADING_4_BLOCK_DATA_TESTID);
+			break;
+		case "Text (h5)":
+			blockLocator = page.getByTestId(HEADING_5_BLOCK_DATA_TESTID);
+			break;
+		case "Text (h6)":
+			blockLocator = page.getByTestId(HEADING_6_BLOCK_DATA_TESTID);
+			break;
+		case "Text":
+			blockLocator = page.getByTestId(TEXT_BLOCK_DATA_TESTID);
+			break;
+		case "Link":
+			blockLocator = page.getByTestId(LINK_BLOCK_DATA_TESTID);
+			break;
+		case "Markdown":
+			blockLocator = page.getByTestId(MARKDOWN_BLOCK_DATA_TESTID);
+			break;
+		case "Logs":
+			blockLocator = page.getByTestId(LOGS_BLOCK_DATA_TESTID);
+			break;
+		case "Scatter Plot":
+			blockLocator = page.getByTestId(SCATTER_PLOT_BLOCK_DATA_TESTID);
+			break;
+		case "Line Chart":
+			blockLocator = page.getByTestId(LINE_CHART_BLOCK_DATA_TESTID);
+			break;
+		case "Bar Chart":
+			blockLocator = page.getByTestId(BAR_CHART_BLOCK_DATA_TESTID);
+			break;
+		case "Bar Chart - Stacked":
+			blockLocator = page.getByTestId(BAR_CHART_STACKED_BLOCK_DATA_TESTID);
+			break;
+		case "Pie Chart":
+			blockLocator = page.getByTestId(PIE_CHART_BLOCK_DATA_TESTID);
+			break;
+		case "Gantt Chart":
+			blockLocator = page.getByTestId(GANTT_CHART_BLOCK_DATA_TESTID);
+			break;
+		case "Area Chart":
+			blockLocator = page.getByTestId(AREA_CHART_DATA_TESTID);
+			break;
+		case "Data Grid":
+			blockLocator = page.getByTestId(DATA_GRID_DATA_TESTID);
+			break;
+		case "Input":
+			blockLocator = page.getByTestId(INPUT_BLOCK_DATA_TESTID);
+			break;
+		case "Dendrogram Chart":
+			blockLocator = page.getByTestId(DENDROGRAM_CHART_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
 		}
+		blockLocator.scrollIntoViewIfNeeded();
+		blockLocator.isVisible();
+		blockLocator.hover();
 		if (isValidBlock) {
 			page.mouse().down();
 		}

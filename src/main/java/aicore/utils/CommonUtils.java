@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,8 +22,6 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import aicore.framework.ConfigUtils;
-import aicore.framework.UrlUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,6 +33,9 @@ import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.BoundingBox;
+
+import aicore.framework.ConfigUtils;
+import aicore.framework.UrlUtils;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
@@ -216,12 +216,9 @@ public class CommonUtils {
 
 		// Ensure diff directory exists
 		diffFile.getParentFile().mkdirs();
-
-		// If expected image doesn't exist, create it from actual
+		// Fail fast if expected image doesn't exist
 		if (!expectedFile.exists()) {
-			logger.info("Expected image not found. Creating baseline from actual");
-			Files.copy(actualFile.toPath(), expectedFile.toPath());
-			return true;
+			throw new IllegalStateException("Expected image not found at: " + expectedImagePath);
 		}
 
 		BufferedImage expected = ImageIO.read(expectedFile);

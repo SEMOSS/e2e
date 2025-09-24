@@ -76,7 +76,7 @@ Feature: Add Engine for Team Permission
     Scenario Outline: Add Engine for Storage Users role
     Given User is on Home page
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     When User clicks on Add Storage button
     And User selects 'Amazon S3' storage
     And User enters storage Catalog name as 'Amazon S3 Storage'

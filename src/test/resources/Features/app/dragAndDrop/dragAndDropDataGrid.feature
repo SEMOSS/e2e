@@ -48,6 +48,7 @@ Feature: Drag and Drop Data Grid
     When User clicks on 'page-1' page
     And User clicks on Blocks
     And User drags the 'Data Grid' block and drops it on the page
+    And User clicks on the 'Data Grid' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown
@@ -62,6 +63,7 @@ Feature: Drag and Drop Data Grid
     When User clicks on 'page-1' page
     And User clicks on Blocks
     And User drags the 'Data Grid' block and drops it on the page
+    And User clicks on the 'Data Grid' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown
