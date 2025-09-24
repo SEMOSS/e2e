@@ -174,12 +174,6 @@ public class AddFunctionSteps {
 		addFunctionToCatalogPage.clickOnDiscoverableFunctionsbutton();
 	}
 
-	@Then("User clicks on Settings Tab")
-	public void user_clicks_on_settings_tab() {
-		// TODO cucumber step should be user clicks on access control
-		addFunctionToCatalogPage.clickOnAccessControl();
-	}
-
 	@Given("User searches the {string} in the function Catalog searchbox")
 	public void user_searches_the_in_the_function_catalog_searchbox(String catalogName) {
 		addFunctionToCatalogPage.searchFunctionCatalog(catalogName);

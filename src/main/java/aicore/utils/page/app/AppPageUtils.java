@@ -143,4 +143,8 @@ public class AppPageUtils {
 	public static void clickOnViewDetails(Page page) {
 		page.locator(VIEW_DETAILS_BUTTON_XPATH).click();
 	}
+
+	public static void clickOnAccessControlButton(Page page) {
+		AICorePageUtils.clickOnTabButton(page, "Access Control");
+	}
 }

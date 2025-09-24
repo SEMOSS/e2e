@@ -25,6 +25,9 @@ public class CaptureScreenShotPage {
             case "button":
                 locators = CaptureElementUtils.captureButtonScreenshot(page, elementName);
                 break;
+            case "tab":
+                locators = CaptureElementUtils.captureTabScreenshot(page, elementName);
+                break;
             case "list item":
                 locators = CaptureElementUtils.captureListItemScreenshot(page, elementName);
             break;

@@ -1,4 +1,4 @@
-Feature: App Library page Documentation
+Feature: App Library Documentation
 
 @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp
   Scenario: Create Drag and Drop app
@@ -33,6 +33,9 @@ Feature: App Library page Documentation
 		And User clicks on View Details button
 		And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
+    And User captures a 'button' and highlights the 'Access Control'
+    And User clicks on Access Control button
+    And User captures a 'Heading' and highlights the 'Pending Requests'
     And User clicks on 'Edit' button
     And User captures screenshot for form "App Edit Options"
     And User clicks on 'Cancel' button

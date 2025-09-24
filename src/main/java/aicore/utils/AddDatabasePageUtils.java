@@ -200,6 +200,10 @@ public class AddDatabasePageUtils {
 	public static void clickOnMetadataTab(Page page) {
 		CatalogPageUtils.clickOnMetadataTab(page);
 	}
+	
+	public static void clickOnUsageTab(Page page) {
+		AICorePageUtils.clickOnTabButton(page, "Usage");
+	}
 
 	public static void verifyMetaData(Page page) {
 		Locator metadataTable = page.locator(METADATA_TABLE_XPATH);

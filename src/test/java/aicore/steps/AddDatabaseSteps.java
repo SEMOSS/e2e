@@ -6,11 +6,14 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
+import com.microsoft.playwright.Page;
+
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddDatabasePage;
 import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
+import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -244,6 +247,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		// if you fix this you need to update in all the places it is used in cucumber
 		// files
 		addDatabaseToCatalogPage.clickOnMetaDataTab();
+	}
+	
+	@When("User clicks on Usage tab")
+	public void user_clicks_on_usage_tab() {
+		Page page = SetupHooks.getPage();
+		AICorePageUtils.clickOnTabButton(page, "Usage");
 	}
 
 	@Then("User sees the table in the metadata tab")

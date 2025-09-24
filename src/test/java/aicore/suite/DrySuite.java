@@ -11,7 +11,7 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = "cucumber.glue", value = "aicore.steps,aicore.hooks")
 //@ConfigurationParameter(key = "cucumber.glue", value =  "aicore.hooks")
 @ConfigurationParameter(key = "cucumber.plugin", value = "pretty,html:target/cucumber-report.html")
-@ConfigurationParameter(key = "dryRun", value = true)
+@ConfigurationParameter(key = "dryRun", value = "true")
 //@ConfigurationParameter(key = "cucumber.plugin", value = "html:target/cucumber-report.html")
-public class FullSuite {
+public class DrySuite {
 }

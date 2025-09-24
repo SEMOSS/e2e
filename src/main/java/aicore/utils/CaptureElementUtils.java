@@ -2,6 +2,8 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public abstract class CaptureElementUtils {
 
@@ -46,6 +48,13 @@ public abstract class CaptureElementUtils {
 
 	public static Locator captureCopyCTAScreenshot(Page page, String buttonName) {
 		Locator locator = page.locator(COPY_ELEMENT_XPATH.replace("{ButtonName}", buttonName)).nth(1);
+		return locator;
+	}
+	
+	public static Locator captureTabScreenshot(Page page, String elementName) {
+		Locator locator = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(elementName).setExact(true));
+		locator.scrollIntoViewIfNeeded();
+		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return locator;
 	}
 }
