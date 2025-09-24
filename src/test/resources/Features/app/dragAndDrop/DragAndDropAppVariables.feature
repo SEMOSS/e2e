@@ -199,7 +199,7 @@ Feature: Create App and validate Variables
   Scenario: Verify Local File System Storage Variable using Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
-    When User clicks on Open Storage engine
+    When User clicks on Open Storage
     And User clicks on Add Storage button
     And User selects 'Local File System' storage
     And User enters storage Catalog name as 'Local File System Storage'

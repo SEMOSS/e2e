@@ -44,6 +44,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.blockDropPosition(page);
 	}
 
+	public void clickOnDroppedBlock(String blockName) {
+		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
+	}
+
 	public void mouseHoverOnBlock(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
 	}
@@ -215,11 +219,13 @@ public class DragAndDropBlocksPage {
 	public boolean createdAppDisplayInDiscoverableApp(String appName) {
 		return DragAndDropBlocksPageUtils.createdAppDisplayInDiscoverableApp(page, appName);
 	}
+
 	public void clickOnSystemApps() {
 		DragAndDropBlocksPageUtils.clickOnSystemApps(page);
 	}
+
 	public boolean isAppDisplayedInSystemAppsSection(String appName) {
-		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page,appName);
+		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page, appName);
 	}
 
 }

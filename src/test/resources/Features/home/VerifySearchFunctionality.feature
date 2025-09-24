@@ -67,14 +67,14 @@ Feature: Search app and catalogs
     And User clicks on Submit button
     When User opens Main Menu
     And User clicks on Open Vector
-    And User clicks on Add vector button
-    And User selects 'FAISS' as connection
+    When User clicks on Add Vector button
+    And User selects 'FAISS' connection
     And User enters 'Test Vector' as Catalog name
-    And User selects 'Test Model' from embedder field
-    And User selects 'Token' from chunking strategy field
-    And User enters 'Content Length' as '512'
-    And User enters 'Content Overlap' as '20'
-    When User clicks on Create Vector Button
+    And User selects 'Test Model' from Embedder field
+    And User selects 'Token' from Chunking Strategy field
+    And User enters value of Content Length as '512'
+    And User enters value of Content Overlap as '20'
+    And User clicks on Create Vector button
     And User clicks On Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
@@ -100,7 +100,7 @@ Feature: Search app and catalogs
 
   Scenario: Search Storage
     Given User opens Main Menu
-    When User clicks on Open Storage engine
+    When User clicks on Open Storage
     And User clicks on Add Storage button
     And User selects 'Amazon S3' storage
     And User enters 'Test Storage' as Catalog name
