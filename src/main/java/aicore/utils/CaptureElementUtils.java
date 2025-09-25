@@ -47,4 +47,8 @@ public abstract class CaptureElementUtils {
 		Locator locator = page.locator(COPY_ELEMENT_XPATH.replace("{ButtonName}", buttonName)).nth(1);
 		return locator;
 	}
+	public static Locator captureCopyIDScreenshot(Page page, String copyId) {
+		Locator locator=page.locator("//*[contains(@aria-label,'"+copyId+"')]/../p");
+		return locator;
+	}
 }

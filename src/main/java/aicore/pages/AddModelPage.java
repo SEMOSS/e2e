@@ -115,6 +115,10 @@ public class AddModelPage {
 		ModelPageUtils.createModel(page, modelName, catalogName, openAIKey, varName);
 	}
 
+	public void deleteCreatedModel() {
+		ModelPageUtils.deleteCreatedModels(page);
+	}
+
 	// Edit model
 	public void searchModelCatalog(String modelName) {
 		EditModelPageUtils.searchModelCatalog(page, modelName);
@@ -356,5 +360,10 @@ public class AddModelPage {
 
 	public void clickOnDiscoverableModelsButton() {
 		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
+	}
+
+	public void userClickOnCreatedModel() {
+		ModelPageUtils.userClickOnCreatedModel(page);
+
 	}
 }

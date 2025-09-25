@@ -345,4 +345,9 @@ public class AddModelSteps {
 		openModelPage.selectModelFromSearchOptions(modelName);
 	}
 
+	@And("User click on Created Model")
+	public void user_click_on_created_model() {
+		openModelPage.userClickOnCreatedModel();
+	}
+
 }
