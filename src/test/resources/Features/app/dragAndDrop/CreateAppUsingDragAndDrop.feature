@@ -25,6 +25,7 @@ Feature: Create drag and drop app
 
   Scenario Outline: Drag and Drop Text section '<BLOCK_NAME>' block
     When User drags the '<BLOCK_NAME>' block and drops it on the page
+    And User clicks on the '<BLOCK_NAME>' block to select it
     And User clicks on the Block Settings option
     And User enters '<DESTINATION>' as the destination
     And User enters '<BLOCK_NAME>' text as '<TEXT>'
@@ -64,6 +65,7 @@ Feature: Create drag and drop app
     And User clicks on Blocks
     And User clicks on 'page-1' page
     And User drags the 'Logs' block and drops it on the page
+    And User clicks on the 'Logs' block to select it
     And User clicks on the Block Settings option
     And User selects 'Test query' from the Query dropdown
     And User clicks on the Save App icon

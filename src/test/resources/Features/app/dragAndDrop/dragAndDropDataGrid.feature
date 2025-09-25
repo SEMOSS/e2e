@@ -9,8 +9,13 @@ Feature: Drag and Drop Data Grid
     And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    Then User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'TestDatabase'
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
     And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
@@ -43,6 +48,7 @@ Feature: Drag and Drop Data Grid
     When User clicks on 'page-1' page
     And User clicks on Blocks
     And User drags the 'Data Grid' block and drops it on the page
+    And User clicks on the 'Data Grid' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown
@@ -57,6 +63,7 @@ Feature: Drag and Drop Data Grid
     When User clicks on 'page-1' page
     And User clicks on Blocks
     And User drags the 'Data Grid' block and drops it on the page
+    And User clicks on the 'Data Grid' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown

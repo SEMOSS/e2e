@@ -74,8 +74,13 @@ Feature: Create App and validate Variables
     And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    Then User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'TestDatabase'
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
     And User clicks On Copy Catalog ID
     And User get the CatalogName for variable
     When User opens Main Menu
@@ -194,7 +199,7 @@ Feature: Create App and validate Variables
   Scenario: Verify Local File System Storage Variable using Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
-    When User clicks on Open Storage engine
+    When User clicks on Open Storage
     And User clicks on Add Storage button
     And User selects 'Local File System' storage
     And User enters storage Catalog name as 'Local File System Storage'

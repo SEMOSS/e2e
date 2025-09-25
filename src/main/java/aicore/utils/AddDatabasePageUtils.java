@@ -200,6 +200,10 @@ public class AddDatabasePageUtils {
 	public static void clickOnMetadataTab(Page page) {
 		CatalogPageUtils.clickOnMetadataTab(page);
 	}
+	
+	public static void clickOnUsageTab(Page page) {
+		AICorePageUtils.clickOnTabButton(page, "Usage");
+	}
 
 	public static void verifyMetaData(Page page) {
 		Locator metadataTable = page.locator(METADATA_TABLE_XPATH);
@@ -309,4 +313,16 @@ public class AddDatabasePageUtils {
 		locator.click();
 	}
 
+	public static void clickOnRefreshButton(Page page) {
+		page.getByText("Refresh Data").isVisible();
+		page.getByText("Refresh Data").click();
+	}
+
+	public static void selectDatabaseFromDropdown(Page page, String dbName) {
+		int checkboxCount = page.getByTestId("CheckBoxOutlineBlankIcon").count();
+		if (checkboxCount > 0) {
+			page.getByText(dbName).isVisible();
+			page.getByText(dbName).click();
+		}
+	}
 }

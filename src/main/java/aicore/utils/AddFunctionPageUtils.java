@@ -180,8 +180,9 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void clickOnSettings(Page page) {
-		page.locator(SETTINGS_TAB_XPATH).isVisible();
-		page.locator(SETTINGS_TAB_XPATH).click();
+		Locator settingsTab = page.locator(SETTINGS_TAB_XPATH);
+		AICorePageUtils.waitFor(settingsTab);
+		settingsTab.click();
 	}
 
 	public static void clickOnDeleteButton(Page page) {
@@ -204,8 +205,9 @@ public class AddFunctionPageUtils {
 	}
 
 	public static String verifySuccessToastMessage(Page page, String Toast_message) {
-		page.getByText(Toast_message).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.getByText(Toast_message).textContent();
+		Locator alert = page.getByTestId("notification-success-alert");
+		AICorePageUtils.waitFor(alert);
+		String toastMessage = alert.textContent().trim();
 		return toastMessage;
 	}
 

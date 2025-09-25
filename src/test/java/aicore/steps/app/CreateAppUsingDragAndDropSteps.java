@@ -1,10 +1,11 @@
 package aicore.steps.app;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -69,6 +70,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on IFrame button")
 	public void user_clicks_on_iframe_button() {
 		appCreatePopup.clickOnIframeButton();
+	}
+
+	@When("User clicks on Access Control button")
+	public void user_clicks_on_access_control_button() {
+		appPage.clickOnAccessControlButton();
 	}
 
 	@Then("User Clicks on close button")
@@ -181,6 +187,11 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
 		blocksPage.mouseHoverOnBlock(blockName);
 		blocksPage.blockDropPosition();
+	}
+
+	@And("User clicks on the {string} block to select it")
+	public void user_clicks_on_block_to_select_it(String blockName) {
+		blocksPage.clickOnDroppedBlock(blockName);
 	}
 
 	@Then("User can see {string} on the page")
@@ -343,9 +354,9 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_chart_same_as_baseline_chart(String chartName) throws Exception {
 		String removeSpace = chartName.replace(" ", "");
 		String folderName = Character.toLowerCase(removeSpace.charAt(0)) + removeSpace.substring(1);
-		final String actualImagePath = "src/test/resources/data/screenshots/" + folderName + "/actualChart.png";
-		final String expectedImagePath = "src/test/resources/data/screenshots/" + folderName + "/expectedChart.png";
-		final String diffImagePath = "src/test/resources/data/screenshots/" + folderName + "/diffChart.png";
+		final String actualImagePath = "screenshots/" + folderName + "/actualChart.png";
+		final String expectedImagePath = "screenshots/" + folderName + "/expectedChart.png";
+		final String diffImagePath = "screenshots/" + folderName + "/diffChart.png";
 		blocksPage.takeChartScreenshot(actualImagePath);
 		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
@@ -663,6 +674,7 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(appDispalyInDiscoverable,
 				"Created Application is not displayed in Discovrable Apps section");
 	}
+
 	@When("User click on System Apps")
 	public void user_click_on_system_apps() {
 		blocksPage.clickOnSystemApps();
@@ -672,6 +684,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_see_the_created_app_in_system_apps_section(String appName) {
 		boolean isAppDisplayed = blocksPage.isAppDisplayedInSystemAppsSection(appName);
 		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in System Apps section");
-	}	
+	}
 
 }

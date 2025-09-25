@@ -28,10 +28,11 @@ public class captureScreenShotSteps {
 
     @And("User captures a {string} and highlights the {string}")
     public void user_Captures_Screenshot_and_highlights_the(String elementType, String elementName) throws IOException {
-        String fullPath = currentFolder;
+       //here
+    	String fullPath = currentFolder;
         captureScreenShotPage.captureScreenshot(elementType, elementName, fullPath);
     }
-
+    
     @Then("User completes screenshot capture and triggers comparison for {string}")
     public void user_completes_screenshot_capture_and_triggers_comparison(String catalogName) throws IOException, Exception {
         captureScreenShotPage.compareAndStoreResultsIfReady(catalogName);

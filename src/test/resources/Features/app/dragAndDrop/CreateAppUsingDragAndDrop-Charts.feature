@@ -8,8 +8,13 @@ Feature: Create drag and drop app
     And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    Then User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'TestDatabase'
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
     And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
@@ -48,13 +53,14 @@ Feature: Create drag and drop app
     And User clicks on Blocks
     And User clicks on 'page-1' page
     And User drags the '<BLOCK_NAME>' block and drops it on the page
+    And User clicks on the '<BLOCK_NAME>' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the Selected Frame dropdown
     And User drag and drop the '<COLUMN_NAMES>' columns to '<FIELD_NAMES>' fields
     Then User can see '<BLOCK_NAME>' chart same as baseline chart
     When User clicks on the Save App icon
-       
+
     Examples: 
       | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                                                    | FIELD_NAMES                                                                                          |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose                                | Select Label, Select X Axis, Select Y Axis, Select Tooltip                                           |
@@ -63,3 +69,4 @@ Feature: Create drag and drop app
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Pie Chart           | Age, BloodPressure                                              | Select Label, Select Value                                                                           |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Gantt Chart         | Task_Name, Start_Date, End_Date, Task_Group, Milestone, Tooltip | Select Task, Select Start Date, Select End Date, Select Task Group, Select MileStone, Select Tooltip |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Dendrogram Chart    | Age, BloodPressure                                              | Select Dimensions, Select Facet                                                                      |

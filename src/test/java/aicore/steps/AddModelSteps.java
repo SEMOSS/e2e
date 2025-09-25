@@ -295,11 +295,6 @@ public class AddModelSteps {
 		expectedCatalogId = openModelPage.copyModelID();
 	}
 
-	@And("User clicks on Usage tab")
-	public void user_clicks_on_usage_tab() {
-		openModelPage.clickOnUsageTab();
-	}
-
 	@When("User copies code contents and validate model catalog Id occurences in sections:")
 	public void user_copies_code_contents_and_validate_model_catalog_id_occurences_in_sections(DataTable table) {
 

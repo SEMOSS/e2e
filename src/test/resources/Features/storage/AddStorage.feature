@@ -47,7 +47,7 @@ Feature: Add Storage
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
-    And User clicks on Settings Tab
+    And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User opens Main Menu
@@ -68,7 +68,7 @@ Feature: Add Storage
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate Change access popup
     Given User can see the Storage title as 'Amazon S3 Storage'
-    And 'Author' user clicks on Settings of Storage
+    When User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
@@ -92,7 +92,7 @@ Feature: Add Storage
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate change access request
     Given User can see the Storage title as 'Amazon S3 Storage'
-    And 'Author' user clicks on Settings of Storage
+    When User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application

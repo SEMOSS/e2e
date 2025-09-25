@@ -19,9 +19,8 @@ Feature: Add Engine for Team Permission
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User sees the database name 'TestDatabase' in the database catalog
-    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User sees success toast message 'ZIP uploaded successfully'
+    And User can see the Catalog title as 'TestDatabase'
     And User clicks On Copy Catalog ID
     Given User opens Main Menu
     When User clicks on Open Settings
@@ -77,7 +76,7 @@ Feature: Add Engine for Team Permission
     Scenario Outline: Add Engine for Storage Users role
     Given User is on Home page
     When User opens Main Menu
-    And User clicks on Open Storage engine
+    And User clicks on Open Storage
     When User clicks on Add Storage button
     And User selects 'Amazon S3' storage
     And User enters storage Catalog name as 'Amazon S3 Storage'

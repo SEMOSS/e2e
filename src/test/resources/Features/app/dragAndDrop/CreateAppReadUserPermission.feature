@@ -1,3 +1,4 @@
+@LoginWithAuthor
 @DeleteCreatedTestApp
 Feature: Create App setting for Read permission
   Adding LLm to the Catlog
@@ -22,7 +23,6 @@ Feature: Create App setting for Read permission
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
 
-  @LoginWithAdmin
   Scenario: Create APP - Read Only user - Edit button is disable
     And 'Read' user Edit option should be 'Disable'
     And  User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'

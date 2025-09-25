@@ -42,6 +42,10 @@ public class BISystemAppPage {
 	private static final String ENTER_DATABASE_NAME_TEXTBOX_XPATH = "//input[@placeholder='Database Name']";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "(//input[@type='file'])[2]";
 	private static final String DATABASE_CREATED_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
+	private static final String VISUALIZATION_TYPE_OPTION_XPATH = "//span[text()='{type}']";
+	private static final String X_AXIS_DROPPABLE_AREA_XPATH = "//span[text()='{axis}']//../../..//ul";
+	private static final String FIELD_BUTTON_XPATH = "//div[@title='{fieldName} is a Number']";
+	private static final String TOOLS_OPTION_XPATH = "//span[text()='{optionName}']";
 
 	public BISystemAppPage(Page page, String timestamp) {
 		this.page = page;
@@ -93,7 +97,7 @@ public class BISystemAppPage {
 	public void enterDatabaseName(String databaseName) {
 		Locator databaseNameTextbox = page.locator(ENTER_DATABASE_NAME_TEXTBOX_XPATH);
 		AICorePageUtils.waitFor(databaseNameTextbox);
-		databaseNameTextbox.fill(databaseName + " " + timestamp);
+		databaseNameTextbox.fill(databaseName);
 	}
 
 	public void uploadCSVFile() {
@@ -119,8 +123,8 @@ public class BISystemAppPage {
 	}
 
 	public void searchDatabaseName(String createdDatabaseName) {
-		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, createdDatabaseName + " " + timestamp);
-		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", createdDatabaseName + " " + timestamp));
+		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, createdDatabaseName);
+		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", createdDatabaseName));
 	}
 
 	public void clickOnAddAllOption() {
@@ -156,9 +160,43 @@ public class BISystemAppPage {
 	}
 
 	public String verifySavedInsightSuccessMsg() {
-		page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).waitFor(new WaitForOptions().setTimeout(10000));
+		page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).isVisible();
 		String successMessage = page.textContent(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).trim();
 		return successMessage;
 	}
 
+	public void clickOnNewProjectButton() {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("New project")).click();
+	}
+
+	public void selectVisualizationType(String visualizationType) {
+		page.locator(VISUALIZATION_TYPE_OPTION_XPATH.replace("{type}", visualizationType)).click();
+	}
+
+	public void dragFieldToXAxis(String fieldName, String axis) {
+		page.dragAndDrop(FIELD_BUTTON_XPATH.replace("{fieldName}", fieldName), X_AXIS_DROPPABLE_AREA_XPATH.replace("{axis}", axis));
+	}
+
+	public void clickOnToolsOption() {
+		// page.pause();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("TOOLS")).isVisible();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("TOOLS")).click();
+	}
+
+	public void selectToolOption(String toolOption) {
+		page.click(TOOLS_OPTION_XPATH.replace("{optionName}", toolOption));
+	}
+
+	public void hoverAddPanelAndSelectAddChart(String panelType) {
+		page.getByTitle("Add Panel").hover();
+		page.getByTitle(panelType).click();
+	}
+
+	public void clickOnPresentationModeOption() {
+		page.getByTitle("Toggle Presentation").click();
+	}
+
+	public void clickOnSideMenuOption() {
+		page.getByTitle("Share or Export").click();
+	}
 }

@@ -46,7 +46,7 @@ public class StoragePageUtils {
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Storage";
 	private static final String STORAGE_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
 	private static final String DISCOVERABLE_STORAGES_XPATH = "//button[text()='Discoverable Storages']";
-	private static final String EDIT_BUTTON_XPATH = "//span[text()='{buttonName}']";
+	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
@@ -289,7 +289,6 @@ public class StoragePageUtils {
 	}
 
 	public static void clickOnButton(Page page, String buttonName) {
-		page.click(EDIT_BUTTON_XPATH.replace("{buttonName}", buttonName));
+		page.click(BUTTON_XPATH.replace("{buttonName}", buttonName));
 	}
-
 }

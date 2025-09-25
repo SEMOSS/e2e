@@ -25,6 +25,9 @@ public class CaptureScreenShotPage {
 		case "button":
 			locators = CaptureElementUtils.captureButtonScreenshot(page, elementName);
 			break;
+		case "tab":
+			locators = CaptureElementUtils.captureTabScreenshot(page, elementName);
+			break;
 		case "list item":
 			locators = CaptureElementUtils.captureListItemScreenshot(page, elementName);
 			break;
@@ -40,9 +43,6 @@ public class CaptureScreenShotPage {
 		case "copycta":
 			String elementName1 = "Copy";
 			locators = CaptureElementUtils.captureCopyCTAScreenshot(page, elementName1);
-			break;
-		case "copyid":
-			locators = CaptureElementUtils.captureCopyIDScreenshot(page, elementName);
 			break;
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);

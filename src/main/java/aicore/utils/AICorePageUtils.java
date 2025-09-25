@@ -39,6 +39,14 @@ public class AICorePageUtils {
 		buttonLocator.click();
 	}
 
+	public static void clickOnTabButton(Page page, String buttonLabel) {
+		Locator buttonLocator = page.getByRole(AriaRole.TAB,
+				new Page.GetByRoleOptions().setName(buttonLabel).setExact(true));
+		buttonLocator.scrollIntoViewIfNeeded();
+		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		buttonLocator.click();
+	} 
+	
 	public static void waitFor(Locator locator) {
 		if (!locator.isVisible()) {
 			locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
