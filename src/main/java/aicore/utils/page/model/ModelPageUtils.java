@@ -3,6 +3,9 @@ package aicore.utils.page.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -14,6 +17,7 @@ import aicore.utils.HomePageUtils;
 
 public class ModelPageUtils {
 
+	private static final Logger logger = LogManager.getLogger(ModelPageUtils.class);
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
 	private static final String CATALOG_NAME_DATA_TESTID = "importForm-NAME-textField";
@@ -146,7 +150,7 @@ public class ModelPageUtils {
 				page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 
 			} catch (Exception e) {
-				System.out.println("Model ID not found or already deleted: " + modelId);
+				logger.warn("Model ID not found or already deleted: " + modelId);
 			}
 		}
 		createdModelIds.clear();
