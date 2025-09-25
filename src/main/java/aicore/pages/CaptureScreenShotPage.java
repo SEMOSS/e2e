@@ -44,6 +44,9 @@ public class CaptureScreenShotPage {
 			String elementName1 = "Copy";
 			locators = CaptureElementUtils.captureCopyCTAScreenshot(page, elementName1);
 			break;
+			case "copyid":
+			locators = CaptureElementUtils.captureCopyIDScreenshot(page, elementName);
+			break;
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}

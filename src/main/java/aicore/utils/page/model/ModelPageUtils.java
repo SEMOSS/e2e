@@ -132,6 +132,7 @@ public class ModelPageUtils {
 	}
 
 	public static void userClickOnCreatedModel(Page page) {
+		page.getByLabel(SEARCH_CATALOG_LABEL).fill("Model 2");
 		page.locator(CLICK_ON_CREATED_MODEL_XPATH).first().click();
 
 	}
