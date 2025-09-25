@@ -151,4 +151,11 @@ public class BlockSettingsUtils {
 		return tag.isVisible();
 	}
 
+	public static void enterValueInGraphTD(Page page, String value) {
+		Locator editor = page.locator(".monaco-editor");
+		AICorePageUtils.waitFor(editor);
+		editor.click();
+		page.keyboard().press("Control+End");
+		page.keyboard().type(value);
+	}
 }

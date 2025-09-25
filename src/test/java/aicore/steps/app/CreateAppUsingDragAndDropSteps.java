@@ -249,6 +249,11 @@ public class CreateAppUsingDragAndDropSteps {
 		blockSettings.selectTextAlign(textAlign);
 	}
 
+	@And("User enters {string} in graph TD section")
+	public void user_enters_in_graph_td_section(String graphTdContent) {
+		blockSettings.enterValueInGraphTD(graphTdContent);
+	}
+
 	@And("User clicks on the Save App icon")
 	public void user_clicks_on_the_save_app_icon() {
 		blocksPage.clickOnSaveAppButton();
@@ -357,7 +362,7 @@ public class CreateAppUsingDragAndDropSteps {
 		final String actualImagePath = "screenshots/" + folderName + "/actualChart.png";
 		final String expectedImagePath = "screenshots/" + folderName + "/expectedChart.png";
 		final String diffImagePath = "screenshots/" + folderName + "/diffChart.png";
-		blocksPage.takeChartScreenshot(actualImagePath);
+		blocksPage.takeChartScreenshot(actualImagePath, chartName);
 		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}

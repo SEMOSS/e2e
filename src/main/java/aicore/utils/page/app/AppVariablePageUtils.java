@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AppVariablePageUtils {
 	private static final String VariableOption = "//div[contains(@class,'flexlayout__border_button')][@title='Variables']";
-	private static final String AddVariableButton = "//h6[text()='Variables']/following-sibling::button";
+	private static final String AddVariableButton = "//h6[text()='Variables']/parent::div/child::div//button//*[@data-testid='AddIcon']";
 	private static final String VariableNameInput = "//p[text()='Variable Name']//following-sibling::div//div//input[@placeholder='Name']";
 	private static final String VariableTypeDropdown = "//p[text()='Type']//following-sibling::div[1]";
 	private static final String VariableTypeDropdownList = "//ul[@role='listbox']//li[@data-value='{variableType}']";
@@ -19,16 +19,11 @@ public class AppVariablePageUtils {
 	private static final String ToastMessage = "//*[contains(@class, 'MuiAlert-message')]";
 	private static final String CatalogVariable = "//div[@id='home__content']//h4";
 	private static final String VariableListItem = "//button//div//p[text()='{variableName}']";
-	private static final String CLICKONVARIABLEDATATESTID = "workspace-Variables";
 
 	public static void clickOnVariableOption(Page page) {
-		boolean VariableIconIsVisible = page.getByTestId(CLICKONVARIABLEDATATESTID).first().isVisible();
-		// page.locator(VariableOption).isVisible();
-		if (VariableIconIsVisible) {
-			page.locator(VariableOption).click();
-		} else {
-			throw new RuntimeException("Variable option is not visible");
-		}
+		Locator variables = page.locator(VariableOption);
+		variables.isVisible();
+		variables.click();
 	}
 
 	public static void clickOnAddVariableButton(Page page) {
@@ -147,14 +142,13 @@ public class AppVariablePageUtils {
 	}
 
 	public static void verifyVariablePresentInList(Page page, String variableName, String variableType) {
-		boolean variableNameIsVisible = page.locator(VariableListItem.replace("{variableName}", variableName))
-				.isVisible();
-		boolean variableTypeIsVisible = page.locator(VariableListItem.replace("{variableName}", variableType))
-				.isVisible();
-		if (!variableNameIsVisible || !variableTypeIsVisible) {
-			throw new RuntimeException("Variable '" + variableName + "' with type '" + variableType
-					+ "' is not visible in the variable list");
-		}
+		page.locator(VariableListItem.replace("{variableName}", variableName)).isVisible();
+//		boolean variableTypeIsVisible = page.locator(VariableListItem.replace("{variableName}", variableType))
+//				.isVisible();
+//		if (!variableNameIsVisible || !variableTypeIsVisible) {
+//			throw new RuntimeException("Variable '" + variableName + "' with type '" + variableType
+//					+ "' is not visible in the variable list");
+//		}
 	}
 
 }

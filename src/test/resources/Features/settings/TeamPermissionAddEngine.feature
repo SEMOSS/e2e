@@ -11,8 +11,8 @@ Feature: Add Engine for Team Permission
     And User fills Description as 'Test Description' in Description field of Add Team form
     And User clicks on 'Add' button in Add Team form
 
-	@DeleteTestCatalog
-    Scenario Outline: Add Engine for Database Users role
+  @LoginWithAdmin @DeleteTestCatalog
+  Scenario Outline: Add Engine for Database Users role
     Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
@@ -28,21 +28,21 @@ Feature: Add Engine for Team Permission
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
-    When User clicks on 'Add Engine' button in Team Permission page 
+    When User clicks on 'Add Engine' button in Team Permission page
     And User select the 'TestDatabase' in the 'Select Engine' field of Add Engine form the 'catlog type'
     And User select the engine access as '<Role>'
     And User clicks on save button
-    Then User sees the message 'Successfully added engine permission' is displayed 
+    Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'TestDatabase' in the engine list with access as '<Role>'
 
-    Examples:
-      | Role        |
-      | Author      |
-      | Editor      |
-      | Read-Only   |
+    Examples: 
+      | Role      |
+      | Author    |
+      | Editor    |
+      | Read-Only |
 
-    @DeleteTestCatalog
-    Scenario Outline: Add Engine for Function Users role
+  @LoginWithAdmin @DeleteTestCatalog
+  Scenario Outline: Add Engine for Function Users role
     Given User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
@@ -59,21 +59,21 @@ Feature: Add Engine for Team Permission
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
-    When User clicks on 'Add Engine' button in Team Permission page 
+    When User clicks on 'Add Engine' button in Team Permission page
     And User select the 'WeatherFunctionTest' in the 'Select Engine' field of Add Engine form the 'catlog type'
     And User select the engine access as '<Role>'
     And User clicks on save button
-    Then User sees the message 'Successfully added engine permission' is displayed 
+    Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'WeatherFunctionTest' in the engine list with access as '<Role>'
 
-    Examples:
-      | Role        |
-      | Author      |
-      | Editor      |
-      | Read-Only   |
-      
-    @DeleteTestCatalog
-    Scenario Outline: Add Engine for Storage Users role
+    Examples: 
+      | Role      |
+      | Author    |
+      | Editor    |
+      | Read-Only |
+
+  @LoginWithAdmin @DeleteTestCatalog
+  Scenario Outline: Add Engine for Storage Users role
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Storage
@@ -93,21 +93,21 @@ Feature: Add Engine for Team Permission
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
-    When User clicks on 'Add Engine' button in Team Permission page 
+    When User clicks on 'Add Engine' button in Team Permission page
     And User select the 'Amazon S3 Storage' in the 'Select Engine' field of Add Engine form the 'catlog type'
     And User select the engine access as '<Role>'
     And User clicks on save button
-    Then User sees the message 'Successfully added engine permission' is displayed 
+    Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'Amazon S3 Storage' in the engine list with access as '<Role>'
 
-    Examples:
-      | Role        |
-      | Author      |
-      | Editor      |
-      | Read-Only   |
+    Examples: 
+      | Role      |
+      | Author    |
+      | Editor    |
+      | Read-Only |
 
- @DeleteTestCatalog
-    Scenario Outline: Add Engine for Vector Users role
+  @LoginWithAdmin @DeleteTestCatalog
+  Scenario Outline: Add Engine for Vector Users role
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Model
@@ -141,16 +141,15 @@ Feature: Add Engine for Team Permission
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
-    When User clicks on 'Add Engine' button in Team Permission page 
+    When User clicks on 'Add Engine' button in Team Permission page
     And User select the 'FAISS Vector DB01' in the 'Select Engine' field of Add Engine form the 'catlog type'
     And User select the engine access as '<Role>'
     And User clicks on save button
-    Then User sees the message 'Successfully added engine permission' is displayed 
+    Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'FAISS Vector DB01' in the engine list with access as '<Role>'
 
-    Examples:
-      | Role        |
-      | Author      |
-      | Editor      |
-      | Read-Only   |
-      
+    Examples: 
+      | Role      |
+      | Author    |
+      | Editor    |
+      | Read-Only |
