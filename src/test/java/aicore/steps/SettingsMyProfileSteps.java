@@ -37,10 +37,9 @@ public class SettingsMyProfileSteps {
 	}
 
 	@Then("User can see {string} section on profile page")
-	public void user_can_see_section(String sectionName) throws InterruptedException {
+	public void user_can_see_section(String sectionName) {
 		boolean isVisible = settings.isSectionVisible(sectionName);
 		assertTrue("Expected section not found: " + sectionName, isVisible);
-		Thread.sleep(5000);
 	}
 
 	@When("User clicks on New Key button")

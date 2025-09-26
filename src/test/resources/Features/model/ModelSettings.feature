@@ -20,11 +20,11 @@ Feature: Model settings
     And User can see text message in 'Private' section as 'No one outside of the specified member group can access'
     And User can see toggle button in 'Private' section
     And User can see 'Non Discoverable' section
-    And User can see text message in 'Non Discoverable' section as 'Users cannot request access to this database if private'
+    And User can see text message in 'Non Discoverable' section as 'Users cannot discover Model, view its details, or request access when it is non-discoverable.'
     And User can see toggle button in 'Non Discoverable' section
-    And User can see 'Delete Database' section
-    And User can see text message in 'Delete Database' section as 'Users cannot request access to this database if private'
-    And User can see Delete button in 'Delete Database' section
+    And User can see 'Delete Model' section
+    And User can see text message in 'Delete Model' section as 'Delete Model from catalog.'
+    And User can see Delete button in 'Delete Model' section
     And User can see 'Pending Requests' section
     And User can see 'Pending Requests' section contains 'pending request' or 'pending requests' text with count
     And User can see 'Permissions' section
