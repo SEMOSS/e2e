@@ -1,5 +1,5 @@
-  Feature: Team Permissions
-  
+Feature: Team Permissions
+
   @LoginWithAdmin
   Scenario: Team Permissions - Add team
     Given User opens Main Menu
@@ -13,8 +13,7 @@
     And User clicks on "Add" button in Add Team form
     Then User opens Main Menu
     And User clicks on Open Settings
+    And User enable admin mode
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
-    Then User can see description as "Test Description" in the list 
-
-    
+    Then User can see description as "Test Description" in the list

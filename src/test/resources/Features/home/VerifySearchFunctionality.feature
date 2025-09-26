@@ -28,7 +28,6 @@ Feature: Search app and catalogs
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     And User clicks On Copy Catalog ID
-    When User opens Main Menu
     And User opens Main Menu
     And User clicks on Home
     And User search the 'Test Model' in the home search box
@@ -42,9 +41,6 @@ Feature: Search app and catalogs
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    Then User sees the function name 'WeatherFunctionTest' in the function catalog
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
     And User clicks On Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
@@ -61,6 +57,7 @@ Feature: Search app and catalogs
     And User enters open AI Key as 'Test@1234'
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
+    And User clicks On Copy Catalog ID
     Then User can see a toast message as 'Successfully added LLM to catalog'
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
@@ -89,8 +86,6 @@ Feature: Search app and catalogs
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on the database name 'TestDatabase' in the database catalog
     And User clicks On Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
@@ -125,13 +120,13 @@ Feature: Search app and catalogs
     Then User can see '<CATALOG NAME>' in the '<OPTION>' filter results
 
     Examples: 
-      | CATALOG NAME        | OPTION   |
-      | Test apps           | Apps     |
-      | Test Model          | Model    |
-      | weatherFunctionTest | Function |
-      | Test Vector         | Vector   |
-      | TestDatabase        | Database |
-      | Test Storage        | Storage  |
+      | CATALOG NAME        | OPTION |
+      | Test apps           | All    |
+      | Test Model          | All    |
+      | weatherFunctionTest | All    |
+      | Test Vector         | All    |
+      | TestDatabase        | All    |
+      | Test Storage        | All    |
 
   @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Delete created resources

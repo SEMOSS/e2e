@@ -10,7 +10,7 @@ import aicore.utils.CommonUtils;
 public class BlockSettingsUtils {
 	// Block settings for Text elements
 	public static final String APP_SETTINGS_DATA_TEST_ID = "MenuIcon";
-	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
 	public static final String PERMISSION_SETTINGS_DATA_TEST_ID = "SettingsIcon";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
@@ -155,6 +155,10 @@ public class BlockSettingsUtils {
 		Locator editor = page.locator(".monaco-editor");
 		AICorePageUtils.waitFor(editor);
 		editor.click();
+//		Locator inputArea = page.locator(".monaco-editor textarea.inputarea");
+//		inputArea.click();
+//		inputArea.press("Control+End");
+//		inputArea.pressSequentially(value);
 		page.keyboard().press("Control+End");
 		page.keyboard().type(value);
 	}

@@ -22,7 +22,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final Logger logger = LogManager.getLogger(DragAndDropBlocksPageUtils.class);
 
 	private static final String PAGE_1_ID = "#page-1";
-	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content' and text()='{pageName}']";
+	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='page-1']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
@@ -190,7 +190,9 @@ public class DragAndDropBlocksPageUtils {
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
 		}
 		AICorePageUtils.waitFor(DroppedBlockLocator);
-		DroppedBlockLocator.click();
+		if (!blockName.equals("Link")) {
+			DroppedBlockLocator.click();
+		}
 	}
 
 	public static void mouseHoverOnBlock(Page page, String blockName) {

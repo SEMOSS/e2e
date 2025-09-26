@@ -99,12 +99,12 @@ public class TeamPermissionsSettingSteps {
 			String catlogType) {
 		teamPermissionsSettings.userSelectEngineFromList(catalogName, timestamp, selectCatalog, catlogType);
 	}
+
 	@And("User select the {string} in the {string} field of Add App form")
-	public void user_select_the_in_the_app_field_of_add_app_form(String catalogName, String selectCatalog){
+	public void user_select_the_in_the_app_field_of_add_app_form(String catalogName, String selectCatalog) {
 		teamPermissionsSettings.userSelectAppFromList(catalogName, selectCatalog);
-				
 	}
-	
+
 	@And("User select the engine access as {string}")
 	public void user_select_the_engine_access_as(String role) {
 		teamPermissionsSettings.userSelectEngineAccessRole(role);

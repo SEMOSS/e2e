@@ -17,7 +17,7 @@ Feature: Add Project for Team Permission
     When User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test for add project'
+    And User enters 'Test for add project' as app name
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button

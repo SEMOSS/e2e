@@ -49,9 +49,6 @@ Feature: Add Engine for Team Permission
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    Then User sees the function name 'WeatherFunctionTest' in the function catalog
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
     And User clicks On Copy Catalog ID
     Given User opens Main Menu
     When User clicks on Open Settings

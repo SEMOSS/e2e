@@ -168,6 +168,9 @@ public class JobPageUtils {
 	public static void createJob(Page page, String name, String value) {
 		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenSettings(page);
+		if (page.locator("//*[local-name()='svg'][contains(@class,'MuiSvgIcon-colorDisabled')]").isVisible()) {
+			page.getByTestId("AdminPanelSettingsOutlinedIcon").click();
+		}
 		page.locator(JOBS_TILE_XPATH).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
 		page.locator(NAME_XPATH).fill(name);

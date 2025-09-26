@@ -10,7 +10,7 @@ Feature: Add Database
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
 
- @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
     And User clicks on Open Database
@@ -59,10 +59,14 @@ Feature: Add Database
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Verify MetaData for Database
     Given User opens Main Menu
-    And User clicks on Open Database
+    When User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     And User clicks On Copy Catalog ID
-    When User clicks on MetaData tab
+    And User clicks on MetaData tab
+    ### Added below 3 steps due to bug- https://github.com/SEMOSS/semoss-ui/issues/1770 ###
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
     Then User sees the table in the metadata tab
