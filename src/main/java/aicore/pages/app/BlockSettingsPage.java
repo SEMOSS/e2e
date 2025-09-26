@@ -66,4 +66,9 @@ public class BlockSettingsPage {
 	public boolean verifyColumnDroppedInCorrectField(String columnName, String targetField) {
 		return BlockSettingsUtils.verifyColumnDroppedInCorrectField(page, columnName, targetField);
 	}
+
+	public void enterValueInGraphTD(String value) {
+		BlockSettingsUtils.enterValueInGraphTD(page, value);
+
+	}
 }

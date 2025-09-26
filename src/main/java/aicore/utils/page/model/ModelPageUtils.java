@@ -99,7 +99,7 @@ public class ModelPageUtils {
 	public static void createModel(Page page, String modelName, String catalogName, String openAIKey, String varName) {
 		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenModel(page);
-		page.getByTestId("engine-catalog-add-btn").click();
+		page.getByTestId("engineIndex-add-Model-btn").click();
 		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
 		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
 		page.getByTestId(OPEN_AI_KEY_DATA_TESTID).fill(openAIKey);

@@ -22,7 +22,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final Logger logger = LogManager.getLogger(DragAndDropBlocksPageUtils.class);
 
 	private static final String PAGE_1_ID = "#page-1";
-	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content' and text()='{pageName}']";
+	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='page-1']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
@@ -52,12 +52,12 @@ public class DragAndDropBlocksPageUtils {
 	private static final String PIE_CHART_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Pie-Chart";
 	private static final String GANTT_CHART_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Gantt-Chart";
 	private static final String DENDROGRAM_CHART_DATA_TESTID = "blockMenuCardContent-card-Dendrogram-Chart";
+	private static final String MERMAID_CHART_DATA_TESTID = "blockMenuCardContent-card-Mermaid-Chart";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
 	private static final String APP_LOGO_ON_EDIT_PAGE_XPATH = "//h6[text()='{appName}']";
 	private static final String LOGS_BLOCK_ON_PAGE_XPATH = "//div[contains(@data-block,'logs')]//span[text()='{logsText}']";
-	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	private static final String INPUT_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Input";
 	private static final String DATA_GRID_DATA_TESTID = "blockMenuCardContent-card-Data-Grid";
 	private static final String COLUMN_HEADERS_XPATH = "//div[contains(@class,'MuiDataGrid-columnHeaderTitleContainerContent')]//div";
@@ -65,6 +65,17 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_ROWS_COUNT_XPATH = "//div[contains(@role,'rowgroup')]//div[contains(@role,'row')]";
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
+
+	// drag and dropped blocks on page
+	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
+	private static final String DROPPED_TEXT_BLOCK_XPATH = "//p[text()='Hello world']";
+	private static final String DROPPED_LINK_BLOCK_XPATH = "//a[text()='Insert text']";
+	private static final String DROPPED_MARKDOWN_BLOCK_XPATH = "//p[strong[text()='Hello world']]";
+	private static final String DROPPED_LOGS_BLOCK_XPATH = "//div[text()='Attach Query']";
+	private static final String DROPPED_INPUT_BLOCK_XPATH = "//label[text()='Example Input']";
+	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//div[text()='No rows']";
+	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
+	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
@@ -125,7 +136,6 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void blockDropPosition(Page page) {
-		// Locator targetBox = page.locator(WELCOME_TEXT_BLOCK_XPATH);
 		Locator targetBox = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
 		CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 10);
 		page.mouse().up();
@@ -143,19 +153,19 @@ public class DragAndDropBlocksPageUtils {
 			DroppedBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Hello world"));
 			break;
 		case "Text":
-			DroppedBlockLocator = page.locator("//p[text()='Hello world']");
+			DroppedBlockLocator = page.locator(DROPPED_TEXT_BLOCK_XPATH);
 			break;
 		case "Link":
-			DroppedBlockLocator = page.locator("//a[text()='Insert text']");
+			DroppedBlockLocator = page.locator(DROPPED_LINK_BLOCK_XPATH);
 			break;
 		case "Markdown":
-			DroppedBlockLocator = page.locator("//p[strong[text()='Hello world']]");
+			DroppedBlockLocator = page.locator(DROPPED_MARKDOWN_BLOCK_XPATH);
 			break;
 		case "Logs":
-			DroppedBlockLocator = page.locator("//div[text()='Attach Query']");
+			DroppedBlockLocator = page.locator(DROPPED_LOGS_BLOCK_XPATH);
 			break;
 		case "Input":
-			DroppedBlockLocator = page.locator("//label[text()='Example Input']");
+			DroppedBlockLocator = page.locator(DROPPED_INPUT_BLOCK_XPATH);
 			break;
 		case "Scatter Plot":
 		case "Line Chart":
@@ -167,17 +177,22 @@ public class DragAndDropBlocksPageUtils {
 			DroppedBlockLocator = page.locator(CHART_XPATH);
 			break;
 		case "Data Grid":
-			DroppedBlockLocator = page.locator("//div[text()='No rows']");
+			DroppedBlockLocator = page.locator(DROPPED_DATA_GRID_BLOCK_XPATH);
 			break;
 		case "Area Chart":
-			DroppedBlockLocator = page.locator("//div[@class='vega-embed']");
+			DroppedBlockLocator = page.locator(DROPPED_AREA_CHART_XPATH);
+			break;
+		case "Mermaid Chart":
+			DroppedBlockLocator = page.locator(DROPPED_MERMAID_CHART_XPATH);
 			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
 		}
 		AICorePageUtils.waitFor(DroppedBlockLocator);
-		DroppedBlockLocator.click();
+		if (!blockName.equals("Link")) {
+			DroppedBlockLocator.click();
+		}
 	}
 
 	public static void mouseHoverOnBlock(Page page, String blockName) {
@@ -243,6 +258,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Dendrogram Chart":
 			blockLocator = page.getByTestId(DENDROGRAM_CHART_DATA_TESTID);
+			break;
+		case "Mermaid Chart":
+			blockLocator = page.getByTestId(MERMAID_CHART_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -341,11 +359,18 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(TERMINAL_XPATH).click();
 	}
 
-	public static void takeChartScreenshot(Page page, String actualImagePath) {
-		Locator chart = page.locator(CHART_XPATH);
+	public static void takeChartScreenshot(Page page, String actualImagePath, String chart) {
+		Locator chartLocator;
+		switch (chart) {
+		case "Mermaid Chart":
+			chartLocator = page.locator(DROPPED_MERMAID_CHART_XPATH);
+			break;
+		default:
+			chartLocator = page.locator(CHART_XPATH);
+		}
 		Path path = Paths.get(actualImagePath);
 		page.waitForTimeout(3000);
-		chart.screenshot(new Locator.ScreenshotOptions().setPath(path));
+		chartLocator.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
 
 	// Duplicate and delete Area Chart

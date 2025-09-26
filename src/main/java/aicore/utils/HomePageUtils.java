@@ -1,7 +1,5 @@
 package aicore.utils;
 
-import aicore.framework.ConfigUtils;
-import aicore.framework.UrlUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,6 +7,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+
+import aicore.framework.ConfigUtils;
+import aicore.framework.UrlUtils;
 
 public class HomePageUtils {
 
@@ -19,7 +20,7 @@ public class HomePageUtils {
 	// menu options
 	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
-	private static final String BUILD_PAGE_BUTTON = "new-app-{Button}-btn";
+	private static final String BUILD_PAGE_BUTTON = "createAppSection-new-app-{Button}-btn-btn";
 	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//button//span[text()='Browse Templates']";
 	private static final String BUILD_PAGE_POPUP_XPATH = "//div[@role='presentation']//div[@role='presentation']";
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
@@ -113,8 +114,8 @@ public class HomePageUtils {
 			page.click(BI_APP_XPATH);
 		} else {
 			page.navigate("http://localhost:9090/SemossWeb/packages/legacy/dist/#!/");
-		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-		page.waitForLoadState(LoadState.NETWORKIDLE);
+			page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+			page.waitForLoadState(LoadState.NETWORKIDLE);
 		}
 	}
 
@@ -138,7 +139,7 @@ public class HomePageUtils {
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
-	
+
 	public static void clickOnBuildButton(Page page) {
 		Locator BuildButton = page.locator(BUILD_BUTTON_XPATH);
 		if (!BuildButton.isVisible()) {
@@ -147,12 +148,13 @@ public class HomePageUtils {
 			BuildButton.click();
 		}
 	}
+
 	public static void verifyBuildPageButton(Page page, String buttonName) {
 		String BUILD_PAGE_BUTTON_XPATH = BUILD_PAGE_BUTTON.replace("{Button}", buttonName);
 		Locator button = page.getByTestId(BUILD_PAGE_BUTTON_XPATH);
 		if (!button.isVisible()) {
 			throw new RuntimeException("Get Started button for " + buttonName + " is not visible");
-		}else{
+		} else {
 			button.click();
 			if (buttonName.equalsIgnoreCase("drag") || buttonName.equalsIgnoreCase("code")) {
 				if (!page.locator(BUILD_PAGE_POPUP_XPATH).isVisible()) {
@@ -177,17 +179,18 @@ public class HomePageUtils {
 		Locator button = page.locator(BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH);
 		if (!button.isVisible()) {
 			throw new RuntimeException("Browser Template Button is not visible");
-		}else{
+		} else {
 			button.click();
 			String currentUrl = page.url();
 			page.waitForLoadState(LoadState.LOAD);
 			if (!currentUrl.contains("template")) {
-   				 throw new RuntimeException("Browser Template page is not opened");
+				throw new RuntimeException("Browser Template page is not opened");
 			} else {
-    			page.goBack(); 
-				}
+				page.goBack();
+			}
 		}
 	}
+
 	public static void verifyTitleIsVisible(Page page, String titleName) {
 		Locator title = page.locator(BUILD_PAGE_TITLE_XPATH.replace("{title}", titleName));
 		if (!title.isVisible()) {

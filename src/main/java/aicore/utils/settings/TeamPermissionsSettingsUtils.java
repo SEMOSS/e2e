@@ -11,10 +11,10 @@ public class TeamPermissionsSettingsUtils {
 
 	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//legend/span[text()='Type*']/ancestor::div[contains(@class,'MuiInputBase-root')]//div[@role='combobox']";
 	private static final String TEAM_NAME_XPATH = "//legend/span[text()='Name*']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
-	private static final String DESCRIPTION_XPATH = "//textarea[@id=//label[normalize-space(text())='Description']/@for]";// "//legend/span[normalize-space()='Description']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
+	private static final String DESCRIPTION_XPATH = "//label[text()='Description']/parent::div/child::div//textarea";
 	private static final String ADD_BUTTON_XPATH = "//button[.//span[normalize-space()='{buttonName}']]";
 	private static final String TEAM_BUTTON_XPATH = "//button//span[contains(text(), 'Add Members')]";
-	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']" ; ////*[contains(text(), '{Member}')]";
+	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']"; //// *[contains(text(), '{Member}')]";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
 	private static final String LIST_DROPDOWN = "ArrowDropDownIcon";
 	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message')]";
@@ -42,12 +42,9 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void enterDescription(Page page, String description) {
-		Locator descriptionText = page.locator(DESCRIPTION_XPATH);
-		descriptionText.click();
-		descriptionText.fill(description);
-//		page.locator(DESCRIPTION_XPATH).isVisible();
-//		page.locator(DESCRIPTION_XPATH).click();
-//		page.locator(DESCRIPTION_XPATH).fill(description);
+		page.locator(DESCRIPTION_XPATH).first().isVisible();
+		page.locator(DESCRIPTION_XPATH).first().fill(description);
+
 	}
 
 	public static void clickOnAddButton(Page page, String button) {
@@ -140,12 +137,11 @@ public class TeamPermissionsSettingsUtils {
 		page.getByText(catalogName).click();
 	}
 
-	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog, String catalogType,
-			String timestamp) {
+	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {
 		Locator dropdownLocator = page
 				.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
-		dropdownLocator.fill(catalogName + " " + timestamp);
+		dropdownLocator.fill(catalogName);
 		AICorePageUtils.waitFor(dropdownLocator);
 		page.getByText(catalogName).click();
 	}

@@ -104,8 +104,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnTerminalCard(page);
 	}
 
-	public void takeChartScreenshot(String actualImagePath) {
-		DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath);
+	public void takeChartScreenshot(String actualImagePath, String chart) {
+		DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath, chart);
 	}
 
 	// Area Chart
