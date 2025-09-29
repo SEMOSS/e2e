@@ -51,7 +51,7 @@ Feature: Database Catalog permissions for Editor user
     And User deletes the 'Read' user
 
   @DeleteTestCatalog
-  Scenario: Database Catalog - Editor - Delete Model
+  Scenario: Database Catalog - Editor - Delete Database
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox

@@ -56,7 +56,7 @@ Feature: Database Catalog permissions for Read user
     Then 'Read' user 'can not' see Member Setting
 
    @DeleteTestCatalog
-  Scenario: Database Catalog - Read -  Delete Model
+  Scenario: Database Catalog - Read -  Delete Database
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox

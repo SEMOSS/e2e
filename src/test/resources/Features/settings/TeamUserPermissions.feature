@@ -1,3 +1,4 @@
+@LoginWithAdmin
 Feature: Team Permissions - add User
 
   Background: Team Permissions - Add team
@@ -17,8 +18,7 @@ Feature: Team Permissions - add User
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
 
-  @LoginWithAdmin
-  Scenario: User add different user to the team
+    Scenario: User add different user to the team
     Given User clicks on the team name 'Test Team' in the list
     And User clicks on "Add Member" button in Add Team Page
     When User selects "userId1" member from the list

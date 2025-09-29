@@ -71,4 +71,4 @@ Feature: Model catalog permission - Author
 
   Scenario: Model Catalog - Author - Delete Model
     And 'Author' user clicks on Settings
-    Then 'Author' user 'can' Delete Model
+    Then 'Author' user 'can' Delete Catalog

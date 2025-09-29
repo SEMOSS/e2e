@@ -22,9 +22,9 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_SETTINGS_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Settings']";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
-	private static final String CLICK_ON_MEMBER_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Member')]";
-	private static final String CIICK_ON_PENDING_REQUESTS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Pending Requests')]";
-	private static final String CLICK_ON_DATA_APPS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Data Apps')]";
+	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
+	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
+	private static final String CLICK_ON_DATA_APPS_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Apps')]";
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
 	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
 	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//span[contains(@title,'discoverable')]";
@@ -34,6 +34,9 @@ public class CatlogAccessPageUtility {
 	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
+
+	// as per new UI update
+	private static final String VIEW_SETTING_OPTION_ON_SETTING_PAGE = "//span[text()='Settings']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -89,19 +92,21 @@ public class CatlogAccessPageUtility {
 
 	}
 
-	public static boolean userCanSeeDeleteModel(Page page) {
-		return page.locator(CLICK_ON_DELETE_BUTTON_XPATH).isVisible();
+	public static boolean userCanSeeDeleteCatalog(Page page) {
+		Locator deleteOption = page.locator(CLICK_ON_DELETE_BUTTON_XPATH);
+		deleteOption.scrollIntoViewIfNeeded();
+		return deleteOption.isVisible();
 	}
 
 	public static boolean userCanSeeMember(Page page) {
 		return page.locator(CLICK_ON_MEMBER_XPATH).isVisible();
 	}
 
-	public static boolean UserCanSeePendingRequests(Page page) {
-		return page.locator(CIICK_ON_PENDING_REQUESTS_XPATH).isVisible();
+	public static boolean UserCanSeeGeneral(Page page) {
+		return page.locator(CIICK_ON_GENERAL_XPATH).isVisible();
 	}
 
-	public static boolean userCanSeeDataApps(Page page) {
+	public static boolean userCanSeeApps(Page page) {
 		return page.locator(CLICK_ON_DATA_APPS_XPATH).isVisible();
 	}
 
@@ -140,7 +145,8 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean canSeeSettingOption(Page page) {
-		return page.locator(CLICK_ON_SETTINGS_XPATH).isVisible();
+		// return page.locator(CLICK_ON_SETTINGS_XPATH).isVisible();
+		return page.locator(VIEW_SETTING_OPTION_ON_SETTING_PAGE).isVisible();
 	}
 
 	public static String editorUserSeeToastMessageText(Page page) {
@@ -163,4 +169,14 @@ public class CatlogAccessPageUtility {
 		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
 		return isToastVisible;
 	}
+
+	// as per new UI of setting page
+	public static void clickOnMemberSettingOption(Page page) {
+		page.locator(CLICK_ON_MEMBER_XPATH).click();
+	}
+
+	public static void clickOnGeneralSettingOption(Page page) {
+		page.locator(CIICK_ON_GENERAL_XPATH).click();
+	}
+
 }

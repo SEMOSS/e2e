@@ -51,20 +51,20 @@ public class CatlogPermissionsPage {
 		CatlogAccessPageUtility.clickOnSettings(page);
 	}
 
-	public boolean userCanSeeDeleteModelOption() {
-		return CatlogAccessPageUtility.userCanSeeDeleteModel(page);
+	public boolean userCanSeeDeleteCatalogOption() {
+		return CatlogAccessPageUtility.userCanSeeDeleteCatalog(page);
 	}
 
 	public boolean userCanSeeMember() {
 		return CatlogAccessPageUtility.userCanSeeMember(page);
 	}
 
-	public boolean userCanSeePendingRequests() {
-		return CatlogAccessPageUtility.UserCanSeePendingRequests(page);
+	public boolean userCanSeeGeneral() {
+		return CatlogAccessPageUtility.UserCanSeeGeneral(page);
 	}
 
-	public boolean userCanSeeDataApps() {
-		return CatlogAccessPageUtility.userCanSeeDataApps(page);
+	public boolean userCanSeeApps() {
+		return CatlogAccessPageUtility.userCanSeeApps(page);
 	}
 
 	public boolean userCanSeeExportIcon() {
@@ -106,4 +106,12 @@ public class CatlogPermissionsPage {
 	public boolean getCatalogAndCopyId() {
 		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
 	}
+	//as per new UI of setting page
+	public void clickOnMemberSettingOption() {
+		CatlogAccessPageUtility.clickOnMemberSettingOption(page);
+	}
+	public void clickOnGeneralSettingOption() {
+		CatlogAccessPageUtility.clickOnGeneralSettingOption(page);
+	}
+	
 }

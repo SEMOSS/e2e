@@ -27,7 +27,7 @@ public class CatlogAccessStep {
 	private CatlogPermissionsPage catlogpermission;
 	private AddModelPage openModelPage;
 	private AddDatabasePage addDatabaseToCatalogPage;
-	
+
 	public CatlogAccessStep() {
 		new LoginPage(SetupHooks.getPage());
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -139,7 +139,7 @@ public class CatlogAccessStep {
 		openModelPage.clickOnAccessControl();
 	}
 
-	@Then("{string} user {string} Delete Model")
+	@Then("{string} user {string} Delete Catalog")
 	public void user_Delete_Model(String userRole, String expectedOutcome) {
 		// Perform delete action
 		openModelPage.clickOnDeleteButton();
@@ -238,7 +238,7 @@ public class CatlogAccessStep {
 		catlogpermission.clickOnSettings();
 	}
 
-	@Then("{string} user can {string} Member")
+	@Then("{string} user can {string} Members")
 	public void user_Can_See_Member(String role, String action) {
 		boolean viewMember = catlogpermission.userCanSeeMember();
 		if (action.equalsIgnoreCase("view")) {
@@ -251,9 +251,9 @@ public class CatlogAccessStep {
 
 	}
 
-	@And("{string} user can {string} Pending Requests")
+	@And("{string} user can {string} General")
 	public void user_Can_See_PendingRequests(String role, String action) {
-		boolean viewPendingRequests = catlogpermission.userCanSeePendingRequests();
+		boolean viewPendingRequests = catlogpermission.userCanSeeGeneral();
 		if (action.equalsIgnoreCase("view")) {
 			Assertions.assertTrue(viewPendingRequests, role + " user can not view the Pending Requests Option");
 		} else if (action.equalsIgnoreCase("not view")) {
@@ -263,9 +263,9 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@And("{string} user can {string} Data Apps")
+	@And("{string} user can {string} Apps")
 	public void user_Can_See_DataApps(String role, String action) {
-		boolean viewDataApps = catlogpermission.userCanSeeDataApps();
+		boolean viewDataApps = catlogpermission.userCanSeeApps();
 		if (action.equalsIgnoreCase("view")) {
 			Assertions.assertTrue(viewDataApps, role + " user can not view the Data Apps Option");
 		} else if (action.equalsIgnoreCase("not view")) {
@@ -341,18 +341,18 @@ public class CatlogAccessStep {
 		catlogpermission.setToggleStateForNonDiscovrable();
 	}
 
-	@Then("{string} user can {string} Delete Model option")
+	@Then("{string} user can {string} Delete catalog option")
 	public void user_Can_See_Delete_Model_Option(String role, String action) {
-		boolean viewDelteModelOption = catlogpermission.userCanSeeDeleteModelOption();
+		boolean viewDeleteCatalogOption = catlogpermission.userCanSeeDeleteCatalogOption();
 		if (action.equalsIgnoreCase("view")) {
-			Assertions.assertTrue(viewDelteModelOption, role + " user not view the Delete Model Option");
+			Assertions.assertTrue(viewDeleteCatalogOption, role + " user not view the Delete Model Option");
 		} else if (action.equalsIgnoreCase("not view")) {
-			Assertions.assertFalse(viewDelteModelOption, role + " user should not view Delete Model Option");
+			Assertions.assertFalse(viewDeleteCatalogOption, role + " user should not view Delete Model Option");
 		} else {
 			Assertions.fail("Invalid action: " + action);
 		}
 	}
-
+	
 	@And("{string} user Edit option should be {string}")
 	public void user_Can_See_EditOptionIcon(String role, String action) {
 		boolean editOption = catlogpermission.canSeeEditOtion();
@@ -376,4 +376,16 @@ public class CatlogAccessStep {
 		boolean isTitleVisible = addDatabaseToCatalogPage.verifyDatabaseTitle(dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
 	}
+
+	// As per New UI of setting page
+	@And("User Click on Members setting option")
+	public void userClickOnMemberSettingOption() {
+		catlogpermission.clickOnMemberSettingOption();
+	}
+
+	@And("User Click on General setting option")
+	public void userClickOnGeneralSettingOption() {
+		catlogpermission.clickOnGeneralSettingOption();
+	}
+
 }
