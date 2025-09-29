@@ -4,17 +4,17 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
-import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
+import aicore.utils.LastCreatedUser;
 
 public class TeamPermissionsSettingsUtils {
 
 	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//legend/span[text()='Type*']/ancestor::div[contains(@class,'MuiInputBase-root')]//div[@role='combobox']";
 	private static final String TEAM_NAME_XPATH = "//legend/span[text()='Name*']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
-	private static final String DESCRIPTION_XPATH = "//legend/span[normalize-space()='Description']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
+	private static final String DESCRIPTION_XPATH = "//textarea[@id=//label[normalize-space(text())='Description']/@for]";// "//legend/span[normalize-space()='Description']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
 	private static final String ADD_BUTTON_XPATH = "//button[.//span[normalize-space()='{buttonName}']]";
 	private static final String TEAM_BUTTON_XPATH = "//button//span[contains(text(), 'Add Members')]";
-	private static final String LIST_MEMBER_XPATH = "//*[contains(text(), '{Member}')]";
+	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']" ; ////*[contains(text(), '{Member}')]";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
 	private static final String LIST_DROPDOWN = "ArrowDropDownIcon";
 	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message')]";
@@ -42,8 +42,12 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void enterDescription(Page page, String description) {
-		page.locator(DESCRIPTION_XPATH).isVisible();
-		page.locator(DESCRIPTION_XPATH).fill(description);
+		Locator descriptionText = page.locator(DESCRIPTION_XPATH);
+		descriptionText.click();
+		descriptionText.fill(description);
+//		page.locator(DESCRIPTION_XPATH).isVisible();
+//		page.locator(DESCRIPTION_XPATH).click();
+//		page.locator(DESCRIPTION_XPATH).fill(description);
 	}
 
 	public static void clickOnAddButton(Page page, String button) {
@@ -60,7 +64,8 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void selectMemberFromList(Page page, String role) {
-		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		String username = LastCreatedUser.getName();
+		// ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
@@ -79,8 +84,9 @@ public class TeamPermissionsSettingsUtils {
 		}
 	}
 
-		public static void checkMemberCard(Page page, String role) {
-		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+	public static void checkMemberCard(Page page, String role) {
+		String username = LastCreatedUser.getUserId();
+		// ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		Locator memberCard = page.locator(MEMBER_CARD_XPATH);
 		AICorePageUtils.waitFor(memberCard);
 		String actualMember = memberCard.textContent().trim();
