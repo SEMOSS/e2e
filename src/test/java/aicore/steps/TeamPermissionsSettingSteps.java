@@ -116,4 +116,41 @@ public class TeamPermissionsSettingSteps {
 		Assertions.assertTrue(isEnginePresent, "Engine with the specified role is not present in the list.");
 	}
 
+	// delete team memeber
+	@When("User clicks on {string} icon on the {string} card")
+	public void user_clicks_on_icon_for_the_member_in_the(String icon, String member) {
+		teamPermissionsSettings.userClickOnDeleteIcon(icon, member);
+	}
+
+	@And("User clicks on {string} button in the confirmation modal")
+	public void user_clicks_on_button_in_the_confirmation_modal(String button) {
+		teamPermissionsSettings.userClickOnDeleteConfirmButton(button);
+	}
+
+	@And("User should not see the {string} card in the team member list")
+	public void user_should_not_see_the_card_in_the_team_member_list(String member) {
+		boolean isMemberPresent = teamPermissionsSettings.checkMemberInList(member);
+		Assertions.assertFalse(isMemberPresent, "Member is still present in the team member list.");
+	}
+
+	@And("User selects multiple members {string} and {string} from the team list")
+	public void user_selects_multiple_members_and_from_the_team_list(String member1, String member2) {
+		teamPermissionsSettings.selectMultipleMembersFromList(member1, member2);
+	}
+
+	@And("User click on checkbox to select all member")
+	public void user_select_all_added_member() {
+		teamPermissionsSettings.userSelectAllMember();
+	}
+
+	@And("User Click on {string} Option")
+	public void user_click_on_option(String string) {
+		teamPermissionsSettings.userClickOnOption(string);
+	}
+
+	@And("User Search the member name as {string}")
+	public void user_search_the_member_name_as(String member) {
+		teamPermissionsSettings.userSearchMemberName(member);
+	}
+
 }

@@ -27,7 +27,7 @@ public class CatlogAccessStep {
 	private CatlogPermissionsPage catlogpermission;
 	private AddModelPage openModelPage;
 	private AddDatabasePage addDatabaseToCatalogPage;
-	
+
 	public CatlogAccessStep() {
 		new LoginPage(SetupHooks.getPage());
 		this.homePage = new HomePage(SetupHooks.getPage());
@@ -139,20 +139,20 @@ public class CatlogAccessStep {
 		openModelPage.clickOnAccessControl();
 	}
 
-	@Then("{string} user {string} Delete Model")
-	public void user_Delete_Model(String userRole, String expectedOutcome) {
+	@Then("{string} user {string} Delete Catalog")
+	public void user_Delete_Catalog(String userRole, String expectedOutcome) {
 		// Perform delete action
 		openModelPage.clickOnDeleteButton();
 		if ("can".equalsIgnoreCase(expectedOutcome)) {
 			// Verify only success message appears
 			Assertions.assertTrue(openModelPage.isDeleteSuccessful(),
-					userRole + " should be able to delete the model, but permission error appeared.");
-			System.out.println(userRole + " successfully deleted the model.");
+					userRole + " should be able to delete the catalog, but permission error appeared.");
+			System.out.println(userRole + " successfully deleted the catalog.");
 		} else if ("can not".equalsIgnoreCase(expectedOutcome)) {
 			// Verify only permission error appears
 			Assertions.assertTrue(openModelPage.isPermissionErrorDisplayed(),
-					userRole + " should not be able to delete the model, but success message appeared.");
-			System.out.println(userRole + " does not have permission to delete the model.");
+					userRole + " should not be able to delete the catalog, but success message appeared.");
+			System.out.println(userRole + " does not have permission to delete the catalog.");
 		} else {
 			throw new IllegalArgumentException("Invalid expected outcome: " + expectedOutcome);
 		}
@@ -238,7 +238,7 @@ public class CatlogAccessStep {
 		catlogpermission.clickOnSettings();
 	}
 
-	@Then("{string} user can {string} Member")
+	@Then("{string} user can {string} Members")
 	public void user_Can_See_Member(String role, String action) {
 		boolean viewMember = catlogpermission.userCanSeeMember();
 		if (action.equalsIgnoreCase("view")) {
@@ -251,9 +251,9 @@ public class CatlogAccessStep {
 
 	}
 
-	@And("{string} user can {string} Pending Requests")
+	@And("{string} user can {string} General")
 	public void user_Can_See_PendingRequests(String role, String action) {
-		boolean viewPendingRequests = catlogpermission.userCanSeePendingRequests();
+		boolean viewPendingRequests = catlogpermission.userCanSeeGeneral();
 		if (action.equalsIgnoreCase("view")) {
 			Assertions.assertTrue(viewPendingRequests, role + " user can not view the Pending Requests Option");
 		} else if (action.equalsIgnoreCase("not view")) {
@@ -263,9 +263,9 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@And("{string} user can {string} Data Apps")
+	@And("{string} user can {string} Apps")
 	public void user_Can_See_DataApps(String role, String action) {
-		boolean viewDataApps = catlogpermission.userCanSeeDataApps();
+		boolean viewDataApps = catlogpermission.userCanSeeApps();
 		if (action.equalsIgnoreCase("view")) {
 			Assertions.assertTrue(viewDataApps, role + " user can not view the Data Apps Option");
 		} else if (action.equalsIgnoreCase("not view")) {
@@ -287,7 +287,7 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@Then("{string} user Private toggle should be {string}")
+	@Then("{string} user can see private toggle button as {string}")
 	public void user_Can_See_Private_Toggle_Enable(String role, String action) {
 		boolean viewMakePrivateToogle = catlogpermission.userCanSeeAndEnablePrivateToggle();
 		if (action.equalsIgnoreCase("Enable")) {
@@ -317,7 +317,7 @@ public class CatlogAccessStep {
 		catlogpermission.setToggleStateForPrivate();
 	}
 
-	@Then("{string} user Non-Discoverable toggle should be {string}")
+	@Then("{string} user can see Non-Discoverable toggle button as {string}")
 	public void user_Can_See_Non_Discoverable_Toggle_Enable(String role, String action) {
 		boolean viewNonDiscovrableToogle = catlogpermission.userCanSeeAndEnableNonDiscovrableToggle();
 		if (action.equalsIgnoreCase("Enable")) {
@@ -341,13 +341,13 @@ public class CatlogAccessStep {
 		catlogpermission.setToggleStateForNonDiscovrable();
 	}
 
-	@Then("{string} user can {string} Delete Model option")
+	@Then("{string} user can {string} Delete catalog option")
 	public void user_Can_See_Delete_Model_Option(String role, String action) {
-		boolean viewDelteModelOption = catlogpermission.userCanSeeDeleteModelOption();
+		boolean viewDeleteCatalogOption = catlogpermission.userCanSeeDeleteCatalogOption();
 		if (action.equalsIgnoreCase("view")) {
-			Assertions.assertTrue(viewDelteModelOption, role + " user not view the Delete Model Option");
+			Assertions.assertTrue(viewDeleteCatalogOption, role + " user not view the Delete Model Option");
 		} else if (action.equalsIgnoreCase("not view")) {
-			Assertions.assertFalse(viewDelteModelOption, role + " user should not view Delete Model Option");
+			Assertions.assertFalse(viewDeleteCatalogOption, role + " user should not view Delete Model Option");
 		} else {
 			Assertions.fail("Invalid action: " + action);
 		}
@@ -376,4 +376,52 @@ public class CatlogAccessStep {
 		boolean isTitleVisible = addDatabaseToCatalogPage.verifyDatabaseTitle(dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
 	}
+
+	// As per New UI of setting page
+	@And("User Click on Members setting option")
+	public void userClickOnMemberSettingOption() {
+		catlogpermission.clickOnMemberSettingOption();
+	}
+
+	@And("User Click on General setting option")
+	public void userClickOnGeneralSettingOption() {
+		catlogpermission.clickOnGeneralSettingOption();
+	}
+
+	@And("Editor user not able to Delete Catalog")
+	public void editorUserNotAbleToDeleteCatalog() {
+		openModelPage.clickOnDeleteButton();
+		String toastMessage = catlogpermission.editorUserSeeToastMessageText();
+		String expectedPart = "does not exist or user does not have permissions to delete the project. "
+				+ "User must be the owner to perform this function.";
+		Assertions.assertTrue(toastMessage.contains(expectedPart),
+				"Expected toast message to contain: " + expectedPart + " but got: " + toastMessage);
+	}
+
+	@And("{string} user can {string} private toggle button")
+	public void user_can_see_private_toggle_button(String role, String action) {
+		boolean viewMakePrivateToogle = catlogpermission.userCanSeeAndEnablePrivateToggle();
+		if (action.equalsIgnoreCase("see")) {
+			Assertions.assertTrue(viewMakePrivateToogle, role + " user can not see the Make see Private Toggle");
+		} else if (action.equalsIgnoreCase("not see")) {
+			Assertions.assertFalse(viewMakePrivateToogle, role + " user should not see Make see Private Toggle");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("{string} user can {string} Non-Discoverable toggle button")
+	public void user_can_see_non_discoverable_toggle_button(String role, String action) {
+		boolean viewNonDiscovrableToogle = catlogpermission.userCanSeeAndEnableNonDiscovrableToggle();
+		if (action.equalsIgnoreCase("see")) {
+			Assertions.assertTrue(viewNonDiscovrableToogle,
+					role + " user can not see the Make see Non- Discovrable Toggle");
+		} else if (action.equalsIgnoreCase("not see")) {
+			Assertions.assertFalse(viewNonDiscovrableToogle,
+					role + " user should not see Make see Non- Discovrable Toggle");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
 }

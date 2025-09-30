@@ -22,9 +22,9 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_SETTINGS_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Settings']";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
-	private static final String CLICK_ON_MEMBER_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Member')]";
-	private static final String CIICK_ON_PENDING_REQUESTS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Pending Requests')]";
-	private static final String CLICK_ON_DATA_APPS_XPATH = "//button[contains(@class, 'MuiTab-root') and contains(text(), 'Data Apps')]";
+	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
+	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
+	private static final String CLICK_ON_DATA_APPS_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Apps')]";
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
 	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
 	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//span[contains(@title,'discoverable')]";
@@ -76,20 +76,14 @@ public class CatlogAccessPageUtility {
 
 	// create app class
 	public static void clickOnSettings(Page page) {
-		// page.locator(CLICK_ON_SETTINGS_XPATH).click();
-		// As per New UI
 		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH);
 		AICorePageUtils.waitFor(settingOption);
-//		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
-//			settingOption.click();
-//		}
-
-		// we have issue with Settings so for now we are commenting if statement
-		settingOption.click();
-
+		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+			settingOption.click();
+		}
 	}
 
-	public static boolean userCanSeeDeleteModel(Page page) {
+	public static boolean userCanSeeDeleteCatalog(Page page) {
 		return page.locator(CLICK_ON_DELETE_BUTTON_XPATH).isVisible();
 	}
 
@@ -97,11 +91,11 @@ public class CatlogAccessPageUtility {
 		return page.locator(CLICK_ON_MEMBER_XPATH).isVisible();
 	}
 
-	public static boolean UserCanSeePendingRequests(Page page) {
-		return page.locator(CIICK_ON_PENDING_REQUESTS_XPATH).isVisible();
+	public static boolean UserCanSeeGeneral(Page page) {
+		return page.locator(CIICK_ON_GENERAL_XPATH).isVisible();
 	}
 
-	public static boolean userCanSeeDataApps(Page page) {
+	public static boolean userCanSeeApps(Page page) {
 		return page.locator(CLICK_ON_DATA_APPS_XPATH).isVisible();
 	}
 
@@ -163,4 +157,14 @@ public class CatlogAccessPageUtility {
 		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
 		return isToastVisible;
 	}
+
+	// as per new UI of setting page
+	public static void clickOnMemberSettingOption(Page page) {
+		page.locator(CLICK_ON_MEMBER_XPATH).click();
+	}
+
+	public static void clickOnGeneralSettingOption(Page page) {
+		page.locator(CIICK_ON_GENERAL_XPATH).click();
+	}
+
 }
