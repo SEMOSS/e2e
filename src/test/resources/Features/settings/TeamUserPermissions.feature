@@ -59,7 +59,7 @@ Feature: Team Permissions - add User
     And User searches for the created user
     And User clicks on Delete Selected button 1 times
     
-     Scenario: Delete multiple members from the team
+     Scenario: Delete multiple members from the Add team member
 		#371 defect are resolved we change steps
     Given User opens Main Menu
     And User clicks on Open Settings
@@ -88,7 +88,7 @@ Feature: Team Permissions - add User
     And User searches for the created user
     And User clicks on Delete Selected button 1 times
     
-   Scenario: Search for a member by name and delete
+   Scenario: Search for a member by name and delete selected user from add member
     #371 defect are resolved we change steps
 		Given User opens Main Menu
     And User clicks on Open Settings
