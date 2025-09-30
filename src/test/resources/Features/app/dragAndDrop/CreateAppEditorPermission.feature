@@ -28,41 +28,45 @@ Feature: Create App setting for Editor permission
   Scenario: Create App - Editor user - View Member, General, Apps option
     Then 'Editor' user Edit option should be 'Enable'
     And User clicks on app Edit button
-    And User click on Settings
     And 'Editor' user can 'view' Settings
     And 'Editor' user can 'view' Members
     And 'Editor' user can 'view' General
     And 'Editor' user can 'view' Apps
-    And User opens Main Menu
     And User logs out from the application
     And User login as 'Author'
+    And User opens Main Menu
+    And User clicks on Open App Library
 
   Scenario: Create App - Editor user - Not View Private, Non Discoverable and Delete toggle button
     And User clicks on app Edit button
-    And User click on Settings
-    And User Click on General setting option
-    And 'Editor' user Private toggle should be 'Disable'
-    And 'Editor' user Non-Discoverable toggle should be 'Disable'
-    And 'Editor' user can 'not view' Delete catalog option
+	   And User Click on General setting option
+    And 'Editor' user can see private toggle button as 'Enable'
+    And 'Editor' user can see Non-Discoverable toggle button as 'Enable'
+    And 'Editor' user can 'view' Delete catalog option
     And User opens Main Menu
     And User logs out from the application
     And User login as 'Author'
 
   Scenario: Create APP - Editor user - View Member setting and add and delete the Editor and Read User
     Given User clicks on app Edit button
-    And User click on Settings
     And User Click on General setting option
-    Then 'Editor' user 'can' see Member Setting
+    Then User Click on Members setting option
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
     And User opens Main Menu
     And User logs out from the application
-    And User login as 'Admin'
-
+    And User login as 'Author'
+    And User opens Main Menu
+    And User clicks on Open App Library
+   
   Scenario: Create App - Editor user - Delete Model
     And User clicks on app Edit button
-    And User click on Settings
     And User Click on General setting option
-    Then 'Editor' user can 'not view' Delete catalog option
+    Then 'Editor' user can 'view' Delete catalog option
+    And Editor user not able to Delete Catalog
+    And User logs out from the application
+    And User login as 'Author'
+    And User opens Main Menu
+    And User clicks on Open App Library

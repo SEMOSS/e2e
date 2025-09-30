@@ -27,22 +27,16 @@ Feature: Create App setting for Read permission
   Scenario: Create APP - Read Only user - Edit button is disable
     And 'Read' user Edit option should be 'Disable'
     And  User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-    And User opens Main Menu
-    And User logs out from the application
-    And User login as 'Admin'
-
-  Scenario: Create App - Read Only user - Not View Member, General, Apps
     Then 'Read' user can 'not view' Settings
     And 'Read' user can 'not view' Members
     And 'Read' user can 'not view' General
     And 'Read' user can 'not view' Apps
+    And 'Read' user can 'not see' private toggle button 
+    And 'Read' user can 'not see' Non-Discoverable toggle button 
+    And 'Read' user can 'not view' Delete catalog option
     And User opens Main Menu
     And User logs out from the application
     And User login as 'Author'
 
-  Scenario: Create App - Read user - Not View Private, Non Discoverable and Delete toggle button
-  	When User Click on General setting option
-    Then 'Read' user Private toggle should be 'Disable'
-    And 'Read' user Non-Discoverable toggle should be 'Disable'
-    And 'Read' user can 'not view' Delete catalog option
-   
+ 
+ 

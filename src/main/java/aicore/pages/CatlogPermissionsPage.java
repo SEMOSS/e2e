@@ -106,12 +106,14 @@ public class CatlogPermissionsPage {
 	public boolean getCatalogAndCopyId() {
 		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
 	}
-	//as per new UI of setting page
+
+	// as per new UI of setting page
 	public void clickOnMemberSettingOption() {
 		CatlogAccessPageUtility.clickOnMemberSettingOption(page);
 	}
+
 	public void clickOnGeneralSettingOption() {
 		CatlogAccessPageUtility.clickOnGeneralSettingOption(page);
 	}
-	
+
 }

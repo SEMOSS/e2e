@@ -16,6 +16,7 @@ import aicore.pages.CatlogPermissionsPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.utils.CommonUtils;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -287,7 +288,7 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@Then("{string} user Private toggle should be {string}")
+	@Then("{string} user can see private toggle button as {string}")
 	public void user_Can_See_Private_Toggle_Enable(String role, String action) {
 		boolean viewMakePrivateToogle = catlogpermission.userCanSeeAndEnablePrivateToggle();
 		if (action.equalsIgnoreCase("Enable")) {
@@ -317,7 +318,7 @@ public class CatlogAccessStep {
 		catlogpermission.setToggleStateForPrivate();
 	}
 
-	@Then("{string} user Non-Discoverable toggle should be {string}")
+	@Then("{string} user can see Non-Discoverable toggle button as {string}")
 	public void user_Can_See_Non_Discoverable_Toggle_Enable(String role, String action) {
 		boolean viewNonDiscovrableToogle = catlogpermission.userCanSeeAndEnableNonDiscovrableToggle();
 		if (action.equalsIgnoreCase("Enable")) {
@@ -352,7 +353,7 @@ public class CatlogAccessStep {
 			Assertions.fail("Invalid action: " + action);
 		}
 	}
-	
+
 	@And("{string} user Edit option should be {string}")
 	public void user_Can_See_EditOptionIcon(String role, String action) {
 		boolean editOption = catlogpermission.canSeeEditOtion();
@@ -387,5 +388,41 @@ public class CatlogAccessStep {
 	public void userClickOnGeneralSettingOption() {
 		catlogpermission.clickOnGeneralSettingOption();
 	}
+
+	@And("Editor user not able to Delete Catalog")
+	public void editorUserNotAbleToDeleteCatalog() {
+		openModelPage.clickOnDeleteButton();
+		String toastMessage = catlogpermission.editorUserSeeToastMessageText();
+		String expectedPart = "does not exist or user does not have permissions to delete the project. "
+				+ "User must be the owner to perform this function.";
+		Assertions.assertTrue(toastMessage.contains(expectedPart),
+				"Expected toast message to contain: " + expectedPart + " but got: " + toastMessage);
+	}
+	@And("{string} user can {string} private toggle button") 
+	public void user_can_see_private_toggle_button(String role, String action) {
+		boolean viewMakePrivateToogle = catlogpermission.userCanSeeAndEnablePrivateToggle();
+		if (action.equalsIgnoreCase("see")) {
+			Assertions.assertTrue(viewMakePrivateToogle,
+					role + " user can not see the Make see Private Toggle");
+		} else if (action.equalsIgnoreCase("not see")) {
+			Assertions.assertFalse(viewMakePrivateToogle, role + " user should not see Make see Private Toggle");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
+	@And("{string} user can {string} Non-Discoverable toggle button") 
+	public void user_can_see_non_discoverable_toggle_button(String role, String action) {
+		boolean viewNonDiscovrableToogle = catlogpermission.userCanSeeAndEnableNonDiscovrableToggle();
+		if (action.equalsIgnoreCase("see")) {
+			Assertions.assertTrue(viewNonDiscovrableToogle,
+					role + " user can not see the Make see Non- Discovrable Toggle");
+		} else if (action.equalsIgnoreCase("not see")) {
+			Assertions.assertFalse(viewNonDiscovrableToogle,
+					role + " user should not see Make see Non- Discovrable Toggle");
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}	
 
 }
