@@ -84,8 +84,8 @@ public class StoragePageUtils {
 	}
 
 	public static String verifyStorageCreatedToastMessage(Page page) {
-		String toastMessage = page.textContent(STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		Locator alert = page.getByTestId("notification-success-alert");
+		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	public static String verifyStorageTitle(Page page, String storageTitle, String timestamp) {

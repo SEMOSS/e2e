@@ -56,9 +56,8 @@ public class ModelPageUtils {
 	}
 
 	public static String modelCreationToastMessage(Page page) {
-		Locator toastMessage = page.getByRole(AriaRole.ALERT)
-				.filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE));
-		return toastMessage.textContent().trim();
+		Locator alert = page.getByTestId("notification-success-alert");
+		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	public static void waitForModelCreationToastMessageDisappear(Page page) {

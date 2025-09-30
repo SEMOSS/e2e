@@ -28,9 +28,11 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	public void clickOnSettings() {
 		AddFunctionPageUtils.clickOnSettings(page);
 	}
+
 	public void clickOnMakeDiscoverableButton(String caltalogName) {
 		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page, caltalogName);
 	}
+
 	public void clickOnDiscoverableFunctionsbutton() {
 		AddFunctionPageUtils.clickOnDiscoverableFunctionsbutton(page);
 	}
@@ -129,9 +131,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return AddFunctionPageUtils.verifyDeleteToastMessage(page);
 	}
 
-	public String verifySuccessToastMessage(String Toast_message) {
-		AddFunctionPageUtils.verifySuccessToastMessage(page, Toast_message);
-		return Toast_message;
+	public String verifySuccessToastMessage() {
+		return AddFunctionPageUtils.verifySuccessToastMessage(page);
 	}
 
 	public boolean verifyMissingInputField() {

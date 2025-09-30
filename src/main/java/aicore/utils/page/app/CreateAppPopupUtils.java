@@ -61,7 +61,6 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void clickOnUploadButton(Page page) {
-//		page.getByTestId("new-app-upload-btn").click();
 		page.getByTestId("createAppSection-upload-btn").click();
 	}
 

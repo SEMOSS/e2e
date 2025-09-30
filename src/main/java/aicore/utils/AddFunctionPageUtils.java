@@ -204,11 +204,9 @@ public class AddFunctionPageUtils {
 		return toastMessage;
 	}
 
-	public static String verifySuccessToastMessage(Page page, String Toast_message) {
+	public static String verifySuccessToastMessage(Page page) {
 		Locator alert = page.getByTestId("notification-success-alert");
-		AICorePageUtils.waitFor(alert);
-		String toastMessage = alert.textContent().trim();
-		return toastMessage;
+		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	public static boolean verifyMissingInputField(Page page) {

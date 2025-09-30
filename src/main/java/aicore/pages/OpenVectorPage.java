@@ -165,8 +165,9 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 		page.locator(VECTOR_CARD_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
-	public void verifyToastMessage(String expectedToastMessage) {
-		AICorePageUtils.verifyToastMessage(page, expectedToastMessage);
+	public String verifyToastMessage() {
+		Locator alert = page.getByTestId("notification-success-alert");
+		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	public void copyVectorId() {
