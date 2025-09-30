@@ -1,6 +1,6 @@
 Feature: Vector Catalog documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Vector 
     Given User captures documentation screenshot for 'Vector Catalog'
     When User is on Home page

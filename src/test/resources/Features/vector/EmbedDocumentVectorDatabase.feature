@@ -1,5 +1,5 @@
 ######### NEED to set up pinecone in docker
-
+# @Regression
 #Feature: Embed file into the Vector Database
 #
   #@LoginWithAdmin

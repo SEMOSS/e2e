@@ -1,6 +1,6 @@
 Feature: Member Settings documentation
 
-@LoginWithAdmin @SkipIfVersionMatch
+@LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - Member Settings
    Given User captures documentation screenshot for 'Member Settings'
     Given User opens Main Menu

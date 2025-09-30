@@ -1,6 +1,6 @@
 Feature: System Apps Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Verify user can create database from CSV file in BI system app
     Given User captures documentation screenshot for 'System Apps'
     When User opens Main Menu

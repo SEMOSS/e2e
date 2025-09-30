@@ -1,6 +1,6 @@
 Feature: Settings My Profile
 
-@LoginWithAdmin @SkipIfVersionMatch
+@LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - My Profile Page
    Given User captures documentation screenshot for 'Settings-My Profile'
     Given User opens Main Menu

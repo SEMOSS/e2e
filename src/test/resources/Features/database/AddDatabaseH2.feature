@@ -1,3 +1,4 @@
+@Regression
 Feature: Add H2 Database
 
   Background: Create H2 database

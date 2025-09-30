@@ -1,6 +1,6 @@
 Feature: Function documentation
 
-@LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
+@LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
 Scenario: Create a Function
   Given User captures documentation screenshot for 'Function Catalog'
   When User opens Main Menu

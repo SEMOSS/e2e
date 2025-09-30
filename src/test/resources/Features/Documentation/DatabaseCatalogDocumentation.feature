@@ -1,6 +1,6 @@
 Feature: Database Catalog Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Database Catalog Documentation
     Given User captures documentation screenshot for 'Database Catalog'
     When User opens Main Menu

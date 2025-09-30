@@ -1,5 +1,5 @@
 @LoginWithAuthor
-@DeleteCreatedTestApp
+@DeleteCreatedTestApp @Regression
 Feature: Create App setting for Read permission
   Adding LLm to the Catlog
 

@@ -1,6 +1,6 @@
 Feature: Settings Overview Documentation
 
-@LoginWithAdmin @SkipIfVersionMatch
+@LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: View Settings Overview
     Given User captures documentation screenshot for 'Settings Overview'
    Given User opens Main Menu

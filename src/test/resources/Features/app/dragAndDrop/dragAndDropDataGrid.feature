@@ -1,4 +1,4 @@
-@DeleteTestCatalog @DeleteCreatedTestApp
+@DeleteTestCatalog @DeleteCreatedTestApp @Regression
 Feature: Drag and Drop Data Grid
 
   Background: Create Drag and Drop app and navigate to Blocks option

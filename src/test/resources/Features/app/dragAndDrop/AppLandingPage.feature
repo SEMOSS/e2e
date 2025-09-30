@@ -1,5 +1,5 @@
+@Regression
 Feature: App landing page
-
   Background: Create Drag and Drop app
     Given User opens Main Menu
     When User clicks on Open App Library

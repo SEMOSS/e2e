@@ -1,4 +1,4 @@
-@DeleteTestCatalog
+@DeleteTestCatalog @Regression
 Feature: View Function Details
 
   Background: Create Function using ZIP file

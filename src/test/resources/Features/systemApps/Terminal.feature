@@ -1,3 +1,4 @@
+@Regression
 Feature: verify the Terminal command
 
   Background: Navigate to Terminal

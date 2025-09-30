@@ -1,3 +1,4 @@
+@Regression
 Feature: Model Catalog Permission - Editor
   Adding LLM to the catalog
 
@@ -85,6 +86,7 @@ Feature: Model Catalog Permission - Editor
     And User logs out from the application
     And User login as 'Author'
 
+  @Smoke
   Scenario: Model Catalog - Editor -  Delete Model as Author
     Given User opens Main Menu
     And User logs out from the application

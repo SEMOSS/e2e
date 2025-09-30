@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Model
   Adding LLM to the catalog
 

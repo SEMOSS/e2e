@@ -1,3 +1,4 @@
+@Regression
 Feature: Create App and validate Variables
 
   Background: Create Drag and Drop app to validate the variables
@@ -33,7 +34,7 @@ Feature: Create App and validate Variables
     Then User sees Toast message of variable creation 'BlockVariable'
     And User sees the variable with name 'BlockVariable' and type 'block' in the variable list
 
-  @LoginWithAdmin @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteCreatedTestApp @Smoke
   Scenario Outline: Validate Query & Cell Variables in Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu

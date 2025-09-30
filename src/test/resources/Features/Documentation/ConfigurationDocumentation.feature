@@ -1,6 +1,6 @@
 Feature: Configuration documentation
 
-@LoginWithAdmin @SkipIfVersionMatch
+@LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - Configuration documentation
    Given User captures documentation screenshot for 'Configuration'
     Given User opens Main Menu

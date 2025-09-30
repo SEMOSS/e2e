@@ -1,3 +1,4 @@
+@Regression
 Feature: Vector Overview
 
   Background: Validate usage of storage

@@ -1,3 +1,4 @@
+@Regression
 Feature: View add Vector options on the page
 
   @LoginWithAdmin

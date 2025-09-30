@@ -1,4 +1,4 @@
-@LoginWithAuthor
+@LoginWithAuthor @Regression
 Feature: Create App setting for Author permission
   Adding LLm to the Catlog
 

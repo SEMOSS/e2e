@@ -1,3 +1,4 @@
+@Regression
 Feature: Job Management
 
   Background: Add Job

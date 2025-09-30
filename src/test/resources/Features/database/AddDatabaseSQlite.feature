@@ -1,3 +1,4 @@
+@Regression 
 Feature: Add SQLITE Database
 
   Background: Create Sqlite database
@@ -13,7 +14,7 @@ Feature: Add SQLITE Database
     And User clicks on apply database button
     Then User can see the database title as 'SqliteDB'
 
-@LoginWithAdmin @DeleteTestCatalog
+@LoginWithAdmin @DeleteTestCatalog @Smoke
   Scenario: Verify Sqlite database
     Given User opens Main Menu
     When User clicks on Open Database

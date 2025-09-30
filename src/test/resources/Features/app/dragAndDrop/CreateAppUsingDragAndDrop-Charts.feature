@@ -1,3 +1,4 @@
+@Regression
 Feature: Create drag and drop app
 
   Background: Create Drag and Drop app
@@ -12,7 +13,7 @@ Feature: Create drag and drop app
     And User clicks on Create button
     And User fetch the app name for drag and drop app
 
-  @DeleteTestCatalog @DeleteCreatedTestApp
+  @DeleteTestCatalog @DeleteCreatedTestApp @Smoke
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     When User opens Main Menu
     And User clicks on Open Database

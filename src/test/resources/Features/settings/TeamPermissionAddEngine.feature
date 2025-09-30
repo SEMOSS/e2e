@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Engine for Team Permission
 
   Background: Team Permissions - Add team
