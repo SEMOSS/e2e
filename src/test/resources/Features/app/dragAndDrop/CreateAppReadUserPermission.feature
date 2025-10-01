@@ -13,6 +13,7 @@ Feature: App setting for Read permission
     And User fetch the app name for drag and drop app
     And User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User click on Settings
+    And User Click on Members setting option
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User logs out from the application
@@ -25,22 +26,13 @@ Feature: App setting for Read permission
   Scenario: Create APP - Read Only user - Edit button is disable
     And 'Read' user Edit option should be 'Disable'
     And User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-    And User opens Main Menu
-    And User logs out from the application
-    And User login as 'Admin'
-
-  Scenario: Create App - Read Only user - Not View Member, Pending Request, Data Apps,Export Icon
     Then 'Read' user can 'not view' Settings
-    And 'Read' user can 'not view' Member
-    And 'Read' user can 'not view' Pending Requests
-    And 'Read' user can 'not view' Data Apps
-    And 'Read' user can 'not view' Export Icon
-    And 'Read' user 'can not' see Member Setting
+    And 'Read' user can 'not view' Members
+    And 'Read' user can 'not view' General
+    And 'Read' user can 'not view' Apps
+    And 'Read' user can 'not see' private toggle button
+    And 'Read' user can 'not see' Non-Discoverable toggle button
+    And 'Read' user can 'not view' Delete catalog option
     And User opens Main Menu
     And User logs out from the application
-    And User login as 'Admin'
-
-  Scenario: Create App - Read user - Not View Export Icon, Make public, Make Discoverable and Delete toggle button
-    And 'Read' user Private toggle should be 'Disable'
-    And 'Read' user Non-Discoverable toggle should be 'Disable'
-    And 'Read' user can 'not view' Delete Model option
+    And User login as 'Author'

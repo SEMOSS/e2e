@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
 
+import aicore.framework.RestCaller;
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.SettingPage;
 import aicore.pages.UserManagementPage;
 import aicore.utils.LastCreatedUser;
-import aicore.framework.RestCaller;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

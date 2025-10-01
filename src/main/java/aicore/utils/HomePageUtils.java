@@ -142,6 +142,7 @@ public class HomePageUtils {
 
 	public static void clickOnBuildButton(Page page) {
 		Locator BuildButton = page.locator(BUILD_BUTTON_XPATH);
+		AICorePageUtils.waitFor(BuildButton);
 		if (!BuildButton.isVisible()) {
 			throw new RuntimeException("Build button is not visible");
 		} else {

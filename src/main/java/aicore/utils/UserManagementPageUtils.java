@@ -1,10 +1,11 @@
 package aicore.utils;
 
-import aicore.framework.ConfigUtils;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
+
+import aicore.framework.ConfigUtils;
 
 public class UserManagementPageUtils {
 
@@ -88,9 +89,13 @@ public class UserManagementPageUtils {
 	}
 
 	public static String userCreationToastMessage(Page page) {
-		page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH).textContent().trim();
+		// page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
+		// .waitFor(new
+		// Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		// page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH).textContent().trim();
+		Locator toasterMessage = page.getByTestId("notification-success-alert");
+		AICorePageUtils.waitFor(toasterMessage);
+		String toastMessage = toasterMessage.textContent().trim();
 		return toastMessage;
 	}
 
@@ -100,7 +105,8 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickOnEditUser(Page page) {
-		page.locator(EDIT_ICON_XPATH).isVisible();
+		Locator editIcon = page.locator(EDIT_ICON_XPATH);
+		AICorePageUtils.waitFor(editIcon);
 		page.locator(EDIT_ICON_XPATH).click();
 	}
 
@@ -213,4 +219,5 @@ public class UserManagementPageUtils {
 		Locator resultButton = page.locator("//button[.//span[text()='" + optionText + "']]");
 		resultButton.click();
 	}
+
 }
