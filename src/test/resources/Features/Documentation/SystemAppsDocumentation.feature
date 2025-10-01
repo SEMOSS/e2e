@@ -1,6 +1,7 @@
 Feature: System Apps Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
+  ### Emedded file upload issue Bug- https://github.com/SEMOSS/semoss-ui/issues/1950 ###
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE
   Scenario: Verify user can create database from CSV file in BI system app
     Given User captures documentation screenshot for 'System Apps'
     When User opens Main Menu
@@ -28,7 +29,7 @@ Feature: System Apps Documentation
     And User captures a 'button' and highlights the 'New project'
     And User captures screenshot for "New Project form"
     And User click on cancel button
-    And User captures a 'button' and highlights the 'Create the first insight'  
+    And User captures a 'button' and highlights the 'Create the first insight'
     And User clicks on Add option
     And User captures screenshot for "Add Data form"
     And User search 'TestDatabase' created database and select

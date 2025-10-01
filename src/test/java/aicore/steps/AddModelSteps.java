@@ -86,7 +86,7 @@ public class AddModelSteps {
 	public void user_can_a_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
-		openModelPage.waitForModelCreationToastMessageDisappear();
+		openModelPage.closeModelCreationToastMessage();
 	}
 
 	@Then("User Can see the Model title as {string}")

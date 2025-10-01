@@ -9,9 +9,9 @@ Feature: Database Catalog permissions for Author
     And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
+    And User clicks On Copy Catalog ID
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
-    And User clicks On Copy Catalog ID
 
   @DeleteTestCatalog
   Scenario: Database Catalog - Author - View Overview,Metadata,Usage,Access Control,SMSS deatils
@@ -51,6 +51,6 @@ Feature: Database Catalog permissions for Author
   Scenario: Database Catalog-Autor-View Export button
     Then 'Author' user can 'view' export button
 
-  Scenario: Database Catalog - Author - Delete Model
+  Scenario: Database Catalog - Author - Delete Database
     And 'Author' user clicks on Access Control
-    Then 'Author' user 'can' Delete Model
+    Then 'Author' user 'can' Delete Catalog 

@@ -9,11 +9,16 @@ import com.microsoft.playwright.options.WaitForSelectorState;
  * Main AI Core Home page utils
  */
 public class AICorePageUtils {
+	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
 	public static String verifySuccessToastMessage(Page page, Locator locator) {
 		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(20000));
 		String toastMessage = locator.textContent().trim();
 		return toastMessage;
+	}
+
+	public static void closeToastMessage(Page page) {
+		page.locator(TOAST_CLOSE_XPATH).click();
 	}
 
 	public static String readStringFromClipboard(Page page) {

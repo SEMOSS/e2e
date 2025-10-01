@@ -159,7 +159,6 @@ public class UserManagementPage {
 		return userIdInput.getAttribute("value");
 	}
 
-
 	public String getDisplayedEmail() throws InterruptedException {
 		Locator emailInput = page.locator("//label[contains(text(), 'Email')]/following::input[1]");
 		return emailInput.getAttribute("value");

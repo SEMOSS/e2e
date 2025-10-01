@@ -77,9 +77,8 @@ public class ModelPageUtils {
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
-	public static void waitForModelCreationToastMessageDisappear(Page page) {
-		page.getByRole(AriaRole.ALERT).filter(new Locator.FilterOptions().setHasText(MODEL_TOAST_MESSAGE)).isVisible();
-		page.getByTestId("CloseIcon").click();
+	public static void closeModelCreationToastMessage(Page page) {
+		AICorePageUtils.closeToastMessage(page);
 	}
 
 	public static String verifyModelTitle(Page page, String modelTitle) {

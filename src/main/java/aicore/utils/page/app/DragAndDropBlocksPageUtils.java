@@ -380,7 +380,7 @@ public class DragAndDropBlocksPageUtils {
 			chartLocator = page.locator(CHART_XPATH);
 		}
 		Path path = Paths.get(actualImagePath);
-		page.waitForTimeout(5000);
+		page.waitForTimeout(4000);
 		chartLocator.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
 
