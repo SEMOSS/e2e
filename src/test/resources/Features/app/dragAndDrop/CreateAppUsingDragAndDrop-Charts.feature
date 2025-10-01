@@ -1,7 +1,19 @@
 Feature: Create drag and drop app
 
-  Background: Create Drag and Drop app and navigate to Blocks option
+  Background: Create Drag and Drop app
     Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Test app'
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+
+  @DeleteTestCatalog @DeleteCreatedTestApp
+  Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     When User opens Main Menu
     And User clicks on Open Database
     And User clicks on Add Database
@@ -15,22 +27,8 @@ Feature: Create drag and drop app
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    And User clicks On Copy Catalog ID
-    When User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test app'
-    And User enters description as 'Created by automation script'
-    And User enters tags 'Test1, Test2' and presses Enter
-    And User clicks on Create button
-    And User fetch the app name for drag and drop app
-    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-
-  @DeleteTestCatalog @DeleteCreatedTestApp
-  Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
-    Given User is on Home page
-    When User opens Main Menu
+    When User clicks On Copy Catalog ID
+    And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
@@ -56,9 +54,14 @@ Feature: Create drag and drop app
     And User clicks on the '<BLOCK_NAME>' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User drag and drop the '<COLUMN_NAMES>' columns to '<FIELD_NAMES>' fields
     Then User can see '<BLOCK_NAME>' chart same as baseline chart
+    And User clicks on the '<BLOCK_NAME>' block to select it
+    When User click on '<BLOCK_NAME>' chart duplicate icon
+    Then Duplicate '<BLOCK_NAME>' chart should appear on the page
+    When User click on '<BLOCK_NAME>' chart delete icon
+    Then Duplicate '<BLOCK_NAME>' chart should be remove from the page
     When User clicks on the Save App icon
 
     Examples: 
@@ -66,7 +69,23 @@ Feature: Create drag and drop app
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose                                | Select Label, Select X Axis, Select Y Axis, Select Tooltip                                           |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure                                              | Select X Axis, Select Y Axis                                                                         |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BloodPressure, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BMI, Glucose, Insulin                                      | Select X Axis, Select Y Axis, Select Category, Select Tooltip                                        |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Pie Chart           | Age, BloodPressure                                              | Select Label, Select Value                                                                           |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Gantt Chart         | Task_Name, Start_Date, End_Date, Task_Group, Milestone, Tooltip | Select Task, Select Start Date, Select End Date, Select Task Group, Select MileStone, Select Tooltip |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Dendrogram Chart    | Age, BloodPressure                                              | Select Dimensions, Select Facet                                                                      |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | World Map Chart     | DIABETES_UNIQUE_ROW_ID, Age, BMI, SkinThickness, Tooltip        | Select Label, Select Latitude, Select Longitude, Select Size, Select Tooltip                         |
+
+  @DeleteCreatedTestApp
+  Scenario Outline: Drag and Drop Mermaid Chart block
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
+    And User clicks on 'Test app' app from the My Apps
+    And User clicks on app Edit button
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'Mermaid Chart' block and drops it on the page
+    And User clicks on the 'Mermaid Chart' block to select it
+    And User clicks on the Block Settings option
+    And User enters 'A-->D' in graph TD section
+    And User clicks on the Save App icon
+    Then User can see 'Mermaid Chart' chart same as baseline chart

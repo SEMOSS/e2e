@@ -3,6 +3,7 @@ Feature: Job Management
   Background: Add Job
     Given User opens Main Menu
     And User clicks on Open Settings
+    And User enables admin mode
     And User clicks on Jobs
     And User clicks on Add Job button
     And User fills 'Test Job' in Name field
@@ -18,14 +19,17 @@ Feature: Job Management
     And User clicks Save button
     Then User can see '2' value as Tag for edited 'Test Job'
 
+  @LoginWithAdmin
   Scenario: Delete Job
     When User clicks on Delete Icon for added 'Test Job'
     Then User sees delete job toast message as 'Successfully deleted all selected jobs'
 
+  @LoginWithAdmin
   Scenario: Run Job
     When User selects the checkbox next to 'Test Job'
     Then 'Test Job' will start running and Pause button will be enabled
 
+  @LoginWithAdmin
   Scenario: Pause a Running Job
     When User clicks the checkbox of "Test Job"
     And User clicks the green Pause button
@@ -33,6 +37,7 @@ Feature: Job Management
     And the checkbox of "Test Job" should become unselected
     And the green Pause button should revert to its default state
 
+  @LoginWithAdmin
   Scenario: Resume a Paused Job
     When User clicks the checkbox of "Test Job"
     And User clicks the green Pause button

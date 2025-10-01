@@ -10,13 +10,10 @@ import com.microsoft.playwright.options.WaitForSelectorState;
  */
 public class AICorePageUtils {
 
-	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), '{TOAST_MESSAGE}')]";
-	private static final String NEXT_BUTTON_XPATH = "//button[span[normalize-space(text())='Next']]";
-
-	public static Locator verifyToastMessage(Page page, String msg) {
-		Locator locator = page.locator(TOAST_MESSAGE_XPATH.replace("{TOAST_MESSAGE}", msg));
-		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-		return locator;
+	public static String verifySuccessToastMessage(Page page, Locator locator) {
+		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(20000));
+		String toastMessage = locator.textContent().trim();
+		return toastMessage;
 	}
 
 	public static String readStringFromClipboard(Page page) {
@@ -45,12 +42,9 @@ public class AICorePageUtils {
 		buttonLocator.scrollIntoViewIfNeeded();
 		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		buttonLocator.click();
-	} 
-	
-	public static void waitFor(Locator locator) {
-		if (!locator.isVisible()) {
-			locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		}
 	}
 
+	public static void waitFor(Locator locator) {
+		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+	}
 }

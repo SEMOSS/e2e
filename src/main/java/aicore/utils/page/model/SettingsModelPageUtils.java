@@ -23,7 +23,7 @@ public class SettingsModelPageUtils {
 	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model public']";
 	private static final String MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Non Discoverable']/following-sibling::p";
 	private static final String MAKE_DISCOVERABLE_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model discoverable']";
-	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Delete Database']/following-sibling::p";
+	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Delete Model']/following-sibling::p";
 	private static final String DELETE_BUTTON_XPATH = "//button//span[text()='Delete']";
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h6[text()='Pending Requests']";
 	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h6[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
@@ -91,7 +91,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static String verifyDeleteSectionTextMessage(Page page) {
-		String actualTextMessage = page.textContent(DELETE_SECTION_TEXT_MESSAGE_XPATH);
+		String actualTextMessage = page.textContent(DELETE_SECTION_TEXT_MESSAGE_XPATH).trim();
 		return actualTextMessage;
 	}
 
@@ -101,12 +101,16 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyPendingRequestsSectionIsVisible(Page page) {
-		boolean isPendingRequestsSectionVisible = page.isVisible(PENDING_REQUESTS_SECTION_TITLE_XPATH);
+		Locator pendingRequest = page.locator(PENDING_REQUESTS_SECTION_TITLE_XPATH);
+		pendingRequest.scrollIntoViewIfNeeded();
+		boolean isPendingRequestsSectionVisible = pendingRequest.isVisible();
 		return isPendingRequestsSectionVisible;
 	}
 
 	public static String verifyPendingRequestsSectionTextMessage(Page page) {
-		String actualTextMessage = page.textContent(PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH).trim();
+		Locator pendingRequestText = page.locator(PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH);
+		pendingRequestText.scrollIntoViewIfNeeded();
+		String actualTextMessage = pendingRequestText.textContent().trim();
 		return actualTextMessage;
 	}
 
@@ -128,6 +132,7 @@ public class SettingsModelPageUtils {
 
 	public static boolean verifyRowsPerPageDropdownIsVisible(Page page) {
 		Locator ROWS_PER_PAGE_DROPDOWN = page.locator(ROWS_PER_PAGE_DROPDOWN_XPATH);
+		AICorePageUtils.waitFor(ROWS_PER_PAGE_DROPDOWN);
 		ROWS_PER_PAGE_DROPDOWN.scrollIntoViewIfNeeded();
 		boolean isRowsPerPageDropdownVisible = ROWS_PER_PAGE_DROPDOWN.isVisible();
 		return isRowsPerPageDropdownVisible;

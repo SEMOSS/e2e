@@ -40,6 +40,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 	}
 
+	public void closeBlocksOption() {
+		DragAndDropBlocksPageUtils.closeBlocksOption(page);
+	}
+
 	public void blockDropPosition() {
 		DragAndDropBlocksPageUtils.blockDropPosition(page);
 	}
@@ -104,8 +108,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnTerminalCard(page);
 	}
 
-	public void takeChartScreenshot(String actualImagePath) {
-		DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath);
+	public void takeChartScreenshot(String actualImagePath, String chart) {
+		DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath, chart);
 	}
 
 	// Area Chart
@@ -114,31 +118,31 @@ public class DragAndDropBlocksPage {
 	}
 
 	public boolean canSeeDuplicateIcon() {
-		return DragAndDropBlocksPageUtils.CanseeDuplicateIcon(page);
+		return DragAndDropBlocksPageUtils.canSeeDuplicateIcon(page);
 	}
 
-	public int getInitialCount() {
-		return DragAndDropBlocksPageUtils.getInitialcount(page);
+	public int getInitialCount(String blockName) {
+		return DragAndDropBlocksPageUtils.getInitialcount(page, blockName);
 	}
 
 	public void clickOnDuplicateIcon() {
 		DragAndDropBlocksPageUtils.clickOnDuplicateIcon(page);
 	}
 
-	public boolean duplicatedChartIsVisiable(int expectedcount) {
-		return DragAndDropBlocksPageUtils.duplicatedChartIsVisiable(page, expectedcount);
+	public boolean duplicatedChartIsVisiable(int expectedcount, String blockName) {
+		return DragAndDropBlocksPageUtils.duplicatedChartIsVisiable(page, expectedcount, blockName);
 	}
 
 	public boolean canSeeDeleteIcon() {
-		return DragAndDropBlocksPageUtils.CanseeDeleteIcon(page);
+		return DragAndDropBlocksPageUtils.canSeeDeleteIcon(page);
 	}
 
 	public void clickOnDeleteIcon() {
 		DragAndDropBlocksPageUtils.clickOnDeleteIcon(page);
 	}
 
-	public boolean areaChartIsRemoved(int count) {
-		return DragAndDropBlocksPageUtils.areaChartIsRemoved(page, count);
+	public boolean chartIsRemoved(int count, String chartName) {
+		return DragAndDropBlocksPageUtils.chartIsRemoved(page, count, chartName);
 	}
 
 	public void hoverOnDuplicateIcon() {
@@ -162,7 +166,7 @@ public class DragAndDropBlocksPage {
 	}
 
 	public int countcheck() {
-		return DragAndDropBlocksPageUtils.CountCheck(page);
+		return DragAndDropBlocksPageUtils.countCheck(page);
 	}
 
 	public void clickOnSyncChangesButton() {

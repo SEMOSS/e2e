@@ -55,7 +55,7 @@ public class ModelSettingsSteps {
 		case "Non Discoverable":
 			actualTextMessage = modelPage.verifyMakeDiscoverableSectionTextMessage();
 			break;
-		case "Delete Database":
+		case "Delete Model":
 			actualTextMessage = modelPage.verifyDeleteSectionTextMessage();
 			break;
 		default:
@@ -84,7 +84,7 @@ public class ModelSettingsSteps {
 	public void user_can_see_delete_button_in_section(String sectionName) {
 		boolean isDeleteButtonVisible = false;
 		switch (sectionName) {
-		case "Delete Database":
+		case "Delete Model":
 			isDeleteButtonVisible = modelPage.verifyDeleteButtonIsVisible();
 			break;
 		default:

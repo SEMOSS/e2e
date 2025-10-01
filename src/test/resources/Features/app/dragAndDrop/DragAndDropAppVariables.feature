@@ -11,7 +11,7 @@ Feature: Create App and validate Variables
     And User fetch the app name for drag and drop app
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteCreatedTestApp
   Scenario: Validate Block Variables in Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
@@ -33,7 +33,7 @@ Feature: Create App and validate Variables
     Then User sees Toast message of variable creation 'BlockVariable'
     And User sees the variable with name 'BlockVariable' and type 'block' in the variable list
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteCreatedTestApp
   Scenario Outline: Validate Query & Cell Variables in Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
@@ -60,12 +60,12 @@ Feature: Create App and validate Variables
     And User clicks on Create Variable button
     Then User sees Toast message of variable creation '<variable_name>'
 
-    Examples:
+    Examples: 
       | variable_name | variable_type | variable_value |
       | QueryVariable | query         | Test query     |
       | CellVariable  | cell          | Test query.2   |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Validate Database Variables in Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
@@ -97,7 +97,7 @@ Feature: Create App and validate Variables
     Then User sees Toast message of variable creation 'TestDatabase'
     And User sees the variable with name 'TestDatabase' and type 'database' in the variable list
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Validate function Variables in Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
@@ -106,9 +106,6 @@ Feature: Create App and validate Variables
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    Then User sees the function name 'WeatherFunctionTest' in the function catalog
-    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
-    And User selects the 'WeatherFunctionTest' from the function catalog
     And User clicks On Copy Catalog ID
     And User get the CatalogName for variable
     When User opens Main Menu
@@ -125,7 +122,7 @@ Feature: Create App and validate Variables
     Then User sees Toast message of variable creation 'WeatherFunctionTest'
     And User sees the variable with name 'WeatherFunctionTest' and type 'function' in the variable list
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Validate Model Variables in Drag and Drop App.
     Given User opens Main Menu
     When User clicks on Open Model
@@ -151,7 +148,8 @@ Feature: Create App and validate Variables
     And User clicks on Create Variable button
     Then User sees Toast message of variable creation 'ModelVariable'
     And User sees the variable with name 'ModelVariable' and type 'model' in the variable list
-  # @LoginWithAdmin @DeleteTestCatalog
+
+  # @LoginWithAdmin @DeleteTestCatalog  @DeleteCreatedTestApp
   # Scenario: Validate Vector Variables in Drag and Drop App.
   #  # adding embedder for use when creating vector DB
   #   Given User opens Main Menu
@@ -194,8 +192,7 @@ Feature: Create App and validate Variables
   #   And User clicks on Create Variable button
   #   Then User sees Toast message of variable creation 'FAISSCatalogeeVectorr'
   #   And User sees the variable with name 'FAISSCatalogeeVectorr' and type 'Vector' in the variable list
-
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Verify Local File System Storage Variable using Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
@@ -223,7 +220,7 @@ Feature: Create App and validate Variables
     Then User sees Toast message of variable creation 'Storage'
     And User sees the variable with name 'Storage' and type 'storage' in the variable list
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteCreatedTestApp
   Scenario Outline: Verify String, date, number Variable for Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
@@ -240,13 +237,13 @@ Feature: Create App and validate Variables
     Then User sees Toast message of variable creation '<variable_name>'
     And User sees the variable with name '<variable_name>' and type '<variable_type>' in the variable list
 
-    Examples:
+    Examples: 
       | variable_name  | variable_type | variable_value |
       | StringVariable | string        | Sample String  |
-      | DateVariable   | date          |     2023-01-01 |
+      | DateVariable   | date          | 2023-01-01     |
       | NumberVariable | number        |            123 |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteCreatedTestApp
   Scenario Outline: Verify array and JSON Variable for Drag and Drop App.
     Given User is on Home page
     When User opens Main Menu
@@ -263,7 +260,7 @@ Feature: Create App and validate Variables
     Then User sees Toast message of variable creation '<variable_name>'
     And User sees the variable with name '<variable_name>' and type '<variable_type>' in the variable list
 
-    Examples:
+    Examples: 
       | variable_name  | variable_type | variable_value   |
       | StringVariable | array         | [2]              |
       | JsonVariable   | JSON          | {"key": "value"} |
