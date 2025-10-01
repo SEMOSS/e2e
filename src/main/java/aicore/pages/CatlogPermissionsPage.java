@@ -2,6 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 
 public class CatlogPermissionsPage {
@@ -103,8 +104,12 @@ public class CatlogPermissionsPage {
 		return CatlogAccessPageUtility.editorUserSeeToastMessageText(page);
 	}
 
-	public boolean getCatalogAndCopyId() {
-		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
+	public void getCatalogAndCopyId() {
+		CatlogAccessPageUtility.getCatalogAndCopyId(page);
+	}
+
+	public void closeToastMessage() {
+		AICorePageUtils.closeToastMessage(page);
 	}
 
 	// as per new UI of setting page

@@ -31,10 +31,9 @@ public class AppTemplatePageUtils {
 	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
 	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
 
-	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content' and normalize-space(text())='page-1']";
+	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content workspace_layout' and normalize-space(text())='page-1']";
 	private static final String TEAMPLATE_APP_PAGE_TITLE_XPATH = "//div[@id='page-1']/h1[contains(@data-block,'text')]";
 	private static final String MULI_PAGE_APP_HYPERLINK_XAPTH = "//a[normalize-space(text())='%s']";
-	private static final String LANDING_PAGE_TEXT = "Landing Page";
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
@@ -120,7 +119,6 @@ public class AppTemplatePageUtils {
 		}
 		page.locator(PREVIEW_APP_CANCEL_XPATH).click();
 	}
-
 
 	public static void verifyInputFieldWithLabelInPreview(String label, Page page) {
 		boolean inputBoxVisible = page.locator(PREVIEW_APP_INPUT_BOX_XPATH).first().isVisible();

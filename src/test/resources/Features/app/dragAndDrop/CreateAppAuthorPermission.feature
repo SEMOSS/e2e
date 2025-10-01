@@ -1,6 +1,5 @@
 @LoginWithAuthor
-Feature: Create App setting for Author permission
-  Adding LLm to the Catlog
+Feature: App setting for Author permission
 
   Background: Create Drag and Drop app and navigate to Setting Page
     Given User opens Main Menu

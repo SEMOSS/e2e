@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
@@ -120,9 +119,8 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static String verifyEditSuccessfullToastMessage(Page page) {
-		Locator toastMessage = page.getByRole(AriaRole.ALERT)
-				.filter(new Locator.FilterOptions().setHasText(EDIT_SUCCESS_TOAST_MESSAGE));
-		return toastMessage.textContent().trim();
+		Locator alert = page.getByTestId("notification-success-alert");
+		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	// View Database Type on Connect To database page

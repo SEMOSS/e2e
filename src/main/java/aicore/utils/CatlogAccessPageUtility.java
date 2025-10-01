@@ -16,7 +16,7 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
-	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//*[name()='svg' and @data-testid='ErrorOutlineIcon']/ancestor::div[contains(@class, 'MuiAlert-root')]//div[contains(@class, 'MuiAlert-message')]";
+	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
 	// create app variable declaration
 	private static final String CLICK_ON_SETTINGS_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Settings']";
@@ -34,6 +34,9 @@ public class CatlogAccessPageUtility {
 	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
+
+	// as per new UI update
+	private static final String VIEW_SETTING_OPTION_ON_SETTING_PAGE = "//span[text()='Settings']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -84,7 +87,8 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean userCanSeeDeleteCatalog(Page page) {
-		return page.locator(CLICK_ON_DELETE_BUTTON_XPATH).isVisible();
+		Locator deleteOption = page.locator(CLICK_ON_DELETE_BUTTON_XPATH);
+		return deleteOption.isVisible();
 	}
 
 	public static boolean userCanSeeMember(Page page) {
@@ -134,28 +138,30 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean canSeeSettingOption(Page page) {
-		return page.locator(CLICK_ON_SETTINGS_XPATH).isVisible();
+		return page.locator(VIEW_SETTING_OPTION_ON_SETTING_PAGE).isVisible();
 	}
 
 	public static String editorUserSeeToastMessageText(Page page) {
-		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH)
+		page.getByTestId(EDITOR_SEE_TOASTER_MESSAGE_DATATESTID)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).innerText();
+		String toasterMessage = page.getByTestId(EDITOR_SEE_TOASTER_MESSAGE_DATATESTID).innerText();
 		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
 		return toasterMessage;
 	}
 
-	public static boolean getCatalogAndCopyId(Page page) {
-		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
+	public static void getCatalogAndCopyId(Page page) {
+//		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
 		page.waitForTimeout(500);
-		copyId.click();
-		Locator toastMessage = page.getByTestId("notification-success-alert");
-		boolean isToastVisible = toastMessage.isVisible();
-		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+//		copyId.click();
+//		Locator toastMessage = page.getByTestId("notification-success-alert");
+//		boolean isToastVisible = toastMessage.isVisible();
+//		AICorePageUtils.closeToastMessage(page);
+//		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+		String copiedId = page.locator("//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p")
+				.innerText();
 		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
 		String catalogType = catalogTypeText.trim().split("\\s+")[0];
 		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
-		return isToastVisible;
 	}
 
 	// as per new UI of setting page

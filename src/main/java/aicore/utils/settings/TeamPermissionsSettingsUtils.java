@@ -14,7 +14,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String DESCRIPTION_XPATH = "//label[text()='Description']/parent::div/child::div//textarea";
 	private static final String ADD_BUTTON_XPATH = "//button[.//span[normalize-space()='{buttonName}']]";
 	private static final String TEAM_BUTTON_XPATH = "//button//span[contains(text(), 'Add Members')]";
-	private static final String LIST_MEMBER_XPATH = "//*[contains(text(), '{Member}')]";
+	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']"; //// *[contains(text(), '{Member}')]";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
 	private static final String LIST_DROPDOWN = "ArrowDropDownIcon";
 	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message')]";
@@ -128,7 +128,7 @@ public class TeamPermissionsSettingsUtils {
 		dropdownLocator.press("Enter");
 		page.keyboard().press("Control+V");
 		AICorePageUtils.waitFor(dropdownLocator);
-		page.getByText(catalogName).click();
+		page.getByText(catalogName).first().click();
 	}
 
 	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {

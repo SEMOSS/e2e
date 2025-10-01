@@ -53,7 +53,7 @@ public class TeamPermissionsSettingsPage {
 	public boolean checkMemberInList(String member) {
 		return TeamPermissionsSettingsUtils.checkMemberInList(page, member);
 	}
-
+	
 	public String verifyName(String name) {
 		return TeamPermissionsSettingsUtils.verifyName(page, name + " " + timestamp);
 	}
@@ -88,7 +88,7 @@ public class TeamPermissionsSettingsPage {
 		TeamPermissionsSettingsUtils.userSelectEngineAccessRole(page, role);
 	}
 
-	// delete team member
+	//delete team member
 	public void userClickOnDeleteIcon(String icon, String member) {
 		TeamPermissionsSettingsUtils.userClickOnDeleteIcon(page, icon, member);
 	}
@@ -104,7 +104,6 @@ public class TeamPermissionsSettingsPage {
 	public void userSelectAllMember() {
 		TeamPermissionsSettingsUtils.userSelectAllMember(page);
 	}
-
 	public void userClickOnOption(String option) {
 		TeamPermissionsSettingsUtils.userClickOnOption(page, option);
 	}

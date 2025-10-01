@@ -337,7 +337,7 @@ public class CreateAppUsingDragAndDropSteps {
 		blockSettings.clickOnDataTab();
 	}
 
-	@And("User selects the frame from the Selected Frame dropdown")
+	@And("User selects the frame from the selected frame dropdown")
 	public void user_selects_the_frame_from_the_selected_frame_dropdown() {
 		blockSettings.selectFrame(NotebookCreationAndExecutionSteps.frameID);
 	}
@@ -362,13 +362,14 @@ public class CreateAppUsingDragAndDropSteps {
 		final String actualImagePath = "screenshots/" + folderName + "/actualChart.png";
 		final String expectedImagePath = "screenshots/" + folderName + "/expectedChart.png";
 		final String diffImagePath = "screenshots/" + folderName + "/diffChart.png";
+		blocksPage.closeBlocksOption();
 		blocksPage.takeChartScreenshot(actualImagePath, chartName);
 		boolean imagesMatches = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
 		Assertions.assertTrue(imagesMatches, "Images do not match for the " + chartName);
 	}
 
 	// duplicate and delete Area Chart
-	@And("User Click on the area chart on the page to view options")
+	@And("User click on the area chart on the page to view options")
 	public void user_Click_On_AreaChart_To_View_Options() {
 		blocksPage.clickOnAreaChartTOViewOptions();
 	}
@@ -385,19 +386,19 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-	@And("User Click on Duplicate Icon")
-	public void user_Click_On_Duplicate_Icon() {
-		initialChartCount = blocksPage.getInitialCount();
+	@And("User click on {string} chart duplicate icon")
+	public void user_click_on_chart_Duplicate_Icon(String blockName) {
+		initialChartCount = blocksPage.getInitialCount(blockName);
 		blocksPage.clickOnDuplicateIcon();
 	}
 
-	@And("Another Area Chart block should appear on the page")
-	public void duplicated_Area_Chart_Is_Visiable() {
-		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(initialChartCount);
-		Assertions.assertTrue(chartIsAdded, "Expected : New Area Chart is added after Duplicateion");
+	@Then("Duplicate {string} chart should appear on the page")
+	public void duplicate_chart_block_should_appear_on_the_page(String blockName) {
+		boolean chartIsAdded = blocksPage.duplicatedChartIsVisiable(initialChartCount, blockName);
+		Assertions.assertTrue(chartIsAdded, "Duplicate chart is not added");
 	}
 
-	@When("User can {string} Delete icon on area chart")
+	@When("User can {string} delete icon on area chart")
 	public void user_can_see_Delete_Icon(String action) {
 		boolean canSeeDelete = blocksPage.canSeeDeleteIcon();
 		if (action.equalsIgnoreCase("view")) {
@@ -409,16 +410,16 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-	@And("User Click on Delete Icon")
-	public void user_Click_On_Delete_Icon() {
-		initialChartCount = blocksPage.getInitialCount();
+	@And("User click on {string} chart delete icon")
+	public void user_click_on_chart_Delete_Icon(String blockName) {
+		initialChartCount = blocksPage.getInitialCount(blockName);
 		blocksPage.clickOnDeleteIcon();
 	}
 
-	@And("Area Chart should be Remove from the page")
-	public void area_Chart_Is_Removed() {
-		boolean chartIsRemoved = blocksPage.areaChartIsRemoved(initialChartCount);
-		Assertions.assertTrue(chartIsRemoved, "Expected : Area Chart is not removed after Delete");
+	@And("Duplicate {string} chart should be remove from the page")
+	public void duplicate_chart_should_be_remove_from_the_page(String chartName) {
+		boolean chartIsRemoved = blocksPage.chartIsRemoved(initialChartCount, chartName);
+		Assertions.assertTrue(chartIsRemoved, "Expected :Chart is not removed after Delete");
 	}
 
 	@And("User hovers over the Duplicate icon")
@@ -443,7 +444,7 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(actual, "Hover Message is Not Match with expedted: ");
 	}
 
-	@And("User Clicks on Duplicate Icon {int} times")
+	@And("User clicks on Duplicate Icon {int} times")
 	public void user_Click_DuplicateIcon_Multiple_Times(int count) {
 		blocksPage.clickOnDuplicateIconMultipleTimes(count);
 	}

@@ -1,6 +1,5 @@
 @LoginWithAuthor @DeleteCreatedTestApp
-Feature: Create App setting for Editor permission
-  Adding LLm to the Catlog
+Feature: App setting for Editor permission
 
   Background: Create Drag and Drop app and navigate to Setting Page
     Given User is on Home page

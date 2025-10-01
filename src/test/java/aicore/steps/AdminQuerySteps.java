@@ -92,6 +92,11 @@ public class AdminQuerySteps {
 		}
 	}
 
+	@And("User Delete the created Model")
+	public void user_delete_created_model() {
+		modelPage.deleteCreatedModel();
+	}
+
 	@Given("User created {string} jobs with the job name {string}, Pixel {string}")
 	public void user_created_jobs_with_the_job_name_pixel(String jobCount, String jobName, String pixel) {
 		for (int i = 1; i <= Integer.parseInt(jobCount); i++) {

@@ -119,7 +119,8 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Then("User can see vector database created success toast message as {string}")
 	public void User_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
-		vectorPage.verifyToastMessage(expectedToastMessage);
+		String actualMessage = vectorPage.verifyToastMessage();
+		Assertions.assertEquals(expectedToastMessage, actualMessage, "catalog is not created successfully");
 	}
 
 	@Then("User can see the Vector title as {string}")
@@ -197,7 +198,8 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Then("User sees deleted Vector success toast message {string}")
 	public void user_sees_deleted_Vector_success_toast_message(String toastMessage) {
-		vectorPage.verifyToastMessage(toastMessage);
+		String actualMessage = vectorPage.verifyToastMessage();
+		Assertions.assertEquals(toastMessage, actualMessage, "catalog is deleted successfully");
 	}
 
 	@And("User clicks on Usage tab for Vector DB")

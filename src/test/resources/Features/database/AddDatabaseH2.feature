@@ -12,6 +12,7 @@ Feature: Add H2 Database
     And User add 'sa' as Username
     And User add 'H2' as JDBC URL for 'h2' database
     And User clicks on Create Database button
+    And User clicks On Copy Catalog ID
     And User clicks on apply button
     And User clicks on apply database button
     Then User can see the database title as 'H2'
@@ -22,4 +23,3 @@ Feature: Add H2 Database
     And User clicks on Open Database
     And User searches the 'H2' in the database Catalog searchbox
     And User clicks on the database name 'H2' in  database catalog
-    And User clicks On Copy Catalog ID

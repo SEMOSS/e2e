@@ -66,7 +66,9 @@ public class TeamPermissionsSettingSteps {
 
 	@Then("User can see the new member {string} added in the team member list")
 	public void user_can_see_the_new_member_added_in_the_team_member_list(String member) {
-		teamPermissionsSettings.checkMemberInList(member);
+		boolean isMemberPresent = teamPermissionsSettings.checkMemberInList(member);
+		Assertions.assertTrue(isMemberPresent, "Member is not present in the team member list.");
+		// teamPermissionsSettings.checkMemberInList(member);
 	}
 
 	@Then("User can see team name as {string} in the list")
