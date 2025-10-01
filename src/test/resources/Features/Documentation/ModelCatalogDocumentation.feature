@@ -59,7 +59,7 @@ Feature: Model Documentation
     And User captures screenshot for "Model Catalog"
     And User click on Created Model
     And User click on 'Usage' tab
-    And User captures screenshot for "Model Usage"
+    And User captures a 'tab' and highlights the 'Usage'
     And User captures a 'copyid' and highlights the 'copy Model ID'
     And User Delete the created Model
     And User completes screenshot capture and triggers comparison for 'Model Catalog'
