@@ -1,7 +1,6 @@
-@LoginWithAuthor @BLOCKED_BY_UI
+@LoginWithAuthor
 Feature: App setting for Author permission
 
-  ### bug- https://github.com/SEMOSS/community/issues/407 ###
   Background: Create Drag and Drop app and navigate to Setting Page
     Given User opens Main Menu
     And User is on Home page

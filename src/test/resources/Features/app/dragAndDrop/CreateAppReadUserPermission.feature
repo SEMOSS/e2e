@@ -1,7 +1,6 @@
-@LoginWithAuthor @DeleteCreatedTestApp @BLOCKED_BY_UI
+@LoginWithAuthor @DeleteCreatedTestApp
 Feature: App setting for Read permission
 
-  ### bug- https://github.com/SEMOSS/community/issues/407 ###
   Background: Create Drag and Drop app and navigate to Setting Page
     Given User is on Home page
     And User opens Main Menu

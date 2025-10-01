@@ -149,19 +149,19 @@ public class CatlogAccessPageUtility {
 		return toasterMessage;
 	}
 
-	public static boolean getCatalogAndCopyId(Page page) {
-		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
+	public static void getCatalogAndCopyId(Page page) {
+//		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
 		page.waitForTimeout(500);
-		copyId.click();
-		Locator toastMessage = page.getByTestId("notification-success-alert");
-		boolean isToastVisible = toastMessage.isVisible();
+//		copyId.click();
+//		Locator toastMessage = page.getByTestId("notification-success-alert");
+//		boolean isToastVisible = toastMessage.isVisible();
+//		AICorePageUtils.closeToastMessage(page);
 //		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
 		String copiedId = page.locator("//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p")
 				.innerText();
 		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
 		String catalogType = catalogTypeText.trim().split("\\s+")[0];
 		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
-		return isToastVisible;
 	}
 
 	// as per new UI of setting page

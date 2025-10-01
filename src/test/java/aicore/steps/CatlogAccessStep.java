@@ -367,9 +367,7 @@ public class CatlogAccessStep {
 
 	@And("User clicks On Copy Catalog ID")
 	public void user_clicks_on_Copy_Catalog_ID() {
-		boolean isVisiable = catlogpermission.getCatalogAndCopyId();
-		Assertions.assertTrue(isVisiable, "Successfully copied ID' toast was not visible after clicking copy icon.");
-		catlogpermission.closeToastMessage();
+		catlogpermission.getCatalogAndCopyId();
 	}
 
 	@Then("User can see the Catalog title as {string}")

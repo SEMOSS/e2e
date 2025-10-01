@@ -83,8 +83,8 @@ public class AddModelPage {
 		return ModelPageUtils.modelCreationToastMessage(page);
 	}
 
-	public void waitForModelCreationToastMessageDisappear() {
-		ModelPageUtils.waitForModelCreationToastMessageDisappear(page);
+	public void closeModelCreationToastMessage() {
+		ModelPageUtils.closeModelCreationToastMessage(page);
 	}
 
 	public String verifyModelTitle(String modelTitle) {
