@@ -1,8 +1,7 @@
-@LoginWithAuthor
-@DeleteCreatedTestApp
-Feature: Create App setting for Read permission
-  Adding LLm to the Catlog
+@LoginWithAuthor @DeleteCreatedTestApp @BLOCKED_BY_UI
+Feature: App setting for Read permission
 
+  ### bug- https://github.com/SEMOSS/community/issues/407 ###
   Background: Create Drag and Drop app and navigate to Setting Page
     Given User is on Home page
     And User opens Main Menu
@@ -25,7 +24,7 @@ Feature: Create App setting for Read permission
 
   Scenario: Create APP - Read Only user - Edit button is disable
     And 'Read' user Edit option should be 'Disable'
-    And  User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    And User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User opens Main Menu
     And User logs out from the application
     And User login as 'Admin'
@@ -45,4 +44,3 @@ Feature: Create App setting for Read permission
     And 'Read' user Private toggle should be 'Disable'
     And 'Read' user Non-Discoverable toggle should be 'Disable'
     And 'Read' user can 'not view' Delete Model option
-   

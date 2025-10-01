@@ -1,7 +1,7 @@
-@LoginWithAuthor
-Feature: Create App setting for Author permission
-  Adding LLm to the Catlog
+@LoginWithAuthor @BLOCKED_BY_UI
+Feature: App setting for Author permission
 
+  ### bug- https://github.com/SEMOSS/community/issues/407 ###
   Background: Create Drag and Drop app and navigate to Setting Page
     Given User opens Main Menu
     When User is on Home page
@@ -13,12 +13,12 @@ Feature: Create App setting for Author permission
     And User fetch the app name for drag and drop app
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User click on Settings
-    
+
   @DeleteCreatedTestApp
   Scenario: Create App - Author user - View Member, Pending Request, Data Apps, Export option
     Then 'Author' user can 'view' Settings
     And 'Author' user can 'view' Member
-   	And 'Author' user can 'view' Pending Requests
+    And 'Author' user can 'view' Pending Requests
     And 'Author' user can 'view' Data Apps
     And 'Author' user can 'view' Export Icon
 

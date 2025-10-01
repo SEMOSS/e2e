@@ -1,7 +1,8 @@
 Feature: Vector Catalog documentation
-
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
-  Scenario: Create a Vector 
+  ## Embede file upload fails bug- https://github.com/SEMOSS/semoss-ui/issues/1950 ###
+  
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE
+  Scenario: Create a Vector
     Given User captures documentation screenshot for 'Vector Catalog'
     When User is on Home page
     And User opens Main Menu
@@ -14,7 +15,7 @@ Feature: Vector Catalog documentation
     And User can see the Catalog title as 'TextEmbeddings BAAI-Large-En-V1.5'
     And User clicks On Copy Catalog ID
     When User opens Main Menu
-    And User captures a 'button' and highlights the 'Vector' 
+    And User captures a 'button' and highlights the 'Vector'
     And User clicks on Open Vector
     And User captures a 'button' and highlights the 'Add Vector'
     When User clicks on Add Vector button
@@ -25,7 +26,7 @@ Feature: Vector Catalog documentation
     And User selects 'Token' from Chunking Strategy field
     And User enters value of Content Length as '510'
     And User enters value of Content Overlap as '17'
-    And User captures a 'button' and highlights the 'Create vector' 
+    And User captures a 'button' and highlights the 'Create vector'
     And User clicks on Create Vector button
     And User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User clicks On Copy Catalog ID
@@ -33,7 +34,7 @@ Feature: Vector Catalog documentation
     And User captures a 'button' and highlights the 'Edit'
     And User clicks on Usage tab
     And User captures a 'tab' and highlights the 'Usage'
-    When User clicks on 'Edit' button 
+    When User clicks on 'Edit' button
     And User captures screenshot for form "Edit Options"
     And User clicks on 'Close' button
     And User clicks on Access Control Tab
@@ -42,7 +43,7 @@ Feature: Vector Catalog documentation
     And User clicks Make 'Vector' Discoverable button
     And User logs out from the application
     And User login as 'editor'
-    And User opens Main Menu    
+    And User opens Main Menu
     And User clicks on Open Vector
     And User clicks on Discoverable Vectors button
     And User searches the 'FAISS Vector DB01' in the Vector Catalog searchbox
@@ -54,7 +55,7 @@ Feature: Vector Catalog documentation
     And User clicks on Request button
     And User logs out from the application
     And User login as 'admin'
-    And User opens Main Menu    
+    And User opens Main Menu
     And User clicks on Open Vector
     And User searches the 'FAISS Vector DB01' in the Vector Catalog searchbox
     And User selects the 'FAISS Vector DB01' from the Vector catalog

@@ -1,8 +1,7 @@
-@LoginWithAuthor
-@DeleteCreatedTestApp
-Feature: Create App setting for Editor permission
-  Adding LLm to the Catlog
+@LoginWithAuthor @DeleteCreatedTestApp @BLOCKED_BY_UI
+Feature: App setting for Editor permission
 
+  ### bug- https://github.com/SEMOSS/community/issues/407 ###
   Background: Create Drag and Drop app and navigate to Setting Page
     Given User is on Home page
     And User opens Main Menu
