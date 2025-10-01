@@ -157,7 +157,9 @@ public class CatlogAccessPageUtility {
 		copyId.click();
 		Locator toastMessage = page.getByTestId("notification-success-alert");
 		boolean isToastVisible = toastMessage.isVisible();
-		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+//		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+		String copiedId = page.locator("//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p")
+				.innerText();
 		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
 		String catalogType = catalogTypeText.trim().split("\\s+")[0];
 		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
