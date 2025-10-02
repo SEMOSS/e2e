@@ -140,19 +140,19 @@ public class CatlogAccessStep {
 	}
 
 	@Then("{string} user {string} Delete Catalog")
-	public void user_Delete_Model(String userRole, String expectedOutcome) {
+	public void user_Delete_Catalog(String userRole, String expectedOutcome) {
 		// Perform delete action
 		openModelPage.clickOnDeleteButton();
 		if ("can".equalsIgnoreCase(expectedOutcome)) {
 			// Verify only success message appears
 			Assertions.assertTrue(openModelPage.isDeleteSuccessful(),
-					userRole + " should be able to delete the model, but permission error appeared.");
-			System.out.println(userRole + " successfully deleted the model.");
+					userRole + " should be able to delete the catalog, but permission error appeared.");
+			System.out.println(userRole + " successfully deleted the catalog.");
 		} else if ("can not".equalsIgnoreCase(expectedOutcome)) {
 			// Verify only permission error appears
 			Assertions.assertTrue(openModelPage.isPermissionErrorDisplayed(),
-					userRole + " should not be able to delete the model, but success message appeared.");
-			System.out.println(userRole + " does not have permission to delete the model.");
+					userRole + " should not be able to delete the catalog, but success message appeared.");
+			System.out.println(userRole + " does not have permission to delete the catalog.");
 		} else {
 			throw new IllegalArgumentException("Invalid expected outcome: " + expectedOutcome);
 		}
@@ -422,4 +422,5 @@ public class CatlogAccessStep {
 			Assertions.fail("Invalid action: " + action);
 		}
 	}
+
 }

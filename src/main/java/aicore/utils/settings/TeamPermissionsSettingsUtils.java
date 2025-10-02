@@ -68,7 +68,6 @@ public class TeamPermissionsSettingsUtils {
 		Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", username));
 		AICorePageUtils.waitFor(listMember);
 		listMember.click();
-
 	}
 
 	public static void validateToastMessage(Page page, String expectedMessage) {
@@ -94,10 +93,6 @@ public class TeamPermissionsSettingsUtils {
 	public static boolean checkMemberInList(Page page, String member) {
 		Locator memberCard = page.locator(MEMBER_XPATH.replace("{member}", member));
 		return memberCard.isVisible();
-		// if (!memberCard.isVisible()) {
-		// throw new AssertionError("Expected " + member + " not present in the list:
-		// ");
-		// }
 	}
 
 	public static String verifyName(Page page, String name) {

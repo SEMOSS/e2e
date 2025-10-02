@@ -92,6 +92,7 @@ public class TeamPermissionsSettingsPage {
 	public void userClickOnDeleteIcon(String icon, String member) {
 		TeamPermissionsSettingsUtils.userClickOnDeleteIcon(page, icon, member);
 	}
+
 	public void userClickOnDeleteConfirmButton(String button) {
 		TeamPermissionsSettingsUtils.userClickOnDeleteConfirmButton(page, button);
 	}
@@ -99,12 +100,14 @@ public class TeamPermissionsSettingsPage {
 	public void selectMultipleMembersFromList(String member1, String member2) {
 		TeamPermissionsSettingsUtils.selectMultipleMembersFromList(page, member1, member2);
 	}
+
 	public void userSelectAllMember() {
 		TeamPermissionsSettingsUtils.userSelectAllMember(page);
 	}
 	public void userClickOnOption(String option) {
 		TeamPermissionsSettingsUtils.userClickOnOption(page, option);
 	}
+
 	public void userSearchMemberName(String member) {
 		TeamPermissionsSettingsUtils.userSearchMemberName(page, member);
 	}
