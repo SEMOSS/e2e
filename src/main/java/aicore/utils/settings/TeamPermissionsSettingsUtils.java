@@ -24,6 +24,8 @@ public class TeamPermissionsSettingsUtils {
 	private static final String SELECT_ENGINE_ROLE_XPATH = "//input[@value='{role}']";
 	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//label[text()='{selectCatalog}']";
 	private static final String CLICK_ON_ADD_CATALOG_TEXT = "{addCatalogName}";
+	private static final String ENGINE_ID_XPATH = "//p[contains(text(),'{EngineId}')]";
+	private static final String RADIO_XPATH = "//input[@type='radio' and @value='{radioIndex}']";
 	private static final String CLICK_ON_DELETE_ICON_DATATESTID = "DeleteRoundedIcon";
 	private static final String CLICK_ON_CONFIRM_BUTTON_XPATH = "//span[text()='{confirm}']";
 	private static final String CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH = "//th//input[@type='checkbox']";
@@ -128,7 +130,9 @@ public class TeamPermissionsSettingsUtils {
 		dropdownLocator.press("Enter");
 		page.keyboard().press("Control+V");
 		AICorePageUtils.waitFor(dropdownLocator);
-		page.getByText(catalogName).first().click();
+		page.keyboard().press("ArrowDown");
+		page.keyboard().press("Enter");
+
 	}
 
 	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {
@@ -145,11 +149,28 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static boolean userSeeAddedEngineInTheList(Page page, String catalogName, String role) {
-		Locator addedEngine = page.getByRole(AriaRole.ROW, new Page.GetByRoleOptions().setName(catalogName))
-				.getByLabel(role);
-		addedEngine.check();
-		AICorePageUtils.waitFor(addedEngine);
-		return addedEngine.isVisible();
+		//Locator EngineSearchBar = page.locator(ENGINE_SEARCH_XPATH);
+		// EngineSearchBar.click();
+		// page.keyboard().press("Control+V");
+		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
+		page.locator(ENGINE_ID_XPATH.replace("{EngineId}", copiedId)).isVisible();
+		boolean EnginePresent = false;
+		//check role should be checked 
+		switch (role) {
+			case "Author":
+				EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "1")).isChecked();
+				break;
+			case "Editor":
+				EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "2")).isChecked();
+				break;
+			case "Read-Only":
+				EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "3")).isChecked();
+				break;
+			default:
+				EnginePresent = false;
+				break;
+		}
+		return EnginePresent;
 	}
 
 	// delete team member

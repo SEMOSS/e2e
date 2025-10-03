@@ -8,8 +8,8 @@ Feature: View existing functions on Function Catalog Page
     Then User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    And User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks On Copy Catalog ID
+    And User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'

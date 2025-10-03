@@ -19,8 +19,8 @@ Feature: Add Function
     And User enters Function description as '<functionDescription>'
     And User sees Create Function button
     And User clicks on Create Function button
-    And User sees success toast message '<Toast_message>'
     And User clicks On Copy Catalog ID
+    And User sees success toast message '<Toast_message>'
    
     Examples: 
       | functionType | catalogName             | url                                   | httpMethod | postBodyMessage | headers                | functionParameters                                                                                                                                                                                | functionRequiredParameters | functionName    | functionDescription                              | functionTitle | Create_Funtion  | Toast_message                          | required_fields                                                                                                                                                             |
