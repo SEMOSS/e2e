@@ -7,13 +7,13 @@ Feature: Add Function From Zip
     And User selects function 'ZIP'
     And User uploads function file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
+    And User clicks On Copy Catalog ID
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'WeatherFunctionTest'
 
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate Change access popup
     Given User can see the Catalog title as 'WeatherFunctionTest'
-    And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -38,7 +38,6 @@ Feature: Add Function From Zip
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: Validate change access request
     Given User can see the Catalog title as 'WeatherFunctionTest'
-    And User clicks On Copy Catalog ID
     When 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
