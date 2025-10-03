@@ -1,6 +1,6 @@
 Feature: Storage Catalog Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Storage Catalog Documentation
     Given User captures documentation screenshot for 'Storage Catalog'
     When User opens Main Menu

@@ -1,3 +1,4 @@
+@Regression
 Feature: View existing functions on Function Catalog Page
 
   Background: Create Function using ZIP file

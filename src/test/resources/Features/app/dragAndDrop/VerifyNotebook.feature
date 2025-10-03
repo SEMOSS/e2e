@@ -1,4 +1,4 @@
-@DeleteCreatedTestApp
+@DeleteCreatedTestApp @Regression
 Feature: Verify Notebook Output
 
   Background: Create Drag and Drop App

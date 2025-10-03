@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Database
 
   Background: Create Database using ZIP file
@@ -11,7 +12,7 @@ Feature: Add Database
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Smoke
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
     And User clicks on Open Database

@@ -1,8 +1,9 @@
-@LoginWithAdmin
+
+@LoginWithAdmin @Regression
 Feature: Team Permissions - add User
 
   Background: Team Permissions - Add team
-    Given User opens Main Menu
+   Given User opens Main Menu
     When User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Member Settings' Card

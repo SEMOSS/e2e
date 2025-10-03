@@ -1,3 +1,4 @@
+@Regression
 Feature: View existing Storages on storage Catalog Page
 
   Background: Add Amazon S3 Storage

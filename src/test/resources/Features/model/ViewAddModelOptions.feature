@@ -1,3 +1,4 @@
+@Regression
 Feature: Available Models and Their Groupings
 
   Scenario: Verify the available models and their specific groupings

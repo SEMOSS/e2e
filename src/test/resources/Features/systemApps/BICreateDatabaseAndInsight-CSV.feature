@@ -1,3 +1,4 @@
+@Regression
 Feature: Create Database and Insight to BI System app- CSV
   I want to use this feature file for all the scenarios related to Create Database and Insight via CSV
 

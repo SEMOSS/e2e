@@ -1,4 +1,4 @@
-@DeleteTestCatalog @DeleteCreatedTestApp
+@DeleteTestCatalog @DeleteCreatedTestApp @Regression
 Feature: Create Notebook and execute it
 
   Background: Create database and notebook

@@ -1,4 +1,4 @@
-@DeleteTestCatalog @DeleteCreatedTestApp
+@DeleteTestCatalog @DeleteCreatedTestApp @Regression
 Feature: Create Notebook and Validate Import Query
 
   Background: Create Drag and Drop app and Notebook

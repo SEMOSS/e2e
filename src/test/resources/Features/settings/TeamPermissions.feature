@@ -1,3 +1,4 @@
+@Regression
 Feature: Team Permissions
 
   @LoginWithAdmin

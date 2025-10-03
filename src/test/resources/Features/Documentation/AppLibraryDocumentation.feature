@@ -1,6 +1,6 @@
 Feature: App Library Documentation
 
-@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp
+@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
   Scenario: Create Drag and Drop app
     Given User captures documentation screenshot for 'App Library'
     When User opens Main Menu

@@ -1,4 +1,4 @@
-@LoginWithAuthor
+@LoginWithAuthor @Regression
 Feature: Database Catalog permissions for Author
   Adding LLm to the Catlog
 

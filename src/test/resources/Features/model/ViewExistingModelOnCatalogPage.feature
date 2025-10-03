@@ -1,3 +1,4 @@
+@Regression
 Feature: View existing models in model Catalog
 
   Background: Create a Model - GPT-3.5

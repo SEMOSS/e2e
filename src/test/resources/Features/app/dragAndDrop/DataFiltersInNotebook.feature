@@ -1,3 +1,4 @@
+@Regression
 Feature: Create drag and drop app And verify Data filters in the app
 
   Background: Create Drag and Drop app

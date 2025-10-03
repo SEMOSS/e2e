@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Function From Zip
 
   Background: Create Function using ZIP file
@@ -57,7 +58,7 @@ Feature: Add Function From Zip
     And User login as "Admin"
    
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Smoke
   Scenario Outline: Delete Function
     Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Access Control Tab

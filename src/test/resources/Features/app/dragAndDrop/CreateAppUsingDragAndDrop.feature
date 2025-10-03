@@ -1,4 +1,4 @@
-@DeleteCreatedTestApp
+@DeleteCreatedTestApp @Regression
 Feature: Create drag and drop app
 
   Background: Create Drag and Drop app and navigate to Blocks option

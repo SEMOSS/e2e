@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
 

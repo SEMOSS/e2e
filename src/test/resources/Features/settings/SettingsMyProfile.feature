@@ -1,3 +1,4 @@
+@Regression
 Feature: Settings My Profile
 
   Scenario: Settings - My Profile Page

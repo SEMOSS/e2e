@@ -1,3 +1,4 @@
+@Regression
 Feature: verify the Terminal command
 
   ## Terminal system app is not accessible in the local environment ###

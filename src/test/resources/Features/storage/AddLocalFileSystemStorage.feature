@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Local File System Storage
 
   Background: Add Local File System Storage

@@ -1,3 +1,4 @@
+@Regression @Smoke
 Feature: Register new user
 
   Scenario: Register new user and login with created user

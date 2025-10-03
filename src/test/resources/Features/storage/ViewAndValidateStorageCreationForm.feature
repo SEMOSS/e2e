@@ -1,3 +1,4 @@
+@Regression
 Feature: Validate storage creation form
 
 @LoginWithAdmin

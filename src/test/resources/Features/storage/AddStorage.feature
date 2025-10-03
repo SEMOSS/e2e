@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Storage
   I want to use this feature file for all scenarios related to the Add Storage
 

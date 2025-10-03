@@ -1,7 +1,7 @@
 Feature: Vector Catalog documentation
   ## Embede file upload fails bug- https://github.com/SEMOSS/semoss-ui/issues/1950 ###
   
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE @Documentation
   Scenario: Create a Vector
     Given User captures documentation screenshot for 'Vector Catalog'
     When User is on Home page

@@ -1,4 +1,4 @@
-@LoginWithAdmin
+@LoginWithAdmin @Regression
 Feature: Validate the Build Page
 
   Scenario: Validate Build page title and buttons
