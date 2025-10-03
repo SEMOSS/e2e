@@ -96,4 +96,4 @@ Feature: Model Catalog Permission - Editor
     And User searches the 'Catalog' in the model catalog searchbox
     And User selects the 'Catalog' from the model catalog
     And 'Author' user clicks on Access Control
-    Then 'Author' user 'can' Delete Model
+    Then 'Author' user 'can' Delete Catalog

@@ -51,14 +51,14 @@ Feature: Drag and Drop Data Grid
     And User clicks on the 'Data Grid' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User clicks on the Sync icon
     And User can see the Data Grid column names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
     And User remove the 'Age' column from the Data Grid
     And User clicks on the Sync icon
     And User should not see the 'Age' column in the Data Grid
    
-  @LoginWithAdmin 
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: validate the pagination on the Data Grid
     When User clicks on 'page-1' page
     And User clicks on Blocks
@@ -66,7 +66,7 @@ Feature: Drag and Drop Data Grid
     And User clicks on the 'Data Grid' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User clicks on the Sync icon
     Then User validates pagination for the following rows per page options
       |  10 |

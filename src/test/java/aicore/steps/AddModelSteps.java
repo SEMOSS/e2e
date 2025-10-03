@@ -86,7 +86,7 @@ public class AddModelSteps {
 	public void user_can_a_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
-		openModelPage.waitForModelCreationToastMessageDisappear();
+		openModelPage.closeModelCreationToastMessage();
 	}
 
 	@Then("User Can see the Model title as {string}")
@@ -338,6 +338,11 @@ public class AddModelSteps {
 	@And("User selects {string} from the model catalog")
 	public void user_selects_text_embeddings_baa_large_en_v1_5_from_the_model_catalog(String modelName) {
 		openModelPage.selectModelFromSearchOptions(modelName);
+	}
+
+	@And("User click on Created Model")
+	public void user_click_on_created_model() {
+		openModelPage.userClickOnCreatedModel();
 	}
 
 }

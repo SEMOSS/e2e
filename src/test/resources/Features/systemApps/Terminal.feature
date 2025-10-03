@@ -1,6 +1,7 @@
 @Regression
 Feature: verify the Terminal command
 
+  ## Terminal system app is not accessible in the local environment ###
   Background: Navigate to Terminal
     Given User is on Home page
     When User opens Main Menu
@@ -8,13 +9,13 @@ Feature: verify the Terminal command
     When User clicks on System app
     And User clicks on Terminal card
 
-  @LoginWithAdmin
+  @LoginWithAdmin @BLOCKED
   Scenario: Run Pixel command in Terminal
     Given User is on Terminal page
     When User run pixel command 'Hello'
     Then User sees 'Pixel' output 'Hello'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @BLOCKED
   Scenario: Run Python command in Terminal
     Given User is on Terminal page
     When User change the language to 'Python'

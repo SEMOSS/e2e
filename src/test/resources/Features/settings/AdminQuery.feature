@@ -37,6 +37,7 @@ Feature: Admin query
     And User clicks on Run button
     Then User can see success toast message as 'Successfully submitted query'
     And User can see table with '<ROW_COUNT>' rows
+    And User Delete the created Model
 
     Examples: 
       | DATABASE_NAME       | QUERY                          | MAX_ROWS | ROW_COUNT | MODEL_COUNT | JOB_COUNT |

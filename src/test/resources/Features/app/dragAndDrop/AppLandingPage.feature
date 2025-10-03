@@ -13,7 +13,7 @@ Feature: App landing page
 
   @DeleteCreatedTestApp
   Scenario: User copies the App Id successfully
-    Given User opens Main Menu
+    Given User opens Main Menu 
     When User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on more vertical icon of 'Test app' app
@@ -48,7 +48,7 @@ Feature: App landing page
     And User clicks on more vertical icon of 'Test app' app
     And User clicks on 'Delete App' option
     And User click on 'Delete' confirmation button
-    Then User can not see 'Test app' app on the page
+    Then User can not see 'Test app' app on the page 
 
   @DeleteCreatedTestApp
   Scenario: Filter apps

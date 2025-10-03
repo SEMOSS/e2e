@@ -8,6 +8,7 @@ Feature: Add Database
     Then User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
+    And User clicks On Copy Catalog ID
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
 
@@ -18,7 +19,6 @@ Feature: Add Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
-    And User clicks On Copy Catalog ID
     When User clicks on Usage tab for Database
     Then User sees an example of "How to use in Javascript" with example code for Database
     And User sees an example of "How to use in Python" with example code for Database
@@ -28,7 +28,6 @@ Feature: Add Database
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Tags
     Given User can see the Catalog title as 'TestDatabase'
-    And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -38,7 +37,6 @@ Feature: Add Database
   @LoginWithAdmin @DeleteTestCatalog
   Scenario: View Database Overview
     Given User can see the Catalog title as 'TestDatabase'
-    And User clicks On Copy Catalog ID
     And User sees the database name as 'TestDatabase'
     And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
@@ -64,7 +62,6 @@ Feature: Add Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
-    And User clicks On Copy Catalog ID
     And User clicks on MetaData tab
     ### Added below 3 steps due to bug- https://github.com/SEMOSS/semoss-ui/issues/1770 ###
     And User clicks on Refresh button

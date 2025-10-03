@@ -83,8 +83,8 @@ public class AddModelPage {
 		return ModelPageUtils.modelCreationToastMessage(page);
 	}
 
-	public void waitForModelCreationToastMessageDisappear() {
-		ModelPageUtils.waitForModelCreationToastMessageDisappear(page);
+	public void closeModelCreationToastMessage() {
+		ModelPageUtils.closeModelCreationToastMessage(page);
 	}
 
 	public String verifyModelTitle(String modelTitle) {
@@ -113,6 +113,10 @@ public class AddModelPage {
 
 	public void createModel(String modelName, String catalogName, String openAIKey, String varName) {
 		ModelPageUtils.createModel(page, modelName, catalogName, openAIKey, varName);
+	}
+
+	public void deleteCreatedModel() {
+		ModelPageUtils.deleteCreatedModels(page);
 	}
 
 	// Edit model
@@ -356,5 +360,10 @@ public class AddModelPage {
 
 	public void clickOnDiscoverableModelsButton() {
 		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
+	}
+
+	public void userClickOnCreatedModel() {
+		ModelPageUtils.userClickOnCreatedModel(page);
+
 	}
 }

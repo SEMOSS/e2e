@@ -17,29 +17,29 @@ Feature: Create App Drag and Drop - Area chart
 
   Scenario: Drag and Drop - Area Chart - Duplicate Icon - Tooltip appears on hover over Duplicate and Delete icons
     Given User drags the 'Area Chart' block and drops it on the page
-    And User Click on the area chart on the page to view options
+    And User clicks on the 'Area Chart' block to select it
     When User hovers over the Duplicate icon
     Then Tooltip with text "Duplicate" should appear
-    And User Click on the area chart on the page to view options
+    And User clicks on the 'Area Chart' block to select it
     When User hovers over the Delete icon
     Then Tooltip with text "Delete" should display
 
   Scenario: Drag and Drop - Area Chart - Duplicate Icon
     Given User drags the 'Area Chart' block and drops it on the page
-    And User Click on the area chart on the page to view options
+    And User clicks on the 'Area Chart' block to select it
     When User can "view" Duplicate icon on area chart
-    And User Click on Duplicate Icon
-    Then Another Area Chart block should appear on the page
+    And User click on 'Area Chart' chart duplicate icon
+    Then Duplicate 'Area Chart' chart should appear on the page
 
   Scenario: Drag and Drop - Area Chart - Duplicate Icon-Duplicate the Area Chart multiple times
     Given User drags the 'Area Chart' block and drops it on the page
-    And User Click on the area chart on the page to view options
-    When User Clicks on Duplicate Icon 3 times
+    And User clicks on the 'Area Chart' block to select it
+    When User clicks on Duplicate Icon 3 times
     Then Total 4 Area Chart blocks should be present on the page
 
   Scenario: Drag and Drop - Area Chart - Delete Icon
     Given User drags the 'Area Chart' block and drops it on the page
-    And User Click on the area chart on the page to view options
-    When User can "view" Delete icon on area chart
-    And User Click on Delete Icon
-    And Area Chart should be Remove from the page
+    And User clicks on the 'Area Chart' block to select it
+    When User can "view" delete icon on area chart
+    And User click on 'Area Chart' chart delete icon
+    And Duplicate 'Area Chart' chart should be remove from the page

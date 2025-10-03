@@ -25,7 +25,7 @@ Feature: Model Documentation
     And User clicks on Usage tab
     And User captures a 'tab' and highlights the 'Usage'
     And User clicks on Usage tab
-  	And User captures a 'tab' and highlights the 'Usage'
+    And User captures a 'tab' and highlights the 'Usage'
     And User clicks on 'Edit' button
     And User captures screenshot for form "Edit Model Options"
     And User clicks on 'Close' button
@@ -33,7 +33,7 @@ Feature: Model Documentation
     And User clicks Make 'Model' Discoverable button
     And User logs out from the application
     And User login as 'editor'
-    And User opens Main Menu    
+    And User opens Main Menu
     When User clicks on Open Model
     And User clicks on Discoverable Models button
     And User captures a 'button' and highlights the 'Discoverable Models'
@@ -47,4 +47,19 @@ Feature: Model Documentation
     And User clicks on Request button
     And User logs out from the application
     And User login as 'admin'
+    And User completes screenshot capture and triggers comparison for 'Model Catalog'
+
+  @LoginWithAdmin @SkipIfVersionMatch
+  Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
+    Given User captures documentation screenshot for 'Model Catalog'
+    And User created '2' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
+    And User created '2' models with the model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123', and variable name 'Var123'
+    When User opens Main Menu
+    And User clicks on Open Model
+    And User captures screenshot for "Model Catalog"
+    And User click on Created Model
+    And User click on 'Usage' tab
+    And User captures a 'tab' and highlights the 'Usage'
+    And User captures a 'copyid' and highlights the 'copy Model ID'
+    And User Delete the created Model
     And User completes screenshot capture and triggers comparison for 'Model Catalog'

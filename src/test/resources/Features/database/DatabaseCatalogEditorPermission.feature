@@ -9,9 +9,9 @@ Feature: Database Catalog permissions for Editor user
     And User selects database 'ZIP'
     And User uploads database file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
+    And User clicks On Copy Catalog ID
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
-    And User clicks On Copy Catalog ID
     Then 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -52,7 +52,7 @@ Feature: Database Catalog permissions for Editor user
     And User deletes the 'Read' user
 
   @DeleteTestCatalog
-  Scenario: Database Catalog - Editor - Delete Model
+  Scenario: Database Catalog - Editor - Delete Database
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox

@@ -1,4 +1,4 @@
-@DeleteTestCatalog @DeleteCreatedTestApp @Regression
+@Regression
 Feature: Create drag and drop app And verify Data filters in the app
 
   Background: Create Drag and Drop app
@@ -49,28 +49,28 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User can see type as 'PY' for 'Python' in JSON
     And User clicks on the Save App icon
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Verify Unfilter Data in the app
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
     And User mouse hover below the existing cell
     And User selects 'Data filters' from the hidden options
     And User selects 'Unfilter Data' from the data filter options
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User deletes the previous cell
     And User clicks on Run cell button
     Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
     And User can see total '20' rows
     And User can see the 'DIABETES_UNIQUE_ROW_ID' column have unique values
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Verify filter Data in the app
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
     And User mouse hover below the existing cell
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
@@ -79,14 +79,14 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with 'Age' equals '30'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Verify filter Data in the app with AND operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
     And User mouse hover below the existing cell
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
@@ -100,14 +100,14 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with "AND" operator for columns "Age, BloodPressure" and values "30,92"
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Verify filter data with OR operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
     And User mouse hover below the existing cell
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
@@ -122,14 +122,14 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with "OR" operator for columns "Age, BloodPressure" and values "30,92"
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Verify Nested Rule filter data with AND operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
     And User mouse hover below the existing cell
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
@@ -148,14 +148,14 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with "AND" operator for columns "Age, BloodPressure, BMI" and values "30,92,37.6"
 
-  @LoginWithAdmin
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
   Scenario: Verify Nested Rule within Nested rule filter data
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
     And User mouse hover below the existing cell
     And User selects 'Data filters' from the hidden options
     And User selects 'Filter Data' from the data filter options
-    And User selects the frame from the Selected Frame dropdown
+    And User selects the frame from the selected frame dropdown
     And User clicks on the 'Add Rule' option
     And User selects 'Age' from the column dropdown
     And User selects 'Equals' from the operator dropdown
