@@ -39,6 +39,10 @@ public class ModelPageUtils {
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String CLICK_ON_CREATED_MODEL_XPATH = "//div[contains(@data-testid,'genericEngineCards')]";
+	private static final String INIT_SCRIPT_DATA_TESTID = "importForm-INIT_MODEL_ENGINE-textField";
+	private static final String GCP_REGION_DATA_TESTID = "importForm-GCP_REGION-textField";
+	private static final String SELECT_TYPE_FOR_MODEL_DATA_TESTID = "importForm-MODEL_TYPE-select";
+	private static final String ENTER_ENDPOINT_DATA_TESTID = "importForm-ENDPOINT-textField";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
@@ -153,6 +157,27 @@ public class ModelPageUtils {
 			}
 		}
 		createdModelIds.clear();
+	}
+
+	// Create all Model Types
+	public static void enterInitScript(Page page, String initScript) {
+		page.getByTestId(INIT_SCRIPT_DATA_TESTID).fill(initScript);
+	}
+
+	public static void enterGCPRegion(Page page, String gcpRegion) {
+		page.getByTestId(GCP_REGION_DATA_TESTID).fill(gcpRegion);
+	}
+
+	public static void selectTypeForModel(Page page, String type) {
+		page.getByTestId(SELECT_TYPE_FOR_MODEL_DATA_TESTID).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(type)).click();
+	}
+	public static void enterEndpoint(Page page, String endpoint) {
+		page.getByTestId(ENTER_ENDPOINT_DATA_TESTID).fill(endpoint);
+	}
+	public static String getAllFieldsInSMSSProperties(Page page,String fieldName) {
+		 String locator = SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName);
+   		 return page.textContent(locator).trim();
 	}
 
 }

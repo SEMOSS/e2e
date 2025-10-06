@@ -345,4 +345,45 @@ public class AddModelSteps {
 		openModelPage.userClickOnCreatedModel();
 	}
 
+	// Create all Model Types
+	@And("User enter Init Script as {string}")
+	public void user_enter_init_script_as(String initScript) {
+		openModelPage.enterInitScript(initScript);
+	}
+
+	@And("User enter GCP Region as {string}")
+	public void user_enter_gcp_region_as(String gcpRegion) {
+		openModelPage.enterGCPRegion(gcpRegion);
+	}
+
+	@And("User select the Type as {string}")
+	public void user_select_the_type_for_model(String type) {
+		openModelPage.selectTypeForModel(type);
+	}
+
+	@And("User enter the Endpoint as {string}")
+	public void user_enter_the_endpoint_as(String endpoint) {
+		openModelPage.enterEndpoint(endpoint);
+	}
+
+	@Then("User can see following fields in SMSS properties")
+	public void user_can_see_following_fields_in_smss_properties(DataTable table) {
+		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("fieldName");
+			String fieldValue = row.get("fieldValue");
+			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName).trim();
+			String actualValue = CommonUtils.splitTrimValue(fullText, fieldName);
+			if (!fieldName.equalsIgnoreCase("OPEN_AI_KEY")) { // adjust sensitive field names as needed
+	            actualValue = actualValue.replaceAll("\\d+$", "");
+	            Assertions.assertEquals(fieldValue, actualValue,
+	                "Field validation failed. Expected value: " + fieldValue + ", but got: " + actualValue);
+	        } else {
+	            // For sensitive fields (passwords, keys) validate that value is masked
+	            Assertions.assertTrue(actualValue.matches("\\*+"),
+	                "Sensitive field " + fieldName + " should be masked, but got: " + actualValue);
+	        }
+		}
+
+	}
 }

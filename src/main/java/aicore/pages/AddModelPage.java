@@ -366,4 +366,21 @@ public class AddModelPage {
 		ModelPageUtils.userClickOnCreatedModel(page);
 
 	}
+	//Create all Model Types
+	public void enterInitScript(String initScript) {
+		ModelPageUtils.enterInitScript(page, initScript + timestamp);
+	}
+	public void enterGCPRegion(String gcpRegion) {
+		ModelPageUtils.enterGCPRegion(page, gcpRegion + timestamp);
+	}	
+	public void selectTypeForModel(String type) {
+		ModelPageUtils.selectTypeForModel(page, type);
+	}
+	public void enterEndpoint(String endpoint) {
+		ModelPageUtils.enterEndpoint(page, endpoint + timestamp);
+	}
+	public String getAllFieldsInSMSSProperties(String fieldName) {
+		return ModelPageUtils.getAllFieldsInSMSSProperties(page, fieldName);
+	}
+	
 }
