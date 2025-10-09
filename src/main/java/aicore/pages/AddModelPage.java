@@ -366,21 +366,40 @@ public class AddModelPage {
 		ModelPageUtils.userClickOnCreatedModel(page);
 
 	}
-	//Create all Model Types
+
+	// Create all Model Types
 	public void enterInitScript(String initScript) {
-		ModelPageUtils.enterInitScript(page, initScript + timestamp);
+		ModelPageUtils.enterInitScript(page, initScript);
 	}
+
 	public void enterGCPRegion(String gcpRegion) {
-		ModelPageUtils.enterGCPRegion(page, gcpRegion + timestamp);
-	}	
+		ModelPageUtils.enterGCPRegion(page, gcpRegion);
+	}
+
 	public void selectTypeForModel(String type) {
 		ModelPageUtils.selectTypeForModel(page, type);
 	}
+
 	public void enterEndpoint(String endpoint) {
-		ModelPageUtils.enterEndpoint(page, endpoint + timestamp);
+		ModelPageUtils.enterEndpoint(page, endpoint);
 	}
+
 	public String getAllFieldsInSMSSProperties(String fieldName) {
 		return ModelPageUtils.getAllFieldsInSMSSProperties(page, fieldName);
 	}
-	
+
+	public void enterDeploymentName(String deploymentName) {
+		ModelPageUtils.enterDeploymentName(page, deploymentName);
+	}
+
+	public void enterVersion(String version) {
+		ModelPageUtils.enterTheVersion(page, version);
+	}
+	public boolean areMandatoryFieldFilled(List<String> fieldNames) {
+		return ModelPageUtils.areMandatoryFieldFilled(page, fieldNames);
+	}
+	public boolean isSubmitButtonEnabled() {
+		return ModelPageUtils.isSubmitButtonEnabled(page);	
+	}
+
 }

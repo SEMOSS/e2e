@@ -366,24 +366,80 @@ public class AddModelSteps {
 		openModelPage.enterEndpoint(endpoint);
 	}
 
+	// new
 	@Then("User can see following fields in SMSS properties")
 	public void user_can_see_following_fields_in_smss_properties(DataTable table) {
 		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
+
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("fieldName");
-			String fieldValue = row.get("fieldValue");
-			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName).trim();
-			String actualValue = CommonUtils.splitTrimValue(fullText, fieldName);
-			if (!fieldName.equalsIgnoreCase("OPEN_AI_KEY")) { // adjust sensitive field names as needed
-	            actualValue = actualValue.replaceAll("\\d+$", "");
-	            Assertions.assertEquals(fieldValue, actualValue,
-	                "Field validation failed. Expected value: " + fieldValue + ", but got: " + actualValue);
-	        } else {
-	            // For sensitive fields (passwords, keys) validate that value is masked
-	            Assertions.assertTrue(actualValue.matches("\\*+"),
-	                "Sensitive field " + fieldName + " should be masked, but got: " + actualValue);
-	        }
+			String expectedValue = row.get("fieldValue");
+
+			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
+
+			if (fullText == null || fullText.trim().isEmpty()) {
+				Assertions.fail("No text found for field: " + fieldName);
+			}
+
+			// Normalize spaces
+			fullText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
+
+			String actualValue;
+
+			// Instead of blindly removing field name, split on first space
+			if (fullText.toUpperCase().startsWith(fieldName.toUpperCase())) {
+				int firstSpaceIndex = fullText.indexOf(' ');
+				if (firstSpaceIndex != -1 && firstSpaceIndex + 1 < fullText.length()) {
+					actualValue = fullText.substring(firstSpaceIndex + 1).trim();
+				} else {
+					actualValue = "";
+				}
+			} else {
+				actualValue = fullText;
+			}
+
+			// Remove trailing digits for NAME
+			if (fieldName.equalsIgnoreCase("NAME")) {
+				actualValue = actualValue.replaceAll("\\d+$", "");
+			}
+
+			// Masked field
+			if (fieldName.equalsIgnoreCase("OPEN_AI_KEY")) {
+				Assertions.assertTrue(actualValue.matches("\\*+"),
+						"Sensitive field " + fieldName + " should be masked, but got: '" + actualValue + "'");
+			} else {
+				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName
+						+ "'. Expected: '" + expectedValue + "', but got: '" + actualValue + "'");
+			}
 		}
+	}
+
+	@And("User enter the Deployment Name as {string}")
+	public void user_enter_the_deployment_name_as(String deploymentName) {
+		openModelPage.enterDeploymentName(deploymentName);
+	}
+
+	@And("User enter the tag as {string}")
+	public void user_enter_the_tag_as(String tagName) {
+		openModelPage.enterTagName(tagName);
+	}
+
+	@And("User enter the Version as {string}")
+	public void user_enter_the_version_as(String version) {
+		openModelPage.enterVersion(version);
+	}
+
+	@Then("User can enable Submit button after filling mandatory fields for {string} model")
+	public void user_can_enable_submit_button_after_filling_mandatory_fields_for_model(String modelType,
+			DataTable table) {
+		List<String> mandatoryFields = table.asList(String.class);
+		boolean allFilled = openModelPage.areMandatoryFieldFilled(mandatoryFields);
+		boolean isSubmitButtonEnabled = openModelPage.isSubmitButtonEnabled();
+
+		Assertions.assertEquals(allFilled, isSubmitButtonEnabled,
+				"Submit button enable state mismatch. Expected enabled: " + allFilled + ", Actual: "
+						+ isSubmitButtonEnabled);
 
 	}
+
 }

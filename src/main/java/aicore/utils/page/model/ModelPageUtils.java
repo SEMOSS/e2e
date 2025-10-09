@@ -43,6 +43,11 @@ public class ModelPageUtils {
 	private static final String GCP_REGION_DATA_TESTID = "importForm-GCP_REGION-textField";
 	private static final String SELECT_TYPE_FOR_MODEL_DATA_TESTID = "importForm-MODEL_TYPE-select";
 	private static final String ENTER_ENDPOINT_DATA_TESTID = "importForm-ENDPOINT-textField";
+	private static final String ENTER_DEPLOYMENT_NAME_DATA_TESTID = "importForm-MODEL-textField";
+	private static final String ENTER_THE_VERSION_DATA_TESTID = "importForm-API_VERSION-textField";
+	private static final String MANDATORY_FIELD_TEXT_DATA_TESTID = "importForm-{fieldName}-textField";
+	private static final String MANDATORY_FIELD_SELECT_DATA_TESTID = "importForm-{fieldName}-select";
+	private static final String SUBMIT_BUTTON_DATA_TESTID = "importForm-submit-btn";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
@@ -172,12 +177,82 @@ public class ModelPageUtils {
 		page.getByTestId(SELECT_TYPE_FOR_MODEL_DATA_TESTID).click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(type)).click();
 	}
+
 	public static void enterEndpoint(Page page, String endpoint) {
 		page.getByTestId(ENTER_ENDPOINT_DATA_TESTID).fill(endpoint);
 	}
-	public static String getAllFieldsInSMSSProperties(Page page,String fieldName) {
-		 String locator = SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName);
-   		 return page.textContent(locator).trim();
+
+	public static String getAllFieldsInSMSSProperties(Page page, String fieldName) {
+		String locator = SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName);
+		return page.textContent(locator).trim();
+	}
+
+	public static void enterDeploymentName(Page page, String deploymentName) {
+		page.getByTestId(ENTER_DEPLOYMENT_NAME_DATA_TESTID).fill(deploymentName);
+	}
+
+	public static void enterTheVersion(Page page, String version) {
+		page.getByTestId(ENTER_THE_VERSION_DATA_TESTID).fill(version);
+	}
+
+	public static boolean areMandatoryFieldFilled(Page page, List<String> fieldNames) {
+		// for (String fieldName : fieldNames){
+		// String
+		// textLocator=page.getByTestId(MANDATORY_FIELD_TEXT_DATA_TESTID.replace("{fieldName}",
+		// fieldName)).textContent().trim();
+		// String
+		// selectLocator=page.getByTestId(MANDATORY_FIELD_SELECT_DATA_TESTID.replace("{fieldName}",
+		// fieldName)).textContent().trim();
+		// if (textLocator.isEmpty() && selectLocator.isEmpty()) {
+		// return false;
+		// }
+		// }
+		// return true;
+		for (String fieldName : fieldNames) {
+			String type;
+			switch (fieldName) {
+			case "NAME":
+			case "OPEN_AI_KEY":
+			case "VAR_NAME":
+			case "INIT_MODEL_ENGINE":
+			case "MAX_TOKENS":
+			case "MAX_INPUT_TOKENS":
+				type = "text";
+				break;
+
+			case "MODEL_TYPE":
+			case "CHAT_TYPE":
+			case "KEEP_CONVERSATION_HISTORY":
+			case "KEEP_INPUT_OUTPUT":
+				type = "select";
+				break;
+
+			default:
+				throw new RuntimeException("Unknown field type: " + fieldName);
+			}
+
+			// Build locator based on field type
+			String testId = "importForm-" + fieldName + "-" + (type.equals("text") ? "textField" : "select");
+			Locator locator = page.locator("[data-testid='" + testId + "']");
+
+			// Check if field exists
+			if (locator.count() == 0) {
+				throw new RuntimeException("Field not found in DOM: " + testId);
+			}
+
+			// Get value based on type
+			String value = type.equals("text") ? locator.inputValue().trim() : locator.textContent().trim();
+
+			// If value is empty → mandatory field not filled
+			if (value.isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean isSubmitButtonEnabled(Page page) {
+		return page.getByTestId(SUBMIT_BUTTON_DATA_TESTID).isEnabled();
 	}
 
 }
