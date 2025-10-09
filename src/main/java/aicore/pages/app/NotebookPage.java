@@ -53,6 +53,12 @@ public class NotebookPage {
 	public void selectValueFromDropdown(String value, String fieldName) {
 		NotebookPageUtils.selectValueFromDropdown(page, value, fieldName);
 	}
+	public void selectValueFromReadAppDropdown(String value, String fieldName) {
+		NotebookPageUtils.selectValueFromReadAppDropdown(page, value, fieldName);
+	}
+	public void checkRecordWithUniqueId(String uniqueId) {
+		NotebookPageUtils.checkRecordWithUniqueId(page, uniqueId);
+	}
 
 	public void clickOnRecordButton(String buttonName) {
 		NotebookPageUtils.clickOnRecordButton(page, buttonName);

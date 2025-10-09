@@ -1,5 +1,6 @@
 @Regression @DeleteTestCatalog @DeleteCreatedTestApp
-Feature: Create app using Delete diabetesTemplate
+Feature: Create app using Update diabetesTemplate
+
   Background: User create the Diabetes database using zip file
     Given User opens Main Menu
     And User clicks on Open Database
@@ -10,12 +11,12 @@ Feature: Create app using Delete diabetesTemplate
     And User clicks On Copy Catalog ID
 
   @LoginWithAdmin
-  Scenario: Create app using delete Diabetes Record Template
+  Scenario: Create app using update Diabetes Record Template
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
-    And User selects "Delete Diabetes Record" from Template List
+    And User selects "Read Diabetes Record" from Template List
     And User enters app name as 'Diabetes app'
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
@@ -25,26 +26,17 @@ Feature: Create app using Delete diabetesTemplate
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
 
-  @LoginWithAdmin 
-  Scenario: Create app using delete Diabetes Record Template in existing data
+  @LoginWithAdmin
+  Scenario: Create app using update Diabetes Record Template with updating existing data
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
-    And User selects "Delete Diabetes Record" from Template List
+    And User selects "Read Diabetes Record" from Template List
     And User enters app name as 'Diabetes app'
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
     And User clicks on Preview app button
-    And user selects "4" from "Unique ID" dropdown
-    And User click on 'Delete' Record button
-    Then User sees the success message "true"
-    When User close the Preview app window
-    And User clicks on Notebook
-    And User clicks on Query name as 'on-page-load'
-    And User clicks on Run cell button of database cell
-    Then User can see the output for database cell
-    When User modify the Sql query "SELECT * from diabetes WHERE DIABETES_UNIQUE_ROW_ID = 4"
-    And User clicks on Run cell button of database cell
-    Then User sees the output of the executed query with empty result
+    And user selects "4" from "Unique ID" Read App dropdown
+    Then user sees the record with Unique ID "4"
