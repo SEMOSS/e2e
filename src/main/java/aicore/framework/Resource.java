@@ -5,20 +5,35 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
+/**
+ * Resource represents per-thread test resources (Playwright Page/Context and counters).
+ *
+ * Thread-safety model:
+ * - Resource is intended to be used by a single thread (one Resource per test/thread).
+ * - To use safely in concurrent execution, obtain instances via {@link ResourceManager#getResource()}.
+ * - Internal mutable counters are implemented with AtomicInteger; string fields that require
+ *   visibility across threads are declared volatile.
+ */
 public class Resource {
 
-    private String url;
+    private volatile String url;
 
-    private Page page;
-    private BrowserContext context;
-    private Browser browser;
-    private Playwright playwright;
-    private String scenarioName;
+    // Playwright artifacts - Page and BrowserContext are not safe to share between threads.
+    // Resource instances should own their own BrowserContext/Page.
+    private volatile Page page;
+    private volatile BrowserContext context;
+    private volatile Browser browser;
 
-    private int step = 0;
-    private int scenarioNumberOfFeatureFile = 0;
-    private String feature = "";
-    private int featureNumber = 0;
+    // Shared browser/playwright are handled by ResourceManager, not stored as mutable here.
+    private volatile Playwright playwright;
+
+    private volatile String scenarioName;
+
+    // Atomic counters for safe concurrent increments if accessed from other threads (defensive).
+    private final java.util.concurrent.atomic.AtomicInteger step = new java.util.concurrent.atomic.AtomicInteger(0);
+    private final java.util.concurrent.atomic.AtomicInteger scenarioNumberOfFeatureFile = new java.util.concurrent.atomic.AtomicInteger(0);
+    private volatile String feature = "";
+    private final java.util.concurrent.atomic.AtomicInteger featureNumber = new java.util.concurrent.atomic.AtomicInteger(0);
 
     private final int resourceNumber;
 
@@ -63,7 +78,11 @@ public class Resource {
         return this.context;
     }
 
-    public void setContext(BrowserContext context) {
+    /**
+     * Set the BrowserContext for this Resource. Should only be called by the owning thread or
+     * ResourceManager when initializing per-thread context.
+     */
+    public synchronized void setContext(BrowserContext context) {
         this.context = context;
     }
 
@@ -71,24 +90,27 @@ public class Resource {
         return this.page;
     }
 
-    public void setPage(Page page) {
+    /**
+     * Set the Page for this Resource. Should only be called by the owning thread.
+     */
+    public synchronized void setPage(Page page) {
         this.page = page;
     }
 
     public int getStep() {
-        return this.step;
+        return this.step.get();
     }
 
     public void setStep(int step) {
-        this.step = step;
+        this.step.set(step);
     }
 
     public int getScenarioNumberOfFeatureFile() {
-        return this.scenarioNumberOfFeatureFile;
+        return this.scenarioNumberOfFeatureFile.get();
     }
 
     public void setScenarioNumberOfFeatureFile(int scenarioNumberOfFeatureFile) {
-        this.scenarioNumberOfFeatureFile = scenarioNumberOfFeatureFile;
+        this.scenarioNumberOfFeatureFile.set(scenarioNumberOfFeatureFile);
     }
 
     public String getFeature() {
@@ -100,30 +122,48 @@ public class Resource {
     }
 
     public int getFeatureNumber() {
-        return this.featureNumber;
+        return this.featureNumber.get();
     }
 
     public void setFeatureNumber(int featureNumber) {
-        this.featureNumber = featureNumber;
+        this.featureNumber.set(featureNumber);
     }
 
     public void resetScenarioNumberOfFeatureFile() {
-        this.scenarioNumberOfFeatureFile = 0;
+        this.scenarioNumberOfFeatureFile.set(0);
     }
 
     public void incrementScenarioNumberOfFeatureFile() {
-        this.scenarioNumberOfFeatureFile++;
+        this.scenarioNumberOfFeatureFile.incrementAndGet();
     }
 
     public void incrementFeatureNumber() {
-        this.featureNumber++;
+        this.featureNumber.incrementAndGet();
     }
 
     public void resetStep() {
-        this.step = 0;
+        this.step.set(0);
     }
 
     public int getResourceNumber() {
         return this.resourceNumber;
+    }
+
+    /**
+     * Cleanup browser context and page owned by this Resource. Safe to call from any thread but
+     * intended to be called by the owning thread during teardown.
+     */
+    public synchronized void closeContext() {
+        try {
+            if (page != null) {
+                try { page.close(); } catch (Exception ignore) {}
+                page = null;
+            }
+        } finally {
+            if (context != null) {
+                try { context.close(); } catch (Exception ignore) {}
+                context = null;
+            }
+        }
     }
 }

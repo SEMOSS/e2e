@@ -42,6 +42,7 @@ public class SetupHooks {
 	public static void beforeAll() throws IOException {
 		logger.info("BEFORE ALL");
 		GenericSetupUtils.initialize();
+		setupFirstScenarioOfFeature();
 		// not sure how this works with parallel?
 		// before all runs outside of parallelization but what about in between features?
 		//scenarioNumberOfFeatureFile = 0;
@@ -56,7 +57,7 @@ public class SetupHooks {
 		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
-			setupFirstScenarioOfFeature(scenario);
+			performLoginBasedOnTags(scenario);
 			ResourcePool.get().incrementFeatureNumber();
 		}
 
@@ -65,18 +66,7 @@ public class SetupHooks {
 		ResourcePool.get().resetStep();
 	}
 
-	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
-		// Not First scenario, reset page
-		if (ResourcePool.get().getFeatureNumber() != 0) {
-			try {
-				GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
-				logoutAndSave();
-			} catch (Exception | Error e) {
-				logger.error("ATTEMPTING TO LOGOUT AND SAVE", e);
-			}
-			ResourcePool.get().getPlaywright().close();
-		}
-
+	private static void setupFirstScenarioOfFeature() throws IOException {
 
 		Playwright playwright = Playwright.create();
 		ResourcePool.get().setPlaywright(playwright);
@@ -101,12 +91,16 @@ public class SetupHooks {
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
 		GenericSetupUtils.setupLoggers(page);
+	}
 
 //		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
 //			logger.info("Creating users");
 //			GenericSetupUtils.createUsers(page);
 //		}
+private static void performLoginBasedOnTags(Scenario scenario) {
+	
 
+		Page page = ResourcePool.get().getPage();
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
 
 		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
@@ -167,23 +161,29 @@ public class SetupHooks {
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+		int currentScenarioCount = ResourcePool.get().getScenarioNumberOfFeatureFile();
+		int totalScenarioCount = scenario.getUri().getPath().lines().filter(line -> line.trim().startsWith("Scenario:")).toArray().length;
+			if (currentScenarioCount == totalScenarioCount) {
+				logger.info("Last scenario of the feature: {}. Logging out and closing context.", ResourcePool.get().getFeature());
+				logoutAndSave();
+			}
+ 
 	}
 
 	@AfterAll
 	public static void afterAll() throws IOException {
 		logger.info("AFTER ALL");
+		ResourcePool.get().getPlaywright().close();
 	}
 
 	private static void logoutAndSave() throws IOException {
 		Page page = ResourcePool.get().getPage();
 		BrowserContext context = ResourcePool.get().getContext();
 		String feature = ResourcePool.get().getFeature();
-		try {
+		
 			page.navigate(UrlUtils.getUrl("#/"));
 			GenericSetupUtils.logout(page);
-		} catch (Throwable t) {
-			logger.error("Could not logout with throwable message: {}", t.getMessage());
-		}
+		
 
 		if (GenericSetupUtils.useTrace()) {
 			logger.info("Using trace. Saving trace video");
@@ -200,13 +200,13 @@ public class SetupHooks {
 			page.context().tracing().stop(so);
 		}
 
-		context.close();
+		// context.close();
 		Path og = null;
 		if (GenericSetupUtils.useVideo()) {
 			og = page.video().path();
 		}
 
-		page.close();
+		// page.close();
 
 		if (GenericSetupUtils.useVideo()) {
 			Path newPath = Paths.get("videos", "features", feature + ".webm");
