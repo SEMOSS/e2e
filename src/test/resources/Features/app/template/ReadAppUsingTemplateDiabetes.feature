@@ -1,5 +1,5 @@
 @Regression @DeleteTestCatalog @DeleteCreatedTestApp
-Feature: Create app using Update diabetesTemplate
+Feature: Create app using Read diabetes Template
 
   Background: User create the Diabetes database using zip file
     Given User opens Main Menu
@@ -11,7 +11,7 @@ Feature: Create app using Update diabetesTemplate
     And User clicks On Copy Catalog ID
 
   @LoginWithAdmin
-  Scenario: Create app using update Diabetes Record Template
+  Scenario: Create app using Read Diabetes Record Template
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
@@ -27,7 +27,7 @@ Feature: Create app using Update diabetesTemplate
     Then User can see the output for database cell
 
   @LoginWithAdmin
-  Scenario: Create app using update Diabetes Record Template with updating existing data
+  Scenario: Create app using Read Diabetes Record Template with updating existing data
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
