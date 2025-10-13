@@ -1,3 +1,4 @@
+@Regression
 Feature: View add function page
 
   Scenario: Verify the available options on add function page

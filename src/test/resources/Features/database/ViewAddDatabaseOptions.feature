@@ -1,3 +1,4 @@
+@Regression
 Feature: View add Database options on catalog page
 
   Scenario: Verify the available options on add database page

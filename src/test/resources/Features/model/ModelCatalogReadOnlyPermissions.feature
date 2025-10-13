@@ -1,4 +1,4 @@
-@LoginWithAuthor
+@LoginWithAuthor @Regression
 Feature: Model Catalog Permission - Read
   Adding LLM to the catalog
 

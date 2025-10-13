@@ -1,4 +1,5 @@
-@LoginWithAuthor @DeleteCreatedTestApp
+
+@LoginWithAuthor @DeleteCreatedTestApp @Regression
 Feature: App setting for Editor permission
 
   Background: Create Drag and Drop app and navigate to Setting Page

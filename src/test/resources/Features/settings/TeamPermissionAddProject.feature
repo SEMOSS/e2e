@@ -1,3 +1,4 @@
+@Regression
 Feature: Add Project for Team Permission
 
   Background: Team Permissions - Add team

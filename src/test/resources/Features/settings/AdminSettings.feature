@@ -1,3 +1,4 @@
+@Regression
 Feature: Admin Settings
 
 	Background: View Admin Settings 

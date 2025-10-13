@@ -1,3 +1,4 @@
+@Regression
 Feature: View existing Vectors on Vector Catalog Page
 
   Background: Create and edit Vector

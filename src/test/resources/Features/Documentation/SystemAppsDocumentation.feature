@@ -1,7 +1,7 @@
 Feature: System Apps Documentation
 
   ### Emedded file upload issue Bug- https://github.com/SEMOSS/semoss-ui/issues/1950 ###
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE @Documentation
   Scenario: Verify user can create database from CSV file in BI system app
     Given User captures documentation screenshot for 'System Apps'
     When User opens Main Menu

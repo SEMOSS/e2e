@@ -1,6 +1,6 @@
 Feature: Admin query
 
-  @LoginWithAdmin @SkipIfVersionMatch
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query
     Given User captures documentation screenshot for 'Admin Query'
     Given User opens Main Menu

@@ -1,6 +1,6 @@
 Feature: Model Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Model
     Given User captures documentation screenshot for 'Model Catalog'
     When User opens Main Menu

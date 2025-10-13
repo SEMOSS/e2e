@@ -1,3 +1,4 @@
+@Regression
 Feature: Model settings
   I want to use this feature file for all the scenarios related to Model settings
 

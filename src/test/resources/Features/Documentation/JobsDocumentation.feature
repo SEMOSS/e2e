@@ -1,6 +1,6 @@
 Feature: Job Settings documentation
 
-@LoginWithAdmin @SkipIfVersionMatch
+@LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - Jobs Page
    Given User captures documentation screenshot for 'Jobs Management'
     Given User opens Main Menu

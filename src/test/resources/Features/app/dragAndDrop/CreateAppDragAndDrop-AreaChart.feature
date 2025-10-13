@@ -1,4 +1,4 @@
-@DeleteCreatedTestApp
+@DeleteCreatedTestApp @Regression
 Feature: Create App Drag and Drop - Area chart
 
   Background: Create Drag and Drop app and navigate to Blocks option

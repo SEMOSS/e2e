@@ -1,4 +1,5 @@
-@LoginWithAuthor @DeleteCreatedTestApp
+
+@LoginWithAuthor @DeleteCreatedTestApp @Regression
 Feature: App setting for Read permission
 
   Background: Create Drag and Drop app and navigate to Setting Page

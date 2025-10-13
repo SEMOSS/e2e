@@ -1,4 +1,5 @@
-@LoginWithAuthor
+
+@LoginWithAuthor @Regression
 Feature: App setting for Author permission
 
   Background: Create Drag and Drop app and navigate to Setting Page

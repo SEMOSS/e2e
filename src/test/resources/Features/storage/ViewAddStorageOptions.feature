@@ -1,3 +1,4 @@
+@Regression
 Feature: View add Storage page
 
   @LoginWithAdmin

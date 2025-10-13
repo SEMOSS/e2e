@@ -1,3 +1,4 @@
+@Regression @Smoke
 Feature: Search Vector Settings
 
   Background: Login to the application and Create model tagged with embeddings

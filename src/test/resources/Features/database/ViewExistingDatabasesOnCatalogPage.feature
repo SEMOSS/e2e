@@ -1,3 +1,4 @@
+@Regression
 Feature: View existing databases on database catalog page
 
   Background: Create and edit database

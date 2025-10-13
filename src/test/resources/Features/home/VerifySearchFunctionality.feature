@@ -1,3 +1,4 @@
+@Regression
 Feature: Search app and catalogs
 
   @LoginWithAdmin
