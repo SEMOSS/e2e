@@ -1,11 +1,12 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -368,46 +369,54 @@ public class AddModelSteps {
 	// new
 	@Then("User can see following fields in SMSS properties")
 	public void user_can_see_following_fields_in_smss_properties(DataTable table) {
-    List<Map<String, String>> rows = table.asMaps(String.class, String.class);
-    for (Map<String, String> row : rows) {
-        String fieldName = row.get("fieldName");
-        String expectedValue = row.get("fieldValue");
-        String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
+		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("fieldName");
+			String expectedValue = row.get("fieldValue");
+			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
 
-        if (!fieldName.equals("ENDPOINT")) {
-            if (fullText == null || fullText.trim().isEmpty()) {
-                Assertions.fail("No text found for field: " + fieldName);
-            }
+			if (fullText == null || fullText.trim().isEmpty()) {
+				Assertions.fail("No text found for field: " + fieldName);
+			}
 
-            // Normalize spaces
-            fullText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
+			// Normalize spacing and remove non-breaking spaces
+			fullText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
 
-            String actualValue;
-            // Instead of blindly removing field name, split on first space
-            if (fullText.toUpperCase().startsWith(fieldName.toUpperCase())) {
-                int firstSpaceIndex = fullText.indexOf(' ');
-                if (firstSpaceIndex != -1 && firstSpaceIndex + 1 < fullText.length()) {
-                    actualValue = fullText.substring(firstSpaceIndex + 1).trim();
-                } else {
-                    actualValue = "";
-                }
-            } else {
-                actualValue = fullText;
-            }
+			String actualValue;
+			// Remove fieldName prefix if present
+			if (fullText.toUpperCase().startsWith(fieldName.toUpperCase())) {
+				int firstSpaceIndex = fullText.indexOf(' ');
+				if (firstSpaceIndex != -1 && firstSpaceIndex + 1 < fullText.length()) {
+					actualValue = fullText.substring(firstSpaceIndex + 1).trim();
+				} else {
+					actualValue = "";
+				}
+			} else {
+				actualValue = fullText;
+			}
 
-            // Remove trailing digits for NAME
-            if (fieldName.equalsIgnoreCase("NAME")) {
-                actualValue = actualValue.replaceAll("\\d+$", "");
-            }
+			// For NAME field → ignore trailing digits
+			if (fieldName.equalsIgnoreCase("NAME")) {
+				actualValue = actualValue.replaceAll("\\d+$", "");
+			}
 
-            // Simple value comparison
-            Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
+			// ✅ Field-specific validation logic
+			switch (fieldName) {
+			case "ENDPOINT":
+				Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
+				break;
 
-        } else if (fieldName.equals("ENDPOINT")) {
-            Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
-        }
-    }
-}
+			case "INIT_MODEL_ENGINE":
+				Assertions.assertTrue(actualValue.contains(expectedValue), "Field validation failed for '" + fieldName
+						+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue + ">");
+				break;
+
+			default:
+				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
+				break;
+			}
+		}
+	}
 
 	@And("User enter the Deployment Name as {string}")
 	public void user_enter_the_deployment_name_as(String deploymentName) {

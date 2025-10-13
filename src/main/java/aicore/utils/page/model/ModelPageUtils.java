@@ -54,6 +54,8 @@ public class ModelPageUtils {
 	private static final String SELECT_RECORD_QUESTIONS_AND_RESPONSES_FOR_MODEL_DATA_TESTID = "importForm-KEEP_INPUT_OUTPUT-select";
 	private static final String MAX_TOKENS_DATA_TESTID = "importForm-MAX_TOKENS-textField";
 	private static final String MAX_INPUT_TOKENS_DATA_TESTID = "importForm-MAX_INPUT_TOKENS-textField";
+	private static final String ENDPOINT_SMSSPROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1 detected-link']";
+	private static final String INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH = "//div[@class='view-line']//span[contains(text(),'INIT_MODEL_ENGINE')]";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
@@ -216,13 +218,16 @@ public class ModelPageUtils {
 		Locator locator;
 		switch (fieldName) {
 		case "ENDPOINT":
-			locator = page.locator("//div[@class='view-line']//span[@class='mtk1 detected-link']");
+			locator = page.locator(ENDPOINT_SMSSPROPERTIES_XPATH);
+			break;
+		case "INIT_MODEL_ENGINE":
+			// Custom handling for partial text match
+			locator = page.locator(INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH);
 			break;
 		default:
 			locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
 			break;
 		}
-		// AICorePageUtils.waitFor(locator);
 		locator.scrollIntoViewIfNeeded();
 		String value = null;
 		try {
