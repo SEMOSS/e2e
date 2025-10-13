@@ -1,12 +1,11 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -369,50 +368,46 @@ public class AddModelSteps {
 	// new
 	@Then("User can see following fields in SMSS properties")
 	public void user_can_see_following_fields_in_smss_properties(DataTable table) {
-		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
+    List<Map<String, String>> rows = table.asMaps(String.class, String.class);
+    for (Map<String, String> row : rows) {
+        String fieldName = row.get("fieldName");
+        String expectedValue = row.get("fieldValue");
+        String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
 
-		for (Map<String, String> row : rows) {
-			String fieldName = row.get("fieldName");
-			String expectedValue = row.get("fieldValue");
+        if (!fieldName.equals("ENDPOINT")) {
+            if (fullText == null || fullText.trim().isEmpty()) {
+                Assertions.fail("No text found for field: " + fieldName);
+            }
 
-			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
+            // Normalize spaces
+            fullText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
 
-			if (fullText == null || fullText.trim().isEmpty()) {
-				Assertions.fail("No text found for field: " + fieldName);
-			}
+            String actualValue;
+            // Instead of blindly removing field name, split on first space
+            if (fullText.toUpperCase().startsWith(fieldName.toUpperCase())) {
+                int firstSpaceIndex = fullText.indexOf(' ');
+                if (firstSpaceIndex != -1 && firstSpaceIndex + 1 < fullText.length()) {
+                    actualValue = fullText.substring(firstSpaceIndex + 1).trim();
+                } else {
+                    actualValue = "";
+                }
+            } else {
+                actualValue = fullText;
+            }
 
-			// Normalize spaces
-			fullText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
+            // Remove trailing digits for NAME
+            if (fieldName.equalsIgnoreCase("NAME")) {
+                actualValue = actualValue.replaceAll("\\d+$", "");
+            }
 
-			String actualValue;
+            // Simple value comparison
+            Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
 
-			// Instead of blindly removing field name, split on first space
-			if (fullText.toUpperCase().startsWith(fieldName.toUpperCase())) {
-				int firstSpaceIndex = fullText.indexOf(' ');
-				if (firstSpaceIndex != -1 && firstSpaceIndex + 1 < fullText.length()) {
-					actualValue = fullText.substring(firstSpaceIndex + 1).trim();
-				} else {
-					actualValue = "";
-				}
-			} else {
-				actualValue = fullText;
-			}
-
-			// Remove trailing digits for NAME
-			if (fieldName.equalsIgnoreCase("NAME")) {
-				actualValue = actualValue.replaceAll("\\d+$", "");
-			}
-
-			// Masked field
-			if (fieldName.equalsIgnoreCase("OPEN_AI_KEY")) {
-				Assertions.assertTrue(actualValue.matches("\\*+"),
-						"Sensitive field " + fieldName + " should be masked, but got: '" + actualValue + "'");
-			} else {
-				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName
-						+ "'. Expected: '" + expectedValue + "', but got: '" + actualValue + "'");
-			}
-		}
-	}
+        } else if (fieldName.equals("ENDPOINT")) {
+            Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
+        }
+    }
+}
 
 	@And("User enter the Deployment Name as {string}")
 	public void user_enter_the_deployment_name_as(String deploymentName) {
@@ -432,14 +427,54 @@ public class AddModelSteps {
 	@Then("User can enable Submit button after filling mandatory fields for {string} model")
 	public void user_can_enable_submit_button_after_filling_mandatory_fields_for_model(String modelType,
 			DataTable table) {
-		List<String> mandatoryFields = table.asList(String.class);
-		boolean allFilled = openModelPage.areMandatoryFieldFilled(mandatoryFields);
+		List<String> fields = table.asList(String.class);
+		for (String fieldName : fields) {
+			boolean isFieldFilled = openModelPage.areMandatoryFieldFilled(fieldName);
+			Assertions.assertTrue(isFieldFilled, fieldName + " field is not filled");
+		}
 		boolean isSubmitButtonEnabled = openModelPage.isSubmitButtonEnabled();
+		Assertions.assertTrue(isSubmitButtonEnabled, "Submit button is not enabled");
 
-		Assertions.assertEquals(allFilled, isSubmitButtonEnabled,
-				"Submit button enable state mismatch. Expected enabled: " + allFilled + ", Actual: "
-						+ isSubmitButtonEnabled);
+	}
 
+	@And("User select chat type as {string}")
+	public void user_select_chat_type_as(String option) {
+		openModelPage.selectChatOption(option);
+	}
+
+	@And("User select the keep conversation history as {string}")
+	public void user_select_the_keep_conversation_history_as(String option) {
+		openModelPage.selectKeepConversationHistoryOption(option);
+	}
+
+	@And("User select Record Questions and Responses as {string}")
+	public void user_select_record_questions_and_responses_as(String option) {
+		openModelPage.selectRecordQuestionsAndResponsesOption(option);
+	}
+
+	@And("User enter the Max Tokens as {string}")
+	public void user_enter_the_max_tokens_as(String maxTokens) {
+		openModelPage.enterMaxTokens(maxTokens);
+	}
+
+	@And("User enter the Max Input Tokens {string}")
+	public void user_enter_the_max_input_tokens_as(String maxInputTokens) {
+		openModelPage.enterMaxInputTokens(maxInputTokens);
+	}
+
+	@And("User select type as {string}")
+	public void user_select_type_as(String type) {
+		openModelPage.selectTypeForModel(type);
+	}
+
+	@And("User enter model name as {string}")
+	public void user_enter_model_name_as(String modelName) {
+		openModelPage.enterModelName(modelName);
+	}
+
+	@And("User select the model as {string}")
+	public void user_select_the_model_as(String model) {
+		openModelPage.selectModelOption(model);
 	}
 
 }

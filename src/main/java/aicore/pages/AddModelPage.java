@@ -395,11 +395,45 @@ public class AddModelPage {
 	public void enterVersion(String version) {
 		ModelPageUtils.enterTheVersion(page, version);
 	}
-	public boolean areMandatoryFieldFilled(List<String> fieldNames) {
-		return ModelPageUtils.areMandatoryFieldFilled(page, fieldNames);
+
+	public boolean areMandatoryFieldFilled(String fieldName) {
+		return ModelPageUtils.areMandatoryFieldFilled(page, fieldName);
 	}
+
 	public boolean isSubmitButtonEnabled() {
-		return ModelPageUtils.isSubmitButtonEnabled(page);	
+		return ModelPageUtils.isSubmitButtonEnabled(page);
+	}
+
+	public void selectChatOption(String option) {
+		ModelPageUtils.selectChatOption(page, option);
+	}
+
+	public void selectKeepConversationHistoryOption(String option) {
+		ModelPageUtils.selectKeepConversationHistoryOption(page, option);
+	}
+
+	public void selectRecordQuestionsAndResponsesOption(String option) {
+		ModelPageUtils.selectRecordQuestionsAndResponsesOption(page, option);
+	}
+
+	public void enterMaxTokens(String maxTokens) {
+		ModelPageUtils.enterMaxTokens(page, maxTokens);
+	}
+
+	public void enterMaxInputTokens(String maxInputTokens) {
+		ModelPageUtils.enterMaxInputTokens(page, maxInputTokens);
+	}
+
+	public void selectTypeForModel() {
+		ModelPageUtils.selectTypeForModel(page);
+	}
+
+	public void enterModelName(String modelName) {
+		ModelPageUtils.enterModelName(page, modelName);
+	}
+
+	public void selectModelOption(String model) {
+		ModelPageUtils.selectModelOption(page, model);
 	}
 
 }
