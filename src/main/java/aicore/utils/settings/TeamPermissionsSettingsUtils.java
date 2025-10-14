@@ -6,6 +6,7 @@ import com.microsoft.playwright.options.AriaRole;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.LastCreatedUser;
+import aicore.utils.TestResourceTrackerHelper;
 
 public class TeamPermissionsSettingsUtils {
 
@@ -121,14 +122,11 @@ public class TeamPermissionsSettingsUtils {
 				.setName(CLICK_ON_ADD_CATALOG_TEXT.replace("{addCatalogName}", addCatalogName))).click();
 	}
 
-	public static void userSelectEngineFromList(Page page, String catalogName, String timestamp, String selectCatalog,
-			String catalogType) {
-		// String catalogId =
-		// TestResourceTrackerHelper.getInstance().getCatalogId(catalogType);
-		Locator dropdownLocator = page
-				.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
+	public static void userSelectEngineFromList(Page page, String catalogName, String timestamp, String selectCatalog, String catalogType) {
+		String catalogId = TestResourceTrackerHelper.getInstance().getCatalogId(catalogType);
+		Locator dropdownLocator = page.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
-		page.keyboard().press("Control+V");
+		page.keyboard().type(catalogId);
 		AICorePageUtils.waitFor(dropdownLocator);
 		page.keyboard().press("ArrowDown");
 		page.keyboard().press("Enter");

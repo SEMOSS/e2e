@@ -13,6 +13,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.bytebuddy.asm.MemberSubstitution.Substitution.Chain.Step.ForField.Read;
 
 public class NotebookCreationAndExecutionSteps {
 
@@ -66,6 +67,14 @@ public class NotebookCreationAndExecutionSteps {
 	@Then("user selects {string} from {string} dropdown")
 	public void user_selects_from_dropdown(String optionName, String dropdownName) throws InterruptedException {
 		notebookPage.selectValueFromDropdown(optionName, dropdownName);
+	}
+	@Then("user selects {string} from {string} Read App dropdown")
+	public void user_selects_from_dropdown_read_app(String optionName, String dropdownName) throws InterruptedException {
+		notebookPage.selectValueFromReadAppDropdown(optionName, dropdownName);
+	}
+	@Then("user sees the record with Unique ID {string}")
+	public void user_sees_the_record_with_unique_id(String uniqueId) throws InterruptedException {
+		notebookPage.checkRecordWithUniqueId(uniqueId);
 	}
 
 	@Then("user add value {string} in {string} field")

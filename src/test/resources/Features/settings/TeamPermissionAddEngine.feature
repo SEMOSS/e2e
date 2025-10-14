@@ -30,7 +30,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'TestDatabase' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'TestDatabase' in the 'Select Engine' field of Add Engine form the 'Database'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
@@ -58,7 +58,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'WeatherFunctionTest' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'WeatherFunctionTest' in the 'Select Engine' field of Add Engine form the 'Function'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
@@ -92,7 +92,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'Amazon S3 Storage' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'Amazon S3 Storage' in the 'Select Engine' field of Add Engine form the 'Storage'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
@@ -140,7 +140,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'FAISS Vector DB01' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'FAISS Vector DB01' in the 'Select Engine' field of Add Engine form the 'Vector'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
