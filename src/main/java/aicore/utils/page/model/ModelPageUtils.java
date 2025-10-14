@@ -56,6 +56,9 @@ public class ModelPageUtils {
 	private static final String MAX_INPUT_TOKENS_DATA_TESTID = "importForm-MAX_INPUT_TOKENS-textField";
 	private static final String ENDPOINT_SMSSPROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1 detected-link']";
 	private static final String INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH = "//div[@class='view-line']//span[contains(text(),'INIT_MODEL_ENGINE')]";
+	private static final String AWS_REGION_DATA_TESTID = "importForm-AWS_REGION-textField";
+	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
+	private static final String AWS_SECRET_KEY_DATA_TESTID = "importForm-AWS_SECRET_KEY-textField";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
@@ -255,39 +258,37 @@ public class ModelPageUtils {
 	}
 
 	public static boolean areMandatoryFieldFilled(Page page, String fieldName) {
-		Locator locator = null;
+		Locator locator;
+		// Map field types correctly
 		switch (fieldName) {
-		case "NAME":
-		case "OPEN_AI_KEY":
-		case "VAR_NAME":
-		case "INIT_MODEL_ENGINE":
-		case "MAX_TOKENS":
-		case "MAX_INPUT_TOKENS":
-		case "GCP_REGION":
-		case "ENDPOINT":
-		case "API_VERSION":
-		case "MODEL":
-			locator = page.getByTestId("importForm-" + fieldName + "-textField");
-			break;
 		case "MODEL_TYPE":
 		case "CHAT_TYPE":
 		case "KEEP_CONVERSATION_HISTORY":
 		case "KEEP_INPUT_OUTPUT":
+			// case "MODEL": // Add here if it's a dropdown
 			locator = page.getByTestId("importForm-" + fieldName + "-select");
 			break;
 		default:
-			throw new RuntimeException("Unknown field type: " + fieldName);
+			locator = page.getByTestId("importForm-" + fieldName + "-textField");
+			break;
 		}
-		String value;
+
 		try {
-			value = locator.inputValue().trim();
-		} catch (PlaywrightException e) {
-			value = locator.textContent().trim();
-		}
-		if (value.isEmpty()) {
+			locator.waitFor(new Locator.WaitForOptions().setTimeout(10000));
+			String value = "";
+
+			if (locator.isVisible()) {
+				try {
+					value = locator.inputValue().trim();
+				} catch (PlaywrightException e) {
+					value = locator.textContent().trim();
+				}
+			}
+			return !value.isEmpty();
+		} catch (Exception e) {
+			logger.warn("Field not found or empty: " + fieldName);
 			return false;
 		}
-		return true;
 	}
 
 	public static boolean isSubmitButtonEnabled(Page page) {
@@ -387,6 +388,30 @@ public class ModelPageUtils {
 		if (!currentValue.equalsIgnoreCase(model)) {
 			modelField.click();
 			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(model)).click();
+		}
+	}
+
+	public static void enterAWSRegion(Page page, String awsRegion) {
+		Locator awsRegionField = page.getByTestId(AWS_REGION_DATA_TESTID);
+		String currentValue = awsRegionField.inputValue().trim();
+		if (currentValue.isEmpty()) {
+			awsRegionField.fill(awsRegion);
+		}
+	}
+
+	public static void enterAWSAccessKey(Page page, String awsAccessKey) {
+		Locator awsAccessKeyField = page.getByTestId(AWS_ACCESS_KEY_DATA_TESTID);
+		String currentValue = awsAccessKeyField.inputValue().trim();
+		if (currentValue.isEmpty()) {
+			awsAccessKeyField.fill(awsAccessKey);
+		}
+	}
+
+	public static void enterAWSSecretKey(Page page, String awsSecretKey) {
+		Locator awsSecretKeyField = page.getByTestId(AWS_SECRET_KEY_DATA_TESTID);
+		String currentValue = awsSecretKeyField.inputValue().trim();
+		if (currentValue.isEmpty()) {
+			awsSecretKeyField.fill(awsSecretKey);
 		}
 	}
 

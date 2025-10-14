@@ -1,12 +1,11 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -484,6 +483,18 @@ public class AddModelSteps {
 	@And("User select the model as {string}")
 	public void user_select_the_model_as(String model) {
 		openModelPage.selectModelOption(model);
+	}
+	@And("User enter aws Region as {string}")
+	public void user_enter_aws_region_as(String awsRegion) {
+		openModelPage.enterAWSRegion(awsRegion);
+	}
+	@And("User enter AWS Access key as {string}")
+	public void user_enter_aws_access_key_as(String awsAccessKey) {
+		openModelPage.enterAWSAccessKey(awsAccessKey);
+	}
+	@And("User enter AWS Secreate key as {string}")
+	public void user_enter_aws_secreate_key_as(String awsSecreateKey) {	
+		openModelPage.enterAWSSecretKey(awsSecreateKey);
 	}
 
 }
