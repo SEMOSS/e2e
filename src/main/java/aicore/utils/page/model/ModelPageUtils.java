@@ -258,6 +258,7 @@ public class ModelPageUtils {
 	}
 
 	public static boolean areMandatoryFieldFilled(Page page, String fieldName) {
+
 		Locator locator;
 		// Map field types correctly
 		switch (fieldName) {
@@ -265,7 +266,6 @@ public class ModelPageUtils {
 		case "CHAT_TYPE":
 		case "KEEP_CONVERSATION_HISTORY":
 		case "KEEP_INPUT_OUTPUT":
-			// case "MODEL": // Add here if it's a dropdown
 			locator = page.getByTestId("importForm-" + fieldName + "-select");
 			break;
 		default:
@@ -289,6 +289,7 @@ public class ModelPageUtils {
 			logger.warn("Field not found or empty: " + fieldName);
 			return false;
 		}
+
 	}
 
 	public static boolean isSubmitButtonEnabled(Page page) {

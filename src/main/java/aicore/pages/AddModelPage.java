@@ -435,12 +435,15 @@ public class AddModelPage {
 	public void selectModelOption(String model) {
 		ModelPageUtils.selectModelOption(page, model);
 	}
+
 	public void enterAWSRegion(String awsRegion) {
 		ModelPageUtils.enterAWSRegion(page, awsRegion);
 	}
+
 	public void enterAWSAccessKey(String awsAccessKey) {
 		ModelPageUtils.enterAWSAccessKey(page, awsAccessKey);
 	}
+
 	public void enterAWSSecretKey(String awsSecretKey) {
 		ModelPageUtils.enterAWSSecretKey(page, awsSecretKey);
 	}
