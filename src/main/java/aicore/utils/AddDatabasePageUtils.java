@@ -35,7 +35,7 @@ public class AddDatabasePageUtils {
 	private static final String EXPORT_BTN_XPATH = "Export";
 	private static final String EDIT_POPUP_XPATH = "//div[contains(text(),\"Edit\")]";
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
-	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH = "//label//following-sibling::div//input[contains(@id ,'generated-id-')]";
+	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH = "//label//following-sibling::div//input";
 	private static final String SEARCHED_DATABASE_XPATH = "//p[text()='{catalogName}']";
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
@@ -200,7 +200,7 @@ public class AddDatabasePageUtils {
 	public static void clickOnMetadataTab(Page page) {
 		CatalogPageUtils.clickOnMetadataTab(page);
 	}
-	
+
 	public static void clickOnUsageTab(Page page) {
 		AICorePageUtils.clickOnTabButton(page, "Usage");
 	}

@@ -45,7 +45,7 @@ public class SettingsModelPageUtils {
 	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
-	private static final String SEARCH_BOX_XPATH = "[id ^='generated-id-'][placeholder='Search']";
+	private static final String SEARCH_BOX_XPATH = "//div[@data-testid='settingsIndexPage-searchBar']//input[@placeholder='Search']";
 	private static final String DISCOVERABLE_MODELS_BUTTON_XPATH = "//button[text()='Discoverable Models']";
 
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
