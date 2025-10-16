@@ -1,7 +1,7 @@
-@Regression
+@LoginWithAuthor @Regression
 Feature: Database Catalog permissions for Editor user
   Adding LLm to the Catlog
-@LoginWithAuthor
+
   Scenario: Create DataBase Using Zip File
     Given User opens Main Menu
     When User clicks on Open Database
@@ -51,7 +51,7 @@ Feature: Database Catalog permissions for Editor user
     And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
-  @DeleteTestCatalog
+ @DeleteTestCatalog
   Scenario: Database Catalog - Editor - Delete Database
     And User opens Main Menu
     And User clicks on Open Database

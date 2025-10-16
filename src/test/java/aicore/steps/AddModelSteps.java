@@ -486,4 +486,19 @@ public class AddModelSteps {
 		openModelPage.selectModelOption(model);
 	}
 
+	@And("User enter aws Region as {string}")
+	public void user_enter_aws_region_as(String awsRegion) {
+		openModelPage.enterAWSRegion(awsRegion);
+	}
+
+	@And("User enter AWS Access key as {string}")
+	public void user_enter_aws_access_key_as(String awsAccessKey) {
+		openModelPage.enterAWSAccessKey(awsAccessKey);
+	}
+
+	@And("User enter AWS Secreate key as {string}")
+	public void user_enter_aws_secreate_key_as(String awsSecreateKey) {
+		openModelPage.enterAWSSecretKey(awsSecreateKey);
+	}
+
 }
