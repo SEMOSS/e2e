@@ -165,7 +165,7 @@ Feature: Add all model types
      When User clicks on Add Model
      And User selects 'Palm Chat Bison'
      And User enters Catalog name as 'Palm_Chat_Bison_Model'
-     #type not able to edit
+    # type not able to edit
      # And User select the Type as 'Vertex'
      And User enter model name as 'mode-bison-001'
      And User enter GCP Region as 'Palm Region'
