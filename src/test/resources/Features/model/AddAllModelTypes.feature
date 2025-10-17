@@ -165,7 +165,7 @@ Feature: Add all model types
      When User clicks on Add Model
      And User selects 'Palm Chat Bison'
      And User enters Catalog name as 'Palm_Chat_Bison_Model'
-    # type not able to edit
+     #type not able to edit
      # And User select the Type as 'Vertex'
      And User enter model name as 'mode-bison-001'
      And User enter GCP Region as 'Palm Region'
@@ -345,7 +345,7 @@ Scenario: Create Model of Azure OpenAI and validate the SMSS properties
    And User selects 'Azure Open AI ADA Embedder'
    And User enters Catalog name as 'Azure_OpenAI_ADA_Embedder_Model'
    #tag name is preselected and not able to edit
-  # And User enter the tag as "Embeddings"
+   #And User enter the tag as "Embeddings"
    And User select type as 'Open AI'
    And User select the model as "text-embedding-ada-002"
    And User enters open AI Key as 'Test@1234'
@@ -752,7 +752,6 @@ Then User can enable Submit button after filling mandatory fields for "Gemini" m
 | MODEL_TYPE                |
 | GCP_REGION                |
 | VAR_NAME                  |
-#| CHAT_TYPE                 |
 | INIT_MODEL_ENGINE         |
 | KEEP_CONVERSATION_HISTORY |
 | KEEP_INPUT_OUTPUT         |
@@ -857,3 +856,358 @@ Then User can see following fields in SMSS properties
       | KEEP_CONVERSATION_HISTORY | false                    |
       | KEEP_INPUT_OUTPUT         | false                    |
       | KEEP_INPUT_OUTPUT         | false                    |
+
+@DeleteTestCatalog
+Scenario: Create Model of Falcon and validate the SMSS properties
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model
+And User selects 'Falcon'
+And User enters Catalog name as 'Falcon_Model'
+And User enter model name as 'Falcon'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_Falcon'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_Falcon'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "Falcon" model
+  | NAME                      |
+  | MODEL                     |
+  | ENDPOINT                  |
+  | VAR_NAME                  |
+  | CHAT_TYPE                 |
+  | INIT_MODEL_ENGINE         |
+  | KEEP_CONVERSATION_HISTORY |
+  | KEEP_INPUT_OUTPUT         |
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'Falcon Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+  | fieldName                 | fieldValue               |
+  | NAME                      | Falcon_Model             |
+  | ENDPOINT                  | https://azureopenai.com/ |
+  | VAR_NAME                  | Variable_Falcon          |
+  | INIT_MODEL_ENGINE         | InitScript_Falcon        |
+  | MODEL_TYPE                | TEXT_GENERATION          |
+  | CHAT_TYPE                 | chat-completion          |
+  | KEEP_CONVERSATION_HISTORY | false                    |
+  | KEEP_INPUT_OUTPUT         | false                    |
+  | MAX_TOKENS                | two                      |
+  | MAX_INPUT_TOKENS          | xyz                      |
+  
+  @DeleteTestCatalog
+  Scenario: Create Model of Flan T5 Large and validate the SMSS properties
+  Given User opens Main Menu
+  When User clicks on Open Model
+  When User clicks on Add Model
+  And User selects 'Flan T5 Large'
+  And User enters Catalog name as 'Flan_T5_Large_Model'
+  And User enter model name as 'Flan T5 Large'
+  And User select the Type as 'Text Generation'
+  And User enter the Endpoint as 'https://azureopenai.com/'
+  And User enters var name as 'Variable_Flan_T5_Large'
+  And User select chat type as "chat-completion"
+  And User enter Init Script as 'InitScript_Flan_T5_Large'
+  And User select the keep conversation history as 'false'
+  And User select Record Questions and Responses as 'false'
+  And User enter the Max Tokens as 'two'
+  And User enter the Max Input Tokens 'xyz'
+  Then User can enable Submit button after filling mandatory fields for "Flan T5 Large" model
+    | NAME                      |
+    | MODEL                     |
+    | ENDPOINT                  |
+    | VAR_NAME                  |
+    | CHAT_TYPE                 |
+    | INIT_MODEL_ENGINE         |
+    | KEEP_CONVERSATION_HISTORY |
+    | KEEP_INPUT_OUTPUT         |
+  And User clicks on Create Model button
+  And User can see a toast message as 'Successfully added LLM to catalog'
+  And User clicks On Copy Catalog ID
+  Then User Can see the Model title as 'Flan T5 Large Model'
+  And User clicks on SMSS
+  Then User can see following fields in SMSS properties
+    | fieldName                 | fieldValue                   |
+    | NAME                      | Flan_T5_Large_Model          |
+    | ENDPOINT                  | https://azureopenai.com/     |
+    | VAR_NAME                  | Variable_Flan_T5_Large       |
+    | INIT_MODEL_ENGINE         | InitScript_Flan_T5_Large     |
+    | MODEL_TYPE                | TEXT_GENERATION              |
+    | CHAT_TYPE                 | chat-completion              |
+    | KEEP_CONVERSATION_HISTORY | false                        |
+    | KEEP_INPUT_OUTPUT         | false                        |
+    | MAX_TOKENS                | two                          |
+    | MAX_INPUT_TOKENS          | xyz                          |
+    
+
+@DeleteTestCatalog
+Scenario: Create Model of Flan T5 XXL and validate the SMSS 
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model
+And User selects 'Flan T5 XXL'
+And User enters Catalog name as 'Flan_T5_XXL_Model'
+And User enter model name as 'Flan T5 XXL'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_Flan_T5_XXL'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_Flan_T5_XXL'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "Flan T5 XXL" model
+  | NAME                      |
+  | MODEL                     |
+  | ENDPOINT                  |
+  | VAR_NAME                  |
+  | CHAT_TYPE                 |
+  | INIT_MODEL_ENGINE         |
+  | KEEP_CONVERSATION_HISTORY |
+  | KEEP_INPUT_OUTPUT         | 
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'Flan T5 XXL Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+  | fieldName                 | fieldValue                   |
+  | NAME                      | Flan_T5_XXL_Model            |
+  | ENDPOINT                  | https://azureopenai.com/     |
+  | VAR_NAME                  | Variable_Flan_T5_XXL         |
+  | INIT_MODEL_ENGINE         | InitScript_Flan_T5_XXL       |
+  | MODEL_TYPE                | TEXT_GENERATION              |
+  | CHAT_TYPE                 | chat-completion              |
+  | KEEP_CONVERSATION_HISTORY | false                        |
+  | KEEP_INPUT_OUTPUT         | false                        |
+  | MAX_TOKENS                | two                          |
+  | MAX_INPUT_TOKENS          | xyz                          |
+
+  @DeleteTestCatalog
+  Scenario: Create Model of Guanaco and validate the SMSS properties
+  Given User opens Main Menu
+  When User clicks on Open Model
+  When User clicks on Add Model
+  And User selects 'Guanaco'
+  And User enters Catalog name as 'Guanaco_Model'
+  And User enter model name as 'Guanaco'
+  And User select the Type as 'Text Generation'
+  And User enter the Endpoint as 'https://azureopenai.com/'
+  And User enters var name as 'Variable_Guanaco'
+  And User select chat type as "chat-completion"
+  And User enter Init Script as 'InitScript_Guanaco'
+  And User select the keep conversation history as 'false'
+  And User select Record Questions and Responses as 'false'
+  And User enter the Max Tokens as 'two'
+  And User enter the Max Input Tokens 'xyz'
+  Then User can enable Submit button after filling mandatory fields for "Guanaco" model
+    | NAME                      |
+    | MODEL                     |
+    | ENDPOINT                  |
+    | VAR_NAME                  |
+    | CHAT_TYPE                 |
+    | INIT_MODEL_ENGINE         |
+    | KEEP_CONVERSATION_HISTORY |
+    | KEEP_INPUT_OUTPUT         |
+  And User clicks on Create Model button
+  And User can see a toast message as 'Successfully added LLM to catalog'
+  And User clicks On Copy Catalog ID
+  Then User Can see the Model title as 'Guanaco Model'
+  And User clicks on SMSS
+  Then User can see following fields in SMSS properties
+    | fieldName                 | fieldValue               |
+    | NAME                      | Guanaco_Model            |
+    | ENDPOINT                  | https://azureopenai.com/ |
+    | VAR_NAME                  | Variable_Guanaco         |
+    | INIT_MODEL_ENGINE         | InitScript_Guanaco       |
+    | MODEL_TYPE                | TEXT_GENERATION          |
+    | CHAT_TYPE                 | chat-completion          |
+    | KEEP_CONVERSATION_HISTORY | false                    |
+    | KEEP_INPUT_OUTPUT         | false                    |
+    | MAX_TOKENS                | two                      |
+    | MAX_INPUT_TOKENS          | xyz                      |
+
+@deleteTestCatalog
+Scenario: Create Model of Llama2 7B and validate the SMSS properties
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model  
+And User selects 'Llama2 7B'
+And User enters Catalog name as 'Llama2_7B_Model' 
+And User enter model name as 'meta-llama/Llama-2-7b'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_Llama2_7B'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_Llama2_7B'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "Llama2 7B" model
+  | NAME                      |
+  | MODEL                     |
+  | ENDPOINT                  |
+  | VAR_NAME                  |
+  | CHAT_TYPE                 |
+  | INIT_MODEL_ENGINE         |
+  | KEEP_CONVERSATION_HISTORY |
+  | KEEP_INPUT_OUTPUT         |
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'Llama2 7B Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+  | fieldName                 | fieldValue               |
+  | NAME                      | Llama2_7B_Model          |
+  | ENDPOINT                  | https://azureopenai.com/ |
+  | VAR_NAME                  | Variable_Llama2_7B       |
+  | INIT_MODEL_ENGINE         | InitScript_Llama2_7B     |
+  | MODEL_TYPE                | TEXT_GENERATION          |
+  | CHAT_TYPE                 | chat-completion          |
+  | KEEP_CONVERSATION_HISTORY | false                    |
+  | KEEP_INPUT_OUTPUT         | false                    |
+  | MAX_TOKENS                | two                      |
+  | MAX_INPUT_TOKENS          | xyz                      |
+
+  @deleteTestCatalog
+  Scenario: Create Model of Llama2 13B and validate the SMSS properties
+  Given User opens Main Menu
+  When User clicks on Open Model
+  When User clicks on Add Model
+  And User selects 'Llama2 13B'
+  And User enters Catalog name as 'Llama2_13B_Model'
+  And User enter model name as 'meta-llama/Llama-2-13b'
+  And User select the Type as 'Text Generation'
+  And User enter the Endpoint as 'https://azureopenai.com/'
+  And User enters var name as 'Variable_Llama2_13B'
+  And User select chat type as "chat-completion"
+  And User enter Init Script as 'InitScript_Llama2_13B'
+  And User select the keep conversation history as 'false'
+  And User select Record Questions and Responses as 'false'
+  And User enter the Max Tokens as 'two'
+  And User enter the Max Input Tokens 'xyz'
+  Then User can enable Submit button after filling mandatory fields for "Llama2 13B" model
+    | NAME                      |
+    | MODEL                     |
+    | ENDPOINT                  |
+    | VAR_NAME                  |
+    | CHAT_TYPE                 |
+    | INIT_MODEL_ENGINE         |
+    | KEEP_CONVERSATION_HISTORY |
+    | KEEP_INPUT_OUTPUT         |
+  And User clicks on Create Model button
+  And User can see a toast message as 'Successfully added LLM to catalog'
+  And User clicks On Copy Catalog ID
+  Then User Can see the Model title as 'Llama2 13B Model'
+  And User clicks on SMSS
+  Then User can see following fields in SMSS properties
+    | fieldName                 | fieldValue               |
+    | NAME                      | Llama2_13B_Model         |
+    | ENDPOINT                  | https://azureopenai.com/ |
+    | VAR_NAME                  | Variable_Llama2_13B      |
+    | INIT_MODEL_ENGINE         | InitScript_Llama2_13B    |
+    | MODEL_TYPE                | TEXT_GENERATION          |
+    | CHAT_TYPE                 | chat-completion          |
+    | KEEP_CONVERSATION_HISTORY | false                    |
+    | KEEP_INPUT_OUTPUT         | false                    |
+    | MAX_TOKENS                | two                      |
+    | MAX_INPUT_TOKENS          | xyz                      |
+
+    @deleteTestCatalog
+    Scenario: Create Model of Llama2 70B and validate the SMSS properties
+    Given User opens Main Menu
+    When User clicks on Open Model
+    When User clicks on Add Model
+    And User selects 'Llama2 70B'
+    And User enters Catalog name as 'Llama2_70B_Model'
+    And User enter model name as 'meta-llama/Llama-2-70b'
+    And User select the Type as 'Text Generation'
+    And User enter the Endpoint as 'https://azureopenai.com/'
+    And User enters var name as 'Variable_Llama2_70B'
+    And User select chat type as "chat-completion"
+    And User enter Init Script as 'InitScript_Llama2_70B'
+    And User select the keep conversation history as 'false'
+    And User select Record Questions and Responses as 'false'
+    And User enter the Max Tokens as 'two'
+    And User enter the Max Input Tokens 'xyz'
+    Then User can enable Submit button after filling mandatory fields for "Llama2 70B" model
+      | NAME                      |
+      | MODEL                     |
+      | ENDPOINT                  |
+      | VAR_NAME                  |
+      | CHAT_TYPE                 |
+      | INIT_MODEL_ENGINE         |
+      | KEEP_CONVERSATION_HISTORY |
+      | KEEP_INPUT_OUTPUT         |
+    And User clicks on Create Model button
+    And User can see a toast message as 'Successfully added LLM to catalog'
+    And User clicks On Copy Catalog ID
+    Then User Can see the Model title as 'Llama2 70B Model'
+    And User clicks on SMSS
+    Then User can see following fields in SMSS properties
+      | fieldName                 | fieldValue               |
+      | NAME                      | Llama2_70B_Model         |
+      | ENDPOINT                  | https://azureopenai.com/ |
+      | VAR_NAME                  | Variable_Llama2_70B      |
+      | INIT_MODEL_ENGINE         | InitScript_Llama2_70B    |
+      | MODEL_TYPE                | TEXT_GENERATION          |
+      | CHAT_TYPE                 | chat-completion          |
+      | KEEP_CONVERSATION_HISTORY | false                    |
+      | KEEP_INPUT_OUTPUT         | false                    |
+      | MAX_TOKENS                | two                      |
+      | MAX_INPUT_TOKENS          | xyz                      |
+
+      @deleteTestCatalog
+      Scenario: Create Model of Mosaic ML and validate the SMSS properties
+      Given User opens Main Menu
+      When User clicks on Open Model
+      When User clicks on Add Model
+      And User selects 'Mosaic ML'
+      And User enters Catalog name as 'Mosaic_ML_Model'
+      And User enter model name as 'Mosaic ML'
+      And User select the Type as 'Text Generation'
+      And User enter the Endpoint as 'https://azureopenai.com/'
+      And User enters var name as 'Variable_Mosaic_ML'
+      And User select chat type as "chat-completion"
+      And User enter Init Script as 'InitScript_Mosaic_ML'
+      And User select the keep conversation history as 'false'
+      And User select Record Questions and Responses as 'false'
+      And User enter the Max Tokens as 'two'
+      And User enter the Max Input Tokens 'xyz'
+      Then User can enable Submit button after filling mandatory fields for "Mosaic ML" model
+        | NAME                      |
+        | MODEL                     |
+        | ENDPOINT                  |
+        | VAR_NAME                  |
+        | CHAT_TYPE                 |
+        | INIT_MODEL_ENGINE         |
+        | KEEP_CONVERSATION_HISTORY |
+        | KEEP_INPUT_OUTPUT         |
+      And User clicks on Create Model button
+      And User can see a toast message as 'Successfully added LLM to catalog'
+      And User clicks On Copy Catalog ID
+      Then User Can see the Model title as 'Mosaic ML Model'
+      And User clicks on SMSS
+      Then User can see following fields in SMSS properties
+        | fieldName                 | fieldValue               |
+        | NAME                      | Mosaic_ML_Model          |
+        | ENDPOINT                  | https://azureopenai.com/ |
+        | VAR_NAME                  | Variable_Mosaic_ML       |
+        | INIT_MODEL_ENGINE         | InitScript_Mosaic_ML     |
+        | MODEL_TYPE                | TEXT_GENERATION          |
+        | CHAT_TYPE                 | chat-completion          |
+        | KEEP_CONVERSATION_HISTORY | false                    |
+        | KEEP_INPUT_OUTPUT         | false                    |
+        | MAX_TOKENS                | two                      |
+        | MAX_INPUT_TOKENS          | xyz                      |
+        
+        
