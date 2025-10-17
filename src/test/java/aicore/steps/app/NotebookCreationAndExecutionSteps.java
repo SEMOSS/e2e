@@ -13,7 +13,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.bytebuddy.asm.MemberSubstitution.Substitution.Chain.Step.ForField.Read;
 
 public class NotebookCreationAndExecutionSteps {
 
@@ -305,6 +304,11 @@ public class NotebookCreationAndExecutionSteps {
 		result = notebookPage.isFilteredDataCorrectForColumns(columns, values, operator);
 		Assertions.assertTrue(result, "Filtered data does not match for columns: " + columns + " with values: " + values
 				+ " using operator: " + operator);
+	}
+
+	@And("User enter the data limit as {string}")
+	public void user_enter_the_data_limit_as(String dataLimit) {
+		notebookPage.enterDataLimit(dataLimit);
 	}
 
 }

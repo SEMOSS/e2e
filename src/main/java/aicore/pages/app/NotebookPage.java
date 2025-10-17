@@ -215,4 +215,7 @@ public class NotebookPage {
 	public boolean isFilteredDataCorrectForColumns(List<String> columns, List<String> values, String operator) {
 		return NotebookPageUtils.isFilteredDataCorrectForColumns(page, columns, values, operator);
 	}
+	public void enterDataLimit(String dataLimit) {
+		NotebookPageUtils.enterDataLimit(page, dataLimit);
+	}
 }
