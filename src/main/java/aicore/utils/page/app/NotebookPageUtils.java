@@ -21,7 +21,7 @@ public class NotebookPageUtils {
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
 	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor textarea.inputarea";
-	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//span[text()='{codeOutput}']";
+	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
@@ -141,6 +141,7 @@ public class NotebookPageUtils {
 		}
 
 	}
+
 	public static void selectValueFromReadAppDropdown(Page page, String value, String fieldName) {
 		Locator progressBar = page.locator(PROGRESS_BAR_READ_IN_FIELD_XPATH);
 		page.waitForCondition(progressBar::isHidden, new Page.WaitForConditionOptions().setTimeout(15000));
@@ -586,5 +587,11 @@ public class NotebookPageUtils {
 		} else {
 			throw new IllegalArgumentException("Unsupported operator: " + operator);
 		}
+	}
+
+	public static void enterDataLimit(Page page, String dataLimit) {
+		Locator dataLimitField = page.getByLabel("Data Limit");
+		AICorePageUtils.waitFor(dataLimitField);
+		dataLimitField.fill(dataLimit);
 	}
 }

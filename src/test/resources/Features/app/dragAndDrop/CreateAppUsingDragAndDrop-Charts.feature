@@ -47,6 +47,7 @@ Feature: Create drag and drop app
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
+    And User enter the data limit as '20'
     And User clicks on Run cell button
     And User fetch the frame id
     And User clicks on Blocks
