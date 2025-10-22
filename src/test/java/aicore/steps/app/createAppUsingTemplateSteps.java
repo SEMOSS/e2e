@@ -40,6 +40,16 @@ public class createAppUsingTemplateSteps {
 		appTemplatePage.verifyInputFieldWithLabel(label);
 	}
 
+	@And("User clicks on description block")
+	public void user_clicks_on_description_block() {
+		appTemplatePage.clickOnQuestionBlock();
+	}
+
+	@And("User adds description as {string}")
+	public void user_adds_description_as(String description) {
+		appTemplatePage.addDescription(description);
+	}
+
 	@And("User sees submit button")
 	public void user_sees_submit_button() {
 		appTemplatePage.verifySubmitButton();

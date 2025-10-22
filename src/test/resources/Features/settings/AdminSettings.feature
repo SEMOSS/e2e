@@ -1,4 +1,3 @@
-@Regression
 Feature: Admin Settings
 
 	Background: View Admin Settings 
@@ -6,7 +5,7 @@ Feature: Admin Settings
    And User clicks on Open Settings
    And User enables admin mode
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Check admin have access to each setting
     Then User can view the following settings tile
       | SETTINGS_TILE     |
@@ -23,7 +22,7 @@ Feature: Admin Settings
       | Admin Query       |
       | My Profile        |
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Search on Settings Page
     Given User searches 'mod' in Search box
     Then User can view the 'Model Settings' tile

@@ -1,4 +1,4 @@
-@DeleteCreatedTestApp @Regression
+@DeleteCreatedTestApp
 Feature: Verify Notebook Output
 
   Background: Create Drag and Drop App
@@ -11,7 +11,7 @@ Feature: Verify Notebook Output
     And User clicks on Create button
     And User fetch the app name for drag and drop app
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Verify pixel Output in Notebook
     Given User is on Home page
     When User opens Main Menu
@@ -32,7 +32,7 @@ Feature: Verify Notebook Output
     And User clicks on Run this cell and below icon
     Then User can see Pixel output as 'Hello'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Verify Python Output in Notebook
     Given User is on Home page
     When User opens Main Menu

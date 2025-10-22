@@ -14,7 +14,7 @@ Background: Create app using Template
     And User sees the sub title as 'This app allows you to upload a CSV file shows data from it in our dynamic data grid'
     And User clicks on the Save App icon
 
-@LoginWithAdmin
+@LoginWithAdmin @Regression
 Scenario: Create app using Template Visualize CSV
     Given User is on Home page
     When User opens Main Menu

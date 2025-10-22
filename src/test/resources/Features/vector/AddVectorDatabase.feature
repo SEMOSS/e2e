@@ -1,4 +1,3 @@
-@Regression
 Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
 
@@ -18,7 +17,7 @@ Feature: Add Vector Database
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
     Given User is on Home page
     When User opens Main Menu
@@ -48,7 +47,7 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 
   #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario: Validate usage of vector
     Given User is on Home page
     When User opens Main Menu
@@ -70,7 +69,7 @@ Feature: Add Vector Database
     And User sees an example of "How to use with Langchain API" with example code for Vector DB
     And User sees an example of "How to use in Java" with example code for Vector DB
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Validate Change access popup
     Given User is on Home page
     When User opens Main Menu
@@ -110,7 +109,7 @@ Feature: Add Vector Database
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
       | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Validate change access request
     Given User is on Home page
     When User opens Main Menu

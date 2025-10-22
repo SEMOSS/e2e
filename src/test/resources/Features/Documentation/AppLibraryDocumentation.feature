@@ -1,6 +1,6 @@
 Feature: App Library Documentation
 
-@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
   Scenario: Create Drag and Drop app
     Given User captures documentation screenshot for 'App Library'
     When User opens Main Menu
@@ -28,10 +28,10 @@ Feature: App Library Documentation
     And User Clicks on close button
     When User opens Main Menu
     And User clicks on Open App Library
-		And User searches 'Travel Itinerary' app in the app searchbox
+    And User searches 'Travel Itinerary' app in the app searchbox
     Then User can see 'Travel Itinerary' app on the page
-		And User clicks on View Details button
-		And User captures a 'button' and highlights the 'Export'
+    And User clicks on View Details button
+    And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User captures a 'button' and highlights the 'Access Control'
     And User clicks on Access Control button
@@ -56,3 +56,34 @@ Feature: App Library Documentation
     Then User can selects 'Travel Itinerary' on the page
     And User captures a 'button' and highlights the 'Delete'
     And User completes screenshot capture and triggers comparison for 'Settings Overview'
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  Scenario: Documentation for Visualize CSV template
+    Given User captures documentation screenshot for 'Visualize CSV'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User captures a 'button' and highlights the "Visualize CSV"
+    And User selects "Visualize CSV" from Template List
+    And User enters app name as 'Test app'
+    And User captures a 'buttonType' and highlights the "submit"
+    And User clicks on Create button
+    And User captures a 'Block' and highlights the "upload"
+    And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  Scenario: Documentation for Ask LLM template
+    Given User captures documentation screenshot for ' Ask LLM'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User captures a "templatetab , usetemplatetab" and highlights the "Ask LLM , Ask LLM"
+    And User selects "Ask LLM" from Template List
+    And User captures screenshot for "Create button"
+    And User enters app name as 'Test app'
+    And User clicks on Create button
+    And User clicks on description block
+    And User clicks on the Block Settings option
+    And User adds description as "When did covid start"
+    And User captures screenshot for "Ask LLM App Page"
+    And User completes screenshot capture and triggers comparison for 'Ask LLM'

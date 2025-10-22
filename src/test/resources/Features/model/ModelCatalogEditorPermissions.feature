@@ -1,4 +1,3 @@
-@Regression
 Feature: Model Catalog Permission - Editor
   Adding LLM to the catalog
 
@@ -26,32 +25,32 @@ Feature: Model Catalog Permission - Editor
     Given User Can see the Model title as 'Catalog'
     Then 'Editor' user can 'View' Overview
 
-  @DeleteTestCatalog @LoginWithAuthor
+  @DeleteTestCatalog @LoginWithAuthor @Regression
   Scenario: Model Catalog - Editor - View usage
     Then 'Editor' user can 'View' Usage
     And User logs out from the application
     And User login as 'Author'
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - SMSS Details
     Then 'Editor' user can 'Not View' SMSS Details
     And User logs out from the application
     And User login as 'Author'
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - Edit SMSS
     And 'Editor' user can 'Not View' SMSS Details
     Then 'Editor' user can 'Not View' Edit SMSS
     And User logs out from the application
     And User login as 'Author'
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor -  Access Control
     Then 'Editor' user can 'View' Access Control
     And User logs out from the application
     And User login as 'Author'
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - Member setting
     And 'Editor' user clicks on Access Control
     Then 'Editor' user 'can' see Member Setting
@@ -62,7 +61,7 @@ Feature: Model Catalog Permission - Editor
   #Then 'Editor' user 'can not' Delete Model
   #And User logs out from the application
   #Then User login as "author"
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - Add Read
     And 'Editor' user clicks on Access Control
     And User clicks on Add Member button
@@ -76,7 +75,7 @@ Feature: Model Catalog Permission - Editor
     And User logs out from the application
     And User login as 'Author'
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - Delete Read Member
     And 'Editor' user clicks on Access Control
     And User clicks on Add Member button
@@ -86,7 +85,7 @@ Feature: Model Catalog Permission - Editor
     And User logs out from the application
     And User login as 'Author'
 
-  @Smoke
+  @Regression @Smoke
   Scenario: Model Catalog - Editor -  Delete Model as Author
     Given User opens Main Menu
     And User logs out from the application
