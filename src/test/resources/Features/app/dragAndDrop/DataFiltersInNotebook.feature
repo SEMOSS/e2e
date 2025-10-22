@@ -40,6 +40,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on data Import button
     And User deletes the previous cell
     And User selects type as 'Python'
+    And User enter the data limit as '20'
     And User clicks on Run cell button
     And User fetch the frame id
     Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'

@@ -1,8 +1,8 @@
-@Regression
+@LoginWithAuthor @Regression
 Feature: Database Catalog permissions for Read user
   Adding LLm to the Catlog
 
-@LoginWithAuthor
+
   Scenario: Create DataBase Using Zip File
     Given User opens Main Menu
     When User clicks on Open Database
