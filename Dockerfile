@@ -20,4 +20,4 @@ COPY testNRM.sh testNRM.sh
 COPY state.json state.json
 COPY .env .env
 
-CMD ["mvn", "clean", "test", "-e"]
+CMD ["mvn", "clean", "-Dtest=aicore.suite.FullSuite", "test", "-e"]
