@@ -1,5 +1,6 @@
 @Regression
 Feature: App landing page
+
   Background: Create Drag and Drop app
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -12,8 +13,25 @@ Feature: App landing page
     And User fetch the app name for drag and drop app
 
   @DeleteCreatedTestApp
+  Scenario: Verify app card details
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    When User searches 'Test app' app in the app searchbox
+    Then User can see 'Test app' app on the page
+    And User can see the following details on the app card
+      | DETAIL_NAME         | VALUE                        |
+      | App Name            | Test app                     |
+      | App Description     | Created by automation script |
+      | Published date      |                              |
+      | Last Edited date    |                              |
+      | Open App button     |                              |
+      | View Details button |                              |
+      | More Vert Icon      |                              |
+      | Bookmark Icon       |                              |
+
+  @DeleteCreatedTestApp
   Scenario: User copies the App Id successfully
-    Given User opens Main Menu 
+    Given User opens Main Menu
     When User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on more vertical icon of 'Test app' app
@@ -48,7 +66,7 @@ Feature: App landing page
     And User clicks on more vertical icon of 'Test app' app
     And User clicks on 'Delete App' option
     And User click on 'Delete' confirmation button
-    Then User can not see 'Test app' app on the page 
+    Then User can not see 'Test app' app on the page
 
   @DeleteCreatedTestApp
   Scenario: Filter apps

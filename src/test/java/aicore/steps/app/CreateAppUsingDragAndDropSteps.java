@@ -532,6 +532,17 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(isAppDisplayed, "Application is not displayed on page");
 	}
 
+	@And("User can see the following details on the app card")
+	public void user_can_see_the_following_details_on_the_app_card(DataTable dataTable) {
+		List<Map<String, String>> details = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> detail : details) {
+			String name = detail.get("DETAIL_NAME");
+			String value = detail.get("VALUE");
+			boolean isContentVisible=appPage.isContentVisibleOnAppCard(name, value);
+			Assertions.assertTrue(isContentVisible, name + " is not displayed on app card");
+		}
+	}
+
 	@When("User click on {string} confirmation button")
 	public void user_click_on_confirmation_button(String buttonName) {
 		appPage.clickOnDeleteButton(buttonName);

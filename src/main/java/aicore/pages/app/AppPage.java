@@ -64,7 +64,10 @@ public class AppPage {
 	public boolean isAppDisplayedOnPage(String appName) {
 		return AppPageUtils.isAppDisplayedOnPage(page, appName, timestamp);
 	}
-
+	
+    public boolean isContentVisibleOnAppCard(String contentName, String contentValue) {
+		return AppPageUtils.isContentVisibleOnAppCard(page, contentName, contentValue, timestamp);
+	}
 	public void clickOnDeleteButton(String buttonName) {
 		AppPageUtils.clickOnDeleteButton(page, buttonName);
 	}
