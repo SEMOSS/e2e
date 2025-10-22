@@ -3,7 +3,7 @@
 cd Semoss
 git fetch
 git pull
-mvn clean install -DskipTests=true -U
+mvn install -DskipTests=true -U
 
 # Update unused semoss directory in order to make sure
 # Semoss resources are up to date
@@ -27,7 +27,7 @@ cd ../../Monolith
 git fetch
 git pull
 cp /app/buildfiles/web.xml /app/Monolith/WebContent/WEB-INF/web.xml
-mvn clean install -DskipTests=true -U
+mvn install -DskipTests=true -U
 mv /app/Monolith/target/monolith-0.0.1-SNAPSHOT/ /opt/apache-tomcat-9.0.102/webapps/Monolith/
 
 # build frontend
