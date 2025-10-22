@@ -34,7 +34,7 @@
                 <version>3.5.2</version>
                 <configuration>
                     <includes>
-                        <include>**/DrySuite.java</include>
+                        <include>**/FullSuite.java</include>
                     </includes>
                 </configuration>
             </plugin>
