@@ -32,11 +32,11 @@ public class DockerUtils {
 					successful = true;
 					break;
 				} else {
-					logger.warn("Unsuccessful ping, sleeping");
+					logger.warn("Unsuccessful ping for {}, sleeping", apiStringEndpoint);
 					Thread.sleep(timeoutInMilliseconds);
 				}
 			} catch (Exception e) {
-				logger.error("Could not ping api or sleep", e);
+				logger.error("Could not ping api or sleep: {}", apiStringEndpoint, e);
                 try {
                     Thread.sleep(timeoutInMilliseconds);
                 } catch (InterruptedException ex) {
