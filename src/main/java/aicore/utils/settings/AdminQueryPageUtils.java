@@ -10,17 +10,19 @@ public class AdminQueryPageUtils {
 
 	///// SETTING ADMIN QUERY PAGE
 	private static final String DATABASE_DROPDOWN_NAME = "Database";
-	private static final String QUERY_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root')]//label[text()='Enter query to run on database']";
+	private static final String QUERY_TEXTBOX_PLACEHOLDER_TEXT = "SELECT * FROM engine";
 	private static final String QUERY_EXECUTED_TOAST_MESSAGE = "Successfully submitted query";
-	private static final String TOAST_MESSAGE_ClOSE_DATA_TESTID = "CloseIcon";
+	private static final String TOAST_MESSAGE_ClOSE_DATA_XPATH = "//button[@aria-label='Close']";
 	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Run";
 	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
-	private static final String MAX_ROWS_COUNT_TEXTBOX_LABEL = "Max # Rows to Collect";
 	private static final String TOTAL_TABLE_ROWS_XPATH = "//table/tbody/tr";
+	private static final String MAX_ROW_COUNT_XPATH = "//input[@type='number']";
 
 	public static void clickOnSelectDatabase(Page page) {
-		Locator databaseDropdown = page.locator("label:has-text('" + DATABASE_DROPDOWN_NAME + "')")
-				.locator("xpath=following-sibling::div//div");
+		// Locator databaseDropdown = page.locator("label:has-text('" +
+		// DATABASE_DROPDOWN_NAME + "')")
+		// .locator("xpath=following-sibling::div//div");
+		Locator databaseDropdown = page.locator("//div[@aria-haspopup='listbox']");
 		databaseDropdown.isVisible();
 		databaseDropdown.click();
 	}
@@ -32,7 +34,10 @@ public class AdminQueryPageUtils {
 	}
 
 	public static void enterQuery(Page page, String query) {
-		page.locator(QUERY_TEXTBOX_XPATH).fill(query);
+		// page.locator(QUERY_TEXTBOX_PLACEHOLDER_TEXT).fill(query);
+		Locator textbox = page.getByPlaceholder(QUERY_TEXTBOX_PLACEHOLDER_TEXT);
+		textbox.fill(query);
+
 	}
 
 	public static void clickOnExecuteQueryButton(Page page) {
@@ -56,11 +61,11 @@ public class AdminQueryPageUtils {
 	}
 
 	public static void closeQueryExecutedToastMessage(Page page) {
-		page.getByTestId(TOAST_MESSAGE_ClOSE_DATA_TESTID).click();
+		page.locator(TOAST_MESSAGE_ClOSE_DATA_XPATH).click();
 	}
 
 	public static void enterRowCount(Page page, String count) {
-		Locator countTextbox = page.getByLabel(MAX_ROWS_COUNT_TEXTBOX_LABEL);
+		Locator countTextbox = page.locator(MAX_ROW_COUNT_XPATH);
 		countTextbox.fill(count);
 	}
 

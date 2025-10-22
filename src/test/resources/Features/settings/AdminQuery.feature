@@ -32,8 +32,8 @@ Feature: Admin query
     And User clicks on 'Admin Query' Card
     And User clicks on Database dropdown
     And User selects '<DATABASE_NAME>' from the database dropdown
-    And User enters '<QUERY>' in the query textbox
     And User enters '<MAX_ROWS>' in the Max Rows to Collected textbox
+    And User enters '<QUERY>' in the query textbox
     And User clicks on Run button
     Then User can see success toast message as 'Successfully submitted query'
     And User can see table with '<ROW_COUNT>' rows
