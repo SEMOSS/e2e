@@ -1,6 +1,5 @@
 @Regression
 Feature: Privacy Center Popup Validation
-######## UI does not have Privacy Information data. Hence commenting the some steps ######
 
   ######## UI does not have Privacy Information data. Hence commenting the some steps ######
   Scenario: Validate Privacy Center popup and its elements
