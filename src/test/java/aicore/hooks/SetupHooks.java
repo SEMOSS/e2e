@@ -85,7 +85,8 @@ public class SetupHooks {
 		ResourcePool.get().setBrowser(browser);
 
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
-				.setDeviceScaleFactor(1); // ensures DPI/zoom consistency;
+				.setDeviceScaleFactor(1)
+				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write")); // ensures DPI/zoom consistency;
 		BrowserContext context = browser.newContext(newContextOptions);
 		ResourcePool.get().setContext(context);
 
@@ -97,6 +98,7 @@ public class SetupHooks {
 		}
 
 		Page page = context.newPage();
+
 		ResourcePool.get().setPage(page);
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
