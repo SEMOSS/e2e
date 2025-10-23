@@ -30,7 +30,7 @@ Feature: App Library Documentation
     And User clicks on Open App Library
 		And User searches 'Travel Itinerary' app in the app searchbox
     Then User can see 'Travel Itinerary' app on the page
-		And User clicks on View Details button
+		And User clicks on app 'View Details' button
 		And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User captures a 'button' and highlights the 'Access Control'

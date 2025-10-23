@@ -22,10 +22,10 @@ Feature: App landing page
       | DETAIL_NAME         | VALUE                        |
       | App Name            | Test app                     |
       | App Description     | Created by automation script |
-      | Published date      |                              |
-      | Last Edited date    |                              |
-      | Open App button     |                              |
-      | View Details button |                              |
+      | Published date      | Published {date}             |
+      | Last Edited date    | Last Edited {date}           |
+      | Open App button     | Open App                     |
+      | View Details button | View Details                 |
       | More Vert Icon      |                              |
       | Bookmark Icon       |                              |
 
@@ -110,7 +110,7 @@ Feature: App landing page
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     Then User can see 'Test app' app on the page
-    And User clicks on View Details button
+    And User clicks on app 'View Details' button
     And User clicks on Access Control Tab
     And User turn OFF the Non Discoverable option
     And User logs out from the application

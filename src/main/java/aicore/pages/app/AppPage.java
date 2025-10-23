@@ -84,7 +84,7 @@ public class AppPage {
 		AppPageUtils.selectFilterValueOnAppPage(page, filterCategory, filterValue);
 	}
 
-	public void clickOnViewDetails() {
-		AppPageUtils.clickOnViewDetails(page);
+	public void clickOnViewDetails(String buttonName) {
+		AppPageUtils.clickOnViewDetails(page,buttonName);
 	}
 }

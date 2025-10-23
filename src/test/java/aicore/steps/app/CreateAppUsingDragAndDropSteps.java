@@ -576,9 +576,9 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-	@Then("User clicks on View Details button")
-	public void User_clicks_on_View_Details_button() {
-		appPage.clickOnViewDetails();
+	@Then("User clicks on app {string} button")
+	public void User_clicks_on_button(String buttonName) {
+		appPage.clickOnViewDetails(buttonName);
 	}
 
 	@And("User get the CatalogName for variable")
