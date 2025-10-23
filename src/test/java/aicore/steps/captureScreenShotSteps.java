@@ -27,7 +27,6 @@ public class captureScreenShotSteps {
     public captureScreenShotSteps() {
         captureScreenShotPage = new CaptureScreenShotPage(SetupHooks.getPage());
         this.page = SetupHooks.getPage();
-
     }
 
     @Given("User captures documentation screenshot for {string}")
@@ -35,7 +34,7 @@ public class captureScreenShotSteps {
         this.subFolder = subFolderName;
         this.currentFolder = FolderUtils.getCurrentBaselineFolder(subFolderName);
     }
-
+    
     @And("User captures a {string} and highlights the {string}")
     public void user_Captures_Screenshot_and_highlights_the(String elementTypes, String elementNames) throws IOException {
         String fullPath = currentFolder;
@@ -55,6 +54,28 @@ public class captureScreenShotSteps {
             allLocators.addAll(locators);
         }
         Path path = Paths.get(fullPath, String.join("_", names) + ".png");
+        CaptureScreenShotUtils.captureScreenshot(page, allLocators, path);      
+    }
+
+    @And("User captures a {string} and highlights the {string} with name {string}")
+    public void user_Captures_Screenshot_and_highlights_the_with_name(String elementTypes, String elementNames,String fileName) throws IOException {
+        String fullPath = currentFolder;
+
+        String[] types = elementTypes.split(",");
+        String[] names = elementNames.split(",");
+
+        // Trim for robustness
+        for (int i = 0; i < types.length; i++) types[i] = types[i].trim();
+        for (int i = 0; i < names.length; i++) names[i] = names[i].trim();
+
+        List<Locator> allLocators = new ArrayList<>();
+        for (int i = 0; i < types.length; i++) {
+            String type = types[i];
+            String name = (i < names.length) ? names[i] : "";
+            List<Locator> locators = captureScreenShotPage.getLocatorsForTypeAndName(type, name);
+            allLocators.addAll(locators);
+        }
+        Path path = Paths.get(fullPath, String.join("_", fileName) + ".png");
         CaptureScreenShotUtils.captureScreenshot(page, allLocators, path);      
     }
     
