@@ -12,7 +12,7 @@
         <log4j.version>2.24.3</log4j.version>
         <junit.version>5.13.4</junit.version>
         <cucumber.version>7.27.2</cucumber.version>
-        <playwright.version>1.49.0</playwright.version>
+        <playwright.version>1.56.0</playwright.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -34,7 +34,7 @@
                 <version>3.5.2</version>
                 <configuration>
                     <includes>
-                        <include>**/DrySuite.java</include>
+                        <include>**/FullSuite.java</include>
                     </includes>
                 </configuration>
             </plugin>

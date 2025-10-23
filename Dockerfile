@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright/java:v1.51.0-noble
+FROM mcr.microsoft.com/playwright/java:v1.56.0-noble
 
 WORKDIR /workspace
 
@@ -20,4 +20,4 @@ COPY testNRM.sh testNRM.sh
 COPY state.json state.json
 COPY .env .env
 
-CMD ["mvn", "clean", "-Dtest=aicore.**", "test", "-e"]
+CMD ["mvn", "clean", "-Dtest=aicore.suite.FullSuite", "test", "-e"]
