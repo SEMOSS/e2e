@@ -4,15 +4,14 @@ services:
     build:
       context: ds2
     ports:
-      - "9091:8080"
-    network_mode: "host"
+      - "0:8080"
     #    environment:
     #      - SETSOCIAL=true
     #      - ENABLE_NATIVE=true
     #      - ENABLE_NATIVE_REGISTRATION=true
     command: /bin/bash -c "/app/scripts.sh"
-#    networks:
-#      - tnet
+    networks:
+      - tnet
     #    volumes:
     #      - ./results/coverage:/opt/testresults/
 
@@ -24,14 +23,13 @@ services:
       - .:/workspace
     working_dir: /workspace
     ipc: host
-    network_mode: "host"
     cap_add:
       - SYS_ADMIN
-#    networks:
-#      - tnet
+    networks:
+      - tnet
     user: "${UID}:${GID}"  # Run the container as the current user
-#
-#networks:
-#  tnet:
+
+networks:
+  tnet:
 
 
