@@ -21,7 +21,7 @@ public class NotebookCreationAndExecutionSteps {
 	protected static String frameID;
 
 	public NotebookCreationAndExecutionSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		notebookPage = new NotebookPage(SetupHooks.getPage(), timestamp);
 	}
 

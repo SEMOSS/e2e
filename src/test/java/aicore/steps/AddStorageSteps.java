@@ -30,7 +30,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());

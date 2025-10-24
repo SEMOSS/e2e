@@ -24,7 +24,7 @@ public class BICreateDatabaseAndInsightSteps {
 
 	public BICreateDatabaseAndInsightSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		biApp = new BISystemAppPage(SetupHooks.getPage(), CreateAppUsingDragAndDropSteps.timestamp);
 	}
 

@@ -24,7 +24,7 @@ public class UserRegistrationSteps {
 	public UserRegistrationSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		loginPage = new LoginPage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		this.userRegistration = new UserRegistrationPage(SetupHooks.getPage());
 	}
 

@@ -39,7 +39,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		appVariablePage = new AppVariablePage(SetupHooks.getPage());
 		blocksPage = new DragAndDropBlocksPage(SetupHooks.getPage());
 		appPage = new AppPage(SetupHooks.getPage(), timestamp);

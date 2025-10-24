@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 
+import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -55,6 +56,7 @@ public class SetupHooks {
 		
 		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
+			ResourcePool.get().resetTimestamp();
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
 			setupFirstScenarioOfFeature(scenario);
 			ResourcePool.get().incrementFeatureNumber();
@@ -223,6 +225,10 @@ public class SetupHooks {
 
 	public static Page getPage() {
 		return ResourcePool.get().getPage();
+	}
+
+	public static String getTimestamp() {
+		return ResourcePool.get().getTimestamp();
 	}
 
 	@After("@DeleteCreatedCatalog")

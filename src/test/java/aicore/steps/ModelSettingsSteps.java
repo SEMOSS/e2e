@@ -19,7 +19,7 @@ public class ModelSettingsSteps {
 	private SoftAssertions softAssert;
 
 	public ModelSettingsSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		modelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		softAssert = SoftAssertionHooks.getSoftAssertions();
 	}

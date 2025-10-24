@@ -34,7 +34,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 	}
 
 	@Given("User opens Main Menu")

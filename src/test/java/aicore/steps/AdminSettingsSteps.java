@@ -18,7 +18,7 @@ public class AdminSettingsSteps {
 	private SoftAssertions softAssert;
 
 	public AdminSettingsSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		modelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		softAssert = SoftAssertionHooks.getSoftAssertions();
 	}

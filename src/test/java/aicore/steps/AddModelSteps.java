@@ -28,7 +28,7 @@ public class AddModelSteps {
 
 	public AddModelSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
 

@@ -31,7 +31,7 @@ public class CatlogAccessStep {
 	public CatlogAccessStep() {
 		new LoginPage(SetupHooks.getPage());
 		this.homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		this.catlogpermission = new CatlogPermissionsPage(SetupHooks.getPage());
 		this.addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());

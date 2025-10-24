@@ -24,7 +24,7 @@ public class AddModelPage {
 	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
-//		this.timestamp = CommonUtils.getTimeStampName();
+//		this.timestamp = SetupHooks.getTimestamp();
 	}
 
 	public void clickAddModelButton() {
