@@ -12,7 +12,7 @@ Feature: View existing models in model Catalog
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks On Copy Catalog ID
-    Then User Can see the Model title as 'Model'
+    Then User can see the Model title as 'Model'
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'
