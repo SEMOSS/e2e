@@ -773,91 +773,7 @@ Then User can see following fields in SMSS properties
 | MAX_INPUT_TOKENS 					| xyz    													|
 
 
-  @DeleteTestCatalog
-  Scenario: Create Model of Eleuther GPTJ and validate the SMSS properties
-    Given User opens Main Menu
-    When User clicks on Open Model
-    When User clicks on Add Model
-    And User selects 'Eleuther GPTJ'
-    And User enters Catalog name as 'Eleuther_GPTJ_Model'
-    And User enter model name as 'Eleuther GPTJ'
-    And User select the Type as 'Text Generation'
-    And User enter the Endpoint as 'https://azureopenai.com/'
-    And User enters var name as 'Variable_Eleuther_GPTJ'
-    And User select chat type as "chat-completion"
-    And User enter Init Script as 'InitScript_Eleuther_GPTJ'
-    And User select the keep conversation history as 'false'
-    And User select Record Questions and Responses as 'false'
-    And User enter the Max Tokens as 'two'
-    And User enter the Max Input Tokens 'xyz'
-    Then User can enable Submit button after filling mandatory fields for "Eleuther GPTJ" model
-      | NAME                      |
-      | MODEL                     |
-      | MODEL_TYPE                |
-      | ENDPOINT                  |
-      | VAR_NAME                  |
-      | CHAT_TYPE                 |
-      | INIT_MODEL_ENGINE         |
-      | KEEP_CONVERSATION_HISTORY |
-      | KEEP_INPUT_OUTPUT         |
-    And User clicks on Create Model button
-    And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
-    Then User Can see the Model title as 'Eleuther GPTJ Model'
-    And User clicks on SMSS
-    Then User can see following fields in SMSS properties
-      | fieldName                 | fieldValue               |
-      | NAME                      | Eleuther_GPTJ_Model      |
-      | ENDPOINT                  | https://azureopenai.com/ |
-      | VAR_NAME                  | Variable_Eleuther_GPTJ   |
-      | INIT_MODEL_ENGINE         | InitScript_Eleuther_GPTJ |
-      | MODEL_TYPE                | TEXT_GENERATION          |
-      | CHAT_TYPE                 | chat-completion          |
-      | KEEP_CONVERSATION_HISTORY | false                    |
-      | KEEP_INPUT_OUTPUT         | false                    |
-      | KEEP_INPUT_OUTPUT         | false                    |
-
-  @DeleteTestCatalog
-  Scenario: Create Model of Orca and validate the SMSS properties
-    Given User opens Main Menu
-    When User clicks on Open Model
-    When User clicks on Add Model
-    And User selects 'Orca'
-    And User enters Catalog name as 'OrcaModel'
-    And User enter model name as 'Orca Model'
-    And User select the Type as 'EMBEDDED'
-    And User enter the Endpoint as 'https://azureopenai.com/'
-    And User enters var name as 'Variable_Orca'
-    And User enter Init Script as 'InitScript_Orca'
-    And User select the keep conversation history as 'false'
-    And User select Record Questions and Responses as 'false'
-    And User enter the Max Tokens as 'two'
-    And User enter the Max Input Tokens 'xyz'
-    Then User can enable Submit button after filling mandatory fields for "Orca" model
-      | NAME                      |
-      | MODEL                     |
-      | ENDPOINT                  |
-      | VAR_NAME                  |
-      | INIT_MODEL_ENGINE         |
-      | KEEP_CONVERSATION_HISTORY |
-      | KEEP_INPUT_OUTPUT         |
-    And User clicks on Create Model button
-    And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
-    Then User Can see the Model title as 'OrcaModel'
-    And User clicks on SMSS
-    Then User can see following fields in SMSS properties
-      | fieldName                 | fieldValue               |
-      | NAME                      | OrcaModel                |
-      | ENDPOINT                  | https://azureopenai.com/ |
-      | VAR_NAME                  | Variable_Orca            |
-      | INIT_MODEL_ENGINE         | InitScript_Orca          |
-      | MODEL_TYPE                | EMBEDDED                 |
-      | KEEP_CONVERSATION_HISTORY | false                    |
-      | KEEP_INPUT_OUTPUT         | false                    |
-      | KEEP_INPUT_OUTPUT         | false                    |
-
-@DeleteTestCatalog
+ @DeleteTestCatalog
 Scenario: Create Model of Falcon and validate the SMSS properties
 Given User opens Main Menu
 When User clicks on Open Model
@@ -1210,4 +1126,253 @@ Then User can see following fields in SMSS properties
         | MAX_TOKENS                | two                      |
         | MAX_INPUT_TOKENS          | xyz                      |
         
+        
+@deleteTestCatalog
+Scenario: Create Model of Replit code model 3b and validate the SMSS properties
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model
+And User selects 'Replit code model – 3b'
+And User enters Catalog name as 'Replit_code_model_3b_Model'
+And User enter model name as 'Replit code model – 3b'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_Replit_code_model_3b'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_Replit_code_model_3b'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "Replit code model – 3b" model
+| NAME                      |
+| MODEL                     |
+| ENDPOINT                  |
+| VAR_NAME                  |
+| CHAT_TYPE                 |
+| INIT_MODEL_ENGINE         |
+| KEEP_CONVERSATION_HISTORY |
+| KEEP_INPUT_OUTPUT         |
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'Replit Code Model 3b Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+| fieldName                 | fieldValue                       |
+| NAME                      | Replit_code_model_3b_Model       |
+| ENDPOINT                  | https://azureopenai.com/         |
+| VAR_NAME                  | Variable_Replit_code_model_3b    |
+| INIT_MODEL_ENGINE         | InitScript_Replit_code_model_3b  |
+| MODEL_TYPE                | TEXT_GENERATION                  |
+| CHAT_TYPE                 | chat-completion                  |
+| KEEP_CONVERSATION_HISTORY | false                            |
+| KEEP_INPUT_OUTPUT         | false                            |
+| MAX_TOKENS                | two                              |
+| MAX_INPUT_TOKENS          | xyz                              |
+
+@deleteTestCatalog
+Scenario: Create Model of StableBeluga2 and validate the SMSS properties
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model
+And User selects 'StableBeluga2'
+And User enters Catalog name as 'StableBeluga2_Model'
+And User enter model name as 'StableBeluga2'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_StableBeluga2'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_StableBeluga2'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "StableBeluga2" model
+| NAME                      |
+| MODEL                     |
+| ENDPOINT                  |
+| VAR_NAME                  |
+| CHAT_TYPE                 |
+| INIT_MODEL_ENGINE         |
+| KEEP_CONVERSATION_HISTORY |
+| KEEP_INPUT_OUTPUT         |
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'StableBeluga2 Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+| fieldName                 | fieldValue                   |
+| NAME                      | StableBeluga2_Model          |
+| ENDPOINT                  | https://azureopenai.com/     |
+| VAR_NAME                  | Variable_StableBeluga2       |
+| INIT_MODEL_ENGINE         | InitScript_StableBeluga2     |
+| MODEL_TYPE                | TEXT_GENERATION              |
+| CHAT_TYPE                 | chat-completion              |
+| KEEP_CONVERSATION_HISTORY | false                        |
+| KEEP_INPUT_OUTPUT         | false                        |
+| MAX_TOKENS                | two                          |
+| MAX_INPUT_TOKENS          | xyz                          |
+
+@deleteTestCatalog
+Scenario: Create Model of Vicuna and validate the SMSS properties    
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model
+And User selects 'Vicuna'
+And User enters Catalog name as 'Vicuna_Model'
+And User enter model name as 'Vicuna'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_Vicuna'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_Vicuna'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "Vicuna" model
+| NAME                      |
+| MODEL                     |
+| ENDPOINT                  |
+| VAR_NAME                  |
+| CHAT_TYPE                 |
+| INIT_MODEL_ENGINE         |
+| KEEP_CONVERSATION_HISTORY |
+| KEEP_INPUT_OUTPUT         |
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'Vicuna Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+| fieldName                 | fieldValue               |
+| NAME                      | Vicuna_Model             |
+| ENDPOINT                  | https://azureopenai.com/ |
+| VAR_NAME                  | Variable_Vicuna          |
+| INIT_MODEL_ENGINE         | InitScript_Vicuna        |
+| MODEL_TYPE                | TEXT_GENERATION          |
+| CHAT_TYPE                 | chat-completion          |
+| KEEP_CONVERSATION_HISTORY | false                    |
+| KEEP_INPUT_OUTPUT         | false                    |
+| MAX_TOKENS                | two                      |
+| MAX_INPUT_TOKENS          | xyz                      |
+
+@deleteTestCatalog
+Scenario: Create Model of Wizard 13B and validate the SMSS properties
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model
+And User selects 'Wizard 13B'
+And User enters Catalog name as 'Wizard_13B_Model'
+And User enter model name as 'Wizard 13B'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_Wizard_13B'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_Wizard_13B'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "Wizard 13B" model
+| NAME                      |
+| MODEL                     |
+| ENDPOINT                  |
+| VAR_NAME                  |
+| CHAT_TYPE                 |
+| INIT_MODEL_ENGINE         |
+| KEEP_CONVERSATION_HISTORY |
+| KEEP_INPUT_OUTPUT         |
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'Wizard 13B Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+| fieldName                 | fieldValue               |
+| NAME                      | Wizard_13B_Model         |
+| ENDPOINT                  | https://azureopenai.com/ |
+| VAR_NAME                  | Variable_Wizard_13B      |
+| INIT_MODEL_ENGINE         | InitScript_Wizard_13B    |
+| MODEL_TYPE                | TEXT_GENERATION          |
+| CHAT_TYPE                 | chat-completion          |
+| KEEP_CONVERSATION_HISTORY | false                    |
+| KEEP_INPUT_OUTPUT         | false                    |
+| MAX_TOKENS                | two                      |
+| MAX_INPUT_TOKENS          | xyz                      |
+
+@deleteTestCatalog
+Scenario: Create Model of Wizard Coder and validate the SMSS properties
+Given User opens Main Menu
+When User clicks on Open Model
+When User clicks on Add Model
+And User selects 'Wizard Coder'
+And User enters Catalog name as 'Wizard_Coder_Model'
+And User enter model name as 'Wizard Coder'
+And User select the Type as 'Text Generation'
+And User enter the Endpoint as 'https://azureopenai.com/'
+And User enters var name as 'Variable_Wizard_Coder'
+And User select chat type as "chat-completion"
+And User enter Init Script as 'InitScript_Wizard_Coder'
+And User select the keep conversation history as 'false'
+And User select Record Questions and Responses as 'false'
+And User enter the Max Tokens as 'two'
+And User enter the Max Input Tokens 'xyz'
+Then User can enable Submit button after filling mandatory fields for "Wizard Coder" model
+| NAME                      |
+| MODEL                     |
+| MODEL_TYPE                |
+| ENDPOINT                  |
+| VAR_NAME                  |
+| CHAT_TYPE                 |
+| INIT_MODEL_ENGINE         |
+| KEEP_CONVERSATION_HISTORY |
+| KEEP_INPUT_OUTPUT         |
+And User clicks on Create Model button
+And User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'Wizard Coder Model'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+| fieldName                 | fieldValue               |
+| NAME                      | Wizard_Coder_Model       |
+| ENDPOINT                  | https://azureopenai.com/ |
+| VAR_NAME                  | Variable_Wizard_Coder    |
+| INIT_MODEL_ENGINE         | InitScript_Wizard_Coder  |
+| MODEL_TYPE                | TEXT_GENERATION          |
+| CHAT_TYPE                 | chat-completion          |
+| KEEP_CONVERSATION_HISTORY | false                    |
+| KEEP_INPUT_OUTPUT         | false                    |
+| MAX_TOKENS                | two                      |
+| MAX_INPUT_TOKENS          | xyz                      |
+
+@deleteTestCatalog
+Scenario: Create Model of ZIP and validate the SMSS properties
+Given User opens Main Menu
+And User clicks on Open Model
+And User clicks on Add Model
+When User selects 'ZIP'
+And User uploads a file 'ModelZIP.zip'
+And User click on Create 'Model' button
+Then User can see a toast message as 'Successfully added LLM to catalog'
+And User clicks On Copy Catalog ID
+Then User Can see the Model title as 'ModelZIP'
+And User clicks on SMSS
+Then User can see following fields in SMSS properties
+  | fieldName                 | fieldValue                                     |
+  | MODEL_TYPE                | TEXT_GENERATION                                |
+  | ENDPOINT                  | https://play.semoss.org/moose/llama3-70/v1     |
+  | VAR_NAME                  | llama3Model                                    |
+  | INIT_MODEL_ENGINE         | import genai_client;${VAR_NAME}                |
+  | KEEP_CONVERSATION_HISTORY | true                                           |
+  | KEEP_INPUT_OUTPUT         | true                                           |
+  | MAX_TOKENS                | 128000                                         |
+  | MAX_INPUT_TOKENS          | 127000                                         |
+
+
+
+
+
         
