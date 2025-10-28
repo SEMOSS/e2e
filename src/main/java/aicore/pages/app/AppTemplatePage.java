@@ -174,4 +174,12 @@ public class AppTemplatePage {
 	public String getFontSize() {
 		return AppTemplatePageUtils.getFontSize(page);
 	}
+
+	public void clickOSubmitBlock() {
+		AppTemplatePageUtils.clickOSubmitBlock(page);
+	}
+
+	public void clickOnResponseBlock() {
+		AppTemplatePageUtils.clickOnResponseBlock(page);
+	}
 }

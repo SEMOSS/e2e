@@ -71,9 +71,17 @@ Feature: App Library Documentation
      And User captures a 'Block' and highlights the "upload" with name "AskCSV3"
      And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation @DeleteTestCatalog
   Scenario: Documentation for Ask LLM template
     Given User captures documentation screenshot for 'Create New App'
+    When User opens Main Menu
+    And User clicks on Open Model
+    When User clicks on Add Model
+    Then User selects 'ZIP'
+    And User uploads a file 'model/Llama_model.zip'
+    And User clicks on Create Model button
+    And User get the CatalogName for variable
+    And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -86,4 +94,18 @@ Feature: App Library Documentation
     And User clicks on the Block Settings option
     And User adds description as "When did covid start"
     And User captures screenshot for "llmone"
+    And User clicks on the Submit Block
+    And User captures screenshot for "llmtwo"
+    And User clicks on Variable
+    And User clicks on "model" open menu
+    And User clicks on edit variable option
+    And User enters variable value
+    And User clicks on Save variable button
+    And User clicks on Notebook
+    And User clicks on Query name as 'ask-llm'
+   	And User clicks on Notebook
+  	And User click on run all cell button
+    And User clicks on 'page-1' page
+    And User clicks on the Response Block
+    And User captures screenshot for "llmthree"
     And User completes screenshot capture and triggers comparison for 'Ask LLM'

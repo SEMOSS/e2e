@@ -208,9 +208,6 @@ public class CaptureScreenShotUtils {
 	}
 
 	public static void captureScreenshot(Page page, Path path) {
-		if (page.getByTestId("CloseIcon").isVisible()) {
-			page.getByTestId("CloseIcon").click();
-		}
 		page.waitForTimeout(1000);
 		Path screenshotPath = Paths.get(path.toString());
 		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true));
