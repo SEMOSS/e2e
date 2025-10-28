@@ -2,7 +2,7 @@ Feature: App Library Documentation
 
    @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
    Scenario: Create Drag and Drop app
-     Given User captures documentation screenshot for 'App Library'
+     Given User captures documentation screenshot for 'PlatformNavigation/App Library'
      When User opens Main Menu
      And User captures a 'button' and highlights the 'Apps'
      And User clicks on Open App Library
@@ -59,7 +59,7 @@ Feature: App Library Documentation
 
    @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
    Scenario: Documentation for Visualize CSV template
-     Given User captures documentation screenshot for 'Create New App'
+     Given User captures documentation screenshot for 'Navigating/Create New App'
      When User opens Main Menu
      And User clicks on Open App Library
      And User clicks on Create New App button
@@ -73,7 +73,7 @@ Feature: App Library Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation @DeleteTestCatalog
   Scenario: Documentation for Ask LLM template
-    Given User captures documentation screenshot for 'Create New App'
+    Given User captures documentation screenshot for 'Navigating/Create New App'
     When User opens Main Menu
     And User clicks on Open Model
     When User clicks on Add Model
@@ -84,6 +84,7 @@ Feature: App Library Documentation
     And User clicks On Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
+    And User captures a 'button' and highlights the "Create New App" with name "LandingPage1"
     And User clicks on Create New App button
     And User captures a "templatetab , usetemplatetab" and highlights the "Ask LLM , Ask LLM" with name "askLLMclick"
     And User selects "Ask LLM" from Template List
