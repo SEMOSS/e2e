@@ -1,4 +1,3 @@
-@Regression
 Feature: View existing Storages on storage Catalog Page
 
   Background: Add Amazon S3 Storage
@@ -20,7 +19,7 @@ Feature: View existing Storages on storage Catalog Page
     And User selects 'FOUO ALLOWED, INTERNAL ALLOWED' from the Data Restrictions dropdown
     And User clicks on Submit button
     
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario: view and validate filter functionality - My Storages
     Given User opens Main Menu
     When User clicks on Open Storage
@@ -35,7 +34,7 @@ Feature: View existing Storages on storage Catalog Page
     #Then User sees the catalog name 'Amazon S3 Storage' in the Bookmarked section
     #When User clicks on bookmark button to unbookmark 'Amazon S3 Storage' catalog
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: view and validate filter functionality - Discoverable Storages
     Given User opens Main Menu
     When User clicks on Open Storage

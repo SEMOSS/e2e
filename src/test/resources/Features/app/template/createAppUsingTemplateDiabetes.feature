@@ -1,4 +1,4 @@
-@Regression @DeleteTestCatalog @DeleteCreatedTestApp
+@DeleteTestCatalog @DeleteCreatedTestApp
 Feature: Create app using Template
 
   Background: User create the Diabetes database using zip file
@@ -10,7 +10,7 @@ Feature: Create app using Template
     And User clicks on Create Database button
     And User clicks On Copy Catalog ID
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Create app using create Diabetes Record Template
     Given User is on Home page
     When User opens Main Menu
@@ -26,7 +26,7 @@ Feature: Create app using Template
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: validate the Updated Diabetes Record app Template with data filling
     Given User is on Home page
     When User opens Main Menu
@@ -45,7 +45,7 @@ Feature: Create app using Template
     And User click on 'Add' Record button
     Then User sees the success message "true"
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Create app using create Diabetes Record Template
     Given User is on Home page
     When User opens Main Menu

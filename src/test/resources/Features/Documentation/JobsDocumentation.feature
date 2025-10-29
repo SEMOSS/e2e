@@ -2,7 +2,7 @@ Feature: Job Settings documentation
 
 @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - Jobs Page
-   Given User captures documentation screenshot for 'Jobs Management'
+   Given User captures documentation screenshot for 'PlatformNavigation/Jobs Management'
     Given User opens Main Menu
     And User captures a 'button' and highlights the 'Settings'
     And User clicks on Open Settings

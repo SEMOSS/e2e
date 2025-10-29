@@ -1,12 +1,11 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -49,17 +48,17 @@ public class AddModelSteps {
 		openModelPage.selectModel(aiModelName);
 	}
 
-	@And("User enters Catalog name as {string}")
+	@And("User enters Catalog Name as {string}")
 	public void user_enters_Catalog_name_as(String catalogName) {
 		openModelPage.enterCatalogName(catalogName);
 	}
 
-	@When("User enters open AI Key as {string}")
+	@When("User enters Open AI Key as {string}")
 	public void user_enters_open_ai_key_as(String openAIKey) {
 		openModelPage.enterOpenAIKey(openAIKey);
 	}
 
-	@When("User enters var name as {string}")
+	@When("User enters Variable Name as {string}")
 	public void user_enters_var_name_as(String varName) {
 		openModelPage.enterVariableName(varName);
 	}
@@ -89,7 +88,7 @@ public class AddModelSteps {
 		openModelPage.closeModelCreationToastMessage();
 	}
 
-	@Then("User Can see the Model title as {string}")
+	@Then("User can see the Model title as {string}")
 	public void user_can_see_the_model_title_as(String modelTitle) {
 		String actualModelTitle = openModelPage.verifyModelTitle(modelTitle);
 		String expModelTitle = openModelPage.getExpectedCatalogTitle(modelTitle);
@@ -367,7 +366,7 @@ public class AddModelSteps {
 	}
 
 	// new
-	@Then("User can see following fields in SMSS properties")
+	@Then("User can see following fields in SMSS Properties")
 	public void user_can_see_following_fields_in_smss_properties(DataTable table) {
 		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
@@ -446,12 +445,12 @@ public class AddModelSteps {
 
 	}
 
-	@And("User select chat type as {string}")
+	@And("User select Chat Type as {string}")
 	public void user_select_chat_type_as(String option) {
 		openModelPage.selectChatOption(option);
 	}
 
-	@And("User select the keep conversation history as {string}")
+	@And("User select the Keep Conversation History as {string}")
 	public void user_select_the_keep_conversation_history_as(String option) {
 		openModelPage.selectKeepConversationHistoryOption(option);
 	}
@@ -471,7 +470,7 @@ public class AddModelSteps {
 		openModelPage.enterMaxInputTokens(maxInputTokens);
 	}
 
-	@And("User select type as {string}")
+	@And("User select Type as {string}")
 	public void user_select_type_as(String type) {
 		openModelPage.selectTypeForModel(type);
 	}
@@ -500,5 +499,11 @@ public class AddModelSteps {
 	public void user_enter_aws_secreate_key_as(String awsSecreateKey) {
 		openModelPage.enterAWSSecretKey(awsSecreateKey);
 	}
+	
+	@And("User click on Create {string} button")
+	public void user_click_on_create_button(String buttonName) {
+		openModelPage.clickOnCreateButton(buttonName);
+	}
+	
 
 }

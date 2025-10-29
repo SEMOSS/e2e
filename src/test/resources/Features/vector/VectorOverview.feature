@@ -1,4 +1,3 @@
-@Regression
 Feature: Vector Overview
 
   Background: Validate usage of storage
@@ -29,7 +28,7 @@ Feature: Vector Overview
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as 'FAISS Vector DB00'
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario: Validate vector overview page
     Given User can see the Vector title as 'FAISS Vector DB00'
     When User clicks on Edit button

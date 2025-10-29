@@ -311,4 +311,9 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.enterDataLimit(dataLimit);
 	}
 
+	@And("User click on run all cell button")
+	public void user_click_on_run_all_cell_button() {
+		notebookPage.clickOnRunAllCellButton();
+	}
+
 }

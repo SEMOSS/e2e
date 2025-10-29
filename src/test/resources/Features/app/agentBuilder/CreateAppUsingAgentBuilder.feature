@@ -11,7 +11,7 @@ Feature: Create Agent builder app
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    Then User Can see the Model title as 'Model'
+    Then User can see the Model title as 'Model'
     And User clicks On Copy Catalog ID
 
   Scenario: Create Agent builder app and navigate to Blocks option
