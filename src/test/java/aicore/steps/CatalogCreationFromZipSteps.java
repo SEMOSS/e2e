@@ -8,13 +8,13 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 
 public class CatalogCreationFromZipSteps {
-	
+
 	private CatalogCreationFromZipPage fileUploadPage;
-	
-	public CatalogCreationFromZipSteps()
-	{
-		fileUploadPage=new CatalogCreationFromZipPage(SetupHooks.getPage());
+
+	public CatalogCreationFromZipSteps() {
+		fileUploadPage = new CatalogCreationFromZipPage(SetupHooks.getPage());
 	}
+
 	@When("User opens {string}")
 	public void user_opens(String catalogName) {
 		fileUploadPage.openCatalog(catalogName);
