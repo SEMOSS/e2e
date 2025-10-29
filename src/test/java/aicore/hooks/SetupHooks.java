@@ -88,7 +88,8 @@ public class SetupHooks {
 
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1)
-				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write")); // ensures DPI/zoom consistency;
+				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
+				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
 		BrowserContext context = browser.newContext(newContextOptions);
 		ResourcePool.get().setContext(context);
 
