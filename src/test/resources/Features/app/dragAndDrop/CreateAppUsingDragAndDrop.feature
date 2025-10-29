@@ -70,3 +70,5 @@ Feature: Create drag and drop app
     And User selects 'Test query' from the Query dropdown
     And User clicks on the Save App icon
     Then User should see the 'Logs' text as 'Hello word'
+
+    

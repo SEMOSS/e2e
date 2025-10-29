@@ -15,7 +15,7 @@ Feature: Model Documentation
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
-    Then User Can see the Model title as 'Model'
+    Then User can see the Model title as 'Model'
     And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
@@ -39,7 +39,7 @@ Feature: Model Documentation
     And User captures a 'button' and highlights the 'Discoverable Models'
     And User searches the 'Model' in the model catalog searchbox
     And User selects the 'Model' from the model catalog
-    And User Can see the Model title as 'Model'
+    And User can see the Model title as 'Model'
     And User captures a 'button' and highlights the 'Request Access'
     And User click on the Request Access button
     And User selects 'author' access

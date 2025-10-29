@@ -59,6 +59,7 @@ public class ModelPageUtils {
 	private static final String AWS_REGION_DATA_TESTID = "importForm-AWS_REGION-textField";
 	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
 	private static final String AWS_SECRET_KEY_DATA_TESTID = "importForm-AWS_SECRET_KEY-textField";
+	private static final String CREATE_MODEL_BUTTON_DATA_TESTID="importForm-submit-btn";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
@@ -414,6 +415,12 @@ public class ModelPageUtils {
 		if (currentValue.isEmpty()) {
 			awsSecretKeyField.fill(awsSecretKey);
 		}
+	}
+	public static void clickOnCreateButton(Page page, String buttonName) {
+		Locator createButtonLocator = page.getByTestId(CREATE_MODEL_BUTTON_DATA_TESTID);
+		AICorePageUtils.waitFor(createButtonLocator);
+		createButtonLocator.scrollIntoViewIfNeeded();
+		createButtonLocator.click();
 	}
 
 }

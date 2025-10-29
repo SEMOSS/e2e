@@ -11,7 +11,7 @@ Feature: Model Catalog Permission - Editor
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    And User Can see the Model title as 'Catalog'
+    And User can see the Model title as 'Catalog'
     And User clicks On Copy Catalog ID
     Then 'Author' user clicks on Access Control
     And User clicks on Add Member button
@@ -22,7 +22,7 @@ Feature: Model Catalog Permission - Editor
     And User clicks on Open Model
     And User searches the 'Catalog' in the model catalog searchbox
     And User selects the 'Catalog' from the model catalog
-    Given User Can see the Model title as 'Catalog'
+    Given User can see the Model title as 'Catalog'
     Then 'Editor' user can 'View' Overview
 
   @DeleteTestCatalog @LoginWithAuthor @Regression
