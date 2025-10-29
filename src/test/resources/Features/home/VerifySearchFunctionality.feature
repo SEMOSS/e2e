@@ -24,8 +24,8 @@ Feature: Search app and catalogs
     When User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters 'Test Model' as Catalog name
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks On Copy Catalog ID
     And User opens Main Menu
@@ -56,8 +56,8 @@ Feature: Search app and catalogs
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters 'Test Model' as Catalog name
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks On Copy Catalog ID
     When User clicks on Edit button
