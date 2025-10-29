@@ -1,11 +1,16 @@
-name: Run Docker Compose and Tests
+name: Pull Request test check
 
 on:
   pull_request:
     branches: [ main ]
 
+concurrency:
+  group: ${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   test:
+    if: ${{ github.event.pull_request.draft == false }}
     runs-on: CICD-GitHubRunner-private
     steps:
       - name: Checkout code
