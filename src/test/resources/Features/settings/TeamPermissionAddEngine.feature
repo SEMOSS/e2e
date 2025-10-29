@@ -1,4 +1,3 @@
-@Regression
 Feature: Add Engine for Team Permission
 
   Background: Team Permissions - Add team
@@ -12,7 +11,7 @@ Feature: Add Engine for Team Permission
     And User fills Description as 'Test Description' in Description field of Add Team form
     And User clicks on 'Add' button in Add Team form
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Database Users role
     Given User opens Main Menu
     And User clicks on Open Database
@@ -42,7 +41,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Function Users role
     Given User opens Main Menu
     When User clicks on Open Function
@@ -70,7 +69,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Storage Users role
     Given User is on Home page
     When User opens Main Menu
@@ -104,7 +103,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Vector Users role
     Given User is on Home page
     When User opens Main Menu

@@ -38,7 +38,7 @@ public class NotebookPageUtils {
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
-	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='{notebookName}']";
+	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='Notebook']/..//following::div//p[text()='{notebookName}']";
 	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
 	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
 	private static final String QUERY_CODE_RUN_NULL_OUTPUT_XPATH = "//tbody//td[contains(text(),'There was an issue generating a preview.')]";
@@ -593,5 +593,9 @@ public class NotebookPageUtils {
 		Locator dataLimitField = page.getByLabel("Data Limit");
 		AICorePageUtils.waitFor(dataLimitField);
 		dataLimitField.fill(dataLimit);
+	}
+
+	public static void clickOnRunAllCellButton(Page page) {
+		page.getByTitle("Run all cells").click();
 	}
 }

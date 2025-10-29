@@ -14,8 +14,6 @@ services:
       - tnet
     #    volumes:
     #      - ./results/coverage:/opt/testresults/
-    deploy:
-      replicas: ${PARALLEL_COUNT}
 
   test:
     build: .

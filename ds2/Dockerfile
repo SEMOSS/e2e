@@ -182,7 +182,7 @@ RUN uv venv --seed $VIRTUAL_ENV
 
 RUN cd /tmp && \
 curl -o pyproject.toml https://raw.githubusercontent.com/SEMOSS/Semoss/refs/heads/dev/py/install_config/pyproject.toml && \
-uv pip install -r pyproject.toml
+uv pip install -r pyproject.toml --extra cpu
 
 ENV VIRTUAL_ENV="/usr/lib/python/semossvenv"
 ENV PATH=$VIRTUAL_ENV/bin:$PATH

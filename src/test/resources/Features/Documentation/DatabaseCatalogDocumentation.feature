@@ -2,7 +2,7 @@ Feature: Database Catalog Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Database Catalog Documentation
-    Given User captures documentation screenshot for 'Database Catalog'
+    Given User captures documentation screenshot for 'PlatformNavigation/Database Catalog'
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Database'
     And User clicks on Open Database

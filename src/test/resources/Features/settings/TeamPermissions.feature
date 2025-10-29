@@ -1,7 +1,6 @@
-@Regression
 Feature: Team Permissions
 
-  @LoginWithAdmin
+  @LoginWithAdmin  @Regression
   Scenario: Team Permissions - Add team
     Given User opens Main Menu
     When User clicks on Open Settings

@@ -1,4 +1,4 @@
-@Regression @Smoke
+
 Feature: Search Vector Settings
 
   Background: Login to the application and Create model tagged with embeddings
@@ -15,7 +15,7 @@ Feature: Search Vector Settings
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteCreatedCatalog @Regression @Smoke
   Scenario Outline: Create vector
     Given User opens Main Menu
     And User clicks on Open Vector
@@ -36,7 +36,7 @@ Feature: Search Vector Settings
       | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 
-  @DeleteCreatedCatalog
+  @DeleteCreatedCatalog @Regression @Smoke
   Scenario Outline: Validate Search Functionality
   Given User opens Main Menu
     And User clicks on Open Vector

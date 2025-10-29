@@ -1,6 +1,6 @@
 Feature: Create app using Template
  
-@LoginWithAdmin
+@LoginWithAdmin @Regression
 Scenario: Create app using Template
     Given User is on Home page
     When User opens Main Menu
@@ -26,7 +26,7 @@ Scenario: Create app using Template
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
     
-  @LoginWithAdmin @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create app using Template - Landing page
     Given User is on Home page
     When User opens Main Menu

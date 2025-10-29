@@ -1,58 +1,112 @@
 Feature: App Library Documentation
 
-@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
-  Scenario: Create Drag and Drop app
-    Given User captures documentation screenshot for 'App Library'
+   @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+   Scenario: Create Drag and Drop app
+     Given User captures documentation screenshot for 'PlatformNavigation/App Library'
+     When User opens Main Menu
+     And User captures a 'button' and highlights the 'Apps'
+     And User clicks on Open App Library
+     And User captures a 'button' and highlights the 'Discoverable'
+     And User captures a 'button' and highlights the 'Create New App'
+     And User captures a 'SearchBar' and highlights the 'Search'
+     And User clicks on Create New App button
+     And User captures a 'Heading' and highlights the 'Start build with a template'
+     And User clicks on Get Started button in "Drag and Drop"
+     And User enters app name as 'Travel Itinerary'
+     And User enters description as 'Created by automation script'
+     And User enters tags 'travel planner, itinerary creator' and presses Enter
+     And User captures screenshot for "New App Popup"
+     And User clicks on Create button
+     And User fetch the app name for drag and drop app
+     And User captures a 'button' and highlights the 'Preview App'
+     And User captures a 'button' and highlights the 'Save App'
+     And User captures a 'button' and highlights the 'Share App'
+     And User clicks on Share App button
+     And User captures a 'button' and highlights the 'Copy'
+     And User clicks on IFrame button
+     And User captures a 'copycta' and highlights the 'CopyURL'
+     And User Clicks on close button
+     When User opens Main Menu
+     And User clicks on Open App Library
+     And User searches 'Travel Itinerary' app in the app searchbox
+     Then User can see 'Travel Itinerary' app on the page
+     And User clicks on View Details button
+     And User captures a 'button' and highlights the 'Export'
+     And User captures a 'button' and highlights the 'Edit'
+     And User captures a 'button' and highlights the 'Access Control'
+     And User clicks on Access Control button
+     And User captures a 'Heading' and highlights the 'Pending Requests'
+     And User clicks on 'Edit' button
+     And User captures screenshot for form "App Edit Options"
+     And User clicks on 'Cancel' button
+     When User opens Main Menu
+     And User clicks on Open App Library
+     And User clicks on Create New App button
+     And User captures a 'button' and highlights the 'Upload App'
+     And User clicks on Upload button
+     And User captures screenshot for "Uploading App"
+     And User is on Home page
+     Then User opens Main Menu
+     And User captures a 'button' and highlights the 'Settings'
+     And User clicks on Open Settings
+     And User captures a 'button' and highlights the 'App Settings'
+     And User clicks on 'App Settings' Card
+     When User enables admin mode
+     And User captures screenshot for "App Settings Page"
+     Then User can selects 'Travel Itinerary' on the page
+     And User captures a 'button' and highlights the 'Delete'
+     And User completes screenshot capture and triggers comparison for 'Settings Overview'
+
+   @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+   Scenario: Documentation for Visualize CSV template
+     Given User captures documentation screenshot for 'Navigating/Create New App'
+     When User opens Main Menu
+     And User clicks on Open App Library
+     And User clicks on Create New App button
+     And User captures a 'button' and highlights the "Visualize CSV" with name "AskCSV1"
+     And User selects "Visualize CSV" from Template List
+     And User enters app name as 'Test app'
+     And User captures a 'buttonType' and highlights the "submit" with name "AskCSV2"
+     And User clicks on Create button
+     And User captures a 'Block' and highlights the "upload" with name "AskCSV3"
+     And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation @DeleteTestCatalog
+  Scenario: Documentation for Ask LLM template
+    Given User captures documentation screenshot for 'Navigating/Create New App'
     When User opens Main Menu
-    And User captures a 'button' and highlights the 'Apps'
+    And User clicks on Open Model
+    When User clicks on Add Model
+    Then User selects 'ZIP'
+    And User uploads a file 'model/Llama_model.zip'
+    And User clicks on Create Model button
+    And User get the CatalogName for variable
+    And User clicks On Copy Catalog ID
+    When User opens Main Menu
     And User clicks on Open App Library
-    And User captures a 'button' and highlights the 'Discoverable'
-    And User captures a 'button' and highlights the 'Create New App'
-    And User captures a 'SearchBar' and highlights the 'Search'
+    And User captures a 'button' and highlights the "Create New App" with name "LandingPage1"
     And User clicks on Create New App button
-    And User captures a 'Heading' and highlights the 'Start build with a template'
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Travel Itinerary'
-    And User enters description as 'Created by automation script'
-    And User enters tags 'travel planner, itinerary creator' and presses Enter
-    And User captures screenshot for "New App Popup"
+    And User captures a "templatetab , usetemplatetab" and highlights the "Ask LLM , Ask LLM" with name "askLLMclick"
+    And User selects "Ask LLM" from Template List
+    And User captures screenshot for "AskLLMcreation"
+    And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
-    And User captures a 'button' and highlights the 'Preview App'
-    And User captures a 'button' and highlights the 'Save App'
-    And User captures a 'button' and highlights the 'Share App'
-    And User clicks on Share App button
-    And User captures a 'button' and highlights the 'Copy'
-    And User clicks on IFrame button
-    And User captures a 'copycta' and highlights the 'CopyURL'
-    And User Clicks on close button
-    When User opens Main Menu
-    And User clicks on Open App Library
-		And User searches 'Travel Itinerary' app in the app searchbox
-    Then User can see 'Travel Itinerary' app on the page
-		And User clicks on app 'View Details' button
-		And User captures a 'button' and highlights the 'Export'
-    And User captures a 'button' and highlights the 'Edit'
-    And User captures a 'button' and highlights the 'Access Control'
-    And User clicks on Access Control button
-    And User captures a 'Heading' and highlights the 'Pending Requests'
-    And User clicks on 'Edit' button
-    And User captures screenshot for form "App Edit Options"
-    And User clicks on 'Cancel' button
-    When User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User captures a 'button' and highlights the 'Upload App'
-    And User clicks on Upload button
-    And User captures screenshot for "Uploading App"
-    And User is on Home page
-    Then User opens Main Menu
-    And User captures a 'button' and highlights the 'Settings'
-    And User clicks on Open Settings
-    And User captures a 'button' and highlights the 'App Settings'
-    And User clicks on 'App Settings' Card
-    When User enables admin mode
-    And User captures screenshot for "App Settings Page"
-    Then User can selects 'Travel Itinerary' on the page
-    And User captures a 'button' and highlights the 'Delete'
-    And User completes screenshot capture and triggers comparison for 'Settings Overview'
+    And User clicks on description block
+    And User clicks on the Block Settings option
+    And User adds description as "When did covid start"
+    And User captures screenshot for "llmone"
+    And User clicks on the Submit Block
+    And User captures screenshot for "llmtwo"
+    And User clicks on Variable
+    And User clicks on "model" open menu
+    And User clicks on edit variable option
+    And User enters variable value
+    And User clicks on Save variable button
+    And User clicks on Notebook
+    And User clicks on Query name as 'ask-llm'
+   	And User clicks on Notebook
+  	And User click on run all cell button
+    And User clicks on 'page-1' page
+    And User clicks on the Response Block
+    And User captures screenshot for "llmthree"
+    And User completes screenshot capture and triggers comparison for 'Ask LLM'
