@@ -60,6 +60,8 @@ echo "Tomcat started"
 
 cd /workspace
 mvn -Dtest=aicore.suite.FullSuite test -e
+TEST_RESULT=$?
+echo "Test result code was: $TEST_RESULT"
 cd /app
 
 TC_PATH=$(find "/opt/" -maxdepth 1 -type d -name "apache-tomcat-*" | head -n 1)
@@ -97,3 +99,5 @@ echo "running coverage command"
 
 echo "JACOCO Command is: $JACOCLI_COMMAND"
 eval "$JACOCLI_COMMAND"
+
+exit $TEST_RESULT

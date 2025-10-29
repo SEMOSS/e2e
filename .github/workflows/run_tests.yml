@@ -28,7 +28,7 @@ jobs:
 
     - name: Build and run Docker Compose
       run: |
-        docker compose up --remove-orphans --build --exit-code-from test
+        docker compose -f docker.yaml up --remove-orphans --build --exit-code-from semoss
       env:
         COMPOSE_DOCKER_CLI_BUILD: 1
         DOCKER_BUILDKIT: 1
