@@ -1,7 +1,6 @@
-@Regression
 Feature: Search app and catalogs
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Search App
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -18,7 +17,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Apps' option to filter the results
     Then User can see 'Test apps' in the 'Apps' filter results
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Search model
     Given User opens Main Menu
     When User clicks on Open Model
@@ -35,6 +34,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Model' option to filter the results
     Then User can see 'Test Model' in the 'Model' filter results
 
+  @Regression
   Scenario: Search Function
     Given User opens Main Menu
     When User clicks on Open Function
@@ -49,6 +49,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Function' option to filter the results
     Then User can see 'weatherFunctionTest' in the 'Function' filter results
 
+  @Regression
   Scenario: Search Vector
     Given User opens Main Menu
     When User clicks on Open Model
@@ -79,6 +80,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Vector' option to filter the results
     Then User can see 'Test Vector' in the 'Vector' filter results
 
+  @Regression
   Scenario: Search Database
     Given User opens Main Menu
     And User clicks on Open Database
@@ -93,6 +95,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Database' option to filter the results
     Then User can see 'TestDatabase' in the 'Database' filter results
 
+  @Regression
   Scenario: Search Storage
     Given User opens Main Menu
     When User clicks on Open Storage
@@ -111,6 +114,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Storage' option to filter the results
     Then User can see 'Test Storage' in the 'Storage' filter results
 
+  @Regression
   Scenario Outline: Search All
     Given User is on Home page
     When User opens Main Menu
@@ -128,7 +132,7 @@ Feature: Search app and catalogs
       | TestDatabase        | All    |
       | Test Storage        | All    |
 
-  @DeleteTestCatalog @DeleteCreatedTestApp
+  @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Delete created resources
     Given User opens Main Menu
     When User clicks on Home

@@ -1,4 +1,3 @@
-@Regression
 Feature: Add H2 Database
 
   Background: Create H2 database
@@ -18,7 +17,7 @@ Feature: Add H2 Database
     And User clicks On Copy Catalog ID
     Then User can see the database title as 'H2'
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Verify H2 database
     Given User opens Main Menu
     And User clicks on Open Database

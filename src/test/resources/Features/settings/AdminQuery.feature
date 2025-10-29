@@ -1,7 +1,6 @@
-@Regression
 Feature: Admin query
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query
     Given User opens Main Menu
     And User clicks on Open Settings
@@ -22,7 +21,7 @@ Feature: Admin query
       | themes              | select * from ADMIN_THEME      |            4 | ID, THEME_NAME, THEME_MAP, IS_ACTIVE                                                                                                                                                                               |
      #| UserTrackingDatabase | select * from INSIGHT_OPENS    |            4 | INSIGHTID, USERID, OPENED_ON, ORIGIN                                                                                                                                                                               |
  
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query count
     Given User created '<MODEL_COUNT>' models with the model 'GPT-3.5', catalog name 'Model', OpenAI key 'Test123', and variable name 'Var123'
     And User created '<JOB_COUNT>' jobs with the job name 'Test Job', Pixel '1+1'

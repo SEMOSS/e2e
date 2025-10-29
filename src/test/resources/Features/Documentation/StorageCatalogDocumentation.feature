@@ -2,7 +2,7 @@ Feature: Storage Catalog Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Storage Catalog Documentation
-    Given User captures documentation screenshot for 'Storage Catalog'
+    Given User captures documentation screenshot for 'PlatformNavigation/Storage Catalog'
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Storage'
     And User clicks on Open Storage

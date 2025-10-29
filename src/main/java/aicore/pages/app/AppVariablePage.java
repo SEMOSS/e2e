@@ -54,4 +54,16 @@ public class AppVariablePage {
 		AppVariablePageUtils.verifyVariablePresentInList(page, variableName, variableType);
 	}
 
+	public void clickOnEditVariableOption() {
+		AppVariablePageUtils.clickOnEditVariableOption(page);
+	}
+
+	public void clickOnVariableOpenMenu(String variableName) {
+		AppVariablePageUtils.clickOnVariableOpenMenu(page, variableName);
+	}
+
+	public void clickOnSaveVariableButton() {
+		AppVariablePageUtils.clickOnSaveVariableButton(page);
+	}
+
 }

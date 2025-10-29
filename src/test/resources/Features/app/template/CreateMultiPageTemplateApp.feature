@@ -1,6 +1,6 @@
 Feature: Create Multi Page App using Template
 
-  @LoginWithAdmin @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create Multi Page App using Template
     Given User is on Home page
     When User opens Main Menu

@@ -2,7 +2,7 @@ Feature: Model Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Model
-    Given User captures documentation screenshot for 'Model Catalog'
+    Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Model'
     When User clicks on Open Model
@@ -51,7 +51,7 @@ Feature: Model Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
-    Given User captures documentation screenshot for 'Model Catalog'
+    Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
     And User created '2' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
     And User created '2' models with the model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123', and variable name 'Var123'
     When User opens Main Menu
