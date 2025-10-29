@@ -1,4 +1,5 @@
 Feature: App landing page
+
   Background: Create Drag and Drop app
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -11,8 +12,25 @@ Feature: App landing page
     And User fetch the app name for drag and drop app
 
   @DeleteCreatedTestApp @Regression
+  Scenario: Verify app card details
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    When User searches 'Test app' app in the app searchbox
+    Then User can see 'Test app' app on the page
+    And User can see the following details on the app card
+      | DETAIL_NAME         | VALUE                        |
+      | App Name            | Test app                     |
+      | App Description     | Created by automation script |
+      | Published date      | Published {date}             |
+      | Last Edited date    | Last Edited {date}           |
+      | Open App button     | Open App                     |
+      | View Details button | View Details                 |
+      | More Vert Icon      |                              |
+      | Bookmark Icon       |                              |
+
+  @DeleteCreatedTestApp @Regression
   Scenario: User copies the App Id successfully
-    Given User opens Main Menu 
+    Given User opens Main Menu
     When User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     And User clicks on more vertical icon of 'Test app' app
@@ -47,7 +65,7 @@ Feature: App landing page
     And User clicks on more vertical icon of 'Test app' app
     And User clicks on 'Delete App' option
     And User click on 'Delete' confirmation button
-    Then User can not see 'Test app' app on the page 
+    Then User can not see 'Test app' app on the page
 
   @DeleteCreatedTestApp @Regression
   Scenario: Filter apps
@@ -91,7 +109,7 @@ Feature: App landing page
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     Then User can see 'Test app' app on the page
-    And User clicks on View Details button
+    And User clicks on app 'View Details' button
     And User clicks on Access Control Tab
     And User turn OFF the Non Discoverable option
     And User logs out from the application

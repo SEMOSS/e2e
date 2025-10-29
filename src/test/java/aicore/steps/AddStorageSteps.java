@@ -309,7 +309,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	}
 
 	@When("User clicks on {string} button")
-	public void user_clicks_on_edit_button(String buttonName) {
+	public void user_clicks_on_button(String buttonName) {
 		storagePage.clickOnButton(buttonName);
 	}
 }

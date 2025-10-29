@@ -1,5 +1,9 @@
 package aicore.utils.page.app;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +21,8 @@ public class AppPageUtils {
 
 	public static final String CREATE_NEW_APP_DATA_TEST_ID = "appCatalogPage-create-new-app-btn";
 	public static final String APP_CARD_XPATH = "//p[text()='{appName}']";
-	public static final String OPEN_APP_LINK_XPATH = "//p[text()='{appName}']/ancestor::div[contains(@class,'MuiCardHeader-root')]/following-sibling::div//a";
+	public static final String APP_DESCRIPTION_XPATH = "//span[text()='{description}']";
+	public static final String OPEN_APP_LINK_XPATH = "//p[text()='{buttonName}']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	public static final String MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID = "MoreVertIcon";
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
@@ -25,7 +30,10 @@ public class AppPageUtils {
 	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
 	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
-	private static final String VIEW_DETAILS_BUTTON_XPATH = "//p[text()='View Details']";
+	private static final String VIEW_DETAILS_BUTTON_XPATH = "//p[text()='{buttonName}']";
+	private static final String APP_BOOKMARK_ICON_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkBorderIcon']";
+	private static final String PUBLISHED_DATE_XPATH = "//p[text()='{publishedDate}']";
+	private static final String LAST_EDITED_DATE_XPATH = "//p[text()='{lastEditedDate}']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -117,6 +125,49 @@ public class AppPageUtils {
 		return appCard.isVisible();
 	}
 
+	public static boolean isContentVisibleOnAppCard(Page page, String contentName, String contentValue,
+			String timestamp) {
+		// Expected formatted date (e.g., "October 22, 2025")
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+	    String expectedDate = LocalDate.now().format(formatter);
+		Locator locator = null;
+		switch (contentName) {
+		case "App Name":
+			locator = page.locator(APP_CARD_XPATH.replace("{appName}", contentValue + " " + timestamp));
+			break;
+		case "App Description":
+			locator = page.locator(APP_DESCRIPTION_XPATH.replace("{description}", contentValue));
+			break;
+		case "Open App button":
+			locator = page.locator(OPEN_APP_LINK_XPATH.replace("{buttonName}", contentValue));
+			break;
+		case "View Details button":
+			locator = page.locator(VIEW_DETAILS_BUTTON_XPATH.replace("{buttonName}", contentValue));
+			break;
+		case "More Vert Icon":
+			locator = page.getByTestId(MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID);
+			break;
+		case "Bookmark Icon":
+			locator = page.locator(APP_BOOKMARK_ICON_XPATH);
+			break;
+		case "Published date":
+			locator = page.locator(PUBLISHED_DATE_XPATH.replace("{publishedDate}", contentValue.replace("{date}", expectedDate)));
+			break;
+		case "Last Edited date":
+			locator = page.locator(LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}", contentValue.replace("{date}", expectedDate)));
+			break;
+		default:
+			logger.error("Invalid option name: " + contentName);
+			throw new IllegalArgumentException("Invalid option name: " + contentName);
+		}
+		locator.scrollIntoViewIfNeeded();
+		return locator.isVisible();
+	}
+
+	public static void getAppDescription(Page page, String appName) {
+
+	}
+
 	public static void clickOnDeleteButton(Page page, String buttonName) {
 		Locator deleteButton = page.locator(DELETE_APP_CONFIRMATION_BUTTON_XPATH.replace("{name}", buttonName));
 		deleteButton.isVisible();
@@ -140,8 +191,8 @@ public class AppPageUtils {
 		filterValueLocator.click();
 	}
 
-	public static void clickOnViewDetails(Page page) {
-		page.locator(VIEW_DETAILS_BUTTON_XPATH).click();
+	public static void clickOnViewDetails(Page page,String buttonName) {
+		page.locator(VIEW_DETAILS_BUTTON_XPATH.replace("{buttonName}", buttonName)).click();
 	}
 
 	public static void clickOnAccessControlButton(Page page) {
