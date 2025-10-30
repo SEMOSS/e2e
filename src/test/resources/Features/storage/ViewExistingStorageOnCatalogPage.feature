@@ -11,7 +11,7 @@ Feature: View existing Storages on storage Catalog Page
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'

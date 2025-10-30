@@ -1,10 +1,11 @@
 package aicore.steps.app;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -537,7 +538,7 @@ public class CreateAppUsingDragAndDropSteps {
 		for (Map<String, String> detail : details) {
 			String name = detail.get("DETAIL_NAME");
 			String value = detail.get("VALUE");
-			boolean isContentVisible=appPage.isContentVisibleOnAppCard(name, value);
+			boolean isContentVisible = appPage.isContentVisibleOnAppCard(name, value);
 			Assertions.assertTrue(isContentVisible, name + " is not displayed on app card");
 		}
 	}

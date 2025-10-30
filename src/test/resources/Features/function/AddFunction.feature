@@ -18,7 +18,7 @@ Feature: Add Function
     And User enters Function description as '<functionDescription>'
     And User sees Create Function button
     And User clicks on Create Function button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User sees success toast message '<Toast_message>'
    
     Examples: 

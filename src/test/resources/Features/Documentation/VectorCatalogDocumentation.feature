@@ -8,12 +8,12 @@ Feature: Vector Catalog documentation
     And User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-    Then User selects 'ZIP'
-    And User uploads a file 'VectorDatabase/Text_Embedding_model.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'VectorDatabase/Text_Embedding_model.zip'
     And User clicks on Create Model button
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TextEmbeddings BAAI-Large-En-V1.5'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Vector'
     And User clicks on Open Vector
@@ -29,7 +29,7 @@ Feature: Vector Catalog documentation
     And User captures a 'button' and highlights the 'Create vector'
     And User clicks on Create Vector button
     And User can see vector database created success toast message as 'Successfully added vector database to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User clicks on Usage tab
@@ -62,7 +62,7 @@ Feature: Vector Catalog documentation
     And User clicks on files
     And User clicks on Embed New Document
     And User captures screenshot for "Embed New Document"
-    And User uploads a file 'VectorDatabase/Vector_Embed_file.pdf'
+    And User uploads the file 'VectorDatabase/Text_Embedding_model.zip'
     And User clicks on Embed button
     Then User sees file embeded success toast message 'Successfully added document'
     And User captures screenshot for "File List"

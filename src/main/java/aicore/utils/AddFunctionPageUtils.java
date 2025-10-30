@@ -1,8 +1,5 @@
 package aicore.utils;
 
-import java.nio.file.FileSystems;
-import java.nio.file.Paths;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -130,29 +127,6 @@ public class AddFunctionPageUtils {
 		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
 		page.getByText(CREATE_FUNCTION_BUTTON).isEnabled();
 		page.getByText(CREATE_FUNCTION_BUTTON).click();
-	}
-
-	public static String enterFilePath(Page page, String fileName) {
-		String pathSeparator = FileSystems.getDefault().getSeparator();
-		Locator fileInput = page.locator(ADD_FILE_XPATH);
-		String relativePath = "src" + pathSeparator + "test" + pathSeparator + "resources" + pathSeparator + "data"
-				+ pathSeparator;
-		if (fileName.contains("/")) {
-			fileName.replace("/", pathSeparator);
-		}
-		fileInput.setInputFiles(Paths.get(relativePath + fileName));
-		if (fileName.contains("/")) {
-			String[] ActualFileName = fileName.split("/");
-			int fileNameIndex = ActualFileName.length - 1;
-			Locator uploadedFileName = page
-					.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", ActualFileName[fileNameIndex]));
-			String uploadedFileNameValue = uploadedFileName.textContent();
-			return uploadedFileNameValue;
-		} else {
-			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
-			String uploadedFileNameValue = uploadedFileName.textContent();
-			return uploadedFileNameValue;
-		}
 	}
 
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {

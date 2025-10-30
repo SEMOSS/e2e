@@ -1,11 +1,12 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -66,19 +67,6 @@ public class AddModelSteps {
 	@When("User clicks on Create Model button")
 	public void user_clicks_on_create_model_button() throws InterruptedException {
 		openModelPage.clickOnCreateModelButton();
-	}
-
-	@Given("User uploads a file {string}")
-	public void user_uploads_a_file(String fileName) {
-		String uploadedFileName = openModelPage.enterFilePath(fileName);
-		if (fileName.contains("/")) {
-			String[] ActualFileName = fileName.split("/");
-			int fileNameIndex = ActualFileName.length - 1;
-			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
-					"Document is not uploaded successfully");
-		} else {
-			Assertions.assertEquals(fileName, uploadedFileName, "Document is not uploaded successfully");
-		}
 	}
 
 	@And("User can see a toast message as {string}")
@@ -499,11 +487,10 @@ public class AddModelSteps {
 	public void user_enter_aws_secreate_key_as(String awsSecreateKey) {
 		openModelPage.enterAWSSecretKey(awsSecreateKey);
 	}
-	
+
 	@And("User click on Create {string} button")
 	public void user_click_on_create_button(String buttonName) {
 		openModelPage.clickOnCreateButton(buttonName);
 	}
-	
 
 }

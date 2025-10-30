@@ -6,13 +6,13 @@ Feature: Model Catalog Permission - Editor
     And User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Catalog'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'Catalog'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User can see the Model title as 'Catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as "Editor"
