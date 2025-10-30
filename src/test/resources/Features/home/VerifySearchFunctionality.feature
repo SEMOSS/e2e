@@ -1,7 +1,6 @@
-@Regression
 Feature: Search app and catalogs
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Search App
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -18,15 +17,15 @@ Feature: Search app and catalogs
     And User clicks on the 'Apps' option to filter the results
     Then User can see 'Test apps' in the 'Apps' filter results
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: Search model
     Given User opens Main Menu
     When User clicks on Open Model
     When User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters 'Test Model' as Catalog name
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks On Copy Catalog ID
     And User opens Main Menu
@@ -35,6 +34,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Model' option to filter the results
     Then User can see 'Test Model' in the 'Model' filter results
 
+  @Regression
   Scenario: Search Function
     Given User opens Main Menu
     When User clicks on Open Function
@@ -51,14 +51,15 @@ Feature: Search app and catalogs
     And User clicks on the 'Function' option to filter the results
     Then User can see 'weatherFunctionTest' in the 'Function' filter results
 
+  @Regression
   Scenario: Search Vector
     Given User opens Main Menu
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters 'Test Model' as Catalog name
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks On Copy Catalog ID
     When User clicks on Edit button
@@ -81,6 +82,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Vector' option to filter the results
     Then User can see 'Test Vector' in the 'Vector' filter results
 
+  @Regression
   Scenario: Search Database
     Given User opens Main Menu
     And User clicks on Open Database
@@ -97,6 +99,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Database' option to filter the results
     Then User can see 'TestDatabase' in the 'Database' filter results
 
+  @Regression
   Scenario: Search Storage
     Given User opens Main Menu
     When User clicks on Open Storage
@@ -115,6 +118,7 @@ Feature: Search app and catalogs
     And User clicks on the 'Storage' option to filter the results
     Then User can see 'Test Storage' in the 'Storage' filter results
 
+  @Regression
   Scenario Outline: Search All
     Given User is on Home page
     When User opens Main Menu
@@ -132,7 +136,7 @@ Feature: Search app and catalogs
       | TestDatabase        | All    |
       | Test Storage        | All    |
 
-  @DeleteTestCatalog @DeleteCreatedTestApp
+  @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Delete created resources
     Given User opens Main Menu
     When User clicks on Home

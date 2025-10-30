@@ -1,7 +1,6 @@
-@Regression
 Feature: User Management
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Add New Native User
     Given User opens Main Menu
     When User clicks on Open Settings
@@ -13,7 +12,7 @@ Feature: User Management
     And User searches for the created user
     And User clicks on Delete Selected button 2 times
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Edit Native User - Change Model Limit Restriction
     Given User opens Main Menu
     When User clicks on Open Settings
@@ -33,7 +32,7 @@ Feature: User Management
     And User searches for the created user
     And User clicks on Delete Selected button 1 times
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Update Configuration Settings - access_keys_allowed - true - Adfs
     Given User opens Main Menu
     When User clicks on Open Settings
@@ -44,7 +43,7 @@ Feature: User Management
     And User clicks on Save button of the configuration
     Then User can see a toast message after updating values of 'Adfs' as "Successfully modified adfs properties"
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Update Configuration Settings - access_keys_allowed - true - native
     Given User opens Main Menu
     When User clicks on Open Settings
@@ -57,7 +56,7 @@ Feature: User Management
     And User clicks on Save button of the configuration
     And User can see a toast message after updating values of 'Native' as "Successfully modified native properties"
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Add New Native User with Unique Incremental Details - Validate profile info
     Given User opens Main Menu
     When User clicks on Open Settings

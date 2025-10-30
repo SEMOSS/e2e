@@ -1,4 +1,3 @@
-@Regression
 Feature: View existing Vectors on Vector Catalog Page
 
   Background: Create and edit Vector
@@ -6,9 +5,9 @@ Feature: View existing Vectors on Vector Catalog Page
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'ModelCatalog'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'ModelCatalog'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks On Copy Catalog ID
     And User clicks on Edit button
@@ -32,7 +31,7 @@ Feature: View existing Vectors on Vector Catalog Page
     And User selects 'IP ALLOWED, PHI ALLOWED' from the Data Restrictions dropdown
     And User clicks on Submit button
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario: view and validate filter functionality - My Vectors
     Given User opens Main Menu
     When User clicks on Open Vector
@@ -47,7 +46,7 @@ Feature: View existing Vectors on Vector Catalog Page
     #Then User sees the catalog name 'FAISSVector' in the Bookmarked section
     #When User clicks on bookmark button to unbookmark 'FAISSVector' catalog
 
-  @DeleteTestCatalog
+  @DeleteTestCatalog @Regression
   Scenario: view and validate filter functionality - Discoverable Vectors
     Given User opens Main Menu
     When User clicks on Open Vector

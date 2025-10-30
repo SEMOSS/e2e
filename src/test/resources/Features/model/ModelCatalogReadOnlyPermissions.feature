@@ -7,13 +7,13 @@ Feature: Model Catalog Permission - Read
     And User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Catalog'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'Catalog'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks On Copy Catalog ID
-    And User Can see the Model title as 'Catalog'
+    And User can see the Model title as 'Catalog'
 		Then 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
@@ -23,7 +23,7 @@ Feature: Model Catalog Permission - Read
     And User clicks on Open Model
     And User searches the 'Catalog' in the model catalog searchbox
     And User selects the 'Catalog' from the model catalog
-    Given User Can see the Model title as 'Catalog'
+    Given User can see the Model title as 'Catalog'
     Then 'Read' user can 'View' Overview
 
   @DeleteTestCatalog

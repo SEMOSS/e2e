@@ -15,7 +15,7 @@ public class TeamPermissionsSettingSteps {
 	private String timestamp;
 
 	public TeamPermissionsSettingSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		teamPermissionsSettings = new TeamPermissionsSettingsPage(SetupHooks.getPage(), timestamp);
 	}
 

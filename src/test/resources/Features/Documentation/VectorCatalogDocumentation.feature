@@ -3,7 +3,7 @@ Feature: Vector Catalog documentation
   
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE @Documentation
   Scenario: Create a Vector
-    Given User captures documentation screenshot for 'Vector Catalog'
+    Given User captures documentation screenshot for 'PlatformNavigation/Vector Catalog'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open Model

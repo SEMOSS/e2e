@@ -1,4 +1,4 @@
-@Regression @Smoke
+
 Feature: Search Vector Settings
 
   Background: Login to the application and Create model tagged with embeddings
@@ -6,16 +6,16 @@ Feature: Search Vector Settings
     Given User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Catalog'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'Catalog'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
 
-  @LoginWithAdmin @DeleteCreatedCatalog
+  @LoginWithAdmin @DeleteCreatedCatalog @Regression @Smoke
   Scenario Outline: Create vector
     Given User opens Main Menu
     And User clicks on Open Vector
@@ -36,7 +36,7 @@ Feature: Search Vector Settings
       | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 
-  @DeleteCreatedCatalog
+  @DeleteCreatedCatalog @Regression @Smoke
   Scenario Outline: Validate Search Functionality
   Given User opens Main Menu
     And User clicks on Open Vector

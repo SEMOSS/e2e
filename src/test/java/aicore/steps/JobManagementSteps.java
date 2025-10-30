@@ -17,7 +17,7 @@ public class JobManagementSteps {
 	protected static String timestamp;
 
 	public JobManagementSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		jobManagementPage = new JobManagementPage(SetupHooks.getPage(), timestamp);
 	}
 

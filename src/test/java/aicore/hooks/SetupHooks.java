@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 
+import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -55,6 +56,7 @@ public class SetupHooks {
 		
 		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
+			ResourcePool.get().resetTimestamp();
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
 			setupFirstScenarioOfFeature(scenario);
 			ResourcePool.get().incrementFeatureNumber();
@@ -86,7 +88,8 @@ public class SetupHooks {
 
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1)
-				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write")); // ensures DPI/zoom consistency;
+				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
+				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
 		BrowserContext context = browser.newContext(newContextOptions);
 		ResourcePool.get().setContext(context);
 
@@ -223,6 +226,10 @@ public class SetupHooks {
 
 	public static Page getPage() {
 		return ResourcePool.get().getPage();
+	}
+
+	public static String getTimestamp() {
+		return ResourcePool.get().getTimestamp();
 	}
 
 	@After("@DeleteCreatedCatalog")

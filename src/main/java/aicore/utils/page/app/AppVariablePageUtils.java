@@ -19,6 +19,9 @@ public class AppVariablePageUtils {
 	private static final String ToastMessage = "//*[contains(@class, 'MuiAlert-message')]";
 	private static final String CatalogVariable = "//div[@id='home__content']//h4";
 	private static final String VariableListItem = "//button//div//p[text()='{variableName}']";
+	private static final String SAVEVARIABLE = "//span[text()='Save']";
+	private static final String OpenMenuOption = "//p[text()='{variableName}']/../../../../..//following-sibling::div//div//button[@title=\"Open Menu\"]";
+	private static final String EditVariableOption = "//li[@value=\"Edit\"]";
 
 	public static void clickOnVariableOption(Page page) {
 		Locator variables = page.locator(VariableOption);
@@ -150,5 +153,20 @@ public class AppVariablePageUtils {
 //					+ "' is not visible in the variable list");
 //		}
 	}
+
+	public static void clickOnEditVariableOption(Page page) {
+		page.locator(EditVariableOption).click();
+	}
+
+	public static void clickOnVariableOpenMenu(Page page, String variableName) {
+		Locator variableItem = page.locator(OpenMenuOption.replace("{variableName}", variableName));
+		variableItem.isVisible();
+		variableItem.click();
+	}
+
+	public static void clickOnSaveVariableButton(Page page) {
+		page.locator(SAVEVARIABLE).isVisible();
+		page.locator(SAVEVARIABLE).click();
+	}	
 
 }

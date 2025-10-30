@@ -21,7 +21,7 @@ public class NotebookCreationAndExecutionSteps {
 	protected static String frameID;
 
 	public NotebookCreationAndExecutionSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		notebookPage = new NotebookPage(SetupHooks.getPage(), timestamp);
 	}
 
@@ -309,6 +309,11 @@ public class NotebookCreationAndExecutionSteps {
 	@And("User enter the data limit as {string}")
 	public void user_enter_the_data_limit_as(String dataLimit) {
 		notebookPage.enterDataLimit(dataLimit);
+	}
+
+	@And("User click on run all cell button")
+	public void user_click_on_run_all_cell_button() {
+		notebookPage.clickOnRunAllCellButton();
 	}
 
 }

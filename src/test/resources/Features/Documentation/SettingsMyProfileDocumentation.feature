@@ -2,7 +2,7 @@ Feature: Settings My Profile
 
 @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - My Profile Page
-   Given User captures documentation screenshot for 'Settings-My Profile'
+   Given User captures documentation screenshot for 'PlatformNavigation/Settings-My Profile'
     Given User opens Main Menu
     And User clicks on Open Settings
     When User clicks on My Profile

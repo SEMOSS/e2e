@@ -1,0 +1,47 @@
+name: Pull Request test check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: CICD-GitHubRunner-private
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set environment variables
+        run: echo "UID=$(id -u)" >> $GITHUB_ENV && echo "GID=$(id -g)" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Build and run Docker Compose
+        run: |
+          docker compose -f docker.yaml up --remove-orphans --build --exit-code-from semoss
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report.html
+          path: target/cucumber-report.html # Adjust this path to where your test results are stored
+
+        # - name: Clean workspace
+        #   if: always()
+        #   run: |
+        #     /usr/bin/chown -R ubuntu:ubuntu $GITHUB_WORKSPACE
+        #     find $GITHUB_WORKSPACE -mindepth 1 -delete
+

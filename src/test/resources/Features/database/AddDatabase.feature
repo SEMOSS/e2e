@@ -1,4 +1,3 @@
-@Regression
 Feature: Add Database
 
   Background: Create Database using ZIP file
@@ -14,7 +13,7 @@ Feature: Add Database
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
 
-  @LoginWithAdmin @DeleteTestCatalog @Smoke
+  @LoginWithAdmin @Regression @DeleteTestCatalog @Smoke
   Scenario: Verify Database Usage Examples
     Given User opens Main Menu
     And User clicks on Open Database
@@ -27,7 +26,7 @@ Feature: Add Database
     And User sees an example of "How to use with Langchain API" with example code for Database
     And User sees an example of "How to use in Java" with example code for Database
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: View Database Tags
     Given User can see the Catalog title as 'TestDatabase'
     And User clicks on Edit button
@@ -36,7 +35,7 @@ Feature: Add Database
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: View Database Overview
     Given User can see the Catalog title as 'TestDatabase'
     And User sees the database name as 'TestDatabase'
@@ -57,7 +56,7 @@ Feature: Add Database
     And User sees an Edit button that opens a pop-up to edit
     And User clicks on Close button
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Verify MetaData for Database
     Given User opens Main Menu
     When User clicks on Open Database

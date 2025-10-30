@@ -1,7 +1,6 @@
-@Regression
 Feature: View add Storage page
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Verify the available options on add storage page
     Given User is on Home page
     When User opens Main Menu

@@ -1,4 +1,3 @@
-@Regression
 Feature: Add Function From Zip
 
   Background: Create Function using ZIP file
@@ -14,7 +13,7 @@ Feature: Add Function From Zip
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'WeatherFunctionTest'
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Validate Change access popup
     Given User can see the Catalog title as 'WeatherFunctionTest'
     When 'Admin' user clicks on Settings
@@ -37,8 +36,8 @@ Feature: Add Function From Zip
     And User click on cancel button
     And User logs out from the application
     Then User login as "Admin"
-    
-  @LoginWithAdmin @DeleteTestCatalog
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Validate change access request
     Given User can see the Catalog title as 'WeatherFunctionTest'
     When 'Admin' user clicks on Settings
@@ -59,7 +58,7 @@ Feature: Add Function From Zip
     And User login as "Admin"
    
 
-  @LoginWithAdmin @Smoke
+  @LoginWithAdmin @Regression @Smoke
   Scenario Outline: Delete Function
     Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Access Control Tab

@@ -1,4 +1,4 @@
-@DeleteTestCatalog @DeleteCreatedTestApp @Regression
+@DeleteTestCatalog @DeleteCreatedTestApp
 Feature: Drag and Drop Data Grid
 
   Background: Create Drag and Drop app and navigate to Blocks option
@@ -45,7 +45,7 @@ Feature: Drag and Drop Data Grid
     And User clicks on Run cell button
     And User fetch the frame id
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Drag and Drop Data Grid block and validate the column names with removed column
     When User clicks on 'page-1' page
     And User clicks on Blocks
@@ -60,7 +60,7 @@ Feature: Drag and Drop Data Grid
     And User clicks on the Sync icon
     And User should not see the 'Age' column in the Data Grid
 
-  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: validate the pagination on the Data Grid
     When User clicks on 'page-1' page
     And User clicks on Blocks

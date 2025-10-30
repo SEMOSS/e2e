@@ -1,7 +1,6 @@
-@Regression
 Feature: Validate storage creation form
 
-@LoginWithAdmin
+@LoginWithAdmin @Regression
   Scenario Outline: View and fill '<FUNCTION_NAME>' storage creation form
     Given User is on Home page
     When User opens Main Menu
@@ -22,7 +21,7 @@ Feature: Validate storage creation form
       | FUNCTION_NAME | FIELD_NAMES                                                                 | REQUIRED_FIELDS              |
       | Amazon S3     | Catalog Name, Region, Bucket, Access key, Secret key, Create Storage button | Catalog Name, Region, Bucket |
 
-	@DeleteTestCatalog
+	@DeleteTestCatalog @Regression
   Scenario: Submit and validate 'Amazon S3' storage creation form
     Given User is on Home page
     When User opens Main Menu

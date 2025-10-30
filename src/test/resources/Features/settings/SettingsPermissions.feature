@@ -1,6 +1,6 @@
 Feature: Validate catalog user permissions for all catalog types
 
-  @LoginWithAuthor @DeleteTestCatalog
+  @LoginWithAuthor @DeleteTestCatalog @Regression
   Scenario Outline: validate user access permissions of '<CATALOG>'
     Given User opens Main Menu
     When User opens '<CATALOG>'
@@ -78,7 +78,7 @@ Feature: Validate catalog user permissions for all catalog types
       | Function | Add Function | Function/weatherFunctionTest.zip | Function Settings | WeatherFunctionTest |
       | Storage  | Add Storage  | Storage/Localminio.zip           | Storage Settings  | Localminio          |
 
-  @LoginWithAuthor @DeleteCreatedTestApp
+  @LoginWithAuthor @DeleteCreatedTestApp @Regression
   Scenario: validate user access permissions of Apps
     Given User opens Main Menu
     When User clicks on Open App Library

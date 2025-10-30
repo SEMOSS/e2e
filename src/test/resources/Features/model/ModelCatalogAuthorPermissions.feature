@@ -7,13 +7,13 @@ Feature: Model catalog permission - Author
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Model'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'Model'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks On Copy Catalog ID
-    Then User Can see the Model title as 'Model'
+    Then User can see the Model title as 'Model'
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - View overview

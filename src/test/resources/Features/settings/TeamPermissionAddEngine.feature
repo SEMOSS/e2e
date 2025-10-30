@@ -1,4 +1,3 @@
-@Regression
 Feature: Add Engine for Team Permission
 
   Background: Team Permissions - Add team
@@ -12,7 +11,7 @@ Feature: Add Engine for Team Permission
     And User fills Description as 'Test Description' in Description field of Add Team form
     And User clicks on 'Add' button in Add Team form
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Database Users role
     Given User opens Main Menu
     And User clicks on Open Database
@@ -44,7 +43,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Function Users role
     Given User opens Main Menu
     When User clicks on Open Function
@@ -74,7 +73,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Storage Users role
     Given User is on Home page
     When User opens Main Menu
@@ -108,16 +107,16 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Vector Users role
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Catalog'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'Catalog'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks On Copy Catalog ID
     When User clicks on Edit button

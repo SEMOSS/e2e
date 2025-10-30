@@ -1,4 +1,3 @@
-@Regression
 Feature: Job Management
 
   Background: Add Job
@@ -12,7 +11,7 @@ Feature: Job Management
     And User clicks Add button
     Then User can see 'Test Job' in the list
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Edit Job
     When User clicks on Edit Icon for added 'Test Job'
     And User edit Tags as 2
@@ -20,17 +19,17 @@ Feature: Job Management
     And User clicks Save button
     Then User can see '2' value as Tag for edited 'Test Job'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Delete Job
     When User clicks on Delete Icon for added 'Test Job'
     Then User sees delete job toast message as 'Successfully deleted all selected jobs'
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Run Job
     When User selects the checkbox next to 'Test Job'
     Then 'Test Job' will start running and Pause button will be enabled
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Pause a Running Job
     When User clicks the checkbox of "Test Job"
     And User clicks the green Pause button
@@ -38,7 +37,7 @@ Feature: Job Management
     And the checkbox of "Test Job" should become unselected
     And the green Pause button should revert to its default state
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Resume a Paused Job
     When User clicks the checkbox of "Test Job"
     And User clicks the green Pause button

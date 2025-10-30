@@ -20,6 +20,10 @@ ARG JDK_VERSION=21.0.7
 
 ARG MAVEN_HOME=/opt/apache-maven-3.8.5
 
+ENV SEMOSS_BRANCH=dev
+ENV MONOLITH_BRANCH=dev
+ENV UI_BRANCH=dev
+
 ARG TOMCAT_VERSION=9.0.102
 ARG TOMCAT_HOME=/opt/apache-tomcat-${TOMCAT_VERSION}
 ENV TOMCAT_HOME=${TOMCAT_HOME}
@@ -109,15 +113,15 @@ WORKDIR /app/buildfiles
 # git clone semoss again so I can replace directories on run for Semoss Resources
 RUN git clone https://github.com/SEMOSS/Semoss.git
 
-COPY sem/db/security/database.mv.db db/security/database.mv.db
-COPY sem/RDF_Map.prop  .
-COPY mon/web.xml  .
+COPY ds2/sem/db/security/database.mv.db db/security/database.mv.db
+COPY ds2/sem/RDF_Map.prop  .
+COPY ds2/mon/web.xml  .
 
 WORKDIR /opt/apache-tomcat-9.0.102/webapps/
 
 RUN git clone https://github.com/SEMOSS/semoss-ui.git
 RUN mv semoss-ui SemossWeb
-COPY BusinessInsider/bi-build.zip /tmp/bi-build.zip
+COPY ds2/BusinessInsider/bi-build.zip /tmp/bi-build.zip
 RUN unzip /tmp/bi-build.zip -d /opt/apache-tomcat-9.0.102/webapps/SemossWeb/packages/legacy/
 WORKDIR /opt/apache-tomcat-9.0.102/webapps/SemossWeb
 RUN pnpm install
@@ -125,11 +129,11 @@ RUN pnpm run build:dev
 
 WORKDIR /app
 
-COPY scripts.sh /app/
+COPY ds2/scripts.sh /app/
 RUN sed -i 's/\r$//' scripts.sh
 RUN chmod 777 scripts.sh
 
-COPY coverageShutdown.sh /app/
+COPY ds2/coverageShutdown.sh /app/
 RUN sed -i 's/\r$//' coverageShutdown.sh
 RUN chmod 777 coverageShutdown.sh
 
@@ -214,6 +218,27 @@ RUN wget "https://repo1.maven.org/maven2/org/jacoco/org.jacoco.agent/0.8.12/org.
 RUN mv "org.jacoco.agent-0.8.12-runtime.jar" "jacocoagent.jar"
 
 RUN echo 'export CATALINA_OPTS="$CATALINA_OPTS -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/opt/testresults/jacoco.exec,output=file,append=false,dumponexit=true,jmx=true"' >> $TOMCAT_HOME/bin/setenv.sh
+
+
+WORKDIR /workspace
+
+COPY pom.xml pom.xml
+
+RUN mvn dependency:resolve
+
+RUN mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install"
+RUN mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+RUN mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps chromium"
+
+COPY src src
+#COPY logs logs
+#COPY target target
+#COPY traces traces
+#COPY videos videos
+COPY tester.sh tester.sh
+COPY testNRM.sh testNRM.sh
+COPY state.json state.json
+COPY .env .env
 
 WORKDIR /app
 CMD ["/app/scripts.sh"]

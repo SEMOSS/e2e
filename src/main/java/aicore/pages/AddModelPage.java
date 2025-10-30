@@ -22,7 +22,7 @@ public class AddModelPage {
 	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
-//		this.timestamp = CommonUtils.getTimeStampName();
+//		this.timestamp = SetupHooks.getTimestamp();
 	}
 
 	public void clickAddModelButton() {
@@ -444,6 +444,9 @@ public class AddModelPage {
 
 	public void enterAWSSecretKey(String awsSecretKey) {
 		ModelPageUtils.enterAWSSecretKey(page, awsSecretKey);
+	}
+	public void clickOnCreateButton(String buttonName) {
+		ModelPageUtils.clickOnCreateButton(page, buttonName);
 	}
 
 }

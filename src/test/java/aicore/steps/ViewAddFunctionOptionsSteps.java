@@ -15,7 +15,7 @@ public class ViewAddFunctionOptionsSteps extends AbstractAddCatalogBase {
 	protected static String timestamp;
 
 	public ViewAddFunctionOptionsSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		functionPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 

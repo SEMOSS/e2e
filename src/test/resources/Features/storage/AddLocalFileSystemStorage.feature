@@ -1,4 +1,3 @@
-@Regression
 Feature: Add Local File System Storage
 
   Background: Add Local File System Storage
@@ -14,7 +13,7 @@ Feature: Add Local File System Storage
     And User clicks On Copy Catalog ID
     And User can see the Storage title as 'Local File System Storage'
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario: Delete Local File System Storage
     Given User is on Home page
     When User opens Main Menu

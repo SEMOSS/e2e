@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.CommonUtils;
 
@@ -13,6 +14,9 @@ public class AppTemplatePageUtils {
 	private static final String SUBMIT_BUTTON_XPATH = "//div[@data-block='submit']";
 	private static final String TITLE_XPATH = "//p[@data-block='title']";
 	private static final String INPUT_BOX_XPATH = "//div[@data-block='question']";
+	private static final String RESPONSE_BOX_XPATH = "//p[@data-block='response']";
+	private static final String ASK_LOADER_XPATH = "//div[@data-block=\"submit\"]//span[@role=\"progressbar\"]";
+	private static final String DESCRIPTION_BOX_XPATH ="//p[text()='Value']/../..//div//div//input";
 	private static final String PREVIEW_APP_CANCEL_XPATH = "(//button//span[contains(text(),'Cancel')])[2]";
 	private static final String INPUT_BOX_LABEL_XPATH = "//div[@data-block='question']//label";
 	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
@@ -60,6 +64,16 @@ public class AppTemplatePageUtils {
 		}
 
 	}
+
+	public static void clickOnQuestionBlock(Page page) {
+		page.locator(INPUT_BOX_XPATH).isVisible();
+		page.locator(INPUT_BOX_XPATH).click();	 
+	}
+	
+	public static void addDescription(String description, Page page) {
+		page.locator(DESCRIPTION_BOX_XPATH).fill(description);
+	}
+	
 
 	public static void clickPreviewButton(Page page) {
 		boolean isPreviewButtonVisible = page.getByTestId("PreviewRoundedIcon").isVisible();
@@ -303,5 +317,17 @@ public class AppTemplatePageUtils {
 
 	public static String getFontSize(Page page) {
 		return page.locator(VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH).inputValue();
+	}
+
+	public static void clickOnResponseBlock(Page page) {
+		page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		page.locator(RESPONSE_BOX_XPATH).isVisible();
+		page.locator(RESPONSE_BOX_XPATH).click();
+		page.locator(TITLE_XPATH).scrollIntoViewIfNeeded();
+	}
+
+	public static void clickOSubmitBlock(Page page) {
+		page.locator(SUBMIT_BUTTON_XPATH).isVisible();
+		page.locator(SUBMIT_BUTTON_XPATH).click();
 	}
 }

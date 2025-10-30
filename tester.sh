@@ -1,2 +1,2 @@
 #!/bin/sh
-docker compose -f dcp.yaml up --remove-orphans --build --exit-code-from test;
+docker compose -f docker.yaml up --remove-orphans --build --exit-code-from semoss;

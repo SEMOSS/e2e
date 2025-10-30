@@ -1,4 +1,3 @@
-@Regression
 Feature: View existing databases on database catalog page
 
   Background: Create and edit database
@@ -21,7 +20,7 @@ Feature: View existing databases on database catalog page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
     And User clicks on Open Database

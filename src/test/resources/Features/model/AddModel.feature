@@ -7,24 +7,24 @@ Feature: Add Model
     When User clicks on Open Model
     When User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Model'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'Model'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks On Copy Catalog ID
-    Then User Can see the Model title as 'Model'
+    Then User can see the Model title as 'Model'
 
   @DeleteTestCatalog
   Scenario: Validate SMSS properties of a Model to catalog - GPT-3.5
-    Given User Can see the Model title as 'Model'
+    Given User can see the Model title as 'Model'
     When User clicks on SMSS
     And User can see name in 'NAME' field as 'Model' in SMSS properties
     And User can see var name in 'VAR_NAME' field as 'Variable1' in SMSS properties
 
   @DeleteTestCatalog
   Scenario: Edit SMSS properties of Model - GPT-3.5
-    Given User Can see the Model title as 'Model'
+    Given User can see the Model title as 'Model'
     When User clicks on SMSS
     And User clicks on Edit SMSS button
     And User can edit the value of 'KEEP_CONVERSATION_HISTORY' field as 'True'
@@ -36,7 +36,7 @@ Feature: Add Model
 
   @DeleteTestCatalog
   Scenario: Adding tag to Model to catalog - GPT-3.5 - embeddings
-    Given User Can see the Model title as 'Model'
+    Given User can see the Model title as 'Model'
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -79,7 +79,7 @@ Feature: Add Model
 
   @DeleteTestCatalog
   Scenario: Validate Model Catalog ID in Usage commands
-    Given User Can see the Model title as 'Model'
+    Given User can see the Model title as 'Model'
     When User copies the model catalog ID below the title using copy icon
     And User clicks on Usage tab
     When User copies code contents and validate model catalog Id occurences in sections:

@@ -2,7 +2,7 @@ Feature: Member Settings documentation
 
 @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - Member Settings
-   Given User captures documentation screenshot for 'Member Settings'
+   Given User captures documentation screenshot for 'PlatformNavigation/Member Settings'
     Given User opens Main Menu
     And User captures a 'button' and highlights the 'Settings'
     And User clicks on Open Settings
