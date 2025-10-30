@@ -6,8 +6,10 @@ Feature: Create drag and drop app And verify Data filters in the app
     When User opens Main Menu
     And User clicks on Open Database
     And User clicks on Add Database
-    And User selects database 'ZIP'
-    And User uploads database file 'Database/TestDatabase.zip'
+    #And User selects database 'ZIP'
+    #And User uploads database file 'Database/TestDatabase.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'

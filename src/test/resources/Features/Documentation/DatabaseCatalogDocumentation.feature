@@ -15,8 +15,10 @@ Feature: Database Catalog Documentation
     Given User opens Main Menu
     When User clicks on Open Database
     And User clicks on Add Database
-    Then User selects database 'ZIP'
-    And User uploads database file 'Database/TestDatabase.zip'
+    #Then User selects database 'ZIP'
+    #And User uploads database file 'Database/TestDatabase.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'

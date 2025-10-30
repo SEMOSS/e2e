@@ -6,8 +6,10 @@ Feature: Database Catalog permissions for Editor user
     Given User opens Main Menu
     When User clicks on Open Database
     And User clicks on Add Database
-    And User selects database 'ZIP'
-    And User uploads database file 'Database/TestDatabase.zip'
+    #And User selects database 'ZIP'
+    #And User uploads database file 'Database/TestDatabase.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User clicks On Copy Catalog ID
     And User sees success toast message 'ZIP uploaded successfully'

@@ -5,8 +5,10 @@ Feature: Create app using Read diabetes Template
     Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
-    And User selects database 'ZIP'
-    And User uploads database file 'Database/diabetes.zip'
+    #And User selects database 'ZIP'
+    #And User uploads database file 'Database/diabetes.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/diabetes.zip'
     And User clicks on Create Database button
     And User clicks On Copy Catalog ID
 

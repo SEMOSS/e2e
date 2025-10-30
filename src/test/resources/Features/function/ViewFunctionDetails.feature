@@ -5,8 +5,10 @@ Feature: View Function Details
     Given User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
-    And User selects function 'ZIP'
-    And User uploads function file 'Function/weatherFunctionTest.zip'
+    #And User selects function 'ZIP'
+    #And User uploads function file 'Function/weatherFunctionTest.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
     And User clicks On Copy Catalog ID
     And User can see the Catalog title as 'WeatherFunctionTest'
@@ -40,4 +42,3 @@ Feature: View Function Details
     And User can see 'How to use in Javascript' usage instructions section
     And User can see 'How to use in Python' usage instructions section
     And User can see 'How to use in Java' usage instructions section
- 

@@ -102,9 +102,9 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnCreateFunctionButton(page);
 	}
 
-	public String enterFilePath(String fileName) {
-		return AddFunctionPageUtils.enterFilePath(page, fileName);
-	}
+//	public String enterFilePath(String fileName) {
+//		return AddFunctionPageUtils.enterFilePath(page, fileName);
+//	}
 
 	public String verifyFunctionNameInCatalog(String catalogName) {
 		return AddFunctionPageUtils.verifyFunctionNameInCatalog(page, catalogName, timestamp);

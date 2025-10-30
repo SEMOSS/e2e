@@ -12,6 +12,7 @@ Feature: Validate catalog user permissions for all catalog types
     And User opens Main Menu
     And User clicks on Open Settings
     When User selects the '<CARD>' card
+    And User can search '<CATALOG_NAME>' in search box
     And User clicks on the '<CATALOG_NAME>'
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -74,7 +75,7 @@ Feature: Validate catalog user permissions for all catalog types
       | Model    | Add Model    | Model/Llama3-70B-Instruct.zip    | Model Settings    | Llama3-70B-Instruct |
       | Database | Add Database | Database/TestDatabase.zip        | Database Settings | TestDatabase        |
       | Vector   | Add Vector   | VectorDatabase/TestVector.zip    | Vector Settings   | TestVector          |
-      | Function | Add Function | Function/weatherFunctionTest.zip | Function Settings | weatherFunctionTest |
+      | Function | Add Function | Function/weatherFunctionTest.zip | Function Settings | WeatherFunctionTest |
       | Storage  | Add Storage  | Storage/Localminio.zip           | Storage Settings  | Localminio          |
 
   @LoginWithAuthor @DeleteCreatedTestApp
@@ -91,6 +92,7 @@ Feature: Validate catalog user permissions for all catalog types
     And User opens Main Menu
     And User clicks on Open Settings
     When User selects the 'App Settings' card
+    And User can search 'Test App permissions' in search box
     And User clicks on the 'Test App permissions'
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'

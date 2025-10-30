@@ -39,8 +39,10 @@ Feature: Search app and catalogs
     Given User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
-    And User selects function 'ZIP'
-    And User uploads function file 'Function/weatherFunctionTest.zip'
+    #And User selects function 'ZIP'
+    #And User uploads function file 'Function/weatherFunctionTest.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
     And User clicks On Copy Catalog ID
     And User opens Main Menu
@@ -83,8 +85,10 @@ Feature: Search app and catalogs
     Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
-    Then User selects database 'ZIP'
-    And User uploads database file 'Database/TestDatabase.zip'
+    #Then User selects database 'ZIP'
+    #And User uploads database file 'Database/TestDatabase.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User clicks On Copy Catalog ID
     And User opens Main Menu

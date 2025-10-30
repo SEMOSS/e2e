@@ -69,18 +69,18 @@ public class AddModelSteps {
 		openModelPage.clickOnCreateModelButton();
 	}
 
-	@Given("User uploads a file {string}")
-	public void user_uploads_a_file(String fileName) {
-		String uploadedFileName = openModelPage.enterFilePath(fileName);
-		if (fileName.contains("/")) {
-			String[] ActualFileName = fileName.split("/");
-			int fileNameIndex = ActualFileName.length - 1;
-			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
-					"Document is not uploaded successfully");
-		} else {
-			Assertions.assertEquals(fileName, uploadedFileName, "Document is not uploaded successfully");
-		}
-	}
+//	@Given("User uploads a file {string}")
+//	public void user_uploads_a_file(String fileName) {
+//		String uploadedFileName = openModelPage.enterFilePath(fileName);
+//		if (fileName.contains("/")) {
+//			String[] ActualFileName = fileName.split("/");
+//			int fileNameIndex = ActualFileName.length - 1;
+//			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
+//					"Document is not uploaded successfully");
+//		} else {
+//			Assertions.assertEquals(fileName, uploadedFileName, "Document is not uploaded successfully");
+//		}
+//	}
 
 	@And("User can see a toast message as {string}")
 	public void user_can_a_see_toast_message_as(String toastMessage) {

@@ -1,7 +1,5 @@
 package aicore.pages;
 
-import java.nio.file.FileSystems;
-import java.nio.file.Paths;
 import java.util.List;
 
 import com.microsoft.playwright.Locator;
@@ -55,29 +53,29 @@ public class AddModelPage {
 		ModelPageUtils.clickOnCreateModelButton(page);
 	}
 
-	public String enterFilePath(String fileName) {
-		String pathSeparator = FileSystems.getDefault().getSeparator();
-		Locator fileInput = page.locator(ADD_FILE_XPATH);
-		String relativePath = "src" + pathSeparator + "test" + pathSeparator + "resources" + pathSeparator + "data"
-				+ pathSeparator;
-		if (fileName.contains("/")) {
-			fileName.replace("/", pathSeparator);
-		}
-		fileInput.setInputFiles(Paths.get(relativePath + fileName));
-		if (fileName.contains("/")) {
-			String[] ActualFileName = fileName.split("/");
-			int fileNameIndex = ActualFileName.length - 1;
-			Locator uploadedFileName = page
-					.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", ActualFileName[fileNameIndex]));
-			String uploadedFileNameValue = uploadedFileName.textContent();
-			return uploadedFileNameValue;
-		} else {
-			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
-			String uploadedFileNameValue = uploadedFileName.textContent();
-			return uploadedFileNameValue;
-		}
-
-	}
+//	public String enterFilePath(String fileName) {
+//		String pathSeparator = FileSystems.getDefault().getSeparator();
+//		Locator fileInput = page.locator(ADD_FILE_XPATH);
+//		String relativePath = "src" + pathSeparator + "test" + pathSeparator + "resources" + pathSeparator + "data"
+//				+ pathSeparator;
+//		if (fileName.contains("/")) {
+//			fileName.replace("/", pathSeparator);
+//		}
+//		fileInput.setInputFiles(Paths.get(relativePath + fileName));
+//		if (fileName.contains("/")) {
+//			String[] ActualFileName = fileName.split("/");
+//			int fileNameIndex = ActualFileName.length - 1;
+//			Locator uploadedFileName = page
+//					.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", ActualFileName[fileNameIndex]));
+//			String uploadedFileNameValue = uploadedFileName.textContent();
+//			return uploadedFileNameValue;
+//		} else {
+//			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
+//			String uploadedFileNameValue = uploadedFileName.textContent();
+//			return uploadedFileNameValue;
+//		}
+//
+//	}
 
 	public String modelCreationToastMessage() {
 		return ModelPageUtils.modelCreationToastMessage(page);

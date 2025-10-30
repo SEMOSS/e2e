@@ -37,18 +37,18 @@ public class AddFunctionSteps {
 		addFunctionToCatalogPage.selectFunction(functionType);
 	}
 
-	@Then("User uploads function file {string}")
-	public void user_uploads_funtion_file(String fileName) {
-		String uploadedFileName = addFunctionToCatalogPage.enterFilePath(fileName);
-		if (fileName.contains("/")) {
-			String[] ActualFileName = fileName.split("/");
-			int fileNameIndex = ActualFileName.length - 1;
-			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
-					"function Document file is not uploaded successfully");
-		} else {
-			Assertions.assertEquals(fileName, uploadedFileName, "function Document file is not uploaded successfully");
-		}
-	}
+//	@Then("User uploads function file {string}")
+//	public void user_uploads_funtion_file(String fileName) {
+//		String uploadedFileName = addFunctionToCatalogPage.enterFilePath(fileName);
+//		if (fileName.contains("/")) {
+//			String[] ActualFileName = fileName.split("/");
+//			int fileNameIndex = ActualFileName.length - 1;
+//			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
+//					"function Document file is not uploaded successfully");
+//		} else {
+//			Assertions.assertEquals(fileName, uploadedFileName, "function Document file is not uploaded successfully");
+//		}
+//	}
 
 	@Then("User clicks on Create Function button")
 	public void user_clicks_on_create_Function_button() {
