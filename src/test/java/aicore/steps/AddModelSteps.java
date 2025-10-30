@@ -1,12 +1,11 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -28,7 +27,7 @@ public class AddModelSteps {
 
 	public AddModelSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
 
@@ -49,17 +48,17 @@ public class AddModelSteps {
 		openModelPage.selectModel(aiModelName);
 	}
 
-	@And("User enters Catalog name as {string}")
+	@And("User enters Catalog Name as {string}")
 	public void user_enters_Catalog_name_as(String catalogName) {
 		openModelPage.enterCatalogName(catalogName);
 	}
 
-	@When("User enters open AI Key as {string}")
+	@When("User enters Open AI Key as {string}")
 	public void user_enters_open_ai_key_as(String openAIKey) {
 		openModelPage.enterOpenAIKey(openAIKey);
 	}
 
-	@When("User enters var name as {string}")
+	@When("User enters Variable Name as {string}")
 	public void user_enters_var_name_as(String varName) {
 		openModelPage.enterVariableName(varName);
 	}
@@ -89,7 +88,7 @@ public class AddModelSteps {
 		openModelPage.closeModelCreationToastMessage();
 	}
 
-	@Then("User Can see the Model title as {string}")
+	@Then("User can see the Model title as {string}")
 	public void user_can_see_the_model_title_as(String modelTitle) {
 		String actualModelTitle = openModelPage.verifyModelTitle(modelTitle);
 		String expModelTitle = openModelPage.getExpectedCatalogTitle(modelTitle);
@@ -344,5 +343,167 @@ public class AddModelSteps {
 	public void user_click_on_created_model() {
 		openModelPage.userClickOnCreatedModel();
 	}
+
+	// Create all Model Types
+	@And("User enter Init Script as {string}")
+	public void user_enter_init_script_as(String initScript) {
+		openModelPage.enterInitScript(initScript);
+	}
+
+	@And("User enter GCP Region as {string}")
+	public void user_enter_gcp_region_as(String gcpRegion) {
+		openModelPage.enterGCPRegion(gcpRegion);
+	}
+
+	@And("User select the Type as {string}")
+	public void user_select_the_type_for_model(String type) {
+		openModelPage.selectTypeForModel(type);
+	}
+
+	@And("User enter the Endpoint as {string}")
+	public void user_enter_the_endpoint_as(String endpoint) {
+		openModelPage.enterEndpoint(endpoint);
+	}
+
+	// new
+	@Then("User can see following fields in SMSS Properties")
+	public void user_can_see_following_fields_in_smss_properties(DataTable table) {
+		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("fieldName");
+			String expectedValue = row.get("fieldValue");
+			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
+
+			if (fullText == null || fullText.trim().isEmpty()) {
+				Assertions.fail("No text found for field: " + fieldName);
+			}
+
+			// Normalize spacing and remove non-breaking spaces
+			fullText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
+
+			String actualValue;
+			// Remove fieldName prefix if present
+			if (fullText.toUpperCase().startsWith(fieldName.toUpperCase())) {
+				int firstSpaceIndex = fullText.indexOf(' ');
+				if (firstSpaceIndex != -1 && firstSpaceIndex + 1 < fullText.length()) {
+					actualValue = fullText.substring(firstSpaceIndex + 1).trim();
+				} else {
+					actualValue = "";
+				}
+			} else {
+				actualValue = fullText;
+			}
+
+			// For NAME field → ignore trailing digits
+			if (fieldName.equalsIgnoreCase("NAME")) {
+				actualValue = actualValue.replaceAll("\\d+$", "");
+			}
+
+			// ✅ Field-specific validation logic
+			switch (fieldName) {
+			case "ENDPOINT":
+				Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
+				break;
+
+			case "INIT_MODEL_ENGINE":
+				Assertions.assertTrue(actualValue.contains(expectedValue), "Field validation failed for '" + fieldName
+						+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue + ">");
+				break;
+
+			default:
+				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
+				break;
+			}
+		}
+	}
+
+	@And("User enter the Deployment Name as {string}")
+	public void user_enter_the_deployment_name_as(String deploymentName) {
+		openModelPage.enterDeploymentName(deploymentName);
+	}
+
+	@And("User enter the tag as {string}")
+	public void user_enter_the_tag_as(String tagName) {
+		openModelPage.enterTagName(tagName);
+	}
+
+	@And("User enter the Version as {string}")
+	public void user_enter_the_version_as(String version) {
+		openModelPage.enterVersion(version);
+	}
+
+	@Then("User can enable Submit button after filling mandatory fields for {string} model")
+	public void user_can_enable_submit_button_after_filling_mandatory_fields_for_model(String modelType,
+			DataTable table) {
+		List<String> fields = table.asList(String.class);
+		for (String fieldName : fields) {
+			boolean isFieldFilled = openModelPage.areMandatoryFieldFilled(fieldName);
+			Assertions.assertTrue(isFieldFilled, fieldName + " field is not filled");
+		}
+		boolean isSubmitButtonEnabled = openModelPage.isSubmitButtonEnabled();
+		Assertions.assertTrue(isSubmitButtonEnabled, "Submit button is not enabled");
+
+	}
+
+	@And("User select Chat Type as {string}")
+	public void user_select_chat_type_as(String option) {
+		openModelPage.selectChatOption(option);
+	}
+
+	@And("User select the Keep Conversation History as {string}")
+	public void user_select_the_keep_conversation_history_as(String option) {
+		openModelPage.selectKeepConversationHistoryOption(option);
+	}
+
+	@And("User select Record Questions and Responses as {string}")
+	public void user_select_record_questions_and_responses_as(String option) {
+		openModelPage.selectRecordQuestionsAndResponsesOption(option);
+	}
+
+	@And("User enter the Max Tokens as {string}")
+	public void user_enter_the_max_tokens_as(String maxTokens) {
+		openModelPage.enterMaxTokens(maxTokens);
+	}
+
+	@And("User enter the Max Input Tokens {string}")
+	public void user_enter_the_max_input_tokens_as(String maxInputTokens) {
+		openModelPage.enterMaxInputTokens(maxInputTokens);
+	}
+
+	@And("User select Type as {string}")
+	public void user_select_type_as(String type) {
+		openModelPage.selectTypeForModel(type);
+	}
+
+	@And("User enter model name as {string}")
+	public void user_enter_model_name_as(String modelName) {
+		openModelPage.enterModelName(modelName);
+	}
+
+	@And("User select the model as {string}")
+	public void user_select_the_model_as(String model) {
+		openModelPage.selectModelOption(model);
+	}
+
+	@And("User enter aws Region as {string}")
+	public void user_enter_aws_region_as(String awsRegion) {
+		openModelPage.enterAWSRegion(awsRegion);
+	}
+
+	@And("User enter AWS Access key as {string}")
+	public void user_enter_aws_access_key_as(String awsAccessKey) {
+		openModelPage.enterAWSAccessKey(awsAccessKey);
+	}
+
+	@And("User enter AWS Secreate key as {string}")
+	public void user_enter_aws_secreate_key_as(String awsSecreateKey) {
+		openModelPage.enterAWSSecretKey(awsSecreateKey);
+	}
+	
+	@And("User click on Create {string} button")
+	public void user_click_on_create_button(String buttonName) {
+		openModelPage.clickOnCreateButton(buttonName);
+	}
+	
 
 }

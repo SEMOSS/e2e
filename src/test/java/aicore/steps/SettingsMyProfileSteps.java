@@ -20,7 +20,7 @@ public class SettingsMyProfileSteps {
 	private String timestamp;
 
 	public SettingsMyProfileSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		this.settings = new SettingsMyProfile(SetupHooks.getPage(), timestamp);
 	}
 

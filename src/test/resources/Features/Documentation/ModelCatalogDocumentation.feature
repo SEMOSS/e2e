@@ -2,7 +2,7 @@ Feature: Model Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Model
-    Given User captures documentation screenshot for 'Model Catalog'
+    Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Model'
     When User clicks on Open Model
@@ -15,7 +15,7 @@ Feature: Model Documentation
     And User enters var name as 'Variable1'
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
-    Then User Can see the Model title as 'Model'
+    Then User can see the Model title as 'Model'
     And User clicks On Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
@@ -39,7 +39,7 @@ Feature: Model Documentation
     And User captures a 'button' and highlights the 'Discoverable Models'
     And User searches the 'Model' in the model catalog searchbox
     And User selects the 'Model' from the model catalog
-    And User Can see the Model title as 'Model'
+    And User can see the Model title as 'Model'
     And User captures a 'button' and highlights the 'Request Access'
     And User click on the Request Access button
     And User selects 'author' access
@@ -51,7 +51,7 @@ Feature: Model Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
-    Given User captures documentation screenshot for 'Model Catalog'
+    Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
     And User created '2' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
     And User created '2' models with the model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123', and variable name 'Var123'
     When User opens Main Menu

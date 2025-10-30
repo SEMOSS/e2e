@@ -2,7 +2,7 @@ Feature: Admin query
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query
-    Given User captures documentation screenshot for 'Admin Query'
+    Given User captures documentation screenshot for 'PlatformNavigation/Admin Query'
     Given User opens Main Menu
     And User captures a 'button' and highlights the 'Settings'
     And User clicks on Open Settings

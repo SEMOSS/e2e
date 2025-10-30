@@ -29,7 +29,7 @@ public class AdminQuerySteps {
 		homePage = new HomePage(SetupHooks.getPage());
 		settingPage = new SettingPage(SetupHooks.getPage());
 		adminQuery = new SettingsAdminQueryPage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		modelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		jobPage = new JobManagementPage(SetupHooks.getPage(), timestamp);
 	}

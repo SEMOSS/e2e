@@ -2,7 +2,7 @@ Feature: Function documentation
 
 @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
 Scenario: Create a Function
-  Given User captures documentation screenshot for 'Function Catalog'
+  Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
   When User opens Main Menu
   And User captures a 'button' and highlights the 'Function'
   When User clicks on Open Function

@@ -1,4 +1,3 @@
-@Regression
 Feature: Create drag and drop app And verify Data filters in the app
 
   Background: Create Drag and Drop app
@@ -40,6 +39,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on data Import button
     And User deletes the previous cell
     And User selects type as 'Python'
+    And User enter the data limit as '20'
     And User clicks on Run cell button
     And User fetch the frame id
     Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
@@ -49,7 +49,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User can see type as 'PY' for 'Python' in JSON
     And User clicks on the Save App icon
 
-  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Verify Unfilter Data in the app
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -63,7 +63,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User can see total '20' rows
     And User can see the 'DIABETES_UNIQUE_ROW_ID' column have unique values
 
-  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Verify filter Data in the app
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -79,7 +79,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with 'Age' equals '30'
 
-  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Verify filter Data in the app with AND operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -100,7 +100,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with "AND" operator for columns "Age, BloodPressure" and values "30,92"
 
-  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Verify filter data with OR operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -122,7 +122,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with "OR" operator for columns "Age, BloodPressure" and values "30,92"
 
-  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Verify Nested Rule filter data with AND operator
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'
@@ -148,7 +148,7 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User clicks on Run cell button
     Then User can see the filtered data with "AND" operator for columns "Age, BloodPressure, BMI" and values "30,92,37.6"
 
-  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Verify Nested Rule within Nested rule filter data
     Given User Sees the Notebook 'Test' in the notebook list
     When User clicks on the Notebook 'Test'

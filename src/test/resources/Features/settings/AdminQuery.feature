@@ -1,7 +1,6 @@
-@Regression
 Feature: Admin query
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query
     Given User opens Main Menu
     And User clicks on Open Settings
@@ -22,7 +21,7 @@ Feature: Admin query
       | themes              | select * from ADMIN_THEME      |            4 | ID, THEME_NAME, THEME_MAP, IS_ACTIVE                                                                                                                                                                               |
      #| UserTrackingDatabase | select * from INSIGHT_OPENS    |            4 | INSIGHTID, USERID, OPENED_ON, ORIGIN                                                                                                                                                                               |
  
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query count
     Given User created '<MODEL_COUNT>' models with the model 'GPT-3.5', catalog name 'Model', OpenAI key 'Test123', and variable name 'Var123'
     And User created '<JOB_COUNT>' jobs with the job name 'Test Job', Pixel '1+1'
@@ -32,8 +31,8 @@ Feature: Admin query
     And User clicks on 'Admin Query' Card
     And User clicks on Database dropdown
     And User selects '<DATABASE_NAME>' from the database dropdown
-    And User enters '<QUERY>' in the query textbox
     And User enters '<MAX_ROWS>' in the Max Rows to Collected textbox
+    And User enters '<QUERY>' in the query textbox
     And User clicks on Run button
     Then User can see success toast message as 'Successfully submitted query'
     And User can see table with '<ROW_COUNT>' rows

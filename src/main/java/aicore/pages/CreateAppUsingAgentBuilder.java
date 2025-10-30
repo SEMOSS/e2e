@@ -10,9 +10,9 @@ public class CreateAppUsingAgentBuilder {
 	private Page page;
 	private String timestamp;
 
-	public CreateAppUsingAgentBuilder(Page page) {
+	public CreateAppUsingAgentBuilder(Page page, String timestamp) {
 		this.page = page;
-		this.timestamp = CommonUtils.getTimeStampName();
+		this.timestamp = timestamp;
 	}
 
 	public void clickOnCreateNewAppButton() {

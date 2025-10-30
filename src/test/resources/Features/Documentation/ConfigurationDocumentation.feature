@@ -2,7 +2,7 @@ Feature: Configuration documentation
 
 @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Settings - Configuration documentation
-   Given User captures documentation screenshot for 'Configuration'
+   Given User captures documentation screenshot for 'PlatformNavigation/Configuration'
     Given User opens Main Menu
     And User captures a 'button' and highlights the 'Settings'
     And User clicks on Open Settings

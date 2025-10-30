@@ -21,7 +21,7 @@ public class NotebookCreationAndExecutionSteps {
 	protected static String frameID;
 
 	public NotebookCreationAndExecutionSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		notebookPage = new NotebookPage(SetupHooks.getPage(), timestamp);
 	}
 
@@ -66,6 +66,14 @@ public class NotebookCreationAndExecutionSteps {
 	@Then("user selects {string} from {string} dropdown")
 	public void user_selects_from_dropdown(String optionName, String dropdownName) throws InterruptedException {
 		notebookPage.selectValueFromDropdown(optionName, dropdownName);
+	}
+	@Then("user selects {string} from {string} Read App dropdown")
+	public void user_selects_from_dropdown_read_app(String optionName, String dropdownName) throws InterruptedException {
+		notebookPage.selectValueFromReadAppDropdown(optionName, dropdownName);
+	}
+	@Then("user sees the record with Unique ID {string}")
+	public void user_sees_the_record_with_unique_id(String uniqueId) throws InterruptedException {
+		notebookPage.checkRecordWithUniqueId(uniqueId);
 	}
 
 	@Then("user add value {string} in {string} field")
@@ -296,6 +304,16 @@ public class NotebookCreationAndExecutionSteps {
 		result = notebookPage.isFilteredDataCorrectForColumns(columns, values, operator);
 		Assertions.assertTrue(result, "Filtered data does not match for columns: " + columns + " with values: " + values
 				+ " using operator: " + operator);
+	}
+
+	@And("User enter the data limit as {string}")
+	public void user_enter_the_data_limit_as(String dataLimit) {
+		notebookPage.enterDataLimit(dataLimit);
+	}
+
+	@And("User click on run all cell button")
+	public void user_click_on_run_all_cell_button() {
+		notebookPage.clickOnRunAllCellButton();
 	}
 
 }

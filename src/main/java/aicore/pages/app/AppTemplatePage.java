@@ -32,6 +32,15 @@ public class AppTemplatePage {
 		AppTemplatePageUtils.clickPreviewButton(page);
 	}
 
+	public void clickOnQuestionBlock() {
+		AppTemplatePageUtils.clickOnQuestionBlock(page);
+	}
+	
+	
+	public void addDescription(String description) {
+		AppTemplatePageUtils.addDescription(description, page);
+	}
+
 	public void selectTemplateFromList(String templateName) {
 		AppTemplatePageUtils.selectTemplateFromList(templateName, page);
 	}
@@ -164,5 +173,13 @@ public class AppTemplatePage {
 
 	public String getFontSize() {
 		return AppTemplatePageUtils.getFontSize(page);
+	}
+
+	public void clickOSubmitBlock() {
+		AppTemplatePageUtils.clickOSubmitBlock(page);
+	}
+
+	public void clickOnResponseBlock() {
+		AppTemplatePageUtils.clickOnResponseBlock(page);
 	}
 }

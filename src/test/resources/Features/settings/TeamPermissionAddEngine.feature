@@ -1,4 +1,3 @@
-@Regression
 Feature: Add Engine for Team Permission
 
   Background: Team Permissions - Add team
@@ -12,7 +11,7 @@ Feature: Add Engine for Team Permission
     And User fills Description as 'Test Description' in Description field of Add Team form
     And User clicks on 'Add' button in Add Team form
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Database Users role
     Given User opens Main Menu
     And User clicks on Open Database
@@ -30,7 +29,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'TestDatabase' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'TestDatabase' in the 'Select Engine' field of Add Engine form the 'Database'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
@@ -42,7 +41,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Function Users role
     Given User opens Main Menu
     When User clicks on Open Function
@@ -58,7 +57,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'WeatherFunctionTest' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'WeatherFunctionTest' in the 'Select Engine' field of Add Engine form the 'Function'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
@@ -70,7 +69,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Storage Users role
     Given User is on Home page
     When User opens Main Menu
@@ -92,7 +91,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'Amazon S3 Storage' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'Amazon S3 Storage' in the 'Select Engine' field of Add Engine form the 'Storage'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
@@ -104,7 +103,7 @@ Feature: Add Engine for Team Permission
       | Editor    |
       | Read-Only |
 
-  @LoginWithAdmin @DeleteTestCatalog
+  @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Vector Users role
     Given User is on Home page
     When User opens Main Menu
@@ -140,7 +139,7 @@ Feature: Add Engine for Team Permission
     Then User can see team name as "Test Team" in the list
     And User clicks on the team name 'Test Team' in the list
     When User clicks on 'Add Engine' button in Team Permission page
-    And User select the 'FAISS Vector DB01' in the 'Select Engine' field of Add Engine form the 'catlog type'
+    And User select the 'FAISS Vector DB01' in the 'Select Engine' field of Add Engine form the 'Vector'
     And User select the engine access as '<Role>'
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed

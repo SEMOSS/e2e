@@ -15,7 +15,7 @@ public class CreateAppUsingAgentBuilderSteps {
 
 	public CreateAppUsingAgentBuilderSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
-		this.createAppAgentBuilder = new CreateAppUsingAgentBuilder(SetupHooks.getPage());
+		this.createAppAgentBuilder = new CreateAppUsingAgentBuilder(SetupHooks.getPage(), SetupHooks.getTimestamp());
 	}
 
 	@Given("User enters name as {string}")

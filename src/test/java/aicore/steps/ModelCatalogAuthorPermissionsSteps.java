@@ -2,7 +2,6 @@ package aicore.steps;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
-import aicore.utils.CommonUtils;
 import io.cucumber.java.en.When;
 
 public class ModelCatalogAuthorPermissionsSteps {
@@ -12,8 +11,7 @@ public class ModelCatalogAuthorPermissionsSteps {
 	protected static String timestamp;
 
 	public ModelCatalogAuthorPermissionsSteps() {
-
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 
 	}

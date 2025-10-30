@@ -24,7 +24,7 @@ public class AddModelPage {
 	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
-//		this.timestamp = CommonUtils.getTimeStampName();
+//		this.timestamp = SetupHooks.getTimestamp();
 	}
 
 	public void clickAddModelButton() {
@@ -366,4 +366,89 @@ public class AddModelPage {
 		ModelPageUtils.userClickOnCreatedModel(page);
 
 	}
+
+	// Create all Model Types
+	public void enterInitScript(String initScript) {
+		ModelPageUtils.enterInitScript(page, initScript);
+	}
+
+	public void enterGCPRegion(String gcpRegion) {
+		ModelPageUtils.enterGCPRegion(page, gcpRegion);
+	}
+
+	public void selectTypeForModel(String type) {
+		ModelPageUtils.selectTypeForModel(page, type);
+	}
+
+	public void enterEndpoint(String endpoint) {
+		ModelPageUtils.enterEndpoint(page, endpoint);
+	}
+
+	public String getAllFieldsInSMSSProperties(String fieldName) {
+		return ModelPageUtils.getAllFieldsInSMSSProperties(page, fieldName);
+	}
+
+	public void enterDeploymentName(String deploymentName) {
+		ModelPageUtils.enterDeploymentName(page, deploymentName);
+	}
+
+	public void enterVersion(String version) {
+		ModelPageUtils.enterTheVersion(page, version);
+	}
+
+	public boolean areMandatoryFieldFilled(String fieldName) {
+		return ModelPageUtils.areMandatoryFieldFilled(page, fieldName);
+	}
+
+	public boolean isSubmitButtonEnabled() {
+		return ModelPageUtils.isSubmitButtonEnabled(page);
+	}
+
+	public void selectChatOption(String option) {
+		ModelPageUtils.selectChatOption(page, option);
+	}
+
+	public void selectKeepConversationHistoryOption(String option) {
+		ModelPageUtils.selectKeepConversationHistoryOption(page, option);
+	}
+
+	public void selectRecordQuestionsAndResponsesOption(String option) {
+		ModelPageUtils.selectRecordQuestionsAndResponsesOption(page, option);
+	}
+
+	public void enterMaxTokens(String maxTokens) {
+		ModelPageUtils.enterMaxTokens(page, maxTokens);
+	}
+
+	public void enterMaxInputTokens(String maxInputTokens) {
+		ModelPageUtils.enterMaxInputTokens(page, maxInputTokens);
+	}
+
+	public void selectTypeForModel() {
+		ModelPageUtils.selectTypeForModel(page);
+	}
+
+	public void enterModelName(String modelName) {
+		ModelPageUtils.enterModelName(page, modelName);
+	}
+
+	public void selectModelOption(String model) {
+		ModelPageUtils.selectModelOption(page, model);
+	}
+
+	public void enterAWSRegion(String awsRegion) {
+		ModelPageUtils.enterAWSRegion(page, awsRegion);
+	}
+
+	public void enterAWSAccessKey(String awsAccessKey) {
+		ModelPageUtils.enterAWSAccessKey(page, awsAccessKey);
+	}
+
+	public void enterAWSSecretKey(String awsSecretKey) {
+		ModelPageUtils.enterAWSSecretKey(page, awsSecretKey);
+	}
+	public void clickOnCreateButton(String buttonName) {
+		ModelPageUtils.clickOnCreateButton(page, buttonName);
+	}
+
 }

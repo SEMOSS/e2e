@@ -21,7 +21,7 @@ public class NotebookPageUtils {
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
 	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor textarea.inputarea";
-	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//span[text()='{codeOutput}']";
+	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
@@ -38,7 +38,7 @@ public class NotebookPageUtils {
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
-	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='{notebookName}']";
+	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='Notebook']/..//following::div//p[text()='{notebookName}']";
 	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
 	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
 	private static final String QUERY_CODE_RUN_NULL_OUTPUT_XPATH = "//tbody//td[contains(text(),'There was an issue generating a preview.')]";
@@ -57,6 +57,9 @@ public class NotebookPageUtils {
 	private static final String QUERY_XPATH = "(//div[contains(@class,'view-line')]//div[contains(@class,'view-line')]//span//span)[1]";
 	private static final String ADD_VALUE_IN_FIELD_XPATH = "(//div[contains(@role,'dialog')]//div//div[contains(@data-block,'input--')]//label[contains(text(),'{fieldName}')]//..//div//input)[2]";
 	private static final String PROGRESS_BAR_IN_FIELD_XPATH = "(//label[contains(text(),'UNIQUE_ROW_ID')]/../div//div//span)[1]";
+	private static final String LOADING_ICON_XPATH = "(//span[@role=\"progressbar\"]/../p[contains(text(), \"Loading\")])[2]";
+	private static final String PROGRESS_BAR_READ_IN_FIELD_XPATH = "(//label[contains(text(),'Select Unique ID')]/../div//div//span)[1]";
+	private static final String READ_RECORD_XPATH = "//p[contains(text(),'[DIABETES_UNIQUE_ROW_ID] : {uniqueId}')]";
 	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "(//*[@data-testid='ArrowDropDownIcon'])[2]";
 
 	public static void clickOnNotebooksOption(Page page) {
@@ -137,6 +140,32 @@ public class NotebookPageUtils {
 					.click(new Locator.ClickOptions().setForce(true));
 		}
 
+	}
+
+	public static void selectValueFromReadAppDropdown(Page page, String value, String fieldName) {
+		Locator progressBar = page.locator(PROGRESS_BAR_READ_IN_FIELD_XPATH);
+		page.waitForCondition(progressBar::isHidden, new Page.WaitForConditionOptions().setTimeout(15000));
+		Locator appFieldLocator = page.locator(UNIQUE_ROW_ID_FIELD_XPATH);
+		AICorePageUtils.waitFor(appFieldLocator);
+		appFieldLocator.scrollIntoViewIfNeeded();
+		if (!appFieldLocator.isVisible()) {
+			throw new AssertionError(fieldName + " field is not visible");
+		} else {
+			appFieldLocator.click(new Locator.ClickOptions().setForce(true));
+			page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value))
+					.click(new Locator.ClickOptions().setForce(true));
+		}
+
+	}
+
+	public static void checkRecordWithUniqueId(Page page, String uniqueId) {
+		Locator loadingIndicator = page.locator(LOADING_ICON_XPATH);
+		page.waitForCondition(loadingIndicator::isHidden, new Page.WaitForConditionOptions().setTimeout(10000));
+		Locator recordLocator = page.locator(READ_RECORD_XPATH.replace("{uniqueId}", uniqueId));
+		AICorePageUtils.waitFor(recordLocator);
+		if (!recordLocator.isVisible()) {
+			throw new AssertionError("Record with Unique ID '" + uniqueId + "' is not visible");
+		}
 	}
 
 	public static void clickOnRecordButton(Page page, String buttonName) {
@@ -558,5 +587,15 @@ public class NotebookPageUtils {
 		} else {
 			throw new IllegalArgumentException("Unsupported operator: " + operator);
 		}
+	}
+
+	public static void enterDataLimit(Page page, String dataLimit) {
+		Locator dataLimitField = page.getByLabel("Data Limit");
+		AICorePageUtils.waitFor(dataLimitField);
+		dataLimitField.fill(dataLimit);
+	}
+
+	public static void clickOnRunAllCellButton(Page page) {
+		page.getByTitle("Run all cells").click();
 	}
 }

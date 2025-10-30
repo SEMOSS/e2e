@@ -30,7 +30,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	public AddStorageSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
@@ -309,7 +309,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	}
 
 	@When("User clicks on {string} button")
-	public void user_clicks_on_edit_button(String buttonName) {
+	public void user_clicks_on_button(String buttonName) {
 		storagePage.clickOnButton(buttonName);
 	}
 }

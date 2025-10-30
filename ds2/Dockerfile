@@ -1,7 +1,7 @@
 # Base image arguments
 ARG BASE_REGISTRY=docker.io
 ARG BASE_IMAGE=ubuntu
-ARG BASE_TAG=22.04
+ARG BASE_TAG=24.04
 
 ARG AZUL_ZULU_VERSION=21.42.19
 ARG JAVA_HOME=/usr/lib/jvm/zulu21
@@ -90,7 +90,13 @@ RUN node -v && npm -v && pnpm -v
 WORKDIR /app
 
 RUN git clone https://github.com/SEMOSS/Semoss.git
+WORKDIR /app/Semoss
+RUN mvn install -DskipTests=true -U
+WORKDIR /app
 RUN git clone https://github.com/SEMOSS/Monolith.git
+WORKDIR /app/Monolith
+RUN mvn install -DskipTests=true -U
+WORKDIR /app
 
 
 RUN mkdir /app/buildfiles/
@@ -111,16 +117,21 @@ WORKDIR /opt/apache-tomcat-9.0.102/webapps/
 
 RUN git clone https://github.com/SEMOSS/semoss-ui.git
 RUN mv semoss-ui SemossWeb
-
-WORKDIR /app
-
-
 COPY BusinessInsider/bi-build.zip /tmp/bi-build.zip
 RUN unzip /tmp/bi-build.zip -d /opt/apache-tomcat-9.0.102/webapps/SemossWeb/packages/legacy/
+WORKDIR /opt/apache-tomcat-9.0.102/webapps/SemossWeb
+RUN pnpm install
+RUN pnpm run build:dev
+
+WORKDIR /app
 
 COPY scripts.sh /app/
 RUN sed -i 's/\r$//' scripts.sh
 RUN chmod 777 scripts.sh
+
+COPY coverageShutdown.sh /app/
+RUN sed -i 's/\r$//' coverageShutdown.sh
+RUN chmod 777 coverageShutdown.sh
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
@@ -171,7 +182,7 @@ RUN uv venv --seed $VIRTUAL_ENV
 
 RUN cd /tmp && \
 curl -o pyproject.toml https://raw.githubusercontent.com/SEMOSS/Semoss/refs/heads/dev/py/install_config/pyproject.toml && \
-uv pip install -r pyproject.toml
+uv pip install -r pyproject.toml --extra cpu
 
 ENV VIRTUAL_ENV="/usr/lib/python/semossvenv"
 ENV PATH=$VIRTUAL_ENV/bin:$PATH
@@ -182,6 +193,27 @@ RUN apt-get update \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
+
+WORKDIR /app
+
+# Jacoco stuff
+RUN mkdir /opt/testresults
+RUN mkdir /opt/testresults/coverage
+RUN mkdir /opt/testjars
+RUN mkdir /opt/repos
+
+WORKDIR /opt/testjars
+
+RUN mvn dependency:get -Dartifact=org.jacoco:org.jacoco.agent:0.8.12:jar:runtime
+RUN mvn dependency:get -Dartifact=org.jacoco:org.jacoco.core:0.8.12
+RUN mvn dependency:get -Dartifact=org.jacoco:org.jacoco.cli:0.8.12
+
+RUN wget "https://repo1.maven.org/maven2/org/jacoco/org.jacoco.cli/0.8.12/org.jacoco.cli-0.8.12-nodeps.jar"
+RUN mv "org.jacoco.cli-0.8.12-nodeps.jar" "jacococli.jar"
+RUN wget "https://repo1.maven.org/maven2/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar"
+RUN mv "org.jacoco.agent-0.8.12-runtime.jar" "jacocoagent.jar"
+
+RUN echo 'export CATALINA_OPTS="$CATALINA_OPTS -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/opt/testresults/jacoco.exec,output=file,append=false,dumponexit=true,jmx=true"' >> $TOMCAT_HOME/bin/setenv.sh
 
 WORKDIR /app
 CMD ["/app/scripts.sh"]

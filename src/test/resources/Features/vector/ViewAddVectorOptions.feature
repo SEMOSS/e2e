@@ -1,7 +1,6 @@
-@Regression
 Feature: View add Vector options on the page
 
-  @LoginWithAdmin
+  @LoginWithAdmin @Regression
   Scenario: Verify the available options on add vector page
     Given User is on Home page
     When User opens Main Menu

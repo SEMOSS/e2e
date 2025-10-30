@@ -1,5 +1,6 @@
 package aicore.framework;
 
+import aicore.utils.CommonUtils;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
@@ -36,6 +37,8 @@ public class Resource {
     private final java.util.concurrent.atomic.AtomicInteger featureNumber = new java.util.concurrent.atomic.AtomicInteger(0);
 
     private final int resourceNumber;
+
+    private String timestamp = null;
 
     public Resource(String url, int resourceNumber) {
         this.url = url;
@@ -165,5 +168,13 @@ public class Resource {
                 context = null;
             }
         }
+  
+    public String getTimestamp() {
+        return this.timestamp;
+    }
+
+    public void resetTimestamp() {
+        this.timestamp = CommonUtils.getTimeStampName();
+
     }
 }

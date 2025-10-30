@@ -40,6 +40,16 @@ public class createAppUsingTemplateSteps {
 		appTemplatePage.verifyInputFieldWithLabel(label);
 	}
 
+	@And("User clicks on description block")
+	public void user_clicks_on_description_block() {
+		appTemplatePage.clickOnQuestionBlock();
+	}
+
+	@And("User adds description as {string}")
+	public void user_adds_description_as(String description) {
+		appTemplatePage.addDescription(description);
+	}
+
 	@And("User sees submit button")
 	public void user_sees_submit_button() {
 		appTemplatePage.verifySubmitButton();
@@ -236,5 +246,15 @@ public class createAppUsingTemplateSteps {
 		String actualSize = appTemplatePage.getFontSize();
 		assertEquals(expectedFont, actualFont, "Font style does not match!");
 		assertEquals(expectedSize, actualSize, "Font size does not match!");
+	}
+	
+	@When("User clicks on the Submit Block")
+	public void user_clicks_on_the_submit_block() {
+		appTemplatePage.clickOSubmitBlock();
+	}
+
+	@And("User clicks on the Response Block")
+	public void user_clicks_on_the_response_block() {
+		appTemplatePage.clickOnResponseBlock();
 	}
 }

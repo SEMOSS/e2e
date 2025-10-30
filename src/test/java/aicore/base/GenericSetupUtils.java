@@ -99,20 +99,22 @@ public class GenericSetupUtils {
 	}
 
 	private static void loadEnv() throws IOException {
-		Path file;
-		Path local = Paths.get(".env.local");
-		if (Files.exists(local)) {
-			file = local;
-		} else {
-			file = Paths.get(".env");
+
+		Path file = Paths.get(".env");
+		Map<String, String> projectEnvironment = getEnvironment(file);
+
+		if (Files.exists(Paths.get(".env.local"))) {
+			projectEnvironment.putAll(getEnvironment(Paths.get(".env.local")));
 		}
 
-		Map<String, String> projectEnvironment = Files.readAllLines(file).stream().map(String::trim)
-				.filter(s -> !s.isEmpty()).filter(s -> !s.startsWith("#")).filter(s -> s.contains("="))
-				.map(s -> s.split("=", 2))
-				.collect(Collectors.toMap(s -> s[0].trim(), s -> s.length > 1 ? s[1].trim() : ""));
-
 		RunInfo.setEnvVariables(projectEnvironment);
+	}
+
+	private static Map<String, String> getEnvironment(Path file) throws IOException {
+        return Files.readAllLines(file).stream().map(String::trim)
+                .filter(s -> !s.isEmpty()).filter(s -> !s.startsWith("#")).filter(s -> s.contains("="))
+                .map(s -> s.split("=", 2))
+                .collect(Collectors.toMap(s -> s[0].trim(), s -> s.length > 1 ? s[1].trim() : ""));
 	}
 
 	private static void loadUrls() {
@@ -132,7 +134,7 @@ public class GenericSetupUtils {
 			}
 		} else {
 			// Generate URLS based off of how docker containers are generated
-			String urlStart = "http:///e2e-semoss-";
+			String urlStart = "http://e2e-semoss-";
 			String urlEnd = ":8080/";
 			for (int i = 1; i <= parallelCount; i++) {
 				String url = urlStart + i + urlEnd;

@@ -1,11 +1,10 @@
 package aicore.steps.app;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -39,7 +38,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		appVariablePage = new AppVariablePage(SetupHooks.getPage());
 		blocksPage = new DragAndDropBlocksPage(SetupHooks.getPage());
 		appPage = new AppPage(SetupHooks.getPage(), timestamp);
@@ -532,6 +531,17 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(isAppDisplayed, "Application is not displayed on page");
 	}
 
+	@And("User can see the following details on the app card")
+	public void user_can_see_the_following_details_on_the_app_card(DataTable dataTable) {
+		List<Map<String, String>> details = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> detail : details) {
+			String name = detail.get("DETAIL_NAME");
+			String value = detail.get("VALUE");
+			boolean isContentVisible=appPage.isContentVisibleOnAppCard(name, value);
+			Assertions.assertTrue(isContentVisible, name + " is not displayed on app card");
+		}
+	}
+
 	@When("User click on {string} confirmation button")
 	public void user_click_on_confirmation_button(String buttonName) {
 		appPage.clickOnDeleteButton(buttonName);
@@ -565,9 +575,9 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
-	@Then("User clicks on View Details button")
-	public void User_clicks_on_View_Details_button() {
-		appPage.clickOnViewDetails();
+	@Then("User clicks on app {string} button")
+	public void User_clicks_on_button(String buttonName) {
+		appPage.clickOnViewDetails(buttonName);
 	}
 
 	@And("User get the CatalogName for variable")
@@ -690,6 +700,21 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_see_the_created_app_in_system_apps_section(String appName) {
 		boolean isAppDisplayed = blocksPage.isAppDisplayedInSystemAppsSection(appName);
 		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in System Apps section");
+	}
+
+	@And("User clicks on edit variable option")
+	public void user_clicks_on_edit_variable_option() {
+		appVariablePage.clickOnEditVariableOption();
+	}
+
+	@And("User clicks on {string} open menu")
+	public void user_clicks_on_variable_open_menu(String variableName) {
+		appVariablePage.clickOnVariableOpenMenu(variableName);
+	}
+
+	@When("User clicks on Save variable button")
+	public void user_clicks_on_save_variable_button() {
+		appVariablePage.clickOnSaveVariableButton();
 	}
 
 }

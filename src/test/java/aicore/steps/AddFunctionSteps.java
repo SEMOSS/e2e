@@ -18,7 +18,7 @@ public class AddFunctionSteps {
 
 	public AddFunctionSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 

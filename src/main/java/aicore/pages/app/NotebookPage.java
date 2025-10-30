@@ -53,6 +53,12 @@ public class NotebookPage {
 	public void selectValueFromDropdown(String value, String fieldName) {
 		NotebookPageUtils.selectValueFromDropdown(page, value, fieldName);
 	}
+	public void selectValueFromReadAppDropdown(String value, String fieldName) {
+		NotebookPageUtils.selectValueFromReadAppDropdown(page, value, fieldName);
+	}
+	public void checkRecordWithUniqueId(String uniqueId) {
+		NotebookPageUtils.checkRecordWithUniqueId(page, uniqueId);
+	}
 
 	public void clickOnRecordButton(String buttonName) {
 		NotebookPageUtils.clickOnRecordButton(page, buttonName);
@@ -208,5 +214,13 @@ public class NotebookPage {
 
 	public boolean isFilteredDataCorrectForColumns(List<String> columns, List<String> values, String operator) {
 		return NotebookPageUtils.isFilteredDataCorrectForColumns(page, columns, values, operator);
+	}
+
+	public void enterDataLimit(String dataLimit) {
+		NotebookPageUtils.enterDataLimit(page, dataLimit);
+	}
+
+	public void clickOnRunAllCellButton() {
+		NotebookPageUtils.clickOnRunAllCellButton(page);
 	}
 }

@@ -1,6 +1,6 @@
 Feature: Create Variable Guide App using Template
 
-  @LoginWithAdmin @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create Variable Guide App using Template
     Given User is on Home page
     When User opens Main Menu
