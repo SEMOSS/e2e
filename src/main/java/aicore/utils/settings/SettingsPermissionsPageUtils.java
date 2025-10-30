@@ -44,9 +44,9 @@ public class SettingsPermissionsPageUtils {
 	public static void clickOnCatalogCard(Page page, String catalogName) {
 		Locator catalogCardLocator = page.locator(CATALOG_CARD_XPATH.replace("{catalogName}", catalogName));
 		Locator appCardLocator = page.locator(APP_CARD_XPATH.replace("{appName}", catalogName));
-		if (appCardLocator.count() > 0 && appCardLocator.isVisible()) {
+		if (appCardLocator.isVisible()) {
 			appCardLocator.click();
-		} else if (catalogCardLocator.count() > 0 && catalogCardLocator.isVisible()) {
+		} else if (catalogCardLocator.isVisible()) {
 			catalogCardLocator.click();
 		} else {
 			throw new RuntimeException("No visible card found for catalog/app: " + catalogName);

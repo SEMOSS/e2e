@@ -11,7 +11,7 @@ Feature: Vector Overview
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     #And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+    And User clicks On Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
