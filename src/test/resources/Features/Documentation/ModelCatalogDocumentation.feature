@@ -10,13 +10,13 @@ Feature: Model Documentation
     When User clicks on Add Model
     And User captures screenshot for "Model Options"
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'Model'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'Model'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
     Then User can see the Model title as 'Model'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User captures a 'button' and highlights the 'Access Control'

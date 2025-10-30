@@ -5,11 +5,11 @@ Feature: View existing Vectors on Vector Catalog Page
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'GPT-3.5'
-    And User enters Catalog name as 'ModelCatalog'
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Catalog Name as 'ModelCatalog'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -23,7 +23,7 @@ Feature: View existing Vectors on Vector Catalog Page
     And User enters value of Content Length as '510'
     And User enters value of Content Overlap as '17'
     And User clicks on Create Vector button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'

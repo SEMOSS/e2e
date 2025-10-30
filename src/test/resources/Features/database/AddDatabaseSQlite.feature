@@ -11,7 +11,7 @@ Feature: Add SQLITE Database
     And User clicks on Create Database button
     And User clicks on apply button
     And User clicks on apply database button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then User can see the database title as 'SqliteDB'
 
 @LoginWithAdmin @Regression @DeleteTestCatalog @Smoke

@@ -6,8 +6,8 @@
   #Scenario Outline: Add Model and Vector database
     #Given User clicks on Open Model
     #When User clicks on Add Model
-    #Then User selects 'ZIP'
-    #And User uploads a file '<file_Name>'
+    #And User selects the 'ZIP' option to upload file
+    #And User uploads the file '<file_Name>'
     #And User clicks on Create Model button
     #And User clicks on Open Vector
     #And User clicks on Add Vector button
@@ -34,7 +34,7 @@
     #When User clicks on the created Vector card name as '<catalog_name>'
     #And User clicks on files
     #And User clicks on Embed New Document
-    #And User uploads a file '<file_Name>'
+    #And User uploads the file '<file_Name>'
     #And User clicks on Embed button
     #Then User sees file embeded success toast message 'Successfully added document'
     #And User sees file named '<file_Name>' in the file list

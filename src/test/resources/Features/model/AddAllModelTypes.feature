@@ -28,7 +28,7 @@ Feature: Add all model types
        | KEEP_INPUT_OUTPUT         |
      And User clicks on Create Model button
      And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+     And User clicks on Copy Catalog ID
      Then User can see the Model title as 'GPT3 Model'
      And User clicks on SMSS
      Then User can see following fields in SMSS Properties
@@ -69,7 +69,7 @@ Feature: Add all model types
        | KEEP_INPUT_OUTPUT         |
      And User clicks on Create Model button
      And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+     And User clicks on Copy Catalog ID
      Then User can see the Model title as 'GPT4 Model'
      And User clicks on SMSS
      Then User can see following fields in SMSS Properties
@@ -107,7 +107,7 @@ Feature: Add all model types
        | KEEP_INPUT_OUTPUT |
      And User clicks on Create Model button
      And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+     And User clicks on Copy Catalog ID
      Then User can see the Model title as 'Text Davinci Model'
      And User clicks on SMSS
      Then User can see following fields in SMSS Properties
@@ -144,7 +144,7 @@ Feature: Add all model types
        | KEEP_INPUT_OUTPUT         |
      And User clicks on Create Model button
      And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+     And User clicks on Copy Catalog ID
      Then User can see the Model title as 'DALL E Model'
      And User clicks on SMSS
      Then User can see following fields in SMSS Properties
@@ -188,7 +188,7 @@ Feature: Add all model types
        | KEEP_INPUT_OUTPUT         |
      And User clicks on Create Model button
      And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+     And User clicks on Copy Catalog ID
      Then User can see the Model title as 'Palm Chat Bison Model'
      And User clicks on SMSS
      Then User can see following fields in SMSS Properties
@@ -232,7 +232,7 @@ Feature: Add all model types
        | KEEP_INPUT_OUTPUT         |
      And User clicks on Create Model button
      And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+     And User clicks on Copy Catalog ID
      Then User can see the Model title as 'Eleuther GPTJ Model'
      And User clicks on SMSS
      Then User can see following fields in SMSS Properties
@@ -274,7 +274,7 @@ Feature: Add all model types
        | KEEP_INPUT_OUTPUT         |
      And User clicks on Create Model button
      And User can see a toast message as 'Successfully added LLM to catalog'
-     And User clicks On Copy Catalog ID
+     And User clicks on Copy Catalog ID
      Then User can see the Model title as 'OrcaModel'
      And User clicks on SMSS
      Then User can see following fields in SMSS Properties
@@ -320,7 +320,7 @@ Scenario: Create Model of Azure OpenAI and validate the SMSS properties
     | KEEP_INPUT_OUTPUT         |
   And User clicks on Create Model button
   And User can see a toast message as 'Successfully added LLM to catalog'
-  And User clicks On Copy Catalog ID
+  And User clicks on Copy Catalog ID
   Then User can see the Model title as 'Azure OpenAI Model'
   And User clicks on SMSS
   Then User can see following fields in SMSS Properties
@@ -365,7 +365,7 @@ Scenario: Create Model of Azure OpenAI and validate the SMSS properties
      | MAX_TOKENS        |
    And User clicks on Create Model button
    And User can see a toast message as 'Successfully added LLM to catalog'
-   And User clicks On Copy Catalog ID
+   And User clicks on Copy Catalog ID
    Then User can see the Model title as 'Azure OpenAI ADA Embedder Model'
    And User clicks on SMSS
    Then User can see following fields in SMSS Properties
@@ -410,7 +410,7 @@ Scenario: Create Model of Azure OpenAI and validate the SMSS properties
       | KEEP_INPUT_OUTPUT         |
      And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Claude Model'
     And User clicks on SMSS
     Then User can see following fields in SMSS Properties
@@ -455,7 +455,7 @@ Then User can enable Submit button after filling mandatory fields for "Palm Biso
   | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Palm Bison Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -499,7 +499,7 @@ Then User can see following fields in SMSS Properties
       | KEEP_INPUT_OUTPUT         |
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Palm Code Bison Model'
     And User clicks on SMSS
     Then User can see following fields in SMSS Properties
@@ -544,7 +544,7 @@ Then User can see following fields in SMSS Properties
       | KEEP_INPUT_OUTPUT         |
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Palm Chat Bison Model'
     And User clicks on SMSS
     Then User can see following fields in SMSS Properties
@@ -584,7 +584,7 @@ Then User can see following fields in SMSS Properties
     | KEEP_INPUT_OUTPUT         |
   And User clicks on Create Model button
   And User can see a toast message as 'Successfully added LLM to catalog'
-  And User clicks On Copy Catalog ID
+  And User clicks on Copy Catalog ID
   Then User can see the Model title as 'Embed-qa-4 Model'
   And User clicks on SMSS
   Then User can see following fields in SMSS Properties
@@ -624,7 +624,7 @@ Then User can see following fields in SMSS Properties
      | KEEP_INPUT_OUTPUT         | 
    And User clicks on Create Model button
    And User can see a toast message as 'Successfully added LLM to catalog'
-   And User clicks On Copy Catalog ID
+   And User clicks on Copy Catalog ID
    Then User can see the Model title as 'Rerank-qa-mistral-4bs Model'
    And User clicks on SMSS
    Then User can see following fields in SMSS Properties
@@ -667,7 +667,7 @@ Then User can enable Submit button after filling mandatory fields for "Bert" mod
   | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Bert Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -711,7 +711,7 @@ Then User can enable Submit button after filling mandatory fields for "Dolly" mo
   | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Dolly Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -741,7 +741,7 @@ And User enter GCP Region as 'Gemini Region'
 And User enters Variable Name as 'Variable_Gemini'
 #chat type is not able to edit
 #And User select Chat Type as "text"
-And User uploads a file 'dummy-pdf.pdf'
+And User uploads the file 'dummy-pdf.pdf'
 And User enter Init Script as 'InitScript_Gemini'
 And User select the Keep Conversation History as 'false'
 And User select Record Questions and Responses as 'false'
@@ -757,7 +757,7 @@ Then User can enable Submit button after filling mandatory fields for "Gemini" m
 | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Gemini Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -801,7 +801,7 @@ Then User can enable Submit button after filling mandatory fields for "Falcon" m
   | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Falcon Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -845,7 +845,7 @@ Then User can see following fields in SMSS Properties
     | KEEP_INPUT_OUTPUT         |
   And User clicks on Create Model button
   And User can see a toast message as 'Successfully added LLM to catalog'
-  And User clicks On Copy Catalog ID
+  And User clicks on Copy Catalog ID
   Then User can see the Model title as 'Flan T5 Large Model'
   And User clicks on SMSS
   Then User can see following fields in SMSS Properties
@@ -890,7 +890,7 @@ Then User can enable Submit button after filling mandatory fields for "Flan T5 X
   | KEEP_INPUT_OUTPUT         | 
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Flan T5 XXL Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -934,7 +934,7 @@ Then User can see following fields in SMSS Properties
     | KEEP_INPUT_OUTPUT         |
   And User clicks on Create Model button
   And User can see a toast message as 'Successfully added LLM to catalog'
-  And User clicks On Copy Catalog ID
+  And User clicks on Copy Catalog ID
   Then User can see the Model title as 'Guanaco Model'
   And User clicks on SMSS
   Then User can see following fields in SMSS Properties
@@ -978,7 +978,7 @@ Then User can enable Submit button after filling mandatory fields for "Llama2 7B
   | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Llama2 7B Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -1022,7 +1022,7 @@ Then User can see following fields in SMSS Properties
     | KEEP_INPUT_OUTPUT         |
   And User clicks on Create Model button
   And User can see a toast message as 'Successfully added LLM to catalog'
-  And User clicks On Copy Catalog ID
+  And User clicks on Copy Catalog ID
   Then User can see the Model title as 'Llama2 13B Model'
   And User clicks on SMSS
   Then User can see following fields in SMSS Properties
@@ -1066,7 +1066,7 @@ Then User can see following fields in SMSS Properties
       | KEEP_INPUT_OUTPUT         |
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Llama2 70B Model'
     And User clicks on SMSS
     Then User can see following fields in SMSS Properties
@@ -1110,7 +1110,7 @@ Then User can see following fields in SMSS Properties
         | KEEP_INPUT_OUTPUT         |
       And User clicks on Create Model button
       And User can see a toast message as 'Successfully added LLM to catalog'
-      And User clicks On Copy Catalog ID
+      And User clicks on Copy Catalog ID
       Then User can see the Model title as 'Mosaic ML Model'
       And User clicks on SMSS
       Then User can see following fields in SMSS Properties
@@ -1155,7 +1155,7 @@ Then User can enable Submit button after filling mandatory fields for "Replit co
 | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Replit Code Model 3b Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -1199,7 +1199,7 @@ Then User can enable Submit button after filling mandatory fields for "StableBel
 | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'StableBeluga2 Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -1243,7 +1243,7 @@ Then User can enable Submit button after filling mandatory fields for "Vicuna" m
 | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Vicuna Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -1287,7 +1287,7 @@ Then User can enable Submit button after filling mandatory fields for "Wizard 13
 | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Wizard 13B Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -1332,7 +1332,7 @@ Then User can enable Submit button after filling mandatory fields for "Wizard Co
 | KEEP_INPUT_OUTPUT         |
 And User clicks on Create Model button
 And User can see a toast message as 'Successfully added LLM to catalog'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Model title as 'Wizard Coder Model'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties
@@ -1354,10 +1354,10 @@ Given User opens Main Menu
 And User clicks on Open Model
 And User clicks on Add Model
 When User selects 'ZIP'
-And User uploads a file 'Model/ModelZIP.zip'
+And User uploads the file 'Model/ModelZIP.zip'
 And User click on Create 'Model' button
 Then User can see a toast message as 'ZIP uploaded successfully'
-And User clicks On Copy Catalog ID
+And User clicks on Copy Catalog ID
 Then User can see the Catalog title as 'Llama3-70B-Instruct'
 And User clicks on SMSS
 Then User can see following fields in SMSS Properties

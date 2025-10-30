@@ -365,7 +365,7 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@And("User clicks On Copy Catalog ID")
+	@And("User clicks on Copy Catalog ID")
 	public void user_clicks_on_Copy_Catalog_ID() {
 		catlogpermission.getCatalogAndCopyId();
 	}

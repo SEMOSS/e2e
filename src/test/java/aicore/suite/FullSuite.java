@@ -7,7 +7,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("Features/app/Build.feature")
+@SelectClasspathResource("Features")
 @ConfigurationParameter(key = "cucumber.glue", value = "aicore.steps,aicore.hooks")
 //@ConfigurationParameter(key = "cucumber.glue", value =  "aicore.hooks")
 @ConfigurationParameter(key = "cucumber.filter.tags", value = "@Regression")

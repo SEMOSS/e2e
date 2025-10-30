@@ -11,7 +11,7 @@ public abstract class AbstractChangeAccessPopUpPage {
 		return ChangeAccessPopUpPageUtils.isChangeAccessPopupVisible(page);
 	}
 
-	public boolean isPopupVisible() throws InterruptedException {
+	public boolean isPopupVisible() {
 		return ChangeAccessPopUpPageUtils.isPopupVisible(page);
 	}
 

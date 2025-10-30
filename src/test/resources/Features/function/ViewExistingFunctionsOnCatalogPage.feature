@@ -4,10 +4,10 @@ Feature: View existing functions on Function Catalog Page
     Given User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
-    Then User selects function 'ZIP'
-    And User uploads function file 'Function/weatherFunctionTest.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Edit button
     And User add tags 'embeddings, Test1' and presses Enter
@@ -29,7 +29,7 @@ Feature: View existing functions on Function Catalog Page
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
 
- @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: view and validate filter functionality - Discoverable Functions
     Given User opens Main Menu
     When User clicks on Open Function
@@ -49,4 +49,3 @@ Feature: View existing functions on Function Catalog Page
       | Data Restrictions   | IP ALLOWED   |
     When User logs out from the application
     And User login as 'admin'
-   

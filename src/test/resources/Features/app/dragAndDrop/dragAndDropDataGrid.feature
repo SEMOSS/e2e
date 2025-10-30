@@ -6,8 +6,8 @@ Feature: Drag and Drop Data Grid
     When User opens Main Menu
     And User clicks on Open Database
     And User clicks on Add Database
-    And User selects database 'ZIP'
-    And User uploads database file 'Database/TestDatabase.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
@@ -16,7 +16,7 @@ Feature: Drag and Drop Data Grid
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -57,7 +57,7 @@ Feature: Drag and Drop Data Grid
     And User remove the 'Age' column from the Data Grid
     And User clicks on the Sync icon
     And User should not see the 'Age' column in the Data Grid
-   
+
   @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: validate the pagination on the Data Grid
     When User clicks on 'page-1' page
@@ -72,4 +72,3 @@ Feature: Drag and Drop Data Grid
       |  10 |
       |  50 |
       | 100 |
-    
