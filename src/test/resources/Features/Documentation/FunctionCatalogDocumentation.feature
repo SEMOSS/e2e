@@ -21,7 +21,7 @@ Feature: Function documentation
     And User captures a 'button' and highlights the 'Create function'
     And User clicks on Create Function button
     And User sees success toast message 'Successfully added function to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User captures a 'button' and highlights the 'Access Control'
@@ -52,8 +52,6 @@ Feature: Function documentation
     And User opens Main Menu
     And User clicks on Open Function
     When User clicks on Add Function
-    #And User selects function 'ZIP'
-    #And User uploads function file 'Function/weatherFunctionTest.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
     And User captures screenshot for "Function ZIP"

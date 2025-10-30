@@ -2,6 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
+import aicore.utils.CommonUtils;
 import aicore.utils.settings.SettingsPermissionsPageUtils;
 
 public class SettingsPermissionsPage {
@@ -47,9 +48,11 @@ public class SettingsPermissionsPage {
 	public boolean isIconDisabled(String role, String iconName) {
 		return SettingsPermissionsPageUtils.isIconDisabled(page, role, iconName);
 	}
+
 	public String getCurrentUtcTime() {
-		return SettingsPermissionsPageUtils.getCurrentUtcTime();
+		return CommonUtils.getCurrentUtcTime();
 	}
+
 	public String getUserPermissionDate(String role) {
 		return SettingsPermissionsPageUtils.getUserPermissionDate(page, role);
 	}

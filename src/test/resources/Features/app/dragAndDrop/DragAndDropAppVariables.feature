@@ -71,8 +71,6 @@ Feature: Create App and validate Variables
     When User opens Main Menu
     And User clicks on Open Database
     And User clicks on Add Database
-    #And User selects database 'ZIP'
-    #And User uploads database file 'Database/TestDatabase.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
@@ -83,7 +81,7 @@ Feature: Create App and validate Variables
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User get the CatalogName for variable
     When User opens Main Menu
     And User clicks on Open App Library
@@ -105,12 +103,10 @@ Feature: Create App and validate Variables
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
-    #And User selects function 'ZIP'
-    #And User uploads function file 'Function/weatherFunctionTest.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User get the CatalogName for variable
     When User opens Main Menu
     And User clicks on Open App Library
@@ -137,7 +133,7 @@ Feature: Create App and validate Variables
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User get the CatalogName for variable
     When User opens Main Menu
     And User clicks on Open App Library
@@ -207,7 +203,7 @@ Feature: Create App and validate Variables
     And User enters Path Prefix as 'local_storage'
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User get the CatalogName for variable
     And User can see the Storage title as 'Local File System Storage'
     When User opens Main Menu

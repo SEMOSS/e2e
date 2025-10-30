@@ -117,25 +117,21 @@ public class SettingsPermissionsSteps {
 	}
 
 	@Then("{string} user cannot change the {string} user role and sees {string} user in members list")
-	public void user_cannot_change_the_user_role_and_sees_user_in_members_list(String user, String user1, String role) {
+	public void user_cannot_change_the_user_role_and_sees_user_in_members_list(String user, String userType,
+			String role) {
 		boolean isUserExists = catalogSettingsPage.verifyUserIsExists(role);
 		Assertions.assertTrue(isUserExists, role + " user is removed from members list");
 	}
 
 	@Then("{string} user cannot delete the {string} user and sees {string} user in members list")
-	public void user_cannot_delete_the_user_and_sees_user_in_members_list(String user, String user1, String role) {
+	public void user_cannot_delete_the_user_and_sees_user_in_members_list(String user, String userType, String role) {
 		boolean isUserExists = catalogSettingsPage.verifyUserIsExists(role);
 		Assertions.assertTrue(isUserExists, role + " user is removed from members list");
 	}
 
-	@Then("{string} user can see {string} icon is disabled")
-	public void user_can_see_button_is_disabled(String role, String iconType) {
+	@Then("User can see {string} user {string} icon is disabled")
+	public void user_can_see_user_icon_is_disabled(String role, String iconType) {
 		boolean isIconDisabled = catalogSettingsPage.isIconDisabled(role, iconType);
 		Assertions.assertTrue(isIconDisabled, "for " + role + " user " + iconType + " icon is not disabled");
-	}
-
-	@Then("User can see {string} user with {string} role in members list")
-	public void user_can_see_user_with_role_in_members_list(String string, String string2) {
-
 	}
 }

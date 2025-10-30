@@ -6,8 +6,6 @@ Feature: Create Notebook and execute it
     And User opens Main Menu
     When User clicks on Open Database
     And User clicks on Add Database
-    #And User selects database 'ZIP'
-    #And User uploads database file 'Database/TestDatabase.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
@@ -18,7 +16,7 @@ Feature: Create Notebook and execute it
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button

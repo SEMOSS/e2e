@@ -4,12 +4,10 @@ Feature: Add Database
     Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
-    #Then User selects database 'ZIP'
-    #And User uploads database file 'Database/TestDatabase.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
 

@@ -30,7 +30,7 @@ Feature: App Library Documentation
      And User clicks on Open App Library
      And User searches 'Travel Itinerary' app in the app searchbox
      Then User can see 'Travel Itinerary' app on the page
-     And User clicks on 'View Details' button
+     And User clicks on app 'View Details' button
      And User captures a 'button' and highlights the 'Export'
      And User captures a 'button' and highlights the 'Edit'
      And User captures a 'button' and highlights the 'Access Control'
@@ -77,13 +77,11 @@ Feature: App Library Documentation
     When User opens Main Menu
     And User clicks on Open Model
     When User clicks on Add Model
-    #Then User selects 'ZIP'
-    #And User uploads a file 'model/Llama_model.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'model/Llama_model.zip'
     And User clicks on Create Model button
     And User get the CatalogName for variable
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
     And User captures a 'button' and highlights the "Create New App" with name "LandingPage1"

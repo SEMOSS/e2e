@@ -1,14 +1,14 @@
 Feature: Validate catalog user permissions for all catalog types
 
   @LoginWithAuthor @DeleteTestCatalog @Regression
-  Scenario Outline: validate user access permissions of '<CATALOG>'
+  Scenario Outline: Validate user access permissions of '<CATALOG>'
     Given User opens Main Menu
     When User opens '<CATALOG>'
     And User clicks on Add '<CATALOG>' button
     And User selects the 'ZIP' option to upload file
     And User uploads the file '<FILE_NAME>'
     And User clicks on Create '<CATALOG>' button to create catalog
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open Settings
     When User selects the '<CARD>' card
@@ -53,10 +53,12 @@ Feature: Validate catalog user permissions for all catalog types
     When User selects the '<CARD>' card
     And User can search '<CATALOG_NAME>' in search box
     And User clicks on the '<CATALOG_NAME>'
-    Then 'Read-Only' user can see 'delete' icon is disabled
-    And 'Read-Only' user can see 'edit' icon is disabled
-    Then 'Read-Only' user can see 'delete' icon is disabled
-    And 'Read-Only' user can see 'edit' icon is disabled
+    And User search for 'Author' user in members search box
+    Then User can see 'Author' user 'delete' icon is disabled
+    And User can see 'Author' user 'edit' icon is disabled
+    And User search for 'Editor' user in members search box
+    Then User can see 'Editor' user 'delete' icon is disabled
+    And User can see 'Editor' user 'edit' icon is disabled
     When User logs out from the application
     And User login as 'Author'
     And User opens Main Menu
@@ -79,7 +81,7 @@ Feature: Validate catalog user permissions for all catalog types
       | Storage  | Add Storage  | Storage/Localminio.zip           | Storage Settings  | Localminio          |
 
   @LoginWithAuthor @DeleteCreatedTestApp @Regression
-  Scenario: validate user access permissions of Apps
+  Scenario: Validate user access permissions of Apps
     Given User opens Main Menu
     When User clicks on Open App Library
     And User clicks on Create New App button
@@ -133,10 +135,12 @@ Feature: Validate catalog user permissions for all catalog types
     When User selects the 'App Settings' card
     And User can search 'Test App permissions' in search box
     And User clicks on the 'Test App permissions'
-    Then 'Read-Only' user can see 'delete' icon is disabled
-    And 'Read-Only' user can see 'edit' icon is disabled
-    Then 'Read-Only' user can see 'delete' icon is disabled
-    And 'Read-Only' user can see 'edit' icon is disabled
+    And User search for 'Author' user in members search box
+    Then User can see 'Author' user 'delete' icon is disabled
+    And User can see 'Author' user 'edit' icon is disabled
+    And User search for 'Editor' user in members search box
+    Then User can see 'Editor' user 'delete' icon is disabled
+    And User can see 'Editor' user 'edit' icon is disabled
     When User logs out from the application
     And User login as 'Author'
     And User opens Main Menu

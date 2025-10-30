@@ -12,7 +12,7 @@ Feature: Add Vector Database
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     #Then User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -32,7 +32,7 @@ Feature: Add Vector Database
     And User clicks on Create Vector button
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as '<catalog_name>'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     When User clicks on SMSS
     Then User can see vector catalog name in 'NAME' field as '<catalog_name>' in SMSS properties
     And User can see embedder engine name in 'EMBEDDER_ENGINE_NAME' field as '<model_name>' in SMSS properties
@@ -62,7 +62,7 @@ Feature: Add Vector Database
     And User clicks on Create Vector button
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as 'FAISS Vector DB00'
-      And User clicks On Copy Catalog ID
+      And User clicks on Copy Catalog ID
     When User clicks on Usage tab for Vector DB
     Then User sees an example of "How to use in Javascript" with example code for Vector DB
     And User sees an example of "How to use in Python" with example code for Vector DB
@@ -83,7 +83,7 @@ Feature: Add Vector Database
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And 'Admin' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -123,7 +123,7 @@ Feature: Add Vector Database
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
-   And User clicks On Copy Catalog ID
+   And User clicks on Copy Catalog ID
     And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'

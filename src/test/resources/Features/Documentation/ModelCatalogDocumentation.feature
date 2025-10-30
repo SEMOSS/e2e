@@ -16,7 +16,7 @@ Feature: Model Documentation
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
     Then User can see the Model title as 'Model'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User captures a 'button' and highlights the 'Access Control'

@@ -12,7 +12,7 @@ Feature: Model settings
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
 
  @DeleteCreatedDatabaseCatalog
   Scenario: Validate Model Settings page

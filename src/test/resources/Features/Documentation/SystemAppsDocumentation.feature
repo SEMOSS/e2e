@@ -7,12 +7,10 @@ Feature: System Apps Documentation
     When User opens Main Menu
     And User clicks on Open Database
     And User clicks on Add Database
-    #Then User selects database 'ZIP'
-    #And User uploads database file 'Database/TestDatabase.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     ##Steps added for metadata table Refresh to enable the data import until bug is fixed
     And User clicks on MetaData tab
     And User clicks on Refresh button

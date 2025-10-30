@@ -12,7 +12,7 @@ Feature: Model catalog permission - Author
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Model'
 
   @DeleteTestCatalog

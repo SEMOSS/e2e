@@ -18,8 +18,6 @@ Feature: Create drag and drop app
     When User opens Main Menu
     And User clicks on Open Database
     And User clicks on Add Database
-    #And User selects database 'ZIP'
-    #And User uploads database file 'Database/TestDatabase.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
@@ -30,7 +28,7 @@ Feature: Create drag and drop app
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    When User clicks On Copy Catalog ID
+    When User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox

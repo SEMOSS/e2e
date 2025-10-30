@@ -1,9 +1,5 @@
 package aicore.utils.settings;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
@@ -123,10 +119,6 @@ public class SettingsPermissionsPageUtils {
 			throw new IllegalArgumentException("Unknown icon type: " + iconType);
 		}
 		return iconLocator.isDisabled();
-	}
-
-	public static String getCurrentUtcTime() {
-		return LocalDateTime.now(ZoneOffset.UTC).withNano(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	}
 
 	public static String getUserPermissionDate(Page page, String role) {

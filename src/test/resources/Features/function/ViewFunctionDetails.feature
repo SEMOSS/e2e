@@ -5,12 +5,10 @@ Feature: View Function Details
     Given User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
-    #And User selects function 'ZIP'
-    #And User uploads function file 'Function/weatherFunctionTest.zip'
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'WeatherFunctionTest'
 
   Scenario: View overview details in "Overview" tab for selected Function

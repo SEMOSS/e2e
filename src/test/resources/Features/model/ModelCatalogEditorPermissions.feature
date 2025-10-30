@@ -12,7 +12,7 @@ Feature: Model Catalog Permission - Editor
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User can see the Model title as 'Catalog'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     Then 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as "Editor"

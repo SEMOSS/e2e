@@ -14,7 +14,6 @@ import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
 import aicore.utils.AICorePageUtils;
-import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -124,20 +123,6 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_selects_database(String dbType) {
 		addDatabaseToCatalogPage.selectDatabaseType(dbType);
 	}
-
-//	@And("User uploads database file {string}")
-//	public void user_uploads_database_file(String fileName) {
-//		String uploadedFileName = addDatabaseToCatalogPage.uploadDatabaseFile(fileName);
-//		if (fileName.contains("/")) {
-//			String[] ActualFileName = fileName.split("/");
-//			int fileNameIndex = ActualFileName.length - 1;
-//			Assertions.assertEquals(ActualFileName[fileNameIndex], uploadedFileName,
-//					"Database Document file is not uploaded successfully");
-//		} else {
-//			Assertions.assertEquals(fileName, uploadedFileName, "Database Document file is not uploaded successfully");
-//		}
-//
-//	}
 
 	@And("User clicks on Create Database button")
 	public void user_clicks_on_create_database_button() {
