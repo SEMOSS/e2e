@@ -1,8 +1,8 @@
 ---
 name: ApplicationBugFailure
 about: An Issue with an application that causes a scenario/feature to fail
-title: "[ApplicationBugFailure] "
-labels: ''
+title: "[Feature File name] [Scenario Name] failing due to Semoss Bug"
+labels: ApplicationBugFailure
 assignees: ''
 
 ---
