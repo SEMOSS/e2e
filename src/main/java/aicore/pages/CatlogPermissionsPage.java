@@ -92,8 +92,8 @@ public class CatlogPermissionsPage {
 		CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page);
 	}
 
-	public boolean canSeeEditOtion() {
-		return CatlogAccessPageUtility.canSeeEditOption(page);
+	public boolean canSeeEditOtion(String action) {
+		return CatlogAccessPageUtility.canSeeEditOption(page, action);
 	}
 
 	public boolean canSeeSettingOtion() {

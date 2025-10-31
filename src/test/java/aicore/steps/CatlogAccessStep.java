@@ -15,7 +15,6 @@ import aicore.pages.AddModelPage;
 import aicore.pages.CatlogPermissionsPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
-import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -355,14 +354,8 @@ public class CatlogAccessStep {
 
 	@And("{string} user Edit option should be {string}")
 	public void user_Can_See_EditOptionIcon(String role, String action) {
-		boolean editOption = catlogpermission.canSeeEditOtion();
-		if (action.equalsIgnoreCase("Enable")) {
-			Assertions.assertTrue(editOption, role + " user can not view the Edit Option");
-		} else if (action.equalsIgnoreCase("Disable")) {
-			Assertions.assertFalse(editOption, role + " user should not view the Edit Option");
-		} else {
-			Assertions.fail("Invalid action: " + action);
-		}
+		boolean editOption = catlogpermission.canSeeEditOtion(action);
+		Assertions.assertTrue(editOption, "for " + role + " user Edit Option is " + action);
 	}
 
 	@And("User clicks on Copy Catalog ID")

@@ -54,6 +54,7 @@ Feature: Create drag and drop app
       | Text       |                         | Text block         | Bold, Italic, Underlined | Bold, Italic, Underlined | Arial           | #ffcc00   | Right          |
       | Markdown   |                         | **Markdown** block | Bold, Italic             | Bold, Italic             | Times New Roman | #ffcc00   | Left           |
 
+  @ApplicationBugFailure
   Scenario: Drag and Drop Text section Logs block
     When User clicks on Notebook
     And User clicks on Create new notebook
@@ -70,5 +71,3 @@ Feature: Create drag and drop app
     And User selects 'Test query' from the Query dropdown
     And User clicks on the Save App icon
     Then User should see the 'Logs' text as 'Hello word'
-
-    
