@@ -35,8 +35,7 @@ public class AppTemplatePage {
 	public void clickOnQuestionBlock() {
 		AppTemplatePageUtils.clickOnQuestionBlock(page);
 	}
-	
-	
+
 	public void addDescription(String description) {
 		AppTemplatePageUtils.addDescription(description, page);
 	}

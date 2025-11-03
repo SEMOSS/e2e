@@ -1,4 +1,3 @@
-@Regression
 Feature: Create drag and drop app
 
   Background: Create Drag and Drop app
@@ -13,7 +12,7 @@ Feature: Create drag and drop app
     And User clicks on Create button
     And User fetch the app name for drag and drop app
 
-  @DeleteTestCatalog @DeleteCreatedTestApp @Smoke
+  @DeleteTestCatalog @DeleteCreatedTestApp @Smoke @Regression @ApplicationBugFailure
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     When User opens Main Menu
     And User clicks on Open Database
@@ -77,7 +76,7 @@ Feature: Create drag and drop app
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Dendrogram Chart    | Age, BloodPressure                                              | Select Dimensions, Select Facet                                                                      |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | World Map Chart     | DIABETES_UNIQUE_ROW_ID, Age, BMI, SkinThickness, Tooltip        | Select Label, Select Latitude, Select Longitude, Select Size, Select Tooltip                         |
 
-  @DeleteCreatedTestApp
+  @DeleteCreatedTestApp @Regression
   Scenario Outline: Drag and Drop Mermaid Chart block
     When User opens Main Menu
     And User clicks on Open App Library

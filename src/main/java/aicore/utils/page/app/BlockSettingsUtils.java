@@ -28,6 +28,7 @@ public class BlockSettingsUtils {
 
 	public static void clickOnBlockSettingsOption(Page page) {
 		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
+		AICorePageUtils.waitFor(blockSettingsOption);
 		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			blockSettingsOption.click();
 		}
@@ -104,7 +105,9 @@ public class BlockSettingsUtils {
 	// chart block settings
 
 	public static void clickOnDataTab(Page page) {
-		page.locator(DATA_TAB_XPATH).click();
+		Locator dataTab = page.locator(DATA_TAB_XPATH);
+		AICorePageUtils.waitFor(dataTab);
+		dataTab.click();
 	}
 
 	public static void selectFrame(Page page, String frameId) {

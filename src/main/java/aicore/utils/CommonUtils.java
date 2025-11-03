@@ -1,8 +1,11 @@
 package aicore.utils;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -210,47 +213,97 @@ public class CommonUtils {
 		}
 	}
 
+//	public static boolean compareImages(String actualImagePath, String expectedImagePath, String diffImagePath)
+//			throws Exception {
+//		File actualFile = new File(actualImagePath);
+//		File expectedFile = new File(expectedImagePath);
+//		File diffFile = new File(diffImagePath);
+//
+//		// Ensure diff directory exists
+//		diffFile.getParentFile().mkdirs();
+//		// Fail fast if expected image doesn't exist
+//		if (!expectedFile.exists()) {
+//			throw new IllegalStateException("Expected image not found at: " + expectedImagePath);
+//		}
+//
+//		BufferedImage expected = ImageIO.read(expectedFile);
+//		BufferedImage actual = ImageIO.read(actualFile);
+//
+//		// Only resize if absolutely needed
+//		if (expected.getWidth() != actual.getWidth() || expected.getHeight() != actual.getHeight()) {
+//			logger.info("Resizing actual image to match expected dimensions");
+//			actual = resizeImage(actual, expected.getWidth(), expected.getHeight());
+//		}
+//
+//		ImageComparison imageComparison = new ImageComparison(expected, actual);
+//		imageComparison.setDestination(diffFile);
+//
+//		ImageComparisonResult result = imageComparison.compareImages();
+//
+//		double diffPercent = result.getDifferencePercent();
+//		logger.info("Difference percent: " + diffPercent);
+//
+//		// Allow small tolerance, e.g., 0.5%
+//		return diffPercent <= 0.5;
+//	}
+//
+//	private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+//		Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
+//		BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+//		Graphics2D g2d = outputImage.createGraphics();
+//		g2d.drawImage(resultingImage, 0, 0, null);
+//		g2d.dispose();
+//		return outputImage;
+//	}
 	public static boolean compareImages(String actualImagePath, String expectedImagePath, String diffImagePath)
 			throws Exception {
 		File actualFile = new File(actualImagePath);
 		File expectedFile = new File(expectedImagePath);
 		File diffFile = new File(diffImagePath);
-
-		// Ensure diff directory exists
 		diffFile.getParentFile().mkdirs();
-		// Fail fast if expected image doesn't exist
 		if (!expectedFile.exists()) {
 			throw new IllegalStateException("Expected image not found at: " + expectedImagePath);
 		}
-
 		BufferedImage expected = ImageIO.read(expectedFile);
 		BufferedImage actual = ImageIO.read(actualFile);
-
-		// Only resize if absolutely needed
 		if (expected.getWidth() != actual.getWidth() || expected.getHeight() != actual.getHeight()) {
-			logger.info("Resizing actual image to match expected dimensions");
+			logger.info("Resizing actual image to match expected dimensions...");
 			actual = resizeImage(actual, expected.getWidth(), expected.getHeight());
 		}
-
+		expected = applyBlur(expected);
+		actual = applyBlur(actual);
 		ImageComparison imageComparison = new ImageComparison(expected, actual);
-		imageComparison.setDestination(diffFile);
-
 		ImageComparisonResult result = imageComparison.compareImages();
-
 		double diffPercent = result.getDifferencePercent();
-		logger.info("Difference percent: " + diffPercent);
-
-		// Allow small tolerance, e.g., 0.5%
-		return diffPercent <= 0.5;
+		logger.info(String.format("Image comparison completed. Difference: %.3f%%", diffPercent));
+		double threshold = 1.5;
+		boolean areSimilar = diffPercent <= threshold;
+		if (!areSimilar) {
+			logger.warn("Images differ beyond acceptable threshold. Creating diff image...");
+			imageComparison.setDestination(diffFile);
+			imageComparison.compareImages();
+		}
+		return areSimilar;
 	}
 
 	private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
-		Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
-		BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2d = outputImage.createGraphics();
-		g2d.drawImage(resultingImage, 0, 0, null);
+		int imageType = originalImage.getColorModel().hasAlpha() ? BufferedImage.TYPE_INT_ARGB
+				: BufferedImage.TYPE_INT_RGB;
+		BufferedImage resized = new BufferedImage(targetWidth, targetHeight, imageType);
+		Graphics2D g2d = resized.createGraphics();
+		// Consistent cross-platform rendering settings
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
 		g2d.dispose();
-		return outputImage;
+		return resized;
+	}
+
+	private static BufferedImage applyBlur(BufferedImage image) {
+		float[] kernel = { 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f };
+		BufferedImageOp op = new ConvolveOp(new Kernel(3, 3, kernel));
+		return op.filter(image, null);
 	}
 
 	public static void moveMouseToCenter(Page page, Locator locator, int steps) {

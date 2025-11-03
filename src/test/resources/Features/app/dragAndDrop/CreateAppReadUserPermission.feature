@@ -33,6 +33,5 @@ Feature: App setting for Read permission
     And 'Read' user can 'not see' private toggle button
     And 'Read' user can 'not see' Non-Discoverable toggle button
     And 'Read' user can 'not view' Delete catalog option
-    And User opens Main Menu
     And User logs out from the application
     And User login as 'Author'

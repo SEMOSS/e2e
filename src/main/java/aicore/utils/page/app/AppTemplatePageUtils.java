@@ -6,6 +6,7 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
 
 public class AppTemplatePageUtils {
@@ -16,7 +17,7 @@ public class AppTemplatePageUtils {
 	private static final String INPUT_BOX_XPATH = "//div[@data-block='question']";
 	private static final String RESPONSE_BOX_XPATH = "//p[@data-block='response']";
 	private static final String ASK_LOADER_XPATH = "//div[@data-block=\"submit\"]//span[@role=\"progressbar\"]";
-	private static final String DESCRIPTION_BOX_XPATH ="//p[text()='Value']/../..//div//div//input";
+	private static final String DESCRIPTION_BOX_XPATH = "//p[text()='Value']/../..//div//div//input";
 	private static final String PREVIEW_APP_CANCEL_XPATH = "(//button//span[contains(text(),'Cancel')])[2]";
 	private static final String INPUT_BOX_LABEL_XPATH = "//div[@data-block='question']//label";
 	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
@@ -67,13 +68,12 @@ public class AppTemplatePageUtils {
 
 	public static void clickOnQuestionBlock(Page page) {
 		page.locator(INPUT_BOX_XPATH).isVisible();
-		page.locator(INPUT_BOX_XPATH).click();	 
+		page.locator(INPUT_BOX_XPATH).click();
 	}
-	
+
 	public static void addDescription(String description, Page page) {
 		page.locator(DESCRIPTION_BOX_XPATH).fill(description);
 	}
-	
 
 	public static void clickPreviewButton(Page page) {
 		boolean isPreviewButtonVisible = page.getByTestId("PreviewRoundedIcon").isVisible();
@@ -171,11 +171,13 @@ public class AppTemplatePageUtils {
 
 	public static void verifyHyperlink(String text, String link, Page page) {
 		Locator textLocator = page.locator(TEXT_XPATH.replace("{text}", text));
+		AICorePageUtils.waitFor(textLocator);
 		textLocator.dblclick();
 		page.waitForTimeout(1000);
 	}
 
 	public static String getCurrentUrl(Page page) {
+		page.waitForLoadState(LoadState.LOAD);
 		return page.url();
 	}
 
@@ -187,7 +189,7 @@ public class AppTemplatePageUtils {
 
 	public static void getBackPage(Page page) {
 		page.goBack();
-		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.LOAD);
 	}
 
 	public static void verifyDescriptionBelowTitleOfBlock(String blockTitle, String description, Page page) {
@@ -296,8 +298,13 @@ public class AppTemplatePageUtils {
 	}
 
 	public static boolean userSeeTheFontStyleAndSizeBlock(Page page, String block) {
-		page.locator(VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH.replace("{blockTitle}", block)).click();
-		return page.locator(FONT_STYLE_SIZE_BLOCK_XAPTH).isVisible();
+		Locator blockLocator = page.locator(VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH.replace("{blockTitle}", block));
+		AICorePageUtils.waitFor(blockLocator);
+		blockLocator.hover();
+		blockLocator.click();
+		Locator style = page.locator(FONT_STYLE_SIZE_BLOCK_XAPTH);
+		AICorePageUtils.waitFor(blockLocator);
+		return style.isVisible();
 	}
 
 	public static void selectFontStyle(Page page, String fontName) {

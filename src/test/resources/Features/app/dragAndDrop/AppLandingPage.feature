@@ -11,7 +11,7 @@ Feature: App landing page
     And User clicks on Create button
     And User fetch the app name for drag and drop app
 
-  @DeleteCreatedTestApp @Regression
+  @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Verify app card details
     Given User opens Main Menu
     And User clicks on Open App Library
@@ -58,6 +58,7 @@ Feature: App landing page
     And User searches 'App clone' app in the app searchbox
     Then User can see 'App clone' app on the page
 
+  @Regression
   Scenario: User deletes app successfully
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -96,14 +97,22 @@ Feature: App landing page
     Then The 'Test app' should be removed from the bookmarked section
     And If no apps remain bookmarked the "Bookmarked" section should not be visible
 
-  @DeleteCreatedTestApp @LoginWithAuthor @Regression
+  @DeleteCreatedTestApp @Regression
   Scenario: Created app is displayed in All Apps section
     Given User opens Main Menu
     And User clicks on Open App Library
     When User searches 'Test app' app in the app searchbox
     Then User can see 'Test app' app in the All Apps section
 
-  @DeleteCreatedTestApp @LoginWithAuthor @Regression
+  @DeleteCreatedTestApp @Regression
+  Scenario: Verify BI and Terminal apps are displayed under System apps
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    When User click on System Apps
+    Then User can see 'BI' app in the System Apps section
+    And User can see 'Terminal' app in the System Apps section
+
+  @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Verify app is display under Discoverable
     Given User opens Main Menu
     And User clicks on Open App Library
@@ -120,12 +129,5 @@ Feature: App landing page
     And User searches 'Test app' app in the app searchbox
     Then The newly created 'Test app' should be displayed in the discoverable apps list
     And User logs out from the application
-    And User login as 'Author'
-
-  @DeleteCreatedTestApp @Regression
-  Scenario: Verify BI and Terminal apps are displayed under System apps
-    Given User opens Main Menu
-    And User clicks on Open App Library
-    When User click on System Apps
-    Then User can see 'BI' app in the System Apps section
-    And User can see 'Terminal' app in the System Apps section
+    And User login as 'Admin'
+    And User opens Main Menu

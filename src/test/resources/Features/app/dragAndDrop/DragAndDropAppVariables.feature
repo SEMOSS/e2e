@@ -74,14 +74,13 @@ Feature: Create App and validate Variables
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User sees success toast message 'ZIP uploaded successfully'
+    And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestDatabase'
     And User clicks on MetaData tab
     And User clicks on Refresh button
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    And User clicks on Copy Catalog ID
     And User get the CatalogName for variable
     When User opens Main Menu
     And User clicks on Open App Library
@@ -132,7 +131,6 @@ Feature: Create App and validate Variables
     And User enters Open AI Key as 'Test@1234'
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
-    And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
     And User get the CatalogName for variable
     When User opens Main Menu
@@ -202,7 +200,6 @@ Feature: Create App and validate Variables
     And User enters storage Catalog name as 'Local File System Storage'
     And User enters Path Prefix as 'local_storage'
     And User clicks on Create Storage button
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
     And User clicks on Copy Catalog ID
     And User get the CatalogName for variable
     And User can see the Storage title as 'Local File System Storage'

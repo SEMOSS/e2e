@@ -247,7 +247,7 @@ public class createAppUsingTemplateSteps {
 		assertEquals(expectedFont, actualFont, "Font style does not match!");
 		assertEquals(expectedSize, actualSize, "Font size does not match!");
 	}
-	
+
 	@When("User clicks on the Submit Block")
 	public void user_clicks_on_the_submit_block() {
 		appTemplatePage.clickOSubmitBlock();

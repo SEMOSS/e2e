@@ -315,6 +315,7 @@ public class DragAndDropBlocksPageUtils {
 			textBlockLocator = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(blockText));
 			break;
 		}
+		AICorePageUtils.waitFor(textBlockLocator);
 		return textBlockLocator;
 	}
 
