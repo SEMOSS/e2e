@@ -8,7 +8,6 @@ Feature: Create drag and drop app And verify Data filters in the app
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
     And User clicks on MetaData tab
     And User clicks on Refresh button

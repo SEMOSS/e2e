@@ -136,10 +136,11 @@ public class NotebookPageUtils {
 			throw new AssertionError(fieldName + " field is not visible");
 		} else {
 			appFieldLocator.click(new Locator.ClickOptions().setForce(true));
-			page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value))
-					.click(new Locator.ClickOptions().setForce(true));
+			Locator dataListItem = page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value));
+			dataListItem.scrollIntoViewIfNeeded();
+			dataListItem.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+			dataListItem.click();
 		}
-
 	}
 
 	public static void selectValueFromReadAppDropdown(Page page, String value, String fieldName) {

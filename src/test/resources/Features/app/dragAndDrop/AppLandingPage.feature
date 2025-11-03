@@ -58,6 +58,7 @@ Feature: App landing page
     And User searches 'App clone' app in the app searchbox
     Then User can see 'App clone' app on the page
 
+  @Regression
   Scenario: User deletes app successfully
     Given User opens Main Menu
     When User clicks on Open App Library
@@ -110,7 +111,7 @@ Feature: App landing page
     When User click on System Apps
     Then User can see 'BI' app in the System Apps section
     And User can see 'Terminal' app in the System Apps section
-    
+
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Verify app is display under Discoverable
     Given User opens Main Menu
@@ -130,4 +131,3 @@ Feature: App landing page
     And User logs out from the application
     And User login as 'Admin'
     And User opens Main Menu
-

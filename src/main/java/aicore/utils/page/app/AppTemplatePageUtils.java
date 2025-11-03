@@ -171,11 +171,13 @@ public class AppTemplatePageUtils {
 
 	public static void verifyHyperlink(String text, String link, Page page) {
 		Locator textLocator = page.locator(TEXT_XPATH.replace("{text}", text));
+		AICorePageUtils.waitFor(textLocator);
 		textLocator.dblclick();
 		page.waitForTimeout(1000);
 	}
 
 	public static String getCurrentUrl(Page page) {
+		page.waitForLoadState(LoadState.LOAD);
 		return page.url();
 	}
 
@@ -187,7 +189,7 @@ public class AppTemplatePageUtils {
 
 	public static void getBackPage(Page page) {
 		page.goBack();
-		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.LOAD);
 	}
 
 	public static void verifyDescriptionBelowTitleOfBlock(String blockTitle, String description, Page page) {
