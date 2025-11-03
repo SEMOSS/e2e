@@ -69,7 +69,7 @@ Feature: User Management
     And User opens Main Menu
     And User clicks on Open Settings
     When User clicks on My Profile
-    And User can see 'Edit profile information Alan' section on profile page
+    And User can see 'Edit profile information' section on profile page
     Then User can see that the displayed User ID matches the generated userId
     And User can see that the displayed Name matches the generated name
     And User can see that the displayed Email matches the generated email

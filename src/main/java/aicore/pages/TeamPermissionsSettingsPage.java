@@ -111,5 +111,9 @@ public class TeamPermissionsSettingsPage {
 	public void userSearchMemberName(String member) {
 		TeamPermissionsSettingsUtils.userSearchMemberName(page, member);
 	}
+	
+	public void clickOnDeleteButton() {
+		TeamPermissionsSettingsUtils.clickOnDeleteButton(page);
+	}
 
 }

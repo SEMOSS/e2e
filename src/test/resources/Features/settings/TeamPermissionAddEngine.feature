@@ -15,6 +15,7 @@ Feature: Add Engine for Team Permission
   Scenario Outline: Add Engine for Database Users role
     Given User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
@@ -34,6 +35,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'TestDatabase' in the engine list with access as '<Role>'
+    And User deletes the added role
 
     Examples: 
       | Role      |
@@ -45,6 +47,7 @@ Feature: Add Engine for Team Permission
   Scenario Outline: Add Engine for Function Users role
     Given User opens Main Menu
     When User clicks on Open Function
+		And User checks if 'Function' catalog created and Deletes the 'weatherFunctionTest'
     And User clicks on Add Function
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
@@ -62,6 +65,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'WeatherFunctionTest' in the engine list with access as '<Role>'
+    And User deletes the added role
 
     Examples: 
       | Role      |
@@ -96,6 +100,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'Amazon S3 Storage' in the engine list with access as '<Role>'
+    And User deletes the added role
 
     Examples: 
       | Role      |
@@ -144,6 +149,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'FAISS Vector DB01' in the engine list with access as '<Role>'
+    And User deletes the added role
 
     Examples: 
       | Role      |

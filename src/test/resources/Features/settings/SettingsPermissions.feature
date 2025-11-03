@@ -4,6 +4,7 @@ Feature: Validate catalog user permissions for all catalog types
   Scenario Outline: Validate user access permissions of '<CATALOG>'
     Given User opens Main Menu
     When User opens '<CATALOG>'
+    And User checks if '<CATALOG>' catalog created and Deletes the '<CATALOG_NAME>'
     And User clicks on Add '<CATALOG>' button
     And User selects the 'ZIP' option to upload file
     And User uploads the file '<FILE_NAME>'

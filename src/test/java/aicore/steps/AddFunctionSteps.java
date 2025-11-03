@@ -168,4 +168,9 @@ public class AddFunctionSteps {
 	public void user_selects_the_from_the_function_catalog(String catalogName) {
 		addFunctionToCatalogPage.selectFunctionFromSearchOptions(catalogName);
 	}
+	
+	@And("User checks if {string} catalog created and Deletes the {string}")
+	public void user_deletes_the_if_already_created(String catalog ,String catalogName) {
+		addFunctionToCatalogPage.deleteCatalog(catalog , catalogName);
+	}
 }
