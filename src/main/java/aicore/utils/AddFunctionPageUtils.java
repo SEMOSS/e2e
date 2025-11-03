@@ -35,6 +35,7 @@ public class AddFunctionPageUtils {
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 	private static final String HTTP_METHOD_TYPE_TESTID = "importForm-{type}-item";
+	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='engineIndexPage-searchBar-{catalog}']//input";
 
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
@@ -227,6 +228,19 @@ public class AddFunctionPageUtils {
 	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
 		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
 		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
+	}
+
+	public static void deleteCatalog(Page page, String catalog, String catalogName) {
+		Locator searchBar = page.locator(SEARCH_BAR_XPATH.replace("{catalog}",catalog));
+		searchBar.click();
+		searchBar.fill(catalog);
+		Locator catalogLocator = page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)));
+		if(catalogLocator.isVisible()) {
+		catalogLocator.click();
+		clickOnAccessControl(page);
+		clickOnDeleteButton(page);
+		clickOnDeleteConfirmationButton(page);
+	}
 	}
 
 }

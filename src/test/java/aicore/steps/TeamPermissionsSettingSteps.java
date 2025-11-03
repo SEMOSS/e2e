@@ -155,4 +155,9 @@ public class TeamPermissionsSettingSteps {
 		teamPermissionsSettings.userSearchMemberName(member);
 	}
 
+	@And("User deletes the added role")
+	public void User_deletes_the_added_role() {
+		teamPermissionsSettings.clickOnDeleteButton();
+	}
+
 }

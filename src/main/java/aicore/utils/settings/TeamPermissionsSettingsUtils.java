@@ -30,7 +30,8 @@ public class TeamPermissionsSettingsUtils {
 	private static final String CLICK_ON_DELETE_ICON_DATATESTID = "DeleteRoundedIcon";
 	private static final String CLICK_ON_CONFIRM_BUTTON_XPATH = "//span[text()='{confirm}']";
 	private static final String CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH = "//th//input[@type='checkbox']";
-
+	private static final String DELETE_ICON_DATATESTID = "DeleteIcon";
+	
 	public static void selectTypeFromDropdown(Page page, String type) {
 		Locator selectTypeFromDropdown = page.locator(SELECT_TYPE_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(selectTypeFromDropdown);
@@ -149,9 +150,9 @@ public class TeamPermissionsSettingsUtils {
 	public static boolean userSeeAddedEngineInTheList(Page page, String catalogName, String role) {
 		//Locator EngineSearchBar = page.locator(ENGINE_SEARCH_XPATH);
 		// EngineSearchBar.click();
-		// page.keyboard().press("Control+V");
+		// page.keyboard().press("Control+V");		
 		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
-		page.locator(ENGINE_ID_XPATH.replace("{EngineId}", copiedId)).isVisible();
+		page.locator(ENGINE_ID_XPATH.replace("{EngineId}", catalogName)).isVisible();
 		boolean EnginePresent = false;
 		//check role should be checked 
 		switch (role) {
@@ -214,4 +215,13 @@ public class TeamPermissionsSettingsUtils {
 		searchmember.fill(member);
 	}
 
+	
+	public static void clickOnDeleteButton(Page page) {
+		page.getByTestId(DELETE_ICON_DATATESTID).isVisible();
+		page.getByTestId(DELETE_ICON_DATATESTID).click();
+		page.getByText("Confirm").isVisible();
+		page.getByText("Confirm").click();
+
+	}
+	
 }

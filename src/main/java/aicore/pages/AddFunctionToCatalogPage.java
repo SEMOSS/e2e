@@ -141,4 +141,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	public void selectFunctionFromSearchOptions(String catalogName) {
 		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, catalogName);
 	}
+
+	public void deleteCatalog(String catalog ,String catalogName) {
+		AddFunctionPageUtils.deleteCatalog(page,catalog ,catalogName);
+	}
 }
