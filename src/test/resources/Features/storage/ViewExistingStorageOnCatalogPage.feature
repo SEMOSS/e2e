@@ -19,7 +19,7 @@ Feature: View existing Storages on storage Catalog Page
     And User selects 'FOUO ALLOWED, INTERNAL ALLOWED' from the Data Restrictions dropdown
     And User clicks on Submit button
     
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @LoginWithAdmin @DeleteTestCatalog @Regression @ApplicationBugFailure
   Scenario: view and validate filter functionality - My Storages
     Given User opens Main Menu
     When User clicks on Open Storage
