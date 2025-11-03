@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Locator;
@@ -22,6 +21,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateAppUsingDragAndDropSteps {
 	private HomePage homePage;
@@ -127,7 +128,7 @@ public class CreateAppUsingDragAndDropSteps {
 		boolean isWelcomeTextboxVisible = blocksPage.verifyWelcomeTextboxIsVisible();
 		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
 		String actualWelcomeTextMessage = blocksPage.verifyWelcomeText();
-		Assertions.assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage,
+		assertEquals(expectedWelcomeTextMessage, actualWelcomeTextMessage,
 				"Mismatch between the expected and actual message");
 	}
 
@@ -271,7 +272,7 @@ public class CreateAppUsingDragAndDropSteps {
 			break;
 		}
 		String actualText = blocksPage.getBlockText(blockName, blockText);
-		Assertions.assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
+		assertEquals(blockText, actualText, "Mismatch between the expected and actual text");
 	}
 
 	@Then("User should see the {string} text displayed in {string} styles")
@@ -279,21 +280,21 @@ public class CreateAppUsingDragAndDropSteps {
 		Locator linkLocator = blocksPage.textSectionDragAndDroppedBlockLocator(blockName, blockText);
 		List<String> appliedTextStyles = Arrays.asList(textStyles.split(", "));
 		List<String> actualAppliedTextStyles = CommonUtils.getAppliedStyles(linkLocator);
-		Assertions.assertEquals(appliedTextStyles, actualAppliedTextStyles,
+		assertEquals(appliedTextStyles, actualAppliedTextStyles,
 				"Mismatch between the expected and actual text styles");
 	}
 
 	@Then("User should see the {string} text displayed in {string} font")
 	public void user_should_see_the_text_displayed_in_font(String blockName, String expectedLinkFont) {
 		String actualTextFont = blocksPage.getBlockTextFont(blockName, blockText);
-		Assertions.assertEquals(expectedLinkFont, actualTextFont, "Mismatch between the expected and actual text font");
+		assertEquals(expectedLinkFont, actualTextFont, "Mismatch between the expected and actual text font");
 	}
 
 	@Then("User should see the {string} text displayed in {string} HEX color value")
 	public void user_should_see_the_text_displayed_in_hex_color_value(String blockName, String hexColor) {
 		String actualTextColor = blocksPage.getBlockTextColor(blockName, blockText);
 		String expectedTextColor = CommonUtils.hexToRGBConversion(hexColor);
-		Assertions.assertEquals("rgb(" + expectedTextColor + ")", actualTextColor,
+		assertEquals("rgb(" + expectedTextColor + ")", actualTextColor,
 				"Mismatch between the expected and actual text color");
 	}
 
@@ -301,7 +302,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_should_see_the_text_aligned_to_the(String blockName, String textAlign) {
 		String actualTextAlign = blocksPage.getBlockTextAlign(blockName, blockText);
 		String expectedTextAlign = textAlign.toLowerCase();
-		Assertions.assertEquals(expectedTextAlign, actualTextAlign,
+		assertEquals(expectedTextAlign, actualTextAlign,
 				"Mismatch between the expected and actual text align");
 	}
 
@@ -310,7 +311,7 @@ public class CreateAppUsingDragAndDropSteps {
 		if (!destination.trim().isEmpty()) {
 			blocksPage.clickOnLink(blockText);
 			String actualUrl = blocksPage.getDestinationUrl(destination);
-			Assertions.assertEquals(destination, actualUrl,
+			assertEquals(destination, actualUrl,
 					"Mismatch between the expected and actual link destination");
 			blocksPage.navigateToPreviosPage();
 		}
@@ -451,7 +452,7 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("Total {int} Area Chart blocks should be present on the page")
 	public void total_Area_Chart_Present_On_Page(int expectedcount) {
 		int actual = blocksPage.countcheck();
-		Assertions.assertEquals(expectedcount, actual, "Not matched");
+		assertEquals(expectedcount, actual, "Not matched");
 	}
 
 	@Then("User clicks on the Sync icon")
@@ -468,7 +469,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_the_data_grid_column_names_as(String columnNames) {
 		List<String> expectedColumns = Arrays.asList(columnNames.split(", "));
 		List<String> uiColumns = blocksPage.checkDataGridColumnNamesOnUI();
-		Assertions.assertEquals(expectedColumns, uiColumns, "Data Grid columns are not matching");
+		assertEquals(expectedColumns, uiColumns, "Data Grid columns are not matching");
 	}
 
 	@Then("User should not see the {string} column in the Data Grid")
@@ -497,7 +498,7 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("User can see {string} toast message after copying the ID.")
 	public void user_can_see_toast_message_after_copying_the_id(String expectedToastMessage) {
 		String actualToastMessage = appPage.getAppIdCopiedToastMessage();
-		Assertions.assertEquals(expectedToastMessage, actualToastMessage, "Toast message text is incorrect");
+		assertEquals(expectedToastMessage, actualToastMessage, "Toast message text is incorrect");
 	}
 
 	@When("User searches copied id in the app searchbox")
@@ -537,7 +538,7 @@ public class CreateAppUsingDragAndDropSteps {
 		for (Map<String, String> detail : details) {
 			String name = detail.get("DETAIL_NAME");
 			String value = detail.get("VALUE");
-			boolean isContentVisible=appPage.isContentVisibleOnAppCard(name, value);
+			boolean isContentVisible = appPage.isContentVisibleOnAppCard(name, value);
 			Assertions.assertTrue(isContentVisible, name + " is not displayed on app card");
 		}
 	}

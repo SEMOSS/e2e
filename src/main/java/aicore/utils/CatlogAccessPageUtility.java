@@ -29,14 +29,14 @@ public class CatlogAccessPageUtility {
 	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
 	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//span[contains(@title,'discoverable')]";
 	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
-	private static final String SEE_EDIT_OPTION_XPATH = "//span[text()='Edit']";
+	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
 
 	// as per new UI update
-	private static final String VIEW_SETTING_OPTION_ON_SETTING_PAGE = "//span[text()='Settings']";
+	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -133,12 +133,26 @@ public class CatlogAccessPageUtility {
 		toggleCheckbox.click();
 	}
 
-	public static boolean canSeeEditOption(Page page) {
-		return page.locator(SEE_EDIT_OPTION_XPATH).isEnabled();
+	public static boolean canSeeEditOption(Page page, String action) {
+		Locator editButton = page.locator(SEE_EDIT_OPTION_XPATH);
+		AICorePageUtils.waitFor(editButton);
+		switch (action) {
+		case "Enable":
+			return editButton.isEnabled();
+		case "Disable":
+			String ariaDisabled = editButton.getAttribute("aria-disabled");
+			String classAttr = editButton.getAttribute("class");
+
+			boolean isDisabled = ("true".equalsIgnoreCase(ariaDisabled))
+					|| (classAttr != null && classAttr.contains("Mui-disabled"));
+			return isDisabled;
+		default:
+			throw new IllegalArgumentException("Invalid action");
+		}
 	}
 
 	public static boolean canSeeSettingOption(Page page) {
-		return page.locator(VIEW_SETTING_OPTION_ON_SETTING_PAGE).isVisible();
+		return page.locator(APP_SETTING_OPTION_XPATH).isVisible();
 	}
 
 	public static String editorUserSeeToastMessageText(Page page) {

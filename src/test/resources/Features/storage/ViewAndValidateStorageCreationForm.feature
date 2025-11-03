@@ -61,5 +61,5 @@ Feature: Validate storage creation form
       | Secret key   | Test123           |
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Storage'

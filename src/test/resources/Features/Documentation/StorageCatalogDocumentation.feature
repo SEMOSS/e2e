@@ -19,7 +19,7 @@ Feature: Storage Catalog Documentation
     And User clicks on Create Storage button
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
     And User can see the Storage title 'Test Storage'
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User captures a 'button' and highlights the 'Access Control'

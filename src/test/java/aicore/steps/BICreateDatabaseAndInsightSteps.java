@@ -1,7 +1,5 @@
 package aicore.steps;
 
-import static org.junit.Assert.assertEquals;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
@@ -10,10 +8,11 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.BISystemAppPage;
 import aicore.pages.HomePage;
 import aicore.steps.app.CreateAppUsingDragAndDropSteps;
-import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BICreateDatabaseAndInsightSteps {
 	private static final Logger logger = LogManager.getLogger(BICreateDatabaseAndInsightSteps.class);
@@ -93,7 +92,7 @@ public class BICreateDatabaseAndInsightSteps {
 	public void user_can_see_database_created_success_toast_message_as(String expectedToastMessage) {
 		// TODO toast disappears quickly need a better way to validate
 		String actualDBCreatedMessage = biApp.verifyDBCreatedToastMessage();
-		Assertions.assertEquals(expectedToastMessage, actualDBCreatedMessage, "Database creation failed");
+		assertEquals(expectedToastMessage, actualDBCreatedMessage, "Database creation failed");
 		logger.info("the success toast is quick skippng for now");
 	}
 
@@ -144,7 +143,7 @@ public class BICreateDatabaseAndInsightSteps {
 	@Then("User can see Insight created toast message as {string}")
 	public void user_can_see_insight_created_toast_message_as(String expectedMessage) {
 		String actualMessage = biApp.verifySavedInsightSuccessMsg();
-		assertEquals("Insights creation failed", actualMessage, expectedMessage);
+		assertEquals(actualMessage, expectedMessage, "Insights creation failed");
 	}
 
 	@And("User clicks on New project button")

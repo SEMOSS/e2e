@@ -1,4 +1,3 @@
-@Regression
 Feature: Create drag and drop app
 
   Background: Create Drag and Drop app
@@ -13,13 +12,13 @@ Feature: Create drag and drop app
     And User clicks on Create button
     And User fetch the app name for drag and drop app
 
-  @DeleteTestCatalog @DeleteCreatedTestApp @Smoke
+  @DeleteTestCatalog @DeleteCreatedTestApp @Smoke @Regression @ApplicationBugFailure
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     When User opens Main Menu
     And User clicks on Open Database
     And User clicks on Add Database
-    And User selects database 'ZIP'
-    And User uploads database file 'Database/TestDatabase.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
     And User sees success toast message 'ZIP uploaded successfully'
     And User can see the Catalog title as 'TestDatabase'
@@ -28,7 +27,7 @@ Feature: Create drag and drop app
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    When User clicks On Copy Catalog ID
+    When User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
@@ -77,8 +76,7 @@ Feature: Create drag and drop app
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Dendrogram Chart    | Age, BloodPressure                                              | Select Dimensions, Select Facet                                                                      |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | World Map Chart     | DIABETES_UNIQUE_ROW_ID, Age, BMI, SkinThickness, Tooltip        | Select Label, Select Latitude, Select Longitude, Select Size, Select Tooltip                         |
 
-
-  @DeleteCreatedTestApp
+  @DeleteCreatedTestApp @Regression
   Scenario Outline: Drag and Drop Mermaid Chart block
     When User opens Main Menu
     And User clicks on Open App Library
@@ -92,4 +90,3 @@ Feature: Create drag and drop app
     And User enters 'A-->D' in graph TD section
     And User clicks on the Save App icon
     Then User can see 'Mermaid Chart' chart same as baseline chart
-

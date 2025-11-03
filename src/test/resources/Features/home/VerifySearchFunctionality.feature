@@ -24,10 +24,10 @@ Feature: Search app and catalogs
     When User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters 'Test Model' as Catalog name
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
     And User search the 'Test Model' in the home search box
@@ -39,10 +39,10 @@ Feature: Search app and catalogs
     Given User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
-    And User selects function 'ZIP'
-    And User uploads function file 'Function/weatherFunctionTest.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Function/weatherFunctionTest.zip'
     And User clicks on Create Function button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
     And User search the 'weatherFunctionTest' in the home search box
@@ -56,10 +56,10 @@ Feature: Search app and catalogs
     And User clicks on Add Model
     And User selects 'GPT-3.5'
     And User enters 'Test Model' as Catalog name
-    And User enters open AI Key as 'Test@1234'
-    And User enters var name as 'Variable1'
+    And User enters Open AI Key as 'Test@1234'
+    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
@@ -73,7 +73,7 @@ Feature: Search app and catalogs
     And User enters value of Content Length as '512'
     And User enters value of Content Overlap as '20'
     And User clicks on Create Vector button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
     And User search the 'Test Vector' in the home search box
@@ -85,10 +85,10 @@ Feature: Search app and catalogs
     Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
-    Then User selects database 'ZIP'
-    And User uploads database file 'Database/TestDatabase.zip'
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
     And User search the 'TestDatabase' in the home search box
@@ -107,7 +107,7 @@ Feature: Search app and catalogs
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
-    And User clicks On Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
     And User search the 'Test Storage' in the home search box

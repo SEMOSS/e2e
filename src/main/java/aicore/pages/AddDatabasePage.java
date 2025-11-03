@@ -60,10 +60,6 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		return AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 	}
 
-	public String uploadDatabaseFile(String fileName) {
-		return AddDatabasePageUtils.uploadDatabaseFile(page, fileName);
-	}
-
 	public void clickOnCreateDatabaseButton() {
 		AddDatabasePageUtils.clickCreateDatabaseButton(page);
 	}
@@ -131,7 +127,7 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void clickOnMetaDataTab() {
 		AddDatabasePageUtils.clickOnMetadataTab(page);
 	}
-	
+
 	public void clickOnUsageTab() {
 		AddDatabasePageUtils.clickOnMetadataTab(page);
 	}

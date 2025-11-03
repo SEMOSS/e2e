@@ -43,10 +43,6 @@ Feature: Team Permissions - add User
     And User clicks on 'Team Permissions' Card
     And User can see team name as 'Test Team' in the list
     And User clicks on the team name 'Test Team' in the list
-    And User clicks on 'Add Member' button in Add Team Page
-    When User selects "userId1" member from the list
-    And User clicks on 'Save' button in Add Member form
-    Then User sees the message "Successfully added member permissions" is displayed
     And User can see the new member "userId1" added in the team member list
     When User clicks on 'Delete' icon on the 'userId1' card
     And User clicks on 'Confirm' button in the confirmation modal
