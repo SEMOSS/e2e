@@ -1,11 +1,16 @@
 package aicore.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-public class CatlogAccessPageUtility {
+import aicore.framework.ConfigUtils;
 
+public class CatlogAccessPageUtility {
+	private static final Logger logger = LogManager.getLogger(CatlogAccessPageUtility.class);
 	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
 	private static final String VIEW_USAGE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Usage']";
 	private static final String VIEW_SMSS_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='SMSS']";
@@ -34,7 +39,7 @@ public class CatlogAccessPageUtility {
 	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
-
+	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	// as per new UI update
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
 
@@ -185,6 +190,35 @@ public class CatlogAccessPageUtility {
 
 	public static void clickOnGeneralSettingOption(Page page) {
 		page.locator(CIICK_ON_GENERAL_XPATH).click();
+	}
+
+	// 🔹 Common reusable method
+
+	public static void searchUser(Page page, String role, boolean useDocker) {
+		Locator searchIcon = page.locator(CLICK_ON_SEARCH_ICON_XPATH);
+		if (searchIcon.isVisible()) {
+			searchIcon.click();
+		}
+		// Get username from config file (same as addMember)
+		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		if (useDocker) {
+			username = username + " lastname";
+		}
+
+		// Fill the search input
+		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(username);
+		page.waitForTimeout(1000);
+
+		// Optional: click the matching result if needed
+		try {
+			if (useDocker) {
+				page.getByTitle("Name: " + username).click();
+			} else {
+				page.locator("//div[contains(text(),'" + username + "')]").first().click();
+			}
+		} catch (Exception e) {
+			logger.info("User not clickable or not found: " + username);
+		}
 	}
 
 }

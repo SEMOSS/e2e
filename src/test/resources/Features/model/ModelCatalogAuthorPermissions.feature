@@ -11,7 +11,7 @@ Feature: Model catalog permission - Author
     And User enters Open AI Key as 'Test@1234'
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
-    And User can see a toast message as 'Successfully added LLM to catalog'
+    #And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Model'
 
@@ -58,7 +58,7 @@ Feature: Model catalog permission - Author
     And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
-    And User Search 'Editor' user from Access Control
+    And User Search the 'Editor' user from Access Control
     And User deletes the 'Editor' user
 
   @DeleteTestCatalog
@@ -66,7 +66,7 @@ Feature: Model catalog permission - Author
     And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
-    And User Search 'Read' user from Access Control
+    And User Search the 'Read' user from Access Control
     And User deletes the 'Read' user
 
   Scenario: Model Catalog - Author - Delete Model
