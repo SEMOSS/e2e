@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.TeamPermissionsSettingsPage;
+import aicore.pages.app.CreateAppPopupPage;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -13,10 +14,12 @@ public class TeamPermissionsSettingSteps {
 
 	private TeamPermissionsSettingsPage teamPermissionsSettings;
 	private String timestamp;
+	private CreateAppPopupPage createAppPopupPage;
 
 	public TeamPermissionsSettingSteps() {
-		timestamp = SetupHooks.getTimestamp();
+		timestamp = CommonUtils.getTimeStampName();
 		teamPermissionsSettings = new TeamPermissionsSettingsPage(SetupHooks.getPage(), timestamp);
+		createAppPopupPage = new CreateAppPopupPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@When("User selects type as {string} from Type dropdown")
@@ -160,4 +163,38 @@ public class TeamPermissionsSettingSteps {
 		teamPermissionsSettings.clickOnDeleteButton();
 	}
 
+	
+	@And("User adds {string} from the member list")
+	public void user_adds_from_the_member_list(String member){
+		teamPermissionsSettings.addmultipleMembers(member);
+	}
+
+	@And("User verifies pagination is working correctly")
+	public void user_verifies_pagination_is_working_correctly() {
+		boolean isPaginationWorking = teamPermissionsSettings.verifyPagination();
+		Assertions.assertTrue(isPaginationWorking, "Pagination is not working correctly.");
+	}
+
+	@And("User adds multiple engines to the team")
+	public void user_adds_multiple_engines_to_the_team() {
+		teamPermissionsSettings.addmultipleEngines();
+	}
+
+	@And("User creates {string} {string} apps with app name {string}, description {string}, and tags {string}")
+	public void user_creates_apps_with_app_name_description_and_tags(String appCount, String appType, String appName, String appDescription, String appTags) {
+		for (int i = 1; i <= Integer.parseInt(appCount); i++) {
+			String appNameWithTimestamp = appName + System.currentTimeMillis();
+			createAppPopupPage.createMultipleApps(appType, appNameWithTimestamp, appDescription, appTags);
+		}
+	}
+
+	@And("User adds multiple projects to the team")
+	public void user_adds_multiple_projects_to_the_team() {
+		teamPermissionsSettings.addMultipleProjects();
+	}
+
+	@And("User Delete the created Apps")
+	public void user_deletes_all_the_created_apps() {
+		createAppPopupPage.deleteCreatedApps();
+	}
 }
