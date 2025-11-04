@@ -15,10 +15,8 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddDatabasePageUtils {
-
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
 	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
-	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String CREATE_DATABASE_BUTTON_LABEL = "Create database";
 	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
@@ -33,7 +31,6 @@ public class AddDatabasePageUtils {
 	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EXPORT_BTN_XPATH = "Export";
 	private static final String EDIT_POPUP_XPATH = "//div[contains(text(),\"Edit\")]";
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
 	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH = "//label//following-sibling::div//input";
 	private static final String SEARCHED_DATABASE_XPATH = "//p[text()='{catalogName}']";
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
@@ -50,6 +47,7 @@ public class AddDatabasePageUtils {
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
 	private static final String COPY_ID_XPATH = "//div[text()='{message}']";
+	private static final String SELECT_ALL_DATABASE_XPATH = "//span[text()='(Select searched items)']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -295,10 +293,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void selectDatabaseFromDropdown(Page page, String dbName) {
-		int checkboxCount = page.getByTestId("CheckBoxOutlineBlankIcon").count();
-		if (checkboxCount > 0) {
-			page.getByText(dbName).isVisible();
-			page.getByText(dbName).click();
-		}
+		page.locator(SELECT_ALL_DATABASE_XPATH).isVisible();
+		page.locator(SELECT_ALL_DATABASE_XPATH).click();
 	}
 }

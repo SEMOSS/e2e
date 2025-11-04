@@ -1,5 +1,7 @@
 package aicore.framework;
 
+import java.net.URI;
+
 public class UrlUtils {
 
 	private static String api = ConfigUtils.getValue("baseUrl") + "Monolith/";
@@ -19,13 +21,19 @@ public class UrlUtils {
 	}
 
 	public static String extractRelativePath(String fullUrl) {
-		// Example: http://localhost:5173/SemossWeb/packages/client/dist/
-		// Split into [ "http://localhost:5173", "SemossWeb/packages/client/dist/" ]
-		String[] parts = fullUrl.split("5173/"); // split on port or domain separator
-		if (parts.length > 1) {
-			return parts[1]; // return only relative path
+		if (fullUrl == null || fullUrl.isEmpty()) {
+			return "";
 		}
-		return "";
+		try {
+			URI uri = new URI(fullUrl);
+			String path = uri.getPath(); // e.g., "/SemossWeb/packages/client/dist/"
+			if (path.startsWith("/")) {
+				path = path.substring(1); // remove leading slash
+			}
+			return path;
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 }
