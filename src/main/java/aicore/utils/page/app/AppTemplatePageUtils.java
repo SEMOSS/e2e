@@ -66,6 +66,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnQuestionBlock(Page page) {
+		page.locator(INPUT_BOX_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(INPUT_BOX_XPATH).isVisible();
 		page.locator(INPUT_BOX_XPATH).click();	 
 	}

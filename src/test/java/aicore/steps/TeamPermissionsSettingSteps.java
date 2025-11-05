@@ -17,7 +17,7 @@ public class TeamPermissionsSettingSteps {
 	private CreateAppPopupPage createAppPopupPage;
 
 	public TeamPermissionsSettingSteps() {
-		timestamp = CommonUtils.getTimeStampName();
+		timestamp = SetupHooks.getTimestamp();
 		teamPermissionsSettings = new TeamPermissionsSettingsPage(SetupHooks.getPage(), timestamp);
 		createAppPopupPage = new CreateAppPopupPage(SetupHooks.getPage(), timestamp);
 	}
