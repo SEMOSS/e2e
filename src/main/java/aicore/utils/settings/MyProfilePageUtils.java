@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.AriaRole;
 public class MyProfilePageUtils {
 
 	///// SETTING MY PROFILE PAGE
-	private static final String MY_PROFILE_SECTION_TITLE_XPATH = "//h6[text()='{sectionText}']";
+	private static final String MY_PROFILE_SECTION_TITLE_XPATH = "//*[text()='{sectionText}']";
 	private static final String PRIVACY_CENTER_XPATH = "//span[text()='Privacy Center']";
 	private static final String DESCRIPTION_FIELD_BUTTON_XPATH = "//label[text()='Description']/following-sibling::div//input";
 	private static final String KEY_COPY_BUTTON_XPATH = "//div[h6[text()='{KeyName}']]//button[contains(@class, 'MuiButton-outlined') and .//span[text()='Copy']]";

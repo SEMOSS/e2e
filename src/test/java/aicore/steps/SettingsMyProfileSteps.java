@@ -1,7 +1,5 @@
 package aicore.steps;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +10,8 @@ import aicore.pages.SettingsMyProfile;
 import aicore.utils.CommonUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SettingsMyProfileSteps {
 	private SettingsMyProfile settings;
@@ -39,7 +39,7 @@ public class SettingsMyProfileSteps {
 	@Then("User can see {string} section on profile page")
 	public void user_can_see_section(String sectionName) {
 		boolean isVisible = settings.isSectionVisible(sectionName);
-		assertTrue("Expected section not found: " + sectionName, isVisible);
+		assertTrue(isVisible, "Expected section not found: " + sectionName);
 	}
 
 	@When("User clicks on New Key button")
@@ -66,7 +66,7 @@ public class SettingsMyProfileSteps {
 	public void user_copies_the_using_copy_icon_and_validate_its_alphanumeric(String KeyName) {
 		String copiedKey = settings.copyAccessKey(KeyName);
 		// Validate key format
-		Assertions.assertTrue(copiedKey.matches("^[a-zA-Z0-9-]+$"),
+		assertTrue(copiedKey.matches("^[a-zA-Z0-9-]+$"),
 				"Copied Key contains non-alphanumeric characters: " + copiedKey);
 		// Store the key in the appropriate variable
 		if (KeyName.equalsIgnoreCase("Access Key")) {

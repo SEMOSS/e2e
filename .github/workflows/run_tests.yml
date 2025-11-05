@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     #runs-on: ubuntu-latest
-    runs-on: CICD-GitHubRunner-private
+    runs-on: CICD-GitHubRunner-e2e
     # container:
     #   image: quay.io/semoss/test-quay:ubuntu-dind
     

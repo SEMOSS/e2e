@@ -102,13 +102,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnCreateFunctionButton(page);
 	}
 
-	public String enterFilePath(String fileName) {
-		return AddFunctionPageUtils.enterFilePath(page, fileName);
-	}
-
 	public String verifyFunctionNameInCatalog(String catalogName) {
 		return AddFunctionPageUtils.verifyFunctionNameInCatalog(page, catalogName, timestamp);
-
 	}
 
 	public void clickOnFunctionNameInCatalog(String functionName) {
@@ -145,5 +140,9 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
 	public void selectFunctionFromSearchOptions(String catalogName) {
 		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, catalogName);
+	}
+
+	public void deleteCatalog(String catalog ,String catalogName) {
+		AddFunctionPageUtils.deleteCatalog(page,catalog ,catalogName);
 	}
 }

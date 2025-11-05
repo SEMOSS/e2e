@@ -236,7 +236,6 @@ COPY src src
 #COPY traces traces
 #COPY videos videos
 COPY tester.sh tester.sh
-COPY testNRM.sh testNRM.sh
 COPY state.json state.json
 COPY .env .env
 

@@ -7,12 +7,10 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 
-import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.AssumptionViolatedException;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
@@ -33,6 +31,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
+import org.opentest4j.TestAbortedException;
 
 public class SetupHooks {
 
@@ -261,7 +260,7 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 		Page page = ResourcePool.get().getPage();
 		boolean isVersionMatched = CommonUtils.getVersion(page);
 		if (isVersionMatched == true) {
-			throw new AssumptionViolatedException("Skipping scenario due to version match.");
+			throw new TestAbortedException("Skipping scenario due to version match.");
 		}
 	}
 
