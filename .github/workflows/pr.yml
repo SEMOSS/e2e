@@ -11,7 +11,7 @@ concurrency:
 jobs:
   test:
     if: ${{ github.event.pull_request.draft == false }}
-    runs-on: CICD-GitHubRunner-private
+    runs-on: CICD-GitHubRunner-e2e
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
