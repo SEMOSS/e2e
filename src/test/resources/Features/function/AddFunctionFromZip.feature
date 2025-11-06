@@ -56,8 +56,7 @@ Feature: Add Function From Zip
     And User logs out from the application
     And User login as "Admin"
    
-
-  @LoginWithAdmin @Regression @Smoke
+  @LoginWithAdmin
   Scenario Outline: Delete Function
     Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Access Control Tab

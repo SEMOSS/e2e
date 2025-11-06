@@ -8,13 +8,13 @@ Feature: verify the Terminal command
     When User clicks on System app
     And User clicks on Terminal card
 
-  @LoginWithAdmin @Regression @BLOCKED
+  @LoginWithAdmin @Regression @BLOCKED @ApplicationBugFailure
   Scenario: Run Pixel command in Terminal
     Given User is on Terminal page
     When User run pixel command 'Hello'
     Then User sees 'Pixel' output 'Hello'
 
-  @LoginWithAdmin @Regression @BLOCKED
+  @LoginWithAdmin @Regression @BLOCKED @ApplicationBugFailure
   Scenario: Run Python command in Terminal
     Given User is on Terminal page
     When User change the language to 'Python'

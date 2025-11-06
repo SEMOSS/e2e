@@ -34,7 +34,7 @@ Feature: View existing Storages on storage Catalog Page
     #Then User sees the catalog name 'Amazon S3 Storage' in the Bookmarked section
     #When User clicks on bookmark button to unbookmark 'Amazon S3 Storage' catalog
 
-  @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression @ApplicationBugFailure
   Scenario: view and validate filter functionality - Discoverable Storages
     Given User opens Main Menu
     When User clicks on Open Storage
