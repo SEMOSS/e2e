@@ -63,10 +63,10 @@ public class AppTemplatePageUtils {
 		if (!page.locator(SUBMIT_BUTTON_XPATH).isVisible()) {
 			throw new AssertionError("Submit button is not visible");
 		}
-
 	}
 
 	public static void clickOnQuestionBlock(Page page) {
+		page.locator(INPUT_BOX_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(INPUT_BOX_XPATH).isVisible();
 		page.locator(INPUT_BOX_XPATH).click();
 	}
@@ -327,9 +327,13 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnResponseBlock(Page page) {
-		page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-		page.locator(RESPONSE_BOX_XPATH).isVisible();
-		page.locator(RESPONSE_BOX_XPATH).click();
+		if (page.locator(ASK_LOADER_XPATH).isVisible()) {
+			page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		}
+		Locator responseBlock = page.locator(RESPONSE_BOX_XPATH);
+		AICorePageUtils.waitFor(responseBlock);
+		responseBlock.isVisible();
+		responseBlock.click();
 		page.locator(TITLE_XPATH).scrollIntoViewIfNeeded();
 	}
 
