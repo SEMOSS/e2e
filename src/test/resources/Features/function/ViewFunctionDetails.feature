@@ -4,6 +4,7 @@ Feature: View Function Details
   Background: Create Function using ZIP file
     Given User opens Main Menu
     When User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
