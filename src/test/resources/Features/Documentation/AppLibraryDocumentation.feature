@@ -57,20 +57,20 @@ Feature: App Library Documentation
     And User captures a 'button' and highlights the 'Delete'
     And User completes screenshot capture and triggers comparison for 'Settings Overview'
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
-  Scenario: Documentation for Visualize CSV template
-    Given User captures documentation screenshot for 'Navigating/Create New App'
-    When User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User captures a 'button' and highlights the "Visualize CSV" with name "AskCSV1"
-    And User selects "Visualize CSV" from Template List
-    And User enters app name as 'Test app'
-    And User captures a 'buttonType' and highlights the "submit" with name "AskCSV2"
-    And User clicks on Create button
-    And User fetch the app name for drag and drop app
-    And User captures a 'Block' and highlights the "upload" with name "AskCSV3"
-    And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
+   @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+   Scenario: Documentation for Visualize CSV template
+     Given User captures documentation screenshot for 'Navigating/Create New App'
+     When User opens Main Menu
+     And User clicks on Open App Library
+     And User clicks on Create New App button
+     And User captures a 'button' and highlights the "Visualize CSV" with name "AskCSV1"
+     And User selects "Visualize CSV" from Template List
+     And User enters app name as 'Test app'
+     And User captures a 'buttonType' and highlights the "submit" with name "AskCSV2"
+     And User clicks on Create button
+     And User fetch the app name for drag and drop app
+     And User captures a 'Block' and highlights the "upload" with name "AskCSV3"
+     And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation @DeleteTestCatalog
   Scenario: Documentation for Ask LLM template

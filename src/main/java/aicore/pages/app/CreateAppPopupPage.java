@@ -52,4 +52,12 @@ public class CreateAppPopupPage {
 	public void clickOnCloseButton() {
 		CreateAppPopupUtils.clickOnCloseButton(page);
 	}
+
+	public void createMultipleApps(String appType, String appName, String appDescription, String appTags) {
+		CreateAppPopupUtils.createMultipleApps(page, appType, appName, appDescription, appTags);
+	}
+
+	public void deleteCreatedApps() {
+		CreateAppPopupUtils.deleteCreatedApps(page);
+	}
 }

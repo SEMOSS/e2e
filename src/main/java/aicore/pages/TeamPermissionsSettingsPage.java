@@ -116,4 +116,20 @@ public class TeamPermissionsSettingsPage {
 		TeamPermissionsSettingsUtils.clickOnDeleteButton(page);
 	}
 
+		public void addmultipleMembers(String member) {
+		TeamPermissionsSettingsUtils.addmultipleMembers(page, member);
+	}
+
+	public boolean verifyPagination() {
+		return TeamPermissionsSettingsUtils.verifyPagination(page);
+	}
+
+	public void addmultipleEngines() {
+		TeamPermissionsSettingsUtils.addmultipleEngines(page);
+	}
+
+	public void addMultipleProjects() {
+		TeamPermissionsSettingsUtils.addMultipleProjects(page);
+	}
+
 }

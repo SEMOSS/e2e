@@ -1,5 +1,7 @@
 package aicore.utils.settings;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -7,6 +9,8 @@ import com.microsoft.playwright.options.AriaRole;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.LastCreatedUser;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.page.app.CreateAppPopupUtils;
+import aicore.utils.page.model.ModelPageUtils;
 
 public class TeamPermissionsSettingsUtils {
 
@@ -31,6 +35,12 @@ public class TeamPermissionsSettingsUtils {
 	private static final String CLICK_ON_CONFIRM_BUTTON_XPATH = "//span[text()='{confirm}']";
 	private static final String CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH = "//th//input[@type='checkbox']";
 	private static final String DELETE_ICON_DATATESTID = "DeleteIcon";
+	private static final String PAGE_NUMBER_XPATH = "//button[@title='Go to previous page']/../..//p";
+	private static final String PREV_BUTTON_XPATH = "//button[@title='Go to previous page']";
+	private static final String NEXT_BUTTON_XPATH = "//button[@title='Go to next page']";
+	private static final String HEADINGS_XPATH = "//h2[text()='Add Members']";
+
+	final static int ROWS_PER_PAGE = 5;
 	
 	public static void selectTypeFromDropdown(Page page, String type) {
 		Locator selectTypeFromDropdown = page.locator(SELECT_TYPE_DROPDOWN_XPATH);
@@ -223,5 +233,139 @@ public class TeamPermissionsSettingsUtils {
 		page.getByText("Confirm").click();
 
 	}
+
+	public static void addmultipleMembers(Page page, String members) {
+		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+		AICorePageUtils.waitFor(dropdownLocator);
+		dropdownLocator.click();
+		Locator Memberlist = page.getByText(members);
+		int count = Memberlist.count();
+		for (int i = 1; i <= count; i++) {
+			Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", members+i));
+			AICorePageUtils.waitFor(listMember);
+			listMember.click();
+			dropdownLocator.click();
+		}
+		dropdownLocator.click();
+		page.locator(HEADINGS_XPATH).click();
+	}
+	
+	public static int calculateTotalPages(Page page) {
+    // Get the pagination text (e.g., "1-5 of 13")
+    Locator paginationText = page.locator(PAGE_NUMBER_XPATH);
+    String text = paginationText.textContent().trim();
+    
+    // Split the text to get "13" (total members)
+    String[] parts = text.split(" ");
+    String totalText = parts[2]; // "13" from "1-5 of 13"
+    int totalMembers = Integer.parseInt(totalText);
+    
+    // Maximum rows per page is 5
+    
+    
+    // Calculate total pages (ceil division to round up)
+    int totalPages = (int) Math.ceil((double) totalMembers / ROWS_PER_PAGE);
+    
+    return totalPages;
+}
+
+public static boolean verifyPagination(Page page) {
+    int totalPages = calculateTotalPages(page);
+  	Locator nextButton = page.locator(NEXT_BUTTON_XPATH);
+    Locator prevButton = page.locator(PREV_BUTTON_XPATH);
+	Locator paginationText = page.locator(PAGE_NUMBER_XPATH);
+	String paginationInfo = paginationText.textContent().trim();
+	String[] parts = paginationInfo.split(" of ");
+		
+   
+    // Check forward navigation
+    int forwardCount = 0;
+	String start = "1";
+    String end = "5";
+    String filter = start + "-" + end;
+    while (nextButton.isEnabled()) {
+        if (Integer.parseInt(start) > Integer.parseInt(parts[1]) 
+            && Integer.parseInt(end) > Integer.parseInt(parts[1])) {
+
+            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+            filter = start + "-" + end;
+
+            if (!filter.equals(parts[0])) {
+                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+            }
+
+        } else if (Integer.parseInt(start) < Integer.parseInt(parts[1]) 
+                   && Integer.parseInt(end) >= Integer.parseInt(parts[1])) {
+
+            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+            filter = start + "-" + end;
+
+            if (!filter.equals(parts[0])) {
+                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+            }
+        }
+
+        nextButton.click();
+        forwardCount++;
+    }
+    // Check backward navigation
+    int backwardCount = 0;
+    while (prevButton.isEnabled()) {
+		  if (Integer.parseInt(start) > Integer.parseInt(parts[1]) 
+            && Integer.parseInt(end) > Integer.parseInt(parts[1])) {
+
+            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+            filter = start + "-" + end;
+
+            if (!filter.equals(parts[0])) {
+                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+            }
+
+        } else if (Integer.parseInt(start) < Integer.parseInt(parts[1]) 
+                   && Integer.parseInt(end) >= Integer.parseInt(parts[1])) {
+
+            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+            filter = start + "-" + end;
+
+            if (!filter.equals(parts[0])) {
+                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+            }
+        }
+
+        prevButton.click();
+		
+        backwardCount++;
+    }
+    
+    // Verify that we navigated through all pages in both directions
+    return (forwardCount == totalPages - 1) && (backwardCount == totalPages - 1);
+}
+
+	public static List<String> ids = ModelPageUtils.createdModelIds;
+	public static void addmultipleEngines(Page page) {
+				for (String engineId : ids) {
+					Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+					dropdownLocator.click();
+					page.keyboard().type(engineId.trim());
+					AICorePageUtils.waitFor(dropdownLocator);
+					page.keyboard().press("ArrowDown");
+					page.keyboard().press("Enter");
+				}
+		}
+		public static List<String> projectName = CreateAppPopupUtils.createdAppNames;
+		public static void addMultipleProjects(Page page) {
+			for (String projectId : projectName) {
+				Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+				dropdownLocator.click();
+				page.keyboard().type(projectId.trim());
+				AICorePageUtils.waitFor(dropdownLocator);
+				page.keyboard().press("ArrowDown");
+				page.keyboard().press("Enter");
+			}
+		}
 	
 }
