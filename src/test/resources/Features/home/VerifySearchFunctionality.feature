@@ -38,6 +38,7 @@ Feature: Search app and catalogs
   Scenario: Search Function
     Given User opens Main Menu
     When User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'weatherFunctionTest'
     And User clicks on Add Function
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
@@ -84,6 +85,7 @@ Feature: Search app and catalogs
   Scenario: Search Database
     Given User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
