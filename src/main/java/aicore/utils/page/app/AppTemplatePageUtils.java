@@ -229,8 +229,10 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyAppPageTitle(String title, Page page) {
-		String pageTitle = page.locator(APP_TITLE_XPATH).textContent();
-		if (!pageTitle.equals(title)) {
+		Locator pageTitle = page.locator(APP_TITLE_XPATH);
+		AICorePageUtils.waitFor(pageTitle);
+		String titleText = pageTitle.textContent();
+		if (!titleText.equals(title)) {
 			throw new AssertionError("App page title '" + title + "' is not visible");
 		}
 	}

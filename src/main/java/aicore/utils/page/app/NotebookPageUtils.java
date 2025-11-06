@@ -60,7 +60,8 @@ public class NotebookPageUtils {
 	private static final String LOADING_ICON_XPATH = "(//span[@role=\"progressbar\"]/../p[contains(text(), \"Loading\")])[2]";
 	private static final String PROGRESS_BAR_READ_IN_FIELD_XPATH = "(//label[contains(text(),'Select Unique ID')]/../div//div//span)[1]";
 	private static final String READ_RECORD_XPATH = "//p[contains(text(),'[DIABETES_UNIQUE_ROW_ID] : {uniqueId}')]";
-	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//button[@title='Open']//*[@data-testid='ArrowDropDownIcon']";
+//	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//button[@title='Open']//*[@data-testid='ArrowDropDownIcon']";
+	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -127,20 +128,12 @@ public class NotebookPageUtils {
 	}
 
 	public static void selectValueFromDropdown(Page page, String value, String fieldName) {
-		Locator progressBar = page.locator(PROGRESS_BAR_IN_FIELD_XPATH);
-		page.waitForCondition(progressBar::isHidden, new Page.WaitForConditionOptions().setTimeout(10000));
-		Locator appFieldLocator = page.locator(UNIQUE_ROW_ID_FIELD_XPATH).nth(1);
+		Locator appFieldLocator = page.locator(UNIQUE_ROW_ID_FIELD_XPATH.replace("{label}", fieldName)).nth(2);
 		AICorePageUtils.waitFor(appFieldLocator);
-		appFieldLocator.scrollIntoViewIfNeeded();
-		if (!appFieldLocator.isVisible()) {
-			throw new AssertionError(fieldName + " field is not visible");
-		} else {
-			appFieldLocator.click(new Locator.ClickOptions().setForce(true));
-			Locator dataListItem = page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value));
-			dataListItem.scrollIntoViewIfNeeded();
-			dataListItem.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-			dataListItem.click();
-		}
+		appFieldLocator.click();
+		appFieldLocator.fill(value);
+		appFieldLocator.press("ArrowDown");
+		appFieldLocator.press("Enter");
 	}
 
 	public static void selectValueFromReadAppDropdown(Page page, String value, String fieldName) {
