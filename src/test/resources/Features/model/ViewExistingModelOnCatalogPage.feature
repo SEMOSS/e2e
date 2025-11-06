@@ -20,7 +20,7 @@ Feature: View existing models in model Catalog
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin @Regression @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog @ApplicationBugFailure
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
     When User clicks on Open Model
