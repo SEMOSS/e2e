@@ -1,4 +1,23 @@
+@DeleteTestCatalog
 Feature: Create app using NLP Query to Grid Template
+
+  Background: Create Database and Model using ZIP file
+    Given User opens Main Menu
+    And User clicks on Open Database
+    When User clicks on Add Database
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/diabetes.zip'
+    And User clicks on Create Database button
+    And User clicks on Copy Catalog ID
+    And User can see the Catalog title as 'Diabetes'
+    And User opens Main Menu
+    And User clicks on Open Model
+    And User clicks on Add Model
+    When User selects 'ZIP'
+    And User uploads the file 'Model/ModelZIP.zip'
+    And User click on Create 'Model' button
+    And User clicks on Copy Catalog ID
+    Then User can see the Catalog title as 'Llama3-70B-Instruct'
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create app using NLP Query to Grid Template
@@ -14,5 +33,12 @@ Feature: Create app using NLP Query to Grid Template
     And User fetch the app name for drag and drop app
     And User see the 'page-1'
     And User see the 'Natural Language Query to Grid' block
-
-    
+    And User views description as 'Ask your query on the diabetes dataset'
+    When User clicks on Notebook
+    And User select the 'nlp-query' from notebook
+    #now it selelcting by default so it comment out this below step for database 
+    #And User select the database for 'nlp-query--1'
+    And User select the 'Llama3-70B-Instruct' model for 'nlp-query-1'
+  	And User click on run all cell button
+  	And User clicks on 'page-1' page
+  	And User clicks on Preview app button 

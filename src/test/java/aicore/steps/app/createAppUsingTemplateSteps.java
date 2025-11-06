@@ -257,4 +257,21 @@ public class createAppUsingTemplateSteps {
 	public void user_clicks_on_the_response_block() {
 		appTemplatePage.clickOnResponseBlock();
 	}
+	//nlp teamplate
+	@And("User select the {string} from notebook")
+	public void user_select_the_from_notebook(String notebookName) {
+		appTemplatePage.selectNotebookFromlist(notebookName);
+	}
+	@And("User select the database for {string}")
+	public void user_select_the_database_for_nlp_query(String notebookName) {
+		appTemplatePage.selectDatabaseForNLPTemplate(notebookName);
+	}
+	@And("User select the {string} model for {string}")
+	public void user_select_the_model_for_nlp_query(String modelName,String notebookName) {
+		appTemplatePage.selectModelForNLPTemplate(modelName,notebookName);
+	}
+	@And("User click on Fetch Data")
+	public void user_click_on_fetch_data_button() {
+		appTemplatePage.clickOnFetchDataButton();	
+	}
 }

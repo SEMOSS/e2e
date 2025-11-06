@@ -181,4 +181,19 @@ public class AppTemplatePage {
 	public void clickOnResponseBlock() {
 		AppTemplatePageUtils.clickOnResponseBlock(page);
 	}
+
+	//nlp teamplate
+	public void selectNotebookFromlist(String notebookName) {
+		AppTemplatePageUtils.selectNotebookFromlist(page, notebookName);
+	}
+	public void selectDatabaseForNLPTemplate(String notebookName) {
+		AppTemplatePageUtils.selectDatabaseForNLPTemplate(page, notebookName);
+	}
+	public void selectModelForNLPTemplate(String modelName,String queryName) {
+		AppTemplatePageUtils.selectModelForNLPTemplate(page, modelName,queryName);
+	}
+	public void clickOnFetchDataButton() {
+		AppTemplatePageUtils.clickOnFetchDataButton(page);
+	}
+	
 }
