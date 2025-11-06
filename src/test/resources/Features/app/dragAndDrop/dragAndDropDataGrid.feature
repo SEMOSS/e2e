@@ -9,13 +9,13 @@ Feature: Drag and Drop Data Grid
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
+    And User clicks on Copy Catalog ID
     Then User can see the Catalog title as 'TestDatabase'
     When User clicks on MetaData tab
     And User clicks on Refresh button
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    And User clicks on Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button

@@ -1,5 +1,7 @@
 package aicore.steps.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +23,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateAppUsingDragAndDropSteps {
 	private HomePage homePage;
@@ -302,8 +302,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_should_see_the_text_aligned_to_the(String blockName, String textAlign) {
 		String actualTextAlign = blocksPage.getBlockTextAlign(blockName, blockText);
 		String expectedTextAlign = textAlign.toLowerCase();
-		assertEquals(expectedTextAlign, actualTextAlign,
-				"Mismatch between the expected and actual text align");
+		assertEquals(expectedTextAlign, actualTextAlign, "Mismatch between the expected and actual text align");
 	}
 
 	@Then("User should be navigated to {string} by clicking on link")
@@ -311,8 +310,7 @@ public class CreateAppUsingDragAndDropSteps {
 		if (!destination.trim().isEmpty()) {
 			blocksPage.clickOnLink(blockText);
 			String actualUrl = blocksPage.getDestinationUrl(destination);
-			assertEquals(destination, actualUrl,
-					"Mismatch between the expected and actual link destination");
+			assertEquals(destination, actualUrl, "Mismatch between the expected and actual link destination");
 			blocksPage.navigateToPreviosPage();
 		}
 	}
@@ -451,7 +449,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Then("Total {int} Area Chart blocks should be present on the page")
 	public void total_Area_Chart_Present_On_Page(int expectedcount) {
-		int actual = blocksPage.countcheck();
+		int actual = blocksPage.waitForChartCount(expectedcount);
 		assertEquals(expectedcount, actual, "Not matched");
 	}
 

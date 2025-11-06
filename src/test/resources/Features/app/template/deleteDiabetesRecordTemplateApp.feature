@@ -39,7 +39,7 @@ Feature: Create app using Delete diabetesTemplate
     And User clicks on Create button
     And User fetch the app name for drag and drop app
     And User clicks on Preview app button
-    And user selects "4" from "Unique ID" dropdown
+    And user selects "4" from "Select Unique ID" dropdown
     And User click on 'Delete' Record button
     Then User sees the success message "true"
     When User close the Preview app window
