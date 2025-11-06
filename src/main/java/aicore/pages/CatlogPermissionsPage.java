@@ -121,4 +121,7 @@ public class CatlogPermissionsPage {
 		CatlogAccessPageUtility.clickOnGeneralSettingOption(page);
 	}
 
+	public void searchUserBasedOnRole(String role, boolean useDocker) {
+		CatlogAccessPageUtility.searchUser(page, role, useDocker);
+	}
 }

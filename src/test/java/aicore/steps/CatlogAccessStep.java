@@ -416,4 +416,9 @@ public class CatlogAccessStep {
 		}
 	}
 
+	@And("User Search the {string} user from Access Control")
+	public void search_the_user_basedonrole1(String role) {
+		catlogpermission.searchUserBasedOnRole(role, GenericSetupUtils.useDocker());
+	}
+
 }
