@@ -20,14 +20,13 @@ Feature: Create drag and drop app
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User sees success toast message 'ZIP uploaded successfully'
+    And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestDatabase'
     And User clicks on MetaData tab
     And User clicks on Refresh button
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    When User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox

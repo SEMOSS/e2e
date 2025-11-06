@@ -1,9 +1,14 @@
 package aicore.utils.page.app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AICorePageUtils;
+import aicore.utils.CommonUtils;
+import aicore.utils.HomePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
@@ -15,6 +20,7 @@ public class CreateAppPopupUtils {
 	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
 	private static final String SELECT_APP_XPATH = "//span[text()='{Select_App}']";
 	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//h6[contains(@class,'MuiTypography-subtitle1')]";
+	public static List<String> createdAppNames = new ArrayList<>();
 
 	public static void clickOnGetStartedButton(Page page, String appType) {
 		if (appType.toLowerCase().contains("agent")) {
@@ -76,5 +82,26 @@ public class CreateAppPopupUtils {
 
 	public static void clickOnCloseButton(Page page) {
 		page.getByTestId("ClearIcon").nth(1).click(new Locator.ClickOptions().setForce(true));
+	}
+
+	public static void createMultipleApps(Page page,String appType, String appName, String appDescription, String appTags) {
+		HomePageUtils.openMainMenu(page);
+		HomePageUtils.clickOnOpenAppLibrary(page);
+		Locator createNewAppBtn = page.getByTestId("appCatalogPage-create-new-app-btn");
+		createNewAppBtn.click();
+		clickOnGetStartedButton(page, appType);
+		page.locator(NAME_TEXTBOX_XPATH).fill(appName);
+		enterAppDescription(page, appDescription);
+		enterTags(page, appTags);
+		clickOnCreateButton(page);
+		createdAppNames.add(appName);
+	}
+
+	public static void deleteCreatedApps(Page page) {
+		for (String appName : createdAppNames) {
+			if (appName != null && !appName.isBlank()) {
+				CommonUtils.navigateAndDeleteApp(page, appName);
+			}
+		}
 	}
 }

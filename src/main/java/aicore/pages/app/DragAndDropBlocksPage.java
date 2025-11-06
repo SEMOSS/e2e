@@ -165,8 +165,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnDuplicateIconMultipleTimes(count, page);
 	}
 
-	public int countcheck() {
-		return DragAndDropBlocksPageUtils.countCheck(page);
+	public int waitForChartCount(int expectedCount) {
+		return DragAndDropBlocksPageUtils.waitForChartCount(page, expectedCount);
 	}
 
 	public void clickOnSyncChangesButton() {

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.app.NotebookPage;
-import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -44,7 +43,7 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_click_on_query_name_as(String queryName) {
 		notebookPage.clickOnQueryName(queryName);
 	}
-	
+
 	@When("User clicks on Run cell button of database cell")
 	public void user_clicks_on_run_cell_button_of_database_cell() throws InterruptedException {
 		notebookPage.clickOnRunCellButtonDatabase();
@@ -59,18 +58,23 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_can_see_the_output_for_database_cell() throws InterruptedException {
 		notebookPage.checkDatabaseOutput();
 	}
+
 	@Then("User modify the Sql query {string}")
 	public void user_modify_the_sql_query(String newQuery) throws InterruptedException {
 		notebookPage.modifySqlQuery(newQuery);
 	}
+
 	@Then("user selects {string} from {string} dropdown")
 	public void user_selects_from_dropdown(String optionName, String dropdownName) throws InterruptedException {
 		notebookPage.selectValueFromDropdown(optionName, dropdownName);
 	}
+
 	@Then("user selects {string} from {string} Read App dropdown")
-	public void user_selects_from_dropdown_read_app(String optionName, String dropdownName) throws InterruptedException {
-		notebookPage.selectValueFromReadAppDropdown(optionName, dropdownName);
+	public void user_selects_from_dropdown_read_app(String optionName, String dropdownName)
+			throws InterruptedException {
+		notebookPage.selectValueFromDropdown(optionName, dropdownName);
 	}
+
 	@Then("user sees the record with Unique ID {string}")
 	public void user_sees_the_record_with_unique_id(String uniqueId) throws InterruptedException {
 		notebookPage.checkRecordWithUniqueId(uniqueId);
@@ -85,6 +89,7 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_click_on_add_record_button(String buttonName) throws InterruptedException {
 		notebookPage.clickOnRecordButton(buttonName);
 	}
+
 	@Then("User sees the success message {string}")
 	public void user_sees_the_success_message(String successMessage) throws InterruptedException {
 		notebookPage.checkSuccessMessage(successMessage);
