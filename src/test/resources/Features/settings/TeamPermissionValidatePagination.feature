@@ -15,7 +15,7 @@ Feature: Validate Pagination in Team Permission Settings
     And User clicks on 'Team Permissions' Card
     And User clicks on "Add Team" button
     And User selects type as "Custom" from Type dropdown
-    And User fills "Test Team" in Name field of Add Team form
+    And User fills "Test Team1" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
     And User clicks on the team name 'Test Team' in the list
@@ -40,7 +40,7 @@ Feature: Validate Pagination in Team Permission Settings
     And User clicks on 'Team Permissions' Card
     And User clicks on "Add Team" button
     And User selects type as "Custom" from Type dropdown
-    And User fills "Test Team" in Name field of Add Team form
+    And User fills "Test Team2" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
     And User clicks on the team name 'Test Team' in the list
@@ -60,7 +60,7 @@ Feature: Validate Pagination in Team Permission Settings
     And User clicks on 'Team Permissions' Card
     And User clicks on "Add Team" button
     And User selects type as "Custom" from Type dropdown
-    And User fills "Test Team" in Name field of Add Team form
+    And User fills "Test Team3" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
     And User clicks on the team name 'Test Team' in the list
