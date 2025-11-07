@@ -112,3 +112,11 @@ Feature: App Library Documentation
     And User clicks on the Response Block
     And User captures screenshot for "llmthree"
     And User completes screenshot capture and triggers comparison for 'Ask LLM'
+   
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Documentation for App Homepage
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User captures a 'button' and highlights the "Create New App" with name "AppHomepage"
+    And User completes screenshot capture and triggers comparison for 'App Homepage'
