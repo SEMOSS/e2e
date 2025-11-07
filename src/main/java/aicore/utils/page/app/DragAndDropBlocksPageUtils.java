@@ -544,6 +544,20 @@ public class DragAndDropBlocksPageUtils {
 		return page.locator(CHART_COUNT_ON_PAGE_XPATH).count();
 	}
 
+	public static int waitForChartCount(Page page, int expectedCount) {
+		Locator charts = page.locator(CHART_COUNT_ON_PAGE_XPATH);
+		int retries = 20; // retry for 10 seconds (20 * 500ms)
+		for (int i = 0; i < retries; i++) {
+			int currentCount = charts.count();
+			if (currentCount == expectedCount) {
+				return currentCount;
+			}
+			page.waitForTimeout(500);
+		}
+		int finalCount = charts.count();
+		throw new RuntimeException("Expected " + expectedCount + " charts, but found " + finalCount);
+	}
+
 	public static void clickOnSyncChangesButton(Page page) {
 		page.getByTestId("SyncIcon").click();
 	}

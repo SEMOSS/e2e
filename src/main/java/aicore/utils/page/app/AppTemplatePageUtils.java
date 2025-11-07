@@ -67,6 +67,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnQuestionBlock(Page page) {
+		page.locator(INPUT_BOX_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(INPUT_BOX_XPATH).isVisible();
 		page.locator(INPUT_BOX_XPATH).click();
 	}
@@ -228,8 +229,10 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyAppPageTitle(String title, Page page) {
-		String pageTitle = page.locator(APP_TITLE_XPATH).textContent();
-		if (!pageTitle.equals(title)) {
+		Locator pageTitle = page.locator(APP_TITLE_XPATH);
+		AICorePageUtils.waitFor(pageTitle);
+		String titleText = pageTitle.textContent();
+		if (!titleText.equals(title)) {
 			throw new AssertionError("App page title '" + title + "' is not visible");
 		}
 	}

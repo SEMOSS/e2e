@@ -152,13 +152,13 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 	@BeforeStep
 	public void beforeStep(Scenario scenario) {
 		int step = ResourcePool.get().getStep();
-		logger.info("BEFORE STEP: {}, {}", scenario.getName(), step++);
+		//logger.info("BEFORE STEP: {}, {}", scenario.getName(), step++);
 		ResourcePool.get().setStep(step);
 	}
 
 	@AfterStep
 	public void afterStep(Scenario scenario) {
-		logger.info("STEP {}", scenario.isFailed() ? "FAILED" : "PASSED");
+		//logger.info("STEP {}", scenario.isFailed() ? "FAILED" : "PASSED");
 	}
 
 	@After

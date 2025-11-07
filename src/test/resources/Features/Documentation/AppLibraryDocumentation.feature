@@ -68,6 +68,7 @@ Feature: App Library Documentation
      And User enters app name as 'Test app'
      And User captures a 'buttonType' and highlights the "submit" with name "AskCSV2"
      And User clicks on Create button
+     And User fetch the app name for drag and drop app
      And User captures a 'Block' and highlights the "upload" with name "AskCSV3"
      And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
 
@@ -91,6 +92,7 @@ Feature: App Library Documentation
     And User captures screenshot for "AskLLMcreation"
     And User enters app name as 'Test app'
     And User clicks on Create button
+    And User fetch the app name for drag and drop app
     And User clicks on description block
     And User clicks on the Block Settings option
     And User adds description as "When did covid start"
