@@ -36,7 +36,7 @@ Feature: Team Permissions - add User
     And User clicks on Delete Selected button 1 times
 
   Scenario: Delete a single member from the team
-    371 defect are resolved we change steps
+    #371 defect are resolved we change steps
     Given User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
