@@ -41,7 +41,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String HEADINGS_XPATH = "//h2[text()='Add Members']";
 
 	final static int ROWS_PER_PAGE = 5;
-	
+
 	public static void selectTypeFromDropdown(Page page, String type) {
 		Locator selectTypeFromDropdown = page.locator(SELECT_TYPE_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(selectTypeFromDropdown);
@@ -133,9 +133,11 @@ public class TeamPermissionsSettingsUtils {
 				.setName(CLICK_ON_ADD_CATALOG_TEXT.replace("{addCatalogName}", addCatalogName))).click();
 	}
 
-	public static void userSelectEngineFromList(Page page, String catalogName, String timestamp, String selectCatalog, String catalogType) {
+	public static void userSelectEngineFromList(Page page, String catalogName, String timestamp, String selectCatalog,
+			String catalogType) {
 		String catalogId = TestResourceTrackerHelper.getInstance().getCatalogId(catalogType);
-		Locator dropdownLocator = page.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
+		Locator dropdownLocator = page
+				.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
 		page.keyboard().type(catalogId);
 		AICorePageUtils.waitFor(dropdownLocator);
@@ -158,26 +160,26 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static boolean userSeeAddedEngineInTheList(Page page, String catalogName, String role) {
-		//Locator EngineSearchBar = page.locator(ENGINE_SEARCH_XPATH);
+		// Locator EngineSearchBar = page.locator(ENGINE_SEARCH_XPATH);
 		// EngineSearchBar.click();
-		// page.keyboard().press("Control+V");		
+		// page.keyboard().press("Control+V");
 		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
 		page.locator(ENGINE_ID_XPATH.replace("{EngineId}", catalogName)).isVisible();
 		boolean EnginePresent = false;
-		//check role should be checked 
+		// check role should be checked
 		switch (role) {
-			case "Author":
-				EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "1")).isChecked();
-				break;
-			case "Editor":
-				EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "2")).isChecked();
-				break;
-			case "Read-Only":
-				EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "3")).isChecked();
-				break;
-			default:
-				EnginePresent = false;
-				break;
+		case "Author":
+			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "1")).isChecked();
+			break;
+		case "Editor":
+			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "2")).isChecked();
+			break;
+		case "Read-Only":
+			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "3")).isChecked();
+			break;
+		default:
+			EnginePresent = false;
+			break;
 		}
 		return EnginePresent;
 	}
@@ -225,7 +227,6 @@ public class TeamPermissionsSettingsUtils {
 		searchmember.fill(member);
 	}
 
-	
 	public static void clickOnDeleteButton(Page page) {
 		page.getByTestId(DELETE_ICON_DATATESTID).isVisible();
 		page.getByTestId(DELETE_ICON_DATATESTID).click();
@@ -241,7 +242,7 @@ public class TeamPermissionsSettingsUtils {
 		Locator Memberlist = page.getByText(members);
 		int count = Memberlist.count();
 		for (int i = 1; i <= count; i++) {
-			Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", members+i));
+			Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", members + i));
 			AICorePageUtils.waitFor(listMember);
 			listMember.click();
 			dropdownLocator.click();
@@ -249,123 +250,124 @@ public class TeamPermissionsSettingsUtils {
 		dropdownLocator.click();
 		page.locator(HEADINGS_XPATH).click();
 	}
-	
+
 	public static int calculateTotalPages(Page page) {
-    // Get the pagination text (e.g., "1-5 of 13")
-    Locator paginationText = page.locator(PAGE_NUMBER_XPATH);
-    String text = paginationText.textContent().trim();
-    
-    // Split the text to get "13" (total members)
-    String[] parts = text.split(" ");
-    String totalText = parts[2]; // "13" from "1-5 of 13"
-    int totalMembers = Integer.parseInt(totalText);
-    
-    // Maximum rows per page is 5
-    
-    
-    // Calculate total pages (ceil division to round up)
-    int totalPages = (int) Math.ceil((double) totalMembers / ROWS_PER_PAGE);
-    
-    return totalPages;
-}
+		// Get the pagination text (e.g., "1-5 of 13")
+		Locator paginationText = page.locator(PAGE_NUMBER_XPATH);
+		String text = paginationText.textContent().trim();
 
-public static boolean verifyPagination(Page page) {
-    int totalPages = calculateTotalPages(page);
-  	Locator nextButton = page.locator(NEXT_BUTTON_XPATH);
-    Locator prevButton = page.locator(PREV_BUTTON_XPATH);
-	Locator paginationText = page.locator(PAGE_NUMBER_XPATH);
-	String paginationInfo = paginationText.textContent().trim();
-	String[] parts = paginationInfo.split(" of ");
-		
-   
-    // Check forward navigation
-    int forwardCount = 0;
-	String start = "1";
-    String end = "5";
-    String filter = start + "-" + end;
-    while (nextButton.isEnabled()) {
-        if (Integer.parseInt(start) > Integer.parseInt(parts[1]) 
-            && Integer.parseInt(end) > Integer.parseInt(parts[1])) {
+		// Split the text to get "13" (total members)
+		String[] parts = text.split(" ");
+		String totalText = parts[2]; // "13" from "1-5 of 13"
+		int totalMembers = Integer.parseInt(totalText);
 
-            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
-            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
-            filter = start + "-" + end;
+		// Maximum rows per page is 5
 
-            if (!filter.equals(parts[0])) {
-                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
-            }
+		// Calculate total pages (ceil division to round up)
+		int totalPages = (int) Math.ceil((double) totalMembers / ROWS_PER_PAGE);
 
-        } else if (Integer.parseInt(start) < Integer.parseInt(parts[1]) 
-                   && Integer.parseInt(end) >= Integer.parseInt(parts[1])) {
+		return totalPages;
+	}
 
-            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
-            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
-            filter = start + "-" + end;
+	public static boolean verifyPagination(Page page) {
+		int totalPages = calculateTotalPages(page);
+		Locator nextButton = page.locator(NEXT_BUTTON_XPATH);
+		Locator prevButton = page.locator(PREV_BUTTON_XPATH);
+		Locator paginationText = page.locator(PAGE_NUMBER_XPATH).first();
+		String paginationInfo = paginationText.textContent().trim();
+		String[] parts = paginationInfo.split(" of ");
 
-            if (!filter.equals(parts[0])) {
-                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
-            }
-        }
+		// Check forward navigation
+		int forwardCount = 0;
+		String start = "1";
+		String end = "5";
+		String filter = start + "-" + end;
+		while (nextButton.isEnabled()) {
+			if (Integer.parseInt(start) > Integer.parseInt(parts[1])
+					&& Integer.parseInt(end) > Integer.parseInt(parts[1])) {
 
-        nextButton.click();
-        forwardCount++;
-    }
-    // Check backward navigation
-    int backwardCount = 0;
-    while (prevButton.isEnabled()) {
-		  if (Integer.parseInt(start) > Integer.parseInt(parts[1]) 
-            && Integer.parseInt(end) > Integer.parseInt(parts[1])) {
+				start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+				end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+				filter = start + "-" + end;
 
-            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
-            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
-            filter = start + "-" + end;
+				if (!filter.equals(parts[0])) {
+					throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+				}
 
-            if (!filter.equals(parts[0])) {
-                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
-            }
+			} else if (Integer.parseInt(start) < Integer.parseInt(parts[1])
+					&& Integer.parseInt(end) >= Integer.parseInt(parts[1])) {
 
-        } else if (Integer.parseInt(start) < Integer.parseInt(parts[1]) 
-                   && Integer.parseInt(end) >= Integer.parseInt(parts[1])) {
+				start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+				end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+				filter = start + "-" + end;
 
-            start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
-            end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
-            filter = start + "-" + end;
+				if (!filter.equals(parts[0])) {
+					throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+				}
+			}
 
-            if (!filter.equals(parts[0])) {
-                throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
-            }
-        }
+			nextButton.click();
+			forwardCount++;
+		}
+		// Check backward navigation
+		int backwardCount = 0;
+		while (prevButton.isEnabled()) {
+			if (Integer.parseInt(start) > Integer.parseInt(parts[1])
+					&& Integer.parseInt(end) > Integer.parseInt(parts[1])) {
 
-        prevButton.click();
-		
-        backwardCount++;
-    }
-    
-    // Verify that we navigated through all pages in both directions
-    return (forwardCount == totalPages - 1) && (backwardCount == totalPages - 1);
-}
+				start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+				end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+				filter = start + "-" + end;
+
+				if (!filter.equals(parts[0])) {
+					throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+				}
+
+			} else if (Integer.parseInt(start) < Integer.parseInt(parts[1])
+					&& Integer.parseInt(end) >= Integer.parseInt(parts[1])) {
+
+				start = String.valueOf(Integer.parseInt(start) + ROWS_PER_PAGE);
+				end = String.valueOf(Integer.parseInt(end) + ROWS_PER_PAGE);
+				filter = start + "-" + end;
+
+				if (!filter.equals(parts[0])) {
+					throw new AssertionError("Pagination forward navigation failed at page: " + parts[0]);
+				}
+			}
+
+			prevButton.click();
+
+			backwardCount++;
+		}
+
+		// Verify that we navigated through all pages in both directions
+		return (forwardCount == totalPages - 1) && (backwardCount == totalPages - 1);
+	}
 
 	public static List<String> ids = ModelPageUtils.createdModelIds;
+
 	public static void addmultipleEngines(Page page) {
-				for (String engineId : ids) {
-					Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
-					dropdownLocator.click();
-					page.keyboard().type(engineId.trim());
-					AICorePageUtils.waitFor(dropdownLocator);
-					page.keyboard().press("ArrowDown");
-					page.keyboard().press("Enter");
-				}
+		for (String engineId : ids) {
+			Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+			dropdownLocator.click();
+			page.keyboard().type(engineId.trim());
+			AICorePageUtils.waitFor(dropdownLocator);
+			page.keyboard().press("ArrowDown");
+			page.keyboard().press("Enter");
 		}
-		public static List<String> projectName = CreateAppPopupUtils.createdAppNames;
-		public static void addMultipleProjects(Page page) {
-			for (String projectId : projectName) {
-				Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
-				dropdownLocator.click();
-				page.keyboard().type(projectId.trim());
-				AICorePageUtils.waitFor(dropdownLocator);
-				page.keyboard().press("ArrowDown");
-				page.keyboard().press("Enter");
-			}
+	}
+
+	public static List<String> projectName = CreateAppPopupUtils.createdAppNames;
+
+	public static void addMultipleProjects(Page page) {
+		for (String projectId : projectName) {
+			Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+			dropdownLocator.click();
+			page.keyboard().type(projectId.trim());
+			AICorePageUtils.waitFor(dropdownLocator);
+			page.keyboard().press("ArrowDown");
+			page.keyboard().press("Enter");
 		}
-	
+	}
+
 }
