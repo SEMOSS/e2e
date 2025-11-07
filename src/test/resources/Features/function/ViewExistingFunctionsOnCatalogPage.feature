@@ -3,6 +3,7 @@ Feature: View existing functions on Function Catalog Page
   Background: Create Function using ZIP file
     Given User opens Main Menu
     When User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
@@ -29,7 +30,7 @@ Feature: View existing functions on Function Catalog Page
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
 
-  @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression @ApplicationBugFailure
   Scenario: view and validate filter functionality - Discoverable Functions
     Given User opens Main Menu
     When User clicks on Open Function

@@ -70,6 +70,7 @@ Feature: Create App and validate Variables
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
@@ -101,6 +102,7 @@ Feature: Create App and validate Variables
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'

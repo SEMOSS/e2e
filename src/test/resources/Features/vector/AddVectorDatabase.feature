@@ -1,3 +1,4 @@
+@LoginWithAuthor
 Feature: Add Vector Database
   I want to use this feature file for all the scenarios related to Create Vector Database
 
@@ -17,7 +18,7 @@ Feature: Add Vector Database
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario Outline: Add and validate FAISS Vector database '<chunking_strategy>'
     Given User is on Home page
     When User opens Main Menu
@@ -30,9 +31,9 @@ Feature: Add Vector Database
     And User enters value of Content Length as '<content_length>'
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
+    And User clicks on Copy Catalog ID
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as '<catalog_name>'
-    And User clicks on Copy Catalog ID
     When User clicks on SMSS
     Then User can see vector catalog name in 'NAME' field as '<catalog_name>' in SMSS properties
     And User can see embedder engine name in 'EMBEDDER_ENGINE_NAME' field as '<model_name>' in SMSS properties
@@ -47,7 +48,7 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 
   #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: Validate usage of vector
     Given User is on Home page
     When User opens Main Menu
@@ -60,16 +61,16 @@ Feature: Add Vector Database
     And User enters value of Content Length as '510'
     And User enters value of Content Overlap as '17'
     And User clicks on Create Vector button
+    And User clicks on Copy Catalog ID
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as 'FAISS Vector DB00'
-      And User clicks on Copy Catalog ID
     When User clicks on Usage tab for Vector DB
     Then User sees an example of "How to use in Javascript" with example code for Vector DB
     And User sees an example of "How to use in Python" with example code for Vector DB
     And User sees an example of "How to use with Langchain API" with example code for Vector DB
     And User sees an example of "How to use in Java" with example code for Vector DB
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario Outline: Validate Change access popup
     Given User is on Home page
     When User opens Main Menu
@@ -109,7 +110,7 @@ Feature: Add Vector Database
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
       | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario Outline: Validate change access request
     Given User is on Home page
     When User opens Main Menu
@@ -123,7 +124,7 @@ Feature: Add Vector Database
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
     #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
-   And User clicks on Copy Catalog ID
+    And User clicks on Copy Catalog ID
     And 'Author' user clicks on Settings
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
@@ -137,8 +138,8 @@ Feature: Add Vector Database
     And User selects 'author' access
     And User types a comment as 'Access Request'
     And User clicks on Request button
-    #Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
 
+    #Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     Examples: 
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
       | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
