@@ -1,5 +1,7 @@
 package aicore.utils.page.app;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -49,7 +51,8 @@ public class AppTemplatePageUtils {
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
 	private static final String SELECT_DATABASE_FOR_NLP_QUERY_XPATH = "//h6[text()='{queryName}']/ancestor::div[contains(@class,'MuiStack-root')]//div[contains(@data-testid,'user-databaseid-1')]";
-	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH ="//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
+	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
+
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
 		String actualDescription = descriptionLocator.textContent();
@@ -342,33 +345,59 @@ public class AppTemplatePageUtils {
 		page.locator(SUBMIT_BUTTON_XPATH).click();
 	}
 
-	//nlp teamplate
+	// nlp teamplate
 	public static void selectNotebookFromlist(Page page, String notebookName) {
 		Locator notebookLocator = page.getByText(notebookName);
 		AICorePageUtils.waitFor(notebookLocator);
 		notebookLocator.click();
 		page.waitForLoadState(LoadState.LOAD);
 	}
+
 	public static void selectDatabaseForNLPTemplate(Page page, String queryName) {
 		Locator databaseLocator = page.locator(SELECT_DATABASE_FOR_NLP_QUERY_XPATH.replace("{queryName}", queryName));
 		AICorePageUtils.waitFor(databaseLocator);
 		databaseLocator.click();
 		page.waitForLoadState(LoadState.LOAD);
-		}
+	}
 
-	public static void selectModelForNLPTemplate(Page page, String modelName,String queryName) {
+	public static void selectModelForNLPTemplate(Page page, String modelName, String queryName) {
 		Locator modelsLocator = page.locator(SELECT_MODEL_FOR_NLP_QUERY_XPATH.replace("{queryName}", queryName));
 		AICorePageUtils.waitFor(modelsLocator);
 		modelsLocator.click();
 		Locator modelLocator = page.getByText(modelName);
 		AICorePageUtils.waitFor(modelLocator);
 		modelLocator.click();
-		page.waitForLoadState(LoadState.LOAD);		
+		page.waitForLoadState(LoadState.LOAD);
 	}
+
 	public static void clickOnFetchDataButton(Page page) {
 		Locator fetchDataButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Fetch Data"));
 		AICorePageUtils.waitFor(fetchDataButton);
 		fetchDataButton.click();
 		page.waitForLoadState(LoadState.LOAD);
 	}
+
+	public static void enterQueryForNLPTemplate(Page page, String query) {
+		Locator inputBox = page.locator("//label[text()='Enter user query']").nth(0);
+		AICorePageUtils.waitFor(inputBox);
+
+		String textArea = inputBox.inputValue();
+		if (!textArea.isEmpty()) {
+			inputBox.fill("");
+		}
+		inputBox.fill(query);
+	}
+
+	public static boolean validateAges(Page page, String condition, int number) {
+
+		Locator ageLocator = page.locator("//div[@data-field='AGE' and @role='gridcell']");
+		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
+
+		return switch (condition.toLowerCase()) {
+		case "above" -> ages.stream().allMatch(age -> age > number);
+		case "below" -> ages.stream().allMatch(age -> age < number);
+		default -> false;
+		};
+	}
+
 }

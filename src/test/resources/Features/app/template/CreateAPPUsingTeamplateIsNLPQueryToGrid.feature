@@ -1,4 +1,4 @@
-@DeleteTestCatalog
+@DeleteTestCatalog 
 Feature: Create app using NLP Query to Grid Template
 
   Background: Create Database and Model using ZIP file
@@ -19,7 +19,7 @@ Feature: Create app using NLP Query to Grid Template
     And User clicks on Copy Catalog ID
     Then User can see the Catalog title as 'Llama3-70B-Instruct'
 
-  @LoginWithAdmin @DeleteCreatedTestApp @Regression
+  @LoginWithAuthor @DeleteCreatedTestApp @Regression
   Scenario: Create app using NLP Query to Grid Template
     Given User is on Home page
     When User opens Main Menu
@@ -42,3 +42,9 @@ Feature: Create app using NLP Query to Grid Template
   	And User click on run all cell button
   	And User clicks on 'page-1' page
   	And User clicks on Preview app button 
+    When User enter the query for people "over" the age "50"
+  	And User click on Fetch Data
+  	Then Results should contain only people with age "above" "50"
+		
+		
+		

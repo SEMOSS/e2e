@@ -257,21 +257,42 @@ public class createAppUsingTemplateSteps {
 	public void user_clicks_on_the_response_block() {
 		appTemplatePage.clickOnResponseBlock();
 	}
-	//nlp teamplate
+
+	// nlp teamplate
 	@And("User select the {string} from notebook")
 	public void user_select_the_from_notebook(String notebookName) {
 		appTemplatePage.selectNotebookFromlist(notebookName);
 	}
+
 	@And("User select the database for {string}")
 	public void user_select_the_database_for_nlp_query(String notebookName) {
 		appTemplatePage.selectDatabaseForNLPTemplate(notebookName);
 	}
+
 	@And("User select the {string} model for {string}")
-	public void user_select_the_model_for_nlp_query(String modelName,String notebookName) {
-		appTemplatePage.selectModelForNLPTemplate(modelName,notebookName);
+	public void user_select_the_model_for_nlp_query(String modelName, String notebookName) {
+		appTemplatePage.selectModelForNLPTemplate(modelName, notebookName);
 	}
+
 	@And("User click on Fetch Data")
 	public void user_click_on_fetch_data_button() {
-		appTemplatePage.clickOnFetchDataButton();	
+		appTemplatePage.clickOnFetchDataButton();
 	}
+
+	@When("User enter the query for people {string} the age {string}")
+	public void user_enter_the_query_for_people_condition_the_age(String condition, String age) {
+		String query = "people " + condition + " the age " + age;
+		appTemplatePage.enterQueryForNLPTemplate(query);
+	}
+
+	@Then("Results should contain only people with age {string} {string}")
+	public void results_should_contain_only_people_with_age(String condition, String number) {
+
+		int num = Integer.parseInt(number);
+
+		boolean result = appTemplatePage.validateAges(condition, num);
+
+		assertTrue(result, "Validation failed. Some records do not satisfy the condition: " + condition + " " + number);
+	}
+
 }
