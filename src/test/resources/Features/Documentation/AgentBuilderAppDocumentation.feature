@@ -26,5 +26,4 @@ Feature: Create Agent builder app documentation
     And User fills the prompt as 'Prompt'
     And User clicks on Next button
     And User clicks on 'Prompt'
-    # And User selects 'Prompt' to set input in prompt
     And User captures screenshot for "SettingPrompt"
