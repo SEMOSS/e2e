@@ -5,6 +5,7 @@ Feature: Database Catalog permissions for Editor user
   Scenario: Create DataBase Using Zip File
     Given User opens Main Menu
     When User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'

@@ -16,6 +16,7 @@ Feature: Create drag and drop app
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
     When User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'

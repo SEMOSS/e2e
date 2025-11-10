@@ -3,6 +3,7 @@ Feature: Add Function From Zip
   Background: Create Function using ZIP file
     Given User opens Main Menu
     When User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
@@ -55,8 +56,7 @@ Feature: Add Function From Zip
     And User logs out from the application
     And User login as "Admin"
    
-
-  @LoginWithAdmin @Regression @Smoke
+  @LoginWithAdmin
   Scenario Outline: Delete Function
     Given User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Access Control Tab

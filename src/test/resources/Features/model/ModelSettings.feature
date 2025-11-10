@@ -11,9 +11,9 @@ Feature: Model settings
     And User enters Open AI Key as 'Test@1234'
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
-    Then User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
-
+    Then User can see a toast message as 'Successfully added LLM to catalog'
+    
  @DeleteCreatedDatabaseCatalog
   Scenario: Validate Model Settings page
     When User clicks on Model Setting tab

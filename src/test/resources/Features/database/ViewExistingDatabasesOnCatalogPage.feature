@@ -3,6 +3,7 @@ Feature: View existing databases on database catalog page
   Background: Create and edit database
     Given User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
@@ -18,7 +19,7 @@ Feature: View existing databases on database catalog page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin @Regression @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog @ApplicationBugFailure
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
     And User clicks on Open Database

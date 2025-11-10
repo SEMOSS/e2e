@@ -10,9 +10,9 @@ Feature: Create Agent builder app
     And User enters Open AI Key as 'Test@1234'
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
+    And User clicks on Copy Catalog ID
     And User can see a toast message as 'Successfully added LLM to catalog'
     Then User can see the Model title as 'Model'
-    And User clicks on Copy Catalog ID
 
   Scenario: Create Agent builder app and navigate to Blocks option
     Given User is on Home page
@@ -38,7 +38,7 @@ Feature: Create Agent builder app
     And User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Construct an agent"
-    And User enters name as 'Demo app'
+    And User enters name as 'Demo app1'
     And User selects LLM as 'Model'
     And User fills the prompt as 'I am planning a 90 day project for a client in Federal Health. The project involves software development, team training, and stakeholder presentations. Can you outline a project plan for me?'
     And User clicks on Next button

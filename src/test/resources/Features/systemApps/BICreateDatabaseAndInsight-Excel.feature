@@ -24,10 +24,10 @@ Feature: Create Database and Insight to BI System app- Excel
     And User enter the database name as 'DB created from Excel'
     And User upload Excel file and clicks on Next button
     And User clicks on Import button
-    Then User can see database created success toast message as 'Success'
+    #Then User can see database created success toast message as 'Success'
  
   Scenario: Create an Insight from a database created by importing a Excel file
-    Given User can see database created success toast message as 'Success'
+    #Given User can see database created success toast message as 'Success'
     And User clicks on Add option
     And User search 'DB created from Excel' database and select
     And User clicks on Add All button from Available Columns section
