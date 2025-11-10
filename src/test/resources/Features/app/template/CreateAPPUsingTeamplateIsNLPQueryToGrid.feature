@@ -19,7 +19,7 @@ Feature: Create app using NLP Query to Grid Template
     And User clicks on Copy Catalog ID
     Then User can see the Catalog title as 'Llama3-70B-Instruct'
 
-  @LoginWithAuthor @DeleteCreatedTestApp @Regression
+  @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create app using NLP Query to Grid Template
     Given User is on Home page
     When User opens Main Menu
@@ -36,8 +36,6 @@ Feature: Create app using NLP Query to Grid Template
     And User views description as 'Ask your query on the diabetes dataset'
     When User clicks on Notebook
     And User select the 'nlp-query' from notebook
-    #now it selelcting by default so it comment out this below step for database 
-    #And User select the database for 'nlp-query--1'
     And User select the 'Llama3-70B-Instruct' model for 'nlp-query-1'
   	And User click on run all cell button
   	And User clicks on 'page-1' page
@@ -45,6 +43,11 @@ Feature: Create app using NLP Query to Grid Template
     When User enter the query for people "over" the age "50"
   	And User click on Fetch Data
   	Then Results should contain only people with age "above" "50"
+  	When User enter the query for people "below" the age "50"
+  	And User click on Fetch Data
+  	Then Results should contain only people with age "below" "50"
+  	And User close the Preview app window
+  	And User clicks on the Save App icon
 		
 		
 		

@@ -44,6 +44,7 @@ public class AppTemplatePageUtils {
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
+	private static final String PREVIEWBUTTON_XPATH = "//button[@aria-label='Preview App']";
 
 	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
 	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'MuiAutocomplete')]]";
@@ -80,11 +81,12 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickPreviewButton(Page page) {
-		boolean isPreviewButtonVisible = page.getByTestId("PreviewRoundedIcon").isVisible();
+		boolean isPreviewButtonVisible = page.locator(PREVIEWBUTTON_XPATH).isVisible();
 		if (!isPreviewButtonVisible) {
 			throw new AssertionError("Preview button is not visible");
 		}
-		page.getByTestId("PreviewRoundedIcon").click();
+		page.locator(PREVIEWBUTTON_XPATH).click();
+		page.waitForLoadState(LoadState.LOAD);
 	}
 
 	public static void selectTemplateFromList(String templateName, Page page) {
@@ -353,13 +355,6 @@ public class AppTemplatePageUtils {
 		Locator notebookLocator = page.getByText(notebookName);
 		AICorePageUtils.waitFor(notebookLocator);
 		notebookLocator.click();
-		page.waitForLoadState(LoadState.LOAD);
-	}
-
-	public static void selectDatabaseForNLPTemplate(Page page, String queryName) {
-		Locator databaseLocator = page.locator(SELECT_DATABASE_FOR_NLP_QUERY_XPATH.replace("{queryName}", queryName));
-		AICorePageUtils.waitFor(databaseLocator);
-		databaseLocator.click();
 		page.waitForLoadState(LoadState.LOAD);
 	}
 

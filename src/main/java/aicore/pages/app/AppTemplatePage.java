@@ -187,10 +187,6 @@ public class AppTemplatePage {
 		AppTemplatePageUtils.selectNotebookFromlist(page, notebookName);
 	}
 
-	public void selectDatabaseForNLPTemplate(String notebookName) {
-		AppTemplatePageUtils.selectDatabaseForNLPTemplate(page, notebookName);
-	}
-
 	public void selectModelForNLPTemplate(String modelName, String queryName) {
 		AppTemplatePageUtils.selectModelForNLPTemplate(page, modelName, queryName);
 	}

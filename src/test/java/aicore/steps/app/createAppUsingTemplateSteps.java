@@ -264,11 +264,6 @@ public class createAppUsingTemplateSteps {
 		appTemplatePage.selectNotebookFromlist(notebookName);
 	}
 
-	@And("User select the database for {string}")
-	public void user_select_the_database_for_nlp_query(String notebookName) {
-		appTemplatePage.selectDatabaseForNLPTemplate(notebookName);
-	}
-
 	@And("User select the {string} model for {string}")
 	public void user_select_the_model_for_nlp_query(String modelName, String notebookName) {
 		appTemplatePage.selectModelForNLPTemplate(modelName, notebookName);
