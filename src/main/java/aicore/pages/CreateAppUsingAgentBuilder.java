@@ -7,55 +7,60 @@ import aicore.utils.CommonUtils;
 import aicore.utils.page.app.AppPageUtils;
 
 public class CreateAppUsingAgentBuilder {
-	private Page page;
-	private String timestamp;
 
-	public CreateAppUsingAgentBuilder(Page page, String timestamp) {
-		this.page = page;
-		this.timestamp = timestamp;
-	}
+    private Page page;
+    private String timestamp;
 
-	public void clickOnCreateNewAppButton() {
-		AppPageUtils.clickOnCreateNewAppButton(page);
-	}
+    public CreateAppUsingAgentBuilder(Page page, String timestamp) {
+        this.page = page;
+        this.timestamp = timestamp;
+    }
 
-	public void enterName(String appName) {
-		AgentBuilderAppsUtils.enterName(page, appName, timestamp);
-	}
+    public void clickOnCreateNewAppButton() {
+        AppPageUtils.clickOnCreateNewAppButton(page);
+    }
 
-	public void clickOnLLMModels(String modelTitle) {
-		AgentBuilderAppsUtils.clickOnSelectLLM(page, modelTitle);
-	}
+    public void enterName(String appName) {
+        AgentBuilderAppsUtils.enterName(page, appName, timestamp);
+    }
 
-	public void fillPrompt(String promptContext) {
-		AgentBuilderAppsUtils.fillPrompt(page, promptContext);
-	}
+    public void clickOnLLMModels(String modelTitle) {
+        AgentBuilderAppsUtils.clickOnSelectLLM(page, modelTitle);
+    }
 
-	public void setInput(String setInput) {
-		AgentBuilderAppsUtils.setInput(page, setInput);
-	}
+    public void fillPrompt(String promptContext) {
+        AgentBuilderAppsUtils.fillPrompt(page, promptContext);
+    }
 
-	public void selectInputType(String inputType) {
-		AgentBuilderAppsUtils.selectInputType(page, inputType);
-	}
+    public void setInput(String setInput) {
+        AgentBuilderAppsUtils.setInput(page, setInput);
+    }
 
-	public void clickOnPreviewButton() {
-		AgentBuilderAppsUtils.clickOnPreviewButton(page);
-	}
+    public void selectInputType(String inputType) {
+        AgentBuilderAppsUtils.selectInputType(page, inputType);
+    }
 
-	public void clickOnCreateAppButton() {
-		AgentBuilderAppsUtils.clickOnCreateAppButton(page);
-	}
+    public void clickOnPreviewButton() {
+        AgentBuilderAppsUtils.clickOnPreviewButton(page);
+    }
 
-	public String userFetchAppName() {
-		return AgentBuilderAppsUtils.userFetchAppName(page);
-	}
+    public void clickOnCreateAppButton() {
+        AgentBuilderAppsUtils.clickOnCreateAppButton(page);
+    }
 
-	public void setInputInPrompt(String input) {
-		AgentBuilderAppsUtils.setInputInPrompt(page, input);
-	}
+    public String userFetchAppName() {
+        return AgentBuilderAppsUtils.userFetchAppName(page);
+    }
 
-	public void selectInputTypeForInput(String inputType, String setInput) {
-		AgentBuilderAppsUtils.selectInputTypeForInput(page, inputType, setInput);
-	}
+    public void clickOnPrompt(String setInput) {
+        AgentBuilderAppsUtils.clickOnElementUsingText(page, setInput);
+    }
+
+    public void setInputInPrompt(String input) {
+        AgentBuilderAppsUtils.setInputInPrompt(page, input);
+    }
+
+    public void selectInputTypeForInput(String inputType, String setInput) {
+        AgentBuilderAppsUtils.selectInputTypeForInput(page, inputType, setInput);
+    }
 }
