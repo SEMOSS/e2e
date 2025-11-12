@@ -68,6 +68,22 @@ public class NotebookPage {
 		NotebookPageUtils.checkSuccessMessage(page, successMessage);
 	}
 
+	public void checkNotebookPresence(String notebookName) {
+		NotebookPageUtils.checkNotebookPresence(page, notebookName);
+	}
+
+	public void SearchForNotebook(String notebookName) {
+		NotebookPageUtils.SearchForNotebook(page, notebookName);
+	}
+
+	public void duplicateNotebook(String notebookName) {
+		NotebookPageUtils.duplicateNotebook(page, notebookName);
+	}
+
+	public void deleteNotebook(String notebookName) {
+		NotebookPageUtils.deleteNotebook(page, notebookName);
+	}
+
 	public void clickOnQuerySubmitButton() {
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 	}

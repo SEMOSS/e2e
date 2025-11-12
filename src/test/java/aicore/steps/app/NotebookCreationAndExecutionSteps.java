@@ -94,6 +94,25 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_sees_the_success_message(String successMessage) throws InterruptedException {
 		notebookPage.checkSuccessMessage(successMessage);
 	}
+	@Then("User see {string} notebook present in the notebook list")
+	public void user_see_notebook_present_in_the_notebook_list(String notebookName) throws InterruptedException {
+		notebookPage.checkNotebookPresence(notebookName);
+	}
+
+	@Then("User searches for notebook named {string}")
+	public void user_searches_for_notebook_named(String notebookName) throws InterruptedException {
+		notebookPage.SearchForNotebook(notebookName);
+	}
+
+	@When("User duplicates the notebook named {string}")
+	public void user_duplicates_the_notebook_named(String notebookName) {
+		notebookPage.duplicateNotebook(notebookName);
+	}
+
+	@When("User deletes the notebook named {string}")
+	public void user_deletes_the_notebook_named(String notebookName) {
+		notebookPage.deleteNotebook(notebookName);
+	}
 
 	@When("User clicks on query Submit button")
 	public void user_clicks_on_query_submit_button() {
