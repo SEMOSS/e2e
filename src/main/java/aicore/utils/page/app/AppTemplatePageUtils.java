@@ -333,6 +333,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnResponseBlock(Page page) {
+		page.waitForTimeout(5000);
 		if (page.locator(ASK_LOADER_XPATH).isVisible()) {
 			page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 		}
