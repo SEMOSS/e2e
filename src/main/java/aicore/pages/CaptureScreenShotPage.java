@@ -53,6 +53,8 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureTemplateTab(page, elementName);
 		case "usetemplatebutton":
 			return CaptureElementUtils.captureUseTemplate(page, elementName);
+		case "testidelement":
+			return CaptureElementUtils.captureElementThroughtDataTestId(page, elementName);
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}
