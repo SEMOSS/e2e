@@ -173,6 +173,7 @@ public class SetupHooks {
 		logger.info("AFTER: {}", scenario.getName());
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
 		Paths.get("img");
+		logger.info("Current directory: {}", System.getProperty("user.dir"));
 		if (Files.exists(Paths.get("img"))) {
 			logger.info("Folder img exists");
 			logger.info("File is directory: {}", Files.isDirectory(Paths.get("img")));
