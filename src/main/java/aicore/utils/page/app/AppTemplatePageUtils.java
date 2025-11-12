@@ -1,5 +1,7 @@
 package aicore.utils.page.app;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -8,6 +10,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.page.model.ModelPageUtils;
 
 public class AppTemplatePageUtils {
 
@@ -48,6 +51,7 @@ public class AppTemplatePageUtils {
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
+	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -329,6 +333,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnResponseBlock(Page page) {
+		page.waitForTimeout(5000);
 		if (page.locator(ASK_LOADER_XPATH).isVisible()) {
 			page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 		}
@@ -342,5 +347,43 @@ public class AppTemplatePageUtils {
 	public static void clickOSubmitBlock(Page page) {
 		page.locator(SUBMIT_BUTTON_XPATH).isVisible();
 		page.locator(SUBMIT_BUTTON_XPATH).click();
+	}
+
+	public static void verifyAppPageDescription(String descriptionText, Page page) {
+		Locator descriptionLocator = page.locator(TEMPLATE_APP_DESCRIPTION.replace("{description}", descriptionText));
+		AICorePageUtils.waitFor(descriptionLocator);
+		String actualDescription = descriptionLocator.textContent();
+
+		if (!actualDescription.equals(descriptionText)) {
+			throw new AssertionError("Description does not match");
+		}
+	}
+
+	public static boolean isButtonEnabled(String buttonText, Page page) {
+		Locator buttonLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonText));
+		AICorePageUtils.waitFor(buttonLocator);
+		return buttonLocator.isEnabled();
+	}
+
+	public static List<String> ids = ModelPageUtils.createdModelIds;
+		public static boolean verifyCreatedModelsInList(Page page) {
+		if (ids == null || ids.isEmpty()) {
+			throw new AssertionError("No created model ids provided");
+		}
+
+		int foundCount = 0;
+		for (String id : ids) {
+			Locator locator = page.getByText(id);
+			if (locator.count() == 0) {
+				throw new AssertionError("Model id '" + id + "' is not present on the page");
+			}
+			foundCount++;
+		}
+		
+		if (foundCount > ids.size()) {
+			throw new AssertionError("More models are present on the page than were created");
+		}
+
+		return foundCount == ids.size();
 	}
 }

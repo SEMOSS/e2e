@@ -320,5 +320,4 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_click_on_run_all_cell_button() {
 		notebookPage.clickOnRunAllCellButton();
 	}
-
 }
