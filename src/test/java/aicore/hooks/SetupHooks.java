@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
@@ -171,6 +172,14 @@ public class SetupHooks {
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+		Paths.get("img");
+		if (Files.exists(Paths.get("img"))) {
+			logger.info("Folder img exists");
+			logger.info("File is directory: {}", Files.isDirectory(Paths.get("img")));
+			try (Stream<Path> stream = Files.list(Paths.get("img"))) {
+				stream.forEach(path -> { logger.info("File: {}", path.toAbsolutePath()); });
+			}
+		}
 	}
 
 	@AfterAll
