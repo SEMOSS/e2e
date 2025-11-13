@@ -17,7 +17,7 @@ public abstract class CaptureElementUtils {
 	private static final String COPY_ID_TEXT_XPATH = "//*[contains(@aria-label,'{copyid}')]/../p";
 	private static final String BLOCK_ELEMENT_XPATH = "//*[contains(@data-block,'{blockName}')]/..";
 	private static final String BUTTON_TYPE_XPATH = "//button[@type='{buttonType}']";
-	private static final String TEMPLATE_TAB_XPATH = "//p[text()='{templateName}']/../../../../../../..";
+	private static final String APP_TYPE_TAB_XPATH = "//p[text()='{appTypeName}']/../../../../../../.. | //h6[text()='{appTypeName}']/../..";
 	private static final String USE_TEMPLATE_TAB_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
 	private static final String DATATESTID_NAME = "{dataTestIdName}";
 
@@ -148,8 +148,8 @@ public abstract class CaptureElementUtils {
 		return locators;
 	}
 
-	public static List<Locator> captureTemplateTab(Page page, String templateName) {
-		Locator locator = page.locator(TEMPLATE_TAB_XPATH.replace("{templateName}", templateName));
+	public static List<Locator> captureAppTypeTab(Page page, String appTypeName) {
+		Locator locator = page.locator(APP_TYPE_TAB_XPATH.replace("{appTypeName}", appTypeName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
