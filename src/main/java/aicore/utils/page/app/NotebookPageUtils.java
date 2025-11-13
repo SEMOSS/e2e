@@ -62,6 +62,13 @@ public class NotebookPageUtils {
 	private static final String PROGRESS_BAR_READ_IN_FIELD_XPATH = "(//label[contains(text(),'Select Unique ID')]/../div//div//span)[1]";
 	private static final String READ_RECORD_XPATH = "//p[contains(text(),'[DIABETES_UNIQUE_ROW_ID] : {uniqueId}')]";
 //	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//button[@title='Open']//*[@data-testid='ArrowDropDownIcon']";
+	private static final String NOTEBOOK_SEARCH_XPATH = "//p[contains(text(),'Notebook')]//..//..//div//div//input[@placeholder='Search']";
+	private static final String DELETE_DIALOG_BOX_XPATH = "(//div[@role='dialog']//div//p)[1]";
+	private static final String DELETE_DIALOG_BOX_DELETE_BUTTON_XPATH = "(//div[@role='dialog']//div//button//span[text()='Delete'])[2]";
+	private static final String NOTEBOOK_MENU_BUTTON_XPATH = "//p[text()='{NOTEBOOK_NAME}']/../div//div//button";
+	private static final String NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH = "//li[@value='Duplicate']";
+	private static final String NOTEBOOK_MENU_DELETE_BUTTON_XPATH = "//li[@value='Delete']";
+	private static final String NOTEBOOK_LIST_XPATH = "//li//p[text()='{NotebookName}']";
 	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
 
 	public static void clickOnNotebooksOption(Page page) {
@@ -203,6 +210,64 @@ public class NotebookPageUtils {
 				|| !successMessageLocator.textContent().trim().equalsIgnoreCase(successMessage)) {
 			throw new AssertionError("Success message is not visible");
 		}
+	}
+	
+	public static void checkNotebookPresence(Page page, String notebookName) {
+		Locator notebookLocator = page.locator(NOTEBOOK_LIST_XPATH.replace("{NotebookName}", notebookName));
+		AICorePageUtils.waitFor(notebookLocator);
+		if (!notebookLocator.isVisible()) {
+			throw new AssertionError("Notebook '" + notebookName + "' is not present in the notebook list");
+		}
+	}
+
+	public static void SearchForNotebook(Page page, String notebookName) {
+		Locator searchLocator = page.locator(NOTEBOOK_SEARCH_XPATH);
+		AICorePageUtils.waitFor(searchLocator);
+		searchLocator.fill(notebookName);
+		Locator notebookLocator = page.getByText(notebookName);
+		AICorePageUtils.waitFor(notebookLocator);
+		if (!notebookLocator.isVisible()) {
+			throw new AssertionError("Notebook '" + notebookName + "' is not present in the notebook search result list");
+		}
+	}
+
+	public static void duplicateNotebook(Page page, String notebookName) {
+		Locator notebookLocator =  page.locator(NOTEBOOK_LIST_XPATH.replace("{NotebookName}", notebookName));
+		AICorePageUtils.waitFor(notebookLocator);
+		notebookLocator.hover();
+		Locator NotebookMenuButton = page.locator(NOTEBOOK_MENU_BUTTON_XPATH.replace("{NOTEBOOK_NAME}", notebookName));
+		NotebookMenuButton.click();
+		Locator notebookDuplicateButton = page.locator(NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH);
+		AICorePageUtils.waitFor(notebookDuplicateButton);
+		if (!notebookDuplicateButton.isVisible()) {
+			throw new AssertionError("Duplicate button is not present in the notebook Menu list");
+		}
+		notebookDuplicateButton.click();
+	}
+	public static void deleteNotebook(Page page, String notebookName) {
+		Locator notebookLocator = page.locator(NOTEBOOK_LIST_XPATH.replace("{NotebookName}", notebookName));
+		AICorePageUtils.waitFor(notebookLocator);
+		notebookLocator.hover();
+		Locator notebookMenuButton = page.locator(NOTEBOOK_MENU_BUTTON_XPATH.replace("{NOTEBOOK_NAME}", notebookName));
+		notebookMenuButton.click();
+		Locator notebookDeleteButton = page.locator(NOTEBOOK_MENU_DELETE_BUTTON_XPATH);
+		AICorePageUtils.waitFor(notebookDeleteButton);
+		if (!notebookDeleteButton.isVisible()) {
+			throw new AssertionError("Delete button is not present in the notebook Menu list");
+		}
+		notebookDeleteButton.click();
+		//check for confirmation dialog and confirm deletion
+		Locator deleteDialogBoxMessage = page.locator(DELETE_DIALOG_BOX_XPATH);
+		String dialogBoxText = deleteDialogBoxMessage.textContent().trim();
+		if(dialogBoxText.isEmpty() || !dialogBoxText.contains(notebookName)) {
+			throw new AssertionError("Delete confirmation dialog box message is not as expected");
+		}
+		Locator deleteButton = page.locator(DELETE_DIALOG_BOX_DELETE_BUTTON_XPATH);
+		AICorePageUtils.waitFor(deleteButton);
+		if (!deleteButton.isVisible()) {
+			throw new AssertionError("Delete button is not present in the delete confirmation dialog box");
+		}
+		deleteButton.click();
 	}
 
 	public static void clickOnQuerySubmitButton(Page page) {

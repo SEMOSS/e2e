@@ -290,4 +290,20 @@ public class createAppUsingTemplateSteps {
 		assertTrue(result, "Validation failed. Some records do not satisfy the condition: " + condition + " " + number);
 	}
 
+	@Then("User sees the description as {string}")
+	public void user_sees_the_description_as(String descriptionText) {
+		appTemplatePage.verifyAppPageDescription(descriptionText);
+	}
+
+	@Then("User checks {string} button is enabled")
+	public void user_checks_button_is_enabled(String buttonText) {
+		boolean isEnabled = appTemplatePage.isButtonEnabled(buttonText);
+		assertTrue(isEnabled, "Expected: Button '" + buttonText + "' should be enabled, but it is not.");
+	}
+
+	@Then("User checks the created models are visible in the list")
+	public void user_checks_the_created_models_are_visible_in_the_list() {
+		boolean areModelsVisible = appTemplatePage.verifyCreatedModelsInList();
+		assertTrue(areModelsVisible," Created models are not visible.");
+	}
 }

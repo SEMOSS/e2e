@@ -204,3 +204,15 @@ public class AppTemplatePage {
 	}
 
 }
+	public void verifyAppPageDescription(String descriptionText) {
+		AppTemplatePageUtils.verifyAppPageDescription(descriptionText, page);
+	}
+
+	public boolean isButtonEnabled(String buttonText) {
+		return AppTemplatePageUtils.isButtonEnabled(buttonText, page);
+	}
+
+	public boolean verifyCreatedModelsInList() {
+		return AppTemplatePageUtils.verifyCreatedModelsInList(page);
+	}
+}

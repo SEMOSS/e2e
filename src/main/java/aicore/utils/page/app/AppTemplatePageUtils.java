@@ -10,6 +10,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.page.model.ModelPageUtils;
 
 public class AppTemplatePageUtils {
 
@@ -53,6 +54,7 @@ public class AppTemplatePageUtils {
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
 	private static final String SELECT_DATABASE_FOR_NLP_QUERY_XPATH = "//h6[text()='{queryName}']/ancestor::div[contains(@class,'MuiStack-root')]//div[contains(@data-testid,'user-databaseid-1')]";
 	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
+	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -335,6 +337,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnResponseBlock(Page page) {
+		page.waitForTimeout(5000);
 		if (page.locator(ASK_LOADER_XPATH).isVisible()) {
 			page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 		}
@@ -398,4 +401,41 @@ public class AppTemplatePageUtils {
 		};
 	}
 
+	public static void verifyAppPageDescription(String descriptionText, Page page) {
+		Locator descriptionLocator = page.locator(TEMPLATE_APP_DESCRIPTION.replace("{description}", descriptionText));
+		AICorePageUtils.waitFor(descriptionLocator);
+		String actualDescription = descriptionLocator.textContent();
+
+		if (!actualDescription.equals(descriptionText)) {
+			throw new AssertionError("Description does not match");
+		}
+	}
+
+	public static boolean isButtonEnabled(String buttonText, Page page) {
+		Locator buttonLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonText));
+		AICorePageUtils.waitFor(buttonLocator);
+		return buttonLocator.isEnabled();
+	}
+
+	public static List<String> ids = ModelPageUtils.createdModelIds;
+		public static boolean verifyCreatedModelsInList(Page page) {
+		if (ids == null || ids.isEmpty()) {
+			throw new AssertionError("No created model ids provided");
+		}
+
+		int foundCount = 0;
+		for (String id : ids) {
+			Locator locator = page.getByText(id);
+			if (locator.count() == 0) {
+				throw new AssertionError("Model id '" + id + "' is not present on the page");
+			}
+			foundCount++;
+		}
+		
+		if (foundCount > ids.size()) {
+			throw new AssertionError("More models are present on the page than were created");
+		}
+
+		return foundCount == ids.size();
+	}
 }
