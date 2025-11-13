@@ -1,4 +1,3 @@
-
 Feature: Search Vector Settings
 
   Background: Login to the application and Create model tagged with embeddings
@@ -10,12 +9,13 @@ Feature: Search Vector Settings
     And User enters Open AI Key as 'Test@1234'
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
+    And User clicks on Copy Catalog ID
     Then User can see a toast message as 'Successfully added LLM to catalog'
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
     And User clicks on Submit button
 
-  @LoginWithAdmin @DeleteCreatedCatalog @Regression @Smoke
+  @LoginWithAdmin @DeleteTestCatalog @Regression @Smoke
   Scenario Outline: Create vector
     Given User opens Main Menu
     And User clicks on Open Vector
@@ -27,6 +27,7 @@ Feature: Search Vector Settings
     And User enters value of Content Length as '<content_length>'
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
+    And User clicks on Copy Catalog ID
     Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as '<catalog_name>'
 
@@ -36,9 +37,9 @@ Feature: Search Vector Settings
       | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
 
-  @DeleteCreatedCatalog @Regression @Smoke
+  @DeleteTestCatalog @Regression @Smoke
   Scenario Outline: Validate Search Functionality
-  Given User opens Main Menu
+    Given User opens Main Menu
     And User clicks on Open Vector
     When User clicks on Add Vector button
     And User selects '<connection>' connection
@@ -48,6 +49,7 @@ Feature: Search Vector Settings
     And User enters value of Content Length as '<content_length>'
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
+    And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
@@ -59,7 +61,7 @@ Feature: Search Vector Settings
     And User sees the '<catalog_name>' in the searched vector list
     And User opens Main Menu
     And User clicks on Open Vector
-     And User searches the '<catalog_name>' in the Vector Catalog searchbox
+    And User searches the '<catalog_name>' in the Vector Catalog searchbox
     And User selects the '<catalog_name>' from the Vector catalog
 
     Examples: 

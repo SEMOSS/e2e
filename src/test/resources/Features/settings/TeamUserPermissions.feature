@@ -63,7 +63,7 @@ Feature: Team Permissions - add User
     And User enable admin mode
     And User clicks on 'Member Settings' Card
     And User sees the Add User button
-    And User adds 1 members with name "TestSecond", userId "TestSecond2", password "Test@12345", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
+    And User adds 1 members with name "SeconduserId1", userId "SeconduserId2", password "Test@12345", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
     And User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
@@ -71,7 +71,7 @@ Feature: Team Permissions - add User
     And User can see team name as 'Test Team' in the list
     And User clicks on the team name 'Test Team' in the list
     And User clicks on 'Add Member' button in Add Team Page
-    When User selects multiple members "userId1" and "TestSecond1" from the team list
+    When User selects multiple members "userId1" and "SeconduserId11" from the team list
     And User clicks on 'Save' button in Add Member form
     And User click on checkbox to select all member
     And User Click on 'Delete Selected' Option
@@ -92,7 +92,7 @@ Feature: Team Permissions - add User
     And User enable admin mode
     And User clicks on 'Member Settings' Card
     And User sees the Add User button
-    And User adds 1 members with name "secondId", userId "seconduser", password "Test@123465", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
+    And User adds 1 members with name "seconduserId", userId "seconduserId", password "Test@123465", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
     And User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
@@ -100,7 +100,7 @@ Feature: Team Permissions - add User
     And User can see team name as 'Test Team' in the list
     And User clicks on the team name 'Test Team' in the list
     And User clicks on 'Add Member' button in Add Team Page
-    When User selects multiple members "userId1" and "secondId1" from the team list
+    When User selects multiple members "userId1" and "seconduserId1" from the team list
     And User clicks on 'Save' button in Add Member form
     And User Search the member name as 'Id'
     And User click on checkbox to select all member

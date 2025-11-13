@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class VectorSettingPageUtils {
 
-	private static final String CLICK_SEARCH_XPATH = "[id ^='generated-id-'][placeholder='Search']";
+	private static final String CATALOG_SEARCHBOX_PLACEHOLDER = "Search";
 	private static final String VECTOR_CARDS_XPATH = "//div[contains(@class,'MuiGrid-root MuiGrid-container')]";
 	private static final String VECTOR_NAME_XPATH = "//p[contains(text(),'{vectorName}')]";
 
@@ -27,15 +27,15 @@ public class VectorSettingPageUtils {
 	}
 
 	public static void isSearchBarPresent(Page page) {
-		if (!page.locator(CLICK_SEARCH_XPATH).isVisible()) {
+		if (!page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).isVisible()) {
 			throw new AssertionError("Search bar is not visible on the page.");
 		}
 	}
 
 	public static void searchForVector(Page page, String vectorName) {
-		page.locator(CLICK_SEARCH_XPATH).click();
-		page.locator(CLICK_SEARCH_XPATH).fill(vectorName);
-		page.locator(CLICK_SEARCH_XPATH).press("Enter");
+		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).click();
+		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).fill(vectorName);
+		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).press("Enter");
 	}
 
 	public static void verifySearchedVector(Page page, String vectorName) {

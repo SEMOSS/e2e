@@ -210,13 +210,14 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchAndSelectOption(Page page, String optionText) {
-		// Fill the search box
-		Locator searchInput = page.locator(SEARCH_BAR_XPATH);
-		searchInput.fill("");
-		searchInput.fill(optionText);
+//		// Fill the search box
+//		Locator searchInput = page.locator(SEARCH_BAR_XPATH);
+//		searchInput.fill("");
+//		searchInput.fill(optionText);
 
 		// Click on the result button
 		Locator resultButton = page.locator("//button[.//span[text()='" + optionText + "']]");
+		AICorePageUtils.waitFor(resultButton);
 		resultButton.click();
 	}
 

@@ -45,41 +45,36 @@ public class CaptureScreenShotUtils {
 		return appVersion;
 	}
 
-	  public static void captureScreenshot(Page page, List<Locator> elements, Path path) throws IOException {
+	public static void captureScreenshot(Page page, List<Locator> elements, Path path) throws IOException {
+		page.waitForTimeout(1000);
 
-	        page.waitForTimeout(1000);
+		// Scroll the first element into view for screenshot context
+		if (!elements.isEmpty()) {
+			elements.get(0).scrollIntoViewIfNeeded();
+		}
 
-	        // Scroll the first element into view for screenshot context
-	        if (!elements.isEmpty()) {
-	            elements.get(0).scrollIntoViewIfNeeded();
-	        }
+		page.screenshot(new Page.ScreenshotOptions().setPath(path).setFullPage(true));
 
-	        page.screenshot(new Page.ScreenshotOptions().setPath(path).setFullPage(true));
+		BufferedImage image = ImageIO.read(path.toFile());
+		Graphics2D graphics = image.createGraphics();
+		graphics.setColor(Color.RED);
+		graphics.setStroke(new BasicStroke(2));
+		int padding = 5;
 
-	        BufferedImage image = ImageIO.read(path.toFile());
-	        Graphics2D graphics = image.createGraphics();
-	        graphics.setColor(Color.RED);
-	        graphics.setStroke(new BasicStroke(2));
-	        int padding = 5;
+		for (Locator element : elements) {
+			if (element.isVisible()) {
+				element.scrollIntoViewIfNeeded();
+				BoundingBox box = element.boundingBox();
+				if (box != null) {
+					graphics.drawRect((int) box.x - padding, (int) box.y - padding, (int) box.width + (2 * padding),
+							(int) box.height + (2 * padding));
+				}
+			}
+		}
 
-	        for (Locator element : elements) {
-	            if (element.isVisible()) {
-	                element.scrollIntoViewIfNeeded();
-	                BoundingBox box = element.boundingBox();
-	                if (box != null) {
-	                    graphics.drawRect(
-	                        (int) box.x - padding,
-	                        (int) box.y - padding,
-	                        (int) box.width + (2 * padding),
-	                        (int) box.height + (2 * padding)
-	                    );
-	                }
-	            }
-	        }
-
-	        graphics.dispose();
-	        ImageIO.write(image, "png", path.toFile());
-	    }
+		graphics.dispose();
+		ImageIO.write(image, "png", path.toFile());
+	}
 
 	public static void compareAndStoreResultsIfReady(Page page, String subFolder) throws IOException, Exception {
 
