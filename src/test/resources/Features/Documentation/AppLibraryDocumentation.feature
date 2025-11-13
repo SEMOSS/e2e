@@ -87,7 +87,7 @@ Feature: App Library Documentation
     And User clicks on Open App Library
     And User captures a 'button' and highlights the "Create New App" with name "LandingPage1"
     And User clicks on Create New App button
-    And User captures a "templateTile , useTemplateButton" and highlights the "Ask LLM , Ask LLM" with name "askLLMclick"
+    And User captures a "appTypeTile , useTemplateButton" and highlights the "Ask LLM , Ask LLM" with name "askLLMclick"
     And User selects "Ask LLM" from Template List
     And User captures screenshot for "AskLLMcreation"
     And User enters app name as 'Test app'
@@ -127,7 +127,7 @@ Feature: App Library Documentation
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
-    And User captures a "templateTile , useTemplateButton" and highlights the "Landing Page , Landing Page" with name "landingpagecreation"
+    And User captures a "appTypeTile , useTemplateButton" and highlights the "Landing Page , Landing Page" with name "landingpagecreation"
     And User selects "Landing Page" from Template List
     And User enters app name as 'Demo landing page'
     And User captures a "buttontype" and highlights the "submit" with name "landingone"

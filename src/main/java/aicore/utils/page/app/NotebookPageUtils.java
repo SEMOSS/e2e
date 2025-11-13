@@ -20,7 +20,7 @@ public class NotebookPageUtils {
 
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
-	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor textarea.inputarea";
+	private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
@@ -290,6 +290,7 @@ public class NotebookPageUtils {
 	public static void mouseHoverOnNotebookHiddenOptions(Page page) {
 		if (!page.getByTestId("data-key-pair").isVisible()) {
 			Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
+			AICorePageUtils.waitFor(hiddenOptions);
 			CommonUtils.moveMouseToCenterWithMargin(page, hiddenOptions, 80, 10);
 		} else {
 			Locator dataKeyPair = page.getByTestId("data-key-pair");
