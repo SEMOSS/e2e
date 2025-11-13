@@ -63,7 +63,7 @@ public class captureScreenShotSteps {
 	@And("User captures a {string} and highlights the {string} with name {string}")
 	public void user_Captures_Screenshot_and_highlights_the_with_name(String elementTypes, String elementNames,
 			String fileName) throws IOException {
-		page.waitForTimeout(1000);
+		page.waitForTimeout(200);
 		String fullPath = currentFolder;
 
 		String[] types = elementTypes.split(",");

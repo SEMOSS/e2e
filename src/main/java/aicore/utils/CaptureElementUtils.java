@@ -174,7 +174,6 @@ public abstract class CaptureElementUtils {
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
 			locators.add(locator.nth(i));
-
 		}
 		return locators;
 	}

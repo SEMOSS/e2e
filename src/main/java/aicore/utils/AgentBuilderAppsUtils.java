@@ -76,7 +76,7 @@ public class AgentBuilderAppsUtils {
 			page.evaluate("document.body.style.zoom='1.0'");
 		}
 
-		Locator setInputButton = page.locator(SET_INPUT_BUTTON_XPATH);
+		Locator setInputButton = page.locator(SET_INPUT_BUTTON_XPATH).first();
 		setInputButton.hover();
 		setInputButton.click();
 	}
