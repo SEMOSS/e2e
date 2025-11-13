@@ -3,6 +3,7 @@ Feature: Add Database
   Background: Create Database using ZIP file
     Given User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'

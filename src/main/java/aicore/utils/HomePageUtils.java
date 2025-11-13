@@ -63,7 +63,7 @@ public class HomePageUtils {
 		// check if menu is open
 //		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
-		page.waitForTimeout(300);
+		page.waitForTimeout(500);
 		if (isMenuOpen.isVisible()) {
 //			isMenuOpen.click();
 			isMenuOpen.dblclick();

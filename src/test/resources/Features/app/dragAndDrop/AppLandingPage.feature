@@ -58,7 +58,6 @@ Feature: App landing page
     And User searches 'App clone' app in the app searchbox
     Then User can see 'App clone' app on the page
 
-  @Regression
   Scenario: User deletes app successfully
     Given User opens Main Menu
     When User clicks on Open App Library

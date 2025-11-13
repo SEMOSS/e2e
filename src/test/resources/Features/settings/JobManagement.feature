@@ -18,6 +18,8 @@ Feature: Job Management
     And User edit Pixels as '2+3'
     And User clicks Save button
     Then User can see '2' value as Tag for edited 'Test Job'
+    When User clicks on Delete Icon for added 'Test Job'
+    Then User sees delete job toast message as 'Successfully deleted all selected jobs'
 
   @LoginWithAdmin @Regression
   Scenario: Delete Job
@@ -28,6 +30,8 @@ Feature: Job Management
   Scenario: Run Job
     When User selects the checkbox next to 'Test Job'
     Then 'Test Job' will start running and Pause button will be enabled
+    When User clicks on Delete Icon for added 'Test Job'
+    Then User sees delete job toast message as 'Successfully deleted all selected jobs'
 
   @LoginWithAdmin @Regression
   Scenario: Pause a Running Job
@@ -36,6 +40,8 @@ Feature: Job Management
     Then the "Test Job" should stop running
     And the checkbox of "Test Job" should become unselected
     And the green Pause button should revert to its default state
+    When User clicks on Delete Icon for added 'Test Job'
+    Then User sees delete job toast message as 'Successfully deleted all selected jobs'
 
   @LoginWithAdmin @Regression
   Scenario: Resume a Paused Job
@@ -47,3 +53,5 @@ Feature: Job Management
     Then 'Test Job' will start running and Pause button will be enabled
     And the checkbox of "Test Job" should become unselected
     And the Resume button should revert to its default state
+    When User clicks on Delete Icon for added 'Test Job'
+    Then User sees delete job toast message as 'Successfully deleted all selected jobs'

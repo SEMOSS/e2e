@@ -213,48 +213,6 @@ public class CommonUtils {
 		}
 	}
 
-//	public static boolean compareImages(String actualImagePath, String expectedImagePath, String diffImagePath)
-//			throws Exception {
-//		File actualFile = new File(actualImagePath);
-//		File expectedFile = new File(expectedImagePath);
-//		File diffFile = new File(diffImagePath);
-//
-//		// Ensure diff directory exists
-//		diffFile.getParentFile().mkdirs();
-//		// Fail fast if expected image doesn't exist
-//		if (!expectedFile.exists()) {
-//			throw new IllegalStateException("Expected image not found at: " + expectedImagePath);
-//		}
-//
-//		BufferedImage expected = ImageIO.read(expectedFile);
-//		BufferedImage actual = ImageIO.read(actualFile);
-//
-//		// Only resize if absolutely needed
-//		if (expected.getWidth() != actual.getWidth() || expected.getHeight() != actual.getHeight()) {
-//			logger.info("Resizing actual image to match expected dimensions");
-//			actual = resizeImage(actual, expected.getWidth(), expected.getHeight());
-//		}
-//
-//		ImageComparison imageComparison = new ImageComparison(expected, actual);
-//		imageComparison.setDestination(diffFile);
-//
-//		ImageComparisonResult result = imageComparison.compareImages();
-//
-//		double diffPercent = result.getDifferencePercent();
-//		logger.info("Difference percent: " + diffPercent);
-//
-//		// Allow small tolerance, e.g., 0.5%
-//		return diffPercent <= 0.5;
-//	}
-//
-//	private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
-//		Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
-//		BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-//		Graphics2D g2d = outputImage.createGraphics();
-//		g2d.drawImage(resultingImage, 0, 0, null);
-//		g2d.dispose();
-//		return outputImage;
-//	}
 	public static boolean compareImages(String actualImagePath, String expectedImagePath, String diffImagePath)
 			throws Exception {
 		File actualFile = new File(actualImagePath);

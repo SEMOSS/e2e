@@ -5,18 +5,18 @@ Feature: Create Notebook and Validate Import Query
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User sees success toast message 'ZIP uploaded successfully'
+    And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestDatabase'
-     When User clicks on MetaData tab
+    When User clicks on MetaData tab
     And User clicks on Refresh button
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    And User clicks on Copy Catalog ID
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button

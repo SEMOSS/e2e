@@ -20,18 +20,14 @@ public final class ConfigUtils {
 		p = new Properties();
 		FileInputStream f;
 		try {
-			logger.info("Loading properties from file");
 			Path pathToProps = Paths.get("src", "main", "resources", "local.properties");
 			if (!Files.exists(pathToProps)) {
 				pathToProps = Paths.get("src", "main", "resources", "config.properties");
 			}
-			logger.info("Loading properties from file: {}", pathToProps);
+			//logger.info("Loading properties from file: {}", pathToProps);
 			f = new FileInputStream(pathToProps.toFile());
 			p.load(f);
-			logger.info("Loaded properties from file");
-			p.entrySet().stream().forEach(entry -> {
-				logger.info("Key: " + entry.getKey() + " Value: " + entry.getValue());
-			});
+			//logger.info("Loaded properties from file");
 		} catch (Exception e) {
 			logger.error("Could not load properties", e);
 			throw new RuntimeException(e);
@@ -42,12 +38,9 @@ public final class ConfigUtils {
 	}
 
 	public static String getValue(String key) {
-		logger.info("Getting value for key: {}", key);
 		String value = p.getProperty(key);
-		logger.info("KEY: {} VALUE: {}", key, value);
 		if (value == null || value.trim().length() == 0) {
 			logger.error("Value of key is empty: {}", key);
-			System.err.println("Property '" + key + "' is undefined in config.properties!");
 		}
 		return value;
 	}

@@ -40,5 +40,5 @@ Feature: Create app using Read diabetes Template
     And User clicks on Create button
     And User fetch the app name for drag and drop app
     And User clicks on Preview app button
-    And user selects "4" from "Unique ID" Read App dropdown
+    And user selects "4" from "Select Unique ID" Read App dropdown
     Then user sees the record with Unique ID "4"

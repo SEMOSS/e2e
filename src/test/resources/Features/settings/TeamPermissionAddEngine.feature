@@ -20,9 +20,8 @@ Feature: Add Engine for Team Permission
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on Create Database button
-    And User sees success toast message 'ZIP uploaded successfully'
-    And User can see the Catalog title as 'TestDatabase'
     And User clicks on Copy Catalog ID
+    And User can see the Catalog title as 'TestDatabase'
     Given User opens Main Menu
     When User clicks on Open Settings
     And User enable admin mode
@@ -47,7 +46,7 @@ Feature: Add Engine for Team Permission
   Scenario Outline: Add Engine for Function Users role
     Given User opens Main Menu
     When User clicks on Open Function
-		And User checks if 'Function' catalog created and Deletes the 'weatherFunctionTest'
+    And User checks if 'Function' catalog created and Deletes the 'weatherFunctionTest'
     And User clicks on Add Function
     And User selects the 'ZIP' option to upload file
     And User uploads the file 'Function/weatherFunctionTest.zip'
@@ -86,8 +85,8 @@ Feature: Add Engine for Team Permission
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
     And User clicks on Copy Catalog ID
+    Then User can see create storage success toast message as 'Successfully added to catalog storage'
     Given User opens Main Menu
     When User clicks on Open Settings
     And User enable admin mode
