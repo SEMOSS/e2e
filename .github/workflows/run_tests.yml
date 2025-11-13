@@ -45,7 +45,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: documentation-images
-        path: img/
+        path: Version0.0.1-SNAPSHOT/
         retention-days: 2
 
     # - name: Clean workspace

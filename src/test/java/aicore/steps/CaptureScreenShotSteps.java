@@ -17,14 +17,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
-public class captureScreenShotSteps {
+public class CaptureScreenShotSteps {
 
 	private CaptureScreenShotPage captureScreenShotPage;
 	private String currentFolder;
 	private String subFolder;
 	private final Page page;
 
-	public captureScreenShotSteps() {
+	public CaptureScreenShotSteps() {
 		captureScreenShotPage = new CaptureScreenShotPage(SetupHooks.getPage());
 		this.page = SetupHooks.getPage();
 	}
