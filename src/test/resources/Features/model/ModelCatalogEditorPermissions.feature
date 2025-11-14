@@ -25,7 +25,7 @@ Feature: Model Catalog Permission - Editor
     Given User can see the Model title as 'Catalog'
     Then 'Editor' user can 'View' Overview
 
-  @DeleteTestCatalog @Regression
+  @DeleteTestCatalog  @Regression
   Scenario: Model Catalog - Editor - View usage
     Then 'Editor' user can 'View' Usage
     And User logs out from the application

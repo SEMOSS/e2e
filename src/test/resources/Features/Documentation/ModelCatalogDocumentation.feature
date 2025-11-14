@@ -49,7 +49,7 @@ Feature: Model Documentation
     And User login as 'admin'
     And User completes screenshot capture and triggers comparison for 'Model Catalog'
 
-  @LoginWithAdmin @SkipIfVersionMatch
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
     Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
     And User created '2' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
@@ -62,4 +62,14 @@ Feature: Model Documentation
     And User captures a 'tab' and highlights the 'Usage'
     And User captures a 'copyid' and highlights the 'copy Model ID'
     And User Delete the created Model
+    And User completes screenshot capture and triggers comparison for 'Model Catalog'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
+    Given User captures documentation screenshot for 'SimpleModelInteraction'
+    And User created '2' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
+    And User created '2' models with the model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123', and variable name 'Var123'
+    When User opens Main Menu
+    And User clicks on Open Model
+    And User captures screenshot for "ModelCatalog"
     And User completes screenshot capture and triggers comparison for 'Model Catalog'

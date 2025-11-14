@@ -68,3 +68,12 @@ Feature: Vector Catalog documentation
     And User captures screenshot for "File List"
     And User clicks on Q&A button
     And User completes screenshot capture and triggers comparison for 'Vector Catalog'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Take the screenshot for Add Vector Button
+    Given User captures documentation screenshot for 'RAG'
+    When User is on Home page
+    And User opens Main Menu
+    And User clicks on Open Vector
+    And User captures a 'button' and highlights the 'Add Vector' with name 'AddVectorDB.png'
+    Then User completes screenshot capture and triggers comparison for 'Add Vector Button'

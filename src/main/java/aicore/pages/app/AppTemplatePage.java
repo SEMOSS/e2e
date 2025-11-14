@@ -182,6 +182,27 @@ public class AppTemplatePage {
 		AppTemplatePageUtils.clickOnResponseBlock(page);
 	}
 
+	// nlp teamplate
+	public void selectNotebookFromlist(String notebookName) {
+		AppTemplatePageUtils.selectNotebookFromlist(page, notebookName);
+	}
+
+	public void selectModelForNLPTemplate(String modelName, String queryName) {
+		AppTemplatePageUtils.selectModelForNLPTemplate(page, modelName, queryName);
+	}
+
+	public void clickOnFetchDataButton() {
+		AppTemplatePageUtils.clickOnFetchDataButton(page);
+	}
+
+	public void enterQueryForNLPTemplate(String query) {
+		AppTemplatePageUtils.enterQueryForNLPTemplate(page, query);
+	}
+
+	public boolean validateAges(String condition, int number) {
+		return AppTemplatePageUtils.validateAges(page, condition, number);
+	}
+
 	public void verifyAppPageDescription(String descriptionText) {
 		AppTemplatePageUtils.verifyAppPageDescription(descriptionText, page);
 	}
