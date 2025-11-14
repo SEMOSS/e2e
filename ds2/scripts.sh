@@ -59,7 +59,7 @@ bash /opt/apache-tomcat-9.0.102/bin/start.sh &
 echo "Tomcat started"
 
 cd /workspace
-mvn -Dtest=aicore.suite.FullSuite test -e
+mvn -Dtest=aicore.runners.FeatureFolderParallelRunner test -e
 TEST_RESULT=$?
 echo "Test result code was: $TEST_RESULT"
 cd /app
