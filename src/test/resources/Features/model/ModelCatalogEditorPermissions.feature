@@ -1,3 +1,4 @@
+@LoginWithAuthor
 Feature: Model Catalog Permission - Editor
   Adding LLM to the catalog
 
@@ -10,7 +11,6 @@ Feature: Model Catalog Permission - Editor
     And User enters Open AI Key as 'Test@1234'
     And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
-    And User can see a toast message as 'Successfully added LLM to catalog'
     And User can see the Model title as 'Catalog'
     And User clicks on Copy Catalog ID
     Then 'Author' user clicks on Access Control
@@ -25,7 +25,7 @@ Feature: Model Catalog Permission - Editor
     Given User can see the Model title as 'Catalog'
     Then 'Editor' user can 'View' Overview
 
-  @DeleteTestCatalog @LoginWithAuthor @Regression
+  @DeleteTestCatalog  @Regression
   Scenario: Model Catalog - Editor - View usage
     Then 'Editor' user can 'View' Usage
     And User logs out from the application

@@ -168,7 +168,8 @@ public class Resource {
                 context = null;
             }
         }
-  
+    }
+    
     public String getTimestamp() {
         return this.timestamp;
     }

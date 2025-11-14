@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class AgentBuilderAppsUtils {
+
 	private static final String SELECT_llM_XPATH = "//input[@id='model-autocomplete' and @type='text' and contains(@class, 'MuiAutocomplete-input')]";
 	private static final String ENTER_NAME_XPATH = "//div[contains(@class, 'MuiInputBase-root')]//legend/span[text()='Name']/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
 	private static final String PROMPT_CONTEXT_XPATH = "//textarea[@rows='6' and contains(@class, 'MuiOutlinedInput-input') and @placeholder and not(@readonly)]";
@@ -61,6 +62,19 @@ public class AgentBuilderAppsUtils {
 		String actualAppName = getAppName.textContent().trim();
 		TestResourceTrackerHelper.getInstance().setAppName(actualAppName);
 		return actualAppName;
+	}
+
+	public static void clickOnElementUsingText(Page page, String setInput) {
+		// Split input string into individual words
+		String[] words = setInput.trim().split("\\s+");
+		for (String word : words) {
+			String wordXPath = SET_INPUT_XPATH.replace("{setInput}", word);
+			Locator wordLocator = page.locator(wordXPath);
+			page.evaluate("document.body.style.zoom='1.4'");
+			wordLocator.hover();
+			wordLocator.click();
+			page.evaluate("document.body.style.zoom='1.0'");
+		}
 	}
 
 	public static void setInputInPrompt(Page page, String setInput) {

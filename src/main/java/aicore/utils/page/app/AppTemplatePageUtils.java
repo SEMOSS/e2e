@@ -1,5 +1,7 @@
 package aicore.utils.page.app;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -8,6 +10,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.page.model.ModelPageUtils;
 
 public class AppTemplatePageUtils {
 
@@ -42,12 +45,16 @@ public class AppTemplatePageUtils {
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
+	private static final String PREVIEWBUTTON_XPATH = "//button[@aria-label='Preview App']";
 
 	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
 	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'MuiAutocomplete')]]";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
+	private static final String SELECT_DATABASE_FOR_NLP_QUERY_XPATH = "//h6[text()='{queryName}']/ancestor::div[contains(@class,'MuiStack-root')]//div[contains(@data-testid,'user-databaseid-1')]";
+	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
+	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -63,7 +70,6 @@ public class AppTemplatePageUtils {
 		if (!page.locator(SUBMIT_BUTTON_XPATH).isVisible()) {
 			throw new AssertionError("Submit button is not visible");
 		}
-
 	}
 
 	public static void clickOnQuestionBlock(Page page) {
@@ -77,11 +83,12 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickPreviewButton(Page page) {
-		boolean isPreviewButtonVisible = page.getByTestId("PreviewRoundedIcon").isVisible();
+		boolean isPreviewButtonVisible = page.locator(PREVIEWBUTTON_XPATH).isVisible();
 		if (!isPreviewButtonVisible) {
 			throw new AssertionError("Preview button is not visible");
 		}
-		page.getByTestId("PreviewRoundedIcon").click();
+		page.locator(PREVIEWBUTTON_XPATH).click();
+		page.waitForLoadState(LoadState.LOAD);
 	}
 
 	public static void selectTemplateFromList(String templateName, Page page) {
@@ -330,14 +337,105 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnResponseBlock(Page page) {
-		page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
-		page.locator(RESPONSE_BOX_XPATH).isVisible();
-		page.locator(RESPONSE_BOX_XPATH).click();
+		page.waitForTimeout(5000);
+		if (page.locator(ASK_LOADER_XPATH).isVisible()) {
+			page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		}
+		Locator responseBlock = page.locator(RESPONSE_BOX_XPATH);
+		AICorePageUtils.waitFor(responseBlock);
+		responseBlock.isVisible();
+		responseBlock.click();
 		page.locator(TITLE_XPATH).scrollIntoViewIfNeeded();
 	}
 
 	public static void clickOSubmitBlock(Page page) {
 		page.locator(SUBMIT_BUTTON_XPATH).isVisible();
 		page.locator(SUBMIT_BUTTON_XPATH).click();
+	}
+
+	// nlp teamplate
+	public static void selectNotebookFromlist(Page page, String notebookName) {
+		Locator notebookLocator = page.getByText(notebookName);
+		AICorePageUtils.waitFor(notebookLocator);
+		notebookLocator.click();
+		page.waitForLoadState(LoadState.LOAD);
+	}
+
+	public static void selectModelForNLPTemplate(Page page, String modelName, String queryName) {
+		Locator modelsLocator = page.locator(SELECT_MODEL_FOR_NLP_QUERY_XPATH.replace("{queryName}", queryName));
+		AICorePageUtils.waitFor(modelsLocator);
+		modelsLocator.click();
+		Locator modelLocator = page.getByText(modelName);
+		AICorePageUtils.waitFor(modelLocator);
+		modelLocator.click();
+		page.waitForLoadState(LoadState.LOAD);
+	}
+
+	public static void clickOnFetchDataButton(Page page) {
+		Locator fetchDataButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Fetch Data"));
+		AICorePageUtils.waitFor(fetchDataButton);
+		fetchDataButton.click();
+		page.waitForLoadState(LoadState.LOAD);
+	}
+
+	public static void enterQueryForNLPTemplate(Page page, String query) {
+		Locator inputBox = page.locator("//label[text()='Enter user query']").nth(0);
+		AICorePageUtils.waitFor(inputBox);
+
+		String textArea = inputBox.inputValue();
+		if (!textArea.isEmpty()) {
+			inputBox.fill("");
+		}
+		inputBox.fill(query);
+	}
+
+	public static boolean validateAges(Page page, String condition, int number) {
+
+		Locator ageLocator = page.locator("//div[@data-field='AGE' and @role='gridcell']");
+		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
+
+		return switch (condition.toLowerCase()) {
+		case "above" -> ages.stream().allMatch(age -> age > number);
+		case "below" -> ages.stream().allMatch(age -> age < number);
+		default -> false;
+		};
+	}
+
+	public static void verifyAppPageDescription(String descriptionText, Page page) {
+		Locator descriptionLocator = page.locator(TEMPLATE_APP_DESCRIPTION.replace("{description}", descriptionText));
+		AICorePageUtils.waitFor(descriptionLocator);
+		String actualDescription = descriptionLocator.textContent();
+
+		if (!actualDescription.equals(descriptionText)) {
+			throw new AssertionError("Description does not match");
+		}
+	}
+
+	public static boolean isButtonEnabled(String buttonText, Page page) {
+		Locator buttonLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonText));
+		AICorePageUtils.waitFor(buttonLocator);
+		return buttonLocator.isEnabled();
+	}
+
+	public static List<String> ids = ModelPageUtils.createdModelIds;
+		public static boolean verifyCreatedModelsInList(Page page) {
+		if (ids == null || ids.isEmpty()) {
+			throw new AssertionError("No created model ids provided");
+		}
+
+		int foundCount = 0;
+		for (String id : ids) {
+			Locator locator = page.getByText(id);
+			if (locator.count() == 0) {
+				throw new AssertionError("Model id '" + id + "' is not present on the page");
+			}
+			foundCount++;
+		}
+		
+		if (foundCount > ids.size()) {
+			throw new AssertionError("More models are present on the page than were created");
+		}
+
+		return foundCount == ids.size();
 	}
 }

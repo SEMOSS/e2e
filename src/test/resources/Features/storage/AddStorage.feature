@@ -1,3 +1,4 @@
+@LoginWithAuthor
 Feature: Add Storage
   I want to use this feature file for all scenarios related to the Add Storage
 
@@ -13,10 +14,10 @@ Feature: Add Storage
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
     And User clicks on Create Storage button
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
     And User clicks on Copy Catalog ID
+    Then User can see create storage success toast message as 'Successfully added to catalog storage'
 
-   @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: Validate usage of storage
     Given User can see the Storage title as 'Amazon S3 Storage'
     When User clicks on Usage tab for storage
@@ -25,17 +26,16 @@ Feature: Add Storage
     And User sees an example of "How to use with Langchain API" with example code for storage
     And User sees an example of "How to use in Java" with example code for storage
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: Validate SMSS properties of storage
     Given User can see the Storage title as 'Amazon S3 Storage'
     And User clicks on SMSS
     Then User can see storage name in 'NAME' field as 'Amazon S3 Storage' in SMSS properties
     And User can see storage region in 'S3_REGION' field as 'India' in SMSS properties
-	    And User can see storage bucket in 'S3_BUCKET' field as 'BucketTest' in SMSS properties
+    And User can see storage bucket in 'S3_BUCKET' field as 'BucketTest' in SMSS properties
     And User can see storage access key in 'S3_ACCESS_KEY' field as 'Test123' in SMSS properties
-  
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: View Storage Overview
     Given User can see the Storage title as 'Amazon S3 Storage'
     When User can see 'copy Storage ID' Storage ID along with copy icon
@@ -65,7 +65,7 @@ Feature: Add Storage
     And User logs out from the application
     And User login as "Author"
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: Validate Change access popup
     Given User can see the Storage title as 'Amazon S3 Storage'
     When User clicks on Access Control Tab
@@ -89,7 +89,7 @@ Feature: Add Storage
     And User logs out from the application
     Then User login as "Author"
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: Validate change access request
     Given User can see the Storage title as 'Amazon S3 Storage'
     When User clicks on Access Control Tab
