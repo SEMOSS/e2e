@@ -49,7 +49,7 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureBlockScreenshot(page, elementName);
 		case "buttontype":
 			return CaptureElementUtils.captureButtonTypeScreenshot(page, elementName);
-		case "appTypeTile":
+		case "apptypetile":
 			return CaptureElementUtils.captureAppTypeTab(page, elementName);
 		case "usetemplatebutton":
 			return CaptureElementUtils.captureUseTemplate(page, elementName);
