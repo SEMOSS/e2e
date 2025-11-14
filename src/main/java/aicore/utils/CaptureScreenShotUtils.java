@@ -46,9 +46,7 @@ public class CaptureScreenShotUtils {
 	}
 
 	public static void captureScreenshot(Page page, List<Locator> elements, Path path) throws IOException {
-
 		page.waitForTimeout(1000);
-
 		// Scroll the first element into view for screenshot context
 		if (!elements.isEmpty()) {
 			elements.get(0).scrollIntoViewIfNeeded();

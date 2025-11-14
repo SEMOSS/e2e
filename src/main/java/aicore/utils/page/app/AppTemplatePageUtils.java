@@ -45,12 +45,15 @@ public class AppTemplatePageUtils {
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
+	private static final String PREVIEWBUTTON_XPATH = "//button[@aria-label='Preview App']";
 
 	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
 	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'MuiAutocomplete')]]";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
+	private static final String SELECT_DATABASE_FOR_NLP_QUERY_XPATH = "//h6[text()='{queryName}']/ancestor::div[contains(@class,'MuiStack-root')]//div[contains(@data-testid,'user-databaseid-1')]";
+	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
 	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
 
 	public static void verifyDescription(String description, Page page) {
@@ -80,11 +83,12 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickPreviewButton(Page page) {
-		boolean isPreviewButtonVisible = page.getByTestId("PreviewRoundedIcon").isVisible();
+		boolean isPreviewButtonVisible = page.locator(PREVIEWBUTTON_XPATH).isVisible();
 		if (!isPreviewButtonVisible) {
 			throw new AssertionError("Preview button is not visible");
 		}
-		page.getByTestId("PreviewRoundedIcon").click();
+		page.locator(PREVIEWBUTTON_XPATH).click();
+		page.waitForLoadState(LoadState.LOAD);
 	}
 
 	public static void selectTemplateFromList(String templateName, Page page) {
@@ -347,6 +351,54 @@ public class AppTemplatePageUtils {
 	public static void clickOSubmitBlock(Page page) {
 		page.locator(SUBMIT_BUTTON_XPATH).isVisible();
 		page.locator(SUBMIT_BUTTON_XPATH).click();
+	}
+
+	// nlp teamplate
+	public static void selectNotebookFromlist(Page page, String notebookName) {
+		Locator notebookLocator = page.getByText(notebookName);
+		AICorePageUtils.waitFor(notebookLocator);
+		notebookLocator.click();
+		page.waitForLoadState(LoadState.LOAD);
+	}
+
+	public static void selectModelForNLPTemplate(Page page, String modelName, String queryName) {
+		Locator modelsLocator = page.locator(SELECT_MODEL_FOR_NLP_QUERY_XPATH.replace("{queryName}", queryName));
+		AICorePageUtils.waitFor(modelsLocator);
+		modelsLocator.click();
+		Locator modelLocator = page.getByText(modelName);
+		AICorePageUtils.waitFor(modelLocator);
+		modelLocator.click();
+		page.waitForLoadState(LoadState.LOAD);
+	}
+
+	public static void clickOnFetchDataButton(Page page) {
+		Locator fetchDataButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Fetch Data"));
+		AICorePageUtils.waitFor(fetchDataButton);
+		fetchDataButton.click();
+		page.waitForLoadState(LoadState.LOAD);
+	}
+
+	public static void enterQueryForNLPTemplate(Page page, String query) {
+		Locator inputBox = page.locator("//label[text()='Enter user query']").nth(0);
+		AICorePageUtils.waitFor(inputBox);
+
+		String textArea = inputBox.inputValue();
+		if (!textArea.isEmpty()) {
+			inputBox.fill("");
+		}
+		inputBox.fill(query);
+	}
+
+	public static boolean validateAges(Page page, String condition, int number) {
+
+		Locator ageLocator = page.locator("//div[@data-field='AGE' and @role='gridcell']");
+		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
+
+		return switch (condition.toLowerCase()) {
+		case "above" -> ages.stream().allMatch(age -> age > number);
+		case "below" -> ages.stream().allMatch(age -> age < number);
+		default -> false;
+		};
 	}
 
 	public static void verifyAppPageDescription(String descriptionText, Page page) {
