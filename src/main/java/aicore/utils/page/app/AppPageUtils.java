@@ -26,7 +26,7 @@ public class AppPageUtils {
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
 	public static final String MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID = "MoreVertIcon";
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
-	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//div[text()='Successfully copied to clipboard']";
+	public static final String ID_COPY_TOAST_MESSAGE_DATATESTID = "notification-success-message";
 	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
 	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
@@ -95,8 +95,10 @@ public class AppPageUtils {
 	}
 
 	public static String getAppIdCopiedToastMessage(Page page) {
-		page.locator(ID_COPY_TOAST_MESSAGE_XPATH).isVisible();
-		return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).textContent().trim();
+		// page.locator(ID_COPY_TOAST_MESSAGE_XPATH).isVisible();
+		// return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).textContent().trim();
+		page.getByTestId(ID_COPY_TOAST_MESSAGE_DATATESTID).isVisible();
+		return page.getByTestId(ID_COPY_TOAST_MESSAGE_DATATESTID).textContent().trim();
 	}
 
 	public static void enterCloneAppName(Page page, String appName, String timestamp) {
@@ -128,8 +130,8 @@ public class AppPageUtils {
 	public static boolean isContentVisibleOnAppCard(Page page, String contentName, String contentValue,
 			String timestamp) {
 		// Expected formatted date (e.g., "October 22, 2025")
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
-	    String expectedDate = LocalDate.now().format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+		String expectedDate = LocalDate.now().format(formatter);
 		Locator locator = null;
 		switch (contentName) {
 		case "App Name":
@@ -151,10 +153,12 @@ public class AppPageUtils {
 			locator = page.locator(APP_BOOKMARK_ICON_XPATH);
 			break;
 		case "Published date":
-			locator = page.locator(PUBLISHED_DATE_XPATH.replace("{publishedDate}", contentValue.replace("{date}", expectedDate)));
+			locator = page.locator(
+					PUBLISHED_DATE_XPATH.replace("{publishedDate}", contentValue.replace("{date}", expectedDate)));
 			break;
 		case "Last Edited date":
-			locator = page.locator(LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}", contentValue.replace("{date}", expectedDate)));
+			locator = page.locator(
+					LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}", contentValue.replace("{date}", expectedDate)));
 			break;
 		default:
 			logger.error("Invalid option name: " + contentName);
@@ -191,7 +195,7 @@ public class AppPageUtils {
 		filterValueLocator.click();
 	}
 
-	public static void clickOnViewDetails(Page page,String buttonName) {
+	public static void clickOnViewDetails(Page page, String buttonName) {
 		page.locator(VIEW_DETAILS_BUTTON_XPATH.replace("{buttonName}", buttonName)).click();
 	}
 
