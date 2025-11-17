@@ -203,7 +203,7 @@ public class AppTemplatePage {
 		return AppTemplatePageUtils.validateAges(page, condition, number);
 	}
 
-}
+
 	public void verifyAppPageDescription(String descriptionText) {
 		AppTemplatePageUtils.verifyAppPageDescription(descriptionText, page);
 	}
