@@ -76,5 +76,5 @@ Feature: Function documentation
     And User clicks on Create Function button
     And User sees success toast message 'Successfully added function to catalog'
     And User clicks on Copy Catalog ID
-    And User captures a 'button' and highlights the 'Export'
+    And User captures a 'buttonType' and highlights the "Export" with name "Export"
     And User completes screenshot capture and triggers comparison for 'Function Catalog Export Button'
