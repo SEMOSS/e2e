@@ -716,4 +716,25 @@ public class CreateAppUsingDragAndDropSteps {
 		appVariablePage.clickOnSaveVariableButton();
 	}
 
+	// bar charts
+	@And("User click on the Tools tab")
+	public void user_click_on_tool_tab() {
+		blocksPage.clickOnToolTab();
+	}
+
+	@And("User validates Conditional using {string}")
+	public void user_validates_conditional_using(String conditionalValues) {
+		String[] values = conditionalValues.split(",");
+		for (String val : values) {
+			boolean expected = Boolean.parseBoolean(val.trim());
+			blocksPage.applyConditional(val.trim());
+			boolean isVisible = blocksPage.isBarChartVisible();
+			if (expected) {
+				Assertions.assertTrue(isVisible, "Chart should be visible when conditional = true");
+			} else {
+				Assertions.assertFalse(isVisible, "Chart should NOT be visible when conditional = false");
+			}
+		}
+	}
+
 }

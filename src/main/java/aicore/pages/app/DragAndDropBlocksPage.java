@@ -232,4 +232,14 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page, appName);
 	}
 
+	//bar charts
+	public void clickOnToolTab() {
+		DragAndDropBlocksPageUtils.clickOnToolTab(page);
+	}
+	public void applyConditional(String value) {
+		DragAndDropBlocksPageUtils.applyConditional(page, value);
+	} 
+	public boolean isBarChartVisible() {
+		return DragAndDropBlocksPageUtils.isBarChartVisible(page);
+	}
 }

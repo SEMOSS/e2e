@@ -99,6 +99,11 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
 	private static final String APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID = "appTileCard-{appName}-tile";
 
+	// Bar Chart
+	private static final String CONDITIONAL_XPATH = "//span[text()='Conditional']";
+	private static final String CONDITIONAL_SHOW_BLOCK_DROPDOWN_XPATH = "//div[@data-testid='selectInputSettings-Show-Block-e-chart--1-select']//div[normalize-space()='{value}']";
+	private static final String BARCHART_ISVISIBLE_XPATH = "//div[@class='echarts-for-react ']";
+
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
 		element.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -667,4 +672,22 @@ public class DragAndDropBlocksPageUtils {
 	public static boolean isAppDisplayedInSystemAppsSection(Page page, String appName) {
 		return page.getByTestId(APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID.replace("{appName}", appName)).isVisible();
 	}
+
+	// bar chart
+	public static void clickOnToolTab(Page page) {
+		page.locator("//button[normalize-space()='Tools']").click();
+		page.locator(CONDITIONAL_XPATH).click();
+	}
+
+	public static void applyConditional(Page page, String value) {
+		page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("True")).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
+
+	}
+
+	public static boolean isBarChartVisible(Page page) {
+		page.waitForTimeout(500);
+		return page.locator(BARCHART_ISVISIBLE_XPATH).isVisible();
+	}
+
 }
