@@ -11,6 +11,7 @@ import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
@@ -30,7 +31,6 @@ public class NotebookPageUtils {
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
 	private static final String OUTPUT_TABLE = "//table";
-	// private static final String OUTPUT_TABLE = "//table//tbody//tr";
 	private static final String JSON_BODY_FIELD_VALUE_XPATH = "//div[contains(@class,'string-value MuiBox-root')]//span[text()='{fieldValue}']";
 	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//div[div[text()='Python']]";
 	private static final String SELECT_TYPE_LISTBOX_XPATH = "//li[text()='{type}']";
@@ -70,6 +70,7 @@ public class NotebookPageUtils {
 	private static final String NOTEBOOK_LIST_XPATH = "//li//p[text()='{NotebookName}']";
 	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
 	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
+	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -665,10 +666,8 @@ public class NotebookPageUtils {
 	public static void clickOnRunAllCellButton(Page page) {
 		Locator runAllCell = page.getByTitle("Run all cells");
 		runAllCell.click();
-//		page.waitForLoadState(LoadState.LOAD);
-//		page.getByTestId("data-key-pair").isVisible();
-		page.locator("span[role='progressbar']").nth(3)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED).setTimeout(30000));
+		page.waitForLoadState(LoadState.LOAD);
+		page.getByTestId("data-key-pair").last().isVisible();
 		page.waitForTimeout(1000);
 	}
 
@@ -699,7 +698,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnIncludeTimeCheckbox(Page page) {
-		Locator checkbox = page.locator("//p[text()='Include time']");
+		Locator checkbox = page.locator(TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH);
 		AICorePageUtils.waitFor(checkbox);
 		checkbox.click();
 	}

@@ -321,7 +321,6 @@ public class NotebookCreationAndExecutionSteps {
 
 	@Then("User sees {string} operator by default between the rules")
 	public void User_sees_operator_by_default_between_the_rules(String operator) {
-
 		notebookPage.getDefaultOperator(operator);
 	}
 
@@ -361,10 +360,10 @@ public class NotebookCreationAndExecutionSteps {
 	}
 
 	@And("User can see {string} column values as todays date along with current time")
-	public void user_can_see_column_values_as_todays_date_along_with_current_time(String string) {
+	public void user_can_see_column_values_as_todays_date_along_with_current_time(String columnName) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
 		LocalDate today = LocalDate.now();
-		List<String> columnValues = notebookPage.getColumnValues(string);
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
 		for (String columnValue : columnValues) {
 			LocalDateTime actual = LocalDateTime.parse(columnValue.trim(), formatter);
 
@@ -381,14 +380,13 @@ public class NotebookCreationAndExecutionSteps {
 	}
 
 	@Then("User can see {string} column values as todays date along with {string} as timestamp")
-	public void user_can_see_column_values_as_todays_date_along_with_as_timestamp(String string, String timestamp) {
+	public void user_can_see_column_values_as_todays_date_along_with_as_timestamp(String columnName, String timestamp) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		List<String> columnValues = notebookPage.getColumnValues(string);
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
 		for (String columnValue : columnValues) {
 			String cleaned = columnValue.replace("T", " ");
 			LocalDateTime actual = LocalDateTime.parse(cleaned, formatter);
 			String expected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + timestamp;
-			System.out.println(actual + " " + expected);
 			Assertions.assertEquals(expected, actual.format(formatter), "timestamp values not matching");
 		}
 
