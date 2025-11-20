@@ -722,6 +722,11 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnToolTab();
 	}
 
+	@And("User click on Conditional toole option")
+	public void user_click_on_conditional_tool_option() {
+		blocksPage.clickOnConditionalToolOption();
+	}
+
 	@And("User validates Conditional using {string}")
 	public void user_validates_conditional_using(String conditionalValues) {
 		String[] values = conditionalValues.split(",");
@@ -733,6 +738,28 @@ public class CreateAppUsingDragAndDropSteps {
 				Assertions.assertTrue(isVisible, "Chart should be visible when conditional = true");
 			} else {
 				Assertions.assertFalse(isVisible, "Chart should NOT be visible when conditional = false");
+			}
+		}
+	}
+
+	@And("User click on Color Palette toole option")
+	public void user_click_on_color_palette_tool_option() {
+		blocksPage.clickOnColorPaletteToolOption();
+	}
+
+	@And("User validates Color Palette using {string}")
+	public void user_validates_color_palette_using(String colorPaletteValues) {
+		for (String action : colorPaletteValues.split(",")) {
+			action = action.trim().toLowerCase();
+			if (action.equals("add color")) {
+				boolean isAdded = blocksPage.performAddColor();
+				if (!isAdded) {
+					throw new AssertionError("Failed to add color from palette.");
+				}
+			} else if (action.equals("change color")) {
+				blocksPage.performCheckColor();
+			} else {
+				throw new AssertionError("Invalid color palette action: " + action);
 			}
 		}
 	}

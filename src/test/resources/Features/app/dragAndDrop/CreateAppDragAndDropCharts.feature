@@ -56,8 +56,11 @@ Feature: Create drag and drop  for charts validation
     And User selects the frame from the selected frame dropdown
     And User drag and drop the 'Age, Glucose' columns to 'Select X Axis, Select Y Axis' fields
     And User click on the Tools tab
+    And User click on Conditional toole option
     And User validates Conditional using '<CONDITIONAL>'
-    #And User validates Color Palette using '<COLOR_PALETTE>'
+    And User click on Color Palette toole option
+    And User validates Color Palette using '<COLOR_PALETTE>'
+    Then User can see '<CHART_NAME>' chart same as baseline chart
     #And User validates Colour By Value using '<COLOUR_BY_VALUE>'
     #And User validates Edit X Axis using '<EDIT_X_AXIS>'
     #And User validates Edit Y Axis using '<EDIT_Y_AXIS>'
@@ -70,5 +73,5 @@ Feature: Create drag and drop  for charts validation
 
 
     Examples:
-    | BLOCK_NAME | CONDITIONAL | #COLOR_PALETTE | COLOUR_BY_VALUE | EDIT_X_AXIS | EDIT_Y_AXIS | VALUE_LABEL | BAR_STYLE | CHART_TITLE | RESIZING | TRENDLINES | LEGEND |
-    | Bar Chart  | true, false  | #custom        | true            | updated     | updated     | true        | updated   | updated     | updated  | true       | true   |
+    | BLOCK_NAME | CONDITIONAL | COLOR_PALETTE		| CHART_NAME 	|
+    | Bar Chart  | false, true | Add Color, Change Color			| Bar Chart Tool |
