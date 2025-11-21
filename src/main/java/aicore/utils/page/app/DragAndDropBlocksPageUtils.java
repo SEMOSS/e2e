@@ -392,6 +392,9 @@ public class DragAndDropBlocksPageUtils {
 		case "Bar Chart Tool":
 			chartLocator = page.locator(CHART_XPATH);
 			break;
+		case "Legend Chart Tool":
+			chartLocator = page.locator(CHART_XPATH);
+			break;
 		default:
 			chartLocator = page.locator(CHART_XPATH);
 		}
@@ -721,6 +724,11 @@ public class DragAndDropBlocksPageUtils {
 	public static void performCheckColor(Page page) {
 		page.locator(ADDED_COLOR_PALETTE_XPATH).first().click();
 
+	}
+
+	public static void clickOnLegendOptionAndTurnOnTheToggle(Page page) {
+		page.locator("//span[text()='Legend']").click();
+		page.locator("//input[@type='checkbox']").check();
 	}
 
 }

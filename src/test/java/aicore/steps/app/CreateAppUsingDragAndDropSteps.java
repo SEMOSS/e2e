@@ -764,4 +764,8 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
+	@And("User click on Legend Option and turn on the toggle")
+	public void user_click_on_legend_option_and_turn_on_the_toggle() {
+		blocksPage.clickOnLegendOptionAndTurnOnTheToggle();
+	}
 }

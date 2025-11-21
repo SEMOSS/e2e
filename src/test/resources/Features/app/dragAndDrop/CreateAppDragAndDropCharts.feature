@@ -60,7 +60,9 @@ Feature: Create drag and drop  for charts validation
     And User validates Conditional using '<CONDITIONAL>'
     And User click on Color Palette toole option
     And User validates Color Palette using '<COLOR_PALETTE>'
-    Then User can see '<CHART_NAME>' chart same as baseline chart
+    Then User can see '<COLOR_PALLETTE_CHART_NAME>' chart same as baseline chart
+    And User click on Legend Option and turn on the toggle
+    Then User can see '<LEGEND_CHART>' chart same as baseline chart
     #And User validates Colour By Value using '<COLOUR_BY_VALUE>'
     #And User validates Edit X Axis using '<EDIT_X_AXIS>'
     #And User validates Edit Y Axis using '<EDIT_Y_AXIS>'
@@ -69,9 +71,7 @@ Feature: Create drag and drop  for charts validation
     #And User validates Chart Title using '<CHART_TITLE>'
     #And User validates Resizing using '<RESIZING>'
     #And User validates Trendlines using '<TRENDLINES>'
-    #And User validates Legend using '<LEGEND>'
-
-
+   
     Examples:
-    | BLOCK_NAME | CONDITIONAL | COLOR_PALETTE		| CHART_NAME 	|
-    | Bar Chart  | false, true | Add Color, Change Color			| Bar Chart Tool |
+    | BLOCK_NAME | CONDITIONAL | COLOR_PALETTE		| COLOR_PALLETTE_CHART_NAME 	| LEGEND_CHART |
+    | Bar Chart  | false, true | Add Color, Change Color			| Bar Chart Tool | Legend Chart Tool |

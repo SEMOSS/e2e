@@ -260,4 +260,8 @@ public class DragAndDropBlocksPage {
 	public void performCheckColor() {
 		DragAndDropBlocksPageUtils.performCheckColor(page);
 	}
+
+	public void clickOnLegendOptionAndTurnOnTheToggle() {
+		DragAndDropBlocksPageUtils.clickOnLegendOptionAndTurnOnTheToggle(page);
+	}
 }
