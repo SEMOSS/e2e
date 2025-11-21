@@ -52,3 +52,12 @@ Feature: Database Catalog Documentation
     When User opens Main Menu
     And User clicks on Open Database
     And User completes screenshot capture and triggers comparison for 'Database Catalog'
+    
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Database Catalog Connection Documentation
+  Given User captures documentation screenshot for 'RAG'
+    When User opens Main Menu
+    And User clicks on Open Database
+    And User clicks on Add Database
+    And User captures screenshot for form "SelectingDBConnection"
+    And User completes screenshot capture and triggers comparison for 'Database Catalog'
