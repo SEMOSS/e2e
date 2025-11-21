@@ -682,7 +682,6 @@ public class NotebookPageUtils {
 	}
 
 	public static List<String> getColumnValues(Page page, String columnName) {
-
 		List<String> headers = page.locator(OUTPUT_TABLE).last().locator("//th").allInnerTexts();
 		int columnIndex = -1;
 		for (int i = 0; i < headers.size(); i++) {

@@ -366,7 +366,6 @@ public class NotebookCreationAndExecutionSteps {
 		List<String> columnValues = notebookPage.getColumnValues(columnName);
 		for (String columnValue : columnValues) {
 			LocalDateTime actual = LocalDateTime.parse(columnValue.trim(), formatter);
-
 			// Check date matches today's date
 			if (!actual.toLocalDate().equals(today)) {
 				throw new AssertionError("Value '" + columnValue + "' does not match today's date: " + today);
@@ -374,7 +373,6 @@ public class NotebookCreationAndExecutionSteps {
 			// Check seconds tolerance
 			LocalDateTime expected = LocalDateTime.now();
 			long diffSeconds = Math.abs(Duration.between(actual, expected).getSeconds());
-			System.out.println(expected + "" + actual);
 			Assertions.assertTrue(diffSeconds <= 5, "time differs by more than 10 seconds");
 		}
 	}

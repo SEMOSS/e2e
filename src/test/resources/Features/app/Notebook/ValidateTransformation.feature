@@ -2,20 +2,20 @@ Feature: Validate Transformation
 
   Background: Validate Uppercase function in Transformation
     Given User is on Home page
-    #When User opens Main Menu
-    #And User clicks on Open Database
-    #And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
-    #And User clicks on Add Database
-    #And User selects the 'ZIP' option to upload file
-    #And User uploads the file 'Database/TestDatabase.zip'
-    #And User clicks on Create Database button
-    #And User clicks on Copy Catalog ID
-    #And User can see the Catalog title as 'TestDatabase'
-    #When User clicks on MetaData tab
-    #And User clicks on Refresh button
-    #And User selects the 'DIABETES' from the dropdown
-    #And User clicks on apply database button
-    #Then User sees the table in the metadata tab
+    When User opens Main Menu
+    And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
+    And User clicks on Add Database
+    And User selects the 'ZIP' option to upload file
+    And User uploads the file 'Database/TestDatabase.zip'
+    And User clicks on Create Database button
+    And User clicks on Copy Catalog ID
+    And User can see the Catalog title as 'TestDatabase'
+    When User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -34,8 +34,9 @@ Feature: Validate Transformation
     And User deletes the previous cell
     And User selects 'TestDatabase' database from the dropdown
 
+  @Regression @LoginWithAdmin @DeleteCreatedTestApp @DeleteTestCatalog
   Scenario: Validate Timestamp function in Transformation
-    And User writes the query 'SELECT BMI FROM DIABETES'
+    And User writes the query 'SELECT BMI FROM DIABETES LIMIT 20'
     And User clicks on Run cell button
     And User fetch the frame id
     And User mouse hover below the existing cell
