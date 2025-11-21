@@ -17,9 +17,9 @@ Feature: Add Engine for Team Permission
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
-    And User clicks on Create Database button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestDatabase'
     Given User opens Main Menu

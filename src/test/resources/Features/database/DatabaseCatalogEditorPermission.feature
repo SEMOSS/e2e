@@ -7,11 +7,11 @@ Feature: Database Catalog permissions for Editor user
     When User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
-    And User clicks on Create Database button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
-    And User sees success toast message 'ZIP uploaded successfully'
+    And User sees success toast message 'Successfully Created Database'
     And User can see the Catalog title as 'TestDatabase'
     Then 'Author' user clicks on Access Control
     And User clicks on Add Member button

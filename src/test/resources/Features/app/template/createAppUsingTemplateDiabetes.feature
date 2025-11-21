@@ -5,9 +5,9 @@ Feature: Create app using Template
     Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
-    And User selects the 'ZIP' option to upload file
-    And User uploads the file 'Database/diabetes.zip'
-    And User clicks on Create Database button
+     And User clicks on file upload icon
+    And User uploads the file 'Database/TestDatabase.zip'
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
 
   @LoginWithAdmin @Regression
