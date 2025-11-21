@@ -21,7 +21,10 @@ public class CatalogCreationFromZipPage {
 
 	public void selectAddCatalogOption(String option) {
 		CatalogCreationFromZipUtil.selectAddCatalogOption(page, option);
-		;
+	}
+
+	public void clickOnFileUploadIcon() {
+		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 	}
 
 	public String uploadFile(String fileName) {
@@ -30,5 +33,9 @@ public class CatalogCreationFromZipPage {
 
 	public void clickOnCreateCatalogButton() {
 		CatalogCreationFromZipUtil.clickOnCreateCatalogButton(page);
+	}
+
+	public void clickOnUploadButton(String label) {
+		CatalogCreationFromZipUtil.clickOnUploadButton(page, label);
 	}
 }
