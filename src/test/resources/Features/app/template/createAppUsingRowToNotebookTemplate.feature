@@ -2,7 +2,7 @@ Feature: Create app using Row to Notebook Template
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create app using Row to Notebook Template
-    Given User created '5' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
+    Given User created '5' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open App Library

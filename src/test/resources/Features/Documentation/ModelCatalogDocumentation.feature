@@ -9,10 +9,10 @@ Feature: Model Documentation
     And User captures a 'button' and highlights the 'Add Model'
     When User clicks on Add Model
     And User captures screenshot for "Model Options"
-    And User selects 'GPT-3.5'
+    And User selects 'OpenAI' type
+    And User selects 'GPT 3.5 Turbo'
     And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
-    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     Then User can see a toast message as 'Successfully added LLM to catalog'
     Then User can see the Model title as 'Model'
@@ -52,8 +52,8 @@ Feature: Model Documentation
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
     Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
-    And User created '2' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
-    And User created '2' models with the model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123', and variable name 'Var123'
+    And User created '2' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123'
     When User opens Main Menu
     And User clicks on Open Model
     And User captures screenshot for "Model Catalog"
@@ -67,8 +67,8 @@ Feature: Model Documentation
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
     Given User captures documentation screenshot for 'SimpleModelInteraction'
-    And User created '2' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
-    And User created '2' models with the model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123', and variable name 'Var123'
+    And User created '2' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123'
     When User opens Main Menu
     And User clicks on Open Model
     And User captures screenshot for "ModelCatalog"

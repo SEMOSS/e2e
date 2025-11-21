@@ -83,12 +83,12 @@ public class AdminQuerySteps {
 		Assertions.assertEquals(expectedRowsCount, actualRowsCount, "Row count is not matching");
 	}
 
-	@Given("User created {string} models with the model {string}, catalog name {string}, OpenAI key {string}, and variable name {string}")
+	@Given("User created {string} models with the {string} model {string}, catalog name {string}, OpenAI key {string}")
 	public void user_created_models_with_the_catalog_name_open_ai_key_and_variable_name(String modelCount,
-			String modelName, String catalogName, String openAIKey, String variableName) {
+			String modelType, String modelName, String catalogName, String openAIKey) {
 		for (int i = 1; i <= Integer.parseInt(modelCount); i++) {
 			String catalogNameWithTimestamp = catalogName + System.currentTimeMillis();
-			modelPage.createModel(modelName, catalogNameWithTimestamp, openAIKey, variableName);
+			modelPage.createModel(modelType, modelName, catalogNameWithTimestamp, openAIKey);
 		}
 	}
 
