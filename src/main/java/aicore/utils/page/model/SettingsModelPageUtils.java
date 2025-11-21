@@ -13,7 +13,7 @@ import aicore.utils.CommonUtils;
 
 public class SettingsModelPageUtils {
 
-	private static final String MODEL_GROUP_TAB_XPATH = "//div[@role='tablist']//button[text()='{groupTabName}']";
+	private static final String MODEL_GROUP_TAB_XPATH = "//span[text()='{groupTabName}']";
 	private static final String MODELS_OPTIONS_XPATH = "//p[text()='{modelOptionName}']";
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
