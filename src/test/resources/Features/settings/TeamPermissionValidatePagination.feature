@@ -33,7 +33,7 @@ Feature: Validate Pagination in Team Permission Settings
 
   @LoginWithAdmin @Regression
   Scenario: Validate Pagination in Team Permission Settings page for add engines
-    Given User created '6' models with the model 'GPT-3.5', catalog name 'Model 1', OpenAI key 'Test123', and variable name 'Var123'
+    Given User created '6' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123
     When User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode

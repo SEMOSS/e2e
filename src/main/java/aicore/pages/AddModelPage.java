@@ -29,6 +29,10 @@ public class AddModelPage {
 		ModelPageUtils.clickAddModelButton(page);
 	}
 
+	public void selectModelType(String modelType) {
+		ModelPageUtils.selectModelType(page, modelType);
+	}
+
 	public void selectModel(String modelName) {
 		ModelPageUtils.selectModel(page, modelName);
 	}
@@ -43,10 +47,6 @@ public class AddModelPage {
 
 	public void enterOpenAIKey(String openAIKey) {
 		ModelPageUtils.enterOpenAIKey(page, openAIKey);
-	}
-
-	public void enterVariableName(String varName) {
-		ModelPageUtils.enterVariableName(page, varName);
 	}
 
 	public void clickOnCreateModelButton() {
@@ -85,8 +85,8 @@ public class AddModelPage {
 		return ModelPageUtils.verifyKeepConversationHistoryValueInSMSS(page, fieldName);
 	}
 
-	public void createModel(String modelName, String catalogName, String openAIKey, String varName) {
-		ModelPageUtils.createModel(page, modelName, catalogName, openAIKey, varName);
+	public void createModel(String modelType, String modelName, String catalogName, String openAIKey) {
+		ModelPageUtils.createModel(page, modelType, modelName, catalogName, openAIKey);
 	}
 
 	public void deleteCreatedModel() {

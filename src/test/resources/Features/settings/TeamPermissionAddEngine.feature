@@ -113,10 +113,10 @@ Feature: Add Engine for Team Permission
     When User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-    And User selects 'GPT-3.5'
+     And User selects 'OpenAI' type
+    And User selects 'GPT 3.5 Turbo'
     And User enters Catalog Name as 'Catalog'
     And User enters Open AI Key as 'Test@1234'
-    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
     When User clicks on Edit button
