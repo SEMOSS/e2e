@@ -24,7 +24,7 @@ Feature: Search app and catalogs
     When User clicks on Add Model
      And User selects 'OpenAI' type
     And User selects 'GPT 3.5 Turbo'
-    And User enters 'Test Model' as Catalog name
+    And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
@@ -57,7 +57,7 @@ Feature: Search app and catalogs
     And User clicks on Add Model
      And User selects 'OpenAI' type
     And User selects 'GPT 3.5 Turbo'
-    And User enters 'Test Model' as Catalog name
+    And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID

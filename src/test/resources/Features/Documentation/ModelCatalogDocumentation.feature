@@ -53,7 +53,7 @@ Feature: Model Documentation
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
     Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
     And User created '2' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
-    And User created '2' models with the 'OpenAI' model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT 4', catalog name 'Model 2', OpenAI key 'Test123'
     When User opens Main Menu
     And User clicks on Open Model
     And User captures screenshot for "Model Catalog"
@@ -68,7 +68,7 @@ Feature: Model Documentation
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
     Given User captures documentation screenshot for 'SimpleModelInteraction'
     And User created '2' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
-    And User created '2' models with the 'OpenAI' model 'GPT-4', catalog name 'Model 2', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT 4', catalog name 'Model 2', OpenAI key 'Test123'
     When User opens Main Menu
     And User clicks on Open Model
     And User captures screenshot for "ModelCatalog"

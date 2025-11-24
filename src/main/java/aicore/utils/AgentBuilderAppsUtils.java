@@ -35,7 +35,7 @@ public class AgentBuilderAppsUtils {
 		Locator setInputValue = page.locator(SET_INPUT_XPATH.replace("{setInput}", setInput));
 		setInputValue.hover();
 		setInputValue.click();
-		Locator setInputButton = page.locator(SET_INPUT_BUTTON_XPATH);
+		Locator setInputButton = page.locator(SET_INPUT_BUTTON_XPATH).first();
 		setInputButton.hover();
 		setInputButton.click();
 	}
@@ -90,7 +90,7 @@ public class AgentBuilderAppsUtils {
 			page.evaluate("document.body.style.zoom='1.0'");
 		}
 
-		Locator setInputButton = page.locator(SET_INPUT_BUTTON_XPATH);
+		Locator setInputButton = page.locator(SET_INPUT_BUTTON_XPATH).first();
 		setInputButton.hover();
 		setInputButton.click();
 	}
