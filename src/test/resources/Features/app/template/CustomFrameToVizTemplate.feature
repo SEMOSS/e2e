@@ -1,6 +1,6 @@
 Feature: Create Custome Frame to Visualization App using Template
 
-  @LoginWithAdmin @DeleteCreatedTestApp
+  @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Custome Frame to Visualization App using Template
     Given User is on Home page
     When User opens Main Menu

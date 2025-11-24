@@ -1,5 +1,5 @@
 @DeleteTestCatalog @DeleteCreatedTestApp
-Feature: Create app using Template
+Feature: Create Diabetes Record Template
 
   Background: User create the Diabetes database using zip file
     Given User opens Main Menu

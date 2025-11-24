@@ -1,4 +1,4 @@
-Feature: Create drag and drop app And verify Data filters in the app
+Feature: Notebook Data Filters
 
   Background: Create Drag and Drop app
     Given User is on Home page

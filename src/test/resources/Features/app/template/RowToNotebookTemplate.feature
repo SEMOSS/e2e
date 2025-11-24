@@ -1,4 +1,4 @@
-Feature: Create app using Row to Notebook Template
+Feature: Row to Notebook Template
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create app using Row to Notebook Template

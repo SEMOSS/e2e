@@ -1,5 +1,5 @@
 @Regression
-Feature: View add Database options on catalog page
+Feature: View add Database options
 
   Scenario: Verify the available options on add database page
     Given User opens Main Menu

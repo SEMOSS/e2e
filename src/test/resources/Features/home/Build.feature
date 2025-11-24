@@ -20,3 +20,10 @@ Feature: Validate the Build Page
       | code  |
       | agent |
     And User able to see the "Browse Templates" button
+    
+  Scenario: Verify BI and Terminal apps are displayed under System apps
+    Given User opens Main Menu
+    And User clicks on Open App Library
+    When User click on System Apps
+    Then User can see 'BI' app in the System Apps section
+    And User can see 'Terminal' app in the System Apps section

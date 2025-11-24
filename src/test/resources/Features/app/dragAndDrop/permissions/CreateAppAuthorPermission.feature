@@ -1,4 +1,3 @@
-
 @LoginWithAuthor @Regression
 Feature: App setting for Author permission
 

@@ -1,4 +1,4 @@
-Feature: Add Database
+Feature: Add Zip Database
 
   Background: Create Database using ZIP file
     Given User opens Main Menu

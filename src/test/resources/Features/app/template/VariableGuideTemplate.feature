@@ -1,4 +1,4 @@
-Feature: Create Variable Guide App using Template
+Feature: Variable Guide App
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Create Variable Guide App using Template

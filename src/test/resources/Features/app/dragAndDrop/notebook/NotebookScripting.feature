@@ -1,5 +1,5 @@
 @DeleteCreatedTestApp
-Feature: Verify Notebook Output
+Feature: Notebook Scripting
 
   Background: Create Drag and Drop App
     Given User is on Home page
@@ -12,7 +12,7 @@ Feature: Verify Notebook Output
     And User fetch the app name for drag and drop app
 
   @LoginWithAdmin @Regression
-  Scenario: Verify pixel Output in Notebook
+  Scenario: Pixel Output in Notebook
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
@@ -33,7 +33,7 @@ Feature: Verify Notebook Output
     Then User can see Pixel output as 'Hello'
 
   @LoginWithAdmin @Regression
-  Scenario: Verify Python Output in Notebook
+  Scenario: Python Output in Notebook
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
