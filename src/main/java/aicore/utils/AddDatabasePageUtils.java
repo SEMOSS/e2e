@@ -45,8 +45,8 @@ public class AddDatabasePageUtils {
 	private static final String APPLY_BUTTON_XPATH = "establishConnectionPage-modal-apply-btn";
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
-	private static final String DATABASE_CONNECTION_XPATH = "//div[text()='Connections']/..//p[text()='{ConnectionTypeDB}']";
-	private static final String COPY_ID_XPATH = "//div[text()='{message}']";
+	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
+	private static final String COPY_ID_XPATH = "//span[text()='{message}']";
 	private static final String SELECT_ALL_DATABASE_XPATH = "//span[text()='(Select searched items)']";
 
 	public static void clickAddDatabaseButton(Page page) {
@@ -60,11 +60,11 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void selectDatabaseFromConnectionTypes(Page page, String dbType) {
-		Locator connectionDB = page.locator(DATABASE_CONNECTION_XPATH.replace("{ConnectionTypeDB}", dbType));
-		if (!connectionDB.isVisible()) {
+		Locator option = page.locator(DATABASE_CONNECTION_XPATH).filter(new Locator.FilterOptions().setHasText(dbType));
+		if (!option.isVisible()) {
 			throw new AssertionError("Database connection type '" + dbType + "' is not visible.");
 		}
-		connectionDB.click();
+		option.click();
 	}
 
 	public static void clickOnApplyButton(Page page) {
