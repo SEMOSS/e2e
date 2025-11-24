@@ -47,7 +47,6 @@ public class CaptureScreenShotUtils {
 
 	public static void captureScreenshot(Page page, List<Locator> elements, Path path) throws IOException {
 		page.waitForTimeout(1000);
-
 		// Scroll the first element into view for screenshot context
 		if (!elements.isEmpty()) {
 			elements.get(0).scrollIntoViewIfNeeded();
@@ -211,9 +210,9 @@ public class CaptureScreenShotUtils {
 	public static void captureFormScreenshot(Page page, Path path) throws IOException {
 		page.waitForTimeout(1000);
 		Path screenshotPath = Paths.get(path.toString());
-		page.evaluate("document.body.style.zoom='0.6'");
+		page.setViewportSize(1920, 1080);
 		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true)
-				.setClip(new Clip(0, 0, 1280, 720)));
-		page.evaluate("document.body.style.zoom='1'");
+				.setClip(new Clip(0, 0, 1920, 1080)));
+		page.setViewportSize(1280, 780);
 	}
 }

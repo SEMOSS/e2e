@@ -58,6 +58,7 @@ Feature: Function documentation
     And User opens Main Menu
     And User completes screenshot capture and triggers comparison for 'Function Catalog'
 
+
 @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Edit button
   Given User captures documentation screenshot for 'FunctionEngines'
@@ -78,4 +79,24 @@ Feature: Function documentation
     And User clicks on Copy Catalog ID
     And User captures a "button" and highlights the "Edit" with name "Edit"
     And User completes screenshot capture and triggers comparison for 'Function Catalog'
- 
+    
+ @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+  Scenario: Create a Function document for the Export button
+  Given User captures documentation screenshot for 'FunctionEngines'
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Add Function
+    And User selects function 'REST'
+    And User enters Catalog name 'TestFunctionExport'
+    And User enters Url as 'https://api.api-ninjas.com/v1/weather'
+    And User selects HTTP method as 'GET'
+    And User selects Post body message as 'json'
+    And User enters Function parameters as '[{"parameterName":"lat","parameterType":"String","parameterDescription":"The lat of the location"},{"parameterName":"lon","parameterType":"String","parameterDescription":"lon of the location"}]'
+    And User enters Function required parameters as '["lat", "lon"]'
+    And User enters Function name as 'WeatherFunctionExport'
+    And User enters Function description as 'a function to call weather based on lat and long'
+    And User clicks on Create Function button
+    And User sees success toast message 'Successfully added function to catalog'
+    And User clicks on Copy Catalog ID
+    And User captures a 'buttonType' and highlights the "Export" with name "Export"
+    And User completes screenshot capture and triggers comparison for 'Function Catalog Export Button'
