@@ -15,7 +15,8 @@ public class FeatureFolderParallelExecutor {
     private static final Logger logger = LogManager.getLogger(FeatureFolderParallelExecutor.class);
 
     // Base feature folder root
-    private static final String FEATURE_ROOT = "src/test/resources/features";
+    private static final String pathSeparator = FileSystems.getDefault().getSeparator();
+    private static final String FEATURE_ROOT = "src" + pathSeparator + "test" + pathSeparator + "resources" + pathSeparator + "features";
 
     private static Map<String, List<String>> distributeFeatureFolders(List<String> folders, int threadCount) {
         Map<String, List<String>> distribution = new HashMap<>();
