@@ -44,6 +44,50 @@ public class AddModelSteps {
 		openModelPage.clickAddModelButton();
 	}
 
+	@When("User clicks on {string} tab")
+	public void user_clicks_on_group_tab(String tabName) {
+		openModelPage.clickOnGroupTab(tabName);
+	}
+
+	@When("User clicks on {string} model")
+	public void user_clicks_on_model(String model) {
+		openModelPage.selectModel(model);
+	}
+
+	@Then("User can see following form sections with fields:")
+	public void user_can_see_following_form_sections_with_fields(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String sectionName = row.get("SECTION_NAME");
+			String fields = row.get("FIELDS");
+			openModelPage.verifyFormSection(sectionName, fields);
+		}
+	}
+
+	@Then("User can see following fields are mandatory fields")
+	public void user_can_see_following_fields_are_mandatory_fields(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("MANDATORY_FIELDS");
+			openModelPage.verifyMandatoryField(fieldName);
+		}
+	}
+
+	@When("User fills the model creation form with:")
+	public void user_fills_the_model_creation_form_with(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("FORM_FIELDS");
+			String fieldValue = row.get("FORM_VALUES");
+			openModelPage.fillModelCreationForm(fieldName, fieldValue);
+		}
+	}
+
+	@Then("User can see {string} button becomes enabled")
+	public void user_can_see_connect_button_becomes_enabled() {
+		openModelPage.verifyConnectButtonEnabled();
+	}
+
 	@When("User selects {string}")
 	public void user_selects(String aiModelName) {
 		openModelPage.selectModel(aiModelName);

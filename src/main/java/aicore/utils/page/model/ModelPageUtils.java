@@ -20,12 +20,14 @@ public class ModelPageUtils {
 
 	private static final Logger logger = LogManager.getLogger(ModelPageUtils.class);
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
+	private static final String OPTIONS_TAB_DATATESTID = "connect-to-{tagName}-tab";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
 	private static final String CATALOG_NAME_DATA_TESTID = "importForm-NAME-textField";
 	private static final String OPEN_AI_KEY_DATA_TESTID = "importForm-OPEN_AI_KEY-textField";
 	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
+	private static final String FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
 	// SMSS field
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
@@ -59,7 +61,7 @@ public class ModelPageUtils {
 	private static final String AWS_REGION_DATA_TESTID = "importForm-AWS_REGION-textField";
 	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
 	private static final String AWS_SECRET_KEY_DATA_TESTID = "importForm-AWS_SECRET_KEY-textField";
-	private static final String CREATE_MODEL_BUTTON_DATA_TESTID="importForm-submit-btn";
+	private static final String CREATE_MODEL_BUTTON_DATA_TESTID = "importForm-submit-btn";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
@@ -72,6 +74,10 @@ public class ModelPageUtils {
 
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
+	}
+
+	public static void clickOnGroupTab(Page page, String tabName) {
+		page.getByTestId(OPTIONS_TAB_DATATESTID.replace("{tabName}", tabName)).click();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
@@ -416,6 +422,7 @@ public class ModelPageUtils {
 			awsSecretKeyField.fill(awsSecretKey);
 		}
 	}
+
 	public static void clickOnCreateButton(Page page, String buttonName) {
 		Locator createButtonLocator = page.getByTestId(CREATE_MODEL_BUTTON_DATA_TESTID);
 		AICorePageUtils.waitFor(createButtonLocator);

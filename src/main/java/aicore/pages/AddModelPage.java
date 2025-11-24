@@ -37,6 +37,10 @@ public class AddModelPage {
 		ModelPageUtils.selectOpenAi(page, aiModelName);
 	}
 
+	public void clickOnGroupTab(String tabName) {
+		ModelPageUtils.clickOnGroupTab(page, tabName);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
 	}
