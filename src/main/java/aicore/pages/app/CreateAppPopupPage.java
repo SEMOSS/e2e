@@ -40,15 +40,19 @@ public class CreateAppPopupPage {
 	public String userFetchAppName() {
 		return CreateAppPopupUtils.userFetchAppName(page);
 	}
+
 	public void clickOnUploadButton() {
 		CreateAppPopupUtils.clickOnUploadButton(page);
 	}
+
 	public void clickOnShareAppButton() {
 		CreateAppPopupUtils.clickOnShareAppButton(page);
 	}
+
 	public void clickOnIframeButton() {
 		CreateAppPopupUtils.clickOnIframeButton(page);
 	}
+
 	public void clickOnCloseButton() {
 		CreateAppPopupUtils.clickOnCloseButton(page);
 	}

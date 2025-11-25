@@ -1,6 +1,6 @@
 Feature: Vector Catalog documentation
+
   ## Embede file upload fails bug- https://github.com/SEMOSS/semoss-ui/issues/1950 ###
-  
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE @Documentation @ApplicationBugFailure
   Scenario: Create a Vector
     Given User captures documentation screenshot for 'PlatformNavigation/Vector Catalog'
@@ -8,10 +8,10 @@ Feature: Vector Catalog documentation
     And User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'VectorDatabase/Text_Embedding_model.zip'
-    And User clicks on Create Model button
-    And User sees success toast message 'ZIP uploaded successfully'
+    And User clicks on 'Upload' button to create catalog
+    And User sees success toast message 'Successfully Created Database'
     And User can see the Catalog title as 'TextEmbeddings BAAI-Large-En-V1.5'
     And User clicks on Copy Catalog ID
     When User opens Main Menu

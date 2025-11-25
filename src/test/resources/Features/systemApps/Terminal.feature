@@ -1,4 +1,4 @@
-Feature: verify the Terminal command
+Feature: Terminal
 
   ## Terminal system app is not accessible in the local environment ###
   Background: Navigate to Terminal

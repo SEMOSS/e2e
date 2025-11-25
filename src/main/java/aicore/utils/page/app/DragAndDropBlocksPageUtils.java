@@ -99,6 +99,18 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
 	private static final String APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID = "appTileCard-{appName}-tile";
 
+	// Bar Chart
+	private static final String CONDITIONAL_XPATH = "//span[text()='Conditional']";
+	private static final String BARCHART_ISVISIBLE_XPATH = "//div[@class='echarts-for-react ']";
+	private static final String COLOR_PALETTE_XPATH = "//span[text()='Color Palette']";
+	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//span[text()='+ Add Custom Color Palette']";
+	private static final String COLOR_PALETTE_ICON_XPATH = "//*[name()='svg'][@data-testid='FormatColorFillIcon']";
+	private static final String SELECT_RED_COLOR_XPATH = "//div[@title='#D0021B']";
+	private static final String SELECT_BLUE_COLOR_XPATH = "//div[@title='#4A90E2']";
+	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
+	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
+	private static final String ADDED_COLOR_PALETTE_XPATH = "//div[normalize-space()='MyPalette']";
+
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
 		element.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -376,6 +388,12 @@ public class DragAndDropBlocksPageUtils {
 		switch (chart) {
 		case "Mermaid Chart":
 			chartLocator = page.locator(DROPPED_MERMAID_CHART_XPATH);
+			break;
+		case "Bar Chart Tool":
+			chartLocator = page.locator(CHART_XPATH);
+			break;
+		case "Legend Chart Tool":
+			chartLocator = page.locator(CHART_XPATH);
 			break;
 		default:
 			chartLocator = page.locator(CHART_XPATH);
@@ -667,4 +685,50 @@ public class DragAndDropBlocksPageUtils {
 	public static boolean isAppDisplayedInSystemAppsSection(Page page, String appName) {
 		return page.getByTestId(APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID.replace("{appName}", appName)).isVisible();
 	}
+
+	// bar chart
+	public static void clickOnToolTab(Page page) {
+		page.locator("//button[normalize-space()='Tools']").click();
+	}
+
+	public static void clickOnConditionalToolOption(Page page) {
+		page.locator(CONDITIONAL_XPATH).click();
+	}
+
+	public static void applyConditional(Page page, String value) {
+		page.getByTestId("selectInputSettings-Show-Block-e-chart--1-select").click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
+	}
+
+	public static boolean isBarChartVisible(Page page) {
+		page.waitForTimeout(500);
+		return page.locator(BARCHART_ISVISIBLE_XPATH).isVisible();
+	}
+
+	public static void clickOnColorPaletteToolOption(Page page) {
+		page.locator(COLOR_PALETTE_XPATH).click();
+	}
+
+	public static boolean performAddColor(Page page) {
+		page.locator(ADD_CUSTOME_COLOR_PALETTE_XPATH).click();
+		page.getByPlaceholder("Enter Palette Name").fill("MyPalette");
+		page.locator(COLOR_PALETTE_ICON_XPATH).click();
+		page.locator(SELECT_RED_COLOR_XPATH).click();
+		page.locator(COLOR_CHECK_ICON_XPATH).click();
+		page.locator(SELECT_BLUE_COLOR_XPATH).click();
+		page.locator(COLOR_CHECK_ICON_XPATH).click();
+		page.locator(ADD_COLOR_XPATH).click();
+		return page.locator(ADDED_COLOR_PALETTE_XPATH).first().isVisible();
+	}
+
+	public static void performCheckColor(Page page) {
+		page.locator(ADDED_COLOR_PALETTE_XPATH).first().click();
+
+	}
+
+	public static void clickOnLegendOptionAndTurnOnTheToggle(Page page) {
+		page.locator("//span[text()='Legend']").click();
+		page.locator("//input[@type='checkbox']").check();
+	}
+
 }
