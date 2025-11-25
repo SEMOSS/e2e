@@ -37,7 +37,7 @@ Feature: Create app using NLP Query to Grid Template
     When User clicks on Notebook
     And User select the 'nlp-query' from notebook
     And User select the 'Llama3-70B-Instruct' model for 'nlp-query-1'
-  	And User click on run all cell button
+  	And User click on Run All cell button
   	And User clicks on 'page-1' page
   	And User clicks on Preview app button 
     When User enter the query for people "over" the age "50"

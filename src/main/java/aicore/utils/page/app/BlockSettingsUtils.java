@@ -23,7 +23,7 @@ public class BlockSettingsUtils {
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[normalize-space()= '{fieldName}']/parent::div/following-sibling::div";
-	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
+	private static final String SEARCH_FRAME_XPATH = "//*[@data-testid='AccountTreeIcon']/../..//*[@data-testid='KeyboardArrowDownIcon']";
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
 
 	public static void clickOnBlockSettingsOption(Page page) {
@@ -111,12 +111,11 @@ public class BlockSettingsUtils {
 	}
 
 	public static void selectFrame(Page page, String frameId) {
-		Locator selectFrame = page.getByPlaceholder(SEARCH_FRAME_PLACEHOLDER);
+		page.pause();
+		Locator selectFrame = page.locator(SEARCH_FRAME_XPATH);
 		AICorePageUtils.waitFor(selectFrame);
-		selectFrame.click();
-		selectFrame.fill(frameId);
-		selectFrame.press("ArrowDown");
-		selectFrame.press("Enter");
+		selectFrame.click(new Locator.ClickOptions().setForce(true));
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(frameId).setExact(true)).click();
 	}
 
 	public static void dragColumnToTargetField(Page page, String columnName, String targetField) {
