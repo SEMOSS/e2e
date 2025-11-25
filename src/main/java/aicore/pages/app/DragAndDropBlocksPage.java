@@ -232,4 +232,36 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page, appName);
 	}
 
+	// bar charts
+	public void clickOnToolTab() {
+		DragAndDropBlocksPageUtils.clickOnToolTab(page);
+	}
+
+	public void clickOnConditionalToolOption() {
+		DragAndDropBlocksPageUtils.clickOnConditionalToolOption(page);
+	}
+
+	public void applyConditional(String value) {
+		DragAndDropBlocksPageUtils.applyConditional(page, value);
+	}
+
+	public boolean isBarChartVisible() {
+		return DragAndDropBlocksPageUtils.isBarChartVisible(page);
+	}
+
+	public void clickOnColorPaletteToolOption() {
+		DragAndDropBlocksPageUtils.clickOnColorPaletteToolOption(page);
+	}
+
+	public boolean performAddColor() {
+		return DragAndDropBlocksPageUtils.performAddColor(page);
+	}
+
+	public void performCheckColor() {
+		DragAndDropBlocksPageUtils.performCheckColor(page);
+	}
+
+	public void clickOnLegendOptionAndTurnOnTheToggle() {
+		DragAndDropBlocksPageUtils.clickOnLegendOptionAndTurnOnTheToggle(page);
+	}
 }

@@ -52,6 +52,12 @@ public class CatalogCreationFromZipUtil {
 		page.getByText(option).click();
 	}
 
+	public static void clickOnFileUploadIcon(Page page) {
+		Locator icon = page.getByTestId("FileUploadOutlinedIcon");
+		AICorePageUtils.waitFor(icon);
+		icon.click();
+	}
+
 	public static String uploadFile(Page page, String fileName) {
 		String pathSeparator = FileSystems.getDefault().getSeparator();
 		Locator fileInput = page.locator(ADD_FILE_XPATH);
@@ -78,5 +84,9 @@ public class CatalogCreationFromZipUtil {
 	public static void clickOnCreateCatalogButton(Page page) {
 		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).isVisible();
 		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).click();
+	}
+
+	public static void clickOnUploadButton(Page page, String label) {
+		AICorePageUtils.clickOnButton(page, label);
 	}
 }

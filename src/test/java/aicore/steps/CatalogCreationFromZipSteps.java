@@ -30,6 +30,11 @@ public class CatalogCreationFromZipSteps {
 		fileUploadPage.selectAddCatalogOption(option);
 	}
 
+	@When("User clicks on file upload icon")
+	public void user_clicks_on_file_upload_icon() {
+		fileUploadPage.clickOnFileUploadIcon();
+	}
+
 	@And("User uploads the file {string}")
 	public void user_uploads_the_file(String fileName) {
 		String uploadedFileName = fileUploadPage.uploadFile(fileName);
@@ -48,4 +53,8 @@ public class CatalogCreationFromZipSteps {
 		fileUploadPage.clickOnCreateCatalogButton();
 	}
 
+	@And("User clicks on {string} button to create catalog")
+	public void user_clicks_on__button_to_create_catalog(String label) {
+		fileUploadPage.clickOnUploadButton(label);
+	}
 }

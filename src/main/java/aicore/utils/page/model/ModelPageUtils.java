@@ -22,12 +22,14 @@ public class ModelPageUtils {
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String OPTIONS_TAB_DATATESTID = "connect-to-{tagName}-tab";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
-	private static final String CATALOG_NAME_DATA_TESTID = "importForm-NAME-textField";
-	private static final String OPEN_AI_KEY_DATA_TESTID = "importForm-OPEN_AI_KEY-textField";
+	private static final String CATALOG_NAME_DATA_TESTID = "importForm-Catalog-Name-textField";
+	private static final String OPEN_AI_KEY_DATA_TESTID = "model-importForm-Open-AI-Key-password";
 	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	private static final String FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
+	private static final String MODEL_TOAST_MESSAGE_TESTID = "notification-success-alert";
+
 	// SMSS field
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
@@ -62,10 +64,15 @@ public class ModelPageUtils {
 	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
 	private static final String AWS_SECRET_KEY_DATA_TESTID = "importForm-AWS_SECRET_KEY-textField";
 	private static final String CREATE_MODEL_BUTTON_DATA_TESTID = "importForm-submit-btn";
+	private static final String MODEL_TYPE_DATATESTID = "//*[@data-tesid=\"connect-to-{modelType}-tab\"]";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
 		page.getByTestId("engineIndex-add-Model-btn").click();
+	}
+
+	public static void selectModelType(Page page, String modelType) {
+		page.locator(MODEL_TYPE_DATATESTID.replace("{modelType}", modelType)).click();
 	}
 
 	public static void selectModel(Page page, String modelName) {
@@ -81,19 +88,15 @@ public class ModelPageUtils {
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
-		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
+		Locator catalogNameField = page.getByTestId(CATALOG_NAME_DATA_TESTID);
+		Locator catalogNameInput = catalogNameField.locator("input");
+		catalogNameInput.fill(catalogName);
 	}
 
 	public static void enterOpenAIKey(Page page, String openAIKey) {
 		Locator openAIKeyField = page.getByTestId(OPEN_AI_KEY_DATA_TESTID);
-		String currentValue = openAIKeyField.inputValue().trim();
-		if (currentValue.isEmpty()) {
-			openAIKeyField.fill(openAIKey);
-		}
-	}
-
-	public static void enterVariableName(Page page, String varName) {
-		page.getByTestId(VARIABLE_NAME_DATA_TESTID).fill(varName);
+		Locator openAIKeyInput = openAIKeyField.locator("input");
+		openAIKeyInput.fill(openAIKey);
 	}
 
 	public static void clickOnCreateModelButton(Page page) {
@@ -104,7 +107,7 @@ public class ModelPageUtils {
 	}
 
 	public static String modelCreationToastMessage(Page page) {
-		Locator alert = page.getByTestId("notification-success-alert");
+		Locator alert = page.getByTestId(MODEL_TOAST_MESSAGE_TESTID);
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -142,14 +145,15 @@ public class ModelPageUtils {
 		return varNameInSMSSProperties;
 	}
 
-	public static void createModel(Page page, String modelName, String catalogName, String openAIKey, String varName) {
+	public static void createModel(Page page, String modelType, String modelName, String catalogName,
+			String openAIKey) {
 		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenModel(page);
 		page.getByTestId("engineIndex-add-Model-btn").click();
-		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
-		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
-		page.getByTestId(OPEN_AI_KEY_DATA_TESTID).fill(openAIKey);
-		page.getByTestId(VARIABLE_NAME_DATA_TESTID).fill(varName);
+		selectModelType(page, modelType);
+		selectModel(page, modelName);
+		enterCatalogName(page, catalogName);
+		enterOpenAIKey(page, openAIKey);
 		Locator createButton = page.locator(CREATE_MODEL_BUTTON_XPATH);
 		createButton.scrollIntoViewIfNeeded();
 		createButton.click();

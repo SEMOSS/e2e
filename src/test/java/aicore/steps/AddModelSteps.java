@@ -45,7 +45,7 @@ public class AddModelSteps {
 	}
 
 	@When("User clicks on {string} tab")
-	public void user_clicks_on_group_tab(String tabName) {
+	public void user_clicks_on_tab(String tabName) {
 		openModelPage.clickOnGroupTab(tabName);
 	}
 
@@ -86,6 +86,10 @@ public class AddModelSteps {
 	@Then("User can see {string} button becomes enabled")
 	public void user_can_see_connect_button_becomes_enabled() {
 		openModelPage.verifyConnectButtonEnabled();
+
+	@And("User selects {string} type")
+	public void user_selects_type(String modelType) {
+		openModelPage.selectModelType(modelType);
 	}
 
 	@When("User selects {string}")
@@ -101,11 +105,6 @@ public class AddModelSteps {
 	@When("User enters Open AI Key as {string}")
 	public void user_enters_open_ai_key_as(String openAIKey) {
 		openModelPage.enterOpenAIKey(openAIKey);
-	}
-
-	@When("User enters Variable Name as {string}")
-	public void user_enters_var_name_as(String varName) {
-		openModelPage.enterVariableName(varName);
 	}
 
 	@When("User clicks on Create Model button")
