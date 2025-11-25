@@ -17,8 +17,7 @@ Feature: Row to Notebook Template
     And User clicks on Notebook
     And User clicks on Query name as 'data'
     And User clicks on Notebook
-    And User click on run all cell button
-    And User clicks on 'page-1' page
+    And User click on Run All cell button    And User clicks on 'page-1' page
     And User checks 'Show Row Data' button is enabled
     And User checks 'Delete Row' button is enabled
     And User clicks on Preview app button

@@ -6,9 +6,9 @@ Feature: Validate Transformation
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
-    And User clicks on Create Database button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestDatabase'
     When User clicks on MetaData tab
@@ -45,11 +45,11 @@ Feature: Validate Transformation
     And User selects the frame from the selected frame dropdown
     And User enters column name as 'BMI_IncludeTime'
     And User clicks on Include time checkbox
-    And User click on run all cell button
+    And User click on Run All cell button
     Then User can see header names as 'BMI, BMI_IncludeTime'
     And User can see 'BMI_IncludeTime' column values as todays date along with current time
     When User clicks on Include time checkbox
     And User enters column name as 'BMI_ExcludeTime'
-    And User click on run all cell button
+    And User click on Run All cell button    
     Then User can see header names as 'BMI, BMI_ExcludeTime'
     And User can see 'BMI_ExcludeTime' column values as todays date along with '00:00:00' as timestamp
