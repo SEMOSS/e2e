@@ -20,14 +20,17 @@ public class ModelPageUtils {
 
 	private static final Logger logger = LogManager.getLogger(ModelPageUtils.class);
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
-	private static final String OPTIONS_TAB_DATATESTID = "connect-to-{tagName}-tab";
+	private static final String OPTIONS_TAB_XPATH = "//button[@data-tesid='connect-to-{tabName}-tab']";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
 	private static final String CATALOG_NAME_DATA_TESTID = "importForm-Catalog-Name-textField";
 	private static final String OPEN_AI_KEY_DATA_TESTID = "model-importForm-Open-AI-Key-password";
 	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
-	private static final String FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
+	private static final String TEXT_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
+	private static final String DROPDOWN_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-select']";
+	private static final String CREDENTIAL_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-password']";
+	private static final String NUMBER_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-number']";
 	private static final String MODEL_TOAST_MESSAGE_TESTID = "notification-success-alert";
 
 	// SMSS field
@@ -84,7 +87,40 @@ public class ModelPageUtils {
 	}
 
 	public static void clickOnGroupTab(Page page, String tabName) {
-		page.getByTestId(OPTIONS_TAB_DATATESTID.replace("{tabName}", tabName)).click();
+		page.locator(OPTIONS_TAB_XPATH.replace("{tabName}", tabName)).click();
+	}
+
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		Locator fieldLocator = null;
+		String fieldName = field.replace(" ", "-");
+		switch (field) {
+		case "Catalog Name":
+		case "Model":
+		case "Init Script":
+			fieldLocator = page.locator(
+					TEXT_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		case "Chat Type":
+		case "Record Questions and Responses":
+		case "Keep Conversation History":
+			fieldLocator = page.locator(
+					DROPDOWN_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		case "Open AI Key":
+			fieldLocator = page.locator(
+					CREDENTIAL_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		case "Max Input Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+			fieldLocator = page.locator(
+					NUMBER_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		default:
+			System.out.println("Invalid field");
+		}
+		fieldLocator.scrollIntoViewIfNeeded();
+		return fieldLocator.isVisible();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {

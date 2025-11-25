@@ -45,6 +45,10 @@ public class AddModelPage {
 		ModelPageUtils.clickOnGroupTab(page, tabName);
 	}
 
+	public boolean fieldUnderSection(String section, String field) {
+		return ModelPageUtils.fieldUnderSection(page, section, field);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
 	}
