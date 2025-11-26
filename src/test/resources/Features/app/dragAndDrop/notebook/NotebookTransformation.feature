@@ -1,6 +1,6 @@
 Feature: Validate Transformation
 
-  Background: Validate Uppercase function in Transformation
+  Background: Create database, drag and drop app, and notebook
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Database
