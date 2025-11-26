@@ -1,4 +1,4 @@
-@DeleteTestCatalog 
+@DeleteTestCatalog
 Feature: Create app using NLP Query to Grid Template
 
   Background: Create Database and Model using ZIP file
@@ -37,16 +37,14 @@ Feature: Create app using NLP Query to Grid Template
     When User clicks on Notebook
     And User select the 'nlp-query' from notebook
     And User select the 'Llama3-70B-Instruct' model for 'nlp-query-1'
-  	And User click on Run All cell button  	And User clicks on 'page-1' page
-  	And User clicks on Preview app button 
+    And User click on Run All cell button
+    And User clicks on 'page-1' page
+    And User clicks on Preview app button
     When User enter the query for people "over" the age "50"
-  	And User click on Fetch Data
-  	Then Results should contain only people with age "above" "50"
-  	When User enter the query for people "below" the age "50"
-  	And User click on Fetch Data
-  	Then Results should contain only people with age "below" "50"
-  	And User close the Preview app window
-  	And User clicks on the Save App icon
-		
-		
-		
+    And User click on Fetch Data
+    Then Results should contain only people with age "above" "50"
+    When User enter the query for people "below" the age "50"
+    And User click on Fetch Data
+    Then Results should contain only people with age "below" "50"
+    And User close the Preview app window
+    And User clicks on the Save App icon
