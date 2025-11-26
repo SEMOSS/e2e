@@ -27,10 +27,20 @@ public class ModelPageUtils {
 	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
-	private static final String TEXT_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
-	private static final String DROPDOWN_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-select']";
-	private static final String CREDENTIAL_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-password']";
-	private static final String NUMBER_FIELD_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-number']";
+	private static final String TEXT_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
+	private static final String DROPDOWN_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-select']";
+	private static final String CREDENTIAL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-password']";
+	private static final String NUMBER_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-number']";
+	private static final String MANDATORY_TEXT_FIELDS_XPATH = "//div[@data-testid='importForm-{field}-textField']//span[text()='*']";
+	private static final String MANDATORY_DROPDOWN_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-select']//span[text()='*']";
+	private static final String MANDATORY_CREDENTIAL_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-password']//span[text()='*']";
+	private static final String MANDATORY_NUMBER_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-number']//span[text()='*']";
+	private static final String TEXT_FIELDS_DATA_TESTID = "importForm-{field}-textField";
+	private static final String DROPDOWN_FIELDS_DATA_TESTID = "model-importForm-{field}-select";
+	private static final String CREDENTIAL_FIELDS_DATA_TESTID = "model-importForm-{field}-password";
+	private static final String NUMBER_FIELDS_DATA_TESTID = "model-importForm-{field}-number";
+	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
+	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
 	private static final String MODEL_TOAST_MESSAGE_TESTID = "notification-success-alert";
 
 	// SMSS field
@@ -98,29 +108,115 @@ public class ModelPageUtils {
 		case "Model":
 		case "Init Script":
 			fieldLocator = page.locator(
-					TEXT_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Chat Type":
 		case "Record Questions and Responses":
 		case "Keep Conversation History":
 			fieldLocator = page.locator(
-					DROPDOWN_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+					DROPDOWN_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Open AI Key":
 			fieldLocator = page.locator(
-					CREDENTIAL_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Max Input Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
 			fieldLocator = page.locator(
-					NUMBER_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+					NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		default:
 			System.out.println("Invalid field");
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
+	}
+
+	public static boolean isFieldMandatory(Page page, String field) {
+		Locator fieldLocator = null;
+		String fieldName = field.replace(" ", "-");
+		switch (field) {
+		case "Catalog Name":
+		case "Model":
+		case "Init Script":
+			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		case "Chat Type":
+		case "Record Questions and Responses":
+		case "Keep Conversation History":
+			fieldLocator = page.locator(MANDATORY_DROPDOWN_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		case "Open AI Key":
+			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		case "Max Input Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+			fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		default:
+			System.out.println("Invalid field");
+		}
+		fieldLocator.first().scrollIntoViewIfNeeded();
+		return fieldLocator.first().isVisible();
+	}
+
+	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
+		Locator fieldLocator = null;
+		String fieldName = field.replace(" ", "-");
+		String fieldType = "";
+		switch (field) {
+		case "Catalog Name":
+		case "Model":
+		case "Init Script":
+			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
+			fieldType = "Text";
+			break;
+		case "Chat Type":
+		case "Record Questions and Responses":
+		case "Keep Conversation History":
+			fieldLocator = page.getByTestId(DROPDOWN_FIELDS_DATA_TESTID.replace("{field}", fieldName));
+			fieldType = "Dropdown";
+			break;
+		case "Open AI Key":
+			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
+					.locator("input");
+			fieldType = "Credential";
+			break;
+		case "Max Input Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+			fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
+			fieldType = "Number";
+			break;
+		default:
+			System.out.println("Invalid field");
+		}
+		fieldLocator.scrollIntoViewIfNeeded();
+		switch (fieldType) {
+		case "Text":
+		case "Credential":
+		case "Number":
+			if (field.equalsIgnoreCase("Catalog Name")) {
+				fieldLocator.fill(fieldValue + timestamp);
+			} else {
+				fieldLocator.fill(fieldValue);
+			}
+			break;
+		case "Dropdown":
+			fieldLocator.click();
+			page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue)).click();
+			break;
+		default:
+			System.out.println("Invalid field type");
+		}
+	}
+
+	public static boolean validateConnectButtonEnabled(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		return connectButton.isEnabled();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
@@ -159,6 +255,7 @@ public class ModelPageUtils {
 
 	public static void clickOnSMSSTab(Page page) {
 		page.click(SMSS_TAB_XPATH);
+		page.waitForTimeout(1000);
 	}
 
 	public static String getExpectedCatalogTitle(String expTitle) {
@@ -273,6 +370,9 @@ public class ModelPageUtils {
 		case "INIT_MODEL_ENGINE":
 			// Custom handling for partial text match
 			locator = page.locator(INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH);
+			break;
+		case "MODEL":
+			locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName)).nth(1);
 			break;
 		default:
 			locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));

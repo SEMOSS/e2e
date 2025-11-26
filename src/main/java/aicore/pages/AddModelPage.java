@@ -49,6 +49,18 @@ public class AddModelPage {
 		return ModelPageUtils.fieldUnderSection(page, section, field);
 	}
 
+	public boolean isFieldMandatory(String field) {
+		return ModelPageUtils.isFieldMandatory(page, field);
+	}
+
+	public void fillModelCreationForm(String fieldName, String fieldValue) {
+		ModelPageUtils.fillCatalogCreationForm(page, fieldName, fieldValue, timestamp);
+	}
+
+	public boolean validateConnectButtonEnabled() {
+		return ModelPageUtils.validateConnectButtonEnabled(page);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
 	}

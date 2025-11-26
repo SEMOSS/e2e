@@ -49,10 +49,6 @@ public class AddModelSteps {
 		openModelPage.clickOnGroupTab(tabName);
 	}
 
-//	@When("User clicks on {string} model")
-//	public void user_clicks_on_model(String model) {
-//		openModelPage.selectModel(model);
-//	}
 	@And("User selects {string} type")
 	public void user_selects_type(String model) {
 		openModelPage.selectModelType(model);
@@ -76,26 +72,37 @@ public class AddModelSteps {
 
 	@Then("User can see following fields are mandatory fields")
 	public void user_can_see_following_fields_are_mandatory_fields(DataTable dataTable) {
-		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		for (Map<String, String> row : rows) {
-			String fieldName = row.get("MANDATORY_FIELDS");
-			// openModelPage.verifyMandatoryField(fieldName);
+		String singleCell = dataTable.cells().get(0).get(0);
+		String[] fields = singleCell.split(", ");
+		for (String field : fields) {
+			System.out.println(field);
+			boolean isFieldMandatory = openModelPage.isFieldMandatory(field);
+			Assertions.assertTrue(isFieldMandatory, field + " is not mandatory field");
 		}
+
 	}
 
 	@When("User fills the model creation form with:")
 	public void user_fills_the_model_creation_form_with(DataTable dataTable) {
-		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		for (Map<String, String> row : rows) {
-			String fieldName = row.get("FORM_FIELDS");
-			String fieldValue = row.get("FORM_VALUES");
-			// openModelPage.fillModelCreationForm(fieldName, fieldValue);
+		String singleCell = dataTable.cells().get(0).get(0);
+		String[] fields = singleCell.split(", ");
+		for (String field : fields) {
+			if (!field.contains("=")) {
+				continue;
+			}
+			String[] keyValue = field.split("=", 2);
+			String fieldName = keyValue[0].trim();
+			String fieldValue = keyValue[1].trim();
+			System.out.println(fieldName);
+			System.out.println(fieldValue);
+			openModelPage.fillModelCreationForm(fieldName, fieldValue);
 		}
 	}
 
 	@Then("User can see {string} button becomes enabled")
-	public void user_can_see_connect_button_becomes_enabled() {
-		// openModelPage.verifyConnectButtonEnabled();
+	public void user_can_see_button_becomes_enabled(String buttonName) {
+		boolean isButtonEnabled = openModelPage.validateConnectButtonEnabled();
+		Assertions.assertTrue(isButtonEnabled, "'Connect' button is not enabled");
 	}
 
 	@When("User selects {string}")
@@ -402,13 +409,17 @@ public class AddModelSteps {
 		openModelPage.enterEndpoint(endpoint);
 	}
 
-	// new
 	@Then("User can see following fields in SMSS Properties")
 	public void user_can_see_following_fields_in_smss_properties(DataTable table) {
-		List<Map<String, String>> rows = table.asMaps(String.class, String.class);
-		for (Map<String, String> row : rows) {
-			String fieldName = row.get("fieldName");
-			String expectedValue = row.get("fieldValue");
+		String singleCell = table.cells().get(0).get(0);
+		String[] fields = singleCell.split(", ");
+		for (String field : fields) {
+			if (!field.contains("=")) {
+				continue;
+			}
+			String[] keyValue = field.split("=", 2);
+			String fieldName = keyValue[0].trim();
+			String expectedValue = keyValue[1].trim();
 			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
 
 			if (fullText == null || fullText.trim().isEmpty()) {
@@ -431,12 +442,12 @@ public class AddModelSteps {
 				actualValue = fullText;
 			}
 
-			// For NAME field → ignore trailing digits
+			// For NAME field ignore trailing digits
 			if (fieldName.equalsIgnoreCase("NAME")) {
 				actualValue = actualValue.replaceAll("\\d+$", "");
 			}
 
-			// ✅ Field-specific validation logic
+			// Field-specific validation logic
 			switch (fieldName) {
 			case "ENDPOINT":
 				Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
