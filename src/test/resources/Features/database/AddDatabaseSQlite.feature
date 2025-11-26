@@ -10,8 +10,8 @@ Feature: Add SQLITE Database
     And User Upload 'localhost' as Host Name
     And User add 'sqlite.db' as JDBC URL for 'sqlite' database
     And User clicks on Next button for Create Database
-    And User clicks on apply button
-    And User clicks on import database button
+    And User clicks on Apply button
+    And User clicks on Import database button
     And User clicks on Copy Catalog ID
     Then User can see the database title as 'SqliteDB'
 

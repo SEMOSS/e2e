@@ -86,12 +86,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.addJDBCUrl(jdbcUrl, dbType);
 	}
 
-	@When("User clicks on apply button")
+	@When("User clicks on Apply button")
 	public void user_clicks_on_apply_button() {
 		addDatabaseToCatalogPage.clickOnApplyButton();
 	}
 
-	@And("User clicks on import database button")
+	@And("User clicks on Import database button")
 	public void user_clicks_on_import_database_button() {
 		addDatabaseToCatalogPage.clickOnImportDatabaseButton();
 	}
