@@ -52,16 +52,16 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 		AddDatabasePageUtils.clickOnApplyButton(page);
 	}
 
-	public void clickApplyDatabaseButton() {
-		AddDatabasePageUtils.clickApplyDatabaseButton(page);
+	public void clickOnImportDatabaseButton() {
+		AddDatabasePageUtils.clickOnImportDatabaseButton(page);
 	}
 
 	public boolean verifyDatabaseTitle(String dbName) {
 		return AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 	}
 
-	public void clickOnCreateDatabaseButton() {
-		AddDatabasePageUtils.clickCreateDatabaseButton(page);
+	public void clickOnNextButtonForCreateDatabase() {
+		AddDatabasePageUtils.clickOnNextButtonForCreateDatabase(page);
 	}
 
 	public String verifyDatabaseNameInCatalog(String dbName) {

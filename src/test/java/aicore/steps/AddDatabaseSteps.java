@@ -91,9 +91,9 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.clickOnApplyButton();
 	}
 
-	@And("User clicks on apply database button")
-	public void user_clicks_on_apply_database_button() {
-		addDatabaseToCatalogPage.clickApplyDatabaseButton();
+	@And("User clicks on import database button")
+	public void user_clicks_on_import_database_button() {
+		addDatabaseToCatalogPage.clickOnImportDatabaseButton();
 	}
 
 	@Then("User selects database {string} from connection types")
@@ -124,9 +124,9 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.selectDatabaseType(dbType);
 	}
 
-	@And("User clicks on Create Database button")
-	public void user_clicks_on_create_database_button() {
-		addDatabaseToCatalogPage.clickOnCreateDatabaseButton();
+	@And("User clicks on Next button for Create Database")
+	public void user_clicks_on_next_button_for_create_database() {
+		addDatabaseToCatalogPage.clickOnNextButtonForCreateDatabase();
 	}
 
 	@And("User sees the database name {string} in the database catalog")

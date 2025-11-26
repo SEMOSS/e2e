@@ -17,7 +17,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class AddDatabasePageUtils {
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
 	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
-	private static final String CREATE_DATABASE_BUTTON_LABEL = "Create database";
+	private static final String NEXT_BUTTON_FOR_CREATE_DATABASE_XPATH = "//button[@data-testid='database-form-submit']";
 	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
 	private static final String COPY_ID_OPTION_TEXT = "copy";
@@ -36,14 +36,14 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
-	private static final String HOST_NAME_XPATH = "importForm-hostname-textField";
-	private static final String CATALOG_NAME_XPATH = "importForm-NAME-textField";
-	private static final String PORT_NUMBER_XPATH = "importForm-port-textField";
-	private static final String SCHEMA_NAME_XPATH = "importForm-schema-textField";
-	private static final String JDBC_URL_XPATH = "importForm-CONNECTION_URL-textField";
-	private static final String USER_NAME_XPATH = "importForm-USERNAME-textField";
-	private static final String APPLY_BUTTON_XPATH = "establishConnectionPage-modal-apply-btn";
-	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
+	private static final String HOST_NAME_XPATH = "//div[@data-testid='database-form-input-hostname']//div//input";
+	private static final String CATALOG_NAME_XPATH = "//div[@data-testid='database-form-input-NAME']//div//input";
+	private static final String PORT_NUMBER_XPATH = "//div[@data-testid='database-form-input-port']//div//input";
+	private static final String SCHEMA_NAME_XPATH = "//div[@data-testid='database-form-input-schema']//div//input";
+	private static final String JDBC_URL_XPATH = "//div[@data-testid='database-form-input-CONNECTION_URL']//div//input";
+	private static final String USER_NAME_XPATH = "//div[@data-testid='database-form-input-USERNAME']//div//input";
+	private static final String APPLY_BUTTON_XPATH = "model-upload-submit-button";
+	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
 	private static final String COPY_ID_XPATH = "//span[text()='{message}']";
@@ -76,18 +76,18 @@ public class AddDatabasePageUtils {
 		applyButton.click();
 	}
 
-	public static void clickApplyDatabaseButton(Page page) {
-		Locator applyDatabaseButton = page.locator(APPLY_DATABASE_BUTTON_XPATH);
-		applyDatabaseButton.scrollIntoViewIfNeeded();
-		applyDatabaseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		if (!applyDatabaseButton.isVisible() || !applyDatabaseButton.isEnabled()) {
-			throw new AssertionError("Apply button is not visible or enabled.");
+	public static void clickOnImportDatabaseButton(Page page) {
+		Locator importDatabaseButton = page.locator(IMPORT_DATABASE_BUTTON_XPATH);
+		importDatabaseButton.scrollIntoViewIfNeeded();
+		importDatabaseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!importDatabaseButton.isVisible() || !importDatabaseButton.isEnabled()) {
+			throw new AssertionError("Import database button is not visible or enabled.");
 		}
-		applyDatabaseButton.click();
+		importDatabaseButton.click();
 	}
 
 	public static void enterHostName(Page page, String hostName) {
-		Locator hostNameInput = page.getByTestId(HOST_NAME_XPATH);
+		Locator hostNameInput = page.locator(HOST_NAME_XPATH);
 		hostNameInput.scrollIntoViewIfNeeded();
 		hostNameInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!hostNameInput.isVisible() || !hostNameInput.isEnabled()) {
@@ -97,7 +97,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clearPortNumber(Page page) {
-		Locator portNumberInput = page.getByTestId(PORT_NUMBER_XPATH);
+		Locator portNumberInput = page.locator(PORT_NUMBER_XPATH);
 		portNumberInput.scrollIntoViewIfNeeded();
 		portNumberInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!portNumberInput.isVisible() || !portNumberInput.isEnabled()) {
@@ -107,7 +107,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void enterSchemaName(Page page, String schemaName) {
-		Locator schemaNameInput = page.getByTestId(SCHEMA_NAME_XPATH);
+		Locator schemaNameInput = page.locator(SCHEMA_NAME_XPATH);
 		schemaNameInput.scrollIntoViewIfNeeded();
 		schemaNameInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!schemaNameInput.isVisible() || !schemaNameInput.isEnabled()) {
@@ -117,7 +117,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void enterJDBCUrl(Page page, String jdbcUrl, String dbType) {
-		Locator jdbcUrlInput = page.getByTestId(JDBC_URL_XPATH);
+		Locator jdbcUrlInput = page.locator(JDBC_URL_XPATH);
 		String jdbcUrlPrefix = "jdbc:" + dbType + ":";
 		String workspaceRoot = System.getProperty("user.dir");
 		Path dbPath = Paths.get(workspaceRoot, "src", "test", "resources", "data", "Database", jdbcUrl);
@@ -130,7 +130,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void enterUserName(Page page, String userName) {
-		Locator userNameInput = page.getByTestId(USER_NAME_XPATH);
+		Locator userNameInput = page.locator(USER_NAME_XPATH);
 		if (!userNameInput.isVisible() && !userNameInput.isEnabled()) {
 			throw new AssertionError("User name input field is not visible.");
 		}
@@ -138,7 +138,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
-		Locator catalogNameInput = page.getByTestId(CATALOG_NAME_XPATH);
+		Locator catalogNameInput = page.locator(CATALOG_NAME_XPATH);
 		if (!catalogNameInput.isVisible() && !catalogNameInput.isEnabled()) {
 			throw new AssertionError("Catalog name input field is not visible.");
 		}
@@ -151,8 +151,12 @@ public class AddDatabasePageUtils {
 		return actualDatabaseTitle.isVisible();
 	}
 
-	public static void clickCreateDatabaseButton(Page page) {
-		AICorePageUtils.clickOnButton(page, CREATE_DATABASE_BUTTON_LABEL);
+	public static void clickOnNextButtonForCreateDatabase(Page page) {
+		Locator nextButtonForCreateDatabase = page.locator(NEXT_BUTTON_FOR_CREATE_DATABASE_XPATH);
+		if (!nextButtonForCreateDatabase.isVisible() && !nextButtonForCreateDatabase.isEnabled()) {
+			throw new AssertionError("Next button on Create database is not visible/Active.");
+		}
+		nextButtonForCreateDatabase.click();
 	}
 
 	public static String verifyDatabaseNameInCatalog(Page page, String dbName) {
