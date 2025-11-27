@@ -390,10 +390,6 @@ public class AddModelPage {
 		ModelPageUtils.enterTheVersion(page, version);
 	}
 
-	public boolean areMandatoryFieldFilled(String fieldName) {
-		return ModelPageUtils.areMandatoryFieldFilled(page, fieldName);
-	}
-
 	public boolean isSubmitButtonEnabled() {
 		return ModelPageUtils.isSubmitButtonEnabled(page);
 	}

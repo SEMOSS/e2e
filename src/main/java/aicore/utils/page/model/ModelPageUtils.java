@@ -107,6 +107,7 @@ public class ModelPageUtils {
 		case "Catalog Name":
 		case "Model":
 		case "Init Script":
+		case "Tag":
 			fieldLocator = page.locator(
 					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
@@ -117,17 +118,19 @@ public class ModelPageUtils {
 					DROPDOWN_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Open AI Key":
+		case "OpenAI API Key":
 			fieldLocator = page.locator(
 					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Max Input Tokens":
+		case "Max Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
 			fieldLocator = page.locator(
 					NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		default:
-			System.out.println("Invalid field");
+			throw new IllegalArgumentException("Invalid field provided for section fields");
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
@@ -140,6 +143,7 @@ public class ModelPageUtils {
 		case "Catalog Name":
 		case "Model":
 		case "Init Script":
+		case "Tag":
 			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Chat Type":
@@ -148,15 +152,17 @@ public class ModelPageUtils {
 			fieldLocator = page.locator(MANDATORY_DROPDOWN_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Open AI Key":
+		case "OpenAI API Key":
 			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Max Input Tokens":
+		case "Max Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
 			fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		default:
-			System.out.println("Invalid field");
+			throw new IllegalArgumentException("Invalid mandatory field provided");
 		}
 		fieldLocator.first().scrollIntoViewIfNeeded();
 		return fieldLocator.first().isVisible();
@@ -170,6 +176,7 @@ public class ModelPageUtils {
 		case "Catalog Name":
 		case "Model":
 		case "Init Script":
+		case "Tag":
 			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
 			fieldType = "Text";
 			break;
@@ -180,18 +187,20 @@ public class ModelPageUtils {
 			fieldType = "Dropdown";
 			break;
 		case "Open AI Key":
+		case "OpenAI API Key":
 			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
 					.locator("input");
 			fieldType = "Credential";
 			break;
 		case "Max Input Tokens":
+		case "Max Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
 			fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
 			fieldType = "Number";
 			break;
 		default:
-			System.out.println("Invalid field");
+			throw new IllegalArgumentException("Invalid field");
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		switch (fieldType) {
@@ -209,7 +218,7 @@ public class ModelPageUtils {
 			page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue)).click();
 			break;
 		default:
-			System.out.println("Invalid field type");
+			throw new IllegalArgumentException("Invalid field type");
 		}
 	}
 
@@ -402,41 +411,6 @@ public class ModelPageUtils {
 		if (currentValue.isEmpty()) {
 			versionField.fill(version);
 		}
-	}
-
-	public static boolean areMandatoryFieldFilled(Page page, String fieldName) {
-
-		Locator locator;
-		// Map field types correctly
-		switch (fieldName) {
-		case "MODEL_TYPE":
-		case "CHAT_TYPE":
-		case "KEEP_CONVERSATION_HISTORY":
-		case "KEEP_INPUT_OUTPUT":
-			locator = page.getByTestId("importForm-" + fieldName + "-select");
-			break;
-		default:
-			locator = page.getByTestId("importForm-" + fieldName + "-textField");
-			break;
-		}
-
-		try {
-			locator.waitFor(new Locator.WaitForOptions().setTimeout(10000));
-			String value = "";
-
-			if (locator.isVisible()) {
-				try {
-					value = locator.inputValue().trim();
-				} catch (PlaywrightException e) {
-					value = locator.textContent().trim();
-				}
-			}
-			return !value.isEmpty();
-		} catch (Exception e) {
-			logger.warn("Field not found or empty: " + fieldName);
-			return false;
-		}
-
 	}
 
 	public static boolean isSubmitButtonEnabled(Page page) {

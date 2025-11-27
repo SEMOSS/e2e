@@ -44,8 +44,8 @@ public class AddModelSteps {
 		openModelPage.clickAddModelButton();
 	}
 
-	@When("User clicks on {string} tab")
-	public void user_clicks_on_tab(String tabName) {
+	@When("User clicks on the {string} tab")
+	public void user_clicks_on_the_tab(String tabName) {
 		openModelPage.clickOnGroupTab(tabName);
 	}
 
@@ -61,13 +61,10 @@ public class AddModelSteps {
 			String sectionName = row.get("SECTION_NAME");
 			String[] fields = row.get("FIELDS").split(", ");
 			for (String field : fields) {
-				System.out.println(sectionName);
-				System.out.println(field);
 				boolean isFieldVisible = openModelPage.fieldUnderSection(sectionName, field);
 				Assertions.assertTrue(isFieldVisible, field + " is not visible under " + sectionName + " section");
 			}
 		}
-
 	}
 
 	@Then("User can see following fields are mandatory fields")
@@ -75,7 +72,6 @@ public class AddModelSteps {
 		String singleCell = dataTable.cells().get(0).get(0);
 		String[] fields = singleCell.split(", ");
 		for (String field : fields) {
-			System.out.println(field);
 			boolean isFieldMandatory = openModelPage.isFieldMandatory(field);
 			Assertions.assertTrue(isFieldMandatory, field + " is not mandatory field");
 		}
@@ -93,8 +89,6 @@ public class AddModelSteps {
 			String[] keyValue = field.split("=", 2);
 			String fieldName = keyValue[0].trim();
 			String fieldValue = keyValue[1].trim();
-			System.out.println(fieldName);
-			System.out.println(fieldValue);
 			openModelPage.fillModelCreationForm(fieldName, fieldValue);
 		}
 	}
@@ -421,14 +415,11 @@ public class AddModelSteps {
 			String fieldName = keyValue[0].trim();
 			String expectedValue = keyValue[1].trim();
 			String fullText = openModelPage.getAllFieldsInSMSSProperties(fieldName);
-
 			if (fullText == null || fullText.trim().isEmpty()) {
 				Assertions.fail("No text found for field: " + fieldName);
 			}
-
 			// Normalize spacing and remove non-breaking spaces
 			fullText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
-
 			String actualValue;
 			// Remove fieldName prefix if present
 			if (fullText.toUpperCase().startsWith(fieldName.toUpperCase())) {
@@ -441,23 +432,19 @@ public class AddModelSteps {
 			} else {
 				actualValue = fullText;
 			}
-
 			// For NAME field ignore trailing digits
 			if (fieldName.equalsIgnoreCase("NAME")) {
 				actualValue = actualValue.replaceAll("\\d+$", "");
 			}
-
 			// Field-specific validation logic
 			switch (fieldName) {
 			case "ENDPOINT":
 				Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
 				break;
-
 			case "INIT_MODEL_ENGINE":
 				Assertions.assertTrue(actualValue.contains(expectedValue), "Field validation failed for '" + fieldName
 						+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue + ">");
 				break;
-
 			default:
 				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
 				break;
@@ -478,19 +465,6 @@ public class AddModelSteps {
 	@And("User enter the Version as {string}")
 	public void user_enter_the_version_as(String version) {
 		openModelPage.enterVersion(version);
-	}
-
-	@Then("User can enable Submit button after filling mandatory fields for {string} model")
-	public void user_can_enable_submit_button_after_filling_mandatory_fields_for_model(String modelType,
-			DataTable table) {
-		List<String> fields = table.asList(String.class);
-		for (String fieldName : fields) {
-			boolean isFieldFilled = openModelPage.areMandatoryFieldFilled(fieldName);
-			Assertions.assertTrue(isFieldFilled, fieldName + " field is not filled");
-		}
-		boolean isSubmitButtonEnabled = openModelPage.isSubmitButtonEnabled();
-		Assertions.assertTrue(isSubmitButtonEnabled, "Submit button is not enabled");
-
 	}
 
 	@And("User select Chat Type as {string}")
