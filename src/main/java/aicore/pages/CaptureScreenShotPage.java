@@ -55,6 +55,8 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureUseTemplate(page, elementName);
 		case "testidelement":
 			return CaptureElementUtils.captureElementThroughtDataTestId(page, elementName);
+		case "blocksettingelement":
+			return CaptureElementUtils.captureBlockSettingElementScreenshot(page, elementName);
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}

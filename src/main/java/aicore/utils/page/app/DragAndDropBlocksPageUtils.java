@@ -54,6 +54,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DENDROGRAM_CHART_DATA_TESTID = "blockMenuCardContent-card-Dendrogram-Chart";
 	private static final String MERMAID_CHART_DATA_TESTID = "blockMenuCardContent-card-Mermaid-Chart";
 	private static final String WORLD_MAP_CHART_DATA_TESTID = "blockMenuCardContent-card-World-Map-Chart";
+	private static final String ACCORDION_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Accordion";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
@@ -77,6 +78,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//div[text()='No rows']";
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
+	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
 
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
@@ -205,6 +207,9 @@ public class DragAndDropBlocksPageUtils {
 		case "Mermaid Chart":
 			DroppedBlockLocator = page.locator(DROPPED_MERMAID_CHART_XPATH);
 			break;
+		case "Accordion":
+			DroppedBlockLocator = page.locator(DROPPED_ACCORDION_BLOCK_XPATH);
+			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
@@ -284,6 +289,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "World Map Chart":
 			blockLocator = page.getByTestId(WORLD_MAP_CHART_DATA_TESTID);
+			break;
+		case "Accordion":
+			blockLocator = page.getByTestId(ACCORDION_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
