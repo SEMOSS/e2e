@@ -43,6 +43,7 @@ public class AddDatabasePageUtils {
 	private static final String JDBC_URL_XPATH = "//div[@data-testid='database-form-input-CONNECTION_URL']//div//input";
 	private static final String USER_NAME_XPATH = "//div[@data-testid='database-form-input-USERNAME']//div//input";
 	private static final String APPLY_BUTTON_XPATH = "model-upload-submit-button";
+	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
 	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
@@ -74,6 +75,16 @@ public class AddDatabasePageUtils {
 			throw new AssertionError("Apply button is not visible or enabled.");
 		}
 		applyButton.click();
+	}
+
+	public static void clickApplyDatabaseButton(Page page) {
+		Locator applyDatabaseButton = page.locator(APPLY_DATABASE_BUTTON_XPATH);
+		applyDatabaseButton.scrollIntoViewIfNeeded();
+		applyDatabaseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		if (!applyDatabaseButton.isVisible() || !applyDatabaseButton.isEnabled()) {
+			throw new AssertionError("Apply button is not visible or enabled.");
+		}
+		applyDatabaseButton.click();
 	}
 
 	public static void clickOnImportDatabaseButton(Page page) {

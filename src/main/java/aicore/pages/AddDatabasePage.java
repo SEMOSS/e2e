@@ -51,6 +51,9 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void clickOnApplyButton() {
 		AddDatabasePageUtils.clickOnApplyButton(page);
 	}
+	public void clickApplyDatabaseButton() {
+		AddDatabasePageUtils.clickApplyDatabaseButton(page);
+	}
 
 	public void clickOnImportDatabaseButton() {
 		AddDatabasePageUtils.clickOnImportDatabaseButton(page);

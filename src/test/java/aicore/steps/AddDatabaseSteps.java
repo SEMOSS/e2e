@@ -226,6 +226,11 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.selectDatabaseFromSearchOptions(catalogName);
 	}
 
+	@And("User clicks on apply database button")
+	public void user_clicks_on_apply_database_button() {
+		addDatabaseToCatalogPage.clickApplyDatabaseButton();
+	}
+
 	@When("User clicks on MetaData tab")
 	public void user_clicks_on_metadata_tab() {
 		// TODO this should be user clicks on Metadata tab
