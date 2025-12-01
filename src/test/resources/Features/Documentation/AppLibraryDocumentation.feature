@@ -160,3 +160,12 @@ Feature: App Library Documentation
     And User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
 
+    @LoginWithAdmin @SkipIfVersionMatch @Documentation
+    Scenario: Documentation for Variable Guide Template Creation   
+      Given User captures documentation screenshot for 'Navigating/Create New App'
+      When User opens Main Menu
+      And User clicks on Open App Library
+      And User clicks on Create New App button
+      And User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
+      And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
+
