@@ -8,7 +8,6 @@ import org.assertj.core.api.SoftAssertions;
 import aicore.hooks.SetupHooks;
 import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.AddModelPage;
-import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 
@@ -39,6 +38,5 @@ public class AvailableModelsUnderGroupsSteps {
 						.withFailMessage(modelOption + " " + "model option is not visible under " + group).isTrue();
 			}
 		}
-
 	}
 }

@@ -12,13 +12,12 @@ import aicore.utils.CommonUtils;
 
 public class EditModelPageUtils {
 
-	private static final String MODEL_CATALOG_SEARCH_TEXTBOX_XPATH = "//input[@placeholder='Search']";
 	private static final String SEARCHED_MODEL_XPATH = "//p[text()='{modelName}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
-	private static final String DETAILS_TEXTBOX_XPATH = "//textarea[@class='inputarea monaco-mouse-cursor-text']";
+	private static final String DETAILS_TEXTBOX_XPATH = "//*[@class='view-lines monaco-mouse-cursor-text']//div";
 	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
 	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
 	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[text()='Data classification']/parent::div//input[@aria-autocomplete='list']";
@@ -59,7 +58,8 @@ public class EditModelPageUtils {
 	}
 
 	public static void enterDetails(Page page, String detailsText) {
-		page.fill(DETAILS_TEXTBOX_XPATH, detailsText);
+		page.locator(DETAILS_TEXTBOX_XPATH).click();
+		page.keyboard().type(detailsText);
 	}
 
 	public static void enterDescription(Page page, String descriptionText) {

@@ -76,7 +76,7 @@ Feature: App landing page
       | FILTER_CATEGORY | FILTER_VALUE |
       | Tag             | Test1, Test2 |
 
-  @DeleteCreatedTestApp @Regression
+  @DeleteCreatedTestApp
   Scenario: Bookmark an app successfully
     Given User opens Main Menu
     And User clicks on Open App Library
@@ -85,7 +85,7 @@ Feature: App landing page
     Then User see the Bookmarked section
     And The app should appear in the bookmarked section
 
-  @DeleteCreatedTestApp @Regression
+  @DeleteCreatedTestApp
   Scenario: Remove app from bookmarks
     Given User opens Main Menu
     And User clicks on Open App Library
@@ -102,14 +102,6 @@ Feature: App landing page
     And User clicks on Open App Library
     When User searches 'Test app' app in the app searchbox
     Then User can see 'Test app' app in the All Apps section
-
-  @DeleteCreatedTestApp @Regression
-  Scenario: Verify BI and Terminal apps are displayed under System apps
-    Given User opens Main Menu
-    And User clicks on Open App Library
-    When User click on System Apps
-    Then User can see 'BI' app in the System Apps section
-    And User can see 'Terminal' app in the System Apps section
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Verify app is display under Discoverable

@@ -2,28 +2,28 @@
 Feature: Add Model
   Adding LLM to the catalog
 
-  Background: Create a Model - GPT-3.5
+  Background: Create a Model - GPT 3.5 Turbo
     Given User opens Main Menu
     When User clicks on Open Model
-    When User clicks on Add Model
-    And User selects 'GPT-3.5'
+    And User clicks on Add Model
+    And User selects 'OpenAI' type
+    And User selects 'GPT 3.5 Turbo'
     And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
-    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Model'
 
   @DeleteTestCatalog
-  Scenario: Validate SMSS properties of a Model to catalog - GPT-3.5
+  Scenario: Validate SMSS properties of a Model to catalog - GPT 3.5 Turbo
     Given User can see the Model title as 'Model'
     When User clicks on SMSS
     And User can see name in 'NAME' field as 'Model' in SMSS properties
-    And User can see var name in 'VAR_NAME' field as 'Variable1' in SMSS properties
+    And User can see var name in 'VAR_NAME' field as 'openAIModel' in SMSS properties
 
   @DeleteTestCatalog
-  Scenario: Edit SMSS properties of Model - GPT-3.5
+  Scenario: Edit SMSS properties of Model - GPT 3.5 Turbo
     Given User can see the Model title as 'Model'
     When User clicks on SMSS
     And User clicks on Edit SMSS button
@@ -35,7 +35,7 @@ Feature: Add Model
     Then User can see updated value in 'VAR_NAME' field as 'New_Name'
 
   @DeleteTestCatalog
-  Scenario: Adding tag to Model to catalog - GPT-3.5 - embeddings
+  Scenario: Adding tag to Model to catalog - GPT 3.5 Turbo - embeddings
     Given User can see the Model title as 'Model'
     When User clicks on Edit button
     And User add tags 'embeddings' and presses Enter
@@ -75,7 +75,7 @@ Feature: Add Model
 
     Examples: 
       | MODEL_NAME | DETAILS       | DESCRIPTION                | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
-      | Model      | GPT-3.5 model | This is GPT-3.5 test model | embeddings, Test1, Test2, Test3 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+      | Model      | GPT 3.5 Turbo model | This is GPT 3.5 Turbo test model | embeddings, Test1, Test2, Test3 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
   @DeleteTestCatalog
   Scenario: Validate Model Catalog ID in Usage commands

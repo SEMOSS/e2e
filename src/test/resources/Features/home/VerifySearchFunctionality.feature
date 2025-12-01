@@ -22,10 +22,10 @@ Feature: Search app and catalogs
     Given User opens Main Menu
     When User clicks on Open Model
     When User clicks on Add Model
-    And User selects 'GPT-3.5'
-    And User enters 'Test Model' as Catalog name
+     And User selects 'OpenAI' type
+    And User selects 'GPT 3.5 Turbo'
+    And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
-    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
     And User opens Main Menu
@@ -55,10 +55,10 @@ Feature: Search app and catalogs
     Given User opens Main Menu
     When User clicks on Open Model
     And User clicks on Add Model
-    And User selects 'GPT-3.5'
-    And User enters 'Test Model' as Catalog name
+     And User selects 'OpenAI' type
+    And User selects 'GPT 3.5 Turbo'
+    And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
-    And User enters Variable Name as 'Variable1'
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
     When User clicks on Edit button
@@ -87,9 +87,9 @@ Feature: Search app and catalogs
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
-    And User clicks on Create Database button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
