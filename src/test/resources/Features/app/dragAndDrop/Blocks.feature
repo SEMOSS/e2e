@@ -23,7 +23,7 @@ Feature: Blocks
     When User drags the 'Text (h1)' block and drops it on the page
     Then User can see 'Hello world' on the page
 
-@ApplicationBugFailure
+  @ApplicationBugFailure
   Scenario Outline: Drag and Drop Text section '<BLOCK_NAME>' block
     When User drags the '<BLOCK_NAME>' block and drops it on the page
     And User clicks on the '<BLOCK_NAME>' block to select it
