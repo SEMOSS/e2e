@@ -86,14 +86,14 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.addJDBCUrl(jdbcUrl, dbType);
 	}
 
-	@When("User clicks on apply button")
+	@When("User clicks on Apply button")
 	public void user_clicks_on_apply_button() {
 		addDatabaseToCatalogPage.clickOnApplyButton();
 	}
 
-	@And("User clicks on apply database button")
-	public void user_clicks_on_apply_database_button() {
-		addDatabaseToCatalogPage.clickApplyDatabaseButton();
+	@And("User clicks on Import database button")
+	public void user_clicks_on_import_database_button() {
+		addDatabaseToCatalogPage.clickOnImportDatabaseButton();
 	}
 
 	@Then("User selects database {string} from connection types")
@@ -124,9 +124,9 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.selectDatabaseType(dbType);
 	}
 
-	@And("User clicks on Create Database button")
-	public void user_clicks_on_create_database_button() {
-		addDatabaseToCatalogPage.clickOnCreateDatabaseButton();
+	@And("User clicks on Next button for Create Database")
+	public void user_clicks_on_next_button_for_create_database() {
+		addDatabaseToCatalogPage.clickOnNextButtonForCreateDatabase();
 	}
 
 	@And("User sees the database name {string} in the database catalog")
@@ -224,6 +224,11 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@Given("User selects the {string} from the database catalog")
 	public void user_selects_the_from_the_database_catalog(String catalogName) {
 		addDatabaseToCatalogPage.selectDatabaseFromSearchOptions(catalogName);
+	}
+
+	@And("User clicks on apply database button")
+	public void user_clicks_on_apply_database_button() {
+		addDatabaseToCatalogPage.clickApplyDatabaseButton();
 	}
 
 	@When("User clicks on MetaData tab")

@@ -24,6 +24,7 @@ public class BlockSettingsUtils {
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[normalize-space()= '{fieldName}']/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
+	private static final String SELECT_FRAME_IN_NOTEBOOK_XPATH = "//*[@data-testid='AccountTreeIcon']//parent::div//following-sibling::div";
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
 
 	public static void clickOnBlockSettingsOption(Page page) {
@@ -112,11 +113,20 @@ public class BlockSettingsUtils {
 
 	public static void selectFrame(Page page, String frameId) {
 		Locator selectFrame = page.getByPlaceholder(SEARCH_FRAME_PLACEHOLDER);
-		AICorePageUtils.waitFor(selectFrame);
-		selectFrame.click();
-		selectFrame.fill(frameId);
-		selectFrame.press("ArrowDown");
-		selectFrame.press("Enter");
+		Locator NotebookFrame = page.locator(SELECT_FRAME_IN_NOTEBOOK_XPATH);
+		if (selectFrame.isVisible()) {
+			selectFrame.scrollIntoViewIfNeeded();
+			selectFrame.click();
+			selectFrame.fill(frameId);
+			selectFrame.press("ArrowDown");
+			selectFrame.press("Enter");
+		} else {
+			NotebookFrame.scrollIntoViewIfNeeded();
+			NotebookFrame.click();
+			Locator frameOption = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(frameId));
+			frameOption.click();
+		}
+		page.waitForTimeout(1000);
 	}
 
 	public static void dragColumnToTargetField(Page page, String columnName, String targetField) {

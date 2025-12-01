@@ -104,6 +104,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.selectPage(page, pageName);
 	}
 
+	public void searchBlock(String blockName) {
+		DragAndDropBlocksPageUtils.searchBlock(page, blockName);
+	}
+
 	public void clickOnTerminalCard() {
 		DragAndDropBlocksPageUtils.clickOnTerminalCard(page);
 	}

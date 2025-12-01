@@ -23,6 +23,7 @@ public class DragAndDropBlocksPageUtils {
 
 	private static final String PAGE_1_ID = "#page-1";
 	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='page-1']";
+	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
@@ -54,6 +55,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DENDROGRAM_CHART_DATA_TESTID = "blockMenuCardContent-card-Dendrogram-Chart";
 	private static final String MERMAID_CHART_DATA_TESTID = "blockMenuCardContent-card-Mermaid-Chart";
 	private static final String WORLD_MAP_CHART_DATA_TESTID = "blockMenuCardContent-card-World-Map-Chart";
+	private static final String ACCORDION_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Accordion";
 	private static final String HEADING_BLOCK_HELLO_WORLD_XPATH = "//h1[text()='Hello world']";
 	private static final String MENU_OPTION_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart')]";
 	private static final String MENU_CLOSED_ICON_XPATH = "//button[@aria-label='menu']//*[local-name()='svg' and @data-testid='MenuIcon']";
@@ -77,6 +79,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//div[text()='No rows']";
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
+	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
 
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
@@ -205,6 +208,9 @@ public class DragAndDropBlocksPageUtils {
 		case "Mermaid Chart":
 			DroppedBlockLocator = page.locator(DROPPED_MERMAID_CHART_XPATH);
 			break;
+		case "Accordion":
+			DroppedBlockLocator = page.locator(DROPPED_ACCORDION_BLOCK_XPATH);
+			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
@@ -284,6 +290,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "World Map Chart":
 			blockLocator = page.getByTestId(WORLD_MAP_CHART_DATA_TESTID);
+			break;
+		case "Accordion":
+			blockLocator = page.getByTestId(ACCORDION_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -376,6 +385,10 @@ public class DragAndDropBlocksPageUtils {
 
 	public static void selectPage(Page page, String pageName) {
 		page.locator(PAGE_SELECTION_XPATH.replace("{pageName}", pageName)).first().click();
+	}
+
+	public static void searchBlock(Page page, String blockName) {
+		page.locator(BLOCK_SEARCH_BOX_XPATH).fill(blockName);
 	}
 
 	public static void clickOnTerminalCard(Page page) {

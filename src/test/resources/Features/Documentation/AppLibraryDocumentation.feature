@@ -107,7 +107,7 @@ Feature: App Library Documentation
     And User clicks on Notebook
     And User clicks on Query name as 'ask-llm'
     And User clicks on Notebook
-    And User click on run all cell button
+    And User click on Run All cell button
     And User clicks on 'page-1' page
     And User clicks on the Response Block
     And User captures screenshot for "llmthree"
