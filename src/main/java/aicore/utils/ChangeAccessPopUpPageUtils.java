@@ -10,7 +10,7 @@ public class ChangeAccessPopUpPageUtils {
 	private static final String CANCEL_BUTTON_XPATH = "//button[contains(., 'Cancel')]";
 	private static final String REQUEST_BUTTON_XPATH = "//span[text()= 'Request']";
 	private static final String CHANGE_ACCESS_POPUP_XPATH = "//h2[text()='Change Access']";
-	private static final String REQUEST_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'Successfully requested access to engine')]";
+	private static final String REQUEST_SUCCESS_TOAST_TESTID = "notification-success-alert";
 
 	public static String isChangeAccessPopupVisible(Page page) {
 		return page.locator(CHANGE_ACCESS_POPUP_XPATH).textContent();
@@ -60,6 +60,6 @@ public class ChangeAccessPopUpPageUtils {
 	}
 
 	public static boolean isRequestSuccessToastVisible(Page page) {
-		return page.locator(REQUEST_SUCCESS_TOAST_XPATH).isVisible();
+		return page.getByTestId(REQUEST_SUCCESS_TOAST_TESTID).isVisible();
 	}
 }
