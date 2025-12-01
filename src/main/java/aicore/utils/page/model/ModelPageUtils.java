@@ -47,7 +47,7 @@ public class ModelPageUtils {
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
-	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
+	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'] [starts-with(normalize-space(string(.)), '{fieldName}')]";
 
 	public static List<String> createdModelIds = new ArrayList<>();
 	private static final String SEARCH_CATALOG_LABEL = "Search";
@@ -97,7 +97,8 @@ public class ModelPageUtils {
 	}
 
 	public static void clickOnGroupTab(Page page, String tabName) {
-		page.locator(OPTIONS_TAB_XPATH.replace("{tabName}", tabName)).click();
+		String tab = tabName.replace(" ", "-");
+		page.locator(OPTIONS_TAB_XPATH.replace("{tabName}", tab)).click();
 	}
 
 	public static boolean fieldUnderSection(Page page, String section, String field) {
@@ -108,6 +109,11 @@ public class ModelPageUtils {
 		case "Model":
 		case "Init Script":
 		case "Tag":
+		case "Project":
+		case "GCP Region":
+		case "Service Account Credentials":
+		case "Model ID":
+		case "Region":
 			fieldLocator = page.locator(
 					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
@@ -119,6 +125,8 @@ public class ModelPageUtils {
 			break;
 		case "Open AI Key":
 		case "OpenAI API Key":
+		case "AWS Access Key ID":
+		case "AWS Secret Access Key":
 			fieldLocator = page.locator(
 					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
@@ -144,6 +152,11 @@ public class ModelPageUtils {
 		case "Model":
 		case "Init Script":
 		case "Tag":
+		case "Project":
+		case "GCP Region":
+		case "Service Account Credentials":
+		case "Model ID":
+		case "Region":
 			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Chat Type":
@@ -153,6 +166,8 @@ public class ModelPageUtils {
 			break;
 		case "Open AI Key":
 		case "OpenAI API Key":
+		case "AWS Access Key ID":
+		case "AWS Secret Access Key":
 			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Max Input Tokens":
@@ -177,6 +192,11 @@ public class ModelPageUtils {
 		case "Model":
 		case "Init Script":
 		case "Tag":
+		case "Project":
+		case "GCP Region":
+		case "Service Account Credentials":
+		case "Model ID":
+		case "Region":
 			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
 			fieldType = "Text";
 			break;
@@ -188,6 +208,8 @@ public class ModelPageUtils {
 			break;
 		case "Open AI Key":
 		case "OpenAI API Key":
+		case "AWS Access Key ID":
+		case "AWS Secret Access Key":
 			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
 					.locator("input");
 			fieldType = "Credential";
@@ -371,7 +393,7 @@ public class ModelPageUtils {
 	}
 
 	public static String getAllFieldsInSMSSProperties(Page page, String fieldName) {
-		Locator locator;
+		Locator locator = null;
 		switch (fieldName) {
 		case "ENDPOINT":
 			locator = page.locator(ENDPOINT_SMSSPROPERTIES_XPATH);
@@ -381,12 +403,21 @@ public class ModelPageUtils {
 			locator = page.locator(INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH);
 			break;
 		case "MODEL":
-			locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName)).nth(1);
+			Locator allModels = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
+			int count = allModels.count();
+			for (int i = 0; i < count; i++) {
+				String text = allModels.nth(i).textContent().replace('\u00A0', ' ').trim();
+				if (text.startsWith("MODEL ") && !text.startsWith("MODEL_")) {
+					locator = allModels.nth(i);
+					break;
+				}
+			}
 			break;
 		default:
 			locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
 			break;
 		}
+		AICorePageUtils.waitFor(locator);
 		locator.scrollIntoViewIfNeeded();
 		String value = null;
 		try {
