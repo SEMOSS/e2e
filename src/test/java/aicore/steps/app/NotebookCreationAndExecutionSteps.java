@@ -1,5 +1,9 @@
 package aicore.steps.app;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -94,6 +98,7 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_sees_the_success_message(String successMessage) throws InterruptedException {
 		notebookPage.checkSuccessMessage(successMessage);
 	}
+
 	@Then("User see {string} notebook present in the notebook list")
 	public void user_see_notebook_present_in_the_notebook_list(String notebookName) throws InterruptedException {
 		notebookPage.checkNotebookPresence(notebookName);
@@ -316,7 +321,6 @@ public class NotebookCreationAndExecutionSteps {
 
 	@Then("User sees {string} operator by default between the rules")
 	public void User_sees_operator_by_default_between_the_rules(String operator) {
-
 		notebookPage.getDefaultOperator(operator);
 	}
 
@@ -335,8 +339,54 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.enterDataLimit(dataLimit);
 	}
 
-	@And("User click on run all cell button")
+	@And("User click on Run All cell button")
 	public void user_click_on_run_all_cell_button() {
 		notebookPage.clickOnRunAllCellButton();
+	}
+
+	@And("User selects {string} from the Transformation options")
+	public void user_selects_from_the_transformation_options(String optionName) {
+		notebookPage.selectTransformationOptionDropdown(optionName);
+	}
+
+	@And("User enters column name as {string}")
+	public void user_enters_column_name_as(String columnName) {
+		notebookPage.enterColumnName(columnName);
+	}
+
+	@Then("User clicks on Include time checkbox")
+	public void user_clicks_on_include_time_checkbox() {
+		notebookPage.clickOnIncludeTimeCheckbox();
+	}
+
+	@And("User can see {string} column values as todays date along with current time")
+	public void user_can_see_column_values_as_todays_date_along_with_current_time(String columnName) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
+		LocalDate today = LocalDate.now();
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
+		for (String columnValue : columnValues) {
+			LocalDateTime actual = LocalDateTime.parse(columnValue.trim(), formatter);
+			// Check date matches today's date
+			if (!actual.toLocalDate().equals(today)) {
+				throw new AssertionError("Value '" + columnValue + "' does not match today's date: " + today);
+			}
+			// Check seconds tolerance
+			LocalDateTime expected = LocalDateTime.now();
+			long diffSeconds = Math.abs(Duration.between(actual, expected).getSeconds());
+			Assertions.assertTrue(diffSeconds <= 5, "time differs by more than 10 seconds");
+		}
+	}
+
+	@Then("User can see {string} column values as todays date along with {string} as timestamp")
+	public void user_can_see_column_values_as_todays_date_along_with_as_timestamp(String columnName, String timestamp) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
+		for (String columnValue : columnValues) {
+			String cleaned = columnValue.replace("T", " ");
+			LocalDateTime actual = LocalDateTime.parse(cleaned, formatter);
+			String expected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + timestamp;
+			Assertions.assertEquals(expected, actual.format(formatter), "timestamp values not matching");
+		}
+
 	}
 }

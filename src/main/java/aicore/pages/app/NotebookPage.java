@@ -46,16 +46,19 @@ public class NotebookPage {
 	public void modifySqlQuery(String newQuery) {
 		NotebookPageUtils.modifySqlQuery(page, newQuery);
 	}
-	
+
 	public void addValueInField(String fieldName, String value) {
 		NotebookPageUtils.addValueInField(page, fieldName, value);
 	}
+
 	public void selectValueFromDropdown(String value, String fieldName) {
 		NotebookPageUtils.selectValueFromDropdown(page, value, fieldName);
 	}
+
 	public void selectValueFromReadAppDropdown(String value, String fieldName) {
 		NotebookPageUtils.selectValueFromReadAppDropdown(page, value, fieldName);
 	}
+
 	public void checkRecordWithUniqueId(String uniqueId) {
 		NotebookPageUtils.checkRecordWithUniqueId(page, uniqueId);
 	}
@@ -238,5 +241,21 @@ public class NotebookPage {
 
 	public void clickOnRunAllCellButton() {
 		NotebookPageUtils.clickOnRunAllCellButton(page);
+	}
+
+	public void selectTransformationOptionDropdown(String optionName) {
+		NotebookPageUtils.selectTransformationOptionDropdown(page, optionName);
+	}
+
+	public void enterColumnName(String columnName) {
+		NotebookPageUtils.enterColumnName(page, columnName);
+	}
+
+	public List<String> getColumnValues(String columnName) {
+		return NotebookPageUtils.getColumnValues(page, columnName);
+	}
+
+	public void clickOnIncludeTimeCheckbox() {
+		NotebookPageUtils.clickOnIncludeTimeCheckbox(page);
 	}
 }
