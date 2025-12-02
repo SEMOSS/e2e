@@ -17,7 +17,8 @@ public class FeatureFolderParallelExecutor {
 
     // Base feature folder root
     private static final String pathSeparator = FileSystems.getDefault().getSeparator();
-    private static final String FEATURE_ROOT = "src" + pathSeparator + "test" + pathSeparator + "resources" + pathSeparator + "features";
+    private static final String FEATURE_ROOT = "src" + pathSeparator + "test" + pathSeparator + "resources" +
+            pathSeparator + "Features";
 
     private static Map<String, List<String>> distributeFeatureFolders(List<String> folders, int threadCount) {
         Map<String, List<String>> distribution = new HashMap<>();
@@ -70,9 +71,7 @@ public class FeatureFolderParallelExecutor {
         
         // Distribute folders across threads evenly
         Map<String, List<String>> threadFolders = distributeFeatureFolders(allFeatureFolders, threadCount);
-        
-        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
-        List<Future<Integer>> futures = new ArrayList<>();
+
 
         // Create and clean extent report directory
         Path extentReportPath = Paths.get("target", "extent-report");
@@ -82,38 +81,48 @@ public class FeatureFolderParallelExecutor {
         Files.walk(extentReportPath)
                 .filter(Files::isRegularFile)
                 .forEach(f -> {
-                    try { 
-                        Files.delete(f); 
+                    try {
+                        Files.delete(f);
                     } catch (Exception e) {
                         logger.warn("Failed to delete old report file: {}", f, e);
                     }
                 });
 
         // Submit tasks for each thread with its assigned feature folders
+        List<Callable<Integer>> tasks = new ArrayList<>();;
         for (Map.Entry<String, List<String>> entry : threadFolders.entrySet()) {
             String threadName = entry.getKey();
             List<String> folders = entry.getValue();
-            
+
             // Collect all feature files from assigned folders
             List<String> features = new ArrayList<>();
             for (String folder : folders) {
                 features.addAll(listFeaturesUnderFolder(folder));
             }
-            
+
             if (features.isEmpty()) {
                 logger.warn("No features found for thread {} in folders {}", threadName, folders);
                 continue;
             }
-            
-            futures.add(executor.submit(() -> runCucumber(threadName, features)));
+
+            tasks.add(() -> runCucumber(threadName, features));
         }
 
-        executor.shutdown();
-        boolean finished = executor.awaitTermination(1, TimeUnit.HOURS);
-        if (!finished) {
-            logger.warn("Timed out waiting for test execution");
-            executor.shutdownNow();
-            return 1;
+        List<Future<Integer>> futures;
+        try (ExecutorService executor = Executors.newFixedThreadPool(threadCount)) {
+            futures = executor.invokeAll(tasks);
+
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(2, TimeUnit.HOURS)) {
+                    logger.warn("Executor did not terminate in set time limit");
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                logger.warn("Forcing shutdown");
+                executor.shutdownNow();
+                return 1;
+            }
         }
 
         int result = 0;
@@ -121,6 +130,7 @@ public class FeatureFolderParallelExecutor {
             try {
                 int r = future.get();
                 if (r != 0) {
+                    logger.warn("Non 0 result. Thread had failure");
                     result = r;
                 }
             } catch (ExecutionException e) {
