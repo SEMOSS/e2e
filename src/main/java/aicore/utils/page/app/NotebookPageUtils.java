@@ -695,3 +695,31 @@ public class NotebookPageUtils {
 		return true;
 	}
 }
+	public static void enterColumnName(Page page, String columnName) {
+		Locator columnTextbox = page.getByLabel("Column Name");
+		AICorePageUtils.waitFor(columnTextbox);
+		columnTextbox.fill(columnName);
+	}
+
+	public static List<String> getColumnValues(Page page, String columnName) {
+		List<String> headers = page.locator(OUTPUT_TABLE).last().locator("//th").allInnerTexts();
+		int columnIndex = -1;
+		for (int i = 0; i < headers.size(); i++) {
+			if (headers.get(i).trim().equalsIgnoreCase(columnName.trim())) {
+				columnIndex = i + 1;
+				break;
+			}
+		}
+		if (columnIndex == -1) {
+			throw new RuntimeException("Column not found: " + columnName);
+		}
+		return page.locator(OUTPUT_TABLE).last().locator("//tbody//tr/td[" + columnIndex + "]").allInnerTexts();
+	}
+
+	public static void clickOnIncludeTimeCheckbox(Page page) {
+		Locator checkbox = page.locator(TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH);
+		AICorePageUtils.waitFor(checkbox);
+		checkbox.click();
+	}
+
+}

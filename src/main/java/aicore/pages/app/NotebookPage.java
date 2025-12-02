@@ -255,3 +255,15 @@ public class NotebookPage {
 		return NotebookPageUtils.isColumnDataInUppercase(page, columnName);
 	}
 }
+	public void enterColumnName(String columnName) {
+		NotebookPageUtils.enterColumnName(page, columnName);
+	}
+
+	public List<String> getColumnValues(String columnName) {
+		return NotebookPageUtils.getColumnValues(page, columnName);
+	}
+
+	public void clickOnIncludeTimeCheckbox() {
+		NotebookPageUtils.clickOnIncludeTimeCheckbox(page);
+	}
+}

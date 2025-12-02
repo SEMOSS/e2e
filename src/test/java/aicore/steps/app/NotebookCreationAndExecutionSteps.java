@@ -360,3 +360,44 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.selectColumnForTransformation(columnName);
 	}
 }
+	@And("User enters column name as {string}")
+	public void user_enters_column_name_as(String columnName) {
+		notebookPage.enterColumnName(columnName);
+	}
+
+	@Then("User clicks on Include time checkbox")
+	public void user_clicks_on_include_time_checkbox() {
+		notebookPage.clickOnIncludeTimeCheckbox();
+	}
+
+	@And("User can see {string} column values as todays date along with current time")
+	public void user_can_see_column_values_as_todays_date_along_with_current_time(String columnName) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
+		LocalDate today = LocalDate.now();
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
+		for (String columnValue : columnValues) {
+			LocalDateTime actual = LocalDateTime.parse(columnValue.trim(), formatter);
+			// Check date matches today's date
+			if (!actual.toLocalDate().equals(today)) {
+				throw new AssertionError("Value '" + columnValue + "' does not match today's date: " + today);
+			}
+			// Check seconds tolerance
+			LocalDateTime expected = LocalDateTime.now();
+			long diffSeconds = Math.abs(Duration.between(actual, expected).getSeconds());
+			Assertions.assertTrue(diffSeconds <= 5, "time differs by more than 10 seconds");
+		}
+	}
+
+	@Then("User can see {string} column values as todays date along with {string} as timestamp")
+	public void user_can_see_column_values_as_todays_date_along_with_as_timestamp(String columnName, String timestamp) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
+		for (String columnValue : columnValues) {
+			String cleaned = columnValue.replace("T", " ");
+			LocalDateTime actual = LocalDateTime.parse(cleaned, formatter);
+			String expected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + timestamp;
+			Assertions.assertEquals(expected, actual.format(formatter), "timestamp values not matching");
+		}
+
+	}
+}

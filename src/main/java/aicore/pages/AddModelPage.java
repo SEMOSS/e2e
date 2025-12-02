@@ -41,6 +41,26 @@ public class AddModelPage {
 		ModelPageUtils.selectOpenAi(page, aiModelName);
 	}
 
+	public void clickOnGroupTab(String tabName) {
+		ModelPageUtils.clickOnGroupTab(page, tabName);
+	}
+
+	public boolean fieldUnderSection(String section, String field) {
+		return ModelPageUtils.fieldUnderSection(page, section, field);
+	}
+
+	public boolean isFieldMandatory(String field) {
+		return ModelPageUtils.isFieldMandatory(page, field);
+	}
+
+	public void fillModelCreationForm(String fieldName, String fieldValue) {
+		ModelPageUtils.fillCatalogCreationForm(page, fieldName, fieldValue, timestamp);
+	}
+
+	public boolean validateConnectButtonEnabled() {
+		return ModelPageUtils.validateConnectButtonEnabled(page);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
 	}
@@ -368,10 +388,6 @@ public class AddModelPage {
 
 	public void enterVersion(String version) {
 		ModelPageUtils.enterTheVersion(page, version);
-	}
-
-	public boolean areMandatoryFieldFilled(String fieldName) {
-		return ModelPageUtils.areMandatoryFieldFilled(page, fieldName);
 	}
 
 	public boolean isSubmitButtonEnabled() {

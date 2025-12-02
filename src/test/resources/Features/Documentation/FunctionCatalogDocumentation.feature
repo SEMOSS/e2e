@@ -100,3 +100,57 @@ Feature: Function documentation
     And User clicks on Copy Catalog ID
     And User captures a 'buttonType' and highlights the "Export" with name "Export"
     And User completes screenshot capture and triggers comparison for 'Function Catalog Export Button'
+
+ @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+  Scenario: Create Function - Capture function AccessControl Screenshot
+    Given User captures documentation screenshot for 'FunctionEngines'
+    When User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Add Function
+    And User selects function 'REST'
+    And User enters Catalog name 'TestFunction'
+    And User enters Url as 'https://api.api-ninjas.com/v1/weather'
+    And User selects HTTP method as 'GET'
+    And User selects Post body message as 'json'
+    And User enters Function parameters as '[{"parameterName":"lat","parameterType":"String","parameterDescription":"The lat of the location"},{"parameterName":"lon","parameterType":"String","parameterDescription":"lon of the location"}]'
+    And User enters Function required parameters as '["lat", "lon"]'
+    And User enters Function name as 'WeatherFunction'
+    And User enters Function description as 'a function to call weather based on lat and long'
+    And User clicks on Create Function button
+    And User clicks on Copy Catalog ID
+    And User clicks on Access Control button
+    And User captures screenshot for "functionAccessControl"
+    And User completes screenshot capture and triggers comparison for 'Function Engines'
+    
+ @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+  Scenario: Create Function - Capture function RequestAccess Screenshot
+    Given User captures documentation screenshot for 'FunctionEngines'
+    When User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Add Function
+    And User selects function 'REST'
+    And User enters Catalog name 'TestFunction'
+    And User enters Url as 'https://api.api-ninjas.com/v1/weather'
+    And User selects HTTP method as 'GET'
+    And User selects Post body message as 'json'
+    And User enters Function parameters as '[{"parameterName":"lat","parameterType":"String","parameterDescription":"The lat of the location"},{"parameterName":"lon","parameterType":"String","parameterDescription":"lon of the location"}]'
+    And User enters Function required parameters as '["lat", "lon"]'
+    And User enters Function name as 'WeatherFunction'
+    And User enters Function description as 'a function to call weather based on lat and long'
+    And User clicks on Create Function button
+    And User clicks on Copy Catalog ID
+    And User clicks on Access Control button
+    And User clicks Make 'Function' Discoverable button
+    And User logs out from the application
+    And User login as 'editor'
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Discoverable Functions button
+    Then User sees the function name 'TestFunction' in the function catalog
+    And User clicks on the function name 'TestFunction' in the function catalog
+    And User click on the Request Access button
+    And User captures screenshot for "functionRequestAccess"
+    And User clicks on 'Cancel' button
+    And User logs out from the application
+    And User login as 'Admin'
+    And User completes screenshot capture and triggers comparison for 'Function Engines'

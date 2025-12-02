@@ -20,17 +20,34 @@ public class ModelPageUtils {
 
 	private static final Logger logger = LogManager.getLogger(ModelPageUtils.class);
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
+	private static final String OPTIONS_TAB_XPATH = "//button[@data-tesid='connect-to-{tabName}-tab']";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
 	private static final String CATALOG_NAME_DATA_TESTID = "importForm-Catalog-Name-textField";
 	private static final String OPEN_AI_KEY_DATA_TESTID = "model-importForm-Open-AI-Key-password";
 	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
+	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
+	private static final String TEXT_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
+	private static final String DROPDOWN_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-select']";
+	private static final String CREDENTIAL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-password']";
+	private static final String NUMBER_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-number']";
+	private static final String MANDATORY_TEXT_FIELDS_XPATH = "//div[@data-testid='importForm-{field}-textField']//span[text()='*']";
+	private static final String MANDATORY_DROPDOWN_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-select']//span[text()='*']";
+	private static final String MANDATORY_CREDENTIAL_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-password']//span[text()='*']";
+	private static final String MANDATORY_NUMBER_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-number']//span[text()='*']";
+	private static final String TEXT_FIELDS_DATA_TESTID = "importForm-{field}-textField";
+	private static final String DROPDOWN_FIELDS_DATA_TESTID = "model-importForm-{field}-select";
+	private static final String CREDENTIAL_FIELDS_DATA_TESTID = "model-importForm-{field}-password";
+	private static final String NUMBER_FIELDS_DATA_TESTID = "model-importForm-{field}-number";
+	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
+	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
 	private static final String MODEL_TOAST_MESSAGE_TESTID = "notification-success-alert";
+
 	// SMSS field
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
-	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
+	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'] [starts-with(normalize-space(string(.)), '{fieldName}')]";
 
 	public static List<String> createdModelIds = new ArrayList<>();
 	private static final String SEARCH_CATALOG_LABEL = "Search";
@@ -59,7 +76,7 @@ public class ModelPageUtils {
 	private static final String AWS_REGION_DATA_TESTID = "importForm-AWS_REGION-textField";
 	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
 	private static final String AWS_SECRET_KEY_DATA_TESTID = "importForm-AWS_SECRET_KEY-textField";
-	private static final String CREATE_MODEL_BUTTON_DATA_TESTID="importForm-submit-btn";
+	private static final String CREATE_MODEL_BUTTON_DATA_TESTID = "importForm-submit-btn";
 	private static final String MODEL_TYPE_DATATESTID = "//*[@data-tesid=\"connect-to-{modelType}-tab\"]";
 
 	public static void clickAddModelButton(Page page) {
@@ -77,6 +94,160 @@ public class ModelPageUtils {
 
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
+	}
+
+	public static void clickOnGroupTab(Page page, String tabName) {
+		String tab = tabName.replace(" ", "-");
+		page.locator(OPTIONS_TAB_XPATH.replace("{tabName}", tab)).click();
+	}
+
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		Locator fieldLocator = null;
+		String fieldName = field.replace(" ", "-");
+		switch (field) {
+		case "Catalog Name":
+		case "Model":
+		case "Init Script":
+		case "Tag":
+		case "Project":
+		case "GCP Region":
+		case "Service Account Credentials":
+		case "Model ID":
+		case "Region":
+			fieldLocator = page.locator(
+					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		case "Chat Type":
+		case "Record Questions and Responses":
+		case "Keep Conversation History":
+			fieldLocator = page.locator(
+					DROPDOWN_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		case "Open AI Key":
+		case "OpenAI API Key":
+		case "AWS Access Key ID":
+		case "AWS Secret Access Key":
+			fieldLocator = page.locator(
+					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		case "Max Input Tokens":
+		case "Max Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+			fieldLocator = page.locator(
+					NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid field provided for section fields");
+		}
+		fieldLocator.scrollIntoViewIfNeeded();
+		return fieldLocator.isVisible();
+	}
+
+	public static boolean isFieldMandatory(Page page, String field) {
+		Locator fieldLocator = null;
+		String fieldName = field.replace(" ", "-");
+		switch (field) {
+		case "Catalog Name":
+		case "Model":
+		case "Init Script":
+		case "Tag":
+		case "Project":
+		case "GCP Region":
+		case "Service Account Credentials":
+		case "Model ID":
+		case "Region":
+			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		case "Chat Type":
+		case "Record Questions and Responses":
+		case "Keep Conversation History":
+			fieldLocator = page.locator(MANDATORY_DROPDOWN_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		case "Open AI Key":
+		case "OpenAI API Key":
+		case "AWS Access Key ID":
+		case "AWS Secret Access Key":
+			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		case "Max Input Tokens":
+		case "Max Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+			fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid mandatory field provided");
+		}
+		fieldLocator.first().scrollIntoViewIfNeeded();
+		return fieldLocator.first().isVisible();
+	}
+
+	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
+		Locator fieldLocator = null;
+		String fieldName = field.replace(" ", "-");
+		String fieldType = "";
+		switch (field) {
+		case "Catalog Name":
+		case "Model":
+		case "Init Script":
+		case "Tag":
+		case "Project":
+		case "GCP Region":
+		case "Service Account Credentials":
+		case "Model ID":
+		case "Region":
+			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
+			fieldType = "Text";
+			break;
+		case "Chat Type":
+		case "Record Questions and Responses":
+		case "Keep Conversation History":
+			fieldLocator = page.getByTestId(DROPDOWN_FIELDS_DATA_TESTID.replace("{field}", fieldName));
+			fieldType = "Dropdown";
+			break;
+		case "Open AI Key":
+		case "OpenAI API Key":
+		case "AWS Access Key ID":
+		case "AWS Secret Access Key":
+			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
+					.locator("input");
+			fieldType = "Credential";
+			break;
+		case "Max Input Tokens":
+		case "Max Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+			fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
+			fieldType = "Number";
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid field");
+		}
+		fieldLocator.scrollIntoViewIfNeeded();
+		switch (fieldType) {
+		case "Text":
+		case "Credential":
+		case "Number":
+			if (field.equalsIgnoreCase("Catalog Name")) {
+				fieldLocator.fill(fieldValue + timestamp);
+			} else {
+				fieldLocator.fill(fieldValue);
+			}
+			break;
+		case "Dropdown":
+			fieldLocator.click();
+			page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue)).click();
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid field type");
+		}
+	}
+
+	public static boolean validateConnectButtonEnabled(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		return connectButton.isEnabled();
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
@@ -115,6 +286,7 @@ public class ModelPageUtils {
 
 	public static void clickOnSMSSTab(Page page) {
 		page.click(SMSS_TAB_XPATH);
+		page.waitForTimeout(1000);
 	}
 
 	public static String getExpectedCatalogTitle(String expTitle) {
@@ -137,7 +309,8 @@ public class ModelPageUtils {
 		return varNameInSMSSProperties;
 	}
 
-	public static void createModel(Page page, String modelType, String modelName, String catalogName, String openAIKey) {
+	public static void createModel(Page page, String modelType, String modelName, String catalogName,
+			String openAIKey) {
 		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenModel(page);
 		page.getByTestId("engineIndex-add-Model-btn").click();
@@ -220,7 +393,7 @@ public class ModelPageUtils {
 	}
 
 	public static String getAllFieldsInSMSSProperties(Page page, String fieldName) {
-		Locator locator;
+		Locator locator = null;
 		switch (fieldName) {
 		case "ENDPOINT":
 			locator = page.locator(ENDPOINT_SMSSPROPERTIES_XPATH);
@@ -229,10 +402,22 @@ public class ModelPageUtils {
 			// Custom handling for partial text match
 			locator = page.locator(INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH);
 			break;
+		case "MODEL":
+			Locator allModels = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
+			int count = allModels.count();
+			for (int i = 0; i < count; i++) {
+				String text = allModels.nth(i).textContent().replace('\u00A0', ' ').trim();
+				if (text.startsWith("MODEL ") && !text.startsWith("MODEL_")) {
+					locator = allModels.nth(i);
+					break;
+				}
+			}
+			break;
 		default:
 			locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
 			break;
 		}
+		AICorePageUtils.waitFor(locator);
 		locator.scrollIntoViewIfNeeded();
 		String value = null;
 		try {
@@ -257,41 +442,6 @@ public class ModelPageUtils {
 		if (currentValue.isEmpty()) {
 			versionField.fill(version);
 		}
-	}
-
-	public static boolean areMandatoryFieldFilled(Page page, String fieldName) {
-
-		Locator locator;
-		// Map field types correctly
-		switch (fieldName) {
-		case "MODEL_TYPE":
-		case "CHAT_TYPE":
-		case "KEEP_CONVERSATION_HISTORY":
-		case "KEEP_INPUT_OUTPUT":
-			locator = page.getByTestId("importForm-" + fieldName + "-select");
-			break;
-		default:
-			locator = page.getByTestId("importForm-" + fieldName + "-textField");
-			break;
-		}
-
-		try {
-			locator.waitFor(new Locator.WaitForOptions().setTimeout(10000));
-			String value = "";
-
-			if (locator.isVisible()) {
-				try {
-					value = locator.inputValue().trim();
-				} catch (PlaywrightException e) {
-					value = locator.textContent().trim();
-				}
-			}
-			return !value.isEmpty();
-		} catch (Exception e) {
-			logger.warn("Field not found or empty: " + fieldName);
-			return false;
-		}
-
 	}
 
 	public static boolean isSubmitButtonEnabled(Page page) {
@@ -417,6 +567,7 @@ public class ModelPageUtils {
 			awsSecretKeyField.fill(awsSecretKey);
 		}
 	}
+
 	public static void clickOnCreateButton(Page page, String buttonName) {
 		Locator createButtonLocator = page.getByTestId(CREATE_MODEL_BUTTON_DATA_TESTID);
 		AICorePageUtils.waitFor(createButtonLocator);
