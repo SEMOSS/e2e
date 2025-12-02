@@ -675,6 +675,26 @@ public class NotebookPageUtils {
 		page.locator(TRANSFORMATION_OPTIONS_XPATH.replace("{optionName}", optionName)).click();
 	}
 
+	public static void selectColumnForTransformation(Page page, String columnName) {
+		Locator columnDropdown = page.getByTitle("Open");
+		AICorePageUtils.waitFor(columnDropdown);
+		columnDropdown.click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(columnName).setExact(true)).click();	
+	}
+
+	public static boolean isColumnDataInUppercase(Page page, String columnName) {
+		String columnNameText = page.locator(OUTPUT_TABLE).last().locator("//th").textContent().trim();
+		if(columnNameText.equals(columnName)) {
+			Locator value  = page.locator(OUTPUT_TABLE).last().locator("//tbody//tr/td");
+			int rowCount = value.count();
+			for (int i = 0; i < rowCount; i++) {
+				String cellText = value.nth(i).textContent().trim();
+				if(!cellText.equals(cellText.toUpperCase()))
+				 return false; // if any cell text not in uppercase return falsecellText	
+		}}
+		return true;
+	}
+}
 	public static void enterColumnName(Page page, String columnName) {
 		Locator columnTextbox = page.getByLabel("Column Name");
 		AICorePageUtils.waitFor(columnTextbox);
