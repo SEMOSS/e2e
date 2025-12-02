@@ -23,6 +23,7 @@ public class DragAndDropBlocksPageUtils {
 
 	private static final String PAGE_1_ID = "#page-1";
 	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='page-1']";
+	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
@@ -384,6 +385,10 @@ public class DragAndDropBlocksPageUtils {
 
 	public static void selectPage(Page page, String pageName) {
 		page.locator(PAGE_SELECTION_XPATH.replace("{pageName}", pageName)).first().click();
+	}
+
+	public static void searchBlock(Page page, String blockName) {
+		page.locator(BLOCK_SEARCH_BOX_XPATH).fill(blockName);
 	}
 
 	public static void clickOnTerminalCard(Page page) {

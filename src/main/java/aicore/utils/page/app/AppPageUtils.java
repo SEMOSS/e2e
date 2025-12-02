@@ -54,8 +54,8 @@ public class AppPageUtils {
 		String expectedAppName = appName + " " + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
 		AICorePageUtils.waitFor(appCard);
-//		Locator anchor = page.locator(OPEN_APP_LINK_XPATH.replace("{appName}", expectedAppName));
-//		CommonUtils.removeTargetAttribute(anchor);
+		// Locator anchor = page.locator(OPEN_APP_LINK_XPATH.replace("{appName}", expectedAppName));
+		// CommonUtils.removeTargetAttribute(anchor);
 		appCard.click();
 	}
 

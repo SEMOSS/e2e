@@ -30,8 +30,7 @@ public class NotebookPageUtils {
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
 	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
-	private static final String OUTPUT_TABLE_HEADER_XPATH = "//table//th";
-	private static final String OUTPUT_TABLE_ROW_XPATH = "//table//tbody//tr";
+	private static final String OUTPUT_TABLE = "//table";
 	private static final String JSON_BODY_FIELD_VALUE_XPATH = "//div[contains(@class,'string-value MuiBox-root')]//span[text()='{fieldValue}']";
 	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//div[div[text()='Python']]";
 	private static final String SELECT_TYPE_LISTBOX_XPATH = "//li[text()='{type}']";
@@ -70,6 +69,8 @@ public class NotebookPageUtils {
 	private static final String NOTEBOOK_MENU_DELETE_BUTTON_XPATH = "//li[@value='Delete']";
 	private static final String NOTEBOOK_LIST_XPATH = "//li//p[text()='{NotebookName}']";
 	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
+	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
+	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -296,14 +297,18 @@ public class NotebookPageUtils {
 			AICorePageUtils.waitFor(hiddenOptions);
 			CommonUtils.moveMouseToCenterWithMargin(page, hiddenOptions, 60, 20);
 		} else {
-			Locator dataKeyPair = page.getByTestId("data-key-pair");
+			page.setViewportSize(1300, 600);
+			Locator dataKeyPair = page.getByTestId("data-key-pairtype").nth(0);
 			dataKeyPair.scrollIntoViewIfNeeded();
-			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 60, 10);
+			AICorePageUtils.waitFor(dataKeyPair);
+			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 60, 20);
 		}
 	}
 
 	public static void clickOnHiddenNotebookOption(Page page, String optionName) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(optionName)).click();
+		Locator option = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(optionName));
+		AICorePageUtils.waitFor(option);
+		option.click();
 	}
 
 	public static void selectHiddenOptionDropdown(Page page, String optionName) {
@@ -364,7 +369,7 @@ public class NotebookPageUtils {
 	}
 
 	public static List<String> getNotebookOutputTableHeader(Page page) {
-		return page.locator(OUTPUT_TABLE_HEADER_XPATH).allTextContents();
+		return page.locator(OUTPUT_TABLE).last().locator("th").allTextContents();
 	}
 
 	public static int getTotalRowsFromPreviewCaption(Page page) {
@@ -382,7 +387,7 @@ public class NotebookPageUtils {
 	}
 
 	public static boolean isColumnUniqueByHeader(Page page, String headerName) {
-		Locator headers = page.locator(OUTPUT_TABLE_HEADER_XPATH);
+		Locator headers = page.locator(OUTPUT_TABLE).last().locator("th");
 		int columnCount = headers.count();
 		int targetColumnIndex = -1;
 		for (int i = 0; i < columnCount; i++) {
@@ -395,7 +400,7 @@ public class NotebookPageUtils {
 		if (targetColumnIndex == -1) {
 			throw new RuntimeException("Header with label '" + headerName + "' not found");
 		}
-		Locator rows = page.locator(OUTPUT_TABLE_ROW_XPATH);
+		Locator rows = page.locator(OUTPUT_TABLE).last().locator("//tbody//tr");
 		int rowCount = rows.count();
 		Set<String> uniqueValues = new HashSet<>();
 		for (int i = 0; i < rowCount; i++) {
@@ -662,6 +667,39 @@ public class NotebookPageUtils {
 		Locator runAllCell = page.getByTitle("Run all cells");
 		runAllCell.click();
 		page.waitForLoadState(LoadState.LOAD);
-		page.getByTestId("data-key-pair").isVisible();
+		page.getByTestId("data-key-pair").last().isVisible();
+		page.waitForTimeout(1000);
 	}
+
+	public static void selectTransformationOptionDropdown(Page page, String optionName) {
+		page.locator(TRANSFORMATION_OPTIONS_XPATH.replace("{optionName}", optionName)).click();
+	}
+
+	public static void enterColumnName(Page page, String columnName) {
+		Locator columnTextbox = page.getByLabel("Column Name");
+		AICorePageUtils.waitFor(columnTextbox);
+		columnTextbox.fill(columnName);
+	}
+
+	public static List<String> getColumnValues(Page page, String columnName) {
+		List<String> headers = page.locator(OUTPUT_TABLE).last().locator("//th").allInnerTexts();
+		int columnIndex = -1;
+		for (int i = 0; i < headers.size(); i++) {
+			if (headers.get(i).trim().equalsIgnoreCase(columnName.trim())) {
+				columnIndex = i + 1;
+				break;
+			}
+		}
+		if (columnIndex == -1) {
+			throw new RuntimeException("Column not found: " + columnName);
+		}
+		return page.locator(OUTPUT_TABLE).last().locator("//tbody//tr/td[" + columnIndex + "]").allInnerTexts();
+	}
+
+	public static void clickOnIncludeTimeCheckbox(Page page) {
+		Locator checkbox = page.locator(TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH);
+		AICorePageUtils.waitFor(checkbox);
+		checkbox.click();
+	}
+
 }
