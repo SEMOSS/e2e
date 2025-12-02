@@ -359,7 +359,7 @@ public class NotebookCreationAndExecutionSteps {
 	public void user_selects_the_column_for_transformation(String columnName) {
 		notebookPage.selectColumnForTransformation(columnName);
 	}
-}
+
 	@And("User enters column name as {string}")
 	public void user_enters_column_name_as(String columnName) {
 		notebookPage.enterColumnName(columnName);

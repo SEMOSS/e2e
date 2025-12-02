@@ -254,7 +254,7 @@ public class NotebookPage {
 	public boolean isColumnDataInUppercase(String columnName) {
 		return NotebookPageUtils.isColumnDataInUppercase(page, columnName);
 	}
-}
+
 	public void enterColumnName(String columnName) {
 		NotebookPageUtils.enterColumnName(page, columnName);
 	}

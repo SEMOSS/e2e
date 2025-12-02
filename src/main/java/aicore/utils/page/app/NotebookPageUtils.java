@@ -694,7 +694,7 @@ public class NotebookPageUtils {
 		}}
 		return true;
 	}
-}
+
 	public static void enterColumnName(Page page, String columnName) {
 		Locator columnTextbox = page.getByLabel("Column Name");
 		AICorePageUtils.waitFor(columnTextbox);
