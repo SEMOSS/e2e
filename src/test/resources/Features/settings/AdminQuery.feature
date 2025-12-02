@@ -23,7 +23,7 @@ Feature: Admin query
  
   @LoginWithAdmin @Regression
   Scenario Outline: Validate '<DATABASE_NAME>' Admin query count
-    Given User created '<MODEL_COUNT>' models with the model 'GPT-3.5', catalog name 'Model', OpenAI key 'Test123', and variable name 'Var123'
+    Given User created '<MODEL_COUNT>' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model', OpenAI key 'Test123'
     And User created '<JOB_COUNT>' jobs with the job name 'Test Job', Pixel '1+1'
     When User opens Main Menu
     And User clicks on Open Settings

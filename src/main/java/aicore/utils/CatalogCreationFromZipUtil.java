@@ -52,6 +52,12 @@ public class CatalogCreationFromZipUtil {
 		page.getByText(option).click();
 	}
 
+	public static void clickOnFileUploadIcon(Page page) {
+		Locator icon = page.getByTestId("FileUploadOutlinedIcon");
+		AICorePageUtils.waitFor(icon);
+		icon.click();
+	}
+
 	public static String uploadFile(Page page, String fileName) {
 		String pathSeparator = FileSystems.getDefault().getSeparator();
 		Locator fileInput = page.locator(ADD_FILE_XPATH);
@@ -60,23 +66,36 @@ public class CatalogCreationFromZipUtil {
 		if (fileName.contains("/")) {
 			fileName.replace("/", pathSeparator);
 		}
-		fileInput.setInputFiles(Paths.get(relativePath + fileName));
+		if (fileInput.count() > 1) {
+			int count = fileInput.count();
+			for (int i = 0; i < count; i++) {
+				Locator input = fileInput.nth(i);
+				input.setInputFiles(Paths.get(relativePath + fileName));
+			}
+		} else {
+			fileInput.setInputFiles(Paths.get(relativePath + fileName));
+		}
+		
 		if (fileName.contains("/")) {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;
 			Locator uploadedFileName = page
 					.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", ActualFileName[fileNameIndex]));
-			String uploadedFileNameValue = uploadedFileName.textContent();
+			String uploadedFileNameValue = uploadedFileName.first().textContent();
 			return uploadedFileNameValue;
 		} else {
 			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
-			String uploadedFileNameValue = uploadedFileName.textContent();
+			String uploadedFileNameValue = uploadedFileName.first().textContent();
 			return uploadedFileNameValue;
-		}
+		}	
 	}
 
 	public static void clickOnCreateCatalogButton(Page page) {
 		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).isVisible();
 		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).click();
+	}
+
+	public static void clickOnUploadButton(Page page, String label) {
+		AICorePageUtils.clickOnButton(page, label);
 	}
 }

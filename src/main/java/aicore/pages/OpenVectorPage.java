@@ -38,7 +38,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
 	private static final String VECTOR_ID = "//*[@data-testid=\"ContentCopyOutlinedIcon\"]/../..";
 	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
-	private static final String COPIED_TOAST_MESSAGE_XPATH = "//div[text()='Successfully copied ID']";
+	private static final String COPIED_TOAST_DATA_TESTID = "notification-success-message";
 	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
 	private static final String VECTOR_TAGS_XPATH = "//h6[text()='Tag']/../../..//div//div//span[text()='{tagName}']";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
@@ -176,9 +176,9 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public String copiedSuccessToastMessage() {
-		page.locator(COPIED_TOAST_MESSAGE_XPATH)
+		page.getByTestId(COPIED_TOAST_DATA_TESTID)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.locator(COPIED_TOAST_MESSAGE_XPATH).textContent();
+		String toastMessage = page.getByTestId(COPIED_TOAST_DATA_TESTID).textContent();
 		return toastMessage;
 	}
 

@@ -320,6 +320,11 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnBlocksOption();
 	}
 
+	@And("User searches {string} block in the block searchbox")
+	public void user_searches_block_in_the_block_searchbox(String blockName) {
+		blocksPage.searchBlock(blockName);
+	}
+
 	@And("User clicks on {string} page")
 	public void user_clicks_on_page(String pageName) {
 		blocksPage.selectPage(pageName);
@@ -716,4 +721,56 @@ public class CreateAppUsingDragAndDropSteps {
 		appVariablePage.clickOnSaveVariableButton();
 	}
 
+	// bar charts
+	@And("User click on the Tools tab")
+	public void user_click_on_tool_tab() {
+		blocksPage.clickOnToolTab();
+	}
+
+	@And("User click on Conditional toole option")
+	public void user_click_on_conditional_tool_option() {
+		blocksPage.clickOnConditionalToolOption();
+	}
+
+	@And("User validates Conditional using {string}")
+	public void user_validates_conditional_using(String conditionalValues) {
+		String[] values = conditionalValues.split(",");
+		for (String val : values) {
+			boolean expected = Boolean.parseBoolean(val.trim());
+			blocksPage.applyConditional(val.trim());
+			boolean isVisible = blocksPage.isBarChartVisible();
+			if (expected) {
+				Assertions.assertTrue(isVisible, "Chart should be visible when conditional = true");
+			} else {
+				Assertions.assertFalse(isVisible, "Chart should NOT be visible when conditional = false");
+			}
+		}
+	}
+
+	@And("User click on Color Palette toole option")
+	public void user_click_on_color_palette_tool_option() {
+		blocksPage.clickOnColorPaletteToolOption();
+	}
+
+	@And("User validates Color Palette using {string}")
+	public void user_validates_color_palette_using(String colorPaletteValues) {
+		for (String action : colorPaletteValues.split(",")) {
+			action = action.trim().toLowerCase();
+			if (action.equals("add color")) {
+				boolean isAdded = blocksPage.performAddColor();
+				if (!isAdded) {
+					throw new AssertionError("Failed to add color from palette.");
+				}
+			} else if (action.equals("change color")) {
+				blocksPage.performCheckColor();
+			} else {
+				throw new AssertionError("Invalid color palette action: " + action);
+			}
+		}
+	}
+
+	@And("User click on Legend Option and turn on the toggle")
+	public void user_click_on_legend_option_and_turn_on_the_toggle() {
+		blocksPage.clickOnLegendOptionAndTurnOnTheToggle();
+	}
 }

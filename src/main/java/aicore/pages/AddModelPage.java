@@ -29,6 +29,10 @@ public class AddModelPage {
 		ModelPageUtils.clickAddModelButton(page);
 	}
 
+	public void selectModelType(String modelType) {
+		ModelPageUtils.selectModelType(page, modelType);
+	}
+
 	public void selectModel(String modelName) {
 		ModelPageUtils.selectModel(page, modelName);
 	}
@@ -37,16 +41,32 @@ public class AddModelPage {
 		ModelPageUtils.selectOpenAi(page, aiModelName);
 	}
 
+	public void clickOnGroupTab(String tabName) {
+		ModelPageUtils.clickOnGroupTab(page, tabName);
+	}
+
+	public boolean fieldUnderSection(String section, String field) {
+		return ModelPageUtils.fieldUnderSection(page, section, field);
+	}
+
+	public boolean isFieldMandatory(String field) {
+		return ModelPageUtils.isFieldMandatory(page, field);
+	}
+
+	public void fillModelCreationForm(String fieldName, String fieldValue) {
+		ModelPageUtils.fillCatalogCreationForm(page, fieldName, fieldValue, timestamp);
+	}
+
+	public boolean validateConnectButtonEnabled() {
+		return ModelPageUtils.validateConnectButtonEnabled(page);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
 	}
 
 	public void enterOpenAIKey(String openAIKey) {
 		ModelPageUtils.enterOpenAIKey(page, openAIKey);
-	}
-
-	public void enterVariableName(String varName) {
-		ModelPageUtils.enterVariableName(page, varName);
 	}
 
 	public void clickOnCreateModelButton() {
@@ -85,8 +105,8 @@ public class AddModelPage {
 		return ModelPageUtils.verifyKeepConversationHistoryValueInSMSS(page, fieldName);
 	}
 
-	public void createModel(String modelName, String catalogName, String openAIKey, String varName) {
-		ModelPageUtils.createModel(page, modelName, catalogName, openAIKey, varName);
+	public void createModel(String modelType, String modelName, String catalogName, String openAIKey) {
+		ModelPageUtils.createModel(page, modelType, modelName, catalogName, openAIKey);
 	}
 
 	public void deleteCreatedModel() {
@@ -368,10 +388,6 @@ public class AddModelPage {
 
 	public void enterVersion(String version) {
 		ModelPageUtils.enterTheVersion(page, version);
-	}
-
-	public boolean areMandatoryFieldFilled(String fieldName) {
-		return ModelPageUtils.areMandatoryFieldFilled(page, fieldName);
 	}
 
 	public boolean isSubmitButtonEnabled() {
