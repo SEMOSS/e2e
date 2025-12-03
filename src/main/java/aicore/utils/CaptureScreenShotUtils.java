@@ -70,7 +70,6 @@ public class CaptureScreenShotUtils {
 				}
 			}
 		}
-
 		graphics.dispose();
 		ImageIO.write(image, "png", path.toFile());
 	}

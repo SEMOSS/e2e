@@ -131,6 +131,25 @@ Feature: App Library Documentation
     And User selects "Landing Page" from Template List
     And User enters app name as 'Demo landing page'
     And User captures a "buttontype" and highlights the "submit" with name "landingone"
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User completes screenshot capture and triggers comparison for 'Landing Page Template'
+
+    @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+    Scenario: Documentation for Variable Guide Template page 1
+    Given User captures documentation screenshot for 'Navigating'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User selects "Variables Guide" from Template List
+    And User enters app name as 'Variable Guide Demo'
+    And User enters app name as 'Test app'
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User captures screenshot for form "vartwo"
+    And User completes screenshot capture and triggers comparison for 'Variable Guide Template'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for Variable Guide Template Creation
