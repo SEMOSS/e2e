@@ -320,6 +320,11 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnBlocksOption();
 	}
 
+	@And("User searches {string} block in the block searchbox")
+	public void user_searches_block_in_the_block_searchbox(String blockName) {
+		blocksPage.searchBlock(blockName);
+	}
+
 	@And("User clicks on {string} page")
 	public void user_clicks_on_page(String pageName) {
 		blocksPage.selectPage(pageName);
