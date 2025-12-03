@@ -9,6 +9,11 @@ public class PlaygroundPageUtils {
     private static final String PLAYGROUND_APP_BUTTON_XPATH = "//span[text()='Experiment in our Playground™']/../../..//a";
     private static final String PROMPT_THE_MODEL_BUTTON_LABEL = "Prompt the Model";
     private static final String CONFIGURATION_MENU_XPATH = "//form";
+    private static final String MODEL_CATALOG_DROPDOWN = "//div//label[text()='Model']//following-sibling::button//span";
+    private static final String MODEL_CATALOG_DROPDOWN_CHECKED = "//div[@role='group']//div//span[contains(text(),'{catalogName}')]/../../*[1]";
+    private static final String MODEL_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
+    private static final String MODEL_ITEM_BY_NAME = "//div[@data-slot='command-group']//div//div//div//span[contains(text(),'{modelName}')]";
+    private static final String MODEL_CHECKBOX_BY_NAME = ".//div[contains(@class,'model-item') and normalize-space(text())='{MODEL}']//input[@type='checkbox']";
 
     public static void clickOnPlaygroundAppButton(Page page) {
         Locator anchor = page.locator(PLAYGROUND_APP_BUTTON_XPATH);
@@ -37,7 +42,69 @@ public class PlaygroundPageUtils {
 
     public static void clickOnOpenConfigurationMenuButton(Page page, String buttonName) {
         Locator button = page.getByLabel(buttonName);
-        button.click();
+        if(button.isEnabled()) {
+            button.click(); 
+        }else {
+            throw new AssertionError("The button '" + buttonName + "' is disabled and cannot be clicked.");
+        }
+    }
+
+    public static void verifyModelCatalogDropdownPresent(Page page, String modelName) {
+        Locator dropdown = page.locator(MODEL_CATALOG_DROPDOWN);
+        AICorePageUtils.waitFor(dropdown);
+        String dropdownText = dropdown.textContent();
+        if (!dropdown.isVisible() && (dropdownText == null || dropdownText.isEmpty())) {
+            throw new AssertionError("Model catalog text not visible");
+        }
+    }
+
+    public static void clickOnModelCatalogDropdown(Page page) {
+        Locator dropdown = page.locator(MODEL_CATALOG_DROPDOWN);
+        AICorePageUtils.waitFor(dropdown);
+        try {
+            dropdown.click();
+        } catch (Exception e) {
+            dropdown.click(new Locator.ClickOptions().setForce(true));
+        }
+    }
+
+    public static void verifyModelIsChecked(Page page, String modelName) {
+        Locator dropdown = page.locator(MODEL_CATALOG_DROPDOWN);
+        AICorePageUtils.waitFor(dropdown);
+        String dropdownText = dropdown.textContent();
+        if(!(modelName.equals("default")) && dropdownText.contains(modelName)) {
+        Locator checkbox = page.locator(MODEL_CATALOG_DROPDOWN_CHECKED.replace("{catalogName}", modelName));
+        AICorePageUtils.waitFor(checkbox);
+        if (!checkbox.isVisible()){
+            throw new AssertionError("Model with partial name'" + modelName + "' is not checked in dropdown");
+        }
+    }
+    }
+
+    public static void searchModelInSearchbox(Page page, String modelName) {
+        Locator input = page.locator(MODEL_CATALOG_SEARCH_INPUT);
+        AICorePageUtils.waitFor(input);
+        input.fill(modelName);
+        page.waitForTimeout(300);
+    }
+
+    public static void verifyModelVisibleInDropdown(Page page, String modelName) {
+        Locator model = page.locator(MODEL_ITEM_BY_NAME.replace("{modelName}", modelName));
+        AICorePageUtils.waitFor(model);
+        if (!model.isVisible()) {
+            throw new AssertionError("Model '" + modelName + "' not visible in dropdown");
+        }
+    }
+
+    public static void selectModelFromDropdown(Page page, String modelName) {
+        Locator model = page.locator(MODEL_ITEM_BY_NAME.replace("{modelName}", modelName));
+        AICorePageUtils.waitFor(model);
+        try {
+            model.click();
+        } catch (Exception e) {
+            model.click(new Locator.ClickOptions().setForce(true));
+        }
+        page.waitForTimeout(300);
     }
 
     public static void verifyConfigurationMenuIsOpened(Page page) {

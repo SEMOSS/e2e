@@ -31,6 +31,30 @@ public class PlaygroundPage {
         PlaygroundPageUtils.clickOnOpenConfigurationMenuButton(page, buttonName);
     }
 
+    public void verifyModelCatalogDropdownPresent(String modelName) {
+        PlaygroundPageUtils.verifyModelCatalogDropdownPresent(page, modelName);
+    }
+
+    public void clickOnModelCatalogDropdown() {
+        PlaygroundPageUtils.clickOnModelCatalogDropdown(page);
+    }
+
+    public void verifyModelIsChecked(String modelName) {
+        PlaygroundPageUtils.verifyModelIsChecked(page, modelName);
+    }
+
+    public void searchModelInSearchbox(String modelName) {
+        PlaygroundPageUtils.searchModelInSearchbox(page, modelName);
+    }
+
+    public void verifyModelVisibleInDropdown(String modelName) {
+        PlaygroundPageUtils.verifyModelVisibleInDropdown(page, modelName);
+    }
+
+    public void selectModelFromDropdown(String modelName) {
+        PlaygroundPageUtils.selectModelFromDropdown(page, modelName);
+    }
+
     public void verifyConfigurationMenuIsOpened() {
         PlaygroundPageUtils.verifyConfigurationMenuIsOpened(page);
     }
