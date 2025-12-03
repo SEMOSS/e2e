@@ -20,7 +20,7 @@ public class ModelPageUtils {
 
 	private static final Logger logger = LogManager.getLogger(ModelPageUtils.class);
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
-	private static final String OPTIONS_TAB_XPATH = "//button[@data-tesid='connect-to-{tabName}-tab']";
+	private static final String OPTIONS_TAB_DATA_TESTID = "connect-to-{tabName}-tab";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
 	private static final String CATALOG_NAME_DATA_TESTID = "importForm-Catalog-Name-textField";
 	private static final String OPEN_AI_KEY_DATA_TESTID = "model-importForm-Open-AI-Key-password";
@@ -80,7 +80,7 @@ public class ModelPageUtils {
 	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
 	private static final String AWS_SECRET_KEY_DATA_TESTID = "importForm-AWS_SECRET_KEY-textField";
 	private static final String CREATE_MODEL_BUTTON_DATA_TESTID = "importForm-submit-btn";
-	private static final String MODEL_TYPE_DATATESTID = "//*[@data-tesid=\"connect-to-{modelType}-tab\"]";
+	private static final String MODEL_TYPE_DATATESTID = "//*[@data-testid=\"connect-to-{modelType}-tab\"]";
 
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
@@ -101,7 +101,7 @@ public class ModelPageUtils {
 
 	public static void clickOnGroupTab(Page page, String tabName) {
 		String tab = tabName.replace(" ", "-");
-		page.locator(OPTIONS_TAB_XPATH.replace("{tabName}", tab)).click();
+		page.getByTestId(OPTIONS_TAB_DATA_TESTID.replace("{tabName}", tab)).click();
 	}
 
 	public static boolean fieldUnderSection(Page page, String section, String field) {
