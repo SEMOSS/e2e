@@ -110,6 +110,12 @@ public class DragAndDropBlocksPageUtils {
 	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
 	private static final String ADDED_COLOR_PALETTE_XPATH = "//div[normalize-space()='MyPalette']";
+	private static final String LEGEND_OPTION_XPATH = "//span[text()='Legend']";
+	private static final String LEGEND_OPTION_CHECKBOX_XPATH = "//p[normalize-space()='Show Legend']/preceding-sibling::span//input[@type='checkbox']";
+	private static final String EDIT_XAXIS_OPTION_XPATH = "//span[text()='Edit X Axis']";
+	public static final String EDIT_YAXIS_OPTION_XPATH = "//span[text()='Edit Y Axis']";
+	public static final String VALUE_LABEL_OPTION_XPATH = "//span[text()='Value Label']";
+	public static final String VALUE_LABELS_DROPDOWN_XPATH = "//li[normalize-space()='{valueLabelPosition}']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -389,12 +395,17 @@ public class DragAndDropBlocksPageUtils {
 		case "Mermaid Chart":
 			chartLocator = page.locator(DROPPED_MERMAID_CHART_XPATH);
 			break;
-		case "Bar Chart Tool":
+		case "Color Pallette Tool":
 			chartLocator = page.locator(CHART_XPATH);
 			break;
 		case "Legend Chart Tool":
 			chartLocator = page.locator(CHART_XPATH);
 			break;
+
+		case "Edit X-Axix Tool":
+			chartLocator = page.locator(CHART_XPATH);
+			break;
+
 		default:
 			chartLocator = page.locator(CHART_XPATH);
 		}
@@ -727,8 +738,241 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnLegendOptionAndTurnOnTheToggle(Page page) {
-		page.locator("//span[text()='Legend']").click();
-		page.locator("//input[@type='checkbox']").check();
+		page.locator(LEGEND_OPTION_XPATH).click();
+		page.locator(LEGEND_OPTION_CHECKBOX_XPATH).check();
 	}
 
+	public static void clickOnEditXAxisOption(Page page) {
+		page.locator(EDIT_XAXIS_OPTION_XPATH).click();
+	}
+
+	public static void updateXAxisSettings(Page page, String values) {
+
+		for (String pair : values.split(",")) {
+
+			if (!pair.contains("=")) {
+				throw new AssertionError("Invalid parameter: " + pair);
+			}
+
+			String[] kv = pair.split("=");
+			String key = kv[0].trim().toLowerCase();
+			String value = kv[1].trim();
+
+			switch (key) {
+			case "showaxistitle":
+				boolean shouldShowTitle = Boolean.parseBoolean(value);
+				boolean currentTitle = page.locator(
+						"//p[normalize-space(.)='Show Axis Title']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (currentTitle != shouldShowTitle) {
+					page.locator(
+							"//p[normalize-space(.)='Show Axis Title']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+
+			case "title":
+				page.locator("//p[contains(text(),'Set Axis Title')]/parent::div//input[@type='text']").fill(values);
+				break;
+
+			case "fontsize":
+				page.locator("//p[contains(text(),'Edit Axis Title Font Size')]/parent::div//input[@type='number']")
+						.fill(value);
+				break;
+
+			case "gap":
+				page.locator("//p[contains(text(),'Axis Gap')]/parent::div//input[@type='number']").fill(value);
+				break;
+
+			case "labelfontsize":
+				page.locator("//p[contains(text(),'Edit Label Font Size:')]/parent::div//input[@type='number']")
+						.fill(value);
+				break;
+
+			case "showlabels":
+				boolean shouldShow = Boolean.parseBoolean(value);
+				boolean current = page.locator(
+						"//p[normalize-space(.)='Show XAxis Labels']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (current != shouldShow) {
+					page.locator(
+							"//p[normalize-space(.)='Show XAxis Labels']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+
+			case "rotatevalues":
+				page.locator("//p[contains(text(),'Rotate X-Axis Values')]/following::input[@type='range']")
+						.fill(value);
+				break;
+
+			case "lineticks":
+				boolean ticks = Boolean.parseBoolean(value);
+				boolean currentTicks = page.locator(
+						"//p[normalize-space(.)='Show XAxis Line Ticks']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (currentTicks != ticks) {
+					page.locator(
+							"//p[normalize-space(.)='Show XAxis Line Ticks']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+
+			case "x-axiszoom":
+				boolean zoom = Boolean.parseBoolean(value);
+				boolean currentZoom = page.locator(
+						"//p[normalize-space(.)='Show / Hide X-Axis Zoom']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (currentZoom != zoom) {
+					page.locator(
+							"//p[normalize-space(.)='Show / Hide X-Axis Zoom']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+
+			default:
+				throw new AssertionError("Unknown X Axis setting: " + key);
+			}
+		}
+	}
+
+	public static void clickOnEditYAxisOption(Page page) {
+		page.locator(EDIT_YAXIS_OPTION_XPATH).click();
+	}
+
+	public static void updateYAxisSettings(Page page, String values) {
+
+		for (String pair : values.split(",")) {
+
+			if (!pair.contains("=")) {
+				throw new AssertionError("Invalid parameter: " + pair);
+			}
+			String[] kv = pair.split("=");
+			String key = kv[0].trim().toLowerCase();
+			String value = kv[1].trim();
+			switch (key) {
+			case "showaxistitle":
+				boolean shouldShowTitle = Boolean.parseBoolean(value);
+				boolean currentTitle = page.locator(
+						"//p[normalize-space(.)='Show Axis Title']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (currentTitle != shouldShowTitle) {
+					page.locator(
+							"//p[normalize-space(.)='Show Axis Title']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+			case "title":
+				page.locator("//p[contains(text(),'Set Axis Title')]/parent::div//input[@type='text']").fill(values);
+				break;
+			case "fontsize":
+				page.locator("//p[contains(text(),'Edit Axis Title Font Size')]/parent::div//input[@type='number']")
+						.fill(value);
+				break;
+			case "gap":
+				page.locator("//p[contains(text(),'Axis Gap')]/parent::div//input[@type='number']").fill(value);
+				break;
+			case "labelfontsize":
+				page.locator("//p[contains(text(),'Edit Label Font Size:')]/parent::div//input[@type='number']")
+						.fill(value);
+				break;
+			case "showlabels":
+				boolean shouldShow = Boolean.parseBoolean(value);
+				boolean current = page.locator(
+						"//p[normalize-space(.)='Show YAxis Labels']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (current != shouldShow) {
+					page.locator(
+							"//p[normalize-space(.)='Show YAxis Labels']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+			case "lineticks":
+				boolean ticks = Boolean.parseBoolean(value);
+				boolean currentTicks = page.locator(
+						"//p[normalize-space(.)='Show YAxis Line Ticks']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (currentTicks != ticks) {
+					page.locator(
+							"//p[normalize-space(.)='Show YAxis Line Ticks']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+			case "rotatevalues":
+				page.locator("//p[contains(text(),'Rotate Y-Axis Values')]/following::input[@type='range']")
+						.fill(value);
+				break;
+			case "y-axiszoom":
+				boolean zoom = Boolean.parseBoolean(value);
+				boolean currentZoom = page.locator(
+						"//p[normalize-space(.)='Show / Hide Y-Axis Zoom']/preceding-sibling::span//input[@type='checkbox']")
+						.isChecked();
+				if (currentZoom != zoom) {
+					page.locator(
+							"//p[normalize-space(.)='Show / Hide Y-Axis Zoom']/preceding-sibling::span//input[@type='checkbox']")
+							.click();
+				}
+				break;
+			default:
+				throw new AssertionError("Unknown Y Axis setting: " + key);
+			}
+
+		}
+	}
+
+	public static void clickOnValueLabelOption(Page page) {
+		page.locator(VALUE_LABEL_OPTION_XPATH).click();
+	}
+
+	public static void turnOnValueLabelToggle(Page page) {
+		Locator valueLabelToggle = page
+				.locator("//p[normalize-space()='Show Value Labels']/preceding-sibling::span//input[@type='checkbox']");
+		if (!valueLabelToggle.isChecked()) {
+			valueLabelToggle.click();
+		}
+	}
+
+	public static void updateValueLabelSettings(Page page, String values) {
+
+		for (String pair : values.split(",")) {
+
+			if (!pair.contains("=")) {
+				throw new AssertionError("Invalid parameter: " + pair);
+			}
+			String[] kv = pair.split("=");
+			String key = kv[0].trim().toLowerCase();
+			String value = kv[1].trim();
+			switch (key) {
+			case "position":
+				page.locator("//div[@id='label-position']").click();
+				page.locator(VALUE_LABELS_DROPDOWN_XPATH.replace("{valueLabelPosition}", value)).click();
+				break;
+			case "rotatelabel":
+				page.locator("//input[@id='rotate-label']").fill(value);
+				break;
+			case "selectalignment":
+				page.locator("//div[@id='alignment-label']").click();
+				page.locator(VALUE_LABELS_DROPDOWN_XPATH.replace("{valueLabelPosition}", value)).click();
+				break;
+			case "selectfont":
+				page.locator("//div[@id='font']").click();
+				page.locator(VALUE_LABELS_DROPDOWN_XPATH.replace("{valueLabelPosition}", value)).click();
+				break;
+			case "selectfontsize":
+				page.locator("//input[@id='font-size']").fill(value);
+				break;
+			case "selectfontweight":
+				page.locator("//div[@id='font-weight']").click();
+				page.locator(VALUE_LABELS_DROPDOWN_XPATH.replace("{valueLabelPosition}", value)).click();
+				break;
+			case "selectcolor":
+				page.locator("//span[@class='css-rbrynm']").click();
+				page.locator("//div[@title='#000000']").click();
+				break;
+			default:
+				throw new AssertionError("Unknown Value Label setting: " + key);
+			}
+		}
+
+	}
 }
