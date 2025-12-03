@@ -24,10 +24,11 @@ Feature: Create app using Read diabetes Template
     And User fetch the app name for drag and drop app
     And User clicks on Notebook
     And User clicks on Query name as 'on-page-load'
+     And User selects 'TestDatabase' database from the dropdown
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
 
-  @LoginWithAdmin @Regression
+  @LoginWithAdmin @Regression @ApplicationBugFailure
   Scenario: Create app using Read Diabetes Record Template with updating existing data
     Given User is on Home page
     When User opens Main Menu

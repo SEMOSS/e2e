@@ -31,14 +31,17 @@ public class ModelPageUtils {
 	private static final String DROPDOWN_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-select']";
 	private static final String CREDENTIAL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-password']";
 	private static final String NUMBER_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-number']";
+	private static final String URL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-url']";
 	private static final String MANDATORY_TEXT_FIELDS_XPATH = "//div[@data-testid='importForm-{field}-textField']//span[text()='*']";
 	private static final String MANDATORY_DROPDOWN_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-select']//span[text()='*']";
 	private static final String MANDATORY_CREDENTIAL_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-password']//span[text()='*']";
 	private static final String MANDATORY_NUMBER_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-number']//span[text()='*']";
+	private static final String MANDATORY_URL_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-url']//span[text()='*']";
 	private static final String TEXT_FIELDS_DATA_TESTID = "importForm-{field}-textField";
 	private static final String DROPDOWN_FIELDS_DATA_TESTID = "model-importForm-{field}-select";
 	private static final String CREDENTIAL_FIELDS_DATA_TESTID = "model-importForm-{field}-password";
 	private static final String NUMBER_FIELDS_DATA_TESTID = "model-importForm-{field}-number";
+	private static final String URL_FIELDS_DATA_TESTID = "model-importForm-{field}-url";
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
 	private static final String MODEL_TOAST_MESSAGE_TESTID = "notification-success-alert";
@@ -71,7 +74,7 @@ public class ModelPageUtils {
 	private static final String SELECT_RECORD_QUESTIONS_AND_RESPONSES_FOR_MODEL_DATA_TESTID = "importForm-KEEP_INPUT_OUTPUT-select";
 	private static final String MAX_TOKENS_DATA_TESTID = "importForm-MAX_TOKENS-textField";
 	private static final String MAX_INPUT_TOKENS_DATA_TESTID = "importForm-MAX_INPUT_TOKENS-textField";
-	private static final String ENDPOINT_SMSSPROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1 detected-link']";
+	private static final String ENDPOINT_SMSSPROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'] [starts-with(normalize-space(string(.)), 'ENDPOINT')]/parent::*";
 	private static final String INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH = "//div[@class='view-line']//span[contains(text(),'INIT_MODEL_ENGINE')]";
 	private static final String AWS_REGION_DATA_TESTID = "importForm-AWS_REGION-textField";
 	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
@@ -114,19 +117,26 @@ public class ModelPageUtils {
 		case "Service Account Credentials":
 		case "Model ID":
 		case "Region":
+		case "Model Name":
+		case "API Version":
 			fieldLocator = page.locator(
 					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Chat Type":
 		case "Record Questions and Responses":
 		case "Keep Conversation History":
+		case "Deployment Type":
+		case "Completion Type":
+		case "Type":
 			fieldLocator = page.locator(
 					DROPDOWN_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Open AI Key":
+		case "OPEN AI Key":
 		case "OpenAI API Key":
 		case "AWS Access Key ID":
 		case "AWS Secret Access Key":
+		case "Azure Open AI Key":
 			fieldLocator = page.locator(
 					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
@@ -137,8 +147,20 @@ public class ModelPageUtils {
 			fieldLocator = page.locator(
 					NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
+		case "Endpoint":
+		case "Azure Endpoint":
+			Locator urlField = page.locator(
+					URL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			Locator textField = page.locator(
+					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+			if (urlField.count() > 0) {
+				fieldLocator = urlField;
+			} else {
+				fieldLocator = textField;
+			}
+			break;
 		default:
-			throw new IllegalArgumentException("Invalid field provided for section fields");
+			throw new IllegalArgumentException("Invalid field provided for section fields: " + field);
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
@@ -157,17 +179,24 @@ public class ModelPageUtils {
 		case "Service Account Credentials":
 		case "Model ID":
 		case "Region":
+		case "Model Name":
+		case "API Version":
 			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Chat Type":
 		case "Record Questions and Responses":
 		case "Keep Conversation History":
+		case "Deployment Type":
+		case "Completion Type":
+		case "Type":
 			fieldLocator = page.locator(MANDATORY_DROPDOWN_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Open AI Key":
+		case "OPEN AI Key":
 		case "OpenAI API Key":
 		case "AWS Access Key ID":
 		case "AWS Secret Access Key":
+		case "Azure Open AI Key":
 			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Max Input Tokens":
@@ -176,8 +205,18 @@ public class ModelPageUtils {
 		case "Context Window":
 			fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
+		case "Endpoint":
+		case "Azure Endpoint":
+			Locator urlField = page.locator(MANDATORY_URL_FIELDS_XPATH.replace("{field}", fieldName));
+			Locator textField = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
+			if (urlField.count() > 0) {
+				fieldLocator = urlField;
+			} else {
+				fieldLocator = textField;
+			}
+			break;
 		default:
-			throw new IllegalArgumentException("Invalid mandatory field provided");
+			throw new IllegalArgumentException("Invalid mandatory field provided: " + field);
 		}
 		fieldLocator.first().scrollIntoViewIfNeeded();
 		return fieldLocator.first().isVisible();
@@ -197,19 +236,26 @@ public class ModelPageUtils {
 		case "Service Account Credentials":
 		case "Model ID":
 		case "Region":
+		case "Model Name":
+		case "API Version":
 			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
 			fieldType = "Text";
 			break;
 		case "Chat Type":
 		case "Record Questions and Responses":
 		case "Keep Conversation History":
+		case "Deployment Type":
+		case "Completion Type":
+		case "Type":
 			fieldLocator = page.getByTestId(DROPDOWN_FIELDS_DATA_TESTID.replace("{field}", fieldName));
 			fieldType = "Dropdown";
 			break;
 		case "Open AI Key":
+		case "OPEN AI Key":
 		case "OpenAI API Key":
 		case "AWS Access Key ID":
 		case "AWS Secret Access Key":
+		case "Azure Open AI Key":
 			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
 					.locator("input");
 			fieldType = "Credential";
@@ -221,14 +267,27 @@ public class ModelPageUtils {
 			fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
 			fieldType = "Number";
 			break;
+		case "Endpoint":
+		case "Azure Endpoint":
+			Locator urlField = page.getByTestId(URL_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
+			Locator textField = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName))
+					.locator("input");
+			if (urlField.count() > 0) {
+				fieldLocator = urlField;
+			} else {
+				fieldLocator = textField;
+			}
+			fieldType = "Url";
+			break;
 		default:
-			throw new IllegalArgumentException("Invalid field");
+			throw new IllegalArgumentException("Invalid field: " + field);
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		switch (fieldType) {
 		case "Text":
 		case "Credential":
 		case "Number":
+		case "Url":
 			if (field.equalsIgnoreCase("Catalog Name")) {
 				fieldLocator.fill(fieldValue + timestamp);
 			} else {
@@ -286,7 +345,7 @@ public class ModelPageUtils {
 
 	public static void clickOnSMSSTab(Page page) {
 		page.click(SMSS_TAB_XPATH);
-		page.waitForTimeout(1000);
+		page.waitForTimeout(2000);
 	}
 
 	public static String getExpectedCatalogTitle(String expTitle) {

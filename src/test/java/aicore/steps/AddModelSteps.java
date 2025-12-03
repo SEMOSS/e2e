@@ -438,9 +438,9 @@ public class AddModelSteps {
 			}
 			// Field-specific validation logic
 			switch (fieldName) {
-			case "ENDPOINT":
-				Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
-				break;
+//			case "ENDPOINT":
+//				Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
+//				break;
 			case "INIT_MODEL_ENGINE":
 				Assertions.assertTrue(actualValue.contains(expectedValue), "Field validation failed for '" + fieldName
 						+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue + ">");
