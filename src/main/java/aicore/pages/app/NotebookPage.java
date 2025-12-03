@@ -247,6 +247,14 @@ public class NotebookPage {
 		NotebookPageUtils.selectTransformationOptionDropdown(page, optionName);
 	}
 
+	public void selectColumnForTransformation(String columnName) {
+		NotebookPageUtils.selectColumnForTransformation(page, columnName);
+	}
+
+	public boolean isColumnDataInUppercase(String columnName) {
+		return NotebookPageUtils.isColumnDataInUppercase(page, columnName);
+	}
+
 	public void enterColumnName(String columnName) {
 		NotebookPageUtils.enterColumnName(page, columnName);
 	}

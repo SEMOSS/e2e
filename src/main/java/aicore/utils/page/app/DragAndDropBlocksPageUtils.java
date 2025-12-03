@@ -577,37 +577,16 @@ public class DragAndDropBlocksPageUtils {
 
 	public static int waitForChartCount(Page page, int expectedCount) {
 		Locator charts = page.locator(CHART_COUNT_ON_PAGE_XPATH);
-		// Polling loop with configurable timeout — more robust in slower environments
-		long timeoutMs = 30000; // total wait time: 30 seconds
-		long pollIntervalMs = 500; // poll every 500ms
-		long deadline = System.currentTimeMillis() + timeoutMs;
-		while (System.currentTimeMillis() <= deadline) {
+		int retries = 20; // retry for 10 seconds (20 * 500ms)
+		for (int i = 0; i < retries; i++) {
 			int currentCount = charts.count();
-			// Use >= because sometimes extra canvases/markers may appear; ensure at least
-			// expected
-			if (currentCount >= expectedCount) {
-				// Try to ensure the last chart is visible/rendered before returning
-				if (currentCount > 0) {
-					try {
-						charts.nth(currentCount - 1).waitFor(
-								new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(5000));
-					} catch (Exception ignored) {
-						// ignore — we still return the count if canvases are present
-					}
-				}
+			if (currentCount == expectedCount) {
 				return currentCount;
 			}
-			try {
-				Thread.sleep(pollIntervalMs);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				break;
-			}
+			page.waitForTimeout(500);
 		}
-
 		int finalCount = charts.count();
-		throw new RuntimeException("Expected at least " + expectedCount + " charts within " + (timeoutMs / 1000)
-				+ "s, but found " + finalCount);
+		throw new RuntimeException("Expected " + expectedCount + " charts, but found " + finalCount);
 	}
 
 	public static void clickOnSyncChangesButton(Page page) {
