@@ -205,6 +205,12 @@ public class NotebookCreationAndExecutionSteps {
 		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
 	}
 
+	@Then("User verifies the transformed data for {string} column is in uppercase format")
+	public void user_verifies_the_transformed_data_for_column_is_in_uppercase_format(String columnName) {
+		boolean isUppercase = notebookPage.isColumnDataInUppercase(columnName);
+		Assertions.assertTrue(isUppercase, "Column data is not in uppercase format for column: " + columnName);
+	}
+
 	@Then("User can see total {string} rows")
 	public void user_can_see_total_rows(String rowsCount) {
 		int actualRowsCount = notebookPage.getTotalRowsFromPreviewCaption();
@@ -347,6 +353,11 @@ public class NotebookCreationAndExecutionSteps {
 	@And("User selects {string} from the Transformation options")
 	public void user_selects_from_the_transformation_options(String optionName) {
 		notebookPage.selectTransformationOptionDropdown(optionName);
+	}
+
+	@And("User selects the column {string} for transformation")
+	public void user_selects_the_column_for_transformation(String columnName) {
+		notebookPage.selectColumnForTransformation(columnName);
 	}
 
 	@And("User enters column name as {string}")
