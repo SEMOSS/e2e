@@ -5,7 +5,7 @@ Feature: Create Diabetes Record Template
     Given User opens Main Menu
     And User clicks on Open Database
     When User clicks on Add Database
-     And User clicks on file upload icon
+    And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
@@ -24,10 +24,11 @@ Feature: Create Diabetes Record Template
     And User fetch the app name for drag and drop app
     And User clicks on Notebook
     And User clicks on Query name as 'insert-diabetes-record'
+    And User selects 'TestDatabase' database from the dropdown
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
 
-  @LoginWithAdmin @Regression
+  @LoginWithAdmin @Regression @ApplicationBugFailure
   Scenario: validate the Updated Diabetes Record app Template with data filling
     Given User is on Home page
     When User opens Main Menu
@@ -47,7 +48,7 @@ Feature: Create Diabetes Record Template
     And User click on 'Add' Record button
     Then User sees the success message "true"
 
-  @LoginWithAdmin @Regression
+  @LoginWithAdmin @Regression @ApplicationBugFailure
   Scenario: Create app using create Diabetes Record Template
     Given User is on Home page
     When User opens Main Menu
@@ -69,6 +70,7 @@ Feature: Create Diabetes Record Template
     When User close the Preview app window
     And User clicks on Notebook
     And User clicks on Query name as 'insert-diabetes-record'
+    And User selects 'TestDatabase' database from the dropdown
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
     When User modify the Sql query "SELECT * from diabetes WHERE ID=16767 AND AGE=35 AND LOCATION='Pune' AND GENDER='Male'"
