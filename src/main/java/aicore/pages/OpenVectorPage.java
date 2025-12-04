@@ -15,7 +15,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "#NAME";
 	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
-	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{modelName}']";
+	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//li[text()='{modelName}']";
 	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
 	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{strategyName}']";
 	private static final String CONTENT_LENGTH_ID = "#CONTENT_LENGTH";
@@ -65,7 +65,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 
 	public void selectModelfromEmbedderDropdown(String modelName) {
 		page.click(EMBEDDER_DROPDOWN_XPATH);
-		page.click(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName));
+		page.locator(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName)).click();
 	}
 
 	public void selectStrategyfromChunkingStrategyDropdown(String strategyName) {

@@ -34,7 +34,16 @@ public class HomePageSteps {
 	public void user_can_see_in_the_filter_results(String searchResult, String optionName) {
 		boolean isCardVisible = homePage.verifySearchResultIsVisible(searchResult);
 		Assertions.assertTrue(isCardVisible, "Searched data is not visible in search result list");
+	}
+
+	@When("User clicks on the {string} option to unfilter the results")
+	public void user_clicks_on_the_option_to_unfilter_the_results(String optionName) {
 		homePage.selectSearchResultFilterOption(optionName);
+	}
+
+	@Then("User close the search popup")
+	public void user_close_the_search_popup() {
+		homePage.closeSearchPopup();
 	}
 
 	@When("User enters {string} as app name")

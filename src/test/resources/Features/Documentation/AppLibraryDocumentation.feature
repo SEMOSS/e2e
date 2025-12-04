@@ -79,7 +79,7 @@ Feature: App Library Documentation
     And User clicks on Open Model
     When User clicks on Add Model
     And User clicks on file upload icon
-    And User uploads the file 'model/Llama_model.zip'
+    And User uploads the file 'Model/Llama_model.zip'
     And User clicks on 'Upload' button to create catalog
     And User get the CatalogName for variable
     And User clicks on Copy Catalog ID
