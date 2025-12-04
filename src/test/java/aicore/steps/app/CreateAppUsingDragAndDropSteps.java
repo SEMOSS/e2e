@@ -773,4 +773,49 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_click_on_legend_option_and_turn_on_the_toggle() {
 		blocksPage.clickOnLegendOptionAndTurnOnTheToggle();
 	}
+
+	@And("User click on the Edit {string} option")
+	public void user_click_on_the_edit_x_axis_option(String axis) {
+		blocksPage.clickOnEditXAxisOption(axis);
+	}
+
+	@And("User updates {string} settings using {string}")
+	public void user_updates_axis_settings_using(String axis, String AxisSettings) {
+		blocksPage.updateAxisSettings(axis, AxisSettings);
+	}
+
+	@Then("User can see {string} of {string} same as baseline")
+	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
+
+		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
+		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
+
+		String basePath = "screenshots/" + chartFolder + "/" + toolFolder + "/";
+
+		String actualImagePath = basePath + "actualChart.png";
+		String expectedImagePath = basePath + "expectedChart.png";
+		String diffImagePath = basePath + "diffChart.png";
+
+		blocksPage.closeBlocksOption();
+		blocksPage.takeChartScreenshot(actualImagePath, toolName);
+
+		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
+
+		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
+	}
+
+	@And("User click on the Value Label option")
+	public void user_click_on_the_value_label_option() {
+		blocksPage.clickOnValueLabelOption();
+	}
+
+	@And("User turns on the Value Labels toggle")
+	public void user_turns_on_the_value_label_toggle() {
+		blocksPage.turnOnValueLabelToggle();
+	}
+
+	@And("User updates Value Labels settings using {string}")
+	public void user_updates_value_label_settings_using(String valueLabelSettings) {
+		blocksPage.updateValueLabelSettings(valueLabelSettings);
+	}
 }
