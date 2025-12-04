@@ -63,11 +63,11 @@ Feature: Create drag and drop  for charts validation
     Then User can see '<COLOR_PALLETTE_TOOL>' of 'Bar Chart' same as baseline
     And User click on Legend Option and turn on the toggle
     Then User can see '<LEGEND_CHART>' of 'Bar Chart' same as baseline
-    And User click on the Edit X Axis option
-    And User updates X Axis settings using '<X_AXIS_VALUES>'
+    And User click on the Edit 'X Axis' option
+    And User updates 'X Axis' settings using '<X_AXIS_VALUES>'
     Then User can see '<EDIT_XAXIS_TOOL>' of 'Bar Chart' same as baseline
-    And User click on the Edit Y Axis option
-    And User updates Y Axis settings using '<Y_AXIS_VALUES>'
+    And User click on the Edit 'Y Axis' option
+    And User updates 'Y Axis' settings using '<Y_AXIS_VALUES>'
     Then User can see '<EDIT_YAXIS_TOOL>' of 'Bar Chart' same as baseline
     And User click on the Value Label option
     And User turns on the Value Labels toggle
@@ -75,5 +75,5 @@ Feature: Create drag and drop  for charts validation
     Then User can see 'Value Labels Tool' of 'Bar Chart' same as baseline
 
     Examples: 
-      | BLOCK_NAME | CONDITIONAL | COLOR_PALETTE           | COLOR_PALLETTE_TOOL | LEGEND_CHART      | X_AXIS_VALUES                                                                                                                          | EDIT_XAXIS_TOOL  | Y_AXIS_VALUES                                                                                                                          | EDIT_YAXIS_TOOL  | VALUE_LABEL_VALUE                                                                                                 |
-      | Bar Chart  | false, true | Add Color, Change Color | Color Pallette Tool | Legend Chart Tool | ShowAxisTitle=true,Title=Bar chart,FontSize=12,Gap=25,showLabels=true,LabelFontSize=12,RotateValues=36,LineTicks=true, X-AxisZoom=true | Edit X-Axix Tool | ShowAxisTitle=true,Title=Bar chart,FontSize=12,Gap=25,showLabels=true,LabelFontSize=12,RotateValues=36,LineTicks=true, Y-AxisZoom=true | Edit Y-Axis Tool | position=top, RotateLabel=90, selectalignment=center, selectFont=serif, selectfontsize=8, selectfontweight=bold, selectcolor=black |
+      | BLOCK_NAME | CONDITIONAL | COLOR_PALETTE           | COLOR_PALLETTE_TOOL | LEGEND_CHART      | X_AXIS_VALUES                                                                                                                                                                                                       | EDIT_XAXIS_TOOL  | Y_AXIS_VALUES                                                                                                                                                                                                       | EDIT_YAXIS_TOOL  | VALUE_LABEL_VALUE                                                                                                                            |
+      | Bar Chart  | false, true | Add Color, Change Color | Color Pallette Tool | Legend Chart Tool | Show Axis Title=true, Set Axis Title=Bar chart, Edit Axis Title Font Size=12, Axis Gap=25, Show XAxis Labels=true, Edit Label Font Size=12, Rotate X-Axis Values=36, Show XAxis Line Ticks=true, Show / Hide X-Axis Zoom=true | Edit X-Axix Tool | Show Axis Title=true, Set Axis Title=Bar chart, Edit Axis Title Font Size=12, Axis Gap=25, Show YAxis Labels=true, Edit Label Font Size=12, Rotate Y-Axis Values=36, Show XAxis Line Ticks=true, Show / Hide Y-Axis Zoom=true | Edit Y-Axis Tool | Position=top, Rotate Label=90, Select Alignment=center, Select Font=serif, Select Font Size =8, Select Font Weight=bold, Select Colour=black |

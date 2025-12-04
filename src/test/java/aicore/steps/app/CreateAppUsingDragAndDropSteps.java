@@ -774,14 +774,14 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnLegendOptionAndTurnOnTheToggle();
 	}
 
-	@And("User click on the Edit X Axis option")
-	public void user_click_on_the_edit_x_axis_option() {
-		blocksPage.clickOnEditXAxisOption();
+	@And("User click on the Edit {string} option")
+	public void user_click_on_the_edit_x_axis_option(String axis) {
+		blocksPage.clickOnEditXAxisOption(axis);
 	}
 
-	@And("User updates X Axis settings using {string}")
-	public void user_updates_x_axis_settings_using(String xAxisSettings) {
-		blocksPage.updateXAxisSettings(xAxisSettings);
+	@And("User updates {string} settings using {string}")
+	public void user_updates_axis_settings_using(String axis, String AxisSettings) {
+		blocksPage.updateAxisSettings(axis, AxisSettings);
 	}
 
 	@Then("User can see {string} of {string} same as baseline")
@@ -802,16 +802,6 @@ public class CreateAppUsingDragAndDropSteps {
 		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
 
 		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
-	}
-
-	@And("User click on the Edit Y Axis option")
-	public void user_click_on_the_edit_y_axis_option() {
-		blocksPage.clickOnEditYAxisOption();
-	}
-
-	@And("User updates Y Axis settings using {string}")
-	public void user_updates_y_axis_settings_using(String yAxisSettings) {
-		blocksPage.updateYAxisSettings(yAxisSettings);
 	}
 
 	@And("User click on the Value Label option")
