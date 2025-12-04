@@ -268,4 +268,24 @@ public class DragAndDropBlocksPage {
 	public void clickOnLegendOptionAndTurnOnTheToggle() {
 		DragAndDropBlocksPageUtils.clickOnLegendOptionAndTurnOnTheToggle(page);
 	}
+
+	public void clickOnEditXAxisOption(String axis) {
+		DragAndDropBlocksPageUtils.clickOnEditXAxisOption(page, axis);
+	}
+
+	public void updateAxisSettings(String axis, String xAxisSettings) {
+		DragAndDropBlocksPageUtils.updateAxisSettings(page, axis, xAxisSettings);
+	}
+
+	public void clickOnValueLabelOption() {
+		DragAndDropBlocksPageUtils.clickOnValueLabelOption(page);
+	}
+
+	public void turnOnValueLabelToggle() {
+		DragAndDropBlocksPageUtils.turnOnValueLabelToggle(page);
+	}
+
+	public void updateValueLabelSettings(String valueLabelSettings) {
+		DragAndDropBlocksPageUtils.updateValueLabelSettings(page, valueLabelSettings);
+	}
 }
