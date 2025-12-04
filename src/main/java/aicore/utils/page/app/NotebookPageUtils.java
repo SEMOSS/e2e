@@ -302,7 +302,7 @@ public class NotebookPageUtils {
 			dataKeyPair.scrollIntoViewIfNeeded();
 			AICorePageUtils.waitFor(dataKeyPair);
 			dataKeyPair.hover();
-			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 150, 80);
+			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 60, 20);
 		}
 	}
 
