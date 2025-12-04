@@ -4,22 +4,23 @@ Feature: Create app using NLP Query to Grid Template
   Background: Create Database and Model using ZIP file
     Given User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
     And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
-    And User can see the Catalog title as 'Diabetes'
+    And User can see the Catalog title as 'TestDatabase'
     And User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-    When User selects 'ZIP'
+    And User clicks on file upload icon
     And User uploads the file 'Model/ModelZIP.zip'
-    And User click on Create 'Model' button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     Then User can see the Catalog title as 'Llama3-70B-Instruct'
 
-  @LoginWithAdmin @DeleteCreatedTestApp @Regression
+  @LoginWithAuthor @DeleteCreatedTestApp @Regression
   Scenario: Create app using NLP Query to Grid Template
     Given User is on Home page
     When User opens Main Menu

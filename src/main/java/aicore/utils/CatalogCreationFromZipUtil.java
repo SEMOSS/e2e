@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class CatalogCreationFromZipUtil {
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
@@ -75,7 +77,7 @@ public class CatalogCreationFromZipUtil {
 		} else {
 			fileInput.setInputFiles(Paths.get(relativePath + fileName));
 		}
-		
+
 		if (fileName.contains("/")) {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;
@@ -87,7 +89,7 @@ public class CatalogCreationFromZipUtil {
 			Locator uploadedFileName = page.locator(ADD_FILE_NAME_XPATH.replace("{fileName}", fileName));
 			String uploadedFileNameValue = uploadedFileName.first().textContent();
 			return uploadedFileNameValue;
-		}	
+		}
 	}
 
 	public static void clickOnCreateCatalogButton(Page page) {
@@ -96,6 +98,15 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void clickOnUploadButton(Page page, String label) {
-		AICorePageUtils.clickOnButton(page, label);
+		Locator buttonLocator = page.getByRole(AriaRole.BUTTON,
+				new Page.GetByRoleOptions().setName(label).setExact(true));
+		buttonLocator.scrollIntoViewIfNeeded();
+		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		buttonLocator.click();
+		Locator loadingSpinner = page.locator("//span[@role='progressbar']");
+		if (loadingSpinner.isVisible()) {
+			loadingSpinner
+					.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(120000));
+		}
 	}
 }

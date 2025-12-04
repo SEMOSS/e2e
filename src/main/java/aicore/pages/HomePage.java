@@ -108,6 +108,10 @@ public class HomePage {
 		HomePageUtils.selectSearchResultFilterOption(page, optionName);
 	}
 
+	public void closeSearchPopup() {
+		HomePageUtils.closeSearchPopup(page);
+	}
+
 	public boolean verifySearchResultIsVisible(String searchResult) {
 		return HomePageUtils.verifySearchResultIsVisible(page, searchResult);
 	}

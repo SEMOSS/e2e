@@ -275,6 +275,21 @@ public class CommonUtils {
 				new Mouse.MoveOptions().setSteps(steps));
 	}
 
+	public static void moveMouseOnNotebookHiddenOptins(Page page, Locator locator, int margin, int steps,
+			Locator hiddenOption) {
+		BoundingBox box = locator.boundingBox();
+		for (int i = 10; i <= margin; i += 3) {
+			page.mouse().move(box.x + (box.width / 2), (box.y + box.height + i),
+					new Mouse.MoveOptions().setSteps(steps));
+			page.waitForTimeout(100);
+			if (hiddenOption.count() > 0 && hiddenOption.isVisible()) {
+				System.out.println("option is visible");
+				break;
+			}
+			System.out.println(i);
+		}
+	}
+
 	public static String readCopiedTextFromClipboard(Page page) {
 		JSHandle handle = page.evaluateHandle("async () => await navigator.clipboard.readText()");
 		try {

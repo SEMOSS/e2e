@@ -301,7 +301,8 @@ public class NotebookPageUtils {
 			Locator dataKeyPair = page.getByTestId("data-key-pairtype").nth(0);
 			dataKeyPair.scrollIntoViewIfNeeded();
 			AICorePageUtils.waitFor(dataKeyPair);
-			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 60, 20);
+			dataKeyPair.hover();
+			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 150, 80);
 		}
 	}
 
@@ -679,19 +680,21 @@ public class NotebookPageUtils {
 		Locator columnDropdown = page.getByTitle("Open");
 		AICorePageUtils.waitFor(columnDropdown);
 		columnDropdown.click();
-		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(columnName).setExact(true)).click();	
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(columnName).setExact(true)).click();
 	}
 
 	public static boolean isColumnDataInUppercase(Page page, String columnName) {
 		String columnNameText = page.locator(OUTPUT_TABLE).last().locator("//th").textContent().trim();
-		if(columnNameText.equals(columnName)) {
-			Locator value  = page.locator(OUTPUT_TABLE).last().locator("//tbody//tr/td");
+		if (columnNameText.equals(columnName)) {
+			Locator value = page.locator(OUTPUT_TABLE).last().locator("//tbody//tr/td");
 			int rowCount = value.count();
 			for (int i = 0; i < rowCount; i++) {
 				String cellText = value.nth(i).textContent().trim();
-				if(!cellText.equals(cellText.toUpperCase()))
-				 return false; // if any cell text not in uppercase return falsecellText	
-		}}
+				if (!cellText.equals(cellText.toUpperCase())) {
+					return false; // if any cell text not in uppercase return falsecellText
+				}
+			}
+		}
 		return true;
 	}
 
