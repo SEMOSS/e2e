@@ -70,9 +70,8 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 //		}
 		switch (modelName) {
 		case "TextEmbeddings BAAI-Large-En-V1.5":
-		case "Test Model":
+		case "Model":
 			vectorPage.selectModelfromEmbedderDropdown(modelName);
-			;
 			break;
 		default:
 			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);

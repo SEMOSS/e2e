@@ -53,7 +53,7 @@ public class AddDatabasePageUtils {
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
 		page.getByLabel(ADD_DATABASE_BUTTON).click();
-		}
+	}
 
 	public static void selectDatabaseType(Page page, String dbType) {
 		page.getByText(dbType).isVisible();

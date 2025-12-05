@@ -171,7 +171,6 @@ public class CatlogAccessPageUtility {
 	public static void getCatalogAndCopyId(Page page) {
 		page.waitForTimeout(500);
 		Locator id = page.locator(CATALOG_ID_XPATH);
-		id.waitFor(new Locator.WaitForOptions().setTimeout(60000).setState(WaitForSelectorState.VISIBLE));
 		String copiedId = id.innerText();
 		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
 		String catalogType = catalogTypeText.trim().split("\\s+")[0];
