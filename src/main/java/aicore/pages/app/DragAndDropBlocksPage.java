@@ -241,20 +241,12 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnToolTab(page);
 	}
 
-	public void clickOnConditionalToolOption() {
-		DragAndDropBlocksPageUtils.clickOnConditionalToolOption(page);
-	}
-
 	public void applyConditional(String value) {
 		DragAndDropBlocksPageUtils.applyConditional(page, value);
 	}
 
 	public boolean isBarChartVisible() {
 		return DragAndDropBlocksPageUtils.isBarChartVisible(page);
-	}
-
-	public void clickOnColorPaletteToolOption() {
-		DragAndDropBlocksPageUtils.clickOnColorPaletteToolOption(page);
 	}
 
 	public boolean performAddColor() {
@@ -277,15 +269,18 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.updateAxisSettings(page, axis, xAxisSettings);
 	}
 
-	public void clickOnValueLabelOption() {
-		DragAndDropBlocksPageUtils.clickOnValueLabelOption(page);
-	}
-
 	public void turnOnValueLabelToggle() {
 		DragAndDropBlocksPageUtils.turnOnValueLabelToggle(page);
 	}
 
 	public void updateValueLabelSettings(String valueLabelSettings) {
 		DragAndDropBlocksPageUtils.updateValueLabelSettings(page, valueLabelSettings);
+	}
+
+	public void clickOnToolOption(String toolName) {
+		DragAndDropBlocksPageUtils.clickOnToolOption(page, toolName);
+	}
+	public void updateBarStyle(String barStyleValue) {
+		DragAndDropBlocksPageUtils.updateBarStyle(page, barStyleValue);
 	}
 }

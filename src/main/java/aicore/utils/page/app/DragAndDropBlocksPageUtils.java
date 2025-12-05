@@ -137,6 +137,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SHOW_VALUE_LABEL_SELECT_COLOR_XPATH = "//span[@class='css-rbrynm']";
 	private static final String SHOW_VALUE_LABEL_CHOOSE_COLOR_XPATH = "//div[@title='#000000']";
 	private static final String SHOW_ROATATE_VALUE_LABEL_XPATH = "//input[@id='rotate-label']";
+	private static final String CHART_TOOL_NAME_XPATH = "//span[text()='{toolName}']";
+	private static final String BAR_STYLE_WIDTH_OPTION_XPATH="//label[normalize-space()='Bar Width']/following::span[contains(@class,'MuiSlider-valueLabelLabel')]";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -733,10 +735,6 @@ public class DragAndDropBlocksPageUtils {
 		page.locator("//button[normalize-space()='Tools']").click();
 	}
 
-	public static void clickOnConditionalToolOption(Page page) {
-		page.locator(CONDITIONAL_XPATH).click();
-	}
-
 	public static void applyConditional(Page page, String value) {
 		page.getByTestId("selectInputSettings-Show-Block-e-chart--1-select").click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
@@ -745,10 +743,6 @@ public class DragAndDropBlocksPageUtils {
 	public static boolean isBarChartVisible(Page page) {
 		page.waitForTimeout(500);
 		return page.locator(BARCHART_ISVISIBLE_XPATH).isVisible();
-	}
-
-	public static void clickOnColorPaletteToolOption(Page page) {
-		page.locator(COLOR_PALETTE_XPATH).click();
 	}
 
 	public static boolean performAddColor(Page page) {
@@ -850,10 +844,6 @@ public class DragAndDropBlocksPageUtils {
 
 	}
 
-	public static void clickOnValueLabelOption(Page page) {
-		page.locator(VALUE_LABEL_OPTION_XPATH).click();
-	}
-
 	public static void turnOnValueLabelToggle(Page page) {
 		Locator valueLabelToggle = page.locator(SHOW_VALUE_LABEL_XPATH);
 		if (!valueLabelToggle.isChecked()) {
@@ -902,4 +892,30 @@ public class DragAndDropBlocksPageUtils {
 		}
 
 	}
+
+	public static void clickOnToolOption(Page page, String toolName) {
+		page.locator(CHART_TOOL_NAME_XPATH.replace("{toolName}", toolName)).click();
+	}
+	public static void updateBarStyle(Page page, String barStyleValue) {
+		for (String pair : barStyleValue.split(", ")) {
+			if (!pair.contains("=")) {
+				throw new AssertionError("Invalid parameter: " + pair);
+			}
+			String[] kv = pair.split("=", 2);
+			String key = kv[0];
+			String value = kv[1].trim();
+			switch (key) {
+				case "Bar Width":
+					page.locator(BAR_STYLE_WIDTH_OPTION_XPATH).fill(value);
+					break;
+				case "Select Colour":
+					page.locator(SHOW_VALUE_LABEL_SELECT_COLOR_XPATH).click();
+					page.locator(SHOW_VALUE_LABEL_CHOOSE_COLOR_XPATH).click();
+					break;
+				default:
+					throw new AssertionError("Unknown Bar Style setting: " + key);
+				}
+
+					}
+}
 }

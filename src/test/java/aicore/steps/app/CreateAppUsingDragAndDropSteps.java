@@ -727,11 +727,6 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnToolTab();
 	}
 
-	@And("User click on Conditional toole option")
-	public void user_click_on_conditional_tool_option() {
-		blocksPage.clickOnConditionalToolOption();
-	}
-
 	@And("User validates Conditional using {string}")
 	public void user_validates_conditional_using(String conditionalValues) {
 		String[] values = conditionalValues.split(",");
@@ -745,11 +740,6 @@ public class CreateAppUsingDragAndDropSteps {
 				Assertions.assertFalse(isVisible, "Chart should NOT be visible when conditional = false");
 			}
 		}
-	}
-
-	@And("User click on Color Palette toole option")
-	public void user_click_on_color_palette_tool_option() {
-		blocksPage.clickOnColorPaletteToolOption();
 	}
 
 	@And("User validates Color Palette using {string}")
@@ -804,11 +794,6 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
 	}
 
-	@And("User click on the Value Label option")
-	public void user_click_on_the_value_label_option() {
-		blocksPage.clickOnValueLabelOption();
-	}
-
 	@And("User turns on the Value Labels toggle")
 	public void user_turns_on_the_value_label_toggle() {
 		blocksPage.turnOnValueLabelToggle();
@@ -817,5 +802,14 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User updates Value Labels settings using {string}")
 	public void user_updates_value_label_settings_using(String valueLabelSettings) {
 		blocksPage.updateValueLabelSettings(valueLabelSettings);
+	}
+
+	@And("User click on {string} tool option")
+	public void user_click_on_tool_option(String toolName) {
+		blocksPage.clickOnToolOption(toolName);
+	}
+	@And("User update Bar Style setting using {string}")
+	public void and_user_update_bar_style_setting_using_bar_style_value(String barStyleValue) {
+		blocksPage.updateBarStyle(barStyleValue);
 	}
 }
