@@ -8,9 +8,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
-	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
-	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']";
-	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following-sibling::div//p[text()='{optionName}']/parent::div//img";
+	private static final String SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
+	private static final String OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
+	private static final String ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
@@ -30,6 +30,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String CONNECTIONS_DB_TYPE_XPATH = "//div[div[normalize-space(text())='Connections']]//p[normalize-space(text())='{DatabaseType}']";
 
 	public static boolean verifySectionIsVisible(Page page, String sectionName) {
+		page.locator(SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
 		boolean isSectionVisible = page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
 		return isSectionVisible;
 	}
@@ -124,7 +125,8 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	// View Database Type on Connect To database page
-	public static void searchDatabaseType(Page page, String databaseType) {
+	public static void searchDatabaseType(Page page, String section, String databaseType) {
+		page.locator(SECTION_NAME_XPATH.replace("{sectionName}", section)).click();
 		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(SEARCH_INPUT_XPATH).click();
 		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term

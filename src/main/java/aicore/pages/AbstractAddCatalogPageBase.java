@@ -30,7 +30,7 @@ public abstract class AbstractAddCatalogPageBase {
 	}
 
 	// View Database Type on Connect To database page
-	public void searchDatabaseType(String dbType) {
-		AddCatalogPageBaseUtils.searchDatabaseType(page, dbType);
+	public void searchDatabaseType(String section, String dbType) {
+		AddCatalogPageBaseUtils.searchDatabaseType(page, section, dbType);
 	}
 }
