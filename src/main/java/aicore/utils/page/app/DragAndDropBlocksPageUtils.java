@@ -102,7 +102,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
 	private static final String APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID = "appTileCard-{appName}-tile";
 
-	// Bar Chart
+	// Bar Chart tool
 	private static final String CONDITIONAL_XPATH = "//span[text()='Conditional']";
 	private static final String BARCHART_ISVISIBLE_XPATH = "//div[@class='echarts-for-react ']";
 	private static final String COLOR_PALETTE_XPATH = "//span[text()='Color Palette']";
@@ -116,9 +116,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String LEGEND_OPTION_XPATH = "//span[text()='Legend']";
 	private static final String LEGEND_OPTION_CHECKBOX_XPATH = "//p[normalize-space()='Show Legend']/preceding-sibling::span//input[@type='checkbox']";
 	private static final String EDIT_AXIS_OPTION_XPATH = "//span[text()='Edit {axis}']";
-	public static final String VALUE_LABEL_OPTION_XPATH = "//span[text()='Value Label']";
 	public static final String VALUE_LABELS_DROPDOWN_XPATH = "//li[normalize-space()='{valueLabelPosition}']";
-
 	private static final String SHOW_AXIS_TITLE_XPATH = "//p[normalize-space(.)='Show Axis Title']/preceding-sibling::span//input[@type='checkbox']";
 	private static final String AXIS_TITLE_XPATH = "//p[contains(text(),'Set Axis Title')]/parent::div//input[@type='text']";
 	private static final String AXIS_FONT_SIZE_XPATH = "//p[contains(text(),'Edit Axis Title Font Size')]/parent::div//input[@type='number']";
@@ -134,9 +132,19 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SHOW_VALUE_LABEL_FONT_XPATH = "//div[@id='font']";
 	private static final String SHOW_VALUE_LABEL_FONT_SIZE_XPATH = "//input[@id='font-size']";
 	private static final String SHOW_VALUE_LABEL_FONT_WEIGHT_XPATH = "//div[@id='font-weight']";
-	private static final String SHOW_VALUE_LABEL_SELECT_COLOR_XPATH = "//span[@class='css-rbrynm']";
+	private static final String SHOW_VALUE_LABEL_SELECT_COLOR_XPATH = "//button[@aria-label='select colour']";
 	private static final String SHOW_VALUE_LABEL_CHOOSE_COLOR_XPATH = "//div[@title='#000000']";
+	private static final String BAR_STYLE_CHHOSE_COLOR_XPATH = "//div[@title='#4A90E2']";
 	private static final String SHOW_ROATATE_VALUE_LABEL_XPATH = "//input[@id='rotate-label']";
+	private static final String CHART_TOOL_NAME_XPATH = "//span[text()='{toolName}']";
+	private static final String BAR_STYLE_WIDTH_OPTION_XPATH = "//label[normalize-space()='Bar Width']/following::input[@aria-orientation='horizontal']";
+	private static final String CHART_TITLE_SELECT_ALIGNMENT_XPATH = "//div[@id='alignment']";
+	private static final String CHART_TITLE_SELECT_FONT_FAMILY_XPATH = "//div[@id='font-family']";
+	private static final String CHART_TITLE_NAME_XPATH = "//input[@id='name']";
+	private static final String CHART_TITLE_SIZE_XPATH = "//input[@id='size']";
+	private static final String CHART_SHOW_TITLE_XPATH = "//span[@title='Show Title']//input";
+	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
+	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -728,13 +736,9 @@ public class DragAndDropBlocksPageUtils {
 		return page.getByTestId(APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID.replace("{appName}", appName)).isVisible();
 	}
 
-	// bar chart
+	// bar chart tool
 	public static void clickOnToolTab(Page page) {
 		page.locator("//button[normalize-space()='Tools']").click();
-	}
-
-	public static void clickOnConditionalToolOption(Page page) {
-		page.locator(CONDITIONAL_XPATH).click();
 	}
 
 	public static void applyConditional(Page page, String value) {
@@ -745,10 +749,6 @@ public class DragAndDropBlocksPageUtils {
 	public static boolean isBarChartVisible(Page page) {
 		page.waitForTimeout(500);
 		return page.locator(BARCHART_ISVISIBLE_XPATH).isVisible();
-	}
-
-	public static void clickOnColorPaletteToolOption(Page page) {
-		page.locator(COLOR_PALETTE_XPATH).click();
 	}
 
 	public static boolean performAddColor(Page page) {
@@ -777,9 +777,9 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(EDIT_AXIS_OPTION_XPATH.replace("{axis}", axis)).click();
 	}
 
-	public static void updateAxisSettings(Page page, String axis, String values) {
-		String axisName = axis.replace(" ", "");
-		String axisNameWithDash = axis.replace(" ", "-");
+	public static void updateToolSettings(Page page, String valueName, String values) {
+		String axisName = valueName.replace(" ", "");
+		String axisNameWithDash = valueName.replace(" ", "-");
 		for (String pair : values.split(", ")) {
 			if (!pair.contains("=")) {
 				throw new AssertionError("Invalid parameter: " + pair);
@@ -797,7 +797,7 @@ public class DragAndDropBlocksPageUtils {
 				break;
 
 			case "Set Axis Title":
-				page.locator(AXIS_TITLE_XPATH).fill(values);
+				page.locator(AXIS_TITLE_XPATH).fill(value);
 				break;
 
 			case "Edit Axis Title Font Size":
@@ -843,15 +843,49 @@ public class DragAndDropBlocksPageUtils {
 					page.locator(AXIS_ZOOM_XPATH.replace("{axis}", axisNameWithDash)).click();
 				}
 				break;
+			case "Show Title":
+				boolean shouldShowTitle1 = Boolean.parseBoolean(value);
+				boolean currentTitle1 = page.locator(CHART_SHOW_TITLE_XPATH).isChecked();
+				if (currentTitle1 != shouldShowTitle1) {
+					page.locator(CHART_SHOW_TITLE_XPATH).click();
+				}
+				break;
+			case "Title Name":
+				page.locator(CHART_TITLE_NAME_XPATH).fill(value);
+				break;
+			case "Text Size":
+				page.locator(CHART_TITLE_SIZE_XPATH).fill(value);
+				break;
+			case "Select Font Family":
+				page.locator(CHART_TITLE_SELECT_FONT_FAMILY_XPATH).click();
+				page.locator(VALUE_LABELS_DROPDOWN_XPATH.replace("{valueLabelPosition}", value)).click();
+				break;
+
+			case "Select Font Weight":
+				page.locator(SHOW_VALUE_LABEL_FONT_WEIGHT_XPATH).click();
+				page.locator(VALUE_LABELS_DROPDOWN_XPATH.replace("{valueLabelPosition}", value)).click();
+				break;
+			case "Select Colour":
+				page.locator(SHOW_VALUE_LABEL_SELECT_COLOR_XPATH).click();
+				page.locator(SHOW_VALUE_LABEL_CHOOSE_COLOR_XPATH).click();
+				page.keyboard().press("Escape");
+				break;
+			case "Select Alignment":
+				page.locator(CHART_TITLE_SELECT_ALIGNMENT_XPATH).click();
+				page.locator(VALUE_LABELS_DROPDOWN_XPATH.replace("{valueLabelPosition}", value)).click();
+				break;
+			case "Height":
+				page.locator(RESIZING_HEIGHT_XPATH).fill(value);
+				break;
+			case "Width":
+				page.locator(RESIZING_WIDTH_XPATH).fill(value);
+				break;
+
 			default:
-				throw new AssertionError("Unknown Axis setting: " + key);
+				throw new AssertionError("Unknown Value setting: " + key);
 			}
 		}
 
-	}
-
-	public static void clickOnValueLabelOption(Page page) {
-		page.locator(VALUE_LABEL_OPTION_XPATH).click();
 	}
 
 	public static void turnOnValueLabelToggle(Page page) {
@@ -895,11 +929,41 @@ public class DragAndDropBlocksPageUtils {
 			case "Select Colour":
 				page.locator(SHOW_VALUE_LABEL_SELECT_COLOR_XPATH).click();
 				page.locator(SHOW_VALUE_LABEL_CHOOSE_COLOR_XPATH).click();
+				page.keyboard().press("Escape");
 				break;
 			default:
 				throw new AssertionError("Unknown Value Label setting: " + key);
 			}
 		}
 
+	}
+
+	public static void clickOnToolOption(Page page, String toolName) {
+		page.locator(CHART_TOOL_NAME_XPATH.replace("{toolName}", toolName)).click();
+
+	}
+
+	public static void updateBarStyle(Page page, String barStyleValue) {
+		for (String pair : barStyleValue.split(", ")) {
+			if (!pair.contains("=")) {
+				throw new AssertionError("Invalid parameter: " + pair);
+			}
+			String[] kv = pair.split("=", 2);
+			String key = kv[0];
+			String value = kv[1].trim();
+			switch (key) {
+			case "Bar Width":
+				page.locator(BAR_STYLE_WIDTH_OPTION_XPATH).fill(value);
+				break;
+			case "Select Colour":
+				page.locator(SHOW_VALUE_LABEL_SELECT_COLOR_XPATH).click();
+				page.locator(BAR_STYLE_CHHOSE_COLOR_XPATH).click();
+				page.keyboard().press("Escape");
+				break;
+			default:
+				throw new AssertionError("Unknown Bar Style setting: " + key);
+			}
+
+		}
 	}
 }

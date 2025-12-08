@@ -260,7 +260,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 			String section = row.get(SECTION_NAME);
 			String[] dbTypes = row.get(OPTION_NAME).split(",\\s*");
 			for (String dbType : dbTypes) {
-				addDatabaseToCatalogPage.searchDatabaseType(dbType);
+				addDatabaseToCatalogPage.searchDatabaseType(section, dbType);
 				boolean isVisible = addDatabaseToCatalogPage.verifyOptionIsVisible(section, dbType);
 				Assertions.assertTrue(isVisible,
 						"Database type '" + dbType + "' was not found under section '" + section + "'");

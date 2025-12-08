@@ -236,13 +236,9 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page, appName);
 	}
 
-	// bar charts
+	// bar charts tools
 	public void clickOnToolTab() {
 		DragAndDropBlocksPageUtils.clickOnToolTab(page);
-	}
-
-	public void clickOnConditionalToolOption() {
-		DragAndDropBlocksPageUtils.clickOnConditionalToolOption(page);
 	}
 
 	public void applyConditional(String value) {
@@ -251,10 +247,6 @@ public class DragAndDropBlocksPage {
 
 	public boolean isBarChartVisible() {
 		return DragAndDropBlocksPageUtils.isBarChartVisible(page);
-	}
-
-	public void clickOnColorPaletteToolOption() {
-		DragAndDropBlocksPageUtils.clickOnColorPaletteToolOption(page);
 	}
 
 	public boolean performAddColor() {
@@ -273,12 +265,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnEditXAxisOption(page, axis);
 	}
 
-	public void updateAxisSettings(String axis, String xAxisSettings) {
-		DragAndDropBlocksPageUtils.updateAxisSettings(page, axis, xAxisSettings);
-	}
-
-	public void clickOnValueLabelOption() {
-		DragAndDropBlocksPageUtils.clickOnValueLabelOption(page);
+	public void updateToolSettings(String axis, String xAxisSettings) {
+		DragAndDropBlocksPageUtils.updateToolSettings(page, axis, xAxisSettings);
 	}
 
 	public void turnOnValueLabelToggle() {
@@ -287,5 +275,13 @@ public class DragAndDropBlocksPage {
 
 	public void updateValueLabelSettings(String valueLabelSettings) {
 		DragAndDropBlocksPageUtils.updateValueLabelSettings(page, valueLabelSettings);
+	}
+
+	public void clickOnToolOption(String toolName) {
+		DragAndDropBlocksPageUtils.clickOnToolOption(page, toolName);
+	}
+
+	public void updateBarStyle(String barStyleValue) {
+		DragAndDropBlocksPageUtils.updateBarStyle(page, barStyleValue);
 	}
 }
