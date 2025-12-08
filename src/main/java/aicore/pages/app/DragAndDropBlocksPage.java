@@ -265,8 +265,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnEditXAxisOption(page, axis);
 	}
 
-	public void updateAxisSettings(String axis, String xAxisSettings) {
-		DragAndDropBlocksPageUtils.updateAxisSettings(page, axis, xAxisSettings);
+	public void updateToolSettings(String axis, String xAxisSettings) {
+		DragAndDropBlocksPageUtils.updateToolSettings(page, axis, xAxisSettings);
 	}
 
 	public void turnOnValueLabelToggle() {
@@ -280,6 +280,7 @@ public class DragAndDropBlocksPage {
 	public void clickOnToolOption(String toolName) {
 		DragAndDropBlocksPageUtils.clickOnToolOption(page, toolName);
 	}
+
 	public void updateBarStyle(String barStyleValue) {
 		DragAndDropBlocksPageUtils.updateBarStyle(page, barStyleValue);
 	}

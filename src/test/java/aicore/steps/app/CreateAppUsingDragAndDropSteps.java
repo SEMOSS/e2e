@@ -770,13 +770,12 @@ public class CreateAppUsingDragAndDropSteps {
 	}
 
 	@And("User updates {string} settings using {string}")
-	public void user_updates_axis_settings_using(String axis, String AxisSettings) {
-		blocksPage.updateAxisSettings(axis, AxisSettings);
+	public void user_updates_tool_settings_using(String axis, String AxisSettings) {
+		blocksPage.updateToolSettings(axis, AxisSettings);
 	}
 
 	@Then("User can see {string} of {string} same as baseline")
 	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
-
 		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
 		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
 
@@ -808,6 +807,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_click_on_tool_option(String toolName) {
 		blocksPage.clickOnToolOption(toolName);
 	}
+
 	@And("User update Bar Style setting using {string}")
 	public void and_user_update_bar_style_setting_using_bar_style_value(String barStyleValue) {
 		blocksPage.updateBarStyle(barStyleValue);

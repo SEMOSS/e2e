@@ -777,7 +777,7 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(EDIT_AXIS_OPTION_XPATH.replace("{axis}", axis)).click();
 	}
 
-	public static void updateAxisSettings(Page page, String valueName, String values) {
+	public static void updateToolSettings(Page page, String valueName, String values) {
 		String axisName = valueName.replace(" ", "");
 		String axisNameWithDash = valueName.replace(" ", "-");
 		for (String pair : values.split(", ")) {
