@@ -721,7 +721,7 @@ public class CreateAppUsingDragAndDropSteps {
 		appVariablePage.clickOnSaveVariableButton();
 	}
 
-	// bar charts
+	// bar charts tools
 	@And("User click on the Tools tab")
 	public void user_click_on_tool_tab() {
 		blocksPage.clickOnToolTab();

@@ -236,7 +236,7 @@ public class DragAndDropBlocksPage {
 		return DragAndDropBlocksPageUtils.isAppDisplayedInSystemAppsSection(page, appName);
 	}
 
-	// bar charts
+	// bar charts tools
 	public void clickOnToolTab() {
 		DragAndDropBlocksPageUtils.clickOnToolTab(page);
 	}
