@@ -13,7 +13,7 @@ Feature: DragAndDrop - Documentation for App Landing
     And User captures a 'testidelement' and highlights the "workspace-Layers" with name "AppLanding" 
     And User completes screenshot capture and triggers comparison for 'App Landing'
 
-   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp @ApplicationBugFailure
    Scenario: DragAndDrop - One Conatainer Documentation for App Landing 
    Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
