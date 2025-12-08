@@ -175,4 +175,12 @@ public class BlockSettingsUtils {
 		page.keyboard().press("Control+End");
 		page.keyboard().type(value);
 	}
+
+	public static void closeBlockSettings(Page page) {
+		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
+		AICorePageUtils.waitFor(blockSettingsOption);
+		if (blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+			blockSettingsOption.click();
+		}
+}
 }

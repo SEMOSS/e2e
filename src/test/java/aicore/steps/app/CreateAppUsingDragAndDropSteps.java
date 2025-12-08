@@ -818,4 +818,9 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_updates_value_label_settings_using(String valueLabelSettings) {
 		blocksPage.updateValueLabelSettings(valueLabelSettings);
 	}
+
+	@And("User closes the Block Settings button")
+	public void user_closes_the_block_settings_button() {
+		blockSettings.closeBlockSettings();
+	}
 }
