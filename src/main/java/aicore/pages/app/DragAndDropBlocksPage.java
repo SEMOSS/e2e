@@ -292,4 +292,7 @@ public class DragAndDropBlocksPage {
 	public void clickOnMarkdownContainerToSelectIt() {
 		DragAndDropBlocksPageUtils.clickOnMarkdownContainerToSelectIt(page);
 	}
+	public void clickOnBlockSettingsOption() {
+		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
+	}
 }

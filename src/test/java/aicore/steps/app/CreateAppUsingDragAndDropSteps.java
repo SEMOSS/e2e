@@ -822,4 +822,8 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_click_on_the_markdown_container_to_select_it() {
 		blocksPage.clickOnMarkdownContainerToSelectIt();
 	}
+	@And("User clicks on Block Settings option")
+	public void user_clicks_on_block_settings_option() {
+		blocksPage.clickOnBlockSettingsOption();
+	}
 }
