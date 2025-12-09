@@ -819,4 +819,18 @@ public class CreateAppUsingDragAndDropSteps {
 	public void and_user_update_bar_style_setting_using_bar_style_value(String barStyleValue) {
 		blocksPage.updateBarStyle(barStyleValue);
 	}
+
+	@And("User click on the {string} tab in the left panel")
+	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
+		blocksPage.clickOnTabInLeftPanel(tabName);
+	}
+
+	@And("User click on the Markdown container to select it")
+	public void user_click_on_the_markdown_container_to_select_it() {
+		blocksPage.clickOnMarkdownContainerToSelectIt();
+	}
+	@And("User clicks on Block Settings option")
+	public void user_clicks_on_block_settings_option() {
+		blocksPage.clickOnBlockSettingsOption();
+	}
 }
