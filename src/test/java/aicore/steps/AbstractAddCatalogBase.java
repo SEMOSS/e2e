@@ -19,12 +19,12 @@ public abstract class AbstractAddCatalogBase {
 			String expectedOptions = row.get(supportedOptions);
 			// Verify section is visible
 			boolean isSectionVisible = abstractCatalogPage.verifySectionIsVisible(sectionName);
-			Assertions.assertTrue(isSectionVisible, sectionName + "section not visible");
+			Assertions.assertTrue(isSectionVisible, sectionName + " section not visible");
 			String[] expectedOptionsArray = expectedOptions.split(", ");
 			for (String optionName : expectedOptionsArray) {
 				// Verify option is visible
 				boolean isOptionVisible = abstractCatalogPage.verifyOptionIsVisible(sectionName, optionName);
-				Assertions.assertTrue(isOptionVisible, optionName + "option not visible");
+				Assertions.assertTrue(isOptionVisible, optionName + " option not visible");
 				// Verify icon is visible
 				Locator icon = abstractCatalogPage.getIconByLabel(sectionName, optionName);
 				icon.waitFor();

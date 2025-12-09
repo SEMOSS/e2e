@@ -30,7 +30,6 @@ Feature: Notebook Data Filters
     And User clicks on Create new notebook
     And User enters New Query name as 'Test'
     And User clicks on query Submit button
-    And User clicks on Notebook
     And User mouse hover below the existing cell
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options

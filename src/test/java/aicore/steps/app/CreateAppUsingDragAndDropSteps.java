@@ -720,15 +720,10 @@ public class CreateAppUsingDragAndDropSteps {
 		appVariablePage.clickOnSaveVariableButton();
 	}
 
-	// bar charts
+	// bar charts tools
 	@And("User click on the Tools tab")
 	public void user_click_on_tool_tab() {
 		blocksPage.clickOnToolTab();
-	}
-
-	@And("User click on Conditional toole option")
-	public void user_click_on_conditional_tool_option() {
-		blocksPage.clickOnConditionalToolOption();
 	}
 
 	@And("User validates Conditional using {string}")
@@ -744,11 +739,6 @@ public class CreateAppUsingDragAndDropSteps {
 				Assertions.assertFalse(isVisible, "Chart should NOT be visible when conditional = false");
 			}
 		}
-	}
-
-	@And("User click on Color Palette toole option")
-	public void user_click_on_color_palette_tool_option() {
-		blocksPage.clickOnColorPaletteToolOption();
 	}
 
 	@And("User validates Color Palette using {string}")
@@ -779,13 +769,12 @@ public class CreateAppUsingDragAndDropSteps {
 	}
 
 	@And("User updates {string} settings using {string}")
-	public void user_updates_axis_settings_using(String axis, String AxisSettings) {
-		blocksPage.updateAxisSettings(axis, AxisSettings);
+	public void user_updates_tool_settings_using(String axis, String AxisSettings) {
+		blocksPage.updateToolSettings(axis, AxisSettings);
 	}
 
 	@Then("User can see {string} of {string} same as baseline")
 	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
-
 		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
 		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
 
@@ -801,11 +790,6 @@ public class CreateAppUsingDragAndDropSteps {
 		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
 
 		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
-	}
-
-	@And("User click on the Value Label option")
-	public void user_click_on_the_value_label_option() {
-		blocksPage.clickOnValueLabelOption();
 	}
 
 	@And("User turns on the Value Labels toggle")
@@ -826,5 +810,13 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User click on the Markdown container to select it")
 	public void user_click_on_the_markdown_container_to_select_it() {
 		blocksPage.clickOnMarkdownContainerToSelectIt();
+	@And("User click on {string} tool option")
+	public void user_click_on_tool_option(String toolName) {
+		blocksPage.clickOnToolOption(toolName);
+	}
+
+	@And("User update Bar Style setting using {string}")
+	public void and_user_update_bar_style_setting_using_bar_style_value(String barStyleValue) {
+		blocksPage.updateBarStyle(barStyleValue);
 	}
 }

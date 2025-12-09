@@ -15,6 +15,7 @@ Feature: View add Database options
     Given User opens Main Menu
     When User clicks on Open Database
     And User clicks on Add Database
+    And User should see Search bar to filter database options
     Then User searches database types and verifies visibility under respective sections
       | EXPECTED_SECTION | DATABASE_TYPE                                                                                                                                                                                                                                                 |
       | File Uploads     | CSV, Excel, TSV, SQLite, H2, Neo4J, Tinker                                                                                                                                                                                                                    |
