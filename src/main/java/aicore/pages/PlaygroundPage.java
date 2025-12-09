@@ -30,6 +30,38 @@ public class PlaygroundPage {
     public void clickOnOpenConfigurationMenuButton(String buttonName) {
         PlaygroundPageUtils.clickOnOpenConfigurationMenuButton(page, buttonName);
     }
+    public void clickOnMCPDropdown() {
+        PlaygroundPageUtils.clickOnMCPDropdown(page);
+    }
+
+    public void saveAddedMCPList() {
+        PlaygroundPageUtils.saveAddedMCPList(page);
+    }
+
+    public void clickOverifyMCPAppVisibleInAvailableTools(String modelName) {
+        PlaygroundPageUtils.clickOverifyMCPAppVisibleInAvailableTools(page, modelName);
+
+    }
+
+    public void verifyAddedMCPAppSelectedList(String modelName) {
+        PlaygroundPageUtils.verifyAddedMCPAppSelectedList(page, modelName);
+    }
+
+    public void verifyAddedMCPModelMCPSection(String modelName) {
+        PlaygroundPageUtils.verifyAddedMCPModelMCPSection(page, modelName);
+    }
+
+    public void deleteAddedMCPModelMCPSection(String modelName) {
+        PlaygroundPageUtils.deleteAddedMCPModelMCPSection(page, modelName);
+    }
+
+    public void verifyMCPModelRemovedMCPSection(String modelName) {
+        PlaygroundPageUtils.verifyMCPModelRemovedMCPSection(page, modelName);
+    }
+
+    public void searchAndSelectMCPModel(String modelName) {
+        PlaygroundPageUtils.searchAndSelectMCPModel(page, modelName);
+    }
 
     public void verifyModelCatalogDropdownPresent(String modelName) {
         PlaygroundPageUtils.verifyModelCatalogDropdownPresent(page, modelName);
