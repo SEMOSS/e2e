@@ -276,11 +276,6 @@ public class DragAndDropBlocksPage {
 	public void updateValueLabelSettings(String valueLabelSettings) {
 		DragAndDropBlocksPageUtils.updateValueLabelSettings(page, valueLabelSettings);
 	}
-	public void clickOnTabInLeftPanel(String tabName) {
-		DragAndDropBlocksPageUtils.clickOnTabInLeftPanel(page, tabName);
-	}
-	public void clickOnMarkdownContainerToSelectIt() {
-		DragAndDropBlocksPageUtils.clickOnMarkdownContainerToSelectIt(page);
 
 	public void clickOnToolOption(String toolName) {
 		DragAndDropBlocksPageUtils.clickOnToolOption(page, toolName);
