@@ -1,27 +1,13 @@
 Feature: Playground Home model to verify configuration tab
 
-  @LoginWithAdmin @Regression
-  Scenario Outline: Validate Playground Configuration tab for Model - add model
+  Background: Playground Configuration tab for Model - add model
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-    And User selects '<MODEL_TYPE>' type
-    And User selects '<MODEL_NAME>'
-    And User enters Catalog Name as '<CATLOG_NAME>'
-    And User enters Open AI Key as '<KEY>'
-    And User clicks on Create Model button
-    And User can see a toast message as '<TOAST_MESSAGE>'
-    And User clicks on Edit button
-    And User add tags '<TAGS>' and presses Enter
-    And User clicks on Submit button
+    And User add "2" models with details "OpenAI" "GPT 3.5 Turbo" "Model" "Test@1234" "text-generation"
     And User clicks on Copy Catalog ID
-    Then User can see the Model title as '<CATLOG_NAME>'
-    Examples: 
-      | MODEL_TYPE | MODEL_NAME    | CATLOG_NAME | KEY       | TOAST_MESSAGE                     | TAGS            |
-      | OpenAI     | GPT 3.5 Turbo | Model1      | Test@1234 | Successfully added LLM to catalog | text-generation |
-      | OpenAI     | GPT 3.5 Turbo | Model2      | Test@1234 | Successfully added LLM to catalog | text-generation |
-
+    
   @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Validate Playground Configuration tab for Model - add/search Model
     Given User is on Home page
