@@ -135,7 +135,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SHOW_VALUE_LABEL_SELECT_COLOR_XPATH = "//button[@aria-label='select colour']";
 	private static final String SHOW_VALUE_LABEL_CHOOSE_COLOR_XPATH = "//div[@title='#000000']";
 	private static final String BAR_STYLE_CHHOSE_COLOR_XPATH = "//div[@title='#4A90E2']";
-	private static final String SHOW_ROATATE_VALUE_LABEL_XPATH = "//input[@id='rotate-label']";
+	private static final String SHOW_ROATATE_VALUE_LABEL_XPATH = "//input[@id='rotate-label']";<<<<<<<HEAD
 	private static final String CHART_TOOL_NAME_XPATH = "//span[text()='{toolName}']";
 	private static final String BAR_STYLE_WIDTH_OPTION_XPATH = "//label[normalize-space()='Bar Width']/following::input[@aria-orientation='horizontal']";
 	private static final String CHART_TITLE_SELECT_ALIGNMENT_XPATH = "//div[@id='alignment']";
@@ -144,7 +144,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_TITLE_SIZE_XPATH = "//input[@id='size']";
 	private static final String CHART_SHOW_TITLE_XPATH = "//span[@title='Show Title']//input";
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
+	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";=======
+	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}";
+	private static final String MARKDOWN_BLOCK_XPATH = "//strong[text()='Hello world']";>>>>>>>Feature/at-605-drag-and-drop-one-container-Screenshot
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -965,5 +967,13 @@ public class DragAndDropBlocksPageUtils {
 			}
 
 		}
+	}
+
+	public static void clickOnTabInLeftPanel(Page page, String tabName) {
+		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();
+	}
+
+	public static void clickOnMarkdownContainerToSelectIt(Page page) {
+		page.locator(MARKDOWN_BLOCK_XPATH).click();
 	}
 }

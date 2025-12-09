@@ -284,4 +284,12 @@ public class DragAndDropBlocksPage {
 	public void updateBarStyle(String barStyleValue) {
 		DragAndDropBlocksPageUtils.updateBarStyle(page, barStyleValue);
 	}
+
+	public void clickOnTabInLeftPanel(String tabName) {
+		DragAndDropBlocksPageUtils.clickOnTabInLeftPanel(page, tabName);
+	}
+
+	public void clickOnMarkdownContainerToSelectIt() {
+		DragAndDropBlocksPageUtils.clickOnMarkdownContainerToSelectIt(page);
+	}
 }

@@ -18,3 +18,4 @@ Feature: Create Drag and Drop app documentation
     And User clicks on Create New App button
     And User captures screenshot for "DragAndDropLanding"
     And User completes screenshot capture and triggers comparison for 'DragAndDropApp'
+    
