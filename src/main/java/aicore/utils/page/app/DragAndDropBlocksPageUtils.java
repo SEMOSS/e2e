@@ -145,6 +145,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_SHOW_TITLE_XPATH = "//span[@title='Show Title']//input";
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
+	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}";
+	private static final String MARKDOWN_BLOCK_XPATH = "//strong[text()='Hello world']";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -965,5 +968,17 @@ public class DragAndDropBlocksPageUtils {
 			}
 
 		}
+	}
+
+	public static void clickOnTabInLeftPanel(Page page, String tabName) {
+		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();
+	}
+
+	public static void clickOnMarkdownContainerToSelectIt(Page page) {
+		page.locator(MARKDOWN_BLOCK_XPATH).click();
+	}
+	
+	public static void clickOnBlockSettingsOption(Page page) {
+		page.locator(BLOCK_SETTINGS_XPATH).click();
 	}
 }

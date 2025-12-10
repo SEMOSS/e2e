@@ -1,5 +1,5 @@
-
 Feature: Create Drag and Drop app documentation
+
 @SkipIfVersionMatch @Documentation 
    Scenario: Drag and Drop app - Create New App screenshot
     Given User captures documentation screenshot for 'DragAndDrop'
@@ -18,3 +18,22 @@ Feature: Create Drag and Drop app documentation
     And User clicks on Create New App button
     And User captures screenshot for "DragAndDropLanding"
     And User completes screenshot capture and triggers comparison for 'DragAndDropApp'
+    
+    @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation 
+    Scenario: Documenation- New Page Icon - Drag and Drop app
+    Given User captures documentation screenshot for 'DragAndDrop'
+    When User is on Home page
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+     And User clicks on Get Started button in 'Drag and Drop'
+    And User enters app name as 'Accordion Settings Test App'
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    #add below step because bydefault block setting is enbled so when bug #549 is solve so remove the below step
+    And User clicks on Block Settings option
+    And User click on the 'Layers' tab in the left panel
+    And User captures a 'testidelement' and highlights the 'AddIcon' with name 'NewPage'
+    And User completes screenshot capture and triggers comparison for 'DragAndDropApp'
+    
+    
