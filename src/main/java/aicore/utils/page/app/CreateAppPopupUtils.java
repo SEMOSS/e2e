@@ -19,7 +19,7 @@ public class CreateAppPopupUtils {
 	private static final String CREATE_BUTTON_XPATH = "//button[span[text()='Create']]";
 	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
 	private static final String SELECT_APP_XPATH = "//span[text()='{Select_App}']";
-	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//h6[contains(@class,'MuiTypography-subtitle1')]";
+	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//div";
 	public static List<String> createdAppNames = new ArrayList<>();
 
 	public static void clickOnGetStartedButton(Page page, String appType) {
