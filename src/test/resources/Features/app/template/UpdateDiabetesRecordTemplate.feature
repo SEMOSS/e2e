@@ -24,10 +24,11 @@ Feature: Create app using Update diabetesTemplate
     And User fetch the app name for drag and drop app
     And User clicks on Notebook
     And User clicks on Query name as 'update-diabetes-record'
+    And User selects 'TestDatabase' database from the dropdown
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
 
-  @LoginWithAdmin @Regression
+  @LoginWithAdmin @Regression @ApplicationBugFailure
   Scenario: Create app using update Diabetes Record Template with updating existing data
     Given User is on Home page
     When User opens Main Menu
@@ -50,6 +51,7 @@ Feature: Create app using Update diabetesTemplate
     When User close the Preview app window
     And User clicks on Notebook
     And User clicks on Query name as 'update-diabetes-record'
+    And User selects 'TestDatabase' database from the dropdown
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
     When User modify the Sql query "SELECT * from diabetes WHERE ID=16767 AND AGE=35 AND LOCATION='Pune' AND GENDER='Male'"

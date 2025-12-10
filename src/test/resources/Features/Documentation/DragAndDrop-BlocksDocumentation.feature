@@ -1,6 +1,6 @@
 Feature: Documentation for Accordion Block Settings
 @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
-  Scenario: Documentation for Accordion Dimensions
+  Scenario: DragAndDrop - Documentation for Accordion Dimensions
     Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
@@ -18,7 +18,7 @@ Feature: Documentation for Accordion Block Settings
     And User completes screenshot capture and triggers comparison for 'Accordion Block Settings'
 
     @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
-  Scenario: Documentation for Accordion Color
+  Scenario: DragAndDrop - Documentation for Accordion Color
     Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
@@ -36,7 +36,7 @@ Feature: Documentation for Accordion Block Settings
     And User completes screenshot capture and triggers comparison for 'Accordion Block Settings' 
 
 @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
-  Scenario: Documentation for Accordion block
+  Scenario: DragAndDrop - Documentation for Accordion block
     Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
@@ -51,7 +51,7 @@ Feature: Documentation for Accordion Block Settings
     And User completes screenshot capture and triggers comparison for 'Accordion Block'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
-  Scenario: Documentation for Accordion block Settings
+  Scenario: DragAndDrop - Documentation for Accordion block Settings
     Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
@@ -68,7 +68,7 @@ Feature: Documentation for Accordion Block Settings
     And User completes screenshot capture and triggers comparison for 'Accordion Block Settings'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
-  Scenario: Documentation for Accordion Content
+  Scenario: DragAndDrop - Documentation for Accordion Content
     Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
@@ -84,3 +84,39 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on the Block Settings option
     And User captures screenshot for "AccordionContent"
     And User completes screenshot capture and triggers comparison for 'Accordion Content'
+
+ @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario:  DragAndDrop - Documentation for Accordion Spacing
+    Given User captures documentation screenshot for 'DragAndDrop'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Accordion Settings Test App'
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User clicks on Blocks
+    And User drags the 'Accordion' block and drops it on the page
+    And User clicks on the 'Accordion' block to select it
+    And User clicks on the Block Settings option
+    And User selects the Appearance tab
+    And User captures a 'blocksettingelement' and highlights the "Spacing" with name "AccordionSpacing"
+    And User completes screenshot capture and triggers comparison for 'Accordion Block Settings'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario:  DragAndDrop - Documentation for Accordion Border
+    Given User captures documentation screenshot for 'DragAndDrop'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Accordion Settings Test App'
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User clicks on Blocks
+    And User drags the 'Accordion' block and drops it on the page
+    And User clicks on the 'Accordion' block to select it
+    And User clicks on the Block Settings option
+    And User selects the Appearance tab
+    And User captures a 'blocksettingelement' and highlights the "Border" with name "AccordionBorder" 
+    And User completes screenshot capture and triggers comparison for 'Accordion Block Settings'

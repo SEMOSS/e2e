@@ -40,8 +40,8 @@ public class CatlogAccessPageUtility {
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
 	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
-	// as per new UI update
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
+	private static final String CATALOG_ID_XPATH = "//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -169,15 +169,9 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void getCatalogAndCopyId(Page page) {
-//		Locator copyId = page.getByTestId(CLICK_ON_COPYICON_DATATESTID);
 		page.waitForTimeout(500);
-//		copyId.click();
-//		Locator toastMessage = page.getByTestId("notification-success-alert");
-//		boolean isToastVisible = toastMessage.isVisible();
-//		AICorePageUtils.closeToastMessage(page);
-//		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
-		String copiedId = page.locator("//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p")
-				.innerText();
+		Locator id = page.locator(CATALOG_ID_XPATH);
+		String copiedId = id.innerText();
 		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
 		String catalogType = catalogTypeText.trim().split("\\s+")[0];
 		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);

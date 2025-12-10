@@ -47,6 +47,7 @@ Feature: App setting for Editor permission
     And User logs out from the application
     And User login as 'Author'
 
+@ApplicationBugFailure
   Scenario: Create APP - Editor user - View Member setting and add and delete the Editor and Read User
     Given User clicks on app Edit button
     And User click on Settings

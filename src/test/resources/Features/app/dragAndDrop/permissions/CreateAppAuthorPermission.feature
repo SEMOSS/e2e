@@ -20,7 +20,7 @@ Feature: App setting for Author permission
     And 'Author' user can 'view' Apps
     And 'Author' user can 'view' General
 
-  @DeleteCreatedTestApp
+  @DeleteCreatedTestApp @ApplicationBugFailure
   Scenario: Create APP - Author user - Click on Member setting and add and delete the Editor and Read User
     When User Click on Members setting option
     Then User clicks on Add Member button

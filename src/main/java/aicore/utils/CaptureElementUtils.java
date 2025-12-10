@@ -22,7 +22,6 @@ public abstract class CaptureElementUtils {
 	private static final String DATATESTID_NAME = "{dataTestIdName}";
 	private static final String BLOCK_SETTING_ELEMENT_XPATH = "//p[text()='{blockName}']/../../../..";
 
-
 	public static List<Locator> captureButtonScreenshot(Page page, String buttonName) {
 		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
 		List<Locator> locators = new ArrayList<>();
@@ -175,7 +174,9 @@ public abstract class CaptureElementUtils {
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
+			if (locator.nth(i).isVisible()) {
+				locators.add(locator.nth(i));
+			}
 		}
 		return locators;
 	}

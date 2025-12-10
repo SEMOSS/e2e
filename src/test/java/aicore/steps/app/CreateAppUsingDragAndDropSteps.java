@@ -1,12 +1,11 @@
 package aicore.steps.app;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -721,15 +720,10 @@ public class CreateAppUsingDragAndDropSteps {
 		appVariablePage.clickOnSaveVariableButton();
 	}
 
-	// bar charts
+	// bar charts tools
 	@And("User click on the Tools tab")
 	public void user_click_on_tool_tab() {
 		blocksPage.clickOnToolTab();
-	}
-
-	@And("User click on Conditional toole option")
-	public void user_click_on_conditional_tool_option() {
-		blocksPage.clickOnConditionalToolOption();
 	}
 
 	@And("User validates Conditional using {string}")
@@ -745,11 +739,6 @@ public class CreateAppUsingDragAndDropSteps {
 				Assertions.assertFalse(isVisible, "Chart should NOT be visible when conditional = false");
 			}
 		}
-	}
-
-	@And("User click on Color Palette toole option")
-	public void user_click_on_color_palette_tool_option() {
-		blocksPage.clickOnColorPaletteToolOption();
 	}
 
 	@And("User validates Color Palette using {string}")
@@ -772,5 +761,69 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User click on Legend Option and turn on the toggle")
 	public void user_click_on_legend_option_and_turn_on_the_toggle() {
 		blocksPage.clickOnLegendOptionAndTurnOnTheToggle();
+	}
+
+	@And("User click on the Edit {string} option")
+	public void user_click_on_the_edit_x_axis_option(String axis) {
+		blocksPage.clickOnEditXAxisOption(axis);
+	}
+
+	@And("User updates {string} settings using {string}")
+	public void user_updates_tool_settings_using(String axis, String AxisSettings) {
+		blocksPage.updateToolSettings(axis, AxisSettings);
+	}
+
+	@Then("User can see {string} of {string} same as baseline")
+	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
+		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
+		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
+
+		String basePath = "screenshots/" + chartFolder + "/" + toolFolder + "/";
+
+		String actualImagePath = basePath + "actualChart.png";
+		String expectedImagePath = basePath + "expectedChart.png";
+		String diffImagePath = basePath + "diffChart.png";
+
+		blocksPage.closeBlocksOption();
+		blocksPage.takeChartScreenshot(actualImagePath, toolName);
+
+		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
+
+		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
+	}
+
+	@And("User turns on the Value Labels toggle")
+	public void user_turns_on_the_value_label_toggle() {
+		blocksPage.turnOnValueLabelToggle();
+	}
+
+	@And("User updates Value Labels settings using {string}")
+	public void user_updates_value_label_settings_using(String valueLabelSettings) {
+		blocksPage.updateValueLabelSettings(valueLabelSettings);
+	}
+
+	@And("User click on the {string} tab in the left panel")
+	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
+		blocksPage.clickOnTabInLeftPanel(tabName);
+	}
+	
+	@And("User click on the Markdown container to select it")
+	public void user_click_on_the_markdown_container_to_select_it() {
+        blocksPage.clickOnMarkdownContainerToSelectIt();
+    }
+
+	@And("User click on {string} tool option")
+	public void user_click_on_tool_option(String toolName) {
+		blocksPage.clickOnToolOption(toolName);
+	}
+
+	@And("User update Bar Style setting using {string}")
+	public void and_user_update_bar_style_setting_using_bar_style_value(String barStyleValue) {
+		blocksPage.updateBarStyle(barStyleValue);
+	}
+
+	@And("User clicks on Block Settings option")
+	public void user_clicks_on_block_settings_option() {
+		blocksPage.clickOnBlockSettingsOption();
 	}
 }

@@ -16,7 +16,9 @@ public class HomePageUtils {
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
 
 	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue("applicationName") + "']";
-	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
+	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
+	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search']";
+	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
 	// menu options
 	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
@@ -45,6 +47,7 @@ public class HomePageUtils {
 	// Create app
 	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";
 	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
+	private static final String CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID = "importForm-Catalog-Name-textField";
 	// pop ups
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
@@ -237,7 +240,9 @@ public class HomePageUtils {
 
 	public static void searchCatalog(Page page, String searchData) {
 		page.locator(APP_SEARCH_TEXTBOX_XPATH).click();
-		page.locator(APP_SEARCH_TEXTBOX_XPATH).fill(searchData);
+		Locator search = page.locator(SEARCH_TEXTBOX_ON_POPUP_XPATH);
+		AICorePageUtils.waitFor(search);
+		search.fill(searchData);
 	}
 
 	public static void selectSearchResultFilterOption(Page page, String optionName) {
@@ -247,10 +252,13 @@ public class HomePageUtils {
 		option.click();
 	}
 
+	public static void closeSearchPopup(Page page) {
+		page.locator("//span[text()='Close']").click();
+	}
+
 	public static boolean verifySearchResultIsVisible(Page page, String catalogName) {
-		Locator listbox = page.locator("ul.MuiAutocomplete-listbox");
-		AICorePageUtils.waitFor(listbox);
-		Locator searchCard = listbox.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(catalogName));
+		Locator searchCard = page.locator(SEARCH_RESULT_XPATH.replace("{catalogName}", catalogName));
+		AICorePageUtils.waitFor(searchCard);
 		return searchCard.isVisible();
 	}
 
@@ -273,6 +281,10 @@ public class HomePageUtils {
 	}
 
 	public static void enterCatalogNameToCreateCatalog(Page page, String catalogName) {
-		page.getByTestId(CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
+		if (page.getByTestId(CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID).isVisible()) {
+			page.getByTestId(CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID).locator("input").fill(catalogName);
+		} else {
+			page.getByTestId(CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
+		}
 	}
 }

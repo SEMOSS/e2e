@@ -10,7 +10,7 @@ Feature: Create drag and drop  for charts validation
     And User clicks on Create button
     And User fetch the app name for drag and drop app
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-    Given User opens Main Menu
+    And User opens Main Menu
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
@@ -23,7 +23,7 @@ Feature: Create drag and drop  for charts validation
     And User clicks on Refresh button
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
-    Then User sees the table in the metadata tab
+    And User sees the table in the metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
@@ -38,8 +38,8 @@ Feature: Create drag and drop  for charts validation
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    Then User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
-    When User selects all columns from database
+    And User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
+    And User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
     And User enter the data limit as '20'
@@ -49,21 +49,40 @@ Feature: Create drag and drop  for charts validation
     And User clicks on Blocks if it is not selected by default
 
   Scenario Outline: Drag and Drop Charts section '<BLOCK_NAME>' block
-    When User drags the '<BLOCK_NAME>' block and drops it on the page
-    And User clicks on the '<BLOCK_NAME>' block to select it
+    Given User drags the '<BLOCK_NAME>' block and drops it on the page
+    When User clicks on the '<BLOCK_NAME>' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the selected frame dropdown
     And User drag and drop the 'Age, Glucose' columns to 'Select X Axis, Select Y Axis' fields
     And User click on the Tools tab
-    And User click on Conditional toole option
+    And User click on 'Conditional' tool option
     And User validates Conditional using '<CONDITIONAL>'
-    And User click on Color Palette toole option
+    And User click on 'Color Palette' tool option
     And User validates Color Palette using '<COLOR_PALETTE>'
-    Then User can see '<COLOR_PALLETTE_CHART_NAME>' chart same as baseline chart
+    Then User can see 'Color_Palette_Tool' of 'Bar Chart' same as baseline
+    And User click on the Edit 'X Axis' option
+    And User updates 'X Axis' settings using '<X_AXIS_VALUES>'
+    And User can see 'Edit_XAxis_Tool' of 'Bar Chart' same as baseline
+    And User click on the Edit 'Y Axis' option
+    And User updates 'Y Axis' settings using '<Y_AXIS_VALUES>'
+    And User can see 'Edit_YAxis_Tool' of 'Bar Chart' same as baseline
+    And User click on 'Value Label' tool option
+    And User turns on the Value Labels toggle
+    And User updates Value Labels settings using '<VALUE_LABEL_VALUE>'
+    And User can see 'Value_Labels_Tool' of 'Bar Chart' same as baseline
+    And User click on 'Bar Style' tool option
+    And User update Bar Style setting using '<BAR_STYLE_VALUE>'
+    And User can see 'Bar_Style_Tool' of 'Bar Chart' same as baseline
+    And User click on 'Chart Title' tool option
+    And User updates 'Chart Title' settings using '<CHART_TITLE_VALUES>'
+    And User can see 'Chart_Title_Tool' of 'Bar Chart' same as baseline
+    And User click on 'Resizing' tool option
+    And User updates 'Resizing' settings using '<RESIZING_VALUES>'
+    And User can see 'Resizing_Tool' of 'Bar Chart' same as baseline
     And User click on Legend Option and turn on the toggle
-    Then User can see '<LEGEND_CHART>' chart same as baseline chart
+    And User can see 'Legend_Tool' of 'Bar Chart' same as baseline
 
     Examples: 
-      | BLOCK_NAME | CONDITIONAL | COLOR_PALETTE           | COLOR_PALLETTE_CHART_NAME | LEGEND_CHART      |
-      | Bar Chart  | false, true | Add Color, Change Color | Bar Chart Tool            | Legend Chart Tool |
+      | BLOCK_NAME | CONDITIONAL | COLOR_PALETTE           | COLOR_PALLETTE_TOOL | LEGEND_CHART      | X_AXIS_VALUES                                                                                                                                                                                                                 | EDIT_XAXIS_TOOL  | Y_AXIS_VALUES                                                                                                                                                                                                                 | EDIT_YAXIS_TOOL  | VALUE_LABEL_VALUE                                                                                                                            | BAR_STYLE_VALUE                    | CHART_TITLE_VALUES                                                                                                                                    | RESIZING_VALUES       |
+      | Bar Chart  | false, true | Add Color, Change Color | Color Pallette Tool | Legend Chart Tool | Show Axis Title=true, Set Axis Title=Bar chart, Edit Axis Title Font Size=12, Axis Gap=25, Show XAxis Labels=true, Edit Label Font Size=12, Rotate X-Axis Values=36, Show XAxis Line Ticks=true, Show / Hide X-Axis Zoom=true | Edit X-Axix Tool | Show Axis Title=true, Set Axis Title=Bar chart, Edit Axis Title Font Size=12, Axis Gap=25, Show YAxis Labels=true, Edit Label Font Size=12, Rotate Y-Axis Values=36, Show XAxis Line Ticks=true, Show / Hide Y-Axis Zoom=true | Edit Y-Axis Tool | Position=top, Rotate Label=90, Select Alignment=center, Select Font=serif, Select Font Size =8, Select Font Weight=bold, Select Colour=black | Bar Width= 13, Select Colour= blue | Show Title=true, Title Name=Bar Graph, Select Alignment=left, Text Size= 14, Select Font Weight=bold, Select Font Family=Calibri, Select Colour=black | Height=250, Width=350 |
