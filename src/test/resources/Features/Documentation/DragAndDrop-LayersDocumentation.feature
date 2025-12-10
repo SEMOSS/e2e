@@ -46,7 +46,7 @@ Feature: DragAndDrop - Documentation for App Landing
     And User drags the 'Container' block and drops it on the page
     And User drags the 'Markdown' block and drops it on the page
     And User drags the 'Markdown' block and drops it on the page
-    And User click on the 'Layers' tab in the left panel
     And User delete 'Welcome to the UI Builder! Drag and drop blocks to use in your app.' on page
+    And User click on the 'Layers' tab in the left panel
     Then User captures screenshot for 'TwoContainer'
     And User completes screenshot capture and triggers comparison for 'Two Container'
