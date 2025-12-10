@@ -69,6 +69,5 @@ public class BlockSettingsPage {
 
 	public void enterValueInGraphTD(String value) {
 		BlockSettingsUtils.enterValueInGraphTD(page, value);
-
 	}
 }

@@ -44,8 +44,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.closeBlocksOption(page);
 	}
 
-	public void blockDropPosition() {
-		DragAndDropBlocksPageUtils.blockDropPosition(page);
+	public void blockDropPosition(String blockName) {
+		DragAndDropBlocksPageUtils.blockDropPosition(page, blockName);
 	}
 
 	public void clickOnDroppedBlock(String blockName) {
@@ -289,10 +289,12 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnTabInLeftPanel(page, tabName);
 	}
 
-	public void clickOnMarkdownContainerToSelectIt() {
-		DragAndDropBlocksPageUtils.clickOnMarkdownContainerToSelectIt(page);
-	}
 	public void clickOnBlockSettingsOption() {
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
 	}
+
+	public void deleteBlockOnPage(String blockName) {
+		DragAndDropBlocksPageUtils.deleteBlockOnPage(page, blockName);
+	}
+
 }
