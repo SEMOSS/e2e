@@ -14,7 +14,7 @@ public class AgentBuilderAppsUtils {
 	private static final String INPUT_TYPE_XPATH = "//div[contains(@class, 'MuiInputBase-root') and contains(@class, 'MuiAutocomplete-inputRoot')]/input[@id='input-token-autocomplete']";
 	private static final String CREATE_APP_BUTTON_XPATH = "//button[normalize-space(.)='Create App']";
 	private static final String INPUT_TYPE_FOR_INPUT_XPATH = "//span[text()='{INPUT_TEXT}']/ancestor::div[contains(@class,'MuiGrid-item')]/following-sibling::div//label[text()='Input Type']/ancestor::div[contains(@class,'MuiFormControl-root')]//input";
-	private static final String USER_FETCH_APP_NAME_XPATH = "//div[@id='navbar--left']//h6[contains(@class,'MuiTypography-subtitle1')]";
+	private static final String USER_FETCH_APP_NAME_XPATH = "//div[@id='navbar--left']//div/following-sibling::div";
 
 	public static void enterName(Page page, String appName, String timestamp) {
 		page.locator(ENTER_NAME_XPATH).fill(appName + " " + timestamp);
