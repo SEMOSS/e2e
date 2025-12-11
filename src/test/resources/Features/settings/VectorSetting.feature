@@ -12,7 +12,7 @@ Feature: Search Vector Settings
     And User clicks on Copy Catalog ID
     Then User can see a toast message as 'Successfully added LLM to catalog'
     When User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
 
   @LoginWithAdmin @DeleteTestCatalog @Regression @Smoke

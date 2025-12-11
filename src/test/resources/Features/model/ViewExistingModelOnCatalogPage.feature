@@ -12,7 +12,7 @@ Feature: View existing models in model Catalog
     And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Model'
     And User clicks on Edit button
-    And User add tags 'embeddings, Test1' and presses Enter
+    And User add Tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'
     And User selects 'IP, PHI' from the Data Classification dropdown
     And User selects 'IP ALLOWED, PHI ALLOWED' from the Data Restrictions dropdown

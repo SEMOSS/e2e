@@ -43,7 +43,7 @@ Feature: Add Storage
     When User can see toast message as 'Successfully copied ID'
     #And User can see 'Please use the Edit button to provide a description for this Storage. A description will help others find the Storage and understand how to use it. To include more details associated with the Storage, edit the markdown located in the Overview section.' as storage description
     When User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
