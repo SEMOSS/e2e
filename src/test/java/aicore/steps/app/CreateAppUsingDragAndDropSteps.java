@@ -802,6 +802,9 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.updateValueLabelSettings(valueLabelSettings);
 	}
 
+	@And("User closes the Block Settings button")
+	public void user_closes_the_block_settings_button() {
+		blockSettings.closeBlockSettings();
 	@And("User click on the {string} tab in the left panel")
 	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
 		blocksPage.clickOnTabInLeftPanel(tabName);

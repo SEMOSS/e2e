@@ -297,12 +297,12 @@ public class NotebookPageUtils {
 			AICorePageUtils.waitFor(hiddenOptions);
 			CommonUtils.moveMouseToCenterWithMargin(page, hiddenOptions, 60, 20);
 		} else {
-			page.setViewportSize(1300, 600);
+			page.setViewportSize(1350, 650);
 			Locator dataKeyPair = page.getByTestId("data-key-pairtype").nth(0);
 			dataKeyPair.scrollIntoViewIfNeeded();
 			AICorePageUtils.waitFor(dataKeyPair);
 			dataKeyPair.hover();
-			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 60, 20);
+			CommonUtils.moveMouseToCenterWithMargin(page, dataKeyPair, 65, 30);
 		}
 	}
 

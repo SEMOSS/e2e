@@ -71,4 +71,8 @@ public class BlockSettingsPage {
 		BlockSettingsUtils.enterValueInGraphTD(page, value);
 
 	}
+
+	public void closeBlockSettings() {
+		BlockSettingsUtils.closeBlockSettings(page);
+	}
 }
