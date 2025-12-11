@@ -11,7 +11,7 @@ Feature: View existing Vectors on Vector Catalog Page
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
     And User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
     When User opens Main Menu
     And User clicks on Open Vector
@@ -25,7 +25,7 @@ Feature: View existing Vectors on Vector Catalog Page
     And User clicks on Create Vector button
     And User clicks on Copy Catalog ID
     And User clicks on Edit button
-    And User add tags 'embeddings, Test1' and presses Enter
+    And User add Tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'
     And User selects 'IP, PHI' from the Data Classification dropdown
     And User selects 'IP ALLOWED, PHI ALLOWED' from the Data Restrictions dropdown

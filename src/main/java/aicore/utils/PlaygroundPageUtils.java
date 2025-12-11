@@ -3,6 +3,7 @@ package aicore.utils;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaygroundPageUtils {
 
@@ -12,6 +13,13 @@ public class PlaygroundPageUtils {
     private static final String ADD_MCP_TOOL_XPATH = "//div[text()='MCPs']/following-sibling::button";
     private static final String SAVE_MCP_TOOL_XPATH = "//button[text()='Save']";
     private static final String MCP_TOOL_XPATH = "//p[contains(text(),'{MCP}')]";
+    private static final String SIDEBAR_TOGGLE_XPATH = "//button[@data-slot='sidebar-trigger']";
+    private static final String NO_PROMPT_EXIST_XPATH = "//div[@data-slot='sidebar-group']//*[text()='No rooms found']";
+    private static final String PROMPT_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']";
+    private static final String PROMPT_DELETE_BUTTON_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']//following-sibling::button";
+    private static final String SIDEBAR_XPATH = "//div[@data-slot='sidebar-group']";
+    private static final String RESPONSE_XPATH = "//div//span[text()='Llama3-70B-Instruct']";
+    private static final String LOADING_SPINNER_XPATH = "//button[@aria-label='Prompt the Model']//*[@aria-label='Loading']";
     private static final String MCP_SEARCH_BAR_XPATH = "//label[text()='Available Tools']//..//..//input[@placeholder='Search']";
     private static final String MCP_CHECKBOX_XPATH = "//p[contains(text(),'{MCP}')]//../../button";
     private static final String MCP_ADDED_MODEL_XPATH = "//*[contains(text(),'Selected Tools')]//..//span";
@@ -121,6 +129,80 @@ public class PlaygroundPageUtils {
         Locator configMenu = page.locator(CONFIGURATION_MENU_XPATH);
         if (!configMenu.isVisible()) {
             throw new AssertionError("Expected the Configuration Menu to be opened, but it is not visible.");
+        }
+    }
+
+    public static void clickOnSidebarToggleButton(Page page) {
+        Locator toggleButton = page.locator(SIDEBAR_TOGGLE_XPATH);
+        if (!toggleButton.isVisible()) {
+            throw new AssertionError("Sidebar toggle button is not visible.");
+        }
+        toggleButton.click();
+    }
+
+    public static void verifyPromptPresentInSidebarHistory(Page page, String prompt) {
+        Locator promptLocator = page.locator("//div[@data-slot='sidebar-group']//*[text()='" + prompt + "']");
+        AICorePageUtils.waitFor(promptLocator);
+        if (!promptLocator.isVisible()) {
+            throw new AssertionError("Prompt '" + prompt + "' is not present in the sidebar history.");
+        }
+    }
+
+    public static void hoverOverSidebarHistoryItem(Page page, String prompt) {
+        Locator promptLocator = page.locator(PROMPT_XPATH.replace("{prompt}", prompt));
+        AICorePageUtils.waitFor(promptLocator);
+        if (!promptLocator.isVisible()) {
+            throw new AssertionError("Prompt '" + prompt + "' is not present in the sidebar history.");
+        }
+        promptLocator.hover();
+    }
+
+    public static void clickDeleteIconForSidebarHistoryItem(Page page, String prompt) {
+        Locator deleteIconLocator = page.locator(PROMPT_DELETE_BUTTON_XPATH.replace("{prompt}", prompt));
+        AICorePageUtils.waitFor(deleteIconLocator);
+        if (!deleteIconLocator.isVisible()) {
+            throw new AssertionError("Delete icon for prompt '" + prompt + "' is not visible in the sidebar history.");
+        }
+        deleteIconLocator.click();
+    }
+
+    public static void verifyPromptNotPresentInSidebarHistory(Page page, String prompt) {
+        Locator promptLocator = page.locator(NO_PROMPT_EXIST_XPATH);
+        AICorePageUtils.waitFor(promptLocator);
+        if (!promptLocator.isVisible()) {
+            throw new AssertionError("Prompt '" + prompt + "' is still present in the sidebar history.");
+        }
+    }
+
+    public static void verifySidebarState(Page page, boolean state) {
+        Locator sidebar = page.locator(SIDEBAR_XPATH);
+        AICorePageUtils.waitFor(sidebar);
+        boolean isVisible = sidebar.isVisible();
+        if (state && !isVisible) {
+            throw new AssertionError("Expected sidebar to be visible, but it is not.");
+        } else if (!state && isVisible) {
+            throw new AssertionError("Expected sidebar to be hidden, but it is visible.");
+        }
+    }
+
+    public static void waitForModelResponse(Page page) {
+        Locator loadingSpinner = page.locator(LOADING_SPINNER_XPATH);
+        // Wait for loading spinner to disappear (become hidden)
+        long timeout = System.currentTimeMillis() + 12000; // 12 second timeout
+        while (loadingSpinner.isVisible() && System.currentTimeMillis() < timeout) {
+            page.waitForTimeout(500);
+        }
+        
+        if (System.currentTimeMillis() >= timeout) {
+            throw new AssertionError("Timeout waiting for loading spinner to disappear. Response loading took too long.");
+        }
+        
+    }
+
+    public static void verifyModelResponseDisplayed(Page page) {
+        Locator responseLocator = page.locator(RESPONSE_XPATH);
+        if (!responseLocator.isVisible()) {
+            throw new AssertionError("Model response/output is not generated.");
         }
     }
 

@@ -87,6 +87,43 @@ public class PlaygroundPage {
         PlaygroundPageUtils.selectModelFromDropdown(page, modelName);
     }
 
+    public void clickOnSidebarToggleButton() {
+            PlaygroundPageUtils.clickOnSidebarToggleButton(page);
+    }
+
+    public void verifyPromptPresentInSidebarHistory(String prompt) {
+        PlaygroundPageUtils.verifyPromptPresentInSidebarHistory(page, prompt);
+    }
+
+    public void hoverOverSidebarHistoryItem(String prompt) {
+        PlaygroundPageUtils.hoverOverSidebarHistoryItem(page, prompt);
+    }
+
+    public void clickDeleteIconForSidebarHistoryItem(String prompt) {
+        PlaygroundPageUtils.clickDeleteIconForSidebarHistoryItem(page, prompt);
+    }
+
+    public void verifyPromptNotPresentInSidebarHistory(String prompt) {
+        PlaygroundPageUtils.verifyPromptNotPresentInSidebarHistory(page, prompt);
+    }
+
+    public void verifySidebarState(String state) {
+         if(state.equals("closed")) {
+            PlaygroundPageUtils.verifySidebarState(page,false);
+        }else if(state.equals("opened")) {
+            PlaygroundPageUtils.verifySidebarState(page,true);
+        }
+       
+    }
+
+    public void waitForModelResponse() {
+        PlaygroundPageUtils.waitForModelResponse(page);
+    }
+
+    public void verifyModelResponseDisplayed() {
+        PlaygroundPageUtils.verifyModelResponseDisplayed(page);
+    }
+
     public void verifyConfigurationMenuIsOpened() {
         PlaygroundPageUtils.verifyConfigurationMenuIsOpened(page);
     }

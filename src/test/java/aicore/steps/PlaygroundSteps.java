@@ -45,6 +45,16 @@ public class PlaygroundSteps {
         playgroundPage.clickOnOpenConfigurationMenuButton(buttonName);
     }
 
+    @And("User waits for the response from the model")
+    public void user_Waits_For_The_Response_From_The_Model() {
+        playgroundPage.waitForModelResponse();
+    }
+
+    @Then("User verifies that the response from the model is displayed as Prompt")
+    public void user_Verifies_That_The_Response_From_The_Model_Is_Displayed_As_Prompt() {
+        playgroundPage.verifyModelResponseDisplayed();
+    }
+
     @When("User clicks on the MCP dropdown")
     public void user_Clicks_On_The_MCP_Dropdown() {
         playgroundPage.clickOnMCPDropdown();
@@ -122,6 +132,36 @@ public class PlaygroundSteps {
         } else {
             playgroundPage.verifyButtonIsDisabled(buttonName);
         }
+    }
+
+    @When("User clicks on sidbar toggle button")
+    public void user_Clicks_On_Sidebar_Toggle_Button() {
+        playgroundPage.clickOnSidebarToggleButton();
+    }
+
+    @Then("User verifies that {string} prompt is present in the sidebar history")
+    public void user_Verifies_That_Prompt_Is_Present_In_The_Sidebar_History(String prompt) {
+        playgroundPage.verifyPromptPresentInSidebarHistory(prompt);
+    }
+
+    @When("User hovers over the sidebar history item with prompt {string}")
+    public void user_Hovers_Over_The_Sidebar_History_Item_With_Prompt(String prompt) {
+        playgroundPage.hoverOverSidebarHistoryItem(prompt);
+    }
+
+    @And("User clicks on the delete icon for the sidebar history item with prompt {string}")
+    public void user_Clicks_On_The_Delete_Icon_For_The_Sidebar_History_Item_With_Prompt(String prompt) {
+        playgroundPage.clickDeleteIconForSidebarHistoryItem(prompt);
+    }
+
+    @Then("User verifies that {string} prompt is no longer present in the sidebar history")
+    public void user_Verifies_That_Prompt_Is_No_Longer_Present_In_The_Sidebar_History(String prompt) {
+        playgroundPage.verifyPromptNotPresentInSidebarHistory(prompt);
+    }
+
+    @Then("User verifies that the sidebar is {string}")
+    public void user_Verifies_That_The_Sidebar_Is(String state) {
+        playgroundPage.verifySidebarState(state);
     }
 
     @Then("User sees the Configuration Menu is opened")

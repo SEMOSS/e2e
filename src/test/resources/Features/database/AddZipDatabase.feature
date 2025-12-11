@@ -29,7 +29,7 @@ Feature: Add Zip Database
   Scenario: View Database Tags
     Given User can see the Catalog title as 'TestDatabase'
     And User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
