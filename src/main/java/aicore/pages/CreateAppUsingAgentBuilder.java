@@ -3,13 +3,12 @@ package aicore.pages;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AgentBuilderAppsUtils;
-import aicore.utils.CommonUtils;
 import aicore.utils.page.app.AppPageUtils;
 
 public class CreateAppUsingAgentBuilder {
 
-    private Page page;
-    private String timestamp;
+    private final Page page;
+    private final String timestamp;
 
     public CreateAppUsingAgentBuilder(Page page, String timestamp) {
         this.page = page;

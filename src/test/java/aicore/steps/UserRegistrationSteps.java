@@ -9,16 +9,15 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.pages.UserRegistrationPage;
-import aicore.utils.CommonUtils;
 import aicore.framework.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class UserRegistrationSteps {
-	private HomePage homePage;
-	private LoginPage loginPage;
-	private UserRegistrationPage userRegistration;
+	private final HomePage homePage;
+	private final LoginPage loginPage;
+	private final UserRegistrationPage userRegistration;
 	protected String timestamp;
 
 	public UserRegistrationSteps() {

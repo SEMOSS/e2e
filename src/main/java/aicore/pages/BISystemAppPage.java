@@ -1,9 +1,7 @@
 package aicore.pages;
-
 import java.nio.file.Paths;
 
 import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
@@ -12,8 +10,8 @@ import aicore.framework.ConfigUtils;
 
 public class BISystemAppPage {
 
-	private Page page;
-	private String timestamp;
+	private final Page page;
+	private final String timestamp;
 
 	private static final String WELCOME_POPUP_CLOSE_XPATH = "//div[@class='smss-overlay__wrapper__header__times']";
 
@@ -61,6 +59,7 @@ public class BISystemAppPage {
 		try {
 			page.getByText("Accept").click();
 		} catch (Exception e) {
+			// no cookies prompt
 		}
 
 		// welcome popup
@@ -118,8 +117,7 @@ public class BISystemAppPage {
 
 	public String verifyDBCreatedToastMessage() {
 		page.locator(DATABASE_CREATED_TOAST_MESSAGE_XPATH).isVisible();
-		String dbSuccessToastMessage = page.textContent(DATABASE_CREATED_TOAST_MESSAGE_XPATH).trim();
-		return dbSuccessToastMessage;
+		return page.textContent(DATABASE_CREATED_TOAST_MESSAGE_XPATH).trim();
 	}
 
 	public void searchDatabaseName(String createdDatabaseName) {
@@ -161,8 +159,7 @@ public class BISystemAppPage {
 
 	public String verifySavedInsightSuccessMsg() {
 		page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).isVisible();
-		String successMessage = page.textContent(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).trim();
-		return successMessage;
+	    return page.textContent(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).trim();
 	}
 
 	public void clickOnNewProjectButton() {

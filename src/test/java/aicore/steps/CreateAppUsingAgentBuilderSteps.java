@@ -4,18 +4,14 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CreateAppUsingAgentBuilder;
-import aicore.pages.HomePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
 public class CreateAppUsingAgentBuilderSteps {
-
-    private HomePage homePage;
-    private CreateAppUsingAgentBuilder createAppAgentBuilder;
-
+    private final CreateAppUsingAgentBuilder createAppAgentBuilder;
+    
     public CreateAppUsingAgentBuilderSteps() {
-        this.homePage = new HomePage(SetupHooks.getPage());
         this.createAppAgentBuilder = new CreateAppUsingAgentBuilder(SetupHooks.getPage(), SetupHooks.getTimestamp());
     }
 

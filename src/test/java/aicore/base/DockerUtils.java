@@ -1,13 +1,12 @@
 package aicore.base;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import aicore.framework.UrlUtils;
 
 public class DockerUtils {
 	private static final Logger logger = LogManager.getLogger(DockerUtils.class);
@@ -23,7 +22,7 @@ public class DockerUtils {
 		logger.warn("attempting to ping: {}", apiStringEndpoint);
 		while (i < retryCount) {
 			try {
-				HttpURLConnection conn = (HttpURLConnection) new URL(apiStringEndpoint).openConnection();
+				HttpURLConnection conn = (HttpURLConnection) URI.create(apiStringEndpoint).toURL().openConnection();
 				conn.setRequestMethod("GET");
 				conn.setConnectTimeout(1000);
 				int code = conn.getResponseCode();
@@ -35,7 +34,7 @@ public class DockerUtils {
 					logger.warn("Unsuccessful ping for {}, sleeping", apiStringEndpoint);
 					Thread.sleep(timeoutInMilliseconds);
 				}
-			} catch (Exception e) {
+			} catch (IOException | InterruptedException e) {
 				logger.error("Could not ping api or sleep: {}", apiStringEndpoint, e);
                 try {
                     Thread.sleep(timeoutInMilliseconds);
