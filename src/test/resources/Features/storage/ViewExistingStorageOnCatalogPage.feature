@@ -13,7 +13,7 @@ Feature: View existing Storages on storage Catalog Page
     And User clicks on Create Storage button
     And User clicks on Copy Catalog ID
     And User clicks on Edit button
-    And User add tags 'embeddings, Test1' and presses Enter
+    And User add Tags 'embeddings, Test1' and presses Enter
     And User enters the Domains as 'SAP, AI'
     And User selects 'PUBLIC, RESTRICTED' from the Data Classification dropdown
     And User selects 'FOUO ALLOWED, INTERNAL ALLOWED' from the Data Restrictions dropdown

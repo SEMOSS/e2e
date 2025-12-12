@@ -48,6 +48,7 @@ Feature: Notebook Data Filters
     And User can see name as frame id in JSON
     And User can see type as 'PY' for 'Python' in JSON
     And User clicks on the Save App icon
+    And User closes the Block Settings button
 
   @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: Verify Unfilter Data in the app

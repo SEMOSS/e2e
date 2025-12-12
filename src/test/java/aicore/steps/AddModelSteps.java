@@ -49,6 +49,29 @@ public class AddModelSteps {
 		openModelPage.clickOnGroupTab(tabName);
 	}
 
+	@And("User add {string} models with details {string} {string} {string} {string} {string}")
+    public void user_add_models_with_details(String index, String modelType, String modelName, String catalogName, String apiKey, String tags) {
+		int modelCount = Integer.parseInt(index);
+		for (int i = 0; i < modelCount; i++) {
+			openModelPage.selectModelType(modelType);
+			openModelPage.selectModel(modelName);
+			openModelPage.enterCatalogName(catalogName+""+(i+1));
+			openModelPage.enterOpenAIKey(apiKey);
+			openModelPage.clickOnCreateModelButton();
+			viewCatalogPage.clickEditIcon();
+			String[] tagsArray = tags.split(", ");
+			for (String tag : tagsArray) {
+				viewCatalogPage.enterTagName(tag);
+			}
+			viewCatalogPage.clickOnSubmit();
+			if(i < modelCount -1) {
+			homePage.openMainMenu();
+			homePage.clickOnOpenModel();
+			openModelPage.clickAddModelButton();
+			}
+		}
+	}
+
 	@And("User selects {string} type")
 	public void user_selects_type(String model) {
 		openModelPage.selectModelType(model);
@@ -185,7 +208,7 @@ public class AddModelSteps {
 		openModelPage.enterDescription(descriptionText);
 	}
 
-	@And("User add tags {string} and presses Enter")
+	@And("User add Tags {string} and presses Enter")
 	public void user_add_tags_and_presses_enter(String tags) {
 		String[] tagsArray = tags.split(", ");
 		for (String tag : tagsArray) {
@@ -286,7 +309,7 @@ public class AddModelSteps {
 		viewCatalogPage.clickOnClose();
 	}
 
-//Edit SMSS
+	// Edit SMSS
 
 	@And("User clicks on Edit SMSS button")
 	public void user_clicks_on_edit_smss_button() {
@@ -312,14 +335,14 @@ public class AddModelSteps {
 	public void user_can_see_updated_value_in_field_as(String field, String newValue) {
 		String fullText = null;
 		switch (field) {
-		case "VAR_NAME":
-			fullText = openModelPage.verifyVarNameInSMSS();
-			break;
-		case "KEEP_CONVERSATION_HISTORY":
-			fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
-			break;
-		default:
-			System.out.println("Invalid field name " + field);
+			case "VAR_NAME":
+				fullText = openModelPage.verifyVarNameInSMSS();
+				break;
+			case "KEEP_CONVERSATION_HISTORY":
+				fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
+				break;
+			default:
+				System.out.println("Invalid field name " + field);
 		}
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
 		assertEquals(actualVarName, newValue);
@@ -438,16 +461,20 @@ public class AddModelSteps {
 			}
 			// Field-specific validation logic
 			switch (fieldName) {
-//			case "ENDPOINT":
-//				Assertions.assertEquals(expectedValue, fullText, "Field validation failed for '" + fieldName + "'");
-//				break;
-			case "INIT_MODEL_ENGINE":
-				Assertions.assertTrue(actualValue.contains(expectedValue), "Field validation failed for '" + fieldName
-						+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue + ">");
-				break;
-			default:
-				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
-				break;
+				// case "ENDPOINT":
+				// Assertions.assertEquals(expectedValue, fullText, "Field validation failed for
+				// '" + fieldName + "'");
+				// break;
+				case "INIT_MODEL_ENGINE":
+					Assertions.assertTrue(actualValue.contains(expectedValue),
+							"Field validation failed for '" + fieldName
+									+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue
+									+ ">");
+					break;
+				default:
+					Assertions.assertEquals(expectedValue, actualValue,
+							"Field validation failed for '" + fieldName + "'");
+					break;
 			}
 		}
 	}

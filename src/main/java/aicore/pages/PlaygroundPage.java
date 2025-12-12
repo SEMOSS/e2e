@@ -30,6 +30,38 @@ public class PlaygroundPage {
     public void clickOnOpenConfigurationMenuButton(String buttonName) {
         PlaygroundPageUtils.clickOnOpenConfigurationMenuButton(page, buttonName);
     }
+    public void clickOnMCPDropdown() {
+        PlaygroundPageUtils.clickOnMCPDropdown(page);
+    }
+
+    public void saveAddedMCPList() {
+        PlaygroundPageUtils.saveAddedMCPList(page);
+    }
+
+    public void clickOverifyMCPAppVisibleInAvailableTools(String modelName) {
+        PlaygroundPageUtils.clickOverifyMCPAppVisibleInAvailableTools(page, modelName);
+
+    }
+
+    public void verifyAddedMCPAppSelectedList(String modelName) {
+        PlaygroundPageUtils.verifyAddedMCPAppSelectedList(page, modelName);
+    }
+
+    public void verifyAddedMCPModelMCPSection(String modelName) {
+        PlaygroundPageUtils.verifyAddedMCPModelMCPSection(page, modelName);
+    }
+
+    public void deleteAddedMCPModelMCPSection(String modelName) {
+        PlaygroundPageUtils.deleteAddedMCPModelMCPSection(page, modelName);
+    }
+
+    public void verifyMCPModelRemovedMCPSection(String modelName) {
+        PlaygroundPageUtils.verifyMCPModelRemovedMCPSection(page, modelName);
+    }
+
+    public void searchAndSelectMCPModel(String modelName) {
+        PlaygroundPageUtils.searchAndSelectMCPModel(page, modelName);
+    }
 
     public void verifyModelCatalogDropdownPresent(String modelName) {
         PlaygroundPageUtils.verifyModelCatalogDropdownPresent(page, modelName);
@@ -53,6 +85,43 @@ public class PlaygroundPage {
 
     public void selectModelFromDropdown(String modelName) {
         PlaygroundPageUtils.selectModelFromDropdown(page, modelName);
+    }
+
+    public void clickOnSidebarToggleButton() {
+            PlaygroundPageUtils.clickOnSidebarToggleButton(page);
+    }
+
+    public void verifyPromptPresentInSidebarHistory(String prompt) {
+        PlaygroundPageUtils.verifyPromptPresentInSidebarHistory(page, prompt);
+    }
+
+    public void hoverOverSidebarHistoryItem(String prompt) {
+        PlaygroundPageUtils.hoverOverSidebarHistoryItem(page, prompt);
+    }
+
+    public void clickDeleteIconForSidebarHistoryItem(String prompt) {
+        PlaygroundPageUtils.clickDeleteIconForSidebarHistoryItem(page, prompt);
+    }
+
+    public void verifyPromptNotPresentInSidebarHistory(String prompt) {
+        PlaygroundPageUtils.verifyPromptNotPresentInSidebarHistory(page, prompt);
+    }
+
+    public void verifySidebarState(String state) {
+         if(state.equals("closed")) {
+            PlaygroundPageUtils.verifySidebarState(page,false);
+        }else if(state.equals("opened")) {
+            PlaygroundPageUtils.verifySidebarState(page,true);
+        }
+       
+    }
+
+    public void waitForModelResponse() {
+        PlaygroundPageUtils.waitForModelResponse(page);
+    }
+
+    public void verifyModelResponseDisplayed() {
+        PlaygroundPageUtils.verifyModelResponseDisplayed(page);
     }
 
     public void verifyConfigurationMenuIsOpened() {

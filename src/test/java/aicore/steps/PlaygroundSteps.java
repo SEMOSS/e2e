@@ -45,6 +45,56 @@ public class PlaygroundSteps {
         playgroundPage.clickOnOpenConfigurationMenuButton(buttonName);
     }
 
+    @And("User waits for the response from the model")
+    public void user_Waits_For_The_Response_From_The_Model() {
+        playgroundPage.waitForModelResponse();
+    }
+
+    @Then("User verifies that the response from the model is displayed as Prompt")
+    public void user_Verifies_That_The_Response_From_The_Model_Is_Displayed_As_Prompt() {
+        playgroundPage.verifyModelResponseDisplayed();
+    }
+
+    @When("User clicks on the MCP dropdown")
+    public void user_Clicks_On_The_MCP_Dropdown() {
+        playgroundPage.clickOnMCPDropdown();
+    }
+
+    @And("User should see and select the {string} in the MCP availale tools")
+    public void user_Should_See_And_Select_The_In_The_MCP_Availale_Tools(String appName) {
+        playgroundPage.clickOverifyMCPAppVisibleInAvailableTools(appName);
+    }
+
+    @And("User verify added {string} is updated in selected list")
+    public void user_Verify_Added_Is_Updated_In_Selected_List(String appName) {
+        playgroundPage.verifyAddedMCPAppSelectedList(appName);
+    }
+
+    @When("User saves the added MCP list")
+    public void user_Saves_The_Added_MCP_List() {
+        playgroundPage.saveAddedMCPList();
+    }
+
+    @Then("User verify the added {string} is displayed in MCP section")
+    public void user_Verify_The_Added_Is_Displayed_In_MCP_Section(String appName) {
+        playgroundPage.verifyAddedMCPModelMCPSection(appName);
+    }
+
+    @When("User deletes the added {string} from MCP section")
+    public void user_Deletes_The_Added_From_MCP_Section(String appName) {
+        playgroundPage.deleteAddedMCPModelMCPSection(appName);
+    }
+
+    @Then("User verify the {string} is removed from MCP section")
+    public void user_Verify_The_Is_Removed_From_MCP_Section(String appName) {
+        playgroundPage.verifyMCPModelRemovedMCPSection(appName);
+    }
+
+    @When("User search for {string} in the MCP available tools & selects it")
+    public void user_search_for_app_in_mcp_and_select(String appName) {
+        playgroundPage.searchAndSelectMCPModel(appName);
+    }
+
      @Then("User verify the model catalog dropdown is present with default model with {string} name")
     public void user_Verify_The_Model_Catalog_Dropdown_Is_Present_With_Default_Model_With(String modelName) {
         playgroundPage.verifyModelCatalogDropdownPresent(modelName);
@@ -82,6 +132,36 @@ public class PlaygroundSteps {
         } else {
             playgroundPage.verifyButtonIsDisabled(buttonName);
         }
+    }
+
+    @When("User clicks on sidbar toggle button")
+    public void user_Clicks_On_Sidebar_Toggle_Button() {
+        playgroundPage.clickOnSidebarToggleButton();
+    }
+
+    @Then("User verifies that {string} prompt is present in the sidebar history")
+    public void user_Verifies_That_Prompt_Is_Present_In_The_Sidebar_History(String prompt) {
+        playgroundPage.verifyPromptPresentInSidebarHistory(prompt);
+    }
+
+    @When("User hovers over the sidebar history item with prompt {string}")
+    public void user_Hovers_Over_The_Sidebar_History_Item_With_Prompt(String prompt) {
+        playgroundPage.hoverOverSidebarHistoryItem(prompt);
+    }
+
+    @And("User clicks on the delete icon for the sidebar history item with prompt {string}")
+    public void user_Clicks_On_The_Delete_Icon_For_The_Sidebar_History_Item_With_Prompt(String prompt) {
+        playgroundPage.clickDeleteIconForSidebarHistoryItem(prompt);
+    }
+
+    @Then("User verifies that {string} prompt is no longer present in the sidebar history")
+    public void user_Verifies_That_Prompt_Is_No_Longer_Present_In_The_Sidebar_History(String prompt) {
+        playgroundPage.verifyPromptNotPresentInSidebarHistory(prompt);
+    }
+
+    @Then("User verifies that the sidebar is {string}")
+    public void user_Verifies_That_The_Sidebar_Is(String state) {
+        playgroundPage.verifySidebarState(state);
     }
 
     @Then("User sees the Configuration Menu is opened")

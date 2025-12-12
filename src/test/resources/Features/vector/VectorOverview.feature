@@ -13,7 +13,7 @@ Feature: Vector Overview
     #And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
     And User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
     And User opens Main Menu
     And User clicks on Open Vector
@@ -32,7 +32,7 @@ Feature: Vector Overview
   Scenario: Validate vector overview page
     Given User can see the Vector title as 'FAISS Vector DB00'
     When User clicks on Edit button
-    And User add tags 'TestTag' and presses Enter
+    And User add Tags 'TestTag' and presses Enter
     And User clicks on Submit button
     And 'Admin' user clicks on Settings
     And User clicks on Add Member button

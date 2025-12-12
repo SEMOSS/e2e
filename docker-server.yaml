@@ -1,0 +1,23 @@
+name: e2e
+services:
+  semoss:
+    build:
+      context: .
+      dockerfile: Dockerfile.serverOnly
+    ports:
+      - "9091:8080"
+    #    environment:
+    #      - SETSOCIAL=true
+    #      - ENABLE_NATIVE=true
+    #      - ENABLE_NATIVE_REGISTRATION=true
+    environment:
+      SEMOSS_BRANCH: dev
+      MONOLITH_BRANCH: dev
+      UI_BRANCH: dev
+    user: "${UID}:${GID}"  # Run the container as the current user
+    volumes:
+      - .:/workspace
+    ipc: host
+    cap_add:
+      - SYS_ADMIN
+    command: /bin/bash -c "/app/runServer.sh"

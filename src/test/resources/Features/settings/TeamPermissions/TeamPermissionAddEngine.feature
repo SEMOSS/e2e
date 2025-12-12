@@ -120,7 +120,7 @@ Feature: Add Engine for Team Permission
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
     When User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
     Given User is on Home page
     When User opens Main Menu
