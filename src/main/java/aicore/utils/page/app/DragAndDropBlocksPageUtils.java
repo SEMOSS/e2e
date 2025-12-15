@@ -33,6 +33,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String TERMINAL_XPATH = "//p[contains(text(),'Terminal')]";
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
+	private static final String LAYER_BLOCK_INSIDE_XPATH = " //li[@role='treeitem']//*[normalize-space(.)='{layerName}']";
+	private static final String LAYER_BLOCK_OUTSIDE_XPATH = " //div[@data-id='{layerName}']/..";
+	private static final String LAYER_DROPDOWN_BLOCK_XPATH = "//li[@role='treeitem']//div//div//span//*";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
@@ -194,6 +197,17 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
+	public static void layerDropPosition(Page page, String layerName, String position) {
+			if(position.equalsIgnoreCase("inside")) {
+				Locator targetBox =  page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerName));
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 10, 10);	
+			}else if(position.equalsIgnoreCase("outside")) {
+				Locator targetBox =  page.locator(LAYER_BLOCK_OUTSIDE_XPATH.replace("{layerName}", layerName));
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 20, 10);
+			}
+				page.mouse().up();
+		}
+		
 	public static void blockDropPosition(Page page, String blockName) {
 		switch (blockName) {
 		case "Container":
@@ -274,6 +288,23 @@ public class DragAndDropBlocksPageUtils {
 		AICorePageUtils.waitFor(DroppedBlockLocator);
 		if (!blockName.equals("Link")) {
 			DroppedBlockLocator.click();
+		}
+	}
+
+public static void mouseHoverOnLayer(Page page, String layerTargetName) {
+		Locator layerDropDownLocator = page.locator(LAYER_DROPDOWN_BLOCK_XPATH).first();
+		boolean isValidBlock = true;
+		Locator blockLocator = page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerTargetName));
+		layerDropDownLocator.click();
+			if(blockLocator==null) {
+			logger.error("Invalid layer name: " + layerTargetName);
+			throw new IllegalArgumentException("Invalid layer name: " + layerTargetName);
+			}
+		blockLocator.scrollIntoViewIfNeeded();
+		blockLocator.isVisible();
+		blockLocator.hover();
+		if (isValidBlock) {
+			page.mouse().down();
 		}
 	}
 

@@ -48,12 +48,19 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.blockDropPosition(page, blockName);
 	}
 
+	public void layerDropPosition(String blockName, String position) {
+		DragAndDropBlocksPageUtils.layerDropPosition(page, blockName, position);
+	}
+
 	public void clickOnDroppedBlock(String blockName) {
 		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
 	}
 
 	public void mouseHoverOnBlock(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
+	}
+	public void mouseHoverOnLayer(String blockName) {
+		DragAndDropBlocksPageUtils.mouseHoverOnLayer(page, blockName);
 	}
 
 	public String verifyHeadingBlockTextMessage() {
