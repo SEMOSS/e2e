@@ -49,26 +49,31 @@ public class SetupHooks {
 
 	@Before
 	public void before(Scenario scenario) throws IOException {
-		logger.info("Thread:Scenario {}:{}", Thread.currentThread().getName(), scenario.getName());
+		logger.info("Thread: {}", Thread.currentThread().getName());
+        logger.info("Scenario: {}", scenario.getName());
 		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
 		String feature = ResourcePool.get().getFeature();
         String scenarioName = scenario.getName();
         boolean failed = ResourcePool.get().isFailed();
 		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
+            logger.info("resetting due to first scenario of feature");
 			ResourcePool.get().resetTimestamp();
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
 			setupFirstScenarioOfFeature(scenario);
 			ResourcePool.get().incrementFeatureNumber();
 		} else if (failed) {
+            logger.info("resetting due to previous scenario failed");
             setupFirstScenarioOfFeature(scenario);
         }
 
+        logger.info("update resource");
 		ResourcePool.get().setFeature(tempFeature);
         ResourcePool.get().setScenarioName(scenarioName);
 		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
 		ResourcePool.get().resetStep();
         ResourcePool.get().setFailed(false);
+        logger.info("start");
 	}
 
 	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
@@ -185,6 +190,7 @@ public class SetupHooks {
 	}
 
 	private static void logoutAndSave() throws IOException {
+        logger.info("logging out and saving");
 		Page page = ResourcePool.get().getPage();
 		BrowserContext context = ResourcePool.get().getContext();
 		String feature = ResourcePool.get().getFeature();
@@ -198,6 +204,7 @@ public class SetupHooks {
 
         boolean failed = ResourcePool.get().isFailed();
 
+        logger.info("saving trace and videos");
 		if (GenericSetupUtils.useTrace() && failed) {
 			logger.info("Using trace. Saving trace video");
 			Tracing.StopOptions so = new Tracing.StopOptions();
@@ -222,6 +229,7 @@ public class SetupHooks {
 		page.close();
 
 		if (GenericSetupUtils.useVideo()) {
+            logger.info("saving video");
             if (failed) {
                 String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
                 Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
@@ -234,6 +242,8 @@ public class SetupHooks {
                 while (Files.exists(newPath) && i < 30) {
                     i++;
                     newPath =  Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
+                    logger.info("File exists getting new path: {}", newPath);
+                    logger.info("loop: {}", i);
                 }
                 Files.move(og, newPath);
             } else {

@@ -59,6 +59,8 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureBlockSettingElementScreenshot(page, elementName);
 		case "section":
 			return CaptureElementUtils.captureSectionScreenshot(page, elementName);
+		case "layerblock":
+			return CaptureElementUtils.captureElementThroughtDataId(page, elementName);
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}

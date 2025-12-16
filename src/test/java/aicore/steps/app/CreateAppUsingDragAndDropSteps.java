@@ -189,6 +189,13 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.blockDropPosition(blockName);
 	}
 
+	@When("User drags the {string} block and drops it {string} the {string} block")
+	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position,
+			String containerName) {
+		blocksPage.mouseHoverOnLayer(blockName);
+		blocksPage.layerDropPosition(containerName, position);
+	}
+
 	@And("User clicks on the {string} block to select it")
 	public void user_clicks_on_block_to_select_it(String blockName) {
 		blocksPage.clickOnDroppedBlock(blockName);
@@ -808,11 +815,6 @@ public class CreateAppUsingDragAndDropSteps {
 		blockSettings.closeBlockSettings();
 	}
 
-	@And("User click on the {string} tab in the left panel")
-	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
-		blocksPage.clickOnTabInLeftPanel(tabName);
-	}
-
 	@And("User click on {string} tool option")
 	public void user_click_on_tool_option(String toolName) {
 		blocksPage.clickOnToolOption(toolName);
@@ -821,6 +823,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User update Bar Style setting using {string}")
 	public void and_user_update_bar_style_setting_using_bar_style_value(String barStyleValue) {
 		blocksPage.updateBarStyle(barStyleValue);
+	}
+
+	@And("User click on the {string} tab in the left panel")
+	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
+		blocksPage.clickOnTabInLeftPanel(tabName);
 	}
 
 	@And("User clicks on Block Settings option")
