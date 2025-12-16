@@ -6,16 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.slf4j.LoggerFactory;
-
 import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AddDatabasePageUtils {
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
+	private static final Logger logger = LogManager.getLogger(AddDatabasePageUtils.class);
 	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
 	private static final String NEXT_BUTTON_FOR_CREATE_DATABASE_XPATH = "//button[@data-testid='database-form-submit']";
 	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
