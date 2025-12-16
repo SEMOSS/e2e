@@ -50,3 +50,22 @@ Feature: DragAndDrop - Documentation for App Landing
     And User click on the 'Layers' tab in the left panel
     Then User captures screenshot for 'TwoContainer'
     And User completes screenshot capture and triggers comparison for 'Two Container'
+
+  @LoginWithAdmin @SkipIfVersionMatchs @Documentation @DeleteCreatedTestApp 
+  Scenario: Drag and drop two Markdown blocks and highlight layers panel for documentation
+    Given User captures documentation screenshot for 'DragAndDrop'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in 'Drag and Drop'
+    And User enters app name as 'Test App'
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User clicks on Block Settings option
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'Markdown' block and drops it on the page
+    And User drags the 'Markdown' block and drops it on the page
+    And User click on the 'Layers' tab in the left panel
+    And User delete 'Welcome to the UI Builder! Drag and drop blocks to use in your app.' on page
+    And User captures a 'section' and highlights the "Layers" with name "NestBlock"
+    And User completes screenshot capture and triggers comparison for 'NestBlock'

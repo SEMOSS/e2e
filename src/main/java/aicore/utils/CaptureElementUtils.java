@@ -21,6 +21,7 @@ public abstract class CaptureElementUtils {
 	private static final String USE_TEMPLATE_TAB_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
 	private static final String DATATESTID_NAME = "{dataTestIdName}";
 	private static final String BLOCK_SETTING_ELEMENT_XPATH = "//p[text()='{blockName}']/../../../..";
+	private static final String SECTION_XPATH = "//h6[normalize-space()='{sectionName}']/ancestor::div[contains(@class,'MuiGrid-item')]//ul[@role='tree']";
 
 	public static List<Locator> captureButtonScreenshot(Page page, String buttonName) {
 		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
@@ -183,6 +184,16 @@ public abstract class CaptureElementUtils {
 
 	public static List<Locator> captureBlockSettingElementScreenshot(Page page, String blockName) {
 		Locator locator = page.locator(BLOCK_SETTING_ELEMENT_XPATH.replace("{blockName}", blockName));
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			locators.add(locator.nth(i));
+		}
+		return locators;
+	}
+
+	public static List<Locator> captureSectionScreenshot(Page page, String layerName) {
+		Locator locator = page.locator(SECTION_XPATH.replace("{sectionName}", layerName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
