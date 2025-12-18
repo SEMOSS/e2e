@@ -33,7 +33,7 @@ import aicore.framework.ConfigUtils;
 public class CaptureScreenShotUtils {
 
 	public static String version;
-	private static final String VERSION_XPATH = "//*[@data-testid=\"LogoutIcon\"]/../../../../following-sibling::li//div//span[1]";
+	private static final String VERSION_XPATH = "//*[@data-testid='LogoutIcon']/../../../../following-sibling::li//div//span[1]";
 
 	public static String versionCapture(Page page) {
 		String appVersion = page.locator(VERSION_XPATH).textContent();
