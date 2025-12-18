@@ -17,9 +17,12 @@ public class AddFunctionPageUtils {
 	private static final String FUNCTION_NAME = "importForm-FUNCTION_NAME-textField";
 	private static final String FUNCTION_DESCRIPTION = "importForm-FUNCTION_DESCRIPTION-textField";
 	private static final String FUNCTION_TYPE = "importForm-FUNCTION_TYPE-textField";
-	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
+	private static final String FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='function-form-input-{fieldName}']";
+	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//span[text()='*']";
+	private static final String FIELDS_DATA_TESTID = "function-form-input-{fieldName}";
+	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
 	private static final String CREATE_FUNCTION_BUTTON = "Create Function";
+	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
@@ -47,11 +50,71 @@ public class AddFunctionPageUtils {
 		page.getByText(functionType).click();
 	}
 
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		String fieldNamesForDataTestid = "";
+		switch (field) {
+		case "Catalog Name" -> fieldNamesForDataTestid = "Name";
+		case "Function Name (metadata)" -> fieldNamesForDataTestid = "Function Name";
+		case "Function Description (metadata)" -> fieldNamesForDataTestid = "Function Description";
+		case "S3 Bucket Engine Id" -> fieldNamesForDataTestid = "S3BucketEngineId";
+		default -> fieldNamesForDataTestid = field;
+		}
+		String fieldName = fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+		Locator fieldLocator = page
+				.locator(FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldName));
+		fieldLocator.scrollIntoViewIfNeeded();
+		return fieldLocator.isVisible();
+	}
+
+	public static boolean isFieldMandatory(Page page, String field) {
+		String fieldNamesForDataTestid = "";
+		switch (field) {
+		case "Catalog Name" -> fieldNamesForDataTestid = "Name";
+		case "Function Name (metadata)" -> fieldNamesForDataTestid = "Function Name";
+		case "Function Description (metadata)" -> fieldNamesForDataTestid = "Function Description";
+		case "S3 Bucket Engine Id" -> fieldNamesForDataTestid = "S3BucketEngineId";
+		default -> fieldNamesForDataTestid = field;
+		}
+		String fieldName = fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+		Locator fieldLocator = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		fieldLocator.first().scrollIntoViewIfNeeded();
+		return fieldLocator.first().isVisible();
+	}
+
+	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
+		String fieldNamesForDataTestid = "";
+		switch (field) {
+		case "Catalog Name" -> fieldNamesForDataTestid = "Name";
+		case "Function Name (metadata)" -> fieldNamesForDataTestid = "Function Name";
+		case "Function Description (metadata)" -> fieldNamesForDataTestid = "Function Description";
+		case "S3 Bucket Engine Id" -> fieldNamesForDataTestid = "S3BucketEngineId";
+		default -> fieldNamesForDataTestid = field;
+		}
+		String fieldName = fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+		Locator fieldContainer = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldName));
+		fieldContainer.scrollIntoViewIfNeeded();
+		Locator dropdownField = fieldContainer.locator("//*[@role='button' or @aria-haspopup='listbox']").first();
+		Locator inputField = fieldContainer.locator("//input[@type='text'] | .//textarea").first();
+		Locator passwordField = fieldContainer.locator("//input[@type='password'] | .//textarea").first();
+		if (dropdownField.isVisible()) {
+			dropdownField.click();
+			Locator dropdownOption = page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue));
+			dropdownOption.click();
+		} else if (passwordField.isVisible()) {
+			passwordField.fill(fieldValue);
+		} else {
+			if (field.contains("Catalog Name")) {
+				fieldValue = fieldValue + timestamp;
+			}
+			inputField.fill(fieldValue);
+		}
+		page.keyboard().press("Tab");
+	}
+
 	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
 		catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
 		page.getByTestId(CATALOG_NAME).click();
 		page.getByTestId(CATALOG_NAME).fill(catalogName);
-
 	}
 
 	public static void enterUrl(Page page, String url) {
@@ -128,6 +191,18 @@ public class AddFunctionPageUtils {
 		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
 		page.getByText(CREATE_FUNCTION_BUTTON).isEnabled();
 		page.getByText(CREATE_FUNCTION_BUTTON).click();
+	}
+
+	public static boolean validateConnectButtonEnabled(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		return connectButton.isEnabled();
+	}
+
+	public static void clickOnConnectButton(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		connectButton.click();
 	}
 
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
