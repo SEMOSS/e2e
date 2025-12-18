@@ -100,6 +100,27 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_selects_database_from_connection_types(String dbType) {
 		addDatabaseToCatalogPage.selectDatabaseFromConnectionTypes(dbType);
 	}
+	@Then("User can see form sections with fields:")
+	public void user_can_see_form_sections_with_fields(DataTable DBTable) {
+		List<Map<String, String>> rows = DBTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String sectionName = row.get("SECTION_NAME");
+			String[] fields = row.get("FIELDS").split(", ");
+			for (String field : fields) {
+				boolean isFieldVisible = addDatabaseToCatalogPage.verifyFieldUnderSection(sectionName, field);
+				Assertions.assertTrue(isFieldVisible, field + " is not visible under " + sectionName + " section");
+			}
+		}
+	}
+	@Then("User can see database mandatory fields")
+	public void user_can_see_database_mandatory_fields(DataTable DBTable) {
+		String singleCell = DBTable.cells().get(0).get(0);
+		String[] fields = singleCell.split(", ");
+		for (String field : fields) {
+			boolean isFieldMandatory = addDatabaseToCatalogPage.isDBFieldMandatory(field);
+			Assertions.assertTrue(isFieldMandatory, field + " is not mandatory field");
+		}
+	}
 
 	@Then("User can see the database title as {string}")
 	public void User_can_see_the_database_title_as(String dbName) {
