@@ -131,10 +131,10 @@ Feature: App Library Documentation
     And User selects "Landing Page" from Template List
     And User enters app name as 'Demo landing page'
     And User captures a "buttontype" and highlights the "submit" with name "landingone"
-	And User clicks on Create button
+    And User clicks on Create button
     And User fetch the app name for drag and drop app
     And User completes screenshot capture and triggers comparison for 'Landing Page Template'
-    
+
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for Variable Guide Template Creation
     Given User captures documentation screenshot for 'Navigating/Create New App'

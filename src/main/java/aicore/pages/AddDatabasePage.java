@@ -23,6 +23,12 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void selectDatabaseFromConnectionTypes(String dbType) {
 		AddDatabasePageUtils.selectDatabaseFromConnectionTypes(page, dbType);
 	}
+	public boolean verifyFieldUnderSection(String sectionName, String fieldName) {
+		return AddDatabasePageUtils.verifyFieldUnderSection(page, sectionName, fieldName);
+	}
+	public boolean isDBFieldMandatory(String fieldName) {
+		return AddDatabasePageUtils.isDBFieldMandatory(page, fieldName);
+	}
 
 	public void enterCatalogName(String catalogName) {
 		AddDatabasePageUtils.enterCatalogName(page, catalogName);
