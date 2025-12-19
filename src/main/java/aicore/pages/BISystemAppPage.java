@@ -117,9 +117,10 @@ public class BISystemAppPage {
 	}
 
 	public String verifyDBCreatedToastMessage() {
-		page.locator(DATABASE_CREATED_TOAST_MESSAGE_XPATH).isVisible();
-		String dbSuccessToastMessage = page.textContent(DATABASE_CREATED_TOAST_MESSAGE_XPATH).trim();
-		return dbSuccessToastMessage;
+		Locator toast = page.locator(DATABASE_CREATED_TOAST_MESSAGE_XPATH).first();
+		toast.isVisible();
+	    return toast.textContent().trim();
+		
 	}
 
 	public void searchDatabaseName(String createdDatabaseName) {
@@ -160,9 +161,8 @@ public class BISystemAppPage {
 	}
 
 	public String verifySavedInsightSuccessMsg() {
-		page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).isVisible();
-		String successMessage = page.textContent(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).trim();
-		return successMessage;
+		Locator toast = page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).last();
+		return toast.textContent().trim();
 	}
 
 	public void clickOnNewProjectButton() {

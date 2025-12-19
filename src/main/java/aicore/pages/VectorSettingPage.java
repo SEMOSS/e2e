@@ -24,6 +24,7 @@ public class VectorSettingPage {
     public void isSearchBarPresent() {
      VectorSettingPageUtils.isSearchBarPresent(page);
     }
+    
     public void searchForVector(String vectorName) {
         VectorSettingPageUtils.searchForVector(page, vectorName);
     }
