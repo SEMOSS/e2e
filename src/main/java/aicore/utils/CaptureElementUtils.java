@@ -21,6 +21,7 @@ public abstract class CaptureElementUtils {
 	private static final String USE_TEMPLATE_TAB_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
 	private static final String DATATESTID_NAME = "{dataTestIdName}";
 	private static final String DATATESTID_LAYER_NAME = "//*[contains(@data-id, '{layerName}')]/..";
+	private static final String BLOCK_TITLE_NAME = "//*[@title='{blockTitle}']";
 	private static final String BLOCK_SETTING_ELEMENT_XPATH = "//p[text()='{blockName}']/../../../..";
 	private static final String SECTION_XPATH = "//h6[normalize-space()='{sectionName}']/ancestor::div[contains(@class,'MuiGrid-item')]//ul[@role='tree']";
 
@@ -184,6 +185,17 @@ public abstract class CaptureElementUtils {
 	}
 	public static List<Locator> captureElementThroughtDataId(Page page, String dataTestId) {
 		Locator locator = page.locator(DATATESTID_LAYER_NAME.replace("{layerName}", dataTestId));
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			if (locator.nth(i).isVisible()) {
+				locators.add(locator.nth(i));
+			}
+		}
+		return locators;
+	}
+	public static List<Locator> captureElementThroughTitle(Page page, String blockTitle) {
+		Locator locator = page.locator(BLOCK_TITLE_NAME.replace("{blockTitle}", blockTitle));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
