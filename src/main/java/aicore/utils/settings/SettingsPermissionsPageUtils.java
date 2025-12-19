@@ -33,7 +33,7 @@ public class SettingsPermissionsPageUtils {
 		if (searchApp.isVisible()) {
 			searchApp.fill(catalogName);
 		} else {
-			page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).fill(catalogName);
+			page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).fill(catalogName);
 		}
 	}
 
