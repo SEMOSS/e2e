@@ -31,7 +31,7 @@ Feature: Documentation for Layers Panel
     Then User captures screenshot for 'OneContainer'
     And User completes screenshot capture and triggers comparison for 'One Container'
 
-  @LoginWithAdmin @Documentation @DeleteCreatedTestApp @SkipIfVersionMatchs
+  @LoginWithAdmin @Documentation @DeleteCreatedTestApp @SkipIfVersionMatch
   Scenario: DragAndDrop - Two Conatainer Documentation for App Landing
     Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
@@ -51,7 +51,7 @@ Feature: Documentation for Layers Panel
     Then User captures screenshot for 'TwoContainer'
     And User completes screenshot capture and triggers comparison for 'Two Container'
 
-  @LoginWithAdmin @SkipIfVersionMatchs @Documentation @DeleteCreatedTestApp
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Drag and drop two Markdown blocks and highlight layers panel for documentation
     Given User captures documentation screenshot for 'DragAndDrop'
     When User opens Main Menu
