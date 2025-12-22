@@ -1,11 +1,12 @@
 package aicore.steps.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -187,8 +188,10 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.mouseHoverOnBlock(blockName);
 		blocksPage.blockDropPosition(blockName);
 	}
+
 	@When("User drags the {string} block and drops it {string} the {string} block")
-	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position, String containerName) {
+	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position,
+			String containerName) {
 		blocksPage.mouseHoverOnLayer(blockName);
 		blocksPage.layerDropPosition(containerName, position);
 	}
@@ -809,8 +812,8 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User closes the Block Settings button")
 	public void user_closes_the_block_settings_button() {
-        blockSettings.closeBlockSettings();
-    }
+		blockSettings.closeBlockSettings();
+	}
 
 	@And("User click on {string} tool option")
 	public void user_click_on_tool_option(String toolName) {

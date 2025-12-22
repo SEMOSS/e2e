@@ -171,7 +171,6 @@ ENV VIRTUAL_ENV="/usr/lib/python/semossvenv"
 ENV UV_PYTHON_INSTALL_DIR="/usr/lib/python"
 ENV UV_INSTALL_DIR="/usr/lib/uv/"
 ENV PATH=$UV_INSTALL_DIR:$PATH
-ENV PATH=$VIRTUAL_ENV/bin:$PATH
 
 # Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -185,15 +184,12 @@ ARG COMPUTE_TYPE
 ENV COMPUTE_TYPE=${COMPUTE_TYPE}
 
 RUN uv python install ${PYTHON_VERSION} --default --preview
-RUN uv venv --seed $VIRTUAL_ENV
-
-
-RUN cd /tmp && \
-curl -o pyproject.toml https://raw.githubusercontent.com/SEMOSS/Semoss/refs/heads/dev/py/install_config/pyproject.toml && \
-uv pip install -r pyproject.toml --extra cpu
-
-ENV VIRTUAL_ENV="/usr/lib/python/semossvenv"
-ENV PATH=$VIRTUAL_ENV/bin:$PATH
+RUN cd /app
+RUN uv venv
+RUN .venv/bin/activate | sh
+RUN curl -o pyproject.toml https://raw.githubusercontent.com/SEMOSS/Semoss/refs/heads/dev/py/install_config/pyproject.toml
+RUN uv pip install -r pyproject.toml --extra cpu
+RUN deactivate | sh
 
 # Install additional dependencies
 RUN apt-get update \

@@ -418,22 +418,22 @@ public class AppTemplatePageUtils {
 	}
 
 	public static List<String> ids = ModelPageUtils.createdModelIds;
-		public static boolean verifyCreatedModelsInList(Page page) {
+	public static boolean verifyCreatedModelsInList(Page page) {
 		if (ids == null || ids.isEmpty()) {
-			throw new AssertionError("No created model ids provided");
+			return false;
 		}
 
 		int foundCount = 0;
 		for (String id : ids) {
 			Locator locator = page.getByText(id);
 			if (locator.count() == 0) {
-				throw new AssertionError("Model id '" + id + "' is not present on the page");
+				return false;
 			}
 			foundCount++;
 		}
 		
 		if (foundCount > ids.size()) {
-			throw new AssertionError("More models are present on the page than were created");
+			return false;
 		}
 
 		return foundCount == ids.size();

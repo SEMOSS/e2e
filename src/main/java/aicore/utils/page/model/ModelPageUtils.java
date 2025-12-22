@@ -92,7 +92,9 @@ public class ModelPageUtils {
 	}
 
 	public static void selectModel(Page page, String modelName) {
-		page.click(SELECT_MODEL_XPATH.replace("{ModelName}", modelName));
+		Locator modelCard = page.locator(SELECT_MODEL_XPATH.replace("{ModelName}", modelName)).first();
+		AICorePageUtils.waitFor(modelCard);
+		modelCard.click();	
 	}
 
 	public static void selectOpenAi(Page page, String aiModelName) {
@@ -101,7 +103,9 @@ public class ModelPageUtils {
 
 	public static void clickOnGroupTab(Page page, String tabName) {
 		String tab = tabName.replace(" ", "-");
-		page.getByTestId(OPTIONS_TAB_DATA_TESTID.replace("{tabName}", tab)).click();
+		Locator tabLocator = page.getByTestId(OPTIONS_TAB_DATA_TESTID.replace("{tabName}", tab));
+		AICorePageUtils.waitFor(tabLocator);
+		tabLocator.click();
 	}
 
 	public static boolean fieldUnderSection(Page page, String section, String field) {
@@ -144,6 +148,7 @@ public class ModelPageUtils {
 		case "Max Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
+		case "Max Tokens (Max Completion Tokens)":
 			fieldLocator = page.locator(
 					NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
@@ -203,6 +208,7 @@ public class ModelPageUtils {
 		case "Max Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
+		case "Max Tokens (Max Completion Tokens)":
 			fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Endpoint":
@@ -264,6 +270,7 @@ public class ModelPageUtils {
 		case "Max Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
+		case "Max Tokens (Max Completion Tokens)":
 			fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
 			fieldType = "Number";
 			break;

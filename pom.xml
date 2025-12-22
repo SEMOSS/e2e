@@ -13,7 +13,7 @@
         <junit.version>6.0.0</junit.version>
         <cucumber.version>7.31.0</cucumber.version>
         <assertj.version>3.27.6</assertj.version>
-        <playwright.version>1.56.0</playwright.version>
+        <playwright.version>1.57.0</playwright.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

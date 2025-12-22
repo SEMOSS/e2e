@@ -24,10 +24,10 @@ Feature: Create Database and Insight to BI System app- CSV
     And User uploads CSV file 
     And User clicks on Next button
     And User clicks on Import button
-    #Then User can see database created success toast message as 'Success'
+    Then User can see database created success toast message as 'Success'
 
   Scenario: Create an Insight from a database created by importing a CSV file
-    #Given User can see database created success toast message as 'Success'
+    Given User can see database created success toast message as 'Success'
     And User clicks on Add option
     And User search 'DB created from CSV' database and select
     And User clicks on Add All button from Available Columns section

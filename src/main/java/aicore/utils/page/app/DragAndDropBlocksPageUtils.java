@@ -30,7 +30,7 @@ public class DragAndDropBlocksPageUtils {
 	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
 	public static final String SAVE_APP_BUTTON_DATA_TEST_ID = "SaveOutlinedIcon";
 	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
-	private static final String TERMINAL_XPATH = "//p[contains(text(),'Terminal')]";
+	private static final String TERMINAL_XPATH = "//div[contains(text(),'Terminal')]";
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
 	private static final String LAYER_BLOCK_INSIDE_XPATH = " //li[@role='treeitem']//*[normalize-space(.)='{layerName}']";

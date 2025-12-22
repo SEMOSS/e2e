@@ -74,7 +74,7 @@ NETTY_R false
 NETTY_PYTHON true
 NATIVE_PY_SERVER true
 
-PYTHONHOME /usr/lib/python/semossvenv
+PYTHONHOME /app/.venv
 TCP_WORKER prerna.tcp.SocketServer
 TCP_CLIENT prerna.tcp.client.NativePySocketClient
 

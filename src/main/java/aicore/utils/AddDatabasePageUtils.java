@@ -6,16 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.slf4j.LoggerFactory;
-
 import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AddDatabasePageUtils {
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AddDatabasePageUtils.class);
+	private static final Logger logger = LogManager.getLogger(AddDatabasePageUtils.class);
 	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
 	private static final String NEXT_BUTTON_FOR_CREATE_DATABASE_XPATH = "//button[@data-testid='database-form-submit']";
 	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
@@ -49,6 +49,10 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
 	private static final String COPY_ID_XPATH = "//span[text()='{message}']";
 	private static final String SELECT_ALL_DATABASE_XPATH = "//span[text()='(Select searched items)']";
+	private static final String MANDATORY_FIELD_XPATH = "//div//label[text()='{fieldName}']//span";
+	private static final String FORM_SECTION_XPATH = "//h6[text()='{sectionName}']";
+	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-form-advanced-toggle']//*)[1]";
+	private static final String SECTION_FIELD_XPATH = "../following-sibling::div//label[text()='{fieldName}']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -66,6 +70,42 @@ public class AddDatabasePageUtils {
 			throw new AssertionError("Database connection type '" + dbType + "' is not visible.");
 		}
 		option.click();
+	}
+
+	public static boolean isDBFieldMandatory(Page page, String fieldName) {
+		Locator mandatoryField = page.locator(MANDATORY_FIELD_XPATH.replace("{fieldName}", fieldName));
+		if (!mandatoryField.textContent().contains("*")) {
+			throw new AssertionError("Database connection type '" + fieldName + "' is not showing with * symbol of required field.");
+		}
+		return mandatoryField.isVisible();
+	}
+
+	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
+		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
+		if(sectionName.toLowerCase().equals("advanced settings")) {
+			if(fieldName.toLowerCase().equals("not available")) {
+				return true;
+			}
+			Locator dropdownLocator = page.locator(ADVANCED_SECTION_XPATH);
+	        AICorePageUtils.waitFor(dropdownLocator);
+	        String attributeVal = dropdownLocator.getAttribute("data-testid");
+			dropdownLocator.scrollIntoViewIfNeeded();
+			if (!sectionLocator.isVisible()) {
+				throw new AssertionError("Advanced Settings dropdown is not visible.");
+			}
+			if(attributeVal.equals("ExpandMoreIcon")) {
+
+				dropdownLocator.click();
+			}
+
+		}
+
+		if (!sectionLocator.isVisible()){
+			throw new AssertionError("Section '" + sectionName + "' is not visible.");
+		}
+		Locator fieldLocator = sectionLocator.locator(SECTION_FIELD_XPATH.replace("{fieldName}", fieldName));
+		return fieldLocator.isVisible();
+
 	}
 
 	public static void clickOnApplyButton(Page page) {
