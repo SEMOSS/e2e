@@ -5,9 +5,9 @@ Feature: View existing functions on Function Catalog Page
     When User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Function/weatherFunctionTest.zip'
-    And User clicks on Create Function button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'WeatherFunctionTest'
     And User clicks on Edit button
@@ -18,7 +18,7 @@ Feature: View existing functions on Function Catalog Page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-  @LoginWithAdmin @Regression @DeleteTestCatalog @ApplicationBugFailure
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
     When User clicks on Open Function

@@ -73,10 +73,10 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	public void selectPostBodyMessage(String postBodyMessage) {
 		AddFunctionPageUtils.selectPostBodyMessage(page, postBodyMessage);
 	}
-
-	public void verifyAsteriskMarkOnFields(String fieldLabels) {
-		AddFunctionPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
-	}
+//
+//	public void verifyAsteriskMarkOnFields(String fieldLabels) {
+//		AddFunctionPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
+//	}
 
 	public void enterHeaders(String headers) {
 		AddFunctionPageUtils.enterHeaders(page, headers);
@@ -108,10 +108,6 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
 	public void checkCreateFunctionButton() {
 		AddFunctionPageUtils.checkCreateFunctionButton(page);
-	}
-
-	public void clickOnCreateFunctionButton() {
-		AddFunctionPageUtils.clickOnCreateFunctionButton(page);
 	}
 
 	public boolean validateConnectButtonEnabled() {
