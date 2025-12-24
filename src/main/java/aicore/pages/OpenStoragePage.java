@@ -22,6 +22,18 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.selectStorage(page, storageName);
 	}
 
+	public boolean fieldUnderSection(String storageType, String section, String field) {
+		return StoragePageUtils.fieldUnderSection(page, storageType, section, field);
+	}
+
+	public boolean isFieldMandatory(String storageType, String field) {
+		return StoragePageUtils.isFieldMandatory(page, storageType, field);
+	}
+
+	public void fillModelCreationForm(String storageType, String fieldName, String fieldValue) {
+		StoragePageUtils.fillCatalogCreationForm(page, storageType, fieldName, fieldValue, timestamp);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		StoragePageUtils.enterCatalogName(page, catalogName);
 	}
@@ -48,6 +60,14 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 
 	public void clickOnCreateStorageButton() {
 		StoragePageUtils.clickOnCreateStorageButton(page);
+	}
+
+	public boolean validateConnectButtonEnabled() {
+		return StoragePageUtils.validateConnectButtonEnabled(page);
+	}
+
+	public void clickOnConnectButton() {
+		StoragePageUtils.clickOnConnectButton(page);
 	}
 
 	public String verifyStorageCreatedToastMessage() {
