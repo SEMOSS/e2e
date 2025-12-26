@@ -30,9 +30,12 @@ public class DragAndDropBlocksPageUtils {
 	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
 	public static final String SAVE_APP_BUTTON_DATA_TEST_ID = "SaveOutlinedIcon";
 	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
-	private static final String TERMINAL_XPATH = "//p[contains(text(),'Terminal')]";
+	private static final String TERMINAL_XPATH = "//div[contains(text(),'Terminal')]";
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
+	private static final String LAYER_BLOCK_INSIDE_XPATH = " //li[@role='treeitem']//*[normalize-space(.)='{layerName}']";
+	private static final String LAYER_BLOCK_OUTSIDE_XPATH = " //div[@data-id='{layerName}']/..";
+	private static final String LAYER_DROPDOWN_BLOCK_XPATH = "//li[@role='treeitem']//div//div//span//*";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
@@ -146,8 +149,10 @@ public class DragAndDropBlocksPageUtils {
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}";
-	private static final String MARKDOWN_BLOCK_XPATH = "//strong[text()='Hello world']";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
+	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
+	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
+	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -192,10 +197,40 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
-	public static void blockDropPosition(Page page) {
-		Locator targetBox = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
-		CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 10);
-		page.mouse().up();
+	public static void layerDropPosition(Page page, String layerName, String position) {
+			if(position.equalsIgnoreCase("inside")) {
+				Locator targetBox =  page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerName));
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 10, 10);	
+			}else if(position.equalsIgnoreCase("outside")) {
+				Locator targetBox =  page.locator(LAYER_BLOCK_OUTSIDE_XPATH.replace("{layerName}", layerName));
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 20, 10);
+			}
+				page.mouse().up();
+		}
+		
+	public static void blockDropPosition(Page page, String blockName) {
+		switch (blockName) {
+		case "Container":
+			Locator targetBox = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
+			CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 35);
+			page.mouse().up();
+			break;
+		case "Markdown":
+			if (page.getByText("Add Content").isVisible()) {
+				Locator targetBox1 = page.getByText("Add Content");
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, -5, 10);
+				page.mouse().up();
+			} else {
+				Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, -5, 10);
+				page.mouse().up();
+
+			}
+		default:
+			Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
+			CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 10);
+			page.mouse().up();
+		}
 	}
 
 	public static void clickOnDroppedBlock(Page page, String blockName) {
@@ -253,6 +288,23 @@ public class DragAndDropBlocksPageUtils {
 		AICorePageUtils.waitFor(DroppedBlockLocator);
 		if (!blockName.equals("Link")) {
 			DroppedBlockLocator.click();
+		}
+	}
+
+public static void mouseHoverOnLayer(Page page, String layerTargetName) {
+		Locator layerDropDownLocator = page.locator(LAYER_DROPDOWN_BLOCK_XPATH).first();
+		boolean isValidBlock = true;
+		Locator blockLocator = page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerTargetName));
+		layerDropDownLocator.click();
+			if(blockLocator==null) {
+			logger.error("Invalid layer name: " + layerTargetName);
+			throw new IllegalArgumentException("Invalid layer name: " + layerTargetName);
+			}
+		blockLocator.scrollIntoViewIfNeeded();
+		blockLocator.isVisible();
+		blockLocator.hover();
+		if (isValidBlock) {
+			page.mouse().down();
 		}
 	}
 
@@ -328,6 +380,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Accordion":
 			blockLocator = page.getByTestId(ACCORDION_BLOCK_DATA_TESTID);
+			break;
+		case "Container":
+			blockLocator = page.getByTestId(CONTAINER_SETTING_DATATESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -974,11 +1029,12 @@ public class DragAndDropBlocksPageUtils {
 		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();
 	}
 
-	public static void clickOnMarkdownContainerToSelectIt(Page page) {
-		page.locator(MARKDOWN_BLOCK_XPATH).click();
-	}
-	
 	public static void clickOnBlockSettingsOption(Page page) {
 		page.locator(BLOCK_SETTINGS_XPATH).click();
+	}
+
+	public static void deleteBlockOnPage(Page page, String blockName) {
+		page.locator(BLOCK_SECTION_XPATH.replace("{textName}", blockName)).click();
+		page.locator(DELETE_BLOCK_ON_PAGE_XPATH).click();
 	}
 }

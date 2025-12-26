@@ -1,11 +1,12 @@
 package aicore.steps.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -185,7 +186,14 @@ public class CreateAppUsingDragAndDropSteps {
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
 		blocksPage.mouseHoverOnBlock(blockName);
-		blocksPage.blockDropPosition();
+		blocksPage.blockDropPosition(blockName);
+	}
+
+	@When("User drags the {string} block and drops it {string} the {string} block")
+	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position,
+			String containerName) {
+		blocksPage.mouseHoverOnLayer(blockName);
+		blocksPage.layerDropPosition(containerName, position);
 	}
 
 	@And("User clicks on the {string} block to select it")
@@ -802,15 +810,10 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.updateValueLabelSettings(valueLabelSettings);
 	}
 
-	@And("User click on the {string} tab in the left panel")
-	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
-		blocksPage.clickOnTabInLeftPanel(tabName);
+	@And("User closes the Block Settings button")
+	public void user_closes_the_block_settings_button() {
+		blockSettings.closeBlockSettings();
 	}
-	
-	@And("User click on the Markdown container to select it")
-	public void user_click_on_the_markdown_container_to_select_it() {
-        blocksPage.clickOnMarkdownContainerToSelectIt();
-    }
 
 	@And("User click on {string} tool option")
 	public void user_click_on_tool_option(String toolName) {
@@ -822,8 +825,18 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.updateBarStyle(barStyleValue);
 	}
 
+	@And("User click on the {string} tab in the left panel")
+	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
+		blocksPage.clickOnTabInLeftPanel(tabName);
+	}
+
 	@And("User clicks on Block Settings option")
 	public void user_clicks_on_block_settings_option() {
 		blocksPage.clickOnBlockSettingsOption();
+	}
+
+	@And("User delete {string} on page")
+	public void user_delete_on_page(String blockName) {
+		blocksPage.deleteBlockOnPage(blockName);
 	}
 }

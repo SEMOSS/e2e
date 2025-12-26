@@ -208,7 +208,7 @@ public class AddModelSteps {
 		openModelPage.enterDescription(descriptionText);
 	}
 
-	@And("User add tags {string} and presses Enter")
+	@And("User add Tags {string} and presses Enter")
 	public void user_add_tags_and_presses_enter(String tags) {
 		String[] tagsArray = tags.split(", ");
 		for (String tag : tagsArray) {

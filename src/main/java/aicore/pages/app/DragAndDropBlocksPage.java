@@ -44,8 +44,12 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.closeBlocksOption(page);
 	}
 
-	public void blockDropPosition() {
-		DragAndDropBlocksPageUtils.blockDropPosition(page);
+	public void blockDropPosition(String blockName) {
+		DragAndDropBlocksPageUtils.blockDropPosition(page, blockName);
+	}
+
+	public void layerDropPosition(String blockName, String position) {
+		DragAndDropBlocksPageUtils.layerDropPosition(page, blockName, position);
 	}
 
 	public void clickOnDroppedBlock(String blockName) {
@@ -54,6 +58,9 @@ public class DragAndDropBlocksPage {
 
 	public void mouseHoverOnBlock(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
+	}
+	public void mouseHoverOnLayer(String blockName) {
+		DragAndDropBlocksPageUtils.mouseHoverOnLayer(page, blockName);
 	}
 
 	public String verifyHeadingBlockTextMessage() {
@@ -289,10 +296,12 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnTabInLeftPanel(page, tabName);
 	}
 
-	public void clickOnMarkdownContainerToSelectIt() {
-		DragAndDropBlocksPageUtils.clickOnMarkdownContainerToSelectIt(page);
-	}
 	public void clickOnBlockSettingsOption() {
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
 	}
+
+	public void deleteBlockOnPage(String blockName) {
+		DragAndDropBlocksPageUtils.deleteBlockOnPage(page, blockName);
+	}
+
 }

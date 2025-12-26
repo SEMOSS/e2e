@@ -27,15 +27,15 @@ public class VectorSettingPageUtils {
 	}
 
 	public static void isSearchBarPresent(Page page) {
-		if (!page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).isVisible()) {
+		if (!page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).isVisible()) {
 			throw new AssertionError("Search bar is not visible on the page.");
 		}
 	}
 
 	public static void searchForVector(Page page, String vectorName) {
-		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).click();
-		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).fill(vectorName);
-		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).nth(1).press("Enter");
+		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).click();
+		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).fill(vectorName);
+		page.getByPlaceholder(CATALOG_SEARCHBOX_PLACEHOLDER).press("Enter");
 	}
 
 	public static void verifySearchedVector(Page page, String vectorName) {

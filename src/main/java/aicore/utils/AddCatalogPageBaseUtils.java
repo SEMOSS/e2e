@@ -8,10 +8,11 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
-	private static final String SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
-	private static final String OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
-	private static final String ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
+	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
+	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']";
+	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
+	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='SearchOutlinedIcon']";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div";
@@ -26,8 +27,6 @@ public class AddCatalogPageBaseUtils {
 
 	// View Database Type on Connect To database page
 	private static final String SEARCH_INPUT_XPATH = "//div[@id='home__content']//input[@placeholder='Search' and @type='text']";
-	private static final String FILE_UPLOAD_DB_TYPE_XPATH = "//div[div[normalize-space(text())='File Uploads']]//p[normalize-space(text())='{DatabaseType}']";
-	private static final String CONNECTIONS_DB_TYPE_XPATH = "//div[div[normalize-space(text())='Connections']]//p[normalize-space(text())='{DatabaseType}']";
 
 	public static boolean verifySectionIsVisible(Page page, String sectionName) {
 		page.locator(SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
@@ -51,7 +50,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean isSearchBarPresent(Page page) {
-		return page.getByTestId("SearchOutlinedIcon").isVisible();
+	    Locator searchBar = page.locator(SEARCH_BAR_XPATH);
+	    AICorePageUtils.waitFor(searchBar);
+	    return searchBar.isVisible();
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {

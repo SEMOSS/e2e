@@ -4,7 +4,7 @@ Feature: Search Vector Settings
     Given User opens Main Menu
     Given User clicks on Open Model
     And User clicks on Add Model
-     And User selects 'OpenAI' type
+    And User selects 'OpenAI' type
     And User selects 'GPT 3.5 Turbo'
     And User enters Catalog Name as 'Catalog'
     And User enters Open AI Key as 'Test@1234'
@@ -12,7 +12,7 @@ Feature: Search Vector Settings
     And User clicks on Copy Catalog ID
     Then User can see a toast message as 'Successfully added LLM to catalog'
     When User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
 
   @LoginWithAdmin @DeleteTestCatalog @Regression @Smoke

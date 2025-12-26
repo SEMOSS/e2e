@@ -50,21 +50,31 @@ public class SetupHooks {
 
 	@Before
 	public void before(Scenario scenario) throws IOException {
-		logger.info("Thread:Scenario {}:{}", Thread.currentThread().getName(), scenario.getName());
+		logger.info("Thread: {}", Thread.currentThread().getName());
+        logger.info("Scenario: {}", scenario.getName());
 		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
 		String feature = ResourcePool.get().getFeature();
-		
+        String scenarioName = scenario.getName();
+        boolean failed = ResourcePool.get().isFailed();
 		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
+            logger.info("resetting due to first scenario of feature");
 			ResourcePool.get().resetTimestamp();
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
 			performLoginBasedOnTags(scenario);
 			ResourcePool.get().incrementFeatureNumber();
-		}
+		} else if (failed) {
+            logger.info("resetting due to previous scenario failed");
+            setupFirstScenarioOfFeature(scenario);
+        }
 
+        logger.info("update resource");
 		ResourcePool.get().setFeature(tempFeature);
+        ResourcePool.get().setScenarioName(scenarioName);
 		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
 		ResourcePool.get().resetStep();
+        ResourcePool.get().setFailed(false);
+        logger.info("start");
 	}
 
 	private static void setupFirstScenarioOfFeature() throws IOException {
@@ -164,6 +174,7 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 	@After
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
+        ResourcePool.get().setFailed(scenario.isFailed());
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
 		int currentScenarioCount = ResourcePool.get().getScenarioNumberOfFeatureFile();
 		int totalScenarioCount = scenario.getUri().getPath().lines().filter(line -> line.trim().startsWith("Scenario:")).toArray().length;
@@ -181,15 +192,21 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 	}
 
 	private static void logoutAndSave() throws IOException {
+        logger.info("logging out and saving");
 		Page page = ResourcePool.get().getPage();
 		BrowserContext context = ResourcePool.get().getContext();
 		String feature = ResourcePool.get().getFeature();
 		
+        String scenarioName = ResourcePool.get().getScenarioName();
+		try {
 			page.navigate(UrlUtils.getUrl("#/"));
 			GenericSetupUtils.logout(page);
 		
 
-		if (GenericSetupUtils.useTrace()) {
+        boolean failed = ResourcePool.get().isFailed();
+
+        logger.info("saving trace and videos");
+		if (GenericSetupUtils.useTrace() && failed) {
 			logger.info("Using trace. Saving trace video");
 			Tracing.StopOptions so = new Tracing.StopOptions();
 			String filename = feature + ".zip";
@@ -213,15 +230,33 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 		// page.close();
 
 		if (GenericSetupUtils.useVideo()) {
-			Path newPath = Paths.get("videos", "features", feature + ".webm");
-			Path newDir = Paths.get("videos", "features");
-			if (!Files.exists(newDir)) {
-				Files.createDirectories(newDir);
-			}
-			Files.move(og, newPath);
+            logger.info("saving video");
+            if (failed) {
+                String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
+                Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
+                Path newDir = Paths.get("videos", "features", feature);
+                if (!Files.exists(newDir)) {
+                    Files.createDirectories(newDir);
+                }
+
+                int i = 0;
+                while (Files.exists(newPath) && i < 30) {
+                    i++;
+                    newPath =  Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
+                    logger.info("File exists getting new path: {}", newPath);
+                    logger.info("loop: {}", i);
+                }
+                Files.move(og, newPath);
+            } else {
+                Files.deleteIfExists(og);
+            }
 		}
 
 	}
+
+    public static String makeScenarioNameFileSafe(String scenarioName) {
+        return scenarioName.trim().replaceAll("[^a-zA-Z0-9._-]", "_");
+    }
 
 	public static Page getPage() {
 		return ResourcePool.get().getPage();

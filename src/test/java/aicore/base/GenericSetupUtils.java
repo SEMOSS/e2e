@@ -72,7 +72,8 @@ public class GenericSetupUtils {
 			logger.info("Videos will be saved to: {}", p.toString());
 			if (Files.isDirectory(p)) {
 				logger.info("Cleaning directory: {}", p.toString());
-				FileUtils.cleanDirectory(p.toFile());
+				FileUtils.deleteDirectory(p.toFile());
+                Files.createDirectory(p);
 			}
 		}
 

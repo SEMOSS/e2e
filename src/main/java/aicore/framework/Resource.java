@@ -40,6 +40,8 @@ public class Resource {
 
     private String timestamp = null;
 
+    private boolean failed = false;
+
     public Resource(String url, int resourceNumber) {
         this.url = url;
         this.resourceNumber = resourceNumber;
@@ -177,5 +179,13 @@ public class Resource {
     public void resetTimestamp() {
         this.timestamp = CommonUtils.getTimeStampName();
 
+    }
+
+    public void setFailed(boolean failed) {
+        this.failed = failed;
+    }
+
+    public boolean isFailed() {
+        return this.failed;
     }
 }

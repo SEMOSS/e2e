@@ -137,6 +137,10 @@ COPY ds2/coverageShutdown.sh /app/
 RUN sed -i 's/\r$//' coverageShutdown.sh
 RUN chmod 777 coverageShutdown.sh
 
+COPY ds2/runServer.sh /app/
+RUN sed -i 's/\r$//' runServer.sh
+RUN chmod 777 runServer.sh
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
@@ -236,4 +240,4 @@ COPY state.json state.json
 COPY .env .env
 
 WORKDIR /app
-CMD ["/app/scripts.sh"]
+CMD ["/app/runServer.sh"]

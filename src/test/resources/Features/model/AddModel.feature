@@ -38,7 +38,7 @@ Feature: Add Model
   Scenario: Adding tag to Model to catalog - GPT 3.5 Turbo - embeddings
     Given User can see the Model title as 'Model'
     When User clicks on Edit button
-    And User add tags 'embeddings' and presses Enter
+    And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
@@ -59,7 +59,7 @@ Feature: Add Model
     And User clicks on Edit button
     And User enters the details as '<DETAILS>'
     And User enters the description as '<DESCRIPTION>'
-    And User add tags '<TAGS>' and presses Enter
+    And User add Tags '<TAGS>' and presses Enter
     And User enters the Domains as '<DOMAINS>'
     And User selects '<DATA_CLASSIFICATION>' from the Data Classification dropdown
     And User selects '<DATA_RESTRICTIONS>' from the Data Restrictions dropdown
