@@ -16,7 +16,7 @@ Feature: Storage Catalog Documentation
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
     And User captures a 'button' and highlights the 'Create storage'
-    And User clicks on Create Storage button
+    And User clicks on Connect button to create storage
     Then User can see create storage success toast message as 'Successfully added to catalog storage'
     And User can see the Storage title 'Test Storage'
     And User clicks on Copy Catalog ID

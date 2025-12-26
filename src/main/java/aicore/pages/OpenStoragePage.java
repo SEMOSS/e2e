@@ -58,10 +58,6 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.searchStorage(page, storageName);
 	}
 
-	public void clickOnCreateStorageButton() {
-		StoragePageUtils.clickOnCreateStorageButton(page);
-	}
-
 	public boolean validateConnectButtonEnabled() {
 		return StoragePageUtils.validateConnectButtonEnabled(page);
 	}
@@ -102,12 +98,8 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
 	}
 
-	public boolean verifyCreateStorageButtonDisabled() {
-		return StoragePageUtils.verifyCreateStorageButtonDisabled(page);
-	}
-
-	public boolean verifyCreateStorageButtonEnabled() {
-		return StoragePageUtils.verifyCreateStorageButtonEnabled(page);
+	public boolean verifyConnectButtonDisabled() {
+		return StoragePageUtils.verifyConnectButtonDisabled(page);
 	}
 
 	public boolean verifyFieldIsVisible(String fieldname) {

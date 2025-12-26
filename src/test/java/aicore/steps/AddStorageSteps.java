@@ -119,7 +119,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	}
 
 	@When("User clicks on Connect button to create storage")
-	public void user_clicks_on_connect_button_to_create_function() {
+	public void user_clicks_on_connect_button_to_create_storage() {
 		storagePage.clickOnConnectButton();
 	}
 
@@ -163,11 +163,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@And("User enters Secret Key as {string}")
 	public void user_enters_secret_key_as(String secretKey) {
 		storagePage.enterSecretKey(secretKey);
-	}
-
-	@And("User clicks on Create Storage button")
-	public void user_clicks_on_create_storage_button() {
-		storagePage.clickOnCreateStorageButton();
 	}
 
 	@Then("User can see create storage success toast message as {string}")
@@ -220,16 +215,10 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.verifyAsteriskMarkOnFields(requiredFields);
 	}
 
-	@Then("User sees the Create Storage button disabled")
+	@Then("User sees the Connect button is disabled")
 	public void user_sees_the_create_storage_button_disabled() {
-		boolean isButtonDisabled = storagePage.verifyCreateStorageButtonDisabled();
+		boolean isButtonDisabled = storagePage.verifyConnectButtonDisabled();
 		Assertions.assertTrue(isButtonDisabled, "Create Storage button is not disabled");
-	}
-
-	@Then("User sees the Create Storage button is enabled")
-	public void user_sees_the_create_storage_button_is_enabled() {
-		boolean isButtonEnabled = storagePage.verifyCreateStorageButtonEnabled();
-		Assertions.assertTrue(isButtonEnabled, "Create Storage button is not enabled");
 	}
 
 	@When("User enters value in below fields")
@@ -324,12 +313,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@When("User enters Path Prefix as {string}")
 	public void User_enters_Path_Prefix_as(String pathPrefix) {
 		storagePage.enterLocalPathPrefix(pathPrefix);
-	}
-
-	@Then("User clicks on Settings Tab for storage")
-	public void user_clicks_on_settings_tab_for_storage() {
-		// TODO cucumber should be clicks on access control
-		storagePage.clickOnSettingsTab();
 	}
 
 	@Then("User clicks on Delete button for storage")

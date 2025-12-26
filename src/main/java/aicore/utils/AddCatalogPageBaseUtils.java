@@ -8,9 +8,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
-	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
-	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']";
-	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
+	private static final String SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
+	private static final String OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
+	private static final String ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div/preceding-sibling::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
 	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='SearchOutlinedIcon']";
 	// TODO need data-testid for catalog description
@@ -30,14 +30,12 @@ public class AddCatalogPageBaseUtils {
 
 	public static boolean verifySectionIsVisible(Page page, String sectionName) {
 		page.locator(SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
-		boolean isSectionVisible = page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
-		return isSectionVisible;
+		return page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
 	}
 
 	public static boolean verifyOptionIsVisible(Page page, String sectionName, String optionName) {
-		boolean isOptionVisible = page.isVisible(
+		return page.isVisible(
 				OPTIONS_UNDER_SECTION_XPATH.replace("{sectionName}", sectionName).replace("{optionName}", optionName));
-		return isOptionVisible;
 	}
 
 	public static Locator getIconByLabel(Page page, String sectionName, String optionName) {
@@ -50,9 +48,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean isSearchBarPresent(Page page) {
-	    Locator searchBar = page.locator(SEARCH_BAR_XPATH);
-	    AICorePageUtils.waitFor(searchBar);
-	    return searchBar.isVisible();
+		Locator searchBar = page.locator(SEARCH_BAR_XPATH);
+		AICorePageUtils.waitFor(searchBar);
+		return searchBar.isVisible();
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {
