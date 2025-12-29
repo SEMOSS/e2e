@@ -86,7 +86,7 @@ Feature: Add Engine for Team Permission
     And User enters Secret Key as 'Test123'
     And User clicks on Connect button to create storage
     And User clicks on Copy Catalog ID
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    Then User can see create storage success toast message as 'Successfully added new storage to catalog'
     Given User opens Main Menu
     When User clicks on Open Settings
     And User enable admin mode

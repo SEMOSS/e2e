@@ -11,7 +11,6 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class StoragePageUtils {
 
 	private static final String ADD_STORAGE_BUTTON_XPATH = "//button[@aria-label='Navigate to import Storage']";
-	private static final String CREATE_STORAGE_BUTTON = "//span[text()='Create storage']";
 	private static final String STORAGE_TITLE_XPATH = "//h4[text()='{title}']";
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
@@ -32,7 +31,6 @@ public class StoragePageUtils {
 	private static final String NUMBER_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='number'] | .//textarea";
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "storage-form-submit";
-
 	private static final String VIEW_STORAGE_XPATH = "//button[@aria-label='copy Storage ID']/parent::span";
 	private static final String COPY_ID_ICON_XPATH = "[data-testid='ContentCopyOutlinedIcon']";
 	private static final String STORAGE_DESCRIPTION_XPATH = "//h6[text()='{StorageDescription}']";

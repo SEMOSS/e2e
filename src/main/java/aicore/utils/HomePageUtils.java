@@ -48,6 +48,7 @@ public class HomePageUtils {
 	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";
 	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
 	private static final String CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID = "importForm-Catalog-Name-textField";
+	private static final String STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID = "storage-form-input-NAME";
 	// pop ups
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
@@ -283,6 +284,8 @@ public class HomePageUtils {
 	public static void enterCatalogNameToCreateCatalog(Page page, String catalogName) {
 		if (page.getByTestId(CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID).isVisible()) {
 			page.getByTestId(CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID).locator("input").fill(catalogName);
+		} else if (page.getByTestId(STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID).isVisible()) {
+			page.getByTestId(STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID).locator("input").fill(catalogName);
 		} else {
 			page.getByTestId(CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
 		}
