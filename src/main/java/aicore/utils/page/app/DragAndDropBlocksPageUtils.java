@@ -154,6 +154,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
 	private static final String SEARCH_BLOCKS_SECTION_XPATH= "//div[text()='{blockName}']";
+	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -384,6 +385,9 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 			break;
 		case "Container":
 			blockLocator = page.getByTestId(CONTAINER_SETTING_DATATESTID);
+			break;
+		case "HTML":
+			blockLocator = page.getByTestId(HTML_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -1044,5 +1048,8 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 		block.waitFor(new Locator.WaitForOptions()
             .setState(WaitForSelectorState.ATTACHED));
 		block.scrollIntoViewIfNeeded();
+	}
+	public static void clickOnBlockOnPage(Page page, String blockName) {
+		page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).click();
 	}
 }
