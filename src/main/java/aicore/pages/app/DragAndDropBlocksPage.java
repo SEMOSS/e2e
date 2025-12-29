@@ -303,5 +303,8 @@ public class DragAndDropBlocksPage {
 	public void deleteBlockOnPage(String blockName) {
 		DragAndDropBlocksPageUtils.deleteBlockOnPage(page, blockName);
 	}
+	public void searchBlockFromBlocksSection(String blockName) {
+		DragAndDropBlocksPageUtils.searchBlockFromBlocksSection(page, blockName);
+	}
 
 }

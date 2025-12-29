@@ -124,7 +124,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Divider Block
-    Given User captures documentation screenshot for 'Navigating/Create%20New%20App'
+    Given User captures documentation screenshot for 'Navigating/Create New App'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -136,3 +136,19 @@ Feature: Documentation for Accordion Block Settings
     And User searches 'Divider' block in the block searchbox
     And User captures a 'blocksection' and highlights the "Divider" with name "DNDdivider"
     And User completes screenshot capture and triggers comparison for 'Divider Block'
+
+    @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  Scenario: Documentation - Input block for Drag and Drop App 
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Input Block Test App'
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User clicks on Blocks
+    And User search the 'Input' block from blocks section
+    And User drags the 'Input' block and drops it on the page
+    And User captures screenshot for "DNDinput"
+    And User completes screenshot capture and triggers comparison for 'Input Block Overview'

@@ -839,4 +839,8 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_delete_on_page(String blockName) {
 		blocksPage.deleteBlockOnPage(blockName);
 	}
+	@And("User search the {string} block from blocks section")
+	public void user_search_the_block_from_blocks_section(String blockName) {
+		blocksPage.searchBlockFromBlocksSection(blockName);
+	}
 }
