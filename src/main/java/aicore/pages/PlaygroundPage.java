@@ -22,6 +22,67 @@ public class PlaygroundPage {
     public void verifyTextareaPlaceholder(String placeholder) {
     PlaygroundPageUtils.verifyTextareaPlaceholder(page, placeholder);
     }
+    public void clickOnWorkspaceButton() {
+        PlaygroundPageUtils.clickOnWorkspaceButton(page);
+    }
+    public void clickOnCreateNewWorkspaceButton() {
+        PlaygroundPageUtils.clickOnCreateNewWorkspaceButton(page);
+    }
+    public void enterWorkspaceName(String workspaceName) {
+        PlaygroundPageUtils.enterWorkspaceName(page, workspaceName);
+    }
+    public void clickOnNewCreateWorkspaceButton() {
+        PlaygroundPageUtils.clickOnNewCreateWorkspaceButton(page);
+    }
+    public void verifyWorkspaceCreatedWithDescription(String workspaceName, String description) {
+        PlaygroundPageUtils.verifyWorkspaceCreatedWithDescription(page, workspaceName, description);
+    }
+
+    public void selectWorkspaceFromList(String workspaceName) {
+        PlaygroundPageUtils.selectWorkspaceFromList(page, workspaceName);
+    }
+    public void selectWorkspaceChatFromList(String workspaceName) {
+        PlaygroundPageUtils.selectWorkspaceChatFromList(page, workspaceName);
+    }
+    public void verifyWorkspaceSelection(String workspaceName) {
+        PlaygroundPageUtils.verifyWorkspaceSelection(page, workspaceName);
+    }
+
+    public void verifyWorkspaceSelectedInList(String workspaceName) {
+        PlaygroundPageUtils.verifyWorkspaceSelectedInList(page, workspaceName);
+    }
+
+    public void clickOnDeleteWorkspaceButton() {
+        PlaygroundPageUtils.clickOnDeleteWorkspaceButton(page);
+    }
+
+    public void verifyWorkspaceDeleted() {
+        PlaygroundPageUtils.verifyWorkspaceDeleted(page);
+    }
+
+    public void clickOnEditWorkspaceButton() {
+        PlaygroundPageUtils.clickOnEditWorkspaceButton(page);
+    }
+
+    public void enterWorkspaceDescription(String workspaceDescription) {
+        PlaygroundPageUtils.enterWorkspaceDescription(page, workspaceDescription);
+    }
+
+    public void clickOnSaveWorkspaceButton() {
+        PlaygroundPageUtils.clickOnNewCreateWorkspaceButton(page);
+    }
+
+    public void verifyWorkspaceUpdatedWithDescription(String workspaceName, String description) {
+        PlaygroundPageUtils.verifyWorkspaceCreatedWithDescription(page, workspaceName, description);
+    }
+
+    public void searchWorkspace(String workspaceName) {
+        PlaygroundPageUtils.searchWorkspace(page, workspaceName);
+    }
+
+    public void verifyWorkspaceDisplayedInSearchResults(String workspaceName) {
+        PlaygroundPageUtils.verifyWorkspaceDisplayedInSearchResults(page, workspaceName);
+    }
 
     public void enterPromptInTextarea(String prompt) {
         PlaygroundPageUtils.enterPromptInTextarea(page, prompt);
