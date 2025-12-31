@@ -75,14 +75,14 @@ public class TeamPermissionsSettingSteps {
 
 	@Then("User can see team name as {string} in the list")
 	public void user_can_see_team_name_as_in_the_list(String name) {
-		String actualName = teamPermissionsSettings.verifyName(name);
+		String actualName = teamPermissionsSettings.verifyName(name + " " + timestamp);
 		String expectedName = name + " " + timestamp;
 		Assertions.assertEquals(expectedName, actualName);
 	}
 
 	@Then("User can see description as {string} in the list")
 	public void user_can_see_description_as_in_the_list(String description) {
-		String actualDescription = teamPermissionsSettings.validateDescription(description);
+		String actualDescription = teamPermissionsSettings.validateDescription(description + " " + timestamp);
 		String expectedDesc = description + " " + timestamp;
 		Assertions.assertEquals(expectedDesc, actualDescription);
 	}
