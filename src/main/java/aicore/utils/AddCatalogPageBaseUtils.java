@@ -8,9 +8,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
-	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
-	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']";
-	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
+	private static final String SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
+	private static final String OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
+	private static final String ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//..//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
 	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='SearchOutlinedIcon']";
 	// TODO need data-testid for catalog description
