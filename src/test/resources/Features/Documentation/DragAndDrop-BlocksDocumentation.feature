@@ -173,3 +173,49 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on the 'Add Content' block on page
     And User captures screenshot for "DNDlayout"
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Layout Overview'
+
+    @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+    Scenario:Documentation - DND Theme screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'DND Theme Test App'
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User clicks on Block Settings option
+    And User clicks on Blocks
+    And User search the 'Theme Block' block from blocks section
+    And User drags the 'Theme Block' block and drops it on the page
+    And User search the 'Input' block from blocks section
+    And User drags the 'Input' block and drops it on the page
+    And User search the 'HTML' block from blocks section
+    And User drags the 'HTML' block and drops it on the page
+    And User clicks on the 'Add Content' block on page
+    And User captures screenshot for "DNDtheme"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Theme Overview'
+
+@LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation - DND Layer screenshot
+  Given User captures documentation screenshot for 'Navigating/Create New App'
+  When User opens Main Menu
+  And User clicks on Open App Library
+  And User clicks on Create New App button
+  And User clicks on Get Started button in "Drag and Drop"
+  And User enters app name as 'DND Layer Test App'
+  And User clicks on Create button
+  And User fetch the app name for drag and drop app
+  And User clicks on Block Settings option
+  And User clicks on Blocks
+  And User search the 'Text' block from blocks section
+  And User drags the 'Text' block and drops it on the page
+  And User search the 'Container' block from blocks section
+  And User drags the 'Container' block and drops it on the page
+  And User search the 'Input' block from blocks section
+  And User drags the 'Input' block and drops it on the page
+  And User search the 'HTML' block from blocks section
+  And User drags the 'HTML' block and drops it on the page
+  And User highlight the 'page-1' page
+  And User captures screenshot for "DNDlayers"
+  And User completes screenshot capture and triggers comparison for 'Drag and Drop Layer Overview'
