@@ -43,4 +43,39 @@ public class AddDatabaseFileUploadSteps {
     public void user_checks_the_columns_are_editable() {
        addDatabaseCSVFileUploadPage.checkColumnsAreEditable();
     }
+
+    @And("User verifies the {string} table name is displayed")
+    public void user_verifies_the_table_name_is_displayed(String tableName) {
+       addDatabaseCSVFileUploadPage.verifyTableName(tableName);
+    }
+
+      @And("User verifies the full screen button is enabled")
+    public void user_verifies_the_full_screen_button_is_enabled() {
+       addDatabaseCSVFileUploadPage.verifyFullScreenBtn();
+    }
+
+      @And("User clicks on the select table button and verifies the table is selected")
+    public void user_clicks_on_the_select_table_button_and_verifies_the_table_is_selected() {
+       addDatabaseCSVFileUploadPage.verifySelectTableBtn();
+    }
+
+      @And("User reset button is enabled")
+    public void user_reset_button_is_enabled() {
+       addDatabaseCSVFileUploadPage.verifyResetbtn();
+    }
+
+      @And("User clicks on create relationship button and creates relationship between {string} and {string} tables")
+    public void user_clicks_on_create_relationship_button_and_creates_relationship_between_and_tables(String table1, String table2) {
+       addDatabaseCSVFileUploadPage.verifyCreateRealtionshipBtn(table1, table2);
+    }
+
+      @And("User verifies save button is enabled")
+    public void user_verifies_save_button_is_enabled() {
+       addDatabaseCSVFileUploadPage.verifySaveBtn();
+    }
+
+      @And("User verifies cancel button is enabled")
+    public void user_verifies_cancel_button_is_enabled() {
+       addDatabaseCSVFileUploadPage.verifyCancelBtn();
+    }
 }

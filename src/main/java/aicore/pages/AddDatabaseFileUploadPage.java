@@ -35,4 +35,32 @@ public AddDatabaseFileUploadPage(Page page) {
     public void checkColumnsAreEditable() {
          AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
     }
+
+    public void verifyTableName(String tableName) {
+        AddDatabaseFileUploadUtils.verifyTableName(page, tableName);
+    }
+    
+    public void verifyFullScreenBtn() {
+        AddDatabaseFileUploadUtils.verifyFullScreenBtn(page);
+    }
+
+    public void verifySelectTableBtn() {
+        AddDatabaseFileUploadUtils.verifySelectTableBtn(page);
+    }
+
+    public void verifyResetbtn() {
+        AddDatabaseFileUploadUtils.verifyResetbtn(page);
+    }
+
+    public void verifyCreateRealtionshipBtn(String parentTable, String childTable) {
+        AddDatabaseFileUploadUtils.verifyCreateRealtionshipBtn(page, parentTable, childTable);
+    }
+
+    public void verifySaveBtn() {
+        AddDatabaseFileUploadUtils.verifySaveBtn(page);
+    }
+
+    public void verifyCancelBtn() {
+        AddDatabaseFileUploadUtils.verifyCancelBtn(page);
+    }
 }
