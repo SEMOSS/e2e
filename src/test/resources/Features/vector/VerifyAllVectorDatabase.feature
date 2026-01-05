@@ -1,6 +1,7 @@
 Feature: Verify All Vector Database
   I want to use this feature file for all the scenarios related to Verify Vector Database
-
+  
+@LoginWithAdmin @Regression @DeleteTestCatalog @Smoke
   Scenario: Create Vector Database using ZIP file
     Given User is on Home page
     When User opens Main Menu
@@ -13,8 +14,8 @@ Feature: Verify All Vector Database
     And User sees success toast message 'Successfully Created Vector Database'
     And User can see the Catalog title as 'TestVector'
 
-  @Regression
-  Scenario Outline: Verify existing Vector Databases in the application
+@LoginWithAdmin @Regression @Smoke
+Scenario Outline: Verify existing Vector Databases in the application
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Vector
@@ -40,6 +41,7 @@ Feature: Verify All Vector Database
       | PGVector        | General | Catalog Name, Description, Tags | Settings | Embedder, Host Name, Port, Database, PGVector Table Name, Schema, Chunking Strategy, Content Length, Content Overlap, Additional Parameters, Record Questions and Responses | Credentials | JDBC Url, Username, Password                            | ADVANCED SETTINGS | Distance Method, Fetch Size, Connection Timeout, Pool Min Size, Pool Max Size                                                           | Catalog Name, Host Name, Record Questions and Responses, Embedder, Chunking Strategy, Content Length, Content Overlap, Database, PGVector Table Name                                                                                               |
       | Weaviate        | General | Catalog Name, Description, Tags | Settings | Embedder, Chunking Strategy, Content Length, Content Overlap, Record Questions and Responses                                                                                | Credentials | Host Name, API Key, Weaviate Classname, Autocut default | ADVANCED SETTINGS | Distance Method                                                                                                                         | Catalog Name, Host Name, Record Questions and Responses, Embedder, Chunking Strategy, Content Length, Content Overlap, API Key, Weaviate Classname, Autocut default                                                                                |
 
+@LoginWithAdmin @Regression @Smoke
   Scenario Outline: Verify '<VECTORDATABASE>' Vector Databases in the application
     Given User is on Home page
     When User opens Main Menu
