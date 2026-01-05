@@ -55,26 +55,30 @@ public class SetupHooks {
 		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
 		String feature = ResourcePool.get().getFeature();
         String scenarioName = scenario.getName();
-        boolean failed = ResourcePool.get().isFailed();
-		// If new feature -> reset | if not -> continue
+        
+		// If new feature -> logout previous, reset and login
 		if (!tempFeature.equals(feature)) {
-            logger.info("resetting due to first scenario of feature");
+            logger.info("New feature detected: {}", tempFeature);
+			// Logout from previous feature if exists
+			if (feature != null && ResourcePool.get().getPage() != null) {
+				try {
+					GenericSetupUtils.logout(ResourcePool.get().getPage());
+				} catch (Exception e) {
+					logger.warn("Failed to logout from previous feature: {}", e.getMessage());
+				}
+			}
+			setupFirstScenarioOfFeature();
+			performLoginBasedOnTags(scenario);
 			ResourcePool.get().resetTimestamp();
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
-			performLoginBasedOnTags(scenario);
 			ResourcePool.get().incrementFeatureNumber();
-		} else if (failed) {
-            logger.info("resetting due to previous scenario failed");
-            setupFirstScenarioOfFeature(scenario);
         }
 
-        logger.info("update resource");
 		ResourcePool.get().setFeature(tempFeature);
         ResourcePool.get().setScenarioName(scenarioName);
 		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
 		ResourcePool.get().resetStep();
         ResourcePool.get().setFailed(false);
-        logger.info("start");
 	}
 
 	private static void setupFirstScenarioOfFeature() throws IOException {
@@ -112,14 +116,14 @@ public class SetupHooks {
 //			GenericSetupUtils.createUsers(page);
 //		}
 private static void performLoginBasedOnTags(Scenario scenario) {
-	
-
 		Page page = ResourcePool.get().getPage();
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
 
 		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
+		performLogin(sourceTagName, page);
+	}
 
-		// Use switch to handle different sourceTagNames
+	private static void performLogin(String sourceTagName, Page page) {
 		switch (sourceTagName) {
 		case "@LoginWithMS":
 			String MsUsername = ConfigUtils.getValue("ms_username");
@@ -176,13 +180,13 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 		logger.info("AFTER: {}", scenario.getName());
         ResourcePool.get().setFailed(scenario.isFailed());
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+		
 		int currentScenarioCount = ResourcePool.get().getScenarioNumberOfFeatureFile();
 		int totalScenarioCount = scenario.getUri().getPath().lines().filter(line -> line.trim().startsWith("Scenario:")).toArray().length;
-			if (currentScenarioCount == totalScenarioCount) {
-				logger.info("Last scenario of the feature: {}. Logging out and closing context.", ResourcePool.get().getFeature());
-				logoutAndSave();
-			}
- 
+		if (currentScenarioCount == totalScenarioCount) {
+			logger.info("Last scenario of the feature: {}. Logging out and closing context.", ResourcePool.get().getFeature());
+			logoutAndSave();
+		}
 	}
 
 	@AfterAll
@@ -201,7 +205,9 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
 			GenericSetupUtils.logout(page);
-		
+		} catch (Exception e) {
+			logger.warn("Failed to logout: {}", e.getMessage());
+		}
 
         boolean failed = ResourcePool.get().isFailed();
 
@@ -251,7 +257,6 @@ private static void performLoginBasedOnTags(Scenario scenario) {
                 Files.deleteIfExists(og);
             }
 		}
-
 	}
 
     public static String makeScenarioNameFileSafe(String scenarioName) {
