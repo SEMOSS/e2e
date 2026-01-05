@@ -21,7 +21,7 @@ public class NotebookPageUtils {
 
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
-	private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
+	private static final String CODE_ENTER_TEXTAREA = "#notebook-cell-test1-1-card-content .monaco-editor";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
@@ -278,7 +278,21 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterCodeInQuery(Page page, String code) {
-		page.locator(CODE_ENTER_TEXTAREA).fill(code);
+//		Locator queryTextBox = page.locator(CODE_ENTER_TEXTAREA).first();
+//		queryTextBox.click();
+//		page.keyboard().type(code);
+		code = code.replace("\\n", "\n");
+		Locator cell = page.locator(".monaco-editor .native-edit-context").first();
+		cell.scrollIntoViewIfNeeded();
+		cell.click(new Locator.ClickOptions().setForce(true));
+		for (int i = 0; i < code.length(); i++) {
+			char c = code.charAt(i);
+			if (c == '\n') {
+				page.keyboard().press("Enter");
+			} else {
+				page.keyboard().type(String.valueOf(c));
+			}
+		}
 	}
 
 	public static void clickOnRunAllButton(Page page) {
@@ -466,10 +480,10 @@ public class NotebookPageUtils {
 	}
 
 	public static void writeQuery(Page page, String query) {
-		Locator editor = page.locator(".monaco-editor");
+		Locator editor = page.locator(".monaco-editor").first();
 		editor.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		editor.click();
-		Locator inputField = page.locator(CODE_ENTER_TEXTAREA);
+		Locator inputField = page.locator(CODE_ENTER_TEXTAREA).first();
 		inputField.focus();
 		page.keyboard().press("Control+A");
 		page.keyboard().press("Backspace");

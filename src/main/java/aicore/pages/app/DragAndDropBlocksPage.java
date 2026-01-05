@@ -59,6 +59,7 @@ public class DragAndDropBlocksPage {
 	public void mouseHoverOnBlock(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
 	}
+
 	public void mouseHoverOnLayer(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnLayer(page, blockName);
 	}
@@ -302,6 +303,10 @@ public class DragAndDropBlocksPage {
 
 	public void deleteBlockOnPage(String blockName) {
 		DragAndDropBlocksPageUtils.deleteBlockOnPage(page, blockName);
+	}
+
+	public void highlightThePage(String pageName) {
+		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
 
 }

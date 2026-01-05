@@ -22,7 +22,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final Logger logger = LogManager.getLogger(DragAndDropBlocksPageUtils.class);
 
 	private static final String PAGE_1_ID = "#page-1";
-	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='page-1']";
+	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='{pageName}']";
 	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
@@ -153,6 +153,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
+	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -198,16 +199,16 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void layerDropPosition(Page page, String layerName, String position) {
-			if(position.equalsIgnoreCase("inside")) {
-				Locator targetBox =  page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerName));
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 10, 10);	
-			}else if(position.equalsIgnoreCase("outside")) {
-				Locator targetBox =  page.locator(LAYER_BLOCK_OUTSIDE_XPATH.replace("{layerName}", layerName));
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 20, 10);
-			}
-				page.mouse().up();
+		if (position.equalsIgnoreCase("inside")) {
+			Locator targetBox = page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerName));
+			CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 10, 10);
+		} else if (position.equalsIgnoreCase("outside")) {
+			Locator targetBox = page.locator(LAYER_BLOCK_OUTSIDE_XPATH.replace("{layerName}", layerName));
+			CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 20, 10);
 		}
-		
+		page.mouse().up();
+	}
+
 	public static void blockDropPosition(Page page, String blockName) {
 		switch (blockName) {
 		case "Container":
@@ -291,15 +292,15 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
-public static void mouseHoverOnLayer(Page page, String layerTargetName) {
+	public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 		Locator layerDropDownLocator = page.locator(LAYER_DROPDOWN_BLOCK_XPATH).first();
 		boolean isValidBlock = true;
 		Locator blockLocator = page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerTargetName));
 		layerDropDownLocator.click();
-			if(blockLocator==null) {
+		if (blockLocator == null) {
 			logger.error("Invalid layer name: " + layerTargetName);
 			throw new IllegalArgumentException("Invalid layer name: " + layerTargetName);
-			}
+		}
 		blockLocator.scrollIntoViewIfNeeded();
 		blockLocator.isVisible();
 		blockLocator.hover();
@@ -1036,5 +1037,13 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 	public static void deleteBlockOnPage(Page page, String blockName) {
 		page.locator(BLOCK_SECTION_XPATH.replace("{textName}", blockName)).click();
 		page.locator(DELETE_BLOCK_ON_PAGE_XPATH).click();
+	}
+
+	public static void highlightThePage(Page page, String pageName) {
+		Locator selectPage1 = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", pageName)).first();
+		CommonUtils.moveMouseToCenterWithMargin(page, selectPage1, 50, 30);
+		page.mouse().down();
+		page.waitForTimeout(100);
+		page.mouse().up();
 	}
 }
