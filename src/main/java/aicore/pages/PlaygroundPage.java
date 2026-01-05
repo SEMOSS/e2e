@@ -33,6 +33,9 @@ public class PlaygroundPage {
     public void clickOnMCPDropdown() {
         PlaygroundPageUtils.clickOnMCPDropdown(page);
     }
+    public void clickOnKnowledgeDropdown() {
+        PlaygroundPageUtils.clickOnKnowledgeDropdown(page);
+    }
 
     public void saveAddedMCPList() {
         PlaygroundPageUtils.saveAddedMCPList(page);
@@ -40,6 +43,10 @@ public class PlaygroundPage {
 
     public void clickOverifyMCPAppVisibleInAvailableTools(String modelName) {
         PlaygroundPageUtils.clickOverifyMCPAppVisibleInAvailableTools(page, modelName);
+
+    }
+    public void clickVerifyKnowledgeAppVisibleInAvailableTools(String knowledgeName) {
+        PlaygroundPageUtils.clickVerifyKnowledgeVisibleInAvailableTools(page, knowledgeName);
 
     }
 
@@ -74,9 +81,16 @@ public class PlaygroundPage {
     public void verifyModelIsChecked(String modelName) {
         PlaygroundPageUtils.verifyModelIsChecked(page, modelName);
     }
+    
+    public void verifyKnowledgeIsChecked(String knowledgeName) {
+        PlaygroundPageUtils.verifyKnowledgeIsChecked(page, knowledgeName);
+    }
 
     public void searchModelInSearchbox(String modelName) {
         PlaygroundPageUtils.searchModelInSearchbox(page, modelName);
+    }
+    public void searchKnowledgeInSearchbox(String knowledgeName) {
+        PlaygroundPageUtils.searchKnowledgeInSearchbox(page, knowledgeName);
     }
 
     public void verifyModelVisibleInDropdown(String modelName) {

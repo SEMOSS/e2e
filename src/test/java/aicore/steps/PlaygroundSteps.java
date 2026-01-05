@@ -59,10 +59,19 @@ public class PlaygroundSteps {
     public void user_Clicks_On_The_MCP_Dropdown() {
         playgroundPage.clickOnMCPDropdown();
     }
+    @When("User clicks on the Knowledge dropdown")
+    public void user_Clicks_On_The_Knowledge_Dropdown() {
+        playgroundPage.clickOnKnowledgeDropdown();
+    }
 
     @And("User should see and select the {string} in the MCP availale tools")
     public void user_Should_See_And_Select_The_In_The_MCP_Availale_Tools(String appName) {
         playgroundPage.clickOverifyMCPAppVisibleInAvailableTools(appName);
+    }
+
+    @And("User should see and select the {string} in the Knowledge available tools")
+    public void user_Should_See_And_Select_The_In_The_Knowledge_Available_Tools(String knowledgeName) {
+        playgroundPage.clickVerifyKnowledgeAppVisibleInAvailableTools(knowledgeName);
     }
 
     @And("User verify added {string} is updated in selected list")
@@ -110,9 +119,18 @@ public class PlaygroundSteps {
         playgroundPage.verifyModelIsChecked(modelName);
     }
 
+    @Then("User verify {string} knowledge should be checked in the knowledge catalog dropdown")
+    public void user_Verify_Knowledge_Should_Be_Checked_In_The_Knowledge_Catalog_Dropdown(String knowledgeName) {
+        playgroundPage.verifyKnowledgeIsChecked(knowledgeName);
+    }
+
     @When("User searches the {string} configuration tab in the model catalog searchbox")
     public void user_Searches_The_Configuration_Tab_In_The_Model_Catalog_Searchbox(String modelName) {
         playgroundPage.searchModelInSearchbox(modelName);
+    }
+    @When("User searches the {string} configuration tab in the Knowledge catalog searchbox")
+    public void user_Searches_The_Configuration_Tab_In_The_Knowledge_Catalog_Searchbox(String knowledgeName) {
+        playgroundPage.searchKnowledgeInSearchbox(knowledgeName);
     }
 
     @Then("User should see the {string} in the model catalog dropdown")

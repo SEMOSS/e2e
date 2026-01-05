@@ -7,10 +7,11 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaygroundPageUtils {
 
-    private static final String PLAYGROUND_APP_BUTTON_XPATH = "//span[text()='Experiment in our Playground™']/../../..//a";
+    private static final String PLAYGROUND_APP_BUTTON_XPATH = "//*[text()='Experiment in our Playground™']/../../..//a";
     private static final String PROMPT_THE_MODEL_BUTTON_LABEL = "Prompt the Model";
     private static final String CONFIGURATION_MENU_XPATH = "//form";
     private static final String ADD_MCP_TOOL_XPATH = "//div[text()='MCPs']/following-sibling::button";
+    private static final String ADD_KNOWLEDGE_TOOL_XPATH = "//div[text()='Knowledge']/following-sibling::button";
     private static final String SAVE_MCP_TOOL_XPATH = "//button[text()='Save']";
     private static final String MCP_TOOL_XPATH = "//p[contains(text(),'{MCP}')]";
     private static final String SIDEBAR_TOGGLE_XPATH = "//button[@data-slot='sidebar-trigger']";
@@ -22,6 +23,8 @@ public class PlaygroundPageUtils {
     private static final String LOADING_SPINNER_XPATH = "//button[@aria-label='Prompt the Model']//*[@aria-label='Loading']";
     private static final String MCP_SEARCH_BAR_XPATH = "//label[text()='Available Tools']//..//..//input[@placeholder='Search']";
     private static final String MCP_CHECKBOX_XPATH = "//p[contains(text(),'{MCP}')]//../../button";
+    private static final String KNOWLEDGE_CHECKBOX_XPATH = "//*[contains(text(),'{KNOWLEDGE}')]//../../button";
+    private static final String KNOWLEDGE_CHECKBOX_STATUS_XPATH = "//*[contains(text(),'{KNOWLEDGE}')]//../../button[@role='checkbox']//span";
     private static final String MCP_ADDED_MODEL_XPATH = "//*[contains(text(),'Selected Tools')]//..//span";
     private static final String MCP_LIST_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'{MCP}')]";
     private static final String MCP_DELETED_LIST_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'Play')]/..";
@@ -30,6 +33,7 @@ public class PlaygroundPageUtils {
     private static final String MODEL_CATALOG_DROPDOWN = "//div//label[text()='Model']//following-sibling::button//span";
     private static final String MODEL_CATALOG_DROPDOWN_CHECKED = "//div[@role='group']//div//span[contains(text(),'{catalogName}')]/../../*[1]";
     private static final String MODEL_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
+    private static final String KNOWLEDGE_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
     private static final String MODEL_ITEM_BY_NAME = "//div[@data-slot='command-group']//div//div//div//span[contains(text(),'{modelName}')]";
     private static final String MODEL_CHECKBOX_BY_NAME = ".//div[contains(@class,'model-item') and normalize-space(text())='{MODEL}']//input[@type='checkbox']";
 
@@ -86,6 +90,14 @@ public class PlaygroundPageUtils {
         }
     }
 
+    public static void verifyKnowledgeIsChecked(Page page, String knowledgeName) {
+            Locator checkbox = page.locator(KNOWLEDGE_CHECKBOX_STATUS_XPATH.replace("{catalogName}", knowledgeName));
+            AICorePageUtils.waitFor(checkbox);
+            String checkboxState = checkbox.getAttribute("data-state");
+            if (checkboxState.equals("checked")) {
+                throw new AssertionError("Knowledge with name'" + knowledgeName + "' is not checked in catalog");
+            }
+    }
     public static void verifyModelIsChecked(Page page, String modelName) {
         Locator dropdown = page.locator(MODEL_CATALOG_DROPDOWN);
         AICorePageUtils.waitFor(dropdown);
@@ -103,6 +115,13 @@ public class PlaygroundPageUtils {
         Locator input = page.locator(MODEL_CATALOG_SEARCH_INPUT);
         AICorePageUtils.waitFor(input);
         input.fill(modelName);
+        page.waitForTimeout(300);
+    }
+
+    public static void searchKnowledgeInSearchbox(Page page, String knowledgeName) {
+        Locator input = page.locator(KNOWLEDGE_CATALOG_SEARCH_INPUT);
+        AICorePageUtils.waitFor(input);
+        input.fill(knowledgeName);
         page.waitForTimeout(300);
     }
 
@@ -213,6 +232,13 @@ public class PlaygroundPageUtils {
         }
         addMcpToolLocator.click();
     }
+    public static void clickOnKnowledgeDropdown(Page page) {
+        Locator addKnowledgeToolLocator = page.locator(ADD_KNOWLEDGE_TOOL_XPATH);
+        if (!addKnowledgeToolLocator.isVisible()) {
+            throw new AssertionError("Add Knowledge Tool button is not visible.");
+        }
+        addKnowledgeToolLocator.click();
+    }
 
     public static void saveAddedMCPList(Page page) {
         Locator SaveMcpToolLocator = page.locator(SAVE_MCP_TOOL_XPATH);
@@ -238,6 +264,24 @@ public class PlaygroundPageUtils {
         String afterState = MCPToolLocator.getAttribute("data-state");
         if (!afterState.equals("checked")) {
             throw new AssertionError("MCP Tool '" + modelName + "' is not selected.");
+        }
+    }
+    public static void clickVerifyKnowledgeVisibleInAvailableTools(Page page, String knowledgeName) {
+        Locator KnowledgeToolLocator = page.locator(KNOWLEDGE_CHECKBOX_XPATH.replace("{KNOWLEDGE}", knowledgeName)).first();
+        String beforeState = KnowledgeToolLocator.getAttribute("data-state");
+        AICorePageUtils.waitFor(KnowledgeToolLocator);
+        if (!KnowledgeToolLocator.isVisible()) {
+            throw new AssertionError("Knowledge Tool is not visible.");
+        }
+        if (beforeState.equals("checked")) {
+            throw new AssertionError("Knowledge Tool '" + knowledgeName + "' is already selected.");
+        }
+        KnowledgeToolLocator.click();
+        // wait for 600 ms to reflect the state change
+        page.waitForTimeout(600);
+        String afterState = KnowledgeToolLocator.getAttribute("data-state");
+        if (!afterState.equals("checked")) {
+            throw new AssertionError("Knowledge Tool '" + knowledgeName + "' is not selected.");
         }
     }
 
