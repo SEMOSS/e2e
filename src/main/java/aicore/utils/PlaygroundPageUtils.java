@@ -7,11 +7,12 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaygroundPageUtils {
 
-    private static final String PLAYGROUND_APP_BUTTON_XPATH = "//span[text()='Experiment in our Playground™']/../../..//a";
+    private static final String PLAYGROUND_APP_BUTTON_XPATH = "//*[text()='Experiment in our Playground™']/../../..//a";
     private static final String PROMPT_THE_MODEL_BUTTON_LABEL = "Prompt the Model";
     private static final String CONFIGURATION_MENU_XPATH = "//form";
     private static final String ADD_MCP_TOOL_XPATH = "//div[text()='MCPs']/following-sibling::button";
-    private static final String SAVE_MCP_TOOL_XPATH = "//button[text()='Save']";
+    private static final String ADD_KNOWLEDGE_TOOL_XPATH = "//div[text()='Knowledge']/following-sibling::button";
+    private static final String SAVE_BUTTON_XPATH = "//button[text()='Save']";
     private static final String MCP_TOOL_XPATH = "//p[contains(text(),'{MCP}')]";
     private static final String SIDEBAR_TOGGLE_XPATH = "//button[@data-slot='sidebar-trigger']";
     private static final String NO_PROMPT_EXIST_XPATH = "//div[@data-slot='sidebar-group']//*[text()='No rooms found']";
@@ -22,14 +23,23 @@ public class PlaygroundPageUtils {
     private static final String LOADING_SPINNER_XPATH = "//button[@aria-label='Prompt the Model']//*[@aria-label='Loading']";
     private static final String MCP_SEARCH_BAR_XPATH = "//label[text()='Available Tools']//..//..//input[@placeholder='Search']";
     private static final String MCP_CHECKBOX_XPATH = "//p[contains(text(),'{MCP}')]//../../button";
+    private static final String KNOWLEDGE_CHECKBOX_XPATH = "//*[contains(text(),'{KNOWLEDGE}')]//../../button";
+    private static final String KNOWLEDGE_CHECKBOX_STATUS_XPATH = "//*[contains(text(),'{KNOWLEDGE}')]//../../button[@role='checkbox']//span";
     private static final String MCP_ADDED_MODEL_XPATH = "//*[contains(text(),'Selected Tools')]//..//span";
+    private static final String KNOWLEDGE_LIST_XPATH = "//div[text()='Knowledge']//../..//div/span";
+    private static final String TEMPERATURE_INPUT_XPATH = "//label[contains(text(),'Temperature')]";
+    private static final String MAX_TOKEN_INPUT_XPATH = "//*[text()='Max Token']//../../input";
+    private static final String INSTRUCTION_INPUT_XPATH = "//*[text()='Instructions']//../../textarea";
+    private static final String KNOWLEDGE_DELETE_XPATH = "//div[text()='Knowledge']//../..//span[contains(text(),'{KNOWLEDGE}')]//following-sibling::button";
     private static final String MCP_LIST_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'{MCP}')]";
     private static final String MCP_DELETED_LIST_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'Play')]/..";
+    private static final String KNOWLEDGE_LIST_MESSAGE_XPATH = "//div[text()='Knowledge']//../..//span";
     private static final String MCP_LIST_MESSAGE_XPATH = "//div[text()='MCPs']//../..//span";
     private static final String MCP_DELETE_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'{MCP}')]//following-sibling::button";
     private static final String MODEL_CATALOG_DROPDOWN = "//div//label[text()='Model']//following-sibling::button//span";
     private static final String MODEL_CATALOG_DROPDOWN_CHECKED = "//div[@role='group']//div//span[contains(text(),'{catalogName}')]/../../*[1]";
     private static final String MODEL_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
+    private static final String KNOWLEDGE_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
     private static final String MODEL_ITEM_BY_NAME = "//div[@data-slot='command-group']//div//div//div//span[contains(text(),'{modelName}')]";
     private static final String MODEL_CHECKBOX_BY_NAME = ".//div[contains(@class,'model-item') and normalize-space(text())='{MODEL}']//input[@type='checkbox']";
 
@@ -86,6 +96,14 @@ public class PlaygroundPageUtils {
         }
     }
 
+    public static void verifyKnowledgeIsChecked(Page page, String knowledgeName) {
+            Locator checkbox = page.locator(KNOWLEDGE_CHECKBOX_STATUS_XPATH.replace("{KNOWLEDGE}", knowledgeName));
+            AICorePageUtils.waitFor(checkbox);
+            String checkboxState = checkbox.getAttribute("data-state");
+            if (!checkboxState.equals("checked")) {
+                throw new AssertionError("Knowledge with name'" + knowledgeName + "' is not checked in catalog ");
+            }
+    }
     public static void verifyModelIsChecked(Page page, String modelName) {
         Locator dropdown = page.locator(MODEL_CATALOG_DROPDOWN);
         AICorePageUtils.waitFor(dropdown);
@@ -106,12 +124,47 @@ public class PlaygroundPageUtils {
         page.waitForTimeout(300);
     }
 
+    public static void searchKnowledgeInSearchbox(Page page, String knowledgeName) {
+        Locator input = page.locator(KNOWLEDGE_CATALOG_SEARCH_INPUT);
+        AICorePageUtils.waitFor(input);
+        input.fill(knowledgeName);
+        page.waitForTimeout(300);
+    }
+
     public static void verifyModelVisibleInDropdown(Page page, String modelName) {
         Locator model = page.locator(MODEL_ITEM_BY_NAME.replace("{modelName}", modelName));
         AICorePageUtils.waitFor(model);
         if (!model.isVisible()) {
             throw new AssertionError("Model '" + modelName + "' not visible in dropdown");
         }
+    }
+
+    public static void verifyInstructionsSectionIsDisplayed(Page page) {
+        Locator maxTokenSection = page.locator(INSTRUCTION_INPUT_XPATH);
+        AICorePageUtils.waitFor(maxTokenSection);
+        String placeholder = maxTokenSection.getAttribute("placeholder");
+        if (placeholder == null || placeholder.isEmpty()|| !placeholder.contains("Update Instructions")) {
+            throw new AssertionError("Instructions section is not visible");
+        }
+        
+    }
+    public static void verifyMaxTokenSectionIsDisplayed(Page page) {
+        Locator maxTokenSection = page.locator(MAX_TOKEN_INPUT_XPATH);
+        AICorePageUtils.waitFor(maxTokenSection);
+        String placeholder = maxTokenSection.getAttribute("placeholder");
+        if (placeholder == null || placeholder.isEmpty()|| !placeholder.contains("Update token length")) {
+            throw new AssertionError("Max Token section is not visible");
+        }
+        
+    }
+    public static void verifyTemperatureSectionIsDisplayed(Page page, String temperature) {
+        Locator temperatureSection = page.locator(TEMPERATURE_INPUT_XPATH);
+        AICorePageUtils.waitFor(temperatureSection);
+        String textContent = temperatureSection.textContent();
+        if (textContent == null || textContent.isEmpty()|| !textContent.contains(temperature)) {
+            throw new AssertionError("Temperature section is not visible");
+        }
+        
     }
 
     public static void selectModelFromDropdown(Page page, String modelName) {
@@ -213,9 +266,23 @@ public class PlaygroundPageUtils {
         }
         addMcpToolLocator.click();
     }
+    public static void clickOnKnowledgeDropdown(Page page) {
+        Locator addKnowledgeToolLocator = page.locator(ADD_KNOWLEDGE_TOOL_XPATH);
+        if (!addKnowledgeToolLocator.isVisible()) {
+            throw new AssertionError("Add Knowledge Tool button is not visible.");
+        }
+        addKnowledgeToolLocator.click();
+    }
 
+    public static void saveAddedKnowledgeList(Page page) {
+        Locator SaveMcpToolLocator = page.locator(SAVE_BUTTON_XPATH);
+        if (!SaveMcpToolLocator.isVisible()) {
+            throw new AssertionError("Save Knowledge button is not visible.");
+        }
+        SaveMcpToolLocator.click();
+    }
     public static void saveAddedMCPList(Page page) {
-        Locator SaveMcpToolLocator = page.locator(SAVE_MCP_TOOL_XPATH);
+        Locator SaveMcpToolLocator = page.locator(SAVE_BUTTON_XPATH);
         if (!SaveMcpToolLocator.isVisible()) {
             throw new AssertionError("Save MCP button is not visible.");
         }
@@ -240,6 +307,24 @@ public class PlaygroundPageUtils {
             throw new AssertionError("MCP Tool '" + modelName + "' is not selected.");
         }
     }
+    public static void clickVerifyKnowledgeVisibleInAvailableTools(Page page, String knowledgeName) {
+        Locator KnowledgeToolLocator = page.locator(KNOWLEDGE_CHECKBOX_XPATH.replace("{KNOWLEDGE}", knowledgeName)).first();
+        String beforeState = KnowledgeToolLocator.getAttribute("data-state");
+        AICorePageUtils.waitFor(KnowledgeToolLocator);
+        if (!KnowledgeToolLocator.isVisible()) {
+            throw new AssertionError("Knowledge Tool is not visible.");
+        }
+        if (beforeState.equals("checked")) {
+            throw new AssertionError("Knowledge Tool '" + knowledgeName + "' is already selected.");
+        }
+        KnowledgeToolLocator.click();
+        // wait for 600 ms to reflect the state change
+        page.waitForTimeout(600);
+        String afterState = KnowledgeToolLocator.getAttribute("data-state");
+        if (!afterState.equals("checked")) {
+            throw new AssertionError("Knowledge Tool '" + knowledgeName + "' is not selected.");
+        }
+    }
 
     public static void deleteAddedMCPModelMCPSection(Page page, String modelName) {
         Locator MCPListToolLocator = page.locator(MCP_DELETED_LIST_XPATH.replace("{MCP}", modelName));
@@ -252,12 +337,33 @@ public class PlaygroundPageUtils {
 
         }
     }
+    public static void deleteAddedKnowledgeModelKnowledgeSection(Page page, String knowledgeName) {
+        Locator knowledgeListToolLocator = page.locator(KNOWLEDGE_LIST_XPATH);
+        Locator knowledgeToolLocator = page.locator(KNOWLEDGE_DELETE_XPATH.replace("{KNOWLEDGE}", knowledgeName));
+        if (knowledgeListToolLocator.isVisible()) {
+            knowledgeListToolLocator.hover();
+            knowledgeToolLocator.click();
+            // wait for 600 ms to reflect the deletion
+            page.waitForTimeout(600);
+
+        }
+    }
 
     public static void verifyMCPModelRemovedMCPSection(Page page, String modelName) {
         Locator MCPListToolMessage = page.locator(MCP_LIST_MESSAGE_XPATH);
         AICorePageUtils.waitFor(MCPListToolMessage);
         String expectedMessage = "No MCPs added";
         String actualMessage = MCPListToolMessage.textContent();
+        if (!actualMessage.equals(expectedMessage)) {
+            throw new AssertionError("Expected message: '" + expectedMessage + "', but found: '" + actualMessage + "'");
+        }
+
+    }
+    public static void verifyKnowledgeRemovedKnowledgeSection(Page page, String knowledgeName) {
+        Locator knowledgeListToolMessage = page.locator(KNOWLEDGE_LIST_MESSAGE_XPATH);
+        AICorePageUtils.waitFor(knowledgeListToolMessage);
+        String expectedMessage = "No Knowledge Found";
+        String actualMessage = knowledgeListToolMessage.textContent();
         if (!actualMessage.equals(expectedMessage)) {
             throw new AssertionError("Expected message: '" + expectedMessage + "', but found: '" + actualMessage + "'");
         }
@@ -298,6 +404,13 @@ public class PlaygroundPageUtils {
         }
     }
 
+    public static void verifyAddedKnowledgeModelKnowledgeSection(Page page, String knowledgeName) {
+        Locator knowledgeListToolLocator = page.locator(KNOWLEDGE_LIST_XPATH);
+        AICorePageUtils.waitFor(knowledgeListToolLocator);
+        if (!knowledgeListToolLocator.isVisible() && !knowledgeListToolLocator.textContent().contains(knowledgeName)) {
+            throw new AssertionError("Knowledge Tool is not added/visible in the side list.");
+        }
+    }
     public static void verifyAddedMCPModelMCPSection(Page page, String modelName) {
         Locator MCPListToolLocator = page.locator(MCP_LIST_XPATH.replace("{MCP}", modelName)).first();
         AICorePageUtils.waitFor(MCPListToolLocator);
