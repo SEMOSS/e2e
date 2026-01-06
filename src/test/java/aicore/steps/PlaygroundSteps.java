@@ -79,6 +79,11 @@ public class PlaygroundSteps {
         playgroundPage.verifyAddedMCPAppSelectedList(appName);
     }
 
+    @When("User saves the added Knowledge list")
+    public void user_Saves_The_Added_Knowledge_List() {
+        playgroundPage.saveAddedKnowledgeList();
+    }
+
     @When("User saves the added MCP list")
     public void user_Saves_The_Added_MCP_List() {
         playgroundPage.saveAddedMCPList();
@@ -89,11 +94,24 @@ public class PlaygroundSteps {
         playgroundPage.verifyAddedMCPModelMCPSection(appName);
     }
 
+    @Then("User verify the added {string} is displayed in Knowledge section")
+    public void user_Verify_The_Added_Is_Displayed_In_Knowledge_Section(String knowledgeName) {
+        playgroundPage.verifyAddedKnowledgeModelKnowledgeSection(knowledgeName);
+    }
+
+    @When("User deletes the added {string} from Knowledge section")
+    public void user_Deletes_The_Added_From_Knowledge_Section(String knowledgeName) {
+        playgroundPage.deleteAddedKnowledgeModelKnowledgeSection(knowledgeName);
+    }
     @When("User deletes the added {string} from MCP section")
     public void user_Deletes_The_Added_From_MCP_Section(String appName) {
         playgroundPage.deleteAddedMCPModelMCPSection(appName);
     }
 
+    @Then("User verify the {string} is removed from Knowledge section")
+    public void user_Verify_The_Is_Removed_From_Knowledge_Section(String knowledgeName) {
+        playgroundPage.verifyKnowledgeRemovedKnowledgeSection(knowledgeName);
+    }
     @Then("User verify the {string} is removed from MCP section")
     public void user_Verify_The_Is_Removed_From_MCP_Section(String appName) {
         playgroundPage.verifyMCPModelRemovedMCPSection(appName);
@@ -136,6 +154,21 @@ public class PlaygroundSteps {
     @Then("User should see the {string} in the model catalog dropdown")
     public void user_Should_See_The_In_The_Model_Catalog_Dropdown(String modelName) {
         playgroundPage.verifyModelVisibleInDropdown(modelName);
+    }
+
+    @Then("User Verify the Max Token section is displayed with default value & stepper control")
+    public void user_Verify_The_Max_Token_Section_Is_Displayed_With_Default_Value_Stepper_Control() {
+        playgroundPage.verifyMaxTokenSectionIsDisplayed();
+    }
+    
+    @Then("User Verify the Instructions section is displayed")
+    public void user_Verify_The_Instructions_Section_Is_Displayed() {
+        playgroundPage.verifyInstructionsSectionIsDisplayed();
+    }
+
+    @Then("User Verify the Temperature section is displayed with default value {string}")
+    public void user_Verify_The_Temperature_Section_Is_Displayed_With_Default_Value(String temperature) {
+        playgroundPage.verifyTemperatureSectionIsDisplayed(temperature);
     }
 
     @When("User selects the {string} from the model catalog dropdown")

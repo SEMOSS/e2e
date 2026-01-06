@@ -37,6 +37,9 @@ public class PlaygroundPage {
         PlaygroundPageUtils.clickOnKnowledgeDropdown(page);
     }
 
+    public void saveAddedKnowledgeList() {
+        PlaygroundPageUtils.saveAddedKnowledgeList(page);
+    }
     public void saveAddedMCPList() {
         PlaygroundPageUtils.saveAddedMCPList(page);
     }
@@ -54,14 +57,23 @@ public class PlaygroundPage {
         PlaygroundPageUtils.verifyAddedMCPAppSelectedList(page, modelName);
     }
 
+    public void verifyAddedKnowledgeModelKnowledgeSection(String knowledgeName) {
+        PlaygroundPageUtils.verifyAddedKnowledgeModelKnowledgeSection(page, knowledgeName);
+    }
     public void verifyAddedMCPModelMCPSection(String modelName) {
         PlaygroundPageUtils.verifyAddedMCPModelMCPSection(page, modelName);
     }
 
+    public void deleteAddedKnowledgeModelKnowledgeSection(String knowledgeName) {
+        PlaygroundPageUtils.deleteAddedKnowledgeModelKnowledgeSection(page, knowledgeName);
+    }
     public void deleteAddedMCPModelMCPSection(String modelName) {
         PlaygroundPageUtils.deleteAddedMCPModelMCPSection(page, modelName);
     }
 
+    public void verifyKnowledgeRemovedKnowledgeSection(String knowledgeName) {
+        PlaygroundPageUtils.verifyKnowledgeRemovedKnowledgeSection(page, knowledgeName);
+    }
     public void verifyMCPModelRemovedMCPSection(String modelName) {
         PlaygroundPageUtils.verifyMCPModelRemovedMCPSection(page, modelName);
     }
@@ -81,7 +93,7 @@ public class PlaygroundPage {
     public void verifyModelIsChecked(String modelName) {
         PlaygroundPageUtils.verifyModelIsChecked(page, modelName);
     }
-    
+
     public void verifyKnowledgeIsChecked(String knowledgeName) {
         PlaygroundPageUtils.verifyKnowledgeIsChecked(page, knowledgeName);
     }
@@ -95,6 +107,16 @@ public class PlaygroundPage {
 
     public void verifyModelVisibleInDropdown(String modelName) {
         PlaygroundPageUtils.verifyModelVisibleInDropdown(page, modelName);
+    }
+
+    public void verifyTemperatureSectionIsDisplayed(String temperature) {
+        PlaygroundPageUtils.verifyTemperatureSectionIsDisplayed(page, temperature);
+    }
+    public void verifyMaxTokenSectionIsDisplayed() {
+        PlaygroundPageUtils.verifyMaxTokenSectionIsDisplayed(page);
+    }
+    public void verifyInstructionsSectionIsDisplayed() {
+        PlaygroundPageUtils.verifyInstructionsSectionIsDisplayed(page);
     }
 
     public void selectModelFromDropdown(String modelName) {
