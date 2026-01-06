@@ -35,6 +35,99 @@ public class PlaygroundSteps {
        playgroundPage.verifyTextareaPlaceholder(placeholder);
     }
 
+    @When("User click on the workspace button")
+    public void user_Clicks_On_Workspace_Button() {
+        playgroundPage.clickOnWorkspaceButton();
+    }
+
+    @And("User clicks on Create New Workspace button")
+    public void user_Clicks_On_Create_New_Workspace_Button() {
+        playgroundPage.clickOnCreateNewWorkspaceButton();
+    }
+
+    @And("User enters workspace name as {string}")
+    public void user_Enters_Workspace_Name_As(String name) {
+        playgroundPage.enterWorkspaceName(name);
+    }
+
+    @And("User enters workspace description as {string}")
+    public void user_Enters_Workspace_Description_As(String desc) {
+        playgroundPage.enterWorkspaceDescription(desc);
+    }
+
+    @And("User clicks on Create button to create workspace")
+    public void user_Clicks_On_Create_Button_To_Create_Workspace() {
+        playgroundPage.clickOnNewCreateWorkspaceButton();
+    }
+
+    @Then("User verifies that {string} workspace is created with description {string}")
+    public void user_Verifies_Workspace_Created_With_Description(String name, String desc) {
+        playgroundPage.verifyWorkspaceCreatedWithDescription(name, desc);
+    }
+
+    @When("User selects the {string} from the workspace list")
+    public void user_Selects_Workspace_From_List(String name) {
+        playgroundPage.selectWorkspaceFromList(name);
+    }
+    @When("User selects the {string} as new chat from the workspace list")
+    public void user_Selects_the_as_new_chat_from_the_workspace_list(String workspaceName) {
+        playgroundPage.selectWorkspaceChatFromList(workspaceName);
+    }
+    @When("User verifies that {string} workspace is selected in the workspace chat")
+    public void user_verifies_that_workspace_is_selected_in_the_workspace_chat(String workspaceName) {
+        playgroundPage.verifyWorkspaceSelection(workspaceName);
+    }
+
+    @Then("User verifies that {string} workspace is selected in the workspace list")
+    public void user_Verifies_Workspace_Selected_In_List(String name) {
+        playgroundPage.verifyWorkspaceSelectedInList(name);
+    }
+
+    @And("User clicks on Delete Workspace button")
+    public void user_Clicks_On_Delete_Workspace_Button() {
+        playgroundPage.clickOnDeleteWorkspaceButton();
+    }
+
+    @Then("User verifies that workspace is deleted and not present in the workspace list")
+    public void user_Verifies_Workspace_Deleted() {
+        playgroundPage.verifyWorkspaceDeleted();
+    }
+
+    @And("User clicks on Edit Workspace button")
+    public void user_Clicks_On_Edit_Workspace_Button() {
+        playgroundPage.clickOnEditWorkspaceButton();
+    }
+
+    @And("User updates workspace name to {string}")
+    public void user_Updates_Workspace_Name_To(String newName) {
+        playgroundPage.enterWorkspaceName(newName);
+    }
+
+    @And("User updates workspace description to {string}")
+    public void user_Updates_Workspace_Description_To(String newDesc) {
+        playgroundPage.enterWorkspaceDescription(newDesc);
+    }
+
+    @And("User clicks on Save button to save workspace changes")
+    public void user_Clicks_On_Save_Button_To_Save_Workspace_Changes() {
+        playgroundPage.clickOnSaveWorkspaceButton();
+    }
+
+    @Then("User verifies that {string} workspace is updated with new description {string}")
+    public void user_Verifies_Workspace_Updated_With_New_Description(String name, String desc) {
+        playgroundPage.verifyWorkspaceUpdatedWithDescription(name, desc);
+    }
+
+    @And("User enters {string} in the workspace search box")
+    public void user_Enters_In_Workspace_Search_Box(String workspaceName) {
+        playgroundPage.searchWorkspace(workspaceName);
+    }
+
+    @Then("User verifies that {string} workspace is displayed in the search results")
+    public void user_Verifies_Workspace_Displayed_In_Search_Results(String name) {
+        playgroundPage.verifyWorkspaceDisplayedInSearchResults(name);
+    }
+
     @When("User enters prompt in the Prompt textarea {string}")
     public void user_Enters_Prompt_In_The_Textarea(String prompt) {
         playgroundPage.enterPromptInTextarea(prompt);

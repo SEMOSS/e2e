@@ -14,6 +14,17 @@ public class PlaygroundPageUtils {
     private static final String ADD_KNOWLEDGE_TOOL_XPATH = "//div[text()='Knowledge']/following-sibling::button";
     private static final String SAVE_BUTTON_XPATH = "//button[text()='Save']";
     private static final String MCP_TOOL_XPATH = "//p[contains(text(),'{MCP}')]";
+    private static final String CREATE_WORKSPACE_XPATH = "//button[text()='Create a Workspace']";
+    private static final String CARD_TITLE_XPATH = "//div[@data-slot='card-title']";
+    private static final String WORKSPACE_PROFILE_XPATH = "//span[@data-slot='tooltip-trigger']//button//span";
+    private static final String SEARCH_WORKSPACE_XPATH = "//div/div[@role='group']//input[@placeholder='Search']";
+    private static final String WORKSPACE_NAME_INPUT_XPATH = "workspaceForm-textField-name";
+    private static final String WORKSPACE_DESCRIPTION_INPUT_XPATH = "workspaceForm-description-txt";
+    private static final String WORKSPACE_CREATE_XPATH = "workspaceForm-submit-btn";
+    private static final String WORKSPACE_MENU_XPATH = "//div/button[@aria-haspopup='menu']";
+    private static final String WORKSPACE_NEW_CHAT_XPATH = "//div[@data-slot='card-title' and text()='{workspaceName}']/../../following-sibling::div//button";
+    private static final String NO_WORKSPACE_PRESENT_XPATH = "//*[text()='No results found']";
+    private static final String WORKSPACE_MENU_OPTION_XPATH = "//*[contains(@role, 'menuitem') and text()='{optionName}']";
     private static final String SIDEBAR_TOGGLE_XPATH = "//button[@data-slot='sidebar-trigger']";
     private static final String NO_PROMPT_EXIST_XPATH = "//div[@data-slot='sidebar-group']//*[text()='No rooms found']";
     private static final String PROMPT_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']";
@@ -60,6 +71,150 @@ public class PlaygroundPageUtils {
         String actualPlaceholder = textarea.getAttribute("placeholder");
         if (!actualPlaceholder.equals(placeholder)) {
             throw new AssertionError("Expected placeholder: " + placeholder + ", but found: " + actualPlaceholder);
+        }
+    }
+    public static void clickOnWorkspaceButton(Page page) {
+        Locator workspaceButton = page.locator("//li//a[@aria-label ='Workspace']");
+        if (workspaceButton.isEnabled()) {
+            workspaceButton.click();
+        } else {
+            throw new AssertionError("The 'Workspace' button is disabled and cannot be clicked.");
+        }
+    }
+
+    public static void clickOnCreateNewWorkspaceButton(Page page) {
+        Locator createNewWorkspaceButton = page.locator(CREATE_WORKSPACE_XPATH);
+        if (createNewWorkspaceButton.isEnabled()) {
+            createNewWorkspaceButton.click();
+        } else {
+            throw new AssertionError("The 'Create New Workspace' button is disabled and cannot be clicked.");
+        }
+    }
+    public static void clickOnNewCreateWorkspaceButton(Page page) {
+        Locator createNewWorkspaceButton = page.getByTestId(WORKSPACE_CREATE_XPATH);
+        if (createNewWorkspaceButton.isEnabled()) {
+            createNewWorkspaceButton.click();
+        } else {
+            throw new AssertionError("The 'Create New Workspace' button is disabled and cannot be clicked on the form");
+        }
+    }
+
+    public static void verifyWorkspaceCreatedWithDescription(Page page, String workspaceName, String description) {
+        Locator createdWorkspace = page.locator("//div[text()='" + workspaceName + "']");
+        AICorePageUtils.waitFor(createdWorkspace);
+        if (!createdWorkspace.isVisible()) {
+            throw new AssertionError("Workspace '" + workspaceName + "' is not created.");
+        }
+        Locator workspaceDescription = page.locator("//div[text()='" + workspaceName + "']");
+        if (!workspaceDescription.isVisible()) {
+            throw new AssertionError("Expected description: " + description + ", but found: " + workspaceDescription.textContent());
+        }
+    }
+
+    public static void selectWorkspaceFromList(Page page, String workspaceName) {
+        Locator workspace = page.locator("//div[text()='" + workspaceName + "']");
+        if (workspace.isEnabled()) {
+            workspace.click();
+        } else {
+            throw new AssertionError("The workspace '" + workspaceName + "' is disabled and cannot be selected.");
+        }
+    }
+    public static void selectWorkspaceChatFromList(Page page, String workspaceName) {
+        Locator workspace = page.locator(WORKSPACE_NEW_CHAT_XPATH.replace("{workspaceName}", workspaceName));
+        if (workspace.isEnabled()) {
+            workspace.click();
+        } else {
+            throw new AssertionError("The workspace '" + workspaceName + "' is disabled and cannot be selected.");
+        }
+    }
+
+    public static void verifyWorkspaceSelectedInList(Page page, String workspaceName) {
+        Locator selectedWorkspace = page.locator("//div[text()='" + workspaceName + "']");
+        AICorePageUtils.waitFor(selectedWorkspace);
+        if (!selectedWorkspace.isVisible()) {
+            throw new AssertionError("Workspace '" + workspaceName + "' is not selected in the list.");
+        }
+    }
+
+    public static void clickOnDeleteWorkspaceButton(Page page) {
+        Locator WorkspaceMenuButton = page.locator(WORKSPACE_MENU_XPATH);
+        if (WorkspaceMenuButton.isEnabled()) {
+            WorkspaceMenuButton.click();
+        } else {
+            throw new AssertionError("The 'Workspaces menu' button is disabled and cannot be clicked.");
+        }
+        Locator deleteWorkspaceButton = page.locator(WORKSPACE_MENU_OPTION_XPATH.replace("{optionName}", "Delete"));
+        if (deleteWorkspaceButton.isEnabled()) {
+            deleteWorkspaceButton.click();
+        } else {
+            throw new AssertionError("The 'Delete Workspace' button is disabled and cannot be clicked.");
+        }
+    }
+    public static void clickOnEditWorkspaceButton(Page page) {
+        Locator WorkspaceMenuButton = page.locator(WORKSPACE_MENU_XPATH);
+        if (WorkspaceMenuButton.isEnabled()) {
+            WorkspaceMenuButton.click();
+        } else {
+            throw new AssertionError("The 'Workspaces menu' button is disabled and cannot be clicked.");
+        }
+        Locator editWorkspaceButton = page.locator(WORKSPACE_MENU_OPTION_XPATH.replace("{optionName}", "Edit"));
+        if (editWorkspaceButton.isEnabled()) {
+            editWorkspaceButton.click();
+        } else {
+            throw new AssertionError("The 'Edit Workspace' button is disabled and cannot be clicked.");
+        }
+    }
+
+    public static void verifyWorkspaceDeleted(Page page) {
+        Locator noWorkspaceExist = page.locator(NO_WORKSPACE_PRESENT_XPATH);
+        AICorePageUtils.waitFor(noWorkspaceExist);
+        if (!noWorkspaceExist.isVisible()) {
+            throw new AssertionError("Workspace is still present in the list.");
+        }
+    }
+  
+    public static void enterWorkspaceName(Page page, String workspaceName) {
+        Locator createNewWorkspaceButton = page.getByTestId(WORKSPACE_NAME_INPUT_XPATH);
+        if (createNewWorkspaceButton.isEnabled()) {
+            createNewWorkspaceButton.fill(workspaceName);
+        } else {
+            throw new AssertionError("The 'Workspace Name' input field is disabled and cannot be filled.");
+        }
+    }
+    public static void enterWorkspaceDescription(Page page, String workspaceDescription) {
+        Locator createNewWorkspaceButton = page.getByTestId(WORKSPACE_DESCRIPTION_INPUT_XPATH);
+        if (createNewWorkspaceButton.isEnabled()) {
+            createNewWorkspaceButton.fill(workspaceDescription);
+        } else {
+            throw new AssertionError("The 'Workspace Description' input field is disabled and cannot be filled.");
+        }
+    }
+
+    public static void searchWorkspace(Page page, String workspaceName) {
+        Locator workspaceSearchBox = page.locator(SEARCH_WORKSPACE_XPATH);
+        if (workspaceSearchBox.isEnabled()) {
+            workspaceSearchBox.fill(workspaceName);
+            page.waitForTimeout(500);
+        } else {
+            throw new AssertionError("The 'Workspace Search' input field is disabled and cannot be filled.");
+        }
+    }
+
+    public static void verifyWorkspaceDisplayedInSearchResults(Page page, String workspaceName) {
+        Locator searchedWorkspace = page.locator(CARD_TITLE_XPATH);
+        AICorePageUtils.waitFor(searchedWorkspace);
+        String workspaceTitle = searchedWorkspace.textContent();
+        if (!workspaceTitle.equals(workspaceName)) {
+            throw new AssertionError("Search function failed. Expected workspace: " + workspaceName + ", but found: " + workspaceTitle);
+        }
+    }
+
+    public static void verifyWorkspaceSelection(Page page, String workspaceName) {
+        Locator workspaceProfile = page.locator(WORKSPACE_PROFILE_XPATH);
+        AICorePageUtils.waitFor(workspaceProfile);
+        String workspaceProfileName = workspaceProfile.textContent();
+        if (!workspaceProfileName.equals(workspaceName)) {
+            throw new AssertionError("did not select the correct workspace. Expected workspace: " + workspaceName + ", but found: " + workspaceProfileName);
         }
     }
 
