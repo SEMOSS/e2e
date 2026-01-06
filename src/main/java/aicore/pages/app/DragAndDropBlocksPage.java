@@ -47,7 +47,7 @@ public class DragAndDropBlocksPage {
 	public void blockDropPosition(String blockName) {
 		DragAndDropBlocksPageUtils.blockDropPosition(page, blockName);
 	}
-
+	
 	public void layerDropPosition(String blockName, String position) {
 		DragAndDropBlocksPageUtils.layerDropPosition(page, blockName, position);
 	}
@@ -302,6 +302,16 @@ public class DragAndDropBlocksPage {
 
 	public void deleteBlockOnPage(String blockName) {
 		DragAndDropBlocksPageUtils.deleteBlockOnPage(page, blockName);
+	}
+	public void searchBlockFromBlocksSection(String blockName) {
+		DragAndDropBlocksPageUtils.searchBlockFromBlocksSection(page, blockName);
+	}
+	public void clickOnBlockOnPage(String blockName) {
+		DragAndDropBlocksPageUtils.clickOnBlockOnPage(page, blockName);
+	}
+
+	public void highlightThePage(String pageName) {
+		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
 
 }
