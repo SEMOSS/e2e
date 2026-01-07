@@ -22,6 +22,7 @@ import aicore.base.GenericSetupUtils;
 import aicore.utils.CaptureScreenShotUtils;
 import aicore.utils.CommonUtils;
 import aicore.framework.ConfigUtils;
+import aicore.framework.Resource;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.framework.UrlUtils;
 import io.cucumber.java.After;
@@ -42,10 +43,7 @@ public class SetupHooks {
 	public static void beforeAll() throws IOException {
 		logger.info("BEFORE ALL");
 		GenericSetupUtils.initialize();
-		setupFirstScenarioOfFeature();
-		// not sure how this works with parallel?
-		// before all runs outside of parallelization but what about in between features?
-		//scenarioNumberOfFeatureFile = 0;
+		// Do not create browser/playwright here - setup is done per-thread when a feature starts
 	}
 
 	@Before
@@ -83,18 +81,29 @@ public class SetupHooks {
 
 	private static void setupFirstScenarioOfFeature() throws IOException {
 
+		// Ensure we don't leak existing resources. If a resource already has a context/page/browser/playwright,
+		// close them first to free system resources and avoid duplicates.
+		Resource res = ResourcePool.get();
+		if (res.getPlaywright() != null || res.getBrowser() != null || res.getContext() != null || res.getPage() != null) {
+			logger.info("Resource {} already has browser/context. Closing before re-creating.", res.getResourceNumber());
+			res.closeContext();
+			res.closeBrowserAndPlaywright();
+		}
+
+		logger.info("Creating playwright/browser for resource {} with url {}", res.getResourceNumber(), res.getUrl());
+
 		Playwright playwright = Playwright.create();
-		ResourcePool.get().setPlaywright(playwright);
+		res.setPlaywright(playwright);
 
 		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-		ResourcePool.get().setBrowser(browser);
+		res.setBrowser(browser);
 
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1)
 				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
 				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
 		BrowserContext context = browser.newContext(newContextOptions);
-		ResourcePool.get().setContext(context);
+		res.setContext(context);
 
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 
@@ -105,7 +114,7 @@ public class SetupHooks {
 
 		Page page = context.newPage();
 
-		ResourcePool.get().setPage(page);
+		res.setPage(page);
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
 		GenericSetupUtils.setupLoggers(page);
@@ -182,8 +191,31 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
 		
 		int currentScenarioCount = ResourcePool.get().getScenarioNumberOfFeatureFile();
-		int totalScenarioCount = scenario.getUri().getPath().lines().filter(line -> line.trim().startsWith("Scenario:")).toArray().length;
-		if (currentScenarioCount == totalScenarioCount) {
+		int totalScenarioCount = 0;
+		try {
+			Path featurePath = null;
+			// Prefer using the URI directly to avoid Windows leading-slash issues ("/D:/...")
+			try {
+				featurePath = Paths.get(scenario.getUri());
+			} catch (IllegalArgumentException ex) {
+				String p = scenario.getUri().getPath();
+				if (p != null && p.startsWith("/") && p.length() > 2 && p.charAt(2) == ':') {
+					// Strip leading slash for Windows absolute paths like "/D:/..."
+					p = p.substring(1);
+				}
+				featurePath = Paths.get(p);
+			}
+			if (Files.exists(featurePath)) {
+				totalScenarioCount = (int) Files.readAllLines(featurePath).stream()
+					.filter(line -> line.trim().startsWith("Scenario:"))
+					.count();
+			} else {
+				logger.warn("Feature file not found when counting scenarios: {}", featurePath);
+			}
+		} catch (IOException e) {
+			logger.warn("Unable to read feature file to count scenarios: {}", e.getMessage());
+		}
+		if (currentScenarioCount == totalScenarioCount && totalScenarioCount > 0) {
 			logger.info("Last scenario of the feature: {}. Logging out and closing context.", ResourcePool.get().getFeature());
 			logoutAndSave();
 		}
@@ -191,8 +223,8 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 
 	@AfterAll
 	public static void afterAll() throws IOException {
-		logger.info("AFTER ALL");
-		ResourcePool.get().getPlaywright().close();
+		logger.info("AFTER ALL - closing all resources");
+		ResourcePool.closeAllResources();
 	}
 
 	private static void logoutAndSave() throws IOException {
@@ -256,6 +288,14 @@ private static void performLoginBasedOnTags(Scenario scenario) {
             } else {
                 Files.deleteIfExists(og);
             }
+		}
+
+		// Close context/browser/playwright for this resource to free system resources
+		try {
+			ResourcePool.get().closeContext();
+			ResourcePool.get().closeBrowserAndPlaywright();
+		} catch (Exception e) {
+			logger.warn("Error during resource cleanup for feature {}: {}", feature, e.getMessage());
 		}
 	}
 

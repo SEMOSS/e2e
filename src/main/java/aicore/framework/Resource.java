@@ -172,6 +172,24 @@ public class Resource {
         }
     }
     
+    /**
+     * Close the browser and Playwright instances owned by this Resource.
+     * Safe to call from any thread; intended for final cleanup.
+     */
+    public synchronized void closeBrowserAndPlaywright() {
+        try {
+            if (browser != null) {
+                try { browser.close(); } catch (Exception ignore) {}
+                browser = null;
+            }
+        } finally {
+            if (playwright != null) {
+                try { playwright.close(); } catch (Exception ignore) {}
+                playwright = null;
+            }
+        }
+    }
+
     public String getTimestamp() {
         return this.timestamp;
     }

@@ -27,4 +27,30 @@ public class ResourcePool {
         }
         return r;
     }
+
+    /**
+     * Return an unmodifiable view of the resources managed by the pool.
+     */
+    public static List<Resource> getAllResources() {
+        return RESOURCES;
+    }
+
+    /**
+     * Close contexts, browsers and Playwright instances for all resources.
+     * Safe to call multiple times.
+     */
+    public static void closeAllResources() {
+        for (Resource r : RESOURCES) {
+            if (r == null) continue;
+            try {
+                r.closeContext();
+            } catch (Exception ignore) {}
+        }
+        for (Resource r : RESOURCES) {
+            if (r == null) continue;
+            try {
+                r.closeBrowserAndPlaywright();
+            } catch (Exception ignore) {}
+        }
+    }
 }
