@@ -8,7 +8,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
-	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
+	private static final String SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
 	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']";
 	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";

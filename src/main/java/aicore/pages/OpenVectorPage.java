@@ -14,6 +14,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String ADD_VECTOR_BUTTON_XPATH = "//button/span[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "#NAME";
+	private static final String VECTOR_TAG_XPATH = "importForm-TAGS-textField";
 	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
 	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//li[text()='{modelName}']";
 	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
@@ -63,6 +64,10 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 		page.fill(CATALOG_NAME_TEXTBOX_ID, vCatalogName);
 	}
 
+	public void enterVectorTag(String vTag) {
+		Locator tagInput = page.getByTestId(VECTOR_TAG_XPATH);
+		tagInput.fill(vTag);
+	}
 	public void selectModelfromEmbedderDropdown(String modelName) {
 		page.click(EMBEDDER_DROPDOWN_XPATH);
 		page.locator(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName)).click();
