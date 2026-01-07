@@ -54,23 +54,38 @@ public class SetupHooks {
 		String feature = ResourcePool.get().getFeature();
         String scenarioName = scenario.getName();
         
-		// If new feature -> logout previous, reset and login
-		if (!tempFeature.equals(feature)) {
-            logger.info("New feature detected: {}", tempFeature);
-			// Logout from previous feature if exists
-			if (feature != null && ResourcePool.get().getPage() != null) {
+		// If new feature OR resource not initialized -> logout previous, reset and login
+		Resource res = ResourcePool.get();
+		if (res.getPage() == null || !tempFeature.equals(feature)) {
+			logger.info("New feature or uninitialized resource detected: {} (current feature: {})", tempFeature, feature);
+			// Logout from previous feature if exists and we have an active page
+			if (feature != null && res.getPage() != null) {
 				try {
-					GenericSetupUtils.logout(ResourcePool.get().getPage());
+					GenericSetupUtils.logout(res.getPage());
 				} catch (Exception e) {
 					logger.warn("Failed to logout from previous feature: {}", e.getMessage());
 				}
 			}
-			setupFirstScenarioOfFeature();
+
+			// If there is no page, create it; if feature changed and there is a page, recreate context
+			if (res.getPage() == null) {
+				setupFirstScenarioOfFeature();
+				try {
+					GenericSetupUtils.navigateToHomePage(res.getPage());
+				} catch (Throwable t) {
+					logger.warn("Navigation after setup failed: {}", t.getMessage());
+				}
+			} else {
+				// Feature changed while a page already exists -> close context and reinitialize
+				res.closeContext();
+				setupFirstScenarioOfFeature();
+			}
+
 			performLoginBasedOnTags(scenario);
-			ResourcePool.get().resetTimestamp();
-			ResourcePool.get().resetScenarioNumberOfFeatureFile();
-			ResourcePool.get().incrementFeatureNumber();
-        }
+			res.resetTimestamp();
+			res.resetScenarioNumberOfFeatureFile();
+			res.incrementFeatureNumber();
+		}
 
 		ResourcePool.get().setFeature(tempFeature);
         ResourcePool.get().setScenarioName(scenarioName);
@@ -81,28 +96,28 @@ public class SetupHooks {
 
 	private static void setupFirstScenarioOfFeature() throws IOException {
 
-		// Ensure we don't leak existing resources. If a resource already has a context/page/browser/playwright,
-		// close them first to free system resources and avoid duplicates.
 		Resource res = ResourcePool.get();
-		if (res.getPlaywright() != null || res.getBrowser() != null || res.getContext() != null || res.getPage() != null) {
-			logger.info("Resource {} already has browser/context. Closing before re-creating.", res.getResourceNumber());
-			res.closeContext();
-			res.closeBrowserAndPlaywright();
+
+		// If browser/playwright not created for this resource, create them once and reuse across features
+		if (res.getBrowser() == null || res.getPlaywright() == null) {
+			logger.info("Creating playwright/browser for resource {} with url {}", res.getResourceNumber(), res.getUrl());
+			Playwright playwright = Playwright.create();
+			res.setPlaywright(playwright);
+
+			Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+			res.setBrowser(browser);
+		} else {
+			logger.info("Reusing existing browser for resource {}", res.getResourceNumber());
 		}
 
-		logger.info("Creating playwright/browser for resource {} with url {}", res.getResourceNumber(), res.getUrl());
-
-		Playwright playwright = Playwright.create();
-		res.setPlaywright(playwright);
-
-		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-		res.setBrowser(browser);
+		// Always create a fresh context + page per feature to isolate state, closing prior context if present
+		res.closeContext();
 
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1)
 				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
 				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
-		BrowserContext context = browser.newContext(newContextOptions);
+		BrowserContext context = res.getBrowser().newContext(newContextOptions);
 		res.setContext(context);
 
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
@@ -223,8 +238,15 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 
 	@AfterAll
 	public static void afterAll() throws IOException {
-		logger.info("AFTER ALL - closing all resources");
-		ResourcePool.closeAllResources();
+		logger.info("AFTER ALL - cleaning up current resource context only");
+		// Only close the context (page + context) for this thread's resource. Do NOT
+		// close the browser or Playwright here because multiple workers run in the
+		// same JVM and other workers may still be using their browsers.
+		try {
+			ResourcePool.get().closeContext();
+		} catch (Exception e) {
+			logger.warn("Error closing context in AfterAll: {}", e.getMessage());
+		}
 	}
 
 	private static void logoutAndSave() throws IOException {
@@ -290,12 +312,11 @@ private static void performLoginBasedOnTags(Scenario scenario) {
             }
 		}
 
-		// Close context/browser/playwright for this resource to free system resources
+		// Close context (page+context) for this resource to free feature-level resources; keep browser/playwright open to avoid frequent restarts
 		try {
 			ResourcePool.get().closeContext();
-			ResourcePool.get().closeBrowserAndPlaywright();
 		} catch (Exception e) {
-			logger.warn("Error during resource cleanup for feature {}: {}", feature, e.getMessage());
+			logger.warn("Error during context cleanup for feature {}: {}", feature, e.getMessage());
 		}
 	}
 

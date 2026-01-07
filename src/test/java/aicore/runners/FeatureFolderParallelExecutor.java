@@ -88,24 +88,37 @@ public class FeatureFolderParallelExecutor {
                     }
                 });
 
-        // Submit tasks for each thread with its assigned feature folders
-        List<Callable<Integer>> tasks = new ArrayList<>();;
-        for (Map.Entry<String, List<String>> entry : threadFolders.entrySet()) {
-            String threadName = entry.getKey();
-            List<String> folders = entry.getValue();
+        // Use a shared concurrent queue of folders so idle threads can pick up remaining work dynamically
+        java.util.concurrent.ConcurrentLinkedQueue<String> folderQueue = new java.util.concurrent.ConcurrentLinkedQueue<>(threadFolders.values().stream().flatMap(List::stream).collect(Collectors.toList()));
 
-            // Collect all feature files from assigned folders
-            List<String> features = new ArrayList<>();
-            for (String folder : folders) {
-                features.addAll(listFeaturesUnderFolder(folder));
-            }
+        List<Callable<Integer>> tasks = new ArrayList<>();
+        for (int i = 0; i < threadCount; i++) {
+            final String workerName = "worker-" + (i + 1);
+            tasks.add(() -> {
+                int threadResult = 0;
+                String folder;
+                while ((folder = folderQueue.poll()) != null) {
+                    logger.info("{} picked up folder {}", workerName, folder);
+                    try {
+                        List<String> folderFeatures = listFeaturesUnderFolder(folder);
+                        if (folderFeatures.isEmpty()) {
+                            logger.warn("No features found in folder {} (picked by {})", folder, workerName);
+                            continue;
+                        }
 
-            if (features.isEmpty()) {
-                logger.warn("No features found for thread {} in folders {}", threadName, folders);
-                continue;
-            }
-
-            tasks.add(() -> runCucumber(threadName, features));
+                        int r = runCucumber(workerName + "-" + folder, folderFeatures);
+                        if (r != 0) {
+                            logger.warn("Worker {}: features in folder {} returned non-zero exit code {}", workerName, folder, r);
+                            threadResult = r; // record the non-zero code
+                        }
+                    } catch (Exception e) {
+                        logger.error("Worker {}: error processing folder {}", workerName, folder, e);
+                        threadResult = 1;
+                    }
+                }
+                logger.info("{} finished (no more folders)", workerName);
+                return threadResult;
+            });
         }
 
         List<Future<Integer>> futures;
