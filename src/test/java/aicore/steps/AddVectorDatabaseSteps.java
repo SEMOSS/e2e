@@ -1,11 +1,10 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
@@ -51,6 +50,30 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		vectorPage.clickOnAddVectorButton();
 	}
 
+	@And("User add {string} vectors with details {string} {string} {string} {string}")
+    public void user_add_vectors_with_details(String index, String connectionName, String catalogName,String tag, String modelName) {
+		int modelCount = Integer.parseInt(index);
+		for (int i = 0; i < modelCount; i++) {
+			vectorPage.selectConnections(connectionName);
+			vectorPage.enterVectorCatalogName(catalogName +i+1);
+			vectorPage.enterVectorTag(tag);
+			switch (modelName) {
+			case "TextEmbeddings BAAI-Large-En-V1.5":
+			case "Model":
+			vectorPage.selectModelfromEmbedderDropdown(modelName);
+			break;
+			default:
+			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
+		}
+			vectorPage.clickOnCreateVectorButton();
+			if(i < modelCount -1) {
+			homePage.openMainMenu();
+			homePage.clickOnOpenVector();
+			vectorPage.clickOnAddVectorButton();
+			}
+		}
+	}
+
 	@And("User selects {string} connection")
 	public void user_selects_connection(String connectionName) {
 		vectorPage.selectConnections(connectionName);
@@ -59,6 +82,10 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User enters vector database Catalog name as {string}")
 	public void user_enters_vector_database_catalog_name_as(String catalogName) {
 		vectorPage.enterVectorCatalogName(catalogName + timestamp);
+	}
+	@And("User enters vector tag as {string}")
+	public void user_enters_vector_tag_as(String tag) {
+		vectorPage.enterVectorTag(tag);
 	}
 
 	@And("User selects {string} from Embedder field")

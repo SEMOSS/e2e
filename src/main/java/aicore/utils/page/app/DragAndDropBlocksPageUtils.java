@@ -154,6 +154,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
 	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
+	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
+	private static final String THEME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Theme-Block";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -384,6 +386,12 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Container":
 			blockLocator = page.getByTestId(CONTAINER_SETTING_DATATESTID);
+			break;
+		case "HTML":
+			blockLocator = page.getByTestId(HTML_BLOCK_DATA_TESTID);
+			break;
+		case "Theme Block":
+			blockLocator = page.getByTestId(THEME_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -1037,6 +1045,16 @@ public class DragAndDropBlocksPageUtils {
 	public static void deleteBlockOnPage(Page page, String blockName) {
 		page.locator(BLOCK_SECTION_XPATH.replace("{textName}", blockName)).click();
 		page.locator(DELETE_BLOCK_ON_PAGE_XPATH).click();
+	}
+
+	public static void searchBlockFromBlocksSection(Page page, String blockName) {
+		Locator block = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName));
+		block.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+		block.scrollIntoViewIfNeeded();
+	}
+
+	public static void clickOnBlockOnPage(Page page, String blockName) {
+		page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).click();
 	}
 
 	public static void highlightThePage(Page page, String pageName) {
