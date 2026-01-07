@@ -22,6 +22,67 @@ public class PlaygroundPage {
     public void verifyTextareaPlaceholder(String placeholder) {
     PlaygroundPageUtils.verifyTextareaPlaceholder(page, placeholder);
     }
+    public void clickOnWorkspaceButton() {
+        PlaygroundPageUtils.clickOnWorkspaceButton(page);
+    }
+    public void clickOnCreateNewWorkspaceButton() {
+        PlaygroundPageUtils.clickOnCreateNewWorkspaceButton(page);
+    }
+    public void enterWorkspaceName(String workspaceName) {
+        PlaygroundPageUtils.enterWorkspaceName(page, workspaceName);
+    }
+    public void clickOnNewCreateWorkspaceButton() {
+        PlaygroundPageUtils.clickOnNewCreateWorkspaceButton(page);
+    }
+    public void verifyWorkspaceCreatedWithDescription(String workspaceName, String description) {
+        PlaygroundPageUtils.verifyWorkspaceCreatedWithDescription(page, workspaceName, description);
+    }
+
+    public void selectWorkspaceFromList(String workspaceName) {
+        PlaygroundPageUtils.selectWorkspaceFromList(page, workspaceName);
+    }
+    public void selectWorkspaceChatFromList(String workspaceName) {
+        PlaygroundPageUtils.selectWorkspaceChatFromList(page, workspaceName);
+    }
+    public void verifyWorkspaceSelection(String workspaceName) {
+        PlaygroundPageUtils.verifyWorkspaceSelection(page, workspaceName);
+    }
+
+    public void verifyWorkspaceSelectedInList(String workspaceName) {
+        PlaygroundPageUtils.verifyWorkspaceSelectedInList(page, workspaceName);
+    }
+
+    public void clickOnDeleteWorkspaceButton() {
+        PlaygroundPageUtils.clickOnDeleteWorkspaceButton(page);
+    }
+
+    public void verifyWorkspaceDeleted() {
+        PlaygroundPageUtils.verifyWorkspaceDeleted(page);
+    }
+
+    public void clickOnEditWorkspaceButton() {
+        PlaygroundPageUtils.clickOnEditWorkspaceButton(page);
+    }
+
+    public void enterWorkspaceDescription(String workspaceDescription) {
+        PlaygroundPageUtils.enterWorkspaceDescription(page, workspaceDescription);
+    }
+
+    public void clickOnSaveWorkspaceButton() {
+        PlaygroundPageUtils.clickOnNewCreateWorkspaceButton(page);
+    }
+
+    public void verifyWorkspaceUpdatedWithDescription(String workspaceName, String description) {
+        PlaygroundPageUtils.verifyWorkspaceCreatedWithDescription(page, workspaceName, description);
+    }
+
+    public void searchWorkspace(String workspaceName) {
+        PlaygroundPageUtils.searchWorkspace(page, workspaceName);
+    }
+
+    public void verifyWorkspaceDisplayedInSearchResults(String workspaceName) {
+        PlaygroundPageUtils.verifyWorkspaceDisplayedInSearchResults(page, workspaceName);
+    }
 
     public void enterPromptInTextarea(String prompt) {
         PlaygroundPageUtils.enterPromptInTextarea(page, prompt);
@@ -33,7 +94,13 @@ public class PlaygroundPage {
     public void clickOnMCPDropdown() {
         PlaygroundPageUtils.clickOnMCPDropdown(page);
     }
+    public void clickOnKnowledgeDropdown() {
+        PlaygroundPageUtils.clickOnKnowledgeDropdown(page);
+    }
 
+    public void saveAddedKnowledgeList() {
+        PlaygroundPageUtils.saveAddedKnowledgeList(page);
+    }
     public void saveAddedMCPList() {
         PlaygroundPageUtils.saveAddedMCPList(page);
     }
@@ -42,19 +109,32 @@ public class PlaygroundPage {
         PlaygroundPageUtils.clickOverifyMCPAppVisibleInAvailableTools(page, modelName);
 
     }
+    public void clickVerifyKnowledgeAppVisibleInAvailableTools(String knowledgeName) {
+        PlaygroundPageUtils.clickVerifyKnowledgeVisibleInAvailableTools(page, knowledgeName);
+
+    }
 
     public void verifyAddedMCPAppSelectedList(String modelName) {
         PlaygroundPageUtils.verifyAddedMCPAppSelectedList(page, modelName);
     }
 
+    public void verifyAddedKnowledgeModelKnowledgeSection(String knowledgeName) {
+        PlaygroundPageUtils.verifyAddedKnowledgeModelKnowledgeSection(page, knowledgeName);
+    }
     public void verifyAddedMCPModelMCPSection(String modelName) {
         PlaygroundPageUtils.verifyAddedMCPModelMCPSection(page, modelName);
     }
 
+    public void deleteAddedKnowledgeModelKnowledgeSection(String knowledgeName) {
+        PlaygroundPageUtils.deleteAddedKnowledgeModelKnowledgeSection(page, knowledgeName);
+    }
     public void deleteAddedMCPModelMCPSection(String modelName) {
         PlaygroundPageUtils.deleteAddedMCPModelMCPSection(page, modelName);
     }
 
+    public void verifyKnowledgeRemovedKnowledgeSection(String knowledgeName) {
+        PlaygroundPageUtils.verifyKnowledgeRemovedKnowledgeSection(page, knowledgeName);
+    }
     public void verifyMCPModelRemovedMCPSection(String modelName) {
         PlaygroundPageUtils.verifyMCPModelRemovedMCPSection(page, modelName);
     }
@@ -75,12 +155,29 @@ public class PlaygroundPage {
         PlaygroundPageUtils.verifyModelIsChecked(page, modelName);
     }
 
+    public void verifyKnowledgeIsChecked(String knowledgeName) {
+        PlaygroundPageUtils.verifyKnowledgeIsChecked(page, knowledgeName);
+    }
+
     public void searchModelInSearchbox(String modelName) {
         PlaygroundPageUtils.searchModelInSearchbox(page, modelName);
+    }
+    public void searchKnowledgeInSearchbox(String knowledgeName) {
+        PlaygroundPageUtils.searchKnowledgeInSearchbox(page, knowledgeName);
     }
 
     public void verifyModelVisibleInDropdown(String modelName) {
         PlaygroundPageUtils.verifyModelVisibleInDropdown(page, modelName);
+    }
+
+    public void verifyTemperatureSectionIsDisplayed(String temperature) {
+        PlaygroundPageUtils.verifyTemperatureSectionIsDisplayed(page, temperature);
+    }
+    public void verifyMaxTokenSectionIsDisplayed() {
+        PlaygroundPageUtils.verifyMaxTokenSectionIsDisplayed(page);
+    }
+    public void verifyInstructionsSectionIsDisplayed() {
+        PlaygroundPageUtils.verifyInstructionsSectionIsDisplayed(page);
     }
 
     public void selectModelFromDropdown(String modelName) {
