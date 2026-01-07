@@ -21,9 +21,11 @@ public abstract class CaptureElementUtils {
 	private static final String USE_TEMPLATE_TAB_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
 	private static final String DATATESTID_NAME = "{dataTestIdName}";
 	private static final String DATATESTID_LAYER_NAME = "//*[contains(@data-id, '{layerName}')]/..";
+	private static final String BLOCK_TITLE_NAME = "//*[@title='{blockTitle}']";
 	private static final String BLOCK_SETTING_ELEMENT_XPATH = "//p[text()='{blockName}']/../../../..";
 	private static final String SECTION_XPATH = "//h6[normalize-space()='{sectionName}']/ancestor::div[contains(@class,'MuiGrid-item')]//ul[@role='tree']";
-
+	private static final String BLOCK_SECTION_XPATH = "//div[normalize-space()='{blockSection}']/ancestor::div[contains(@class,'MuiGrid-item')]";
+	
 	public static List<Locator> captureButtonScreenshot(Page page, String buttonName) {
 		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
 		List<Locator> locators = new ArrayList<>();
@@ -193,6 +195,17 @@ public abstract class CaptureElementUtils {
 		}
 		return locators;
 	}
+	public static List<Locator> captureElementThroughTitle(Page page, String blockTitle) {
+		Locator locator = page.locator(BLOCK_TITLE_NAME.replace("{blockTitle}", blockTitle));
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			if (locator.nth(i).isVisible()) {
+				locators.add(locator.nth(i));
+			}
+		}
+		return locators;
+	}
 
 	public static List<Locator> captureBlockSettingElementScreenshot(Page page, String blockName) {
 		Locator locator = page.locator(BLOCK_SETTING_ELEMENT_XPATH.replace("{blockName}", blockName));
@@ -206,6 +219,15 @@ public abstract class CaptureElementUtils {
 
 	public static List<Locator> captureSectionScreenshot(Page page, String layerName) {
 		Locator locator = page.locator(SECTION_XPATH.replace("{sectionName}", layerName));
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			locators.add(locator.nth(i));
+		}
+		return locators;
+	}
+		public static List<Locator> captureBlockSectionScreenshot(Page page, String blockName) {
+		Locator locator = page.locator(BLOCK_SECTION_XPATH.replace("{blockSection}", blockName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {

@@ -8,8 +8,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
@@ -153,6 +155,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
+	private static final String SEARCH_BLOCKS_SECTION_XPATH= "//div[text()='{blockName}']";
+	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
+	private static final String THEME_BLOCK_DATA_TESTID="blockMenuCardContent-card-Theme-Block";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -384,7 +389,13 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 		case "Container":
 			blockLocator = page.getByTestId(CONTAINER_SETTING_DATATESTID);
 			break;
-		default:
+		case "HTML":
+			blockLocator = page.getByTestId(HTML_BLOCK_DATA_TESTID);
+			break;
+		case "Theme Block":
+			blockLocator=page.getByTestId(THEME_BLOCK_DATA_TESTID);
+			break;
+			default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
@@ -1037,4 +1048,21 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 		page.locator(BLOCK_SECTION_XPATH.replace("{textName}", blockName)).click();
 		page.locator(DELETE_BLOCK_ON_PAGE_XPATH).click();
 	}
+	
+	public static void searchBlockFromBlocksSection(Page page, String blockName) {
+		Locator block=page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName));
+		block.waitFor(new Locator.WaitForOptions()
+            .setState(WaitForSelectorState.ATTACHED));
+		block.scrollIntoViewIfNeeded();
+	}
+	public static void clickOnBlockOnPage(Page page, String blockName) {
+		page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).click();
+	}
+	public static void highlightThePage(Page page, String pageName) {
+		Locator selectPage1=page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}",pageName)).first();
+		CommonUtils.moveMouseToCenterWithMargin(page, selectPage1, 50, 30);
+	    page.mouse().down();
+	    page.waitForTimeout(100);
+	    page.mouse().up();
+		}
 }

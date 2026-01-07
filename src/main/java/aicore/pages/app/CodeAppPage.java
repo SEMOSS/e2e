@@ -22,4 +22,65 @@ public class CodeAppPage {
     public void clickOnPublishButton() {
         CodeAppPageUtils.clickOnPublishButton(page);
     }
+    public boolean  userCanSeeFolder(String folderName) {
+		return CodeAppPageUtils.userCanSeeFolder(page, folderName);
+	}
+
+    public void clickOnCreateNewFolderIcon() {
+    	CodeAppPageUtils.clickOnCreateNewFolderIcon(page);
+    } 
+    public void enterFolderName(String folderName) {
+    	CodeAppPageUtils.enterFolderName(page, folderName);
+    } 
+    public void clickOnCreateButton() {
+    	CodeAppPageUtils.clickOnCreateButton(page);
+    }
+    
+    public void clickOnCreateNewFileIcon() {
+    	CodeAppPageUtils.clickOnCreateNewFileIcon(page);
+    }
+    public void enterFileName(String fileName) {
+    	CodeAppPageUtils.enterFileName(page, fileName);
+    }
+    public boolean userCanSeeFile(String fileName) {
+    	return CodeAppPageUtils.userCanSeeFile(page, fileName);
+    }
+
+    public void userSelectTheFolder(String folderName) {
+    	CodeAppPageUtils.userSelectTheFolder(page, folderName);
+    }
+
+    public void userCanSeeFolderUnderParentFolder(String folderName, String parentFolderName) {
+    	CodeAppPageUtils.userCanSeeFolderUnderParentFolder(page, folderName, parentFolderName);
+    }
+
+    public void userCanSeeFileUnderParentFolder(String fileName, String parentFolderName) {
+    	CodeAppPageUtils.userCanSeeFileUnderParentFolder(page, fileName, parentFolderName);
+    }
+
+    public void userSelectTheFile(String fileName) {   
+    	CodeAppPageUtils.userSelectTheFile(page, fileName);
+    }
+    public void userEditFileWithSomeContentAs(String content) {
+    	CodeAppPageUtils.userEditFileWithSomeContentAs(page, content);
+    }
+    public void userSaveTheFile() {
+    	CodeAppPageUtils.userSaveTheFile(page);
+    }
+    public void seeFileTabIsOpenByDefault() {
+    	CodeAppPageUtils.seeFileTabIsOpenByDefault(page);
+    }
+    public boolean isRefreshFilesOptionVisible() {
+    	return CodeAppPageUtils.isRefreshFilesOptionVisible(page);
+    }
+    public void  isRefreshFilesOptionClickable() {
+    	 CodeAppPageUtils.isRefreshFilesOptionClickable(page);
+    }
+    public boolean isRecompileRefactorOptionVisible() {
+    	return CodeAppPageUtils.isRecompileRefactorOptionVisible(page);
+    }
+
+    public void isRecompileRefactorOptionClickable() {
+    	CodeAppPageUtils.isRecompileRefactorOptionClickable(page);
+    }
 }
