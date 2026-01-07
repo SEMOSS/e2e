@@ -151,6 +151,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}";
+	private static final String ADD_NEW_PAGE_ICON_XPATH = "//button/*[@data-testid='AddIcon']";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
@@ -1038,6 +1039,10 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 
 	public static void clickOnTabInLeftPanel(Page page, String tabName) {
 		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();
+	}
+
+	public static void clickOnAddNewPageIcon(Page page) {
+		page.locator(ADD_NEW_PAGE_ICON_XPATH).click();
 	}
 
 	public static void clickOnBlockSettingsOption(Page page) {

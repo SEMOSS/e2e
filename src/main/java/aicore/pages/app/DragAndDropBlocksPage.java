@@ -296,6 +296,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnTabInLeftPanel(page, tabName);
 	}
 
+	public void clickOnAddNewPageIcon() {
+		DragAndDropBlocksPageUtils.clickOnAddNewPageIcon(page);
+	}
+
 	public void clickOnBlockSettingsOption() {
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
 	}

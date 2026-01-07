@@ -63,6 +63,8 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureElementThroughtDataId(page, elementName);
 		case "blocktitle":
 			return CaptureElementUtils.captureElementThroughTitle(page, elementName);
+		case "text":
+			return CaptureElementUtils.captureElementTextScreenshot(page, elementName);
 		case "blocksection":
 			return CaptureElementUtils.captureBlockSectionScreenshot(page, elementName);
 		default:
