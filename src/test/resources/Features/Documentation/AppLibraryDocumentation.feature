@@ -143,3 +143,20 @@ Feature: App Library Documentation
     And User clicks on Create New App button
     And User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Documentation for Create App Page
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User captures screenshot for "AB14"
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Documentation for Create App Page
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Construct an agent"
+    And User captures screenshot for "AB15"
