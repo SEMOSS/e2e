@@ -312,5 +312,4 @@ public class DragAndDropBlocksPage {
 	public void highlightThePage(String pageName) {
 		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
-
 }
