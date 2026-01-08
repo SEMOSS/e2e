@@ -825,11 +825,6 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.updateBarStyle(barStyleValue);
 	}
 
-	@And("User click on the {string} tab in the left panel")
-	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
-		blocksPage.clickOnTabInLeftPanel(tabName);
-	}
-
 	@And("User clicks on Block Settings option")
 	public void user_clicks_on_block_settings_option() {
 		blocksPage.clickOnBlockSettingsOption();
@@ -839,10 +834,12 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_delete_on_page(String blockName) {
 		blocksPage.deleteBlockOnPage(blockName);
 	}
+
 	@And("User search the {string} block from blocks section")
 	public void user_search_the_block_from_blocks_section(String blockName) {
 		blocksPage.searchBlockFromBlocksSection(blockName);
 	}
+
 	@And("User clicks on the {string} block on page")
 	public void user_clicks_on_the_block_on_page(String blockName) {
 		blocksPage.clickOnBlockOnPage(blockName);
