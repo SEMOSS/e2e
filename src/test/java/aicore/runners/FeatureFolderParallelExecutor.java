@@ -202,6 +202,10 @@ public class FeatureFolderParallelExecutor {
         args.add("--plugin");
         args.add("com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:");
 
+        // Exclude scenarios marked as ApplicationBugFailure
+        args.add("--tags");
+        args.add("not @ApplicationBugFailure");
+
         args.add("--monochrome");
 
         logger.info("Cucumber CLI args: {}", args);

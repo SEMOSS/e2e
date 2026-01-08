@@ -281,13 +281,13 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 			page.context().tracing().stop(so);
 		}
 
-		// context.close();
+		context.close();
 		Path og = null;
 		if (GenericSetupUtils.useVideo()) {
 			og = page.video().path();
 		}
 
-		// page.close();
+		page.close();
 
 		if (GenericSetupUtils.useVideo()) {
             logger.info("saving video");
