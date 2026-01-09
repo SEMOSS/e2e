@@ -84,7 +84,7 @@ public class CreateCodeAppSteps {
 		codeAppPage.userCanSeeFileUnderParentFolder(fileName, parentFolderName);
 	}
 
-	@And("User click on the Created {string} file")
+	@And("User click on the created {string} file")
 	public void user_Click_On_The_Created_File(String fileName) {
 		codeAppPage.userCanSeeFile(fileName);
 		codeAppPage.userSelectTheFile(fileName);
@@ -132,7 +132,7 @@ public class CreateCodeAppSteps {
 		codeAppPage.clickOnShareAppLink();
 	}
 
-	@And("User open the New Tab")
+	@And("User open the new tab")
 	public void user_open_the_new_tab() {
 		codeAppPage.openNewTab();
 	}
@@ -147,7 +147,7 @@ public class CreateCodeAppSteps {
 		codeAppPage.pasteTheUrlOnNewTab();
 	}
 
-	@And("User able to see the {string} on the new tab page")
+	@And("User able to see the {string} title on the new tab page")
 	public void user_able_to_see_the_on_the_new_tab_page(String appName) {
 		boolean isAppVisible = codeAppPage.isAppVisibleOnNewTab(appName);
 		Assertions.assertTrue(isAppVisible, "The app is not visible on the new tab page");
@@ -156,6 +156,17 @@ public class CreateCodeAppSteps {
 	@And("User move to main page")
 	public void userMoveToMainPage() {
 		codeAppPage.moveToMainPage();
+	}
+
+	@And("User edit file for change title as {string}")
+	public void user_Edit_File_For_Change_Title_As(String content) {
+		codeAppPage.userEditFileForTitleAsUpdatedContent(content);
+	}
+
+	@And("User able to see the {string} title on the page")
+	public void user_able_to_see_the_title_on_the_page(String appName) {
+		boolean isAppVisible = codeAppPage.isAppTitleVisible(appName);
+		Assertions.assertTrue(isAppVisible, "The app Title is not visible on the page");
 	}
 
 }

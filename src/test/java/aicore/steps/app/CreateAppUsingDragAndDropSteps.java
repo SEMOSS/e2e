@@ -839,10 +839,12 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_delete_on_page(String blockName) {
 		blocksPage.deleteBlockOnPage(blockName);
 	}
+
 	@And("User search the {string} block from blocks section")
 	public void user_search_the_block_from_blocks_section(String blockName) {
 		blocksPage.searchBlockFromBlocksSection(blockName);
 	}
+
 	@And("User clicks on the {string} block on page")
 	public void user_clicks_on_the_block_on_page(String blockName) {
 		blocksPage.clickOnBlockOnPage(blockName);
@@ -851,5 +853,10 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User highlight the {string} page")
 	public void user_highlight_the_page(String pageName) {
 		blocksPage.highlightThePage(pageName);
+	}
+
+	@And("User click on {string} from breadcrumb link")
+	public void user_Click_On_The_Breadcrumb_Link(String appName) {
+		appCreatePopup.userClickOnBreadcrumbLink(appName);
 	}
 }
