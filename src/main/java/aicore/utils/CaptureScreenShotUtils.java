@@ -27,6 +27,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.Clip;
+import com.microsoft.playwright.options.LoadState;
 
 import aicore.framework.ConfigUtils;
 
@@ -213,5 +214,14 @@ public class CaptureScreenShotUtils {
 		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true)
 				.setClip(new Clip(0, 0, 1920, 1080)));
 		page.setViewportSize(1280, 780);
+	}
+
+	public static void captureAppScreensScreenshot(Page page, Path path) throws IOException {
+		int contentHeight = ((Number) page.evaluate("() => document.documentElement.scrollHeight")).intValue();
+		int width = 1920;
+		page.setViewportSize(width, contentHeight);
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForTimeout(500);
+		page.screenshot(new Page.ScreenshotOptions().setPath(path));
 	}
 }
