@@ -27,3 +27,30 @@ Feature: Create Agent builder app documentation
     And User clicks on Next button
     And User clicks on 'Prompt'
     And User captures screenshot for "SettingPrompt"
+
+  Scenario: Agent builder app Setting Prompt screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User is on Home page
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Construct an agent"
+    And User enters name as 'new demo'
+    And User selects LLM as 'Model'
+    And User fills the prompt as 'Suppose you are a travel agent. The user will provide the destination number Of days of travel and their Travel place preference (slow or fast). Prepare an itinerary for them.'
+    And User clicks on Next button
+    And User selects 'destination' to set input in prompt
+    And User selects 'number Of days' to set input in prompt
+    And User selects 'Travel place' to set input in prompt
+    And User captures screenshot for 'AB16'
+    When User clicks on Next button
+    And User selects InputType as 'User Text' for 'number Of days'
+    And User selects InputType as 'User Text' for 'Travel place'
+    And User selects InputType as 'User Text' for 'destination'
+    And User captures screenshot for 'AB17'
+    When User clicks on Next button
+    And User captures screenshot for 'AB18'
+    When User clicks on Preview button
+    And User captures screenshot for 'AB19'
+    And User clicks on Create App button
+    And User captures screenshot for 'AB20'
