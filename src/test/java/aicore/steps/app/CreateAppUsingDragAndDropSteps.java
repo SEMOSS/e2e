@@ -825,15 +825,6 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.updateBarStyle(barStyleValue);
 	}
 
-	@And("User click on the Add new page icon to add a new page")
-	public void user_click_on_the_add_new_page_icon_to_add_a_new_page() {
-		blocksPage.clickOnAddNewPageIcon();
-	}
-	@And("User click on the {string} tab in the left panel")
-	public void user_click_on_the_tab_in_the_left_panel(String tabName) {
-		blocksPage.clickOnTabInLeftPanel(tabName);
-	}
-
 	@And("User clicks on Block Settings option")
 	public void user_clicks_on_block_settings_option() {
 		blocksPage.clickOnBlockSettingsOption();
