@@ -293,14 +293,6 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.updateBarStyle(page, barStyleValue);
 	}
 
-	public void clickOnTabInLeftPanel(String tabName) {
-		DragAndDropBlocksPageUtils.clickOnTabInLeftPanel(page, tabName);
-	}
-
-	public void clickOnAddNewPageIcon() {
-		DragAndDropBlocksPageUtils.clickOnAddNewPageIcon(page);
-	}
-
 	public void clickOnBlockSettingsOption() {
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
 	}
