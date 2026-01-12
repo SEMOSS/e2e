@@ -22,6 +22,7 @@ public abstract class CaptureElementUtils {
 	private static final String DATATESTID_NAME = "{dataTestIdName}";
 	private static final String DATATESTID_LAYER_NAME = "//*[contains(@data-id, '{layerName}')]/..";
 	private static final String BLOCK_TITLE_NAME = "//*[@title='{blockTitle}']";
+	private static final String PROMPT_CONTEXT_NAME = "(//*[text()='{elementName}']//../..)[1]";
 	private static final String BLOCK_SETTING_ELEMENT_XPATH = "//p[text()='{blockName}']/../../../..";
 	private static final String SECTION_XPATH = "//h6[normalize-space()='{sectionName}']/ancestor::div[contains(@class,'MuiGrid-item')]//ul[@role='tree']";
 	private static final String BLOCK_SECTION_XPATH = "//div[normalize-space()='{blockSection}']/ancestor::div[contains(@class,'MuiGrid-item')]";
@@ -228,6 +229,15 @@ public abstract class CaptureElementUtils {
 	}
 		public static List<Locator> captureBlockSectionScreenshot(Page page, String blockName) {
 		Locator locator = page.locator(BLOCK_SECTION_XPATH.replace("{blockSection}", blockName));
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			locators.add(locator.nth(i));
+		}
+		return locators;
+	}
+		public static List<Locator> capturePromptContextScreenshot(Page page, String blockName) {
+		Locator locator = page.locator(PROMPT_CONTEXT_NAME.replace("{elementName}", blockName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
