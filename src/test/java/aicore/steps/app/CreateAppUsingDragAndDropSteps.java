@@ -849,4 +849,9 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_highlight_the_page(String pageName) {
 		blocksPage.highlightThePage(pageName);
 	}
+
+	@And("User click on {string} from breadcrumb link")
+	public void user_Click_On_The_Breadcrumb_Link(String appName) {
+		appCreatePopup.userClickOnBreadcrumbLink(appName);
+	}
 }
