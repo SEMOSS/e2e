@@ -442,11 +442,6 @@ public class CatlogAccessStep {
 		}
 	}
 
-	@And("And User click on Discoverable {string} tab ")
-	public void user_click_on_discoverable_tab(String catalogType) {
-		catlogpermission.clickOnDiscoverableTab(catalogType);
-	}
-
 	@And("User click on Pending Request")
 	public void user_click_on_pending_request_for_catalog() {
 		catlogpermission.clickOnPendingRequestTab();

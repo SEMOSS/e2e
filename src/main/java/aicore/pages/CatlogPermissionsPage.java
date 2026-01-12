@@ -125,10 +125,6 @@ public class CatlogPermissionsPage {
 		CatlogAccessPageUtility.searchUser(page, role, useDocker);
 	}
 
-	public void clickOnDiscoverableTab(String catalogType) {
-		CatlogAccessPageUtility.clickOnDiscoverableTab(page, catalogType);
-	}
-
 	public void clickOnPendingRequestTab() {
 		CatlogAccessPageUtility.clickOnPendingRequestTab(page);
 

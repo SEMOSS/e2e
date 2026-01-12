@@ -42,10 +42,9 @@ public class CatlogAccessPageUtility {
 	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
 	private static final String CATALOG_ID_XPATH = "//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p";
-	private static final String DISCOVERABLE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='{catalogType}']";
-	private static final String PENDING_REQUEST_ACCEPT_XPATH="//*[name()='svg'][@data-testid='CheckIcon']";
-	private static final String PENDING_REQUEST_REJECT_XPATH="//*[name()='svg'][@data-testid='CloseIcon']";
-	
+	private static final String PENDING_REQUEST_ACCEPT_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
+	private static final String PENDING_REQUEST_REJECT_XPATH = "//*[name()='svg'][@data-testid='CloseIcon']";
+
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
 	}
@@ -217,15 +216,9 @@ public class CatlogAccessPageUtility {
 			logger.info("User not clickable or not found: " + username);
 		}
 	}
-	
-	public static void clickOnDiscoverableTab(Page page, String catalogType) {
-		Locator tabLocator = page.locator(DISCOVERABLE_TAB_XPATH.replace("{catalogType}", catalogType));
-		AICorePageUtils.waitFor(tabLocator);
-		tabLocator.click();
-	}
 
 	public static void clickOnPendingRequestTab(Page page) {
-	 page.getByTestId("pending-requests-count").click();
+		page.getByTestId("pending-requests-count").click();
 	}
 
 	public static void acceptPendingRequest(Page page) {
