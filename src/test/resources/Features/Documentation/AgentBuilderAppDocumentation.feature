@@ -54,3 +54,13 @@ Feature: Create Agent builder app documentation
     And User captures screenshot for 'AB19'
     And User clicks on Create App button
     And User captures screenshot for 'AB20'
+
+    Scenario: Agent builder Prompt context highlight screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User is on Home page
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Construct an agent"
+    And User captures a "promptcontext" and highlights the "Prompt Context" with name "AB3"
+    And User completes screenshot capture and triggers comparison for 'Prompt context'
