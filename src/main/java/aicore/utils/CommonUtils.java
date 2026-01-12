@@ -59,6 +59,7 @@ public class CommonUtils {
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
+	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
@@ -341,12 +342,20 @@ public class CommonUtils {
 			page.getByTestId(THREE_DOT_ICON_DATATESTID).click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
 			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
-			boolean deleted = page.locator(APP_DELETE_TOAST_MESSAGE_XPATH).isVisible();
-			return deleted;
+			Locator toasterMessage = page.getByTestId("notification-success-alert");
+			if (toasterMessage.isVisible()) {
+				page.locator(TOAST_CLOSE_XPATH).click();
+				return true;
+			}
+			return false;
 		} catch (Exception e) {
 			logger.warn("App deletion failed due to an exception", e);
 			return false;
 		}
+	}
+
+	public static void closeToastMessage(Page page) {
+
 	}
 
 	public static String getCurrentUtcTime() {

@@ -119,4 +119,12 @@ public class CodeAppPage {
 		CodeAppPageUtils.moveToMainPage(page);
 	}
 
+	public void userEditFileForTitleAsUpdatedContent(String content) {
+		CodeAppPageUtils.userEditFileForTitleAsUpdatedContent(page, content);
+	}
+
+	public boolean isAppTitleVisible(String appName) {
+		return CodeAppPageUtils.isAppTitleVisible(page, appName);
+	}
+
 }
