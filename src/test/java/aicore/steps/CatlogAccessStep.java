@@ -421,7 +421,7 @@ public class CatlogAccessStep {
 		catlogpermission.searchUserBasedOnRole(role, GenericSetupUtils.useDocker());
 	}
 
-	@And("User Make the {string} as {string}")
+	@And("User make the {string} as {string}")
 	public void user_make_the_catalog_as(String catalogType, String option) {
 		if (option.equalsIgnoreCase("Discoverable")) {
 			catlogpermission.setToggleStateForNonDiscovrable();
@@ -462,5 +462,5 @@ public class CatlogAccessStep {
 			Assertions.fail("Invalid action: " + action);
 		}
 	}
-	
+
 }
