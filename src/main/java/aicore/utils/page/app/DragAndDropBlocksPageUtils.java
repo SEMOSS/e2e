@@ -680,7 +680,7 @@ public class DragAndDropBlocksPageUtils {
 
 	public static int waitForChartCount(Page page, int expectedCount) {
 		Locator charts = page.locator(CHART_COUNT_ON_PAGE_XPATH);
-		int retries = 20; // retry for 10 seconds (20 * 500ms)
+		int retries = 20;
 		for (int i = 0; i < retries; i++) {
 			int currentCount = charts.count();
 			if (currentCount == expectedCount) {
