@@ -38,10 +38,28 @@ public class LayersPage {
 	public void mouseHoverOnLayer(String blockName) {
 		LayersPageUtils.mouseHoverOnLayer(page, blockName);
 	}
+
 	public void reorderLayerPosition(String sourceLayerName, String position, String targetLayerName) {
 		LayersPageUtils.reorderLayerPosition(page, sourceLayerName, position, targetLayerName);
 	}
+
 	public boolean verifyLayerPosition(String reorderedLayer, String position, String baseLayer) {
 		return LayersPageUtils.verifyLayerPosition(page, reorderedLayer, position, baseLayer);
+	}
+
+	public void deleteLayer(String layerName) {
+		LayersPageUtils.deleteLayer(page, layerName);
+	}
+
+	public void duplicateLayer(String layerName) {
+		LayersPageUtils.duplicateLayer(page, layerName);
+	}
+
+	public boolean isLayerDeleted(String layerName) {
+		return LayersPageUtils.isLayerDeleted(page, layerName);
+	}
+
+	public boolean isLayerDuplicated(String layerName) {
+		return LayersPageUtils.isLayerDuplicated(page, layerName);
 	}
 }

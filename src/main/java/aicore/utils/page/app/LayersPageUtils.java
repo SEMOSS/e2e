@@ -24,6 +24,7 @@ public class LayersPageUtils {
 	private static final String LAYER_BLOCK_ABOVE_XPATH = "//div[contains(@data-id,'{baseLayer}')]/preceding-sibling::div[contains(@data-id,'{reorderedLayer}')]";
 	private static final String LAYER_BLOCK_BELOW_XPATH = "//div[contains(@data-id,'{baseLayer}')]/following-sibling::div[contains(@data-id,'{reorderedLayer}')]";
 	private static final String CONTAINER_EXPAND_ARROW_DATA_TESTID = "ChevronRightIcon";
+	private static final String LAYER_MORE_VERT_ICON_XPATH = "//div[contains(@data-id,'link')]//button";
 
 	public static void clickOnTabInLeftPanel(Page page, String tabName) {
 		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();
@@ -119,5 +120,27 @@ public class LayersPageUtils {
 		};
 		AICorePageUtils.waitFor(blockLocator);
 		return blockLocator.isVisible();
+	}
+
+	public static void deleteLayer(Page page, String layerName) {
+		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
+				.first();
+		moreVertIcon.click();
+		page.locator("//li[@value='delete']").click();
+	}
+
+	public static void duplicateLayer(Page page, String layerName) {
+		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
+				.first();
+		moreVertIcon.click();
+		page.locator("//li[@value='duplicate']").click();
+	}
+
+	public static boolean isLayerDeleted(Page page, String layerName) {
+		return page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase())).first().isVisible();
+	}
+
+	public static boolean isLayerDuplicated(Page page, String layerName) {
+		return page.locator(LAYER_BLOCK_XPATH.replace("{layerName}", layerName.toLowerCase())).count() > 1;
 	}
 }
