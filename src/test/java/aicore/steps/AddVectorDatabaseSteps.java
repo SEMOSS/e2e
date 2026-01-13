@@ -90,11 +90,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User selects {string} from Embedder field")
 	public void user_selects_from_embedder_field(String modelName) {
-//		if (modelName.equals("TextEmbeddings BAAI-Large-En-V1.5")) {
-//			vectorPage.selectModelfromEmbedderDropdown(modelName);
-//		} else {
-//			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
-//		}
 		switch (modelName) {
 		case "TextEmbeddings BAAI-Large-En-V1.5":
 		case "Model":

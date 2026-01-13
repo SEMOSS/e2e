@@ -35,8 +35,8 @@ Feature: Code app files
     And User clicks on Create New File icon
     When User enter the file name as 'TestFile'
     And User click on Create button
-    Then User can see the 'TestFile' file in the Files section
-    And User click on the Created 'TestFile' file
+    Then User can see the 'TestFile.txt' file in the Files section
+    And User click on the created 'TestFile.txt' file
     And User Edit File with some content as 'dummydata'
     And User Save the file
 
@@ -67,3 +67,57 @@ Feature: Code app files
     When The Recompile Refactor option should be visible
     Then User click on the  Recompile Refactor option
     And User sees success toast message 'Successfully recompiled reactors. Remember to publish changes.'
+
+  Scenario: Publish code app and verify access using shared URL
+    Given User clicks on the file icon in the left panel
+    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    And User selects the unzip checkbox
+    Then User clicks on 'Upload' button to create catalog
+    And User can see the 'py' folder in the Files section
+    And User can see the 'mcp' folder in the Files section
+    And User clicks on the publish icon to publish the code app
+    And User sees success toast message 'Successfully published'
+    And User click on Share App link
+    And User click on Copy button for Url
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User open the new tab
+    And User paste the URl on new tab
+    And User able to see the 'Get Stock' title on the new tab page
+    And User move to main page
+
+  Scenario: Edit the uploaded file in code app and verify changes in shared url link
+    Given User clicks on the file icon in the left panel
+    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    And User selects the unzip checkbox
+    Then User clicks on 'Upload' button to create catalog
+    And User can see the 'py' folder in the Files section
+    And User can see the 'mcp' folder in the Files section
+    And User can see the 'index.html' file under 'portals' in the Files section
+    And User click on the created 'index.html' file
+    And User edit file for change title as 'Get New Stock Updated'
+    And User Save the file
+    And User clicks on the publish icon to publish the code app
+    And User sees success toast message 'Successfully published'
+    And User click on Share App link
+    And User click on Copy button for Url
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User open the new tab
+    And User paste the URl on new tab
+    And User able to see the 'Get New Stock Updated' title on the new tab page
+    And User move to main page
+
+  Scenario: Edit the uploaded file in code app and verify changes in code app preview
+    Given User clicks on the file icon in the left panel
+    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    And User selects the unzip checkbox
+    Then User clicks on 'Upload' button to create catalog
+    And User can see the 'py' folder in the Files section
+    And User can see the 'mcp' folder in the Files section
+    And User can see the 'index.html' file under 'portals' in the Files section
+    And User click on the created 'index.html' file
+    And User edit file for change title as 'Get New Stock Updated'
+    And User Save the file
+    And User clicks on the publish icon to publish the code app
+    And User sees success toast message 'Successfully published'
+    And User click on 'Code app' from breadcrumb link
+    And User able to see the 'Get New Stock Updated' title on the page
