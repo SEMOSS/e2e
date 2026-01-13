@@ -40,6 +40,9 @@ public class Resource {
 
     private String timestamp = null;
 
+    // Millis timestamp when resource (feature) started. Used to find artifacts created during the feature run.
+    private volatile long timestampMillis = 0L;
+
     private boolean failed = false;
 
     public Resource(String url, int resourceNumber) {
@@ -196,7 +199,11 @@ public class Resource {
 
     public void resetTimestamp() {
         this.timestamp = CommonUtils.getTimeStampName();
+        this.timestampMillis = System.currentTimeMillis();
+    }
 
+    public long getTimestampMillis() {
+        return this.timestampMillis;
     }
 
     public void setFailed(boolean failed) {

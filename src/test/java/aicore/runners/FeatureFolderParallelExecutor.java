@@ -60,17 +60,20 @@ public class FeatureFolderParallelExecutor {
         int threadCount = aicore.base.RunInfo.getParallelism();
         logger.info("Using {} threads for parallel execution", threadCount);
         
-        // Get all feature folders dynamically
-        List<String> allFeatureFolders = Files.walk(Paths.get(FEATURE_ROOT), 1)
-                .filter(path -> Files.isDirectory(path) && !path.equals(Paths.get(FEATURE_ROOT)))
-                .map(path -> path.getFileName().toString())
-                .sorted()  // Sort folders for consistent distribution
+        // Collect all feature files dynamically (per-feature granularity for better load balancing)
+        List<String> allFeaturePaths = Files.walk(Paths.get(FEATURE_ROOT))
+                .filter(p -> p.toString().endsWith(".feature"))
+                .map(p -> p.toAbsolutePath().toString())
+                .sorted()
                 .collect(Collectors.toList());
-                
-        logger.info("Found feature folders: {}", allFeatureFolders);
-        
-        // Distribute folders across threads evenly
-        Map<String, List<String>> threadFolders = distributeFeatureFolders(allFeatureFolders, threadCount);
+
+        logger.info("Found feature files: {}", allFeaturePaths.size());
+
+        // If none found, warn and exit
+        if (allFeaturePaths.isEmpty()) {
+            logger.warn("No feature files found under {}", FEATURE_ROOT);
+            return 0;
+        }
 
 
         // Create and clean extent report directory
@@ -88,35 +91,37 @@ public class FeatureFolderParallelExecutor {
                     }
                 });
 
-        // Use a shared concurrent queue of folders so idle threads can pick up remaining work dynamically
-        java.util.concurrent.ConcurrentLinkedQueue<String> folderQueue = new java.util.concurrent.ConcurrentLinkedQueue<>(threadFolders.values().stream().flatMap(List::stream).collect(Collectors.toList()));
+        // Use a shared concurrent queue of feature paths so idle threads can pick up remaining work dynamically
+        java.util.concurrent.ConcurrentLinkedQueue<String> featureQueue = new java.util.concurrent.ConcurrentLinkedQueue<>(allFeaturePaths);
 
         List<Callable<Integer>> tasks = new ArrayList<>();
         for (int i = 0; i < threadCount; i++) {
             final String workerName = "worker-" + (i + 1);
             tasks.add(() -> {
+                long startMillis = System.currentTimeMillis();
                 int threadResult = 0;
-                String folder;
-                while ((folder = folderQueue.poll()) != null) {
-                    logger.info("{} picked up folder {}", workerName, folder);
+                int processedCount = 0;
+                String featurePath;
+                while ((featurePath = featureQueue.poll()) != null) {
+                    logger.info("{} picked up feature {}", workerName, featurePath);
                     try {
-                        List<String> folderFeatures = listFeaturesUnderFolder(folder);
-                        if (folderFeatures.isEmpty()) {
-                            logger.warn("No features found in folder {} (picked by {})", folder, workerName);
-                            continue;
-                        }
-
-                        int r = runCucumber(workerName + "-" + folder, folderFeatures);
+                        int r = runCucumber(workerName + "-" + Paths.get(featurePath).getFileName().toString(), Collections.singletonList(featurePath));
+                        processedCount++;
                         if (r != 0) {
-                            logger.warn("Worker {}: features in folder {} returned non-zero exit code {}", workerName, folder, r);
+                            logger.warn("Worker {}: feature {} returned non-zero exit code {}", workerName, featurePath, r);
                             threadResult = r; // record the non-zero code
                         }
                     } catch (Exception e) {
-                        logger.error("Worker {}: error processing folder {}", workerName, folder, e);
+                        logger.error("Worker {}: error processing feature {}", workerName, featurePath, e);
                         threadResult = 1;
                     }
                 }
-                logger.info("{} finished (no more folders)", workerName);
+                long elapsed = System.currentTimeMillis() - startMillis;
+                if (processedCount > 0) {
+                    logger.info("{} finished (no more features). Processed {} features in {} ms (avg {} ms/feature)", workerName, processedCount, elapsed, elapsed / processedCount);
+                } else {
+                    logger.info("{} finished (no more features). Processed 0 features in {} ms", workerName, elapsed);
+                }
                 return threadResult;
             });
         }
