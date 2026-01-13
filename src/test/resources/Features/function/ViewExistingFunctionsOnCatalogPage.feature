@@ -30,7 +30,7 @@ Feature: View existing functions on Function Catalog Page
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
 
-  @DeleteTestCatalog @Regression @ApplicationBugFailure
+  @DeleteTestCatalog @Regression 
   Scenario: view and validate filter functionality - Discoverable Functions
     Given User opens Main Menu
     When User clicks on Open Function

@@ -65,6 +65,8 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureElementThroughTitle(page, elementName);
 		case "blocksection":
 			return CaptureElementUtils.captureBlockSectionScreenshot(page, elementName);
+		case "promptcontext":
+			return CaptureElementUtils.capturePromptContextScreenshot(page, elementName);
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}
@@ -78,6 +80,11 @@ public class CaptureScreenShotPage {
 	public void captureFormScreenshot(String formName, String folderName) throws IOException {
 		Path path = Paths.get(folderName, formName + ".png");
 		CaptureScreenShotUtils.captureFormScreenshot(page, path);
+	}
+
+	public void captureAppScreensScreenshot(String formName, String folderName) throws IOException {
+		Path path = Paths.get(folderName, formName + ".png");
+		CaptureScreenShotUtils.captureAppScreensScreenshot(page, path);
 	}
 
 	public void compareAndStoreResultsIfReady(String catalogName) throws IOException, Exception {

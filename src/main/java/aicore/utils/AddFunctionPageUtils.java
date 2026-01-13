@@ -311,4 +311,8 @@ public class AddFunctionPageUtils {
 		}
 	}
 
+	public static void closeToastMessage(Page page) {
+		AICorePageUtils.closeToastMessage(page);
+	}
+
 }

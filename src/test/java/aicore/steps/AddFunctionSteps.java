@@ -163,6 +163,7 @@ public class AddFunctionSteps {
 	public void user_sees_success_toast_message(String toastMessage) {
 		String actualMessage = addFunctionToCatalogPage.verifySuccessToastMessage();
 		Assertions.assertEquals(toastMessage, actualMessage, "catalog is not created successfully");
+		addFunctionToCatalogPage.closeToastMessage();
 	}
 
 	@Then("User sees the function name {string} in the function catalog")

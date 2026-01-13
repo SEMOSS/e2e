@@ -64,4 +64,8 @@ public class CreateAppPopupPage {
 	public void deleteCreatedApps() {
 		CreateAppPopupUtils.deleteCreatedApps(page);
 	}
+
+	public void userClickOnBreadcrumbLink(String appName) {
+		CreateAppPopupUtils.userClickOnBreadcrumbLink(page, appName, timestamp);
+	}
 }

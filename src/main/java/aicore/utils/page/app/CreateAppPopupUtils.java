@@ -21,6 +21,7 @@ public class CreateAppPopupUtils {
 	private static final String SELECT_APP_XPATH = "//span[text()='{Select_App}']";
 	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//div";
 	public static List<String> createdAppNames = new ArrayList<>();
+	private static final String BREADCRUMB_LINK_XPATH = "//a//div[text()='{appName}']";
 
 	public static void clickOnGetStartedButton(Page page, String appType) {
 		if (appType.toLowerCase().contains("agent")) {
@@ -84,7 +85,8 @@ public class CreateAppPopupUtils {
 		page.getByTestId("ClearIcon").nth(1).click(new Locator.ClickOptions().setForce(true));
 	}
 
-	public static void createMultipleApps(Page page,String appType, String appName, String appDescription, String appTags) {
+	public static void createMultipleApps(Page page, String appType, String appName, String appDescription,
+			String appTags) {
 		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenAppLibrary(page);
 		Locator createNewAppBtn = page.getByTestId("appCatalogPage-create-new-app-btn");
@@ -103,5 +105,9 @@ public class CreateAppPopupUtils {
 				CommonUtils.navigateAndDeleteApp(page, appName);
 			}
 		}
+	}
+
+	public static void userClickOnBreadcrumbLink(Page page, String appName, String timestamp) {
+		page.locator(BREADCRUMB_LINK_XPATH.replace("{appName}", appName + " " + timestamp)).first().click();
 	}
 }

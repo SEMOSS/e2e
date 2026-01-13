@@ -161,4 +161,7 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	public void deleteCatalog(String catalog, String catalogName) {
 		AddFunctionPageUtils.deleteCatalog(page, catalog, catalogName);
 	}
+	public void closeToastMessage() {
+		AddFunctionPageUtils.closeToastMessage(page);
+	}
 }
