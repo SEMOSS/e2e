@@ -41,4 +41,23 @@ public class DragAndDropAppLayersSteps {
 	public void user_clicks_on_in_the_left_pane(String pageName) {
 		layerPage.clickOnPageInLeftPane(pageName);
 	}
+
+	@When("User drags the {string} block and drops it {string} the {string} block")
+	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position,
+			String containerName) {
+		layerPage.mouseHoverOnLayer(blockName);
+		layerPage.layerDropPosition(containerName, position);
+	}
+
+	@When("User moves the {string} block {string} the {string} block")
+	public void user_moves_the_block_the_block(String sourceLayerName, String position, String targetLayerName) {
+		layerPage.reorderLayerPosition(sourceLayerName, position, targetLayerName);
+	}
+
+	@Then("User should see {string} block appear {string} the {string} block on the page")
+	public void user_should_see_block_appear_the_block_on_the_page(String reorderedLayer, String position, String baseLayer) {
+		boolean isLayerPositionCorrect = layerPage.verifyLayerPosition(reorderedLayer, position, baseLayer);
+		Assertions.assertTrue(isLayerPositionCorrect, "Expected layer position is not correct for " + reorderedLayer);
+	}
+
 }
