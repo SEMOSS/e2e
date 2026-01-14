@@ -1,10 +1,11 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
@@ -51,25 +52,26 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	}
 
 	@And("User add {string} vectors with details {string} {string} {string} {string}")
-    public void user_add_vectors_with_details(String index, String connectionName, String catalogName,String tag, String modelName) {
+	public void user_add_vectors_with_details(String index, String connectionName, String catalogName, String tag,
+			String modelName) {
 		int modelCount = Integer.parseInt(index);
 		for (int i = 0; i < modelCount; i++) {
 			vectorPage.selectConnections(connectionName);
-			vectorPage.enterVectorCatalogName(catalogName +i+1);
+			vectorPage.enterVectorCatalogName(catalogName + i + 1);
 			vectorPage.enterVectorTag(tag);
 			switch (modelName) {
 			case "TextEmbeddings BAAI-Large-En-V1.5":
 			case "Model":
-			vectorPage.selectModelfromEmbedderDropdown(modelName);
-			break;
+				vectorPage.selectModelfromEmbedderDropdown(modelName);
+				break;
 			default:
-			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
-		}
+				vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
+			}
 			vectorPage.clickOnCreateVectorButton();
-			if(i < modelCount -1) {
-			homePage.openMainMenu();
-			homePage.clickOnOpenVector();
-			vectorPage.clickOnAddVectorButton();
+			if (i < modelCount - 1) {
+				homePage.openMainMenu();
+				homePage.clickOnOpenVector();
+				vectorPage.clickOnAddVectorButton();
 			}
 		}
 	}
@@ -83,6 +85,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_enters_vector_database_catalog_name_as(String catalogName) {
 		vectorPage.enterVectorCatalogName(catalogName + timestamp);
 	}
+
 	@And("User enters vector tag as {string}")
 	public void user_enters_vector_tag_as(String tag) {
 		vectorPage.enterVectorTag(tag);
@@ -290,12 +293,13 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		validateSearchBar(vectorPage);
 	}
 
-	@And("User should see the following vector options with icons on the page")
-	public void user_should_see_the_following_vector_options_with_icons_on_the_page(DataTable dataTable) {
+	@Then("User should see the following {string} options with icons on the Connect to Vector page")
+	public void user_should_see_the_following_options_with_icons_on_the_connect_to_vector_page(String catalog,
+			DataTable dataTable) {
 		final String GROUP_NAME = "GROUP";
 		final String VECTOR_OPTION_NAMES = "VECTOR_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(GROUP_NAME, VECTOR_OPTION_NAMES, rows, vectorPage);
+		validateOptionsWithIcon(catalog, GROUP_NAME, VECTOR_OPTION_NAMES, rows, vectorPage);
 	}
 
 	@Then("User sees and copies the vector id")
