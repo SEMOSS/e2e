@@ -21,6 +21,7 @@ public abstract class CaptureElementUtils {
 	private static final String USE_TEMPLATE_TAB_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
 	private static final String DATATESTID_NAME = "{dataTestIdName}";
 	private static final String DATATESTID_LAYER_NAME = "//*[contains(@data-id, '{layerName}')]/..";
+	private static final String ELEMENT_TEXT_NAME = "//*[text()='{elementText}']";
 	private static final String BLOCK_TITLE_NAME = "//*[@title='{blockTitle}']";
 	private static final String PROMPT_CONTEXT_NAME = "(//*[text()='{elementName}']//../..)[1]";
 	private static final String BLOCK_SETTING_ELEMENT_XPATH = "//p[text()='{blockName}']/../../../..";
@@ -198,6 +199,17 @@ public abstract class CaptureElementUtils {
 	}
 	public static List<Locator> captureElementThroughTitle(Page page, String blockTitle) {
 		Locator locator = page.locator(BLOCK_TITLE_NAME.replace("{blockTitle}", blockTitle));
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			if (locator.nth(i).isVisible()) {
+				locators.add(locator.nth(i));
+			}
+		}
+		return locators;
+	}
+	public static List<Locator> captureElementTextScreenshot(Page page, String elementText) {
+		Locator locator = page.locator(ELEMENT_TEXT_NAME.replace("{elementText}", elementText));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
