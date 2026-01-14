@@ -1,5 +1,6 @@
 package aicore.utils;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class ChangeAccessPopUpPageUtils {
@@ -56,7 +57,10 @@ public class ChangeAccessPopUpPageUtils {
 	}
 
 	public static void clickOnRequestButton(Page page) {
-		page.locator(REQUEST_BUTTON_XPATH).click();
+		Locator button = page.locator(REQUEST_BUTTON_XPATH);
+		AICorePageUtils.waitFor(button);
+		button.isEnabled();
+		button.click();
 	}
 
 	public static boolean isRequestSuccessToastVisible(Page page) {
