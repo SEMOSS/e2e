@@ -50,6 +50,6 @@ public class AICorePageUtils {
 	}
 
 	public static void waitFor(Locator locator) {
-		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(30000));
 	}
 }
