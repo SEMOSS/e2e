@@ -330,6 +330,12 @@ public class NotebookPageUtils {
 		page.waitForTimeout(300);
 		page.getByText(databaseName).click();
 	}
+	public static void clickOnImportDropdown(Page page) {
+		Locator selectDatabaseDropdown = page.locator(SELECT_DATABASE_DROPDOWN_XPATH);
+		AICorePageUtils.waitFor(selectDatabaseDropdown);
+		page.waitForTimeout(2000); // waiting for columns to map with view
+		selectDatabaseDropdown.click();
+	}
 
 	public static void selectAllColumns(Page page) {
 		page.locator(SELECT_ALL_COLUMNS_XPATH).click();
