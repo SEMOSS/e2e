@@ -25,6 +25,8 @@ public class LayersPageUtils {
 	private static final String LAYER_BLOCK_BELOW_XPATH = "//div[contains(@data-id,'{baseLayer}')]/following-sibling::div[contains(@data-id,'{reorderedLayer}')]";
 	private static final String CONTAINER_EXPAND_ARROW_DATA_TESTID = "ChevronRightIcon";
 	private static final String LAYER_MORE_VERT_ICON_XPATH = "//div[contains(@data-id,'link')]//button";
+	private static final String DELETE_LAYER_XPATH = "//li[@value='delete']";
+	private static final String DUPLICATE_LAYER_XPATH = "//li[@value='duplicate']";
 
 	public static void clickOnTabInLeftPanel(Page page, String tabName) {
 		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();
@@ -126,14 +128,14 @@ public class LayersPageUtils {
 		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
 				.first();
 		moreVertIcon.click();
-		page.locator("//li[@value='delete']").click();
+		page.locator(DELETE_LAYER_XPATH).click();
 	}
 
 	public static void duplicateLayer(Page page, String layerName) {
 		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
 				.first();
 		moreVertIcon.click();
-		page.locator("//li[@value='duplicate']").click();
+		page.locator(DUPLICATE_LAYER_XPATH).click();
 	}
 
 	public static boolean isLayerDeleted(Page page, String layerName) {

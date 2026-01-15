@@ -54,9 +54,8 @@ public class DragAndDropAppLayersSteps {
 		layerPage.reorderLayerPosition(sourceLayerName, position, targetLayerName);
 	}
 
-	@Then("User should see {string} block appear {string} the {string} block on the page")
-	public void user_should_see_block_appear_the_block_on_the_page(String reorderedLayer, String position,
-			String baseLayer) {
+	@Then("User should see {string} block appear {string} the {string} block")
+	public void user_should_see_block_appear_the_block(String reorderedLayer, String position, String baseLayer) {
 		boolean isLayerPositionCorrect = layerPage.verifyLayerPosition(reorderedLayer, position, baseLayer);
 		Assertions.assertTrue(isLayerPositionCorrect, "Expected layer position is not correct for " + reorderedLayer);
 	}

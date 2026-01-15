@@ -32,11 +32,11 @@ Feature: Validate layers
     And User drags the 'Link' block and drops it on the page
     And User click on the 'Layers' tab in the left panel
     And User moves the 'E-chart' block 'above' the 'Link' block
-    Then User should see 'E-chart' block appear 'above' the 'Link' block on the page
+    Then User should see 'E-chart' block appear 'above' the 'Link' block
     And User moves the 'Link' block 'inside' the 'Container' block
-    Then User should see 'Link' block appear 'inside' the 'Container' block on the page
+    Then User should see 'Link' block appear 'inside' the 'Container' block
     And User moves the 'Text' block 'outside' the 'Container' block
-    Then User should see 'Text' block appear 'outside' the 'Container' block on the page
+    Then User should see 'Text' block appear 'outside' the 'Container' block
     And User clicks on the Save App icon
 
   @LoginWithAdmin @Regression @DeleteCreatedTestApp
