@@ -77,7 +77,7 @@ Feature: Create drag and drop app
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | World Map Chart     | DIABETES_UNIQUE_ROW_ID, Age, BMI, SkinThickness, Tooltip        | Select Label, Select Latitude, Select Longitude, Select Size, Select Tooltip                         |
 
   @DeleteCreatedTestApp @Regression
-  Scenario Outline: Drag and Drop Mermaid Chart block
+  Scenario: Drag and Drop Mermaid Chart block
     When User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
