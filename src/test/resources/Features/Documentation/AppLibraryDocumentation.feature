@@ -98,7 +98,7 @@ Feature: App Library Documentation
     And User adds description as "When did covid start"
     And User captures screenshot for "llmone"
     And User clicks on the Submit Block
-    And User captures screenshot for "llmtwo"
+    Then User captures screenshot for "llmtwo"
     And User clicks on Variable
     And User clicks on "model" open menu
     And User clicks on edit variable option
@@ -118,7 +118,7 @@ Feature: App Library Documentation
     Given User captures documentation screenshot for 'Navigating/Create New App'
     When User opens Main Menu
     And User clicks on Open App Library
-    And User captures a 'button' and highlights the "Create New App" with name "AppHomepage"
+    Then User captures a 'button' and highlights the "Create New App" with name "AppHomepage"
     And User completes screenshot capture and triggers comparison for 'App Homepage'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
@@ -130,7 +130,7 @@ Feature: App Library Documentation
     And User captures a "appTypeTile , useTemplateButton" and highlights the "Landing Page , Landing Page" with name "landingpagecreation"
     And User selects "Landing Page" from Template List
     And User enters app name as 'Demo landing page'
-    And User captures a "buttontype" and highlights the "submit" with name "landingone"
+    Then User captures a "buttontype" and highlights the "submit" with name "landingone"
     And User clicks on Create button
     And User fetch the app name for drag and drop app
     And User completes screenshot capture and triggers comparison for 'Landing Page Template'
@@ -141,9 +141,17 @@ Feature: App Library Documentation
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
-    And User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
+    Then User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
 
+    @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+    Scenario: Documentation for Create New App - Home Page 
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    Then User captures a "button" and highlights the "Create New App" with name "AppHomepage"
+    And User completes screenshot capture and triggers comparison for 'AppHomePage'
+   
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for Create App Page
     Given User captures documentation screenshot for 'Navigating/Create New App'
