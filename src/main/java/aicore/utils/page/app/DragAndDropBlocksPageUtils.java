@@ -1033,7 +1033,7 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
-	public static void clickOnBlockSettingsOption(Page page) {
+		public static void clickOnBlockSettingsOption(Page page) {
 		page.locator(BLOCK_SETTINGS_XPATH).click();
 	}
 
