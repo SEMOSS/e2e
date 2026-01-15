@@ -143,3 +143,17 @@ Feature: App Library Documentation
     And User clicks on Create New App button
     And User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
+
+@LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation for ASK LLM Template - model screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User selects "Ask LLM" from Template List
+    And User enters app name as 'Test app'
+    When User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User clicks on Variable
+    Then User captures a "testidelement , blocksettingelement" and highlights the "workspace-Variables , model" with name "modelchange"
+    And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
