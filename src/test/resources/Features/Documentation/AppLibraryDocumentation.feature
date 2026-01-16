@@ -193,7 +193,7 @@ Feature: App Library Documentation
     And User completes screenshot capture and triggers comparison for 'AppHomePage'
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation @DeleteCreatedTestApp
-  Scenario: Documentation for Model Catalog - Create new App - NB5 screenshot
+  Scenario: Documentation for Create new App - NB5 screenshot
     Given User captures documentation screenshot for 'CreateNewApp'
     When User is on Home page
     And User opens Main Menu
