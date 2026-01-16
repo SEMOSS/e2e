@@ -8,10 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
@@ -24,7 +22,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final Logger logger = LogManager.getLogger(DragAndDropBlocksPageUtils.class);
 
 	private static final String PAGE_1_ID = "#page-1";
-	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='page-1']";
+	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='{pageName}']";
 	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
@@ -35,9 +33,6 @@ public class DragAndDropBlocksPageUtils {
 	private static final String TERMINAL_XPATH = "//div[contains(text(),'Terminal')]";
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
-	private static final String LAYER_BLOCK_INSIDE_XPATH = " //li[@role='treeitem']//*[normalize-space(.)='{layerName}']";
-	private static final String LAYER_BLOCK_OUTSIDE_XPATH = " //div[@data-id='{layerName}']/..";
-	private static final String LAYER_DROPDOWN_BLOCK_XPATH = "//li[@role='treeitem']//div//div//span//*";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
@@ -150,14 +145,13 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_SHOW_TITLE_XPATH = "//span[@title='Show Title']//input";
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
-	private static final String SEARCH_BLOCKS_SECTION_XPATH= "//div[text()='{blockName}']";
+	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
 	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
-	private static final String THEME_BLOCK_DATA_TESTID="blockMenuCardContent-card-Theme-Block";
+	private static final String THEME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Theme-Block";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -202,17 +196,6 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
-	public static void layerDropPosition(Page page, String layerName, String position) {
-			if(position.equalsIgnoreCase("inside")) {
-				Locator targetBox =  page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerName));
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 10, 10);	
-			}else if(position.equalsIgnoreCase("outside")) {
-				Locator targetBox =  page.locator(LAYER_BLOCK_OUTSIDE_XPATH.replace("{layerName}", layerName));
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 20, 10);
-			}
-				page.mouse().up();
-		}
-		
 	public static void blockDropPosition(Page page, String blockName) {
 		switch (blockName) {
 		case "Container":
@@ -296,23 +279,6 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
-public static void mouseHoverOnLayer(Page page, String layerTargetName) {
-		Locator layerDropDownLocator = page.locator(LAYER_DROPDOWN_BLOCK_XPATH).first();
-		boolean isValidBlock = true;
-		Locator blockLocator = page.locator(LAYER_BLOCK_INSIDE_XPATH.replace("{layerName}", layerTargetName));
-		layerDropDownLocator.click();
-			if(blockLocator==null) {
-			logger.error("Invalid layer name: " + layerTargetName);
-			throw new IllegalArgumentException("Invalid layer name: " + layerTargetName);
-			}
-		blockLocator.scrollIntoViewIfNeeded();
-		blockLocator.isVisible();
-		blockLocator.hover();
-		if (isValidBlock) {
-			page.mouse().down();
-		}
-	}
-
 	public static void mouseHoverOnBlock(Page page, String blockName) {
 		boolean isValidBlock = true;
 		Locator blockLocator = null;
@@ -393,9 +359,9 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 			blockLocator = page.getByTestId(HTML_BLOCK_DATA_TESTID);
 			break;
 		case "Theme Block":
-			blockLocator=page.getByTestId(THEME_BLOCK_DATA_TESTID);
+			blockLocator = page.getByTestId(THEME_BLOCK_DATA_TESTID);
 			break;
-			default:
+		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
@@ -1036,11 +1002,7 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 		}
 	}
 
-	public static void clickOnTabInLeftPanel(Page page, String tabName) {
-		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();
-	}
-
-	public static void clickOnBlockSettingsOption(Page page) {
+		public static void clickOnBlockSettingsOption(Page page) {
 		page.locator(BLOCK_SETTINGS_XPATH).click();
 	}
 
@@ -1048,21 +1010,22 @@ public static void mouseHoverOnLayer(Page page, String layerTargetName) {
 		page.locator(BLOCK_SECTION_XPATH.replace("{textName}", blockName)).click();
 		page.locator(DELETE_BLOCK_ON_PAGE_XPATH).click();
 	}
-	
+
 	public static void searchBlockFromBlocksSection(Page page, String blockName) {
-		Locator block=page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName));
-		block.waitFor(new Locator.WaitForOptions()
-            .setState(WaitForSelectorState.ATTACHED));
+		Locator block = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName));
+		block.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
 		block.scrollIntoViewIfNeeded();
 	}
+
 	public static void clickOnBlockOnPage(Page page, String blockName) {
 		page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).click();
 	}
+
 	public static void highlightThePage(Page page, String pageName) {
-		Locator selectPage1=page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}",pageName)).first();
+		Locator selectPage1 = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", pageName)).first();
 		CommonUtils.moveMouseToCenterWithMargin(page, selectPage1, 50, 30);
-	    page.mouse().down();
-	    page.waitForTimeout(100);
-	    page.mouse().up();
-		}
+		page.mouse().down();
+		page.waitForTimeout(100);
+		page.mouse().up();
+	}
 }

@@ -47,10 +47,6 @@ public class DragAndDropBlocksPage {
 	public void blockDropPosition(String blockName) {
 		DragAndDropBlocksPageUtils.blockDropPosition(page, blockName);
 	}
-	
-	public void layerDropPosition(String blockName, String position) {
-		DragAndDropBlocksPageUtils.layerDropPosition(page, blockName, position);
-	}
 
 	public void clickOnDroppedBlock(String blockName) {
 		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
@@ -58,9 +54,6 @@ public class DragAndDropBlocksPage {
 
 	public void mouseHoverOnBlock(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
-	}
-	public void mouseHoverOnLayer(String blockName) {
-		DragAndDropBlocksPageUtils.mouseHoverOnLayer(page, blockName);
 	}
 
 	public String verifyHeadingBlockTextMessage() {
@@ -292,10 +285,6 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.updateBarStyle(page, barStyleValue);
 	}
 
-	public void clickOnTabInLeftPanel(String tabName) {
-		DragAndDropBlocksPageUtils.clickOnTabInLeftPanel(page, tabName);
-	}
-
 	public void clickOnBlockSettingsOption() {
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
 	}
@@ -303,9 +292,11 @@ public class DragAndDropBlocksPage {
 	public void deleteBlockOnPage(String blockName) {
 		DragAndDropBlocksPageUtils.deleteBlockOnPage(page, blockName);
 	}
+
 	public void searchBlockFromBlocksSection(String blockName) {
 		DragAndDropBlocksPageUtils.searchBlockFromBlocksSection(page, blockName);
 	}
+
 	public void clickOnBlockOnPage(String blockName) {
 		DragAndDropBlocksPageUtils.clickOnBlockOnPage(page, blockName);
 	}
@@ -313,5 +304,4 @@ public class DragAndDropBlocksPage {
 	public void highlightThePage(String pageName) {
 		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
-
 }
