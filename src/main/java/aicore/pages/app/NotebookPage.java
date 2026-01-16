@@ -118,6 +118,10 @@ public class NotebookPage {
 	public void selectDatabaseFromDropdown(String databaseName) {
 		NotebookPageUtils.selectDatabaseFromDropdown(page, databaseName);
 	}
+	
+	public void clickOnImportDropdown() {
+		NotebookPageUtils.clickOnImportDropdown(page);
+	}
 
 	public void selectAllColumns() {
 		NotebookPageUtils.selectAllColumns(page);

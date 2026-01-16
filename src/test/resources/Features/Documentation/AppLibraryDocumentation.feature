@@ -144,6 +144,15 @@ Feature: App Library Documentation
     Then User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
 
+    @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+    Scenario: Documentation for Create New App - Home Page 
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    Then User captures a "button" and highlights the "Create New App" with name "AppHomepage"
+    And User completes screenshot capture and triggers comparison for 'AppHomePage'
+   
+
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for Create App Page
     Given User captures documentation screenshot for 'Navigating/Create New App'
@@ -328,3 +337,4 @@ Feature: App Library Documentation
     And User deletes the previous cell
     And User captures screenshot for "NB7"
     And User completes screenshot capture and triggers comparison for "CreateNewAppNB7"
+

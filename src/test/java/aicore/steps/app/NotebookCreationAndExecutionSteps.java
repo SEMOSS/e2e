@@ -156,6 +156,11 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.selectHiddenOptionDropdown(optionName);
 	}
 
+	@And("User click on Import data menu")
+	public void user_clicks_on_Import_data_menu() {
+		notebookPage.clickOnImportDropdown();
+	}
+
 	@And("User selects {string} from the dropdown list")
 	public void user_selects_from_the_dropdown_list(String databaseName) {
 		notebookPage.selectDatabaseFromDropdown(databaseName);
