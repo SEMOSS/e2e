@@ -421,4 +421,41 @@ public class CatlogAccessStep {
 		catlogpermission.searchUserBasedOnRole(role, GenericSetupUtils.useDocker());
 	}
 
+	@And("User make the {string} as {string}")
+	public void user_make_the_catalog_as(String catalogType, String option) {
+		if (option.equalsIgnoreCase("Discoverable")) {
+			catlogpermission.setToggleStateForNonDiscovrable();
+			String expectedPattern = "Successfully made " + catalogType + " discoverable";
+			String actualMessage = catlogpermission.getToasterMessage();
+			assertTrue(actualMessage.toLowerCase().matches(expectedPattern.toLowerCase()),
+					"User can turn ON the Toogle - Expected pattern: " + expectedPattern + ", but got: "
+							+ actualMessage);
+		} else if (option.equalsIgnoreCase("Non-Discoverable")) {
+			catlogpermission.setToggleStateForNonDiscovrable();
+			String expectedPattern = "Successfully made " + catalogType + " non-discoverable";
+			String actualMessage = catlogpermission.getToasterMessage();
+			assertTrue(actualMessage.toLowerCase().matches(expectedPattern.toLowerCase()),
+					"User can turn OFF the Toogle - Expected pattern: " + expectedPattern + ", but got: "
+							+ actualMessage);
+		} else {
+			Assertions.fail("Invalid action: " + option);
+		}
+	}
+
+	@And("User click on Pending Request")
+	public void user_click_on_pending_request_for_catalog() {
+		catlogpermission.clickOnPendingRequestTab();
+	}
+
+	@And("User {string} request")
+	public void user_handle_request_for_catalog(String action) {
+		if (action.equalsIgnoreCase("Accept")) {
+			catlogpermission.acceptPendingRequest();
+		} else if (action.equalsIgnoreCase("Reject")) {
+			catlogpermission.rejectPendingRequest();
+		} else {
+			Assertions.fail("Invalid action: " + action);
+		}
+	}
+
 }

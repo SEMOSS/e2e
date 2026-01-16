@@ -189,13 +189,6 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.blockDropPosition(blockName);
 	}
 
-	@When("User drags the {string} block and drops it {string} the {string} block")
-	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position,
-			String containerName) {
-		blocksPage.mouseHoverOnLayer(blockName);
-		blocksPage.layerDropPosition(containerName, position);
-	}
-
 	@And("User clicks on the {string} block to select it")
 	public void user_clicks_on_block_to_select_it(String blockName) {
 		blocksPage.clickOnDroppedBlock(blockName);
