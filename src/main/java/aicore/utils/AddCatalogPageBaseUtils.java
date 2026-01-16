@@ -8,9 +8,12 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddCatalogPageBaseUtils {
-	private static final String SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
-	private static final String OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
-	private static final String ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div/preceding-sibling::div//img";
+	private static final String SECTION_NAME_XPATH = "//div[text()='{sectionName}']";
+	private static final String OPTIONS_UNDER_SECTION_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']";
+	private static final String ICONS_XPATH = "//div[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
+	private static final String DATABASE_SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
+	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
+	private static final String DATABASE_OPTIONS_ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
 	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='SearchOutlinedIcon']";
 	// TODO need data-testid for catalog description
@@ -28,23 +31,64 @@ public class AddCatalogPageBaseUtils {
 	// View Database Type on Connect To database page
 	private static final String SEARCH_INPUT_XPATH = "//div[@id='home__content']//input[@placeholder='Search' and @type='text']";
 
-	public static boolean verifySectionIsVisible(Page page, String sectionName) {
-		page.locator(SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
-		return page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
+	public static void clickOnSection(Page page, String catalog, String sectionName) {
+		switch (catalog) {
+		case "database":
+			page.locator(DATABASE_SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
+			break;
+		default:
+			page.locator(SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
+		}
 	}
 
-	public static boolean verifyOptionIsVisible(Page page, String sectionName, String optionName) {
-		return page.isVisible(
-				OPTIONS_UNDER_SECTION_XPATH.replace("{sectionName}", sectionName).replace("{optionName}", optionName));
+	public static boolean verifySectionIsVisible(Page page, String catalog, String sectionName) {
+		boolean isSectionVisible;
+		switch (catalog.toLowerCase()) {
+		case "database":
+			page.locator(DATABASE_SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
+			isSectionVisible = page.isVisible(DATABASE_SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
+			break;
+		default:
+			page.locator(SECTION_NAME_XPATH.replace("{sectionName}", sectionName)).click();
+			isSectionVisible = page.isVisible(SECTION_NAME_XPATH.replace("{sectionName}", sectionName));
+		}
+		return isSectionVisible;
 	}
 
-	public static Locator getIconByLabel(Page page, String sectionName, String optionName) {
-		return page.locator(ICONS_XPATH.replace("{sectionName}", sectionName).replace("{optionName}", optionName));
+	public static boolean verifyOptionIsVisible(Page page, String catalog, String sectionName, String optionName) {
+		boolean isOptionVisible;
+		switch (catalog.toLowerCase()) {
+		case "database":
+			isOptionVisible = page.isVisible(DATABASE_OPTIONS_UNDER_SECTION_XPATH.replace("{sectionName}", sectionName)
+					.replace("{optionName}", optionName));
+			break;
+		default:
+			isOptionVisible = page.isVisible(OPTIONS_UNDER_SECTION_XPATH.replace("{sectionName}", sectionName)
+					.replace("{optionName}", optionName));
+		}
+		return isOptionVisible;
 	}
 
-	public static boolean isIconVisible(Page page, String sectionName, String optionName) {
-		return page.locator(ICONS_XPATH.replace("{sectionName}", sectionName).replace("{optionName}", optionName))
-				.isVisible();
+	public static Locator getIconByLabel(Page page, String catalog, String sectionName, String optionName) {
+		switch (catalog.toLowerCase()) {
+		case "database":
+			return page.locator(DATABASE_OPTIONS_ICONS_XPATH.replace("{sectionName}", sectionName)
+					.replace("{optionName}", optionName));
+		default:
+			return page.locator(ICONS_XPATH.replace("{sectionName}", sectionName).replace("{optionName}", optionName));
+		}
+
+	}
+
+	public static boolean isIconVisible(Page page, String catalog, String sectionName, String optionName) {
+		switch (catalog.toLowerCase()) {
+		case "database":
+			return page.locator(DATABASE_OPTIONS_ICONS_XPATH.replace("{sectionName}", sectionName)
+					.replace("{optionName}", optionName)).isVisible();
+		default:
+			return page.locator(ICONS_XPATH.replace("{sectionName}", sectionName).replace("{optionName}", optionName))
+					.isVisible();
+		}
 	}
 
 	public static boolean isSearchBarPresent(Page page) {
@@ -125,7 +169,6 @@ public class AddCatalogPageBaseUtils {
 
 	// View Database Type on Connect To database page
 	public static void searchDatabaseType(Page page, String section, String databaseType) {
-		page.locator(SECTION_NAME_XPATH.replace("{sectionName}", section)).click();
 		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(SEARCH_INPUT_XPATH).click();
 		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term

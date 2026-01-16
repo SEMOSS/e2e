@@ -100,6 +100,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_selects_database_from_connection_types(String dbType) {
 		addDatabaseToCatalogPage.selectDatabaseFromConnectionTypes(dbType);
 	}
+
 	@Then("User can see form sections with fields:")
 	public void user_can_see_form_sections_with_fields(DataTable DBTable) {
 		List<Map<String, String>> rows = DBTable.asMaps(String.class, String.class);
@@ -112,6 +113,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 			}
 		}
 	}
+
 	@Then("User can see database mandatory fields")
 	public void user_can_see_database_mandatory_fields(DataTable DBTable) {
 		String singleCell = DBTable.cells().get(0).get(0);
@@ -177,12 +179,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		validateSearchBar(addDatabaseToCatalogPage);
 	}
 
-	@And("User should see the following database options with icons on the page")
-	public void user_should_see_the_following_database_options_with_icons_on_the_page(DataTable dataTable) {
+	@Then("User should see the following {string} options with icons on the page")
+	public void user_should_see_the_following_options_with_icons_on_the_page(String catalog, DataTable dataTable) {
 		final String GROUP_NAME = "GROUP";
 		final String DATABASE_OPTION_NAMES = "DATABASE_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(GROUP_NAME, DATABASE_OPTION_NAMES, rows, addDatabaseToCatalogPage);
+		validateOptionsWithIcon(catalog, GROUP_NAME, DATABASE_OPTION_NAMES, rows, addDatabaseToCatalogPage);
 	}
 
 	@When("User clicks on Copy ID option of {string} database")
@@ -272,17 +274,19 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	}
 
 	// View Database Type on Connect To database page
-	@Then("User searches database types and verifies visibility under respective sections")
-	public void userSearchesDatabaseTypesAndVerifiesVisibility(DataTable dataTable) {
+	@Then("User searches {string} types and verifies visibility under respective sections")
+	public void user_searches_types_and_verifies_visibility_under_respective_sections(String catalog,
+			DataTable dataTable) {
 		final String SECTION_NAME = "EXPECTED_SECTION";
 		final String OPTION_NAME = "DATABASE_TYPE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String section = row.get(SECTION_NAME);
 			String[] dbTypes = row.get(OPTION_NAME).split(",\\s*");
+			addDatabaseToCatalogPage.clickOnSection(catalog, section);
 			for (String dbType : dbTypes) {
 				addDatabaseToCatalogPage.searchDatabaseType(section, dbType);
-				boolean isVisible = addDatabaseToCatalogPage.verifyOptionIsVisible(section, dbType);
+				boolean isVisible = addDatabaseToCatalogPage.verifyOptionIsVisible(catalog, section, dbType);
 				Assertions.assertTrue(isVisible,
 						"Database type '" + dbType + "' was not found under section '" + section + "'");
 			}
