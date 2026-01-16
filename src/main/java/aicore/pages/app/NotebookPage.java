@@ -266,4 +266,12 @@ public class NotebookPage {
 	public void clickOnIncludeTimeCheckbox() {
 		NotebookPageUtils.clickOnIncludeTimeCheckbox(page);
 	}
+
+	public void mouseHoverAboveNotebookHiddenOptions() {
+		NotebookPageUtils.mouseHoverAboveNotebookHiddenOptions(page);
+	}
+
+	public void mouseHoverOnBlankCell() {
+		NotebookPageUtils.mouseHoverOnBlankCell(page);
+	}
 }

@@ -71,6 +71,7 @@ public class NotebookPageUtils {
 	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
 	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
+	private static final String NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH = "//div[contains(@class,'MuiPaper-elevation MuiPaper-rounded')]//div[@title='Database Not Editable']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -362,7 +363,7 @@ public class NotebookPageUtils {
 		if (block.isVisible()) {
 			block.hover();
 		}
-		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell"));
+		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).last();
 		AICorePageUtils.waitFor(runCellButton);
 		runCellButton.click();
 		Locator checkCircle = page.getByTestId("CheckCircleIcon");
@@ -734,6 +735,18 @@ public class NotebookPageUtils {
 		Locator checkbox = page.locator(TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH);
 		AICorePageUtils.waitFor(checkbox);
 		checkbox.click();
+	}
+
+	public static void mouseHoverAboveNotebookHiddenOptions(Page page) {
+		page.getByTestId("data-key-pair").isVisible();
+		Locator cell = page.locator(NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH);
+		CommonUtils.moveMouseToCenterWithMargin(page, cell, -70, 20);
+	}
+
+	public static void mouseHoverOnBlankCell(Page page) {
+		Locator cell = page.locator(CODE_ENTER_TEXTAREA).first();
+		AICorePageUtils.waitFor(cell);
+		CommonUtils.moveMouseToCenterWithMargin(page, cell, 60, 20);
 	}
 
 }

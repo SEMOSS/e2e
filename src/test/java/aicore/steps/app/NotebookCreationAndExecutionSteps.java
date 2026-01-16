@@ -400,4 +400,14 @@ public class NotebookCreationAndExecutionSteps {
 		}
 
 	}
+
+	@And("User mouse hover above the existing cell")
+	public void user_mouse_hover_above_the_existing_cell() {
+		notebookPage.mouseHoverAboveNotebookHiddenOptions();
+	}
+
+	@And("User mouse hover on the blank cell")
+	public void mouse_hover_on_blank_cell() {
+		notebookPage.mouseHoverOnBlankCell();
+	}
 }
