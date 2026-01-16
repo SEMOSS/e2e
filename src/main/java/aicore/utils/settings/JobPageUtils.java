@@ -3,7 +3,6 @@ package aicore.utils.settings;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.HomePageUtils;
@@ -18,9 +17,9 @@ public class JobPageUtils {
 	private static final String EDIT_TAGS_XPATH = "//span[text()='Tags']/ancestor::fieldset/parent::div//input";
 	private static final String ADDED_TAG_XPATH = "//div[contains(text(),'{jobName}')]/following-sibling::div//div//span[text()='{textValue}']";
 	private static final String DELETE_ICON_XPATH = "//div[contains(text(),'{jobName}')]/following-sibling::div//*[name()='svg'][@data-testid='DeleteIcon']";
-	private static final String DELETE_JOB_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted all selected jobs']";
+	private static final String DELETE_JOB_TOAST_MESSAGE_DATA_TESTID = "notification-success-message";
 	private static final String CHECKBOX_XPATH = "//div[contains(text(),'{jobName}')]/preceding-sibling::div[@role=\"gridcell\"]";
-	private static final String JOB_CHECKBOX_XPATH = "//div[@data-field='name' and normalize-space(text()) = '{JobName}']/ancestor::div[@role='row']//input[@type='checkbox']";
+	private static final String JOB_CHECKBOX_XPATH = "//div[text()='{jobName}']/parent::div//input[@type='checkbox']";
 	private static final String JOB_STATUS_CHECK_XPATH = "//div[@role='rowgroup']//div[@role='row'][.//div[@data-field='name' and normalize-space(text())='{JobName}']]//div[@data-field='isActive']";
 	private static final String RESUME_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Resume']";
 	private static final String PAUSE_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Pause']";
@@ -51,7 +50,7 @@ public class JobPageUtils {
 	}
 
 	public static String verifyJobTitle(Page page, String jobTitle) {
-		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle));
+		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle)).first();
 		AICorePageUtils.waitFor(actualJobTitle);
 		actualJobTitle.scrollIntoViewIfNeeded();
 		return actualJobTitle.textContent().trim();
@@ -94,8 +93,7 @@ public class JobPageUtils {
 	}
 
 	public static String jobDeletionToastMessage(Page page) {
-		String toastMessage = page.textContent(DELETE_JOB_TOAST_MESSAGE_XPATH).trim();
-		return toastMessage;
+		return page.getByTestId(DELETE_JOB_TOAST_MESSAGE_DATA_TESTID).textContent().trim();
 	}
 
 	public static void clickCheckBox(Page page, String jobTitle) {
@@ -110,18 +108,17 @@ public class JobPageUtils {
 	}
 
 	public static void clickJobCheckBox(Page page, String jobName) {
-		String checkboxXPath = JOB_CHECKBOX_XPATH.replace("{JobName}", jobName);
+		String checkboxXPath = JOB_CHECKBOX_XPATH.replace("{jobName}", jobName);
 		Locator checkbox = page.locator(checkboxXPath);
-		checkbox.waitFor();
-
-		if (!checkbox.isChecked()) {
-			checkbox.check();
-		}
+		AICorePageUtils.waitFor(checkbox);
+		checkbox.scrollIntoViewIfNeeded();
+		checkbox.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static void clickPauseButton(Page page) {
 		Locator pauseButton = page.locator(PAUSE_BUTTON_XPATH);
-		pauseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(pauseButton);
+		pauseButton.isEnabled();
 		pauseButton.click();
 	}
 
@@ -142,7 +139,7 @@ public class JobPageUtils {
 	}
 
 	public static boolean isCheckboxSelected(Page page, String jobName) {
-		String xpath = JOB_CHECKBOX_XPATH.replace("{JobName}", jobName);
+		String xpath = JOB_CHECKBOX_XPATH.replace("{jobName}", jobName);
 		page.waitForSelector(xpath);
 		return page.locator(xpath).isChecked();
 	}
@@ -154,9 +151,10 @@ public class JobPageUtils {
 	}
 
 	public static void clickResumeButton(Page page) {
-		Locator pauseButton = page.locator(RESUME_BUTTON_XPATH);
-		pauseButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		pauseButton.click();
+		Locator resumeButton = page.locator(RESUME_BUTTON_XPATH);
+		AICorePageUtils.waitFor(resumeButton);
+		resumeButton.isEnabled();
+		resumeButton.click();
 	}
 
 	public static boolean isResumeButtonReverted(Page page) {

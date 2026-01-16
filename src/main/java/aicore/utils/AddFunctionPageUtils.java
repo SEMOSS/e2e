@@ -77,8 +77,9 @@ public class AddFunctionPageUtils {
 		String[] labels = fieldLabels.split(",");
 		for (String label : labels) {
 			String asteriskSelector = "//label[text()='%s']/span[text()='*']".replace("%s", label.trim());
-			if (!page.locator(asteriskSelector).isVisible()
-					|| !page.locator(asteriskSelector).textContent().contains("*")) {
+			Locator mandatoryField = page.locator(asteriskSelector);
+			AICorePageUtils.waitFor(mandatoryField);
+			if (!mandatoryField.isVisible() || !mandatoryField.textContent().contains("*")) {
 				throw new AssertionError(
 						"Asterisk mark is not visible or does not contain '*' for the field: " + label.trim());
 			}

@@ -41,4 +41,45 @@ public class DragAndDropAppLayersSteps {
 	public void user_clicks_on_in_the_left_pane(String pageName) {
 		layerPage.clickOnPageInLeftPane(pageName);
 	}
+
+	@When("User drags the {string} block and drops it {string} the {string} block")
+	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position,
+			String containerName) {
+		layerPage.mouseHoverOnLayer(blockName);
+		layerPage.layerDropPosition(containerName, position);
+	}
+
+	@When("User moves the {string} block {string} the {string} block")
+	public void user_moves_the_block_the_block(String sourceLayerName, String position, String targetLayerName) {
+		layerPage.reorderLayerPosition(sourceLayerName, position, targetLayerName);
+	}
+
+	@Then("User should see {string} block appear {string} the {string} block")
+	public void user_should_see_block_appear_the_block(String reorderedLayer, String position, String baseLayer) {
+		boolean isLayerPositionCorrect = layerPage.verifyLayerPosition(reorderedLayer, position, baseLayer);
+		Assertions.assertTrue(isLayerPositionCorrect, "Expected layer position is not correct for " + reorderedLayer);
+	}
+
+	@When("User duplicate the {string} layer")
+	public void user_duplicate_the_layer(String layerName) {
+		layerPage.duplicateLayer(layerName);
+	}
+
+	@Then("User should see another {string} block appear on the page")
+	public void user_should_see_another_block_appear_on_the_page(String layerName) {
+		boolean isLayerDuplicated = layerPage.isLayerDuplicated(layerName);
+		Assertions.assertTrue(isLayerDuplicated, "Expected layer is not duplicated");
+	}
+
+	@When("User delete the {string} layer")
+	public void user_delete_the_layer(String layerName) {
+		layerPage.deleteLayer(layerName);
+	}
+
+	@Then("User should not see {string} block on the page")
+	public void user_should_not_see_block_on_the_page(String layerName) {
+		boolean isLayerDeleted = layerPage.isLayerDeleted(layerName);
+		Assertions.assertFalse(isLayerDeleted, "Expected layer is not deleted");
+	}
+
 }

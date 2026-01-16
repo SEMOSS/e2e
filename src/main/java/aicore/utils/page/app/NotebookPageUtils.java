@@ -81,10 +81,6 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterQueryName(Page page, String queryName) {
-//		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX,
-//				new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL));
-//		AICorePageUtils.waitFor(queryTextbox);
-//		queryTextbox.fill(queryName);
 		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX);
 		AICorePageUtils.waitFor(queryTextbox);
 		queryTextbox.fill(queryName);
@@ -333,6 +329,12 @@ public class NotebookPageUtils {
 		selectDatabaseDropdown.click();
 		page.waitForTimeout(300);
 		page.getByText(databaseName).click();
+	}
+	public static void clickOnImportDropdown(Page page) {
+		Locator selectDatabaseDropdown = page.locator(SELECT_DATABASE_DROPDOWN_XPATH);
+		AICorePageUtils.waitFor(selectDatabaseDropdown);
+		page.waitForTimeout(2000); // waiting for columns to map with view
+		selectDatabaseDropdown.click();
 	}
 
 	public static void selectAllColumns(Page page) {

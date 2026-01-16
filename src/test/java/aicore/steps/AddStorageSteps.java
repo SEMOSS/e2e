@@ -52,12 +52,13 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		validateSearchBar(storagePage);
 	}
 
-	@Then("User should see the following storage options with valid icons on the page")
-	public void user_should_see_the_following_storage_options_with_valid_icon_on_the_page(DataTable dataTable) {
+	@Then("User should see the following {string} options with valid icons on the Connect to Storage page")
+	public void user_should_see_the_following_options_with_valid_icons_on_the_connect_to_storage_page(String catalog,
+			DataTable dataTable) {
 		final String GROUP_NAME = "GROUP";
 		final String STORAGE_OPTION_NAMES = "STORAGE_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(GROUP_NAME, STORAGE_OPTION_NAMES, rows, storagePage);
+		validateOptionsWithIcon(catalog, GROUP_NAME, STORAGE_OPTION_NAMES, rows, storagePage);
 	}
 
 	@And("User selects {string} storage")
