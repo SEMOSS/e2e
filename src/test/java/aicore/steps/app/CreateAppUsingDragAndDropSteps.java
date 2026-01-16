@@ -189,13 +189,6 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.blockDropPosition(blockName);
 	}
 
-	@When("User drags the {string} block and drops it {string} the {string} block")
-	public void user_drags_the_block_and_drops_it_on_the_block(String blockName, String position,
-			String containerName) {
-		blocksPage.mouseHoverOnLayer(blockName);
-		blocksPage.layerDropPosition(containerName, position);
-	}
-
 	@And("User clicks on the {string} block to select it")
 	public void user_clicks_on_block_to_select_it(String blockName) {
 		blocksPage.clickOnDroppedBlock(blockName);
@@ -848,5 +841,10 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User highlight the {string} page")
 	public void user_highlight_the_page(String pageName) {
 		blocksPage.highlightThePage(pageName);
+	}
+
+	@And("User click on {string} from breadcrumb link")
+	public void user_Click_On_The_Breadcrumb_Link(String appName) {
+		appCreatePopup.userClickOnBreadcrumbLink(appName);
 	}
 }

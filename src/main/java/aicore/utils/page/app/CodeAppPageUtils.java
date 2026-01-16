@@ -25,7 +25,9 @@ public class CodeAppPageUtils {
 	private static final String NEW_PAGE_TEXT_XPATH = "//h3[text()='{textName}']";
 	private static final String SHARE_APP_LINK_XPATH = "//button[@aria-label='Share App']";
 	private static final String COPY_BUTTON_XPATH = "//span[normalize-space()='Copy']";
-
+	private static final String EDIT_TITLE_OF_TITLE_SECOND_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Stock')]";
+	private static final String EDIT_TITLE_OF_TITLE_FIRST_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Get')]";
+	
 	public static void clickOnFileUploadButton(Page page) {
 		page.getByTestId(FILE_UPLOAD_TESTID).click();
 	}
@@ -81,6 +83,7 @@ public class CodeAppPageUtils {
 	}
 
 	public static void userCanSeeFileUnderParentFolder(Page page, String fileName, String parentFolderName) {
+		page.locator(FOLDER_NAME_XPATH.replace("{folderName}", parentFolderName)).click();
 		Locator fileLocator = page.locator(
 				SUBFOLDERORFILE_XPATH.replace("{parentFolder}", parentFolderName).replace("{subFolder}", fileName));
 		fileLocator.isVisible();
@@ -94,7 +97,6 @@ public class CodeAppPageUtils {
 		Locator editFile = page.locator(EDIT_FILE_XPATH);
 		editFile.click();
 		editFile.pressSequentially(content);
-
 	}
 
 	public static void userSaveTheFile(Page page) {
@@ -105,18 +107,15 @@ public class CodeAppPageUtils {
 		if (!page.locator(SEE_THE_FILES_IN_FILES_TAB_XPATH).first().isVisible()) {
 			page.locator(CLICK_ON_THE_FILES_TAB_XPATH).first().click();
 		}
-
 	}
 
 	public static boolean isRefreshFilesOptionVisible(Page page) {
 		page.locator(FILES_REFRESH_OPTION_XPATH).isVisible();
 		return page.locator(FILES_REFRESH_OPTION_XPATH).isEnabled();
-
 	}
 
 	public static void isRefreshFilesOptionClickable(Page page) {
 		page.locator(FILES_REFRESH_OPTION_XPATH).click();
-
 	}
 
 	public static boolean isRecompileRefactorOptionVisible(Page page) {
@@ -157,7 +156,7 @@ public class CodeAppPageUtils {
 
 	public static boolean isAppVisibleOnNewTab(String appName) {
 		Locator appLocator = newTab.frameLocator("iframe[data-test^='iframe--']").getByRole(AriaRole.HEADING,
-				new FrameLocator.GetByRoleOptions().setName("Get Stock"));
+				new FrameLocator.GetByRoleOptions().setName(appName));
 		appLocator.waitFor();
 		return appLocator.isVisible();
 	}
@@ -168,5 +167,21 @@ public class CodeAppPageUtils {
 		}
 		page.bringToFront();
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+	}
+
+	public static void userEditFileForTitleAsUpdatedContent(Page page, String content) {
+		Locator EditTitle = page.locator(EDIT_TITLE_OF_TITLE_SECOND_TEXT_XPATH);
+		EditTitle.dblclick();
+		page.keyboard().press("Delete");
+		page.keyboard().press("Backspace");
+		page.locator(EDIT_TITLE_OF_TITLE_FIRST_TEXT_XPATH).dblclick();
+		page.keyboard().press("Delete");
+		page.keyboard().type(content);
+	}
+
+	public static boolean isAppTitleVisible(Page page, String appName) {
+		Locator appTitle = page.frameLocator("//iframe[contains(@data-test,'iframe-')]")
+				.locator("//h3[normalize-space()='" + appName + "']");
+		return appTitle.isVisible();
 	}
 }
