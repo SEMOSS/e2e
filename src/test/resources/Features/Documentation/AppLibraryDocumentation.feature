@@ -194,7 +194,7 @@ Feature: App Library Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation @DeleteCreatedTestApp
   Scenario: Documentation for Create new App - NB5 screenshot
-    Given User captures documentation screenshot for 'CreateNewApp'
+    Given User captures documentation screenshot for 'Navigating/Create New App'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open Database
@@ -240,7 +240,7 @@ Feature: App Library Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp @DeleteTestCatalog
   Scenario: Documentation for App Library - Create new App - NB6 screenshot
-    Given User captures documentation screenshot for 'CreateNewApp'
+    Given User captures documentation screenshot for 'Navigating/Create New App'
     When User is on Home page
     And User opens Main Menu
     And User opens Main Menu
@@ -290,7 +290,7 @@ Feature: App Library Documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp @DeleteTestCatalog
   Scenario: Documentation for App Library - Create new App - NB7 screenshot
-    Given User captures documentation screenshot for 'CreateNewApp'
+    Given User captures documentation screenshot for 'Navigating/Create New App'
     When User is on Home page
     And User opens Main Menu
     And User opens Main Menu
