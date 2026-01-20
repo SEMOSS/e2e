@@ -172,4 +172,7 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void verifyQueryFieldIsEmpty() {
 		AddDatabasePageUtils.verifyQueryFieldIsEmpty(page);
 	}
+	public boolean verifyAllColumnsAreCollapsed() {
+		return AddDatabasePageUtils.verifyAllColumnsAreCollapsed(page);
+	}
 }

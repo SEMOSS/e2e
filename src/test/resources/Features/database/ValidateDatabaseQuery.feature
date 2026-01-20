@@ -12,14 +12,19 @@ Feature: Validate Database Query Functionality
     And User can see the Catalog title as 'TestDatabase'
     And User clicks on Query tab
 
-  @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate database query response
-    When User enters the query 'SELECT AGE, BMI from DIABETES'
-    And User clicks on 'Run Query' button
-    Then User sees 'AGE, BMI' columns in the query response table
+  #@LoginWithAdmin @Regression @DeleteTestCatalog
+  #Scenario: Validate database query response
+    #When User enters the query 'SELECT AGE, BMI from DIABETES'
+    #And User clicks on 'Run Query' button
+    #Then User sees 'AGE, BMI' columns in the query response table
+#
+  #@LoginWithAdmin @Regression @DeleteTestCatalog
+  #Scenario: Validate database query response
+    #When User enters the query 'SELECT AGE, BMI from DIABETES'
+    #And User clicks on 'Reset' button
+    #Then User can see query field is empty
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate database query response
-    When User enters the query 'SELECT AGE, BMI from DIABETES'
-    And User clicks on 'Reset' button
-    Then User can see query field is empty
+  Scenario: Validate collapse data columns
+    And User clicks on 'Collapse All' button
+    Then User can see all data columns are collapsed

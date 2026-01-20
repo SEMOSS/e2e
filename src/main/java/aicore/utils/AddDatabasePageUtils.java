@@ -58,6 +58,8 @@ public class AddDatabasePageUtils {
 	private static final String QUERY_TAB_DATA_TESTID = "engineLayout-Query-tab";
 	private static final String QUERY_ENTER_TEXTAREA_XPATH = ".monaco-editor .native-edit-context";
 	private static final String OUTPUT_TABLE = "//table";
+	private static final String COLLAPSE_COLUMNS_XPATH = "//table//tbody";
+	private static final String COLLAPSE_COLUMNS_HEADER_XPATH = "//table//thead//tr[contains(@class,'closed')]";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -327,9 +329,6 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void searchDatabaseCatalog(Page page, String catalogName) {
-//		page.waitForSelector(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
-//		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-//		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
 		Locator searchcatalog = page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
 		AICorePageUtils.waitFor(searchcatalog);
 		searchcatalog.click();
@@ -379,6 +378,16 @@ public class AddDatabasePageUtils {
 		String queryText = cell.textContent();
 		if (queryText != null && !queryText.trim().isEmpty()) {
 			throw new AssertionError("Query field is not empty.");
+		}
+	}
+
+	public static boolean verifyAllColumnsAreCollapsed(Page page) {
+		Locator collapseColumns = page.locator(COLLAPSE_COLUMNS_XPATH);
+		Locator collapsedHeaders = page.locator(COLLAPSE_COLUMNS_HEADER_XPATH);
+		if (!collapseColumns.isVisible() && collapsedHeaders.count() > 0) {
+			return true;
+		} else {
+			throw new AssertionError("All data columns are not collapsed.");
 		}
 	}
 }

@@ -325,4 +325,9 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_can_see_query_field_is_empty() {
 		addDatabaseToCatalogPage.verifyQueryFieldIsEmpty();
 	}
+
+	@Then("User can see all data columns are collapsed")
+	public void user_can_see_all_data_columns_are_collapsed() {
+		addDatabaseToCatalogPage.verifyAllColumnsAreCollapsed();
+	}
 }
