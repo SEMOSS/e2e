@@ -333,7 +333,6 @@ public class AddDatabasePageUtils {
 		AICorePageUtils.waitFor(searchcatalog);
 		searchcatalog.click();
 		searchcatalog.fill(catalogName);
-
 	}
 
 	public static void selectDatabaseFromSearchOptions(Page page, String catalogName) {
