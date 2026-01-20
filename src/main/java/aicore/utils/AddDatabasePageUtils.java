@@ -325,7 +325,6 @@ public class AddDatabasePageUtils {
 		page.getByTestId(EDIT_BTN_XPATH).isVisible();
 		page.getByTestId(EDIT_BTN_XPATH).click();
 		page.locator(EDIT_POPUP_XPATH).isVisible();
-
 	}
 
 	public static void searchDatabaseCatalog(Page page, String catalogName) {
