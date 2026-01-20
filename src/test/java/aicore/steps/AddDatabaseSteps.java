@@ -1,6 +1,7 @@
 package aicore.steps;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -301,5 +302,27 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User selects the {string} from the dropdown")
 	public void user_selects_the_from_the_dropdown(String dbName) {
 		addDatabaseToCatalogPage.selectDatabaseFromDropdown(dbName);
+	}
+
+	@When("User clicks on Query tab")
+	public void user_clicks_on_query_tab() {
+		addDatabaseToCatalogPage.clickOnQueryTab();
+	}
+
+	@When("User enters the query {string}")
+	public void user_enters_the_query(String query) {
+		addDatabaseToCatalogPage.enterQuery(query);
+	}
+
+	@Then("User sees {string} columns in the query response table")
+	public void user_sees_columns_in_the_query_response_table(String headerNames) {
+		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
+		List<String> actualHeaderNames = addDatabaseToCatalogPage.getQueryResponseTableHeader();
+		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
+	}
+
+	@Then("User can see query field is empty")
+	public void user_can_see_query_field_is_empty() {
+		addDatabaseToCatalogPage.verifyQueryFieldIsEmpty();
 	}
 }

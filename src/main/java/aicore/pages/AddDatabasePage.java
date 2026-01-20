@@ -1,6 +1,7 @@
 package aicore.pages;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import com.microsoft.playwright.Page;
 
@@ -23,9 +24,11 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void selectDatabaseFromConnectionTypes(String dbType) {
 		AddDatabasePageUtils.selectDatabaseFromConnectionTypes(page, dbType);
 	}
+
 	public boolean verifyFieldUnderSection(String sectionName, String fieldName) {
 		return AddDatabasePageUtils.verifyFieldUnderSection(page, sectionName, fieldName);
 	}
+
 	public boolean isDBFieldMandatory(String fieldName) {
 		return AddDatabasePageUtils.isDBFieldMandatory(page, fieldName);
 	}
@@ -57,6 +60,7 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void clickOnApplyButton() {
 		AddDatabasePageUtils.clickOnApplyButton(page);
 	}
+
 	public void clickApplyDatabaseButton() {
 		AddDatabasePageUtils.clickApplyDatabaseButton(page);
 	}
@@ -151,5 +155,21 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 
 	public void selectDatabaseFromDropdown(String dbName) {
 		AddDatabasePageUtils.selectDatabaseFromDropdown(page, dbName);
+	}
+
+	public void clickOnQueryTab() {
+		AddDatabasePageUtils.clickOnQueryTab(page);
+	}
+
+	public void enterQuery(String query) {
+		AddDatabasePageUtils.enterQuery(page, query);
+	}
+
+	public List<String> getQueryResponseTableHeader() {
+		return AddDatabasePageUtils.getQueryResponseTableHeader(page);
+	}
+
+	public void verifyQueryFieldIsEmpty() {
+		AddDatabasePageUtils.verifyQueryFieldIsEmpty(page);
 	}
 }
