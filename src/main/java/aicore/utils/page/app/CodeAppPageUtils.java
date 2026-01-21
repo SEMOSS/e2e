@@ -22,12 +22,12 @@ public class CodeAppPageUtils {
 	private static final String FILES_REFRESH_OPTION_XPATH = "//button[@aria-label='Refresh files']";
 	private static final String FILES_RECOMPILE_REACTOR_XPATH = "//button[@aria-label='Recompile reactors']";
 	private static Page newTab;
-	private static final String NEW_PAGE_TEXT_XPATH = "//h3[text()='{textName}']";
 	private static final String SHARE_APP_LINK_XPATH = "//button[@aria-label='Share App']";
 	private static final String COPY_BUTTON_XPATH = "//span[normalize-space()='Copy']";
 	private static final String EDIT_TITLE_OF_TITLE_SECOND_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Stock')]";
 	private static final String EDIT_TITLE_OF_TITLE_FIRST_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Get')]";
-	
+	private static final String CODEAPPBOOKMARK_ICON_DATATESTID = "viewAppPage-bookmark-btn";
+
 	public static void clickOnFileUploadButton(Page page) {
 		page.getByTestId(FILE_UPLOAD_TESTID).click();
 	}
@@ -184,4 +184,9 @@ public class CodeAppPageUtils {
 				.locator("//h3[normalize-space()='" + appName + "']");
 		return appTitle.isVisible();
 	}
+
+	public static void clickOnBookmarkAppIcon(Page page) {
+		page.getByTestId(CODEAPPBOOKMARK_ICON_DATATESTID).click();
+	}
+
 }

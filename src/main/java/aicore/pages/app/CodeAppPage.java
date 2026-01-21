@@ -127,4 +127,7 @@ public class CodeAppPage {
 		return CodeAppPageUtils.isAppTitleVisible(page, appName);
 	}
 
+	public void clickOnBookmarkAppIcon() {
+		CodeAppPageUtils.clickOnBookmarkAppIcon(page);
+	}
 }

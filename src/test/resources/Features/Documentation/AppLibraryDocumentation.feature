@@ -152,6 +152,7 @@ Feature: App Library Documentation
     Then User captures a "button" and highlights the "Create New App" with name "AppHomepage"
     And User completes screenshot capture and triggers comparison for 'AppHomePage'
    
+
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for Create App Page
     Given User captures documentation screenshot for 'Navigating/Create New App'
@@ -168,3 +169,172 @@ Feature: App Library Documentation
     And User clicks on Create New App button
     And User clicks on Get Started button in "Construct an agent"
     And User captures screenshot for "AB15"
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation for ASK LLM Template - model screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User selects "Ask LLM" from Template List
+    And User enters app name as 'Test app'
+    When User clicks on Create button
+    And User fetch the app name for drag and drop app
+    And User clicks on Variable
+    Then User captures a "testidelement , blocksettingelement" and highlights the "workspace-Variables , model" with name "modelchange"
+    And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation for Create New App - Home Page
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    Then User captures a "button" and highlights the "Create New App" with name "AppHomepage"
+    And User completes screenshot capture and triggers comparison for 'AppHomePage'
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation for Create new App - NB5 screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User is on Home page
+    And User opens Main Menu
+    And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'diabetes'
+    And User clicks on Add Database
+    And User clicks on file upload icon
+    And User uploads the file 'Database/diabetes.zip'
+    And User clicks on 'Upload' button to create catalog
+    And User clicks on Copy Catalog ID
+    And User can see the Catalog title as 'diabetes'
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Test app'
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    And User clicks on Block Settings option
+    When User clicks on Notebook
+    And User clicks on Create new notebook
+    And User enters New Query name as 'adding_numbs'
+    And User clicks on query Submit button
+    And User mouse hover below the existing cell
+    And User selects 'Import Data' from the hidden options
+    And User selects 'From Data Catalog' from the data import options
+    And User selects 'diabetes' from the dropdown list
+    When User selects all columns from database
+    And User clicks on data Import button
+    And User deletes the previous cell
+    And User selects type as 'Python'
+    And User enter the data limit as '20'
+    And User clicks on Run cell button
+    And User captures screenshot for "NB5"
+    And User completes screenshot capture and triggers comparison for "CreateNewAppNB5"
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp @DeleteTestCatalog
+  Scenario: Documentation for App Library - Create new App - NB6 screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User is on Home page
+    And User opens Main Menu
+    And User opens Main Menu
+    And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'diabetes'
+    And User clicks on Add Database
+    And User clicks on file upload icon
+    And User uploads the file 'Database/diabetes.zip'
+    And User clicks on 'Upload' button to create catalog
+    And User clicks on Copy Catalog ID
+    And User can see the Catalog title as 'diabetes'
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Test app'
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    And User clicks on Block Settings option
+    When User clicks on Notebook
+    And User clicks on Create new notebook
+    And User enters New Query name as 'adding_numbs'
+    And User clicks on query Submit button
+    And User mouse hover below the existing cell
+    And User enters code as "from ai_server import ModelEngine\nmodel = ModelEngine(engine_id =\n\"4acbe913-df40-4ac0-b23a-da5ad91b172\")\n\n# Generation\n5 question = \"{prompt}\"\n6 output = model.ask(question = question, param_dict="
+    And User mouse hover below the existing cell
+    And User selects 'Import Data' from the hidden options
+    And User selects 'From Data Catalog' from the data import options
+    And User selects 'diabetes' from the dropdown list
+    When User selects all columns from database
+    And User clicks on data Import button
+    And User selects type as 'Python'
+    And User enter the data limit as '20'
+    And User clicks on Run cell button
+    And User mouse hover above the existing cell
+    And User selects 'Transformation' from the hidden options
+    And User captures screenshot for "NB6"
+    And User completes screenshot capture and triggers comparison for "CreateNewAppNB6"
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp @DeleteTestCatalog
+  Scenario: Documentation for App Library - Create new App - NB7 screenshot
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User is on Home page
+    And User opens Main Menu
+    And User opens Main Menu
+    And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'diabetes'
+    And User clicks on Add Database
+    And User clicks on file upload icon
+    And User uploads the file 'Database/diabetes.zip'
+    And User clicks on 'Upload' button to create catalog
+    And User clicks on Copy Catalog ID
+    And User can see the Catalog title as 'diabetes'
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
+    And User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Test app'
+    And User enters description as 'Created by automation script'
+    And User enters tags 'Test1, Test2' and presses Enter
+    And User clicks on Create button
+    And User fetch the app name for drag and drop app
+    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    And User clicks on Block Settings option
+    When User clicks on Notebook
+    And User clicks on Create new notebook
+    And User enters New Query name as 'prompt_output'
+    And User clicks on query Submit button
+    And User mouse hover below the existing cell
+    And User selects 'Import Data' from the hidden options
+    And User selects 'From Data Catalog' from the data import options
+    And User selects 'diabetes' from the dropdown list
+    When User selects all columns from database
+    And User clicks on data Import button
+    And User selects type as 'Python'
+    And User enter the data limit as '20'
+    And User clicks on Run cell button
+    And User mouse hover on the blank cell
+    And User selects 'Transformation' from the hidden options
+    And User selects 'Uppercase' from the Transformation options
+    And User deletes the previous cell
+    And User captures screenshot for "NB7"
+    And User completes screenshot capture and triggers comparison for "CreateNewAppNB7"
+

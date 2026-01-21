@@ -127,15 +127,21 @@ public class LayersPageUtils {
 	public static void deleteLayer(Page page, String layerName) {
 		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
 				.first();
+		AICorePageUtils.waitFor(moreVertIcon);
 		moreVertIcon.click();
-		page.locator(DELETE_LAYER_XPATH).click();
+		Locator delete = page.locator(DELETE_LAYER_XPATH);
+		AICorePageUtils.waitFor(delete);
+		delete.click();
 	}
 
 	public static void duplicateLayer(Page page, String layerName) {
 		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
 				.first();
+		AICorePageUtils.waitFor(moreVertIcon);
 		moreVertIcon.click();
-		page.locator(DUPLICATE_LAYER_XPATH).click();
+		Locator duplicate = page.locator(DUPLICATE_LAYER_XPATH);
+		AICorePageUtils.waitFor(duplicate);
+		duplicate.click();
 	}
 
 	public static boolean isLayerDeleted(Page page, String layerName) {
