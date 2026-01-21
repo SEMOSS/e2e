@@ -848,9 +848,9 @@ public class CreateAppUsingDragAndDropSteps {
 		appCreatePopup.userClickOnBreadcrumbLink(appName);
 	}
 
-	@And("User see the {string} as title of the Block Settings panel")
-	public void user_see_the_as_title_of_the_block_settings_panel(String expectedTitle) {
-		String actualTitle = blocksPage.getBlockSettingsPanelTitle();
+	@And("User see the {string} as title of the {string} option")
+	public void user_see_the_as_title_of_the_block_settings_panel(String expectedTitle, String option) {
+		String actualTitle = blocksPage.getBlockSettingsPanelTitle(option);
 		assertEquals(expectedTitle, actualTitle, "Mismatch between the expected and actual Block Settings panel title");
 	}
 
