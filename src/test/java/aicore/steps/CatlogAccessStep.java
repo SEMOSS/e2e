@@ -458,4 +458,21 @@ public class CatlogAccessStep {
 		}
 	}
 
+	@And("User clicks on {string} option under Settings")
+	public void user_clicks_on_option_under_Settings(String option) {
+		catlogpermission.clickOnSettingsOption(option);
+	}
+
+	@And("User see the {string} page open on right side panel")
+	public void user_see_the_page_open_on_right_side_panel(String pageName) {
+		boolean isPageOpen = catlogpermission.userSeeThePageOpenOnRightSidePanel(pageName);
+		Assertions.assertTrue(isPageOpen, pageName + " page is not open on right side panel");
+	}
+
+	@And("User can see the {string} section on setting page")
+	public void user_can_see_the_section(String sectionName) {
+		boolean isSectionVisible = catlogpermission.userCanSeeSectionUnderSetting(sectionName);
+		Assertions.assertTrue(isSectionVisible, sectionName + " section is not visible");
+	}
+
 }

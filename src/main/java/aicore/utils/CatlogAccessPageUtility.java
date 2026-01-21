@@ -44,6 +44,9 @@ public class CatlogAccessPageUtility {
 	private static final String CATALOG_ID_XPATH = "//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p";
 	private static final String PENDING_REQUEST_ACCEPT_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String PENDING_REQUEST_REJECT_XPATH = "//*[name()='svg'][@data-testid='CloseIcon']";
+	private static final String SEETING_OPTION_XPATH="//div[@aria-label='{option}']";
+	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH="//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
+	private static final String SETTING_SECTION_XPATH="//h6[normalize-space()='{section}']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -231,6 +234,25 @@ public class CatlogAccessPageUtility {
 		Locator rejectButton = page.locator(PENDING_REQUEST_REJECT_XPATH);
 		AICorePageUtils.waitFor(rejectButton);
 		rejectButton.click();
+	}
+
+	public static void clickOnSettingsOption(Page page, String option) {
+		page.locator(SEETING_OPTION_XPATH.replace("{option}", option)).click();
+	}
+
+	public static boolean userSeeThePageOpenOnRightSidePanel(Page page, String pageName) {
+		Locator rightSidePage = page.locator(RIGHT_SIDE_OPEN_PAGE_XPATH.replace("{pageName}", pageName));
+		AICorePageUtils.waitFor(rightSidePage);
+		if (!rightSidePage.isVisible()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
+		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));		
+		return sectionLocator.isVisible();
 	}
 
 }

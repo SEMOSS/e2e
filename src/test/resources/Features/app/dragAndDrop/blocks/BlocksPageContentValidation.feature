@@ -16,7 +16,7 @@ Feature: Block page content
   Scenario: Validate the blocks page content
     Given User clicks on Blocks if it is not selected by default
     When User clicks on Block Settings option
-    Then User see the 'Add Blocks' as title of the Block Settings panel
+    Then User see the 'Add Blocks' as title of the 'Blocks' option
     And User sees the search bar
     And User sees the 'System Blocks' section
     And User sees the 'Community Blocks' section

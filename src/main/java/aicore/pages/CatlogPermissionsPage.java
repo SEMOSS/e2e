@@ -63,7 +63,7 @@ public class CatlogPermissionsPage {
 	public boolean userCanSeeGeneral() {
 		return CatlogAccessPageUtility.UserCanSeeGeneral(page);
 	}
-
+	
 	public boolean userCanSeeApps() {
 		return CatlogAccessPageUtility.userCanSeeApps(page);
 	}
@@ -137,4 +137,17 @@ public class CatlogPermissionsPage {
 	public void rejectPendingRequest() {
 		CatlogAccessPageUtility.rejectPendingRequest(page);
 	}
+
+	public void clickOnSettingsOption(String option) {
+		CatlogAccessPageUtility.clickOnSettingsOption(page, option);
+	}
+
+	public boolean userSeeThePageOpenOnRightSidePanel(String pageName) {
+		return CatlogAccessPageUtility.userSeeThePageOpenOnRightSidePanel(page, pageName);
+	}
+
+	public boolean userCanSeeSectionUnderSetting(String section) {
+		return CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, section);
+	}
+
 }
