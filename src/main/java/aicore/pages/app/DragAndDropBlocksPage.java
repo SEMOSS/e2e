@@ -304,4 +304,17 @@ public class DragAndDropBlocksPage {
 	public void highlightThePage(String pageName) {
 		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
+
+	public String getBlockSettingsPanelTitle(String option) {
+		return DragAndDropBlocksPageUtils.getBlockSettingsPanelTitle(page, option);
+	}
+	
+	public boolean userSeesTheSection(String sectionsName) {
+		return DragAndDropBlocksPageUtils.userSeesTheSection(page, sectionsName);
+	}
+
+	public boolean isOptionVisibleUnderSection(String sectionName, String optionName) {
+		return DragAndDropBlocksPageUtils.isOptionVisibleUnderSection(page, sectionName, optionName);
+	}
+	
 }
