@@ -89,6 +89,51 @@ public class AddModelPage {
 		return ModelPageUtils.getExpectedCatalogTitle(modelTitle + timestamp);
 	}
 
+	public void clickOnChatTab() {
+		ModelPageUtils.clickOnChatTab(page);
+	}
+
+	public void verifyChatSectionDisplayed(String title) {
+		ModelPageUtils.verifyChatSectionDisplayed(page, title);
+	}
+
+	public void verifyModelIDAndNameDisplayed() {
+		ModelPageUtils.verifyModelIDAndNameDisplayed(page);
+	}
+
+	public void verifyTemperatureValue(String expectedValue) {
+		ModelPageUtils.verifyTemperatureValue(page, expectedValue);
+	}
+
+	public void verifyMaxTokensValue(String expectedValue) {
+		ModelPageUtils.verifyMaxTokensValue(page, expectedValue);
+	}
+
+	public void verifyInputTextboxPlaceholder(String expectedValue) {
+		ModelPageUtils.verifyInputTextboxPlaceholder(page, expectedValue);
+	}
+	public void verifyAndActivateSendButton(String inputText) {
+		ModelPageUtils.verifyAndActivateSendButton(page, inputText);
+	}
+
+	public void clickOnSendButton() {
+		ModelPageUtils.clickOnSendButton(page);
+	}
+
+	public void clickOnClearAllButton() {
+		ModelPageUtils.clickOnClearAllButton(page);
+	}
+	public void verifyChatWindowCleared() {
+		ModelPageUtils.verifyChatWindowCleared(page);
+	}
+
+	public void verifyLoaderDisplayed() {
+		ModelPageUtils.verifyLoaderDisplayed(page);
+	}
+	public void verifyResponseGeneratedInChatWindow() {
+		ModelPageUtils.verifyResponseGeneratedInChatWindow(page);
+	}
+
 	public void clickOnSMSSTab() {
 		ModelPageUtils.clickOnSMSSTab(page);
 	}
