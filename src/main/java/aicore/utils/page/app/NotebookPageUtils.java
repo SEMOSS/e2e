@@ -383,7 +383,9 @@ public class NotebookPageUtils {
 	}
 
 	public static List<String> getNotebookOutputTableHeader(Page page) {
-		return page.locator(OUTPUT_TABLE).last().locator("th").allTextContents();
+		Locator tableHeader = page.locator(OUTPUT_TABLE).last().locator("th");
+		AICorePageUtils.waitFor(tableHeader);
+		return tableHeader.allTextContents();
 	}
 
 	public static int getTotalRowsFromPreviewCaption(Page page) {

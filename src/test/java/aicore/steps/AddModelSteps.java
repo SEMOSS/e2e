@@ -216,7 +216,7 @@ public class AddModelSteps {
     }
 
     @And("User should see the response generated for the query in the chat window")
-    public void user_Should_See_The_Response_Generated_For_The_Query_In_The_Chat_Window(String) {
+    public void user_Should_See_The_Response_Generated_For_The_Query_In_The_Chat_Window() {
         openModelPage.verifyResponseGeneratedInChatWindow();
     }
 
