@@ -119,4 +119,6 @@ Feature: Model Documentation
     And User selects the 'ModelGPT4o' from the model catalog
     And User clicks on Usage tab
     And User captures screenshot for "NB3"
+    And User logs out from the application
+    Then User login as "Admin"
     And User completes screenshot capture and triggers comparison for "MODELGPT4USAGE"
