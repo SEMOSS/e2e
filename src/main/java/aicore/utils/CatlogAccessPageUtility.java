@@ -50,6 +50,7 @@ public class CatlogAccessPageUtility {
 	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div//p[normalize-space()='Enable the publishing of the portal.']/following::span[contains(@class,'Mui-checked')]//input[@type='checkbox']";
 	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button//span[normalize-space()='Publish']";
 	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//span[normalize-space()='{buttonName}']";
+	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -282,6 +283,11 @@ public class CatlogAccessPageUtility {
 
 	public static void clickOnAppSettingsOption(Page page, String buttonName) {
 		page.locator(SETTING_PAGE_APP_OPTION_XPATH.replace("{buttonName}", buttonName)).click();
+	}
+
+	public static boolean userCanSeeSectionUnderGeneralSetting(Page page, String sectionName) {
+		Locator sectionLocator = page.locator(GENERAL_SETTING_SECTION_XPATH.replace("{section}", sectionName));
+		return sectionLocator.isVisible();
 	}
 
 }

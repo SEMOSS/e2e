@@ -488,4 +488,11 @@ public class CatlogAccessStep {
 	public void user_click_on_app_section_button(String buttonName) {
 		catlogpermission.clickOnAppSettingsOption(buttonName);
 	}
+
+	@And("User can see the {string} section on General setting page")
+	public void user_can_see_the_section_on_general_setting_page(String sectionName) {
+		boolean isSectionVisible = catlogpermission.userCanSeeSectionUnderGeneralSetting(sectionName);
+		Assertions.assertTrue(isSectionVisible, sectionName + " section is not visible on General setting page");
+	}
+	
 }

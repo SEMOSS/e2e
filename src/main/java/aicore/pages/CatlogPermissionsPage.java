@@ -161,5 +161,8 @@ public class CatlogPermissionsPage {
 	public void clickOnAppSettingsOption(String buttonName) {
 		CatlogAccessPageUtility.clickOnAppSettingsOption(page, buttonName);
 	}
+	public boolean userCanSeeSectionUnderGeneralSetting(String sectionName) {
+		return CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page, sectionName);
+	}
 
 }

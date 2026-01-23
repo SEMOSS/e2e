@@ -1,4 +1,4 @@
-@LoginWithAdmin @Regression @DeleteCreatedTestApp
+@LoginWithAdmin @Regression
 Feature: Drag and Drop App setting Page
 
   Background: Create Drag and Drop app and navigate to Setting Page
@@ -13,6 +13,7 @@ Feature: Drag and Drop App setting Page
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User clicks on Block Settings option
 
+  @DeleteCreatedTestApp
   Scenario: Setting page - View Title, Member, Apps, General option
     Given User click on Settings
     Then 'Admin' user can 'view' Settings
@@ -21,6 +22,7 @@ Feature: Drag and Drop App setting Page
     And 'Admin' user can 'view' Apps
     And 'Admin' user can 'view' General
 
+  @DeleteCreatedTestApp
   Scenario: Setting page - validate the Member option for drag and drop app
     Given User click on Settings
     When User clicks on 'Members' option under Settings
@@ -36,6 +38,7 @@ Feature: Drag and Drop App setting Page
     And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
+  @DeleteCreatedTestApp
   Scenario: Setting page - validate the Apps option for drag and drop app
     Given User click on Settings
     When User clicks on 'Apps' option under Settings
@@ -53,3 +56,20 @@ Feature: Drag and Drop App setting Page
     And User can see the 'Update Project' section on setting page
     And User uploads the file 'dummy-pdf.pdf'
     And User click on 'Update' button on setting page
+
+  Scenario: Setting page - validate the General option for drag and drop app
+    Given User click on Settings
+    When User clicks on 'General' option under Settings
+    Then User see the 'General' page open on right side panel
+    And User can see the 'Private' section on General setting page
+    And User turn OFF the Private option
+    And 'Admin' user can see toaster message is 'Successfully made Test app .* global'
+    And User turn ON the Private option
+    And 'Admin' user can see toaster message is 'Successfully made Test app .* non-global'
+    And User can see the 'Non Discoverable' section on General setting page
+    And User turn OFF the Non Discoverable option
+    And 'Author' user can see toaster message is 'Successfully made Test app .* discoverable'
+    And User turn ON the Non Discoverable option
+    And 'Author' user can see toaster message is 'Successfully made Test app .* undiscoverable'
+    And User can see the 'Delete Project' section on General setting page
+    And 'Author' user 'can' Delete Catalog
