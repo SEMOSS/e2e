@@ -360,8 +360,8 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		Assertions.assertTrue(isColumnVisible, "Searched column is not visible in the list");
 	}
 
-	@When("User clicks on Refresh database structure button")
-	public void user_clicks_on_refresh_database_structure_button() {
+	@When("User clicks on Refresh database structure icon")
+	public void user_clicks_on_refresh_database_structure_icon() {
 		addDatabaseToCatalogPage.clickOnRefreshButtonForDataColumns();
 	}
 
