@@ -169,4 +169,9 @@ public class CreateCodeAppSteps {
 		Assertions.assertTrue(isAppVisible, "The app Title is not visible on the page");
 	}
 
+	@And("User click on the Bookmark App icon")
+	public void user_click_on_the_bookmark_app_icon() {
+		codeAppPage.clickOnBookmarkAppIcon();
+	}
+
 }
