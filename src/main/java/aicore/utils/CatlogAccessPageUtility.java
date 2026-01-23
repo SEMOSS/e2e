@@ -44,9 +44,12 @@ public class CatlogAccessPageUtility {
 	private static final String CATALOG_ID_XPATH = "//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p";
 	private static final String PENDING_REQUEST_ACCEPT_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String PENDING_REQUEST_REJECT_XPATH = "//*[name()='svg'][@data-testid='CloseIcon']";
-	private static final String SEETING_OPTION_XPATH="//div[@aria-label='{option}']";
-	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH="//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
-	private static final String SETTING_SECTION_XPATH="//h6[normalize-space()='{section}']";
+	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
+	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
+	private static final String SETTING_SECTION_XPATH = "//h6[normalize-space()='{section}']";
+	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div//p[normalize-space()='Enable the publishing of the portal.']/following::span[contains(@class,'Mui-checked')]//input[@type='checkbox']";
+	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button//span[normalize-space()='Publish']";
+	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//span[normalize-space()='{buttonName}']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
@@ -251,8 +254,34 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
-		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));		
+		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));
 		return sectionLocator.isVisible();
+	}
+
+	public static boolean changeTheToggleStateForPortal(Page page, String action) {
+		Locator toggleLocator = page.locator(PUBLISH_ENABLE_TOGGLE_XPATH);
+		AICorePageUtils.waitFor(toggleLocator);
+		if (toggleLocator.isVisible()) {
+			return true;
+		} else {
+			toggleLocator.click();
+			return false;
+		}
+	}
+
+	public static boolean clickOnPublishPortalButton(Page page) {
+		Locator publishButton = page.locator(CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH);
+		if (publishButton.isEnabled()) {
+			publishButton.click();
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public static void clickOnAppSettingsOption(Page page, String buttonName) {
+		page.locator(SETTING_PAGE_APP_OPTION_XPATH.replace("{buttonName}", buttonName)).click();
 	}
 
 }

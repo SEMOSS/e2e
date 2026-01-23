@@ -305,8 +305,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
 
-	public String getBlockSettingsPanelTitle(String option) {
-		return DragAndDropBlocksPageUtils.getBlockSettingsPanelTitle(page, option);
+	public String getBlockSettingsPanelTitle(String expectedTitle,String option) {
+		return DragAndDropBlocksPageUtils.getBlockSettingsPanelTitle(page, expectedTitle,option);
 	}
 	
 	public boolean userSeesTheSection(String sectionsName) {

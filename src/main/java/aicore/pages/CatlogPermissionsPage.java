@@ -150,4 +150,16 @@ public class CatlogPermissionsPage {
 		return CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, section);
 	}
 
+	public boolean changeTheToggleStateForPortal(String action) {
+		return CatlogAccessPageUtility.changeTheToggleStateForPortal(page, action);
+	}
+
+	public boolean clickOnPublishPortalButton() {
+		return CatlogAccessPageUtility.clickOnPublishPortalButton(page);
+	}
+
+	public void clickOnAppSettingsOption(String buttonName) {
+		CatlogAccessPageUtility.clickOnAppSettingsOption(page, buttonName);
+	}
+
 }
