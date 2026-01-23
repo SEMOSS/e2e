@@ -357,7 +357,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@Then("User can see only {string} column in the list")
 	public void user_can_see_only_column_in_the_list(String columnName) {
 		boolean isColumnVisible = addDatabaseToCatalogPage.verifySearchedDataColumn(columnName);
-		Assertions.assertTrue(isColumnVisible, "Searched column is not visible in the list");
+		Assertions.assertTrue(isColumnVisible, "Searched " + columnName + " column is not visible in the list");
 	}
 
 	@When("User clicks on Refresh database structure icon")
