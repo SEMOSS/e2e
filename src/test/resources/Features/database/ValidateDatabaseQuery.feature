@@ -40,7 +40,7 @@ Feature: Validate Database Query Functionality
     #And User can see all data columns are collapsed
  
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate all columns displayed under data columns
+  Scenario: Validate all database columns displayed under data columns
     Given User can see the Catalog title as 'TestDatabase'
     When User clicks on Query tab
     Then User can see 'DIABETES_UNIQUE_ROW_ID, AGE, BMI, BLOODPRESSURE, DIABETESPEDIGREEFUNCTION, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns displayed under data columns section
