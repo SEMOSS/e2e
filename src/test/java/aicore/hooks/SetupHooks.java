@@ -283,95 +283,50 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 			page.context().tracing().stop(so);
 		}
 
-		// Close page/context for this feature so Playwright finalizes videos/traces
-		try {
-			if (GenericSetupUtils.useVideo()) {
-				try {
-					Path og = null;
-					try {
-						og = page.video().path();
-					} catch (Throwable t) {
-						logger.debug("No video available directly from page: {}", t.getMessage());
-						og = null;
-					}
-
-					page.close();
-
-					logger.info("saving video");
-					if (ResourcePool.get().isFailed()) {
-						String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
-						Path newDir = Paths.get("videos", "features", feature);
-						if (!Files.exists(newDir)) {
-							Files.createDirectories(newDir);
-						}
-
-						if (og != null && Files.exists(og)) {
-							Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
-							int i = 0;
-							while (Files.exists(newPath) && i < 30) {
-								i++;
-								newPath = Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
-							}
-							Files.move(og, newPath);
-							logger.info("Moved video {} to {}", og, newPath);
-						} else {
-							// Fallback: find candidate video files created during feature window
-							long startMillis = ResourcePool.get().getTimestampMillis();
-							long now = System.currentTimeMillis();
-							Path videosRoot = Paths.get("videos");
-							if (Files.exists(videosRoot)) {
-								Optional<Path> candidate = Files.walk(videosRoot)
-									.filter(Files::isRegularFile)
-									.filter(p -> {
-										try { long lm = Files.getLastModifiedTime(p).toMillis(); return lm >= startMillis - 2000 && lm <= now + 2000; } catch (Exception e) { return false; }
-									})
-									.max(Comparator.comparingLong(p -> { try { return Files.size(p);} catch (Exception e) { return 0L; } }));
-								if (candidate.isPresent()) {
-									Path src = candidate.get();
-									Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
-									int i = 0;
-									while (Files.exists(newPath) && i < 30) { i++; newPath = Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm"); }
-									Files.move(src, newPath);
-									logger.info("Fallback moved video {} to {}", src, newPath);
-								} else {
-									logger.warn("No candidate video found in videos/ to move for feature {}", feature);
-								}
-							}
-						}
-					} else {
-						// Passed scenario: delete the temporary video if it exists, otherwise remove small temp files in the feature window
-						try {
-							if (og != null && Files.exists(og)) {
-								Files.deleteIfExists(og);
-								logger.info("Deleted temporary video {} (scenario passed)", og);
-							} else {
-								long startMillis = ResourcePool.get().getTimestampMillis();
-								long now = System.currentTimeMillis();
-								Path videosRoot = Paths.get("videos");
-								if (Files.exists(videosRoot)) {
-									Files.walk(videosRoot).filter(Files::isRegularFile).forEach(p -> {
-										try { long lm = Files.getLastModifiedTime(p).toMillis(); if (lm >= startMillis - 2000 && lm <= now + 2000 && Files.size(p) < 1024) { Files.deleteIfExists(p); logger.info("Deleted small temporary video {}", p); } } catch (Exception ignore) {}
-									});
-								}
-							}
-						} catch (Exception e) { logger.warn("Error while cleaning temp videos: {}", e.getMessage()); }
-					}
-				} catch (Exception e) {
-					logger.warn("Error while handling video for feature {}: {}", feature, e.getMessage());
-				}
-			} else {
-				// if not using video, just close the page
-				try { page.close(); } catch (Exception ignore) {}
-			}
-		} catch (Throwable t) {
-			logger.warn("Error finalizing page/context for feature {}: {}", feature, t.getMessage());
+		context.close();
+		Path og = null;
+		if (GenericSetupUtils.useVideo()) {
+			og = page.video().path();
 		}
 
-		// Close context (page+context) for this resource to free feature-level resources; keep browser/playwright open to avoid frequent restarts
-		try {
-			ResourcePool.get().closeContext();
-		} catch (Exception e) {
-			logger.warn("Error during context cleanup for feature {}: {}", feature, e.getMessage());
+		page.close();
+
+		if (GenericSetupUtils.useVideo()) {
+            logger.info("saving video");
+            if (failed) {
+                String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
+                Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
+                Path newDir = Paths.get("videos", "features", feature);
+                if (!Files.exists(newDir)) {
+                    Files.createDirectories(newDir);
+                }
+
+                int i = 0;
+                while (Files.exists(newPath) && i < 30) {
+                    i++;
+                    newPath =  Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
+                    logger.info("File exists getting new path: {}", newPath);
+                    logger.info("loop: {}", i);
+                }
+                try {
+                    Files.move(og, newPath);
+                } catch (IOException e) {
+                    // Handle race condition in parallel execution - find next available slot
+                    int j = i + 1;
+                    while (j < 100) {
+                        Path fallbackPath = Paths.get("videos", "features", feature, scenarioNameSafe + j + ".webm");
+                        try {
+                            Files.move(og, fallbackPath);
+                            logger.info("Moved video to fallback path due to race condition: {}", fallbackPath);
+                            break;
+                        } catch (IOException ignore) {
+                            j++;
+                        }
+                    }
+                }
+            } else {
+                Files.deleteIfExists(og);
+            }
 		}
 	}
 
