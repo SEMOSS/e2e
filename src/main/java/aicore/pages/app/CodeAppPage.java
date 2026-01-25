@@ -130,4 +130,16 @@ public class CodeAppPage {
 	public void clickOnBookmarkAppIcon() {
 		CodeAppPageUtils.clickOnBookmarkAppIcon(page);
 	}
+
+	public void clickOnSettingsTab(){
+	 CodeAppPageUtils.clickOnSettingsTab(page);
+	}
+	
+	public void clickOnGeneralTab(){
+		CodeAppPageUtils.clickOnGeneralTab(page);
+	}
+	
+	public void clickOnAppsTab() {
+		CodeAppPageUtils.clickOnAppsTab(page);
+	}
 }
