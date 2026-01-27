@@ -24,7 +24,7 @@ public class LayersPageUtils {
 	private static final String LAYER_BLOCK_ABOVE_XPATH = "//div[contains(@data-id,'{baseLayer}')]/preceding-sibling::div[contains(@data-id,'{reorderedLayer}')]";
 	private static final String LAYER_BLOCK_BELOW_XPATH = "//div[contains(@data-id,'{baseLayer}')]/following-sibling::div[contains(@data-id,'{reorderedLayer}')]";
 	private static final String CONTAINER_EXPAND_ARROW_DATA_TESTID = "ChevronRightIcon";
-	private static final String LAYER_MORE_VERT_ICON_XPATH = "//div[contains(@data-id,'link')]//button";
+	private static final String LAYER_MORE_VERT_ICON_XPATH = "//div[contains(@data-id,'{layerName}')]//button";
 	private static final String DELETE_LAYER_XPATH = "//li[@value='delete']";
 	private static final String DUPLICATE_LAYER_XPATH = "//li[@value='duplicate']";
 
@@ -125,23 +125,33 @@ public class LayersPageUtils {
 	}
 
 	public static void deleteLayer(Page page, String layerName) {
-		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
+		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("{layerName}", layerName.toLowerCase()))
 				.first();
 		AICorePageUtils.waitFor(moreVertIcon);
-		moreVertIcon.click();
-		Locator delete = page.locator(DELETE_LAYER_XPATH);
-		AICorePageUtils.waitFor(delete);
-		delete.click();
+		for (int i = 1; i <= 5; i++) {
+			moreVertIcon.click();
+			Locator delete = page.locator(DELETE_LAYER_XPATH);
+			AICorePageUtils.waitFor(delete);
+			if (delete.isVisible()) {
+				delete.click();
+				break;
+			}
+		}
 	}
 
 	public static void duplicateLayer(Page page, String layerName) {
-		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("link", layerName.toLowerCase()))
+		Locator moreVertIcon = page.locator(LAYER_MORE_VERT_ICON_XPATH.replace("{layerName}", layerName.toLowerCase()))
 				.first();
 		AICorePageUtils.waitFor(moreVertIcon);
-		moreVertIcon.click();
-		Locator duplicate = page.locator(DUPLICATE_LAYER_XPATH);
-		AICorePageUtils.waitFor(duplicate);
-		duplicate.click();
+		for (int i = 1; i <= 5; i++) {
+			moreVertIcon.click();
+			Locator duplicate = page.locator(DUPLICATE_LAYER_XPATH);
+			AICorePageUtils.waitFor(duplicate);
+			if (duplicate.isVisible()) {
+				duplicate.click();
+				break;
+			}
+		}
 	}
 
 	public static boolean isLayerDeleted(Page page, String layerName) {
@@ -151,4 +161,5 @@ public class LayersPageUtils {
 	public static boolean isLayerDuplicated(Page page, String layerName) {
 		return page.locator(LAYER_BLOCK_XPATH.replace("{layerName}", layerName.toLowerCase())).count() > 1;
 	}
+	
 }
