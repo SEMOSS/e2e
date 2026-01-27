@@ -1,0 +1,53 @@
+package aicore.steps;
+
+import org.junit.jupiter.api.Assertions;
+
+import aicore.hooks.SetupHooks;
+import aicore.pages.GuardrailPage;
+import aicore.pages.HomePage;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class AddGuardrailSteps {
+	private HomePage homePage;
+	private GuardrailPage guardrailPage;
+	protected static String timestamp;
+
+	public AddGuardrailSteps() {
+		timestamp = SetupHooks.getTimestamp();
+		this.guardrailPage = new GuardrailPage(SetupHooks.getPage());
+		this.homePage = new HomePage(SetupHooks.getPage());
+	}
+
+	@When("User clicks on Guardrail")
+	public void user_clicks_on_guardrail() {
+		homePage.clickOnGuardrail();
+	}
+
+	@When("User clicks on Add Guardrail button")
+	public void user_clicks_on_add_guardrail() {
+		guardrailPage.clickOnAddGuardrailButton();
+	}
+
+	@When("User enters guardrail Catalog Name as {string}")
+	public void user_enters_guardrail_catalog_name_as(String catalogName) {
+		guardrailPage.enterCatalogName(catalogName + timestamp);
+	}
+
+	@When("User enters NER Labels as {string} and presses Enter")
+	public void user_enters_ner_labels_as_and_presses_Enter(String label) {
+		guardrailPage.enterNerLabels(label);
+	}
+
+	@When("User enters Default Threshold as {string}")
+	public void user_enters_default_threshold_as(String threshold) {
+		guardrailPage.enterDefaultThreshold(threshold);
+	}
+
+	@Then("User can see the Guardrail Catalog title as {string}")
+	public void user_can_see_the_guardrail_catalog_title_as(String guardrailTitle) {
+		String actualGuardrailTitle = guardrailPage.verifyGuardrailTitle(guardrailTitle);
+		String expGuardrailTitle = guardrailTitle + timestamp;
+		Assertions.assertEquals(expGuardrailTitle, actualGuardrailTitle, "Guardrail title does not match");
+	}
+}
