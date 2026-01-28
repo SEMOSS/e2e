@@ -219,3 +219,23 @@ Feature: Documentation for Accordion Block Settings
   And User highlight the 'page-1' page
   And User captures screenshot for "DNDlayers"
   And User completes screenshot capture and triggers comparison for 'Drag and Drop Layer Overview'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation - DND Text screenshot
+  Given User captures documentation screenshot for 'Navigating/Create New App'
+  When User opens Main Menu
+  And User clicks on Open App Library
+  And User clicks on Create New App button
+  And User clicks on Get Started button in "Drag and Drop"
+  And User enters app name as 'DND Text Test App'
+  And User clicks on Create button
+  And User fetch the app name for drag and drop app
+  And User clicks on Blocks if it is not selected by default
+  And User closes the Block Settings button
+  And User drags the 'Markdown' block and drops it on the page
+  And User drags the 'Input' block and drops it on the page
+  And User drags the 'HTML' block and drops it on the page
+  And User clicks on the 'Markdown' block to select it
+  And User clicks on the Block Settings option
+  And User captures screenshot for "DNDtext"
+  And User completes screenshot capture and triggers comparison for 'Drag and Drop Text Overview'

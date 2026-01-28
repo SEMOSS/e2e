@@ -210,17 +210,17 @@ public class DragAndDropBlocksPageUtils {
 		case "Markdown":
 			if (page.getByText("Add Content").isVisible()) {
 				Locator targetBox1 = page.getByText("Add Content");
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, -5, 10);
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, -5, 20);
 				page.mouse().up();
 			} else {
 				Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, -5, 10);
+				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 20);
 				page.mouse().up();
 
 			}
 		default:
 			Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
-			CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 10);
+			CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 20);
 			page.mouse().up();
 		}
 	}
