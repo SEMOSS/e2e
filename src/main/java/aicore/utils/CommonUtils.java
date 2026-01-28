@@ -311,6 +311,7 @@ public class CommonUtils {
 			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
 			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
 			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);

@@ -47,6 +47,14 @@ public class AppVariablePageUtils {
 		}
 	}
 
+	public static void clickVariableType(Page page) {
+		Locator variableTypeButton = page.locator(VariableTypeDropdown);
+		if (variableTypeButton.isVisible()) {
+			variableTypeButton.click();
+		} else {
+			throw new RuntimeException("Variable Type dropdown is not visible");
+		}
+	}
 	public static void selectVariableType(Page page, String variableType) {
 		Locator variableTypeButton = page.locator(VariableTypeDropdown);
 		if (variableTypeButton.isVisible()) {
