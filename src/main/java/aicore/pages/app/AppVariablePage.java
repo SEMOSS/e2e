@@ -28,6 +28,10 @@ public class AppVariablePage {
 		AppVariablePageUtils.selectVariableType(page, variableType);
 	}
 
+	public void clickVariableType() {
+		AppVariablePageUtils.clickVariableType(page);
+	}
+
 	public void setVariableValue(String variableValue) {
 		AppVariablePageUtils.setVariableValue(page, variableValue);
 	}

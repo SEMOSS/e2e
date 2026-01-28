@@ -60,6 +60,11 @@ public class AddDatabasePageUtils {
 	private static final String OUTPUT_TABLE = "//table";
 	private static final String COLLAPSE_COLUMNS_XPATH = "//table//tbody";
 	private static final String COLLAPSE_COLUMNS_HEADER_XPATH = "//table//thead//tr[contains(@class,'closed')]";
+	private static final String DATA_COLUMNS_XPATH = "//table//tbody//tr";
+	private static final String DATA_COLUMNS_REFRESH_BUTTON_XPATH = "//button[@title='Refresh database structure']";
+	private static final String DATA_COLUMNS_REFRESHING_TILE_XPATH = "//p[contains(text(),'{text}')]";
+	private static final String EXPAND_TABLE_ARROW_XPATH = "//button[@title='{name}']";
+	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -387,5 +392,51 @@ public class AddDatabasePageUtils {
 		} else {
 			throw new AssertionError("All data columns are not collapsed.");
 		}
+	}
+
+	public static boolean verifyButtonNameChanged(Page page, String buttonName) {
+		Locator buttonLocator = page.locator(BUTTON_XPATH.replace("{buttonName}", buttonName));
+		if (buttonLocator.isVisible()) {
+			return true;
+		} else {
+			throw new AssertionError("Button name is not changed to " + buttonName);
+		}
+	}
+
+	public static List<String> getDataColumns(Page page) {
+		return page.locator(DATA_COLUMNS_XPATH).allTextContents();
+	}
+
+	public static void searchDataColumn(Page page, String columnName) {
+		Locator searchBox = page.getByPlaceholder("Search");
+		AICorePageUtils.waitFor(searchBox);
+		searchBox.fill(columnName);
+	}
+
+	public static boolean verifySearchedDataColumn(Page page, String columnName) {
+		Locator dataColumn = page.locator(DATA_COLUMNS_XPATH)
+				.filter(new Locator.FilterOptions().setHasText(columnName));
+		if (page.locator(DATA_COLUMNS_XPATH).count() == 1 && dataColumn.isVisible()) {
+			return true;
+		}
+		return false;
+	}
+
+	public static void clickOnRefreshButtonForDataColumns(Page page) {
+		Locator refreshButton = page.locator(DATA_COLUMNS_REFRESH_BUTTON_XPATH);
+		AICorePageUtils.waitFor(refreshButton);
+		refreshButton.click();
+	}
+
+	public static boolean verifyRefreshingTileForDataColumns(Page page, String text) {
+		Locator refreshingTile = page.locator(DATA_COLUMNS_REFRESHING_TILE_XPATH.replace("{text}", text));
+		AICorePageUtils.waitFor(refreshingTile);
+		return refreshingTile.isVisible();
+	}
+
+	public static void clickOnExpandTableArrow(Page page, String name) {
+		Locator expandArrow = page.locator(EXPAND_TABLE_ARROW_XPATH.replace("{name}", name));
+		AICorePageUtils.waitFor(expandArrow);
+		expandArrow.click();
 	}
 }
