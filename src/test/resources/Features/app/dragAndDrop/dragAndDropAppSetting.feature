@@ -26,7 +26,7 @@ Feature: Drag and Drop App setting Page
   Scenario: Setting page - validate the Member option for drag and drop app
     Given User click on Settings
     When User clicks on 'Members' option under Settings
-    Then User see the 'Members' page open on right side panel
+    Then User can see the 'Members' page open on right side panel
     And 'Admin' user can 'view' Export Icon
     And User can see the 'Pending Requests' section on setting page
     And User clicks on Add Member button
@@ -42,7 +42,7 @@ Feature: Drag and Drop App setting Page
   Scenario: Setting page - validate the Apps option for drag and drop app
     Given User click on Settings
     When User clicks on 'Apps' option under Settings
-    Then User see the 'Apps' page open on right side panel
+    Then User can see the 'Apps' page open on right side panel
     And 'Admin' user can 'view' Export Icon
     And User can see the 'Portals' section on setting page
     And User can 'enable' the portal
@@ -60,7 +60,7 @@ Feature: Drag and Drop App setting Page
   Scenario: Setting page - validate the General option for drag and drop app
     Given User click on Settings
     When User clicks on 'General' option under Settings
-    Then User see the 'General' page open on right side panel
+    Then User can see the 'General' page open on right side panel
     And User can see the 'Private' section on General setting page
     And User turn OFF the Private option
     And 'Admin' user can see toaster message is 'Successfully made Test app .* global'

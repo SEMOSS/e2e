@@ -63,7 +63,7 @@ public class CatlogPermissionsPage {
 	public boolean userCanSeeGeneral() {
 		return CatlogAccessPageUtility.UserCanSeeGeneral(page);
 	}
-	
+
 	public boolean userCanSeeApps() {
 		return CatlogAccessPageUtility.userCanSeeApps(page);
 	}
@@ -150,8 +150,8 @@ public class CatlogPermissionsPage {
 		return CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, section);
 	}
 
-	public boolean changeTheToggleStateForPortal(String action) {
-		return CatlogAccessPageUtility.changeTheToggleStateForPortal(page, action);
+	public boolean isPortalToggleInExpectedState(String action) {
+		return CatlogAccessPageUtility.isPortalToggleInExpectedState(page, action);
 	}
 
 	public boolean clickOnPublishPortalButton() {
@@ -161,8 +161,8 @@ public class CatlogPermissionsPage {
 	public void clickOnAppSettingsOption(String buttonName) {
 		CatlogAccessPageUtility.clickOnAppSettingsOption(page, buttonName);
 	}
+
 	public boolean userCanSeeSectionUnderGeneralSetting(String sectionName) {
 		return CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page, sectionName);
 	}
-
 }

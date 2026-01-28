@@ -425,9 +425,9 @@ public class CatlogAccessStep {
 	public void user_make_the_catalog_as(String catalogType, String option) {
 		if (option.equalsIgnoreCase("Discoverable")) {
 			catlogpermission.setToggleStateForNonDiscovrable();
-					} else if (option.equalsIgnoreCase("Non-Discoverable")) {
+		} else if (option.equalsIgnoreCase("Non-Discoverable")) {
 			catlogpermission.setToggleStateForNonDiscovrable();
-					} else {
+		} else {
 			Assertions.fail("Invalid action: " + option);
 		}
 	}
@@ -453,7 +453,7 @@ public class CatlogAccessStep {
 		catlogpermission.clickOnSettingsOption(option);
 	}
 
-	@And("User see the {string} page open on right side panel")
+	@And("User can see the {string} page open on right side panel")
 	public void user_see_the_page_open_on_right_side_panel(String pageName) {
 		boolean isPageOpen = catlogpermission.userSeeThePageOpenOnRightSidePanel(pageName);
 		Assertions.assertTrue(isPageOpen, pageName + " page is not open on right side panel");
@@ -467,22 +467,15 @@ public class CatlogAccessStep {
 
 	@And("User can {string} the portal")
 	public void user_can_enable_or_disable_portal(String action) {
-		if (action.equalsIgnoreCase("enable")) {
-			boolean isPortalEnabled = catlogpermission.changeTheToggleStateForPortal(action);
-			Assertions.assertTrue(isPortalEnabled, "Publish Portal toggle could not be enabled");
-		} else if (action.equalsIgnoreCase("disable")) {
-			boolean isPortalDisabled = catlogpermission.changeTheToggleStateForPortal(action);
-			Assertions.assertTrue(isPortalDisabled, "Publish Portal toggle could not be disabled");
-		} else {
-			Assertions.fail("Invalid action: " + action);
-		}
+		boolean isSuccessful = catlogpermission.isPortalToggleInExpectedState(action);
+		Assertions.assertTrue(isSuccessful, "Failed to " + action + " the Publish Portal toggle");
 	}
 
 	@And("User click on Publish Portal button")
 	public void user_click_on_Publish_Portal_button() {
 		boolean isPublishButtonEnable = catlogpermission.clickOnPublishPortalButton();
 		Assertions.assertTrue(isPublishButtonEnable, "Publish Portal button is not enabled");
-			}
+	}
 
 	@And("User click on {string} button on setting page")
 	public void user_click_on_app_section_button(String buttonName) {
@@ -494,5 +487,4 @@ public class CatlogAccessStep {
 		boolean isSectionVisible = catlogpermission.userCanSeeSectionUnderGeneralSetting(sectionName);
 		Assertions.assertTrue(isSectionVisible, sectionName + " section is not visible on General setting page");
 	}
-	
 }

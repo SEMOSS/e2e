@@ -247,11 +247,7 @@ public class CatlogAccessPageUtility {
 	public static boolean userSeeThePageOpenOnRightSidePanel(Page page, String pageName) {
 		Locator rightSidePage = page.locator(RIGHT_SIDE_OPEN_PAGE_XPATH.replace("{pageName}", pageName));
 		AICorePageUtils.waitFor(rightSidePage);
-		if (!rightSidePage.isVisible()) {
-			return false;
-		} else {
-			return true;
-		}
+		return rightSidePage.isVisible();
 	}
 
 	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
@@ -259,15 +255,15 @@ public class CatlogAccessPageUtility {
 		return sectionLocator.isVisible();
 	}
 
-	public static boolean changeTheToggleStateForPortal(Page page, String action) {
-		Locator toggleLocator = page.locator(PUBLISH_ENABLE_TOGGLE_XPATH);
-		AICorePageUtils.waitFor(toggleLocator);
-		if (toggleLocator.isVisible()) {
-			return true;
-		} else {
-			toggleLocator.click();
-			return false;
+	public static boolean isPortalToggleInExpectedState(Page page, String action) {
+		Locator enableToggle = page.locator(PUBLISH_ENABLE_TOGGLE_XPATH);
+		AICorePageUtils.waitFor(enableToggle);
+		boolean shouldEnable = action.equalsIgnoreCase("enable");
+		boolean isCurrentlyEnabled = enableToggle.isVisible();
+		if (isCurrentlyEnabled != shouldEnable) {
+			enableToggle.click();
 		}
+		return enableToggle.isVisible() == shouldEnable;
 	}
 
 	public static boolean clickOnPublishPortalButton(Page page) {
@@ -289,5 +285,4 @@ public class CatlogAccessPageUtility {
 		Locator sectionLocator = page.locator(GENERAL_SETTING_SECTION_XPATH.replace("{section}", sectionName));
 		return sectionLocator.isVisible();
 	}
-
 }
