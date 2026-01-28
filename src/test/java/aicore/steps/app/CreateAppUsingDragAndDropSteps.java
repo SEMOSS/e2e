@@ -608,6 +608,10 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_variable_type_as(String variableType) {
 		appVariablePage.selectVariableType(variableType);
 	}
+	@Then("User clicks on variable type")
+	public void user_clicks_on_variable_type() {
+		appVariablePage.clickVariableType();
+	}
 
 	@When("User enters variable value")
 	public void user_enters_variable_value() {
