@@ -21,7 +21,7 @@ public class NotebookPageUtils {
 
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
-	private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
+	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor .native-edit-context";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
@@ -71,6 +71,7 @@ public class NotebookPageUtils {
 	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
 	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
+	private static final String NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH = "//div[contains(@class,'MuiPaper-elevation MuiPaper-rounded')]//div[@title='Database Not Editable']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -81,10 +82,6 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterQueryName(Page page, String queryName) {
-//		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX,
-//				new Page.GetByRoleOptions().setName(NOTEBOOK_QUERY_ID_LABEL));
-//		AICorePageUtils.waitFor(queryTextbox);
-//		queryTextbox.fill(queryName);
 		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX);
 		AICorePageUtils.waitFor(queryTextbox);
 		queryTextbox.fill(queryName);
@@ -278,7 +275,18 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterCodeInQuery(Page page, String code) {
-		page.locator(CODE_ENTER_TEXTAREA).fill(code);
+		code = code.replace("\\n", "\n");
+		Locator cell = page.locator(CODE_ENTER_TEXTAREA).first();
+		cell.scrollIntoViewIfNeeded();
+		cell.click(new Locator.ClickOptions().setForce(true));
+		for (int i = 0; i < code.length(); i++) {
+			char c = code.charAt(i);
+			if (c == '\n') {
+				page.keyboard().press("Enter");
+			} else {
+				page.keyboard().type(String.valueOf(c));
+			}
+		}
 	}
 
 	public static void clickOnRunAllButton(Page page) {
@@ -293,9 +301,9 @@ public class NotebookPageUtils {
 
 	public static void mouseHoverOnNotebookHiddenOptions(Page page) {
 		if (!page.getByTestId("data-key-pair").isVisible()) {
-			Locator hiddenOptions = page.locator(CODE_ENTER_TEXTAREA);
-			AICorePageUtils.waitFor(hiddenOptions);
-			CommonUtils.moveMouseToCenterWithMargin(page, hiddenOptions, 60, 20);
+			Locator cell = page.locator(CODE_ENTER_TEXTAREA).first();
+			AICorePageUtils.waitFor(cell);
+			CommonUtils.moveMouseToCenterWithMargin(page, cell, 60, 20);
 		} else {
 			page.setViewportSize(1350, 650);
 			Locator dataKeyPair = page.getByTestId("data-key-pairtype").nth(0);
@@ -322,6 +330,12 @@ public class NotebookPageUtils {
 		selectDatabaseDropdown.click();
 		page.waitForTimeout(300);
 		page.getByText(databaseName).click();
+	}
+	public static void clickOnImportDropdown(Page page) {
+		Locator selectDatabaseDropdown = page.locator(SELECT_DATABASE_DROPDOWN_XPATH);
+		AICorePageUtils.waitFor(selectDatabaseDropdown);
+		page.waitForTimeout(2000); // waiting for columns to map with view
+		selectDatabaseDropdown.click();
 	}
 
 	public static void selectAllColumns(Page page) {
@@ -351,7 +365,7 @@ public class NotebookPageUtils {
 		if (block.isVisible()) {
 			block.hover();
 		}
-		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell"));
+		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).last();
 		AICorePageUtils.waitFor(runCellButton);
 		runCellButton.click();
 		Locator checkCircle = page.getByTestId("CheckCircleIcon");
@@ -466,10 +480,10 @@ public class NotebookPageUtils {
 	}
 
 	public static void writeQuery(Page page, String query) {
-		Locator editor = page.locator(".monaco-editor");
+		Locator editor = page.locator(".monaco-editor").first();
 		editor.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		editor.click();
-		Locator inputField = page.locator(CODE_ENTER_TEXTAREA);
+		Locator inputField = page.locator(CODE_ENTER_TEXTAREA).first();
 		inputField.focus();
 		page.keyboard().press("Control+A");
 		page.keyboard().press("Backspace");
@@ -723,6 +737,18 @@ public class NotebookPageUtils {
 		Locator checkbox = page.locator(TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH);
 		AICorePageUtils.waitFor(checkbox);
 		checkbox.click();
+	}
+
+	public static void mouseHoverAboveNotebookHiddenOptions(Page page) {
+		page.getByTestId("data-key-pair").isVisible();
+		Locator cell = page.locator(NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH);
+		CommonUtils.moveMouseToCenterWithMargin(page, cell, -70, 20);
+	}
+
+	public static void mouseHoverOnBlankCell(Page page) {
+		Locator cell = page.locator(CODE_ENTER_TEXTAREA).first();
+		AICorePageUtils.waitFor(cell);
+		CommonUtils.moveMouseToCenterWithMargin(page, cell, 60, 20);
 	}
 
 }

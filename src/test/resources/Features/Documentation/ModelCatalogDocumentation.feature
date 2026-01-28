@@ -73,3 +73,52 @@ Feature: Model Documentation
     And User clicks on Open Model
     And User captures screenshot for "ModelCatalog"
     And User completes screenshot capture and triggers comparison for 'Model Catalog'
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+  Scenario: Model Catalog - Create New App - NB3 screenshot
+    Given User captures documentation screenshot for 'CreateNewApp'
+    When User is on Home page
+    And User opens Main Menu
+    And User clicks on Open Model
+    When User clicks on Add Model
+    And User selects 'GPT-4o'
+    And User enters Catalog Name as 'ModelGPT4o'
+    And User enters Open AI Key as 'Test@1234'
+    And User clicks on Create Model button
+    Then User can see a toast message as 'Successfully added LLM to catalog'
+    Then User can see the Model title as 'ModelGPT4o'
+    And User clicks on Copy Catalog ID
+    And User clicks on Access Control
+    And User make the 'Model' as 'Discoverable'
+    And User can see a toast message as 'Successfully made Model discoverable'
+    And User logs out from the application
+    Then User login as "editor"
+    And User opens Main Menu
+    And User clicks on Open Model
+    And User click on 'Discoverable Models' tab
+    And User searches the 'ModelGPT4o' in the model catalog searchbox
+    And User selects the 'ModelGPT4o' from the model catalog
+    Given User can see the Model title as 'ModelGPT4o'
+    And User click on the Request Access button
+    And User selects 'read-only' access
+    And User clicks on Request button
+    And User logs out from the application
+    Then User login as "Admin"
+    And User opens Main Menu
+    And User clicks on Open Model
+    And User searches the 'ModelGPT4o' in the model catalog searchbox
+    And User selects the 'ModelGPT4o' from the model catalog
+    And User clicks on Access Control
+    And User click on Pending Request
+    And User 'Accept' request
+    And User logs out from the application
+    Then User login as "editor"
+    And User opens Main Menu
+    And User clicks on Open Model
+    And User searches the 'ModelGPT4o' in the model catalog searchbox
+    And User selects the 'ModelGPT4o' from the model catalog
+    And User clicks on Usage tab
+    And User captures screenshot for "NB3"
+    And User logs out from the application
+    Then User login as "Admin"
+    And User completes screenshot capture and triggers comparison for "MODELGPT4USAGE"

@@ -118,6 +118,10 @@ public class NotebookPage {
 	public void selectDatabaseFromDropdown(String databaseName) {
 		NotebookPageUtils.selectDatabaseFromDropdown(page, databaseName);
 	}
+	
+	public void clickOnImportDropdown() {
+		NotebookPageUtils.clickOnImportDropdown(page);
+	}
 
 	public void selectAllColumns() {
 		NotebookPageUtils.selectAllColumns(page);
@@ -265,5 +269,13 @@ public class NotebookPage {
 
 	public void clickOnIncludeTimeCheckbox() {
 		NotebookPageUtils.clickOnIncludeTimeCheckbox(page);
+	}
+
+	public void mouseHoverAboveNotebookHiddenOptions() {
+		NotebookPageUtils.mouseHoverAboveNotebookHiddenOptions(page);
+	}
+
+	public void mouseHoverOnBlankCell() {
+		NotebookPageUtils.mouseHoverOnBlankCell(page);
 	}
 }

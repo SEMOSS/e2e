@@ -124,4 +124,17 @@ public class CatlogPermissionsPage {
 	public void searchUserBasedOnRole(String role, boolean useDocker) {
 		CatlogAccessPageUtility.searchUser(page, role, useDocker);
 	}
+
+	public void clickOnPendingRequestTab() {
+		CatlogAccessPageUtility.clickOnPendingRequestTab(page);
+
+	}
+
+	public void acceptPendingRequest() {
+		CatlogAccessPageUtility.acceptPendingRequest(page);
+	}
+
+	public void rejectPendingRequest() {
+		CatlogAccessPageUtility.rejectPendingRequest(page);
+	}
 }

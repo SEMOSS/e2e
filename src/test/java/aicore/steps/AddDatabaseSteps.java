@@ -1,6 +1,7 @@
 package aicore.steps;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -100,6 +101,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_selects_database_from_connection_types(String dbType) {
 		addDatabaseToCatalogPage.selectDatabaseFromConnectionTypes(dbType);
 	}
+
 	@Then("User can see form sections with fields:")
 	public void user_can_see_form_sections_with_fields(DataTable DBTable) {
 		List<Map<String, String>> rows = DBTable.asMaps(String.class, String.class);
@@ -112,6 +114,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 			}
 		}
 	}
+
 	@Then("User can see database mandatory fields")
 	public void user_can_see_database_mandatory_fields(DataTable DBTable) {
 		String singleCell = DBTable.cells().get(0).get(0);
@@ -177,12 +180,12 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		validateSearchBar(addDatabaseToCatalogPage);
 	}
 
-	@And("User should see the following database options with icons on the page")
-	public void user_should_see_the_following_database_options_with_icons_on_the_page(DataTable dataTable) {
+	@Then("User should see the following {string} options with icons on the page")
+	public void user_should_see_the_following_options_with_icons_on_the_page(String catalog, DataTable dataTable) {
 		final String GROUP_NAME = "GROUP";
 		final String DATABASE_OPTION_NAMES = "DATABASE_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(GROUP_NAME, DATABASE_OPTION_NAMES, rows, addDatabaseToCatalogPage);
+		validateOptionsWithIcon(catalog, GROUP_NAME, DATABASE_OPTION_NAMES, rows, addDatabaseToCatalogPage);
 	}
 
 	@When("User clicks on Copy ID option of {string} database")
@@ -272,17 +275,19 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	}
 
 	// View Database Type on Connect To database page
-	@Then("User searches database types and verifies visibility under respective sections")
-	public void userSearchesDatabaseTypesAndVerifiesVisibility(DataTable dataTable) {
+	@Then("User searches {string} types and verifies visibility under respective sections")
+	public void user_searches_types_and_verifies_visibility_under_respective_sections(String catalog,
+			DataTable dataTable) {
 		final String SECTION_NAME = "EXPECTED_SECTION";
 		final String OPTION_NAME = "DATABASE_TYPE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String section = row.get(SECTION_NAME);
 			String[] dbTypes = row.get(OPTION_NAME).split(",\\s*");
+			addDatabaseToCatalogPage.clickOnSection(catalog, section);
 			for (String dbType : dbTypes) {
 				addDatabaseToCatalogPage.searchDatabaseType(section, dbType);
-				boolean isVisible = addDatabaseToCatalogPage.verifyOptionIsVisible(section, dbType);
+				boolean isVisible = addDatabaseToCatalogPage.verifyOptionIsVisible(catalog, section, dbType);
 				Assertions.assertTrue(isVisible,
 						"Database type '" + dbType + "' was not found under section '" + section + "'");
 			}
@@ -297,5 +302,72 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User selects the {string} from the dropdown")
 	public void user_selects_the_from_the_dropdown(String dbName) {
 		addDatabaseToCatalogPage.selectDatabaseFromDropdown(dbName);
+	}
+
+	@When("User clicks on Query tab")
+	public void user_clicks_on_query_tab() {
+		addDatabaseToCatalogPage.clickOnQueryTab();
+	}
+
+	@When("User enters the query {string}")
+	public void user_enters_the_query(String query) {
+		addDatabaseToCatalogPage.enterQuery(query);
+	}
+
+	@Then("User sees {string} columns in the query response table")
+	public void user_sees_columns_in_the_query_response_table(String headerNames) {
+		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
+		List<String> actualHeaderNames = addDatabaseToCatalogPage.getQueryResponseTableHeader();
+		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
+	}
+
+	@Then("User can see query field is empty")
+	public void user_can_see_query_field_is_empty() {
+		addDatabaseToCatalogPage.verifyQueryFieldIsEmpty();
+	}
+
+	@Then("User can see all data columns are collapsed")
+	public void user_can_see_all_data_columns_are_collapsed() {
+		addDatabaseToCatalogPage.verifyAllColumnsAreCollapsed();
+	}
+
+	@Then("User can see button name changed to {string} button")
+	public void user_can_see_button_name_changed_to_button(String buttonName) {
+		boolean isButtonVisible = addDatabaseToCatalogPage.verifyButtonNameChanged(buttonName);
+		Assertions.assertTrue(isButtonVisible, "Button name is not changed to " + buttonName);
+	}
+
+	@When("User clicks on {string} arrow")
+	public void user_clicks_on_arrow(String arrowName) {
+		addDatabaseToCatalogPage.clickOnExpandTableArrow(arrowName);
+	}
+
+	@Then("User can see {string} columns displayed under data columns section")
+	public void user_can_see_columns_displayed_under_data_columns_section(String columnNames) {
+		List<String> expectedColumnNames = Arrays.asList(columnNames.split(", "));
+		List<String> actualColumnNames = addDatabaseToCatalogPage.getDataColumns();
+		Assertions.assertEquals(expectedColumnNames, actualColumnNames, "Columns are not matching");
+	}
+
+	@When("User searches the {string} column in data columns searchbox")
+	public void user_searches_the_column_in_data_columns_searchbox(String columnName) {
+		addDatabaseToCatalogPage.searchDataColumn(columnName);
+	}
+
+	@Then("User can see only {string} column in the list")
+	public void user_can_see_only_column_in_the_list(String columnName) {
+		boolean isColumnVisible = addDatabaseToCatalogPage.verifySearchedDataColumn(columnName);
+		Assertions.assertTrue(isColumnVisible, "Searched " + columnName + " column is not visible in the list");
+	}
+
+	@When("User clicks on Refresh database structure icon")
+	public void user_clicks_on_refresh_database_structure_icon() {
+		addDatabaseToCatalogPage.clickOnRefreshButtonForDataColumns();
+	}
+
+	@Then("User can see {string} tile")
+	public void user_can_see_tile(String text) {
+		boolean isTileVisible = addDatabaseToCatalogPage.verifyRefreshingTileForDataColumns(text);
+		Assertions.assertTrue(isTileVisible, "Tile is not visible");
 	}
 }

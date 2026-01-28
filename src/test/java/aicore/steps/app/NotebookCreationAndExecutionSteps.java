@@ -156,6 +156,11 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.selectHiddenOptionDropdown(optionName);
 	}
 
+	@And("User click on Import data menu")
+	public void user_clicks_on_Import_data_menu() {
+		notebookPage.clickOnImportDropdown();
+	}
+
 	@And("User selects {string} from the dropdown list")
 	public void user_selects_from_the_dropdown_list(String databaseName) {
 		notebookPage.selectDatabaseFromDropdown(databaseName);
@@ -399,5 +404,15 @@ public class NotebookCreationAndExecutionSteps {
 			Assertions.assertEquals(expected, actual.format(formatter), "timestamp values not matching");
 		}
 
+	}
+
+	@And("User mouse hover above the existing cell")
+	public void user_mouse_hover_above_the_existing_cell() {
+		notebookPage.mouseHoverAboveNotebookHiddenOptions();
+	}
+
+	@And("User mouse hover on the blank cell")
+	public void mouse_hover_on_blank_cell() {
+		notebookPage.mouseHoverOnBlankCell();
 	}
 }

@@ -32,6 +32,7 @@ public class BlockSettingsUtils {
 		AICorePageUtils.waitFor(blockSettingsOption);
 		if (!blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			blockSettingsOption.click();
+			page.waitForTimeout(1000);
 		}
 	}
 
@@ -182,5 +183,5 @@ public class BlockSettingsUtils {
 		if (blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			blockSettingsOption.click();
 		}
-}
+	}
 }
