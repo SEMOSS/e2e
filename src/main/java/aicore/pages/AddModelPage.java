@@ -112,6 +112,7 @@ public class AddModelPage {
 	public void verifyInputTextboxPlaceholder(String expectedValue) {
 		ModelPageUtils.verifyInputTextboxPlaceholder(page, expectedValue);
 	}
+
 	public void verifyAndActivateSendButton(String inputText) {
 		ModelPageUtils.verifyAndActivateSendButton(page, inputText);
 	}
@@ -123,6 +124,7 @@ public class AddModelPage {
 	public void clickOnClearAllButton() {
 		ModelPageUtils.clickOnClearAllButton(page);
 	}
+
 	public void verifyChatWindowCleared() {
 		ModelPageUtils.verifyChatWindowCleared(page);
 	}
@@ -130,6 +132,7 @@ public class AddModelPage {
 	public void verifyLoaderDisplayed() {
 		ModelPageUtils.verifyLoaderDisplayed(page);
 	}
+
 	public void verifyResponseGeneratedInChatWindow() {
 		ModelPageUtils.verifyResponseGeneratedInChatWindow(page);
 	}
