@@ -201,5 +201,4 @@ public class CodeAppPageUtils {
 	public static void clickOnAppsTab(Page page) {
 		page.getByLabel("Apps").click();
 	}
-
 }
