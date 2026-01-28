@@ -172,7 +172,36 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void verifyQueryFieldIsEmpty() {
 		AddDatabasePageUtils.verifyQueryFieldIsEmpty(page);
 	}
+
 	public boolean verifyAllColumnsAreCollapsed() {
 		return AddDatabasePageUtils.verifyAllColumnsAreCollapsed(page);
+	}
+
+	public boolean verifyButtonNameChanged(String buttonName) {
+		return AddDatabasePageUtils.verifyButtonNameChanged(page, buttonName);
+	}
+
+	public List<String> getDataColumns() {
+		return AddDatabasePageUtils.getDataColumns(page);
+	}
+
+	public void searchDataColumn(String columnName) {
+		AddDatabasePageUtils.searchDataColumn(page, columnName);
+	}
+
+	public boolean verifySearchedDataColumn(String columnName) {
+		return AddDatabasePageUtils.verifySearchedDataColumn(page, columnName);
+	}
+
+	public void clickOnRefreshButtonForDataColumns() {
+		AddDatabasePageUtils.clickOnRefreshButtonForDataColumns(page);
+	}
+
+	public boolean verifyRefreshingTileForDataColumns(String text) {
+		return AddDatabasePageUtils.verifyRefreshingTileForDataColumns(page, text);
+	}
+
+	public void clickOnExpandTableArrow(String name) {
+		AddDatabasePageUtils.clickOnExpandTableArrow(page, name);
 	}
 }

@@ -22,6 +22,7 @@ public final class TestResourceTrackerHelper {
 	public static final String CATALOG_TYPE_VECTOR = "Vector";
 	public static final String CATALOG_TYPE_FUNCTION = "Function";
 	public static final String CATALOG_TYPE_STORAGE = "Storage";
+	public static final String CATALOG_TYPE_GUARDRAIL = "Guardrail";
 
 	public static final List<String> CATALOG_TYPES = List.of(CATALOG_TYPE_DATABASE, CATALOG_TYPE_MODEL,
 			CATALOG_TYPE_VECTOR, CATALOG_TYPE_FUNCTION, CATALOG_TYPE_STORAGE);
