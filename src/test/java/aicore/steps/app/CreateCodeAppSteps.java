@@ -174,8 +174,8 @@ public class CreateCodeAppSteps {
 		codeAppPage.clickOnBookmarkAppIcon();
 	}
 
-	@And("User clicks on settings tab")
-	public void user_Clicks_On_Settings_Tab() {
+	@And("User clicks on Settings tab")
+	public void user_clicks_On_Settings_Tab() {
 		codeAppPage.clickOnSettingsTab();
 	}
 	

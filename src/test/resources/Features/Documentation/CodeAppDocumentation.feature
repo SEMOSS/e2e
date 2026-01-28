@@ -12,7 +12,7 @@ Feature: Documentation for Code App
     And User enters description as 'Created by automation script'
     And User clicks on Create button
     And User fetch the app name for drag and drop app
-    And User clicks on settings tab
+    And User clicks on Settings tab
     And User clicks on General tab
     And User clicks on Apps tab
     Then User captures a "testidelement , label" and highlights the "workspace-Settings-image , Apps" with name "AppSettings"
