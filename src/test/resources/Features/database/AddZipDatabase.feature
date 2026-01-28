@@ -63,8 +63,24 @@ Feature: Add Zip Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     And User clicks on MetaData tab
-    ### Added below 3 steps due to bug- https://github.com/SEMOSS/semoss-ui/issues/1770 ###
     And User clicks on Refresh button
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
+
+ @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Database - Verify Save functionality for MetaData
+    Given User opens Main Menu
+    When User clicks on Open Database
+    And User searches the 'TestDatabase' in the database Catalog searchbox
+    And User sees the database name 'TestDatabase' in the database catalog
+    And User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks on MetaData tab
+    And User sees the Save button is 'disabled'
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    And User sees the Save button is 'enabled'
+    And User clicks on Save button of Metadata tab
+    Then User sees Database Catalog page
+  
