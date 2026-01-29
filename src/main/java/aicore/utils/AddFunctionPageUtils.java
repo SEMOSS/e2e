@@ -53,7 +53,7 @@ public class AddFunctionPageUtils {
 		page.getByText(functionType).first().click();
 	}
 
-	public static boolean fieldUnderSection(Page page, String section, String field) {
+	private static String getFieldNameForTestId(String field) {
 		String fieldNamesForDataTestid = switch (field) {
 		case "Catalog Name" -> "Name";
 		case "Function Name (metadata)" -> "Function Name";
@@ -65,7 +65,11 @@ public class AddFunctionPageUtils {
 		case "Http Headers" -> "Headers";
 		default -> field;
 		};
-		String fieldName = fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+		return fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+	}
+
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		String fieldName = getFieldNameForTestId(field);
 		Locator fieldLocator = page
 				.locator(FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldName));
 		fieldLocator.scrollIntoViewIfNeeded();
@@ -73,35 +77,14 @@ public class AddFunctionPageUtils {
 	}
 
 	public static boolean isFieldMandatory(Page page, String field) {
-		String fieldNamesForDataTestid = switch (field) {
-		case "Catalog Name" -> "Name";
-		case "Function Name (metadata)" -> "Function Name";
-		case "Function Description (metadata)" -> "Function Description";
-		case "S3 Bucket Engine Id" -> "S3BucketEngineId";
-		case "Google Bucket Engine Id" -> "Google Bucket EngineId";
-		case "Upload Service Account File" -> "File";
-		case "POST Message Body Type" -> "Content Type";
-		case "Http Headers" -> "Headers";
-		default -> field;
-		};
-		String fieldName = fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+		String fieldName = getFieldNameForTestId(field);
 		Locator fieldLocator = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", fieldName));
 		fieldLocator.first().scrollIntoViewIfNeeded();
 		return fieldLocator.first().isVisible();
 	}
 
 	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
-		String fieldNamesForDataTestid = switch (field) {
-		case "Catalog Name" -> "Name";
-		case "Function Name (metadata)" -> "Function Name";
-		case "Function Description (metadata)" -> "Function Description";
-		case "S3 Bucket Engine Id" -> "S3BucketEngineId";
-		case "Google Bucket Engine Id" -> "Google Bucket EngineId";
-		case "POST Message Body Type" -> "Content Type";
-		case "Http Headers" -> "Headers";
-		default -> field;
-		};
-		String fieldName = fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+		String fieldName = getFieldNameForTestId(field);
 		Locator fieldContainer = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldName));
 		fieldContainer.scrollIntoViewIfNeeded();
 		Locator dropdownField = page.locator(DROPDOWN_FIELDS_XPATH.replace("{fieldName}", fieldName));
