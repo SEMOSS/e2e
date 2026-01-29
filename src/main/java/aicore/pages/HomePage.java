@@ -52,6 +52,10 @@ public class HomePage {
 		HomePageUtils.clickOnOpenAppLibrary(page);
 	}
 
+	public void clickOnGuardrail() {
+		HomePageUtils.clickOnGuardrail(page);
+	}
+
 	public void clickOnBuildButton() {
 		HomePageUtils.clickOnBuildButton(page);
 	}

@@ -608,6 +608,10 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_variable_type_as(String variableType) {
 		appVariablePage.selectVariableType(variableType);
 	}
+	@Then("User clicks on variable type")
+	public void user_clicks_on_variable_type() {
+		appVariablePage.clickVariableType();
+	}
 
 	@When("User enters variable value")
 	public void user_enters_variable_value() {
@@ -846,5 +850,34 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User click on {string} from breadcrumb link")
 	public void user_Click_On_The_Breadcrumb_Link(String appName) {
 		appCreatePopup.userClickOnBreadcrumbLink(appName);
+	}
+
+	@And("User see the {string} as title of the {string} option")
+	public void user_see_the_as_title_of_the_block_settings_panel(String expectedTitle, String option) {
+		String actualTitle = blocksPage.getBlockSettingsPanelTitle(option);
+		assertEquals(expectedTitle, actualTitle, "Mismatch between the expected and actual Block Settings panel title");
+	}
+
+	@And("User sees the {string} section")
+	public void user_sees_the_section(String sectionName) {
+		boolean sectionVisible = blocksPage.userSeesTheSection(sectionName);
+		Assertions.assertTrue(sectionVisible, sectionName + " section is not visible under the Block panel");
+	}
+
+	@And("User sees the following options under {string} section:")
+	public void user_sees_the_following_options_under_section(String sectionName, DataTable dataTable) {
+		final String Section = "Section";
+		final String optionName = "Options";
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String sectionNameFromTable = row.get(Section);
+			String optionNameFromTable = row.get(optionName);
+			String[] optionNames = optionNameFromTable.split(", ");
+			for (String optionName1 : optionNames) {
+				boolean isOptionVisible = blocksPage.isOptionVisibleUnderSection(sectionNameFromTable, optionName1);
+				Assertions.assertTrue(isOptionVisible,
+						optionName1 + " option is not visible under the " + sectionNameFromTable + " section");
+			}
+		}
 	}
 }

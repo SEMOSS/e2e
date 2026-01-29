@@ -27,7 +27,6 @@ public class HomePageUtils {
 	private static final String BUILD_PAGE_POPUP_XPATH = "//div[@role='presentation']//div[@role='presentation']";
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-//	private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
 	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
 	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
@@ -35,10 +34,10 @@ public class HomePageUtils {
 	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
 	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
+	private static final String GUARDRAIL_MENU_BUTTON_DATA_TESTID = "sidebar-Guardrail-btn";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String SETTINGS_MENU_BUTTON_DATA_TESTID = "SettingsIcon";
-	private static final String USER_PROFILE_ICON_DATA_TESTID = "PersonIcon";
 	private static final String HOME_MENU_BUTTON_DATA_TESTID = "HomeIcon";
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
@@ -137,6 +136,11 @@ public class HomePageUtils {
 		HomePageUtils.closeMainMenu(page);
 	}
 
+	public static void clickOnGuardrail(Page page) {
+		page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TESTID).click();
+		HomePageUtils.closeMainMenu(page);
+	}
+
 	public static void clickOnOpenAppLibrary(Page page) {
 		Locator locator = page.locator(APP_MENU_BUTTON_XPATH);
 		locator.click();
@@ -208,10 +212,8 @@ public class HomePageUtils {
 	}
 
 	public static void logout(Page page) {
-//		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
 		if (isMenuOpen.isVisible()) {
-//			isMenuOpen.click();
 			isMenuOpen.dblclick();
 		}
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
