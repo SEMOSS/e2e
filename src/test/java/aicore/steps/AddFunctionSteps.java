@@ -105,7 +105,7 @@ public class AddFunctionSteps {
 	@Then("User sees success toast message {string}")
 	public void user_sees_success_toast_message(String toastMessage) {
 		String actualMessage = addFunctionToCatalogPage.verifySuccessToastMessage();
-		Assertions.assertEquals(toastMessage, actualMessage, "catalog is not created successfully");
+		Assertions.assertEquals(toastMessage, actualMessage, "Toaster is not matching with expected");
 		addFunctionToCatalogPage.closeToastMessage();
 	}
 

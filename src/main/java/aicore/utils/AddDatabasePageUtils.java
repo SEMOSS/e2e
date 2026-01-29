@@ -5,14 +5,16 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class AddDatabasePageUtils {
 	private static final Logger logger = LogManager.getLogger(AddDatabasePageUtils.class);
@@ -53,6 +55,16 @@ public class AddDatabasePageUtils {
 	private static final String FORM_SECTION_XPATH = "//h6[text()='{sectionName}']";
 	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-form-advanced-toggle']//*)[1]";
 	private static final String SECTION_FIELD_XPATH = "../following-sibling::div//label[text()='{fieldName}']";
+	private static final String QUERY_TAB_DATA_TESTID = "engineLayout-Query-tab";
+	private static final String QUERY_ENTER_TEXTAREA_XPATH = ".monaco-editor .native-edit-context";
+	private static final String OUTPUT_TABLE = "//table";
+	private static final String COLLAPSE_COLUMNS_XPATH = "//table//tbody";
+	private static final String COLLAPSE_COLUMNS_HEADER_XPATH = "//table//thead//tr[contains(@class,'closed')]";
+	private static final String DATA_COLUMNS_XPATH = "//table//tbody//tr";
+	private static final String DATA_COLUMNS_REFRESH_BUTTON_XPATH = "//button[@title='Refresh database structure']";
+	private static final String DATA_COLUMNS_REFRESHING_TILE_XPATH = "//p[contains(text(),'{text}')]";
+	private static final String EXPAND_TABLE_ARROW_XPATH = "//button[@title='{name}']";
+	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -75,32 +87,33 @@ public class AddDatabasePageUtils {
 	public static boolean isDBFieldMandatory(Page page, String fieldName) {
 		Locator mandatoryField = page.locator(MANDATORY_FIELD_XPATH.replace("{fieldName}", fieldName));
 		if (!mandatoryField.textContent().contains("*")) {
-			throw new AssertionError("Database connection type '" + fieldName + "' is not showing with * symbol of required field.");
+			throw new AssertionError(
+					"Database connection type '" + fieldName + "' is not showing with * symbol of required field.");
 		}
 		return mandatoryField.isVisible();
 	}
 
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
 		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
-		if(sectionName.toLowerCase().equals("advanced settings")) {
-			if(fieldName.toLowerCase().equals("not available")) {
+		if (sectionName.toLowerCase().equals("advanced settings")) {
+			if (fieldName.toLowerCase().equals("not available")) {
 				return true;
 			}
 			Locator dropdownLocator = page.locator(ADVANCED_SECTION_XPATH);
-	        AICorePageUtils.waitFor(dropdownLocator);
-	        String attributeVal = dropdownLocator.getAttribute("data-testid");
+			AICorePageUtils.waitFor(dropdownLocator);
+			String attributeVal = dropdownLocator.getAttribute("data-testid");
 			dropdownLocator.scrollIntoViewIfNeeded();
 			if (!sectionLocator.isVisible()) {
 				throw new AssertionError("Advanced Settings dropdown is not visible.");
 			}
-			if(attributeVal.equals("ExpandMoreIcon")) {
+			if (attributeVal.equals("ExpandMoreIcon")) {
 
 				dropdownLocator.click();
 			}
 
 		}
 
-		if (!sectionLocator.isVisible()){
+		if (!sectionLocator.isVisible()) {
 			throw new AssertionError("Section '" + sectionName + "' is not visible.");
 		}
 		Locator fieldLocator = sectionLocator.locator(SECTION_FIELD_XPATH.replace("{fieldName}", fieldName));
@@ -317,18 +330,13 @@ public class AddDatabasePageUtils {
 		page.getByTestId(EDIT_BTN_XPATH).isVisible();
 		page.getByTestId(EDIT_BTN_XPATH).click();
 		page.locator(EDIT_POPUP_XPATH).isVisible();
-
 	}
 
 	public static void searchDatabaseCatalog(Page page, String catalogName) {
-//		page.waitForSelector(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
-//		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).click();
-//		page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH).fill(catalogName);
 		Locator searchcatalog = page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
 		AICorePageUtils.waitFor(searchcatalog);
 		searchcatalog.click();
 		searchcatalog.fill(catalogName);
-
 	}
 
 	public static void selectDatabaseFromSearchOptions(Page page, String catalogName) {
@@ -350,5 +358,85 @@ public class AddDatabasePageUtils {
 	public static void selectDatabaseFromDropdown(Page page, String dbName) {
 		page.locator(SELECT_ALL_DATABASE_XPATH).isVisible();
 		page.locator(SELECT_ALL_DATABASE_XPATH).click();
+	}
+
+	public static void clickOnQueryTab(Page page) {
+		page.getByTestId(QUERY_TAB_DATA_TESTID).isVisible();
+		page.getByTestId(QUERY_TAB_DATA_TESTID).click();
+	}
+
+	public static void enterQuery(Page page, String query) {
+		Locator cell = page.locator(QUERY_ENTER_TEXTAREA_XPATH).first();
+		cell.scrollIntoViewIfNeeded();
+		cell.click(new Locator.ClickOptions().setForce(true));
+		cell.pressSequentially(query);
+	}
+
+	public static List<String> getQueryResponseTableHeader(Page page) {
+		return page.locator(OUTPUT_TABLE).last().locator("th").allTextContents();
+	}
+
+	public static void verifyQueryFieldIsEmpty(Page page) {
+		Locator cell = page.locator(QUERY_ENTER_TEXTAREA_XPATH).first();
+		String queryText = cell.textContent();
+		if (queryText != null && !queryText.trim().isEmpty()) {
+			throw new AssertionError("Query field is not empty.");
+		}
+	}
+
+	public static boolean verifyAllColumnsAreCollapsed(Page page) {
+		Locator collapseColumns = page.locator(COLLAPSE_COLUMNS_XPATH);
+		Locator collapsedHeaders = page.locator(COLLAPSE_COLUMNS_HEADER_XPATH);
+		if (!collapseColumns.isVisible() && collapsedHeaders.count() > 0) {
+			return true;
+		} else {
+			throw new AssertionError("All data columns are not collapsed.");
+		}
+	}
+
+	public static boolean verifyButtonNameChanged(Page page, String buttonName) {
+		Locator buttonLocator = page.locator(BUTTON_XPATH.replace("{buttonName}", buttonName));
+		if (buttonLocator.isVisible()) {
+			return true;
+		} else {
+			throw new AssertionError("Button name is not changed to " + buttonName);
+		}
+	}
+
+	public static List<String> getDataColumns(Page page) {
+		return page.locator(DATA_COLUMNS_XPATH).allTextContents();
+	}
+
+	public static void searchDataColumn(Page page, String columnName) {
+		Locator searchBox = page.getByPlaceholder("Search");
+		AICorePageUtils.waitFor(searchBox);
+		searchBox.fill(columnName);
+	}
+
+	public static boolean verifySearchedDataColumn(Page page, String columnName) {
+		Locator dataColumn = page.locator(DATA_COLUMNS_XPATH)
+				.filter(new Locator.FilterOptions().setHasText(columnName));
+		if (page.locator(DATA_COLUMNS_XPATH).count() == 1 && dataColumn.isVisible()) {
+			return true;
+		}
+		return false;
+	}
+
+	public static void clickOnRefreshButtonForDataColumns(Page page) {
+		Locator refreshButton = page.locator(DATA_COLUMNS_REFRESH_BUTTON_XPATH);
+		AICorePageUtils.waitFor(refreshButton);
+		refreshButton.click();
+	}
+
+	public static boolean verifyRefreshingTileForDataColumns(Page page, String text) {
+		Locator refreshingTile = page.locator(DATA_COLUMNS_REFRESHING_TILE_XPATH.replace("{text}", text));
+		AICorePageUtils.waitFor(refreshingTile);
+		return refreshingTile.isVisible();
+	}
+
+	public static void clickOnExpandTableArrow(Page page, String name) {
+		Locator expandArrow = page.locator(EXPAND_TABLE_ARROW_XPATH.replace("{name}", name));
+		AICorePageUtils.waitFor(expandArrow);
+		expandArrow.click();
 	}
 }
