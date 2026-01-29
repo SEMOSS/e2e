@@ -23,6 +23,14 @@ public class JobPageUtils {
 	private static final String JOB_STATUS_CHECK_XPATH = "//div[@role='rowgroup']//div[@role='row'][.//div[@data-field='name' and normalize-space(text())='{JobName}']]//div[@data-field='isActive']";
 	private static final String RESUME_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Resume']";
 	private static final String PAUSE_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Pause']";
+	private static final String JOB_PAGE_SUB_TITLE_XPATH = "//p[text()='{subTitle}']";
+	private static final String STATUS_TILES_XPATH = "//div[contains(@class,'MuiBox')]//p[text()='{tileName}']";
+	private static final String NO_JOBS_MESSAGE_XPATH = "//div[text()='{message}']";
+	private static final String JOBS_TABLE_COULMNS_XPATH = "//div[@role='columnheader']//div[text()='{columnName}']";
+	private static final String HISTORY_TABLE_XPATH = "//div[@aria-expanded='false']//div[text()='History']";
+	private static final String HISTORY_TABLE_COLUMNS_XPATH = "//table//thead//tr//th[text()='{columnName}']";
+	private static final String HISTORY_TABLE_SEARCHBOX_XPATH = "//div[text()='History']/ancestor::h3//following-sibling::div//input[@placeholder='Search']";
+	private static final String NO_JOB_HISTORY_MESSAGE_XPATH = "//table//tbody//tr//td[text()='{message}']";
 
 	public static void clickOnJobTile(Page page) {
 		page.locator(JOBS_TILE_XPATH).isVisible();
@@ -175,4 +183,68 @@ public class JobPageUtils {
 		page.locator(PIXEL_XPATH).fill(value);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
 	}
+
+	public static String verifyTitleOfJobPage(Page page, String expectedTitle) {
+		return page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(expectedTitle)).textContent()
+				.trim();
+	}
+
+	public static String verifySubtitleOfJobPage(Page page, String expectedSubtitle) {
+		return page.locator(JOB_PAGE_SUB_TITLE_XPATH.replace("{subTitle}", expectedSubtitle)).textContent().trim();
+	}
+
+	public static boolean verifyStatusTilesVisibleOnJobPage(Page page, String tileName) {
+		return page.locator(STATUS_TILES_XPATH.replace("{tileName}", tileName)).isVisible();
+	}
+
+	public static boolean verifyButtonsVisibleOnJobPage(Page page, String buttonName) {
+		return page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName)).isVisible();
+	}
+
+	public static boolean verifyButtonsDisabledOnJobPage(Page page, String buttonName) {
+		return page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName)).isDisabled();
+	}
+
+	public static boolean verifyTabsVisibleOnJobPage(Page page, String tabName) {
+		return page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).first().isVisible();
+	}
+
+	public static boolean verifySearchBoxVisibleOnJobPage(Page page) {
+		return page.getByPlaceholder("Search").first().isVisible();
+	}
+
+	public static boolean verifyJobTableColumns(Page page, String columnName) {
+		return page.locator(JOBS_TABLE_COULMNS_XPATH.replace("{columnName}", columnName)).isVisible();
+	}
+
+	public static boolean verifyNoJobsMessageOnJobPage(Page page, String expectedMessage) {
+		return page.locator(NO_JOBS_MESSAGE_XPATH.replace("{message}", expectedMessage)).isVisible();
+	}
+
+	public static boolean verifyHistoryTableCollapsed(Page page) {
+		Locator historyTableLocator = page.locator(HISTORY_TABLE_XPATH);
+		AICorePageUtils.waitFor(historyTableLocator);
+		historyTableLocator.scrollIntoViewIfNeeded();
+		return historyTableLocator.isVisible();
+	}
+
+	public static void expandHistoryTable(Page page) {
+		Locator historyTableLocator = page.locator(HISTORY_TABLE_XPATH);
+		AICorePageUtils.waitFor(historyTableLocator);
+		historyTableLocator.scrollIntoViewIfNeeded();
+		historyTableLocator.click();
+	}
+
+	public static boolean verifyHistoryTableColumns(Page page, String columnName) {
+		return page.locator(HISTORY_TABLE_COLUMNS_XPATH.replace("{columnName}", columnName)).isVisible();
+	}
+
+	public static boolean verifySearchBoxVisibleOnHistoryTable(Page page) {
+		return page.locator(HISTORY_TABLE_SEARCHBOX_XPATH).isVisible();
+	}
+
+	public static boolean verifyNoJobHistoryMessageOnJobPage(Page page, String expectedMessage) {
+		return page.locator(NO_JOB_HISTORY_MESSAGE_XPATH.replace("{message}", expectedMessage)).isVisible();
+	}
+
 }
