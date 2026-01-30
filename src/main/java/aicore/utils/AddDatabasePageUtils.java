@@ -65,6 +65,7 @@ public class AddDatabasePageUtils {
 	private static final String DATA_COLUMNS_REFRESHING_TILE_XPATH = "//p[contains(text(),'{text}')]";
 	private static final String EXPAND_TABLE_ARROW_XPATH = "//button[@title='{name}']";
 	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
+	private static final String DATABASE_CATALOG_HEADER_XPATH = "//h4[normalize-space() ='Database Catalog']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -439,4 +440,23 @@ public class AddDatabasePageUtils {
 		AICorePageUtils.waitFor(expandArrow);
 		expandArrow.click();
 	}
+
+	public static boolean isSaveButtonDisabled(Page page) {
+		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		AICorePageUtils.waitFor(saveButton);
+		return !saveButton.isEnabled();
+	}
+
+	public static void clickOnSaveButtonOfMetadataTab(Page page) {
+		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		AICorePageUtils.waitFor(saveButton);
+		saveButton.click();
+	}
+
+	public static boolean verifyDatabaseCatalogPage(Page page) {
+		Locator databaseCatalogHeader = page.locator(DATABASE_CATALOG_HEADER_XPATH);
+		AICorePageUtils.waitFor(databaseCatalogHeader);
+		return databaseCatalogHeader.isVisible();
+	}
+
 }
