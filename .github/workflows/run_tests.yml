@@ -40,21 +40,21 @@ jobs:
         name: cucumber-report.html
         path: target/cucumber-report.html # Adjust this path to where your test results are stored
 
-    - name: Upload Test Results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: testFailureVideos
-        path: videos/
-        retention-days: 1
-
-    - name: Upload Documentation Images
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: documentation-images
-        path: Version0.0.1-SNAPSHOT/
-        retention-days: 2
+#    - name: Upload Test Results
+#      if: always()
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: testFailureVideos
+#        path: videos/
+#        retention-days: 1
+#
+#    - name: Upload Documentation Images
+#      if: always()
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: documentation-images
+#        path: Version0.0.1-SNAPSHOT/
+#        retention-days: 2
 
     # - name: Clean workspace
     #   if: always()
