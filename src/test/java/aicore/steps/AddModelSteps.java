@@ -50,12 +50,13 @@ public class AddModelSteps {
 	}
 
 	@And("User add {string} models with details {string} {string} {string} {string} {string}")
-    public void user_add_models_with_details(String index, String modelType, String modelName, String catalogName, String apiKey, String tags) {
+	public void user_add_models_with_details(String index, String modelType, String modelName, String catalogName,
+			String apiKey, String tags) {
 		int modelCount = Integer.parseInt(index);
 		for (int i = 0; i < modelCount; i++) {
 			openModelPage.selectModelType(modelType);
 			openModelPage.selectModel(modelName);
-			openModelPage.enterCatalogName(catalogName+""+(i+1));
+			openModelPage.enterCatalogName(catalogName + "" + (i + 1));
 			openModelPage.enterOpenAIKey(apiKey);
 			openModelPage.clickOnCreateModelButton();
 			viewCatalogPage.clickEditIcon();
@@ -64,10 +65,10 @@ public class AddModelSteps {
 				viewCatalogPage.enterTagName(tag);
 			}
 			viewCatalogPage.clickOnSubmit();
-			if(i < modelCount -1) {
-			homePage.openMainMenu();
-			homePage.clickOnOpenModel();
-			openModelPage.clickAddModelButton();
+			if (i < modelCount - 1) {
+				homePage.openMainMenu();
+				homePage.clickOnOpenModel();
+				openModelPage.clickAddModelButton();
 			}
 		}
 	}
@@ -159,6 +160,67 @@ public class AddModelSteps {
 	@Then("User clicks on SMSS")
 	public void user_clicks_on_smss() {
 		openModelPage.clickOnSMSSTab();
+	}
+
+	@And("User clicks on Chat button")
+	public void user_Clicks_On_Chat_Button() {
+		openModelPage.clickOnChatTab();
+	}
+
+	@Then("User should see the Chat section for Model with title {string}")
+	public void user_Should_See_The_Chat_Section_For_Model_with_title(String title) {
+		openModelPage.verifyChatSectionDisplayed(title);
+	}
+
+	@And("User should see the Model ID and Model Name displayed in Model information section")
+	public void user_Should_See_The_Model_ID_And_Model_Name_Displayed_In_Model_Information_Section() {
+		openModelPage.verifyModelIDAndNameDisplayed();
+	}
+
+	@And("User should see the Temperature value displayed as {string} in Model information section by default")
+	public void user_Should_See_The_Temperature_Value_Displayed_As_In_Model_Information_Section_By_Default(
+			String tempValue) {
+		openModelPage.verifyTemperatureValue(tempValue);
+	}
+
+	@And("User should see the Max Tokens value displayed as {string} in Model information section by default")
+	public void user_Should_See_The_Max_Tokens_Value_Displayed_As_In_Model_Information_Section_By_Default(String maxTokens) {
+		openModelPage.verifyMaxTokensValue(maxTokens);
+	}
+
+	@And("User should see the input textbox with placeholder as {string}")
+	public void user_Should_See_The_Input_Textbox_With_Placeholder_As(String placeholder) {
+		openModelPage.verifyInputTextboxPlaceholder(placeholder);
+	}
+
+	@And("User should see the send button get active on entering text {string} in the input textbox")
+	public void user_Should_See_The_Send_Button_Get_Active_On_Entering_Text_In_The_Input_Textbox(String inputText) {
+		openModelPage.verifyAndActivateSendButton(inputText);
+	}
+
+	@When("User click on send button to submit the query")
+	public void user_Click_On_Send_Button_To_Submit_The_Query() {
+		openModelPage.clickOnSendButton();
+	}
+
+	@When("User click on clear all button")
+	public void user_Click_On_Clear_All_Button() {
+		openModelPage.clickOnClearAllButton();
+	}
+
+	@Then("User should see the chat window is cleared of previous conversation")
+	public void user_Should_See_The_Chat_Window_Is_Cleared_Of_Previous_Conversation() {
+		openModelPage.verifyChatWindowCleared();
+	}
+
+	@Then("User should see the loader indicating that the response is being generated for the query")
+	public void user_Should_See_The_Loader_Indicating_That_The_Response_Is_Being_Generated_For_The_Query() {
+		openModelPage.verifyLoaderDisplayed();
+	}
+
+	@And("User should see the response generated for the query in the chat window")
+	public void user_Should_See_The_Response_Generated_For_The_Query_In_The_Chat_Window() {
+		openModelPage.verifyResponseGeneratedInChatWindow();
 	}
 
 	@Then("User can see name in {string} field as {string} in SMSS properties")
