@@ -30,7 +30,7 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		return StoragePageUtils.isFieldMandatory(page, storageType, field);
 	}
 
-	public void fillModelCreationForm(String storageType, String fieldName, String fieldValue) {
+	public void fillCatalogCreationForm(String storageType, String fieldName, String fieldValue) {
 		StoragePageUtils.fillCatalogCreationForm(page, storageType, fieldName, fieldValue, timestamp);
 	}
 
