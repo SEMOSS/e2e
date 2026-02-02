@@ -42,26 +42,9 @@ public class JobPageUtils {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
 	}
 
-	public static void fillName(Page page, String name) {
-		page.locator(NAME_XPATH).isVisible();
-		page.locator(NAME_XPATH).fill(name);
-	}
-
-	public static void fillPixel(Page page, String value) {
-		page.locator(PIXEL_XPATH).isVisible();
-		page.locator(PIXEL_XPATH).fill(value);
-	}
-
 	public static void clickAddButton(Page page) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).isVisible();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
-	}
-
-	public static String verifyJobTitle(Page page, String jobTitle) {
-		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle)).first();
-		AICorePageUtils.waitFor(actualJobTitle);
-		actualJobTitle.scrollIntoViewIfNeeded();
-		return actualJobTitle.textContent().trim();
 	}
 
 	public static void clickEditIcon(Page page, String jobTitle) {
@@ -71,25 +54,9 @@ public class JobPageUtils {
 		page.locator(EDIT_ICON_XPATH.replace("{jobName}", title)).click();
 	}
 
-	public static void editTags(Page page, int value) {
-		page.locator(EDIT_TAGS_XPATH).isVisible();
-		page.locator(EDIT_TAGS_XPATH).click();
-		page.locator(EDIT_TAGS_XPATH).fill(String.valueOf(value));
-		page.locator(EDIT_TAGS_XPATH).press("Enter");
-	}
-
-	public static void editPixel(Page page, String value) {
-		page.locator(PIXEL_XPATH).isVisible();
-		page.locator(PIXEL_XPATH).fill(value);
-	}
-
 	public static void clickSaveButton(Page page) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).isVisible();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
-	}
-
-	public static void verifyAddedTag(Page page, String expectedText, String jobTitle) {
-		page.locator(ADDED_TAG_XPATH.replace("{jobName}", jobTitle).replace("{textValue}", expectedText)).isVisible();
 	}
 
 	public static void clickDeleteIcon(Page page, String jobTitle) throws InterruptedException {
@@ -98,21 +65,6 @@ public class JobPageUtils {
 		page.locator(DELETE_ICON_XPATH.replace("{jobName}", title)).isVisible();
 		page.locator(DELETE_ICON_XPATH.replace("{jobName}", title)).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete")).click();
-	}
-
-	public static String jobDeletionToastMessage(Page page) {
-		return page.getByTestId(DELETE_JOB_TOAST_MESSAGE_DATA_TESTID).textContent().trim();
-	}
-
-	public static void clickCheckBox(Page page, String jobTitle) {
-		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle));
-		String title = actualJobTitle.textContent();
-		page.locator(CHECKBOX_XPATH.replace("{jobName}", title)).isVisible();
-		page.locator(CHECKBOX_XPATH.replace("{jobName}", title)).click();
-	}
-
-	public static void verifyPauseButtonEnabled(Page page, String jobTitle) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Pause")).isEnabled();
 	}
 
 	public static void clickJobCheckBox(Page page, String jobName) {
@@ -128,6 +80,46 @@ public class JobPageUtils {
 		AICorePageUtils.waitFor(pauseButton);
 		pauseButton.isEnabled();
 		pauseButton.click();
+	}
+
+	public static void clickResumeButton(Page page) {
+		Locator resumeButton = page.locator(RESUME_BUTTON_XPATH);
+		AICorePageUtils.waitFor(resumeButton);
+		resumeButton.isEnabled();
+		resumeButton.click();
+	}
+
+	public static void clickCheckBox(Page page, String jobTitle) {
+		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle));
+		String title = actualJobTitle.textContent();
+		page.locator(CHECKBOX_XPATH.replace("{jobName}", title)).isVisible();
+		page.locator(CHECKBOX_XPATH.replace("{jobName}", title)).click();
+	}
+
+	public static void fillName(Page page, String name) {
+		page.locator(NAME_XPATH).isVisible();
+		page.locator(NAME_XPATH).fill(name);
+	}
+
+	public static void fillPixel(Page page, String value) {
+		page.locator(PIXEL_XPATH).isVisible();
+		page.locator(PIXEL_XPATH).fill(value);
+	}
+
+	public static void editTags(Page page, int value) {
+		page.locator(EDIT_TAGS_XPATH).isVisible();
+		page.locator(EDIT_TAGS_XPATH).click();
+		page.locator(EDIT_TAGS_XPATH).fill(String.valueOf(value));
+		page.locator(EDIT_TAGS_XPATH).press("Enter");
+	}
+
+	public static void editPixel(Page page, String value) {
+		page.locator(PIXEL_XPATH).isVisible();
+		page.locator(PIXEL_XPATH).fill(value);
+	}
+
+	public static String jobDeletionToastMessage(Page page) {
+		return page.getByTestId(DELETE_JOB_TOAST_MESSAGE_DATA_TESTID).textContent().trim();
 	}
 
 	public static boolean isJobStopped(Page page, String jobName) {
@@ -158,13 +150,6 @@ public class JobPageUtils {
 		return (page.locator(xpath).isDisabled());
 	}
 
-	public static void clickResumeButton(Page page) {
-		Locator resumeButton = page.locator(RESUME_BUTTON_XPATH);
-		AICorePageUtils.waitFor(resumeButton);
-		resumeButton.isEnabled();
-		resumeButton.click();
-	}
-
 	public static boolean isResumeButtonReverted(Page page) {
 		String xpath = RESUME_BUTTON_XPATH;
 		page.waitForSelector(xpath);
@@ -182,6 +167,21 @@ public class JobPageUtils {
 		page.locator(NAME_XPATH).fill(name);
 		page.locator(PIXEL_XPATH).fill(value);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+	}
+
+	public static String verifyJobTitle(Page page, String jobTitle) {
+		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle)).first();
+		AICorePageUtils.waitFor(actualJobTitle);
+		actualJobTitle.scrollIntoViewIfNeeded();
+		return actualJobTitle.textContent().trim();
+	}
+
+	public static void verifyAddedTag(Page page, String expectedText, String jobTitle) {
+		page.locator(ADDED_TAG_XPATH.replace("{jobName}", jobTitle).replace("{textValue}", expectedText)).isVisible();
+	}
+
+	public static void verifyPauseButtonEnabled(Page page, String jobTitle) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Pause")).isEnabled();
 	}
 
 	public static String verifyTitleOfJobPage(Page page, String expectedTitle) {
@@ -228,13 +228,6 @@ public class JobPageUtils {
 		return historyTableLocator.isVisible();
 	}
 
-	public static void expandHistoryTable(Page page) {
-		Locator historyTableLocator = page.locator(HISTORY_TABLE_XPATH);
-		AICorePageUtils.waitFor(historyTableLocator);
-		historyTableLocator.scrollIntoViewIfNeeded();
-		historyTableLocator.click();
-	}
-
 	public static boolean verifyHistoryTableColumns(Page page, String columnName) {
 		return page.locator(HISTORY_TABLE_COLUMNS_XPATH.replace("{columnName}", columnName)).isVisible();
 	}
@@ -245,6 +238,13 @@ public class JobPageUtils {
 
 	public static boolean verifyNoJobHistoryMessageOnJobPage(Page page, String expectedMessage) {
 		return page.locator(NO_JOB_HISTORY_MESSAGE_XPATH.replace("{message}", expectedMessage)).isVisible();
+	}
+
+	public static void expandHistoryTable(Page page) {
+		Locator historyTableLocator = page.locator(HISTORY_TABLE_XPATH);
+		AICorePageUtils.waitFor(historyTableLocator);
+		historyTableLocator.scrollIntoViewIfNeeded();
+		historyTableLocator.click();
 	}
 
 }

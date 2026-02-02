@@ -22,24 +22,44 @@ public class JobManagementPage {
 		JobPageUtils.clickOnAddJobButton(page);
 	}
 
+	public void clickAddButton() {
+		JobPageUtils.clickAddButton(page);
+	}
+
+	public void clickEditIcon(String jobTitle) {
+		JobPageUtils.clickEditIcon(page, jobTitle + " " + timestamp);
+	}
+
+	public void clickSaveButton() {
+		JobPageUtils.clickSaveButton(page);
+	}
+
+	public void clickDeleteIcon(String jobTitle) throws InterruptedException {
+		JobPageUtils.clickDeleteIcon(page, jobTitle + " " + timestamp);
+	}
+
+	public void clickJobCheckBox(String jobName) {
+		JobPageUtils.clickJobCheckBox(page, jobName + " " + timestamp);
+	}
+
+	public void clickPauseButton() {
+		JobPageUtils.clickPauseButton(page);
+	}
+
+	public void clickCheckBox(String jobTitle) {
+		JobPageUtils.clickCheckBox(page, jobTitle + " " + timestamp);
+	}
+
+	public void clickResumeButton() {
+		JobPageUtils.clickResumeButton(page);
+	}
+
 	public void fillName(String value) {
 		JobPageUtils.fillName(page, value);
 	}
 
 	public void fillPixel(String value) {
 		JobPageUtils.fillPixel(page, value);
-	}
-
-	public void clickAddButton() {
-		JobPageUtils.clickAddButton(page);
-	}
-
-	public String verifyJobTitle(String jobTitle) {
-		return JobPageUtils.verifyJobTitle(page, jobTitle + " " + timestamp);
-	}
-
-	public void clickEditIcon(String jobTitle) {
-		JobPageUtils.clickEditIcon(page, jobTitle + " " + timestamp);
 	}
 
 	public void editTags(int value) {
@@ -50,36 +70,8 @@ public class JobManagementPage {
 		JobPageUtils.editPixel(page, value);
 	}
 
-	public void clickSaveButton() {
-		JobPageUtils.clickSaveButton(page);
-	}
-
-	public void verifyAddedTag(String expectedText, String jobTitle) {
-		JobPageUtils.verifyAddedTag(page, expectedText, jobTitle + " " + timestamp);
-	}
-
-	public void clickDeleteIcon(String jobTitle) throws InterruptedException {
-		JobPageUtils.clickDeleteIcon(page, jobTitle + " " + timestamp);
-	}
-
 	public String jobDeletionToastMessage() {
 		return JobPageUtils.jobDeletionToastMessage(page);
-	}
-
-	public void clickCheckBox(String jobTitle) {
-		JobPageUtils.clickCheckBox(page, jobTitle + " " + timestamp);
-	}
-
-	public void verifyPauseButtonEnabled(String jobTitle) {
-		JobPageUtils.verifyPauseButtonEnabled(page, jobTitle);
-	}
-
-	public void clickJobCheckBox(String jobName) {
-		JobPageUtils.clickJobCheckBox(page, jobName + " " + timestamp);
-	}
-
-	public void clickPauseButton() {
-		JobPageUtils.clickPauseButton(page);
 	}
 
 	public boolean isJobStopped(String jobName) {
@@ -94,16 +86,24 @@ public class JobManagementPage {
 		return JobPageUtils.isPauseButtonReverted(page);
 	}
 
-	public void clickResumeButton() {
-		JobPageUtils.clickResumeButton(page);
-	}
-
 	public boolean isResumeButtonReverted() {
 		return JobPageUtils.isResumeButtonReverted(page);
 	}
 
 	public void createJob(String name, String value) {
 		JobPageUtils.createJob(page, name, value);
+	}
+
+	public String verifyJobTitle(String jobTitle) {
+		return JobPageUtils.verifyJobTitle(page, jobTitle + " " + timestamp);
+	}
+
+	public void verifyAddedTag(String expectedText, String jobTitle) {
+		JobPageUtils.verifyAddedTag(page, expectedText, jobTitle + " " + timestamp);
+	}
+
+	public void verifyPauseButtonEnabled(String jobTitle) {
+		JobPageUtils.verifyPauseButtonEnabled(page, jobTitle);
 	}
 
 	public String verifyTitleOfJobPage(String expectedTitle) {
@@ -150,16 +150,16 @@ public class JobManagementPage {
 		return JobPageUtils.verifyHistoryTableCollapsed(page);
 	}
 
-	public void expandHistoryTable() {
-		JobPageUtils.expandHistoryTable(page);
-	}
-
 	public boolean verifySearchBoxVisibleOnHistoryTable() {
 		return JobPageUtils.verifySearchBoxVisibleOnHistoryTable(page);
 	}
 
 	public boolean verifyNoJobHistoryMessageOnJobPage(String expectedMessage) {
 		return JobPageUtils.verifyNoJobHistoryMessageOnJobPage(page, expectedMessage);
+	}
+
+	public void expandHistoryTable() {
+		JobPageUtils.expandHistoryTable(page);
 	}
 
 }
