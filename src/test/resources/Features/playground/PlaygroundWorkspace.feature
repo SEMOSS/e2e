@@ -19,7 +19,7 @@ Feature: Playground Home Workspace
     Given User is on Home page
     When User clicks on Build button
     And User clicks on Try it out hyperlink for Experiment in our Playground
-    And User sees the Prompt textarea with placeholder 'What do you want to do today?'
+    And User sees the Prompt textarea with placeholder '/ to add capability'
     And User click on the workspace button
     And User clicks on Create New Workspace button
     And User enters workspace name as 'PlaygroundWorkspace1'
@@ -34,7 +34,7 @@ Feature: Playground Home Workspace
   # Scenario: Validate Playground workspace validatinos - edit workspace
   #   Given User is on Home page
   #   When User clicks on Try it out hyperlink for Experiment in our Playground
-  #   And User sees the Prompt textarea with placeholder 'What do you want to do today?'
+  #   And User sees the Prompt textarea with placeholder '/ to add capability'
   #   And User click on the workspace button
   #   And User selects the 'PlaygroundWorkspace1' from the workspace list
   #   And User clicks on Edit Workspace button
@@ -49,7 +49,7 @@ Feature: Playground Home Workspace
   Scenario: Validate Playground workspace validatinos - search workspace
     Given User is on Home page
     When User clicks on Try it out hyperlink for Experiment in our Playground
-    And User sees the Prompt textarea with placeholder 'What do you want to do today?'
+    And User sees the Prompt textarea with placeholder '/ to add capability'
     And User click on the workspace button
     And User enters 'PlaygroundWorkspace1' in the workspace search box
     Then User verifies that 'PlaygroundWorkspace1' workspace is displayed in the search results
@@ -58,7 +58,7 @@ Feature: Playground Home Workspace
   Scenario: Validate Playground workspace validatinos - switch workspace
     Given User is on Home page
     When User clicks on Try it out hyperlink for Experiment in our Playground
-    And User sees the Prompt textarea with placeholder 'What do you want to do today?'
+    And User sees the Prompt textarea with placeholder '/ to add capability'
     And User click on the workspace button
     And User selects the 'PlaygroundWorkspace1' as new chat from the workspace list
     Then User verifies that 'PlaygroundWorkspace1' workspace is selected in the workspace chat
@@ -67,7 +67,7 @@ Feature: Playground Home Workspace
   Scenario: Validate Playground workspace validatinos - delete workspace
     Given User is on Home page
     When User clicks on Try it out hyperlink for Experiment in our Playground
-    And User sees the Prompt textarea with placeholder 'What do you want to do today?'
+    And User sees the Prompt textarea with placeholder '/ to add capability'
     And User click on the workspace button
     And User selects the 'PlaygroundWorkspace1' from the workspace list
     And User clicks on Delete Workspace button
