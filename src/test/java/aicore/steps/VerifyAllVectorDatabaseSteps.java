@@ -24,7 +24,7 @@ private VerifyVectorDatabasePage verifyVectorDatabasePage;
     }
 
     @Then("User can see vector Database form sections with fields:")
-	public void user_can_see_form_sections_with_fields(DataTable DBTable) {
+	public void user_can_see_vector_Database_form_sections_with_fields(DataTable DBTable) {
 		List<Map<String, String>> rows = DBTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String sectionName = row.get("SECTION_NAME");
@@ -37,7 +37,7 @@ private VerifyVectorDatabasePage verifyVectorDatabasePage;
 	}
 
     @Then("User can see vector database mandatory fields")
-	public void user_can_see_database_mandatory_fields(DataTable DBTable) {
+	public void user_can_see_vector_database_mandatory_fields(DataTable DBTable) {
 		String singleCell = DBTable.cells().get(0).get(0);
 		String[] fields = singleCell.split(", ");
 		for (String field : fields) {
