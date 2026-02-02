@@ -1,6 +1,6 @@
 Feature: Storage Catalog Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Storage Catalog Documentation
     Given User captures documentation screenshot for 'PlatformNavigation/Storage Catalog'
     When User opens Main Menu
@@ -16,8 +16,8 @@ Feature: Storage Catalog Documentation
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
     And User captures a 'button' and highlights the 'Create storage'
-    And User clicks on Create Storage button
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks on Connect button to create storage
+    Then User can see create storage success toast message as 'Successfully added new storage to catalog'
     And User can see the Storage title 'Test Storage'
     And User clicks on Copy Catalog ID
     And User captures a 'button' and highlights the 'Export'

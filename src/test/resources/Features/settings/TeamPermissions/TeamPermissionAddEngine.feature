@@ -84,10 +84,10 @@ Feature: Add Engine for Team Permission
     And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
-    And User clicks on Create Storage button
+    And User clicks on Connect button to create storage
     And User clicks on Copy Catalog ID
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
-    And User opens Main Menu
+    Then User can see create storage success toast message as 'Successfully added new storage to catalog'
+    When User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Team Permissions' Card

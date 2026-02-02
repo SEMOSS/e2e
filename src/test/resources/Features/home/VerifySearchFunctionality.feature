@@ -123,7 +123,7 @@ Feature: Search app and catalogs
     And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
-    And User clicks on Create Storage button
+    And User clicks on Connect button to create storage
     And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home

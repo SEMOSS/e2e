@@ -7,11 +7,9 @@ import aicore.utils.settings.TeamPermissionsSettingsUtils;
 public class TeamPermissionsSettingsPage {
 
 	private Page page;
-	private String timestamp;
 
 	public TeamPermissionsSettingsPage(Page page, String timestamp) {
 		this.page = page;
-		this.timestamp = timestamp;
 	}
 
 	public void selectTypeFromDropdown(String type) {
@@ -53,13 +51,13 @@ public class TeamPermissionsSettingsPage {
 	public boolean checkMemberInList(String member) {
 		return TeamPermissionsSettingsUtils.checkMemberInList(page, member);
 	}
-	
+
 	public String verifyName(String name) {
-		return TeamPermissionsSettingsUtils.verifyName(page, name + " " + timestamp);
+		return TeamPermissionsSettingsUtils.verifyName(page, name);
 	}
 
 	public String validateDescription(String description) {
-		return TeamPermissionsSettingsUtils.validateDescription(page, description + " " + timestamp);
+		return TeamPermissionsSettingsUtils.validateDescription(page, description);
 	}
 
 	// add engine to all catalog with different roles
@@ -88,7 +86,7 @@ public class TeamPermissionsSettingsPage {
 		TeamPermissionsSettingsUtils.userSelectEngineAccessRole(page, role);
 	}
 
-	//delete team member
+	// delete team member
 	public void userClickOnDeleteIcon(String icon, String member) {
 		TeamPermissionsSettingsUtils.userClickOnDeleteIcon(page, icon, member);
 	}
@@ -104,6 +102,7 @@ public class TeamPermissionsSettingsPage {
 	public void userSelectAllMember() {
 		TeamPermissionsSettingsUtils.userSelectAllMember(page);
 	}
+
 	public void userClickOnOption(String option) {
 		TeamPermissionsSettingsUtils.userClickOnOption(page, option);
 	}
@@ -111,12 +110,12 @@ public class TeamPermissionsSettingsPage {
 	public void userSearchMemberName(String member) {
 		TeamPermissionsSettingsUtils.userSearchMemberName(page, member);
 	}
-	
+
 	public void clickOnDeleteButton() {
 		TeamPermissionsSettingsUtils.clickOnDeleteButton(page);
 	}
 
-		public void addmultipleMembers(String member) {
+	public void addmultipleMembers(String member) {
 		TeamPermissionsSettingsUtils.addmultipleMembers(page, member);
 	}
 
