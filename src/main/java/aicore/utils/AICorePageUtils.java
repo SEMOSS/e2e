@@ -18,7 +18,9 @@ public class AICorePageUtils {
 	}
 
 	public static void closeToastMessage(Page page) {
-		page.locator(TOAST_CLOSE_XPATH).click();
+		Locator closeToaster = page.locator(TOAST_CLOSE_XPATH);
+		closeToaster.click();
+		closeToaster.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
 	}
 
 	public static String readStringFromClipboard(Page page) {

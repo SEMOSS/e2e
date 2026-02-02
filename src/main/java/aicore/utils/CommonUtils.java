@@ -38,6 +38,7 @@ import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.ConfigUtils;
 import aicore.framework.UrlUtils;
@@ -346,6 +347,7 @@ public class CommonUtils {
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {
 				page.locator(TOAST_CLOSE_XPATH).click();
+				toasterMessage.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
 				return true;
 			}
 			return false;
