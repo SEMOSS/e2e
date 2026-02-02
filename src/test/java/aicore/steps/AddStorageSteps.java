@@ -109,7 +109,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 			String[] keyValue = field.split("=", 2);
 			String fieldName = keyValue[0].trim();
 			String fieldValue = keyValue[1].trim();
-			storagePage.fillModelCreationForm(storageType, fieldName, fieldValue);
+			storagePage.fillCatalogCreationForm(storageType, fieldName, fieldValue);
 		}
 	}
 
