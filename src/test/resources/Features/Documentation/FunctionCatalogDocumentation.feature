@@ -19,9 +19,9 @@ Feature: Function documentation
     And User enters Function name as 'WeatherFunction'
     And User enters Function description as 'a function to call weather based on lat and long'
     And User captures a 'button' and highlights the 'Create function'
-    And User clicks on Create Function button
-    And User sees success toast message 'Successfully added function to catalog'
+    And User clicks on Connect button to create function
     And User clicks on Copy Catalog ID
+    And User sees success toast message 'Successfully added function database to catalog'
     And User captures a 'button' and highlights the 'Export'
     And User captures a 'button' and highlights the 'Edit'
     And User captures a 'button' and highlights the 'Access Control'
@@ -52,16 +52,16 @@ Feature: Function documentation
     And User opens Main Menu
     And User clicks on Open Function
     When User clicks on Add Function
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Function/weatherFunctionTest.zip'
     And User captures screenshot for "Function ZIP"
+    And User clicks on 'Close' button
     And User opens Main Menu
     And User completes screenshot capture and triggers comparison for 'Function Catalog'
 
-
-@LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Edit button
-  Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'FunctionEngines'
     And User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -74,15 +74,15 @@ Feature: Function documentation
     And User enters Function required parameters as '["lat", "lon"]'
     And User enters Function name as 'WeatherFunctionExport'
     And User enters Function description as 'a function to call weather based on lat and long'
-    And User clicks on Create Function button
-    And User sees success toast message 'Successfully added function to catalog'
+    And User clicks on Connect button to create function
     And User clicks on Copy Catalog ID
+    And User sees success toast message 'Successfully added function database to catalog'
     And User captures a "button" and highlights the "Edit" with name "Edit"
     And User completes screenshot capture and triggers comparison for 'Function Catalog'
-    
- @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Export button
-  Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'FunctionEngines'
     And User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -95,13 +95,13 @@ Feature: Function documentation
     And User enters Function required parameters as '["lat", "lon"]'
     And User enters Function name as 'WeatherFunctionExport'
     And User enters Function description as 'a function to call weather based on lat and long'
-    And User clicks on Create Function button
-    And User sees success toast message 'Successfully added function to catalog'
+    And User clicks on Connect button to create function
     And User clicks on Copy Catalog ID
+    And User sees success toast message 'Successfully added function database to catalog'
     And User captures a 'buttonType' and highlights the "Export" with name "Export"
     And User completes screenshot capture and triggers comparison for 'Function Catalog Export Button'
 
- @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create Function - Capture function AccessControl Screenshot
     Given User captures documentation screenshot for 'FunctionEngines'
     When User opens Main Menu
@@ -116,13 +116,13 @@ Feature: Function documentation
     And User enters Function required parameters as '["lat", "lon"]'
     And User enters Function name as 'WeatherFunction'
     And User enters Function description as 'a function to call weather based on lat and long'
-    And User clicks on Create Function button
+    And User clicks on Connect button to create function
     And User clicks on Copy Catalog ID
     And User clicks on Access Control button
     And User captures screenshot for "functionAccessControl"
     And User completes screenshot capture and triggers comparison for 'Function Engines'
-    
- @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
+
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create Function - Capture function RequestAccess Screenshot
     Given User captures documentation screenshot for 'FunctionEngines'
     When User opens Main Menu
@@ -137,7 +137,7 @@ Feature: Function documentation
     And User enters Function required parameters as '["lat", "lon"]'
     And User enters Function name as 'WeatherFunction'
     And User enters Function description as 'a function to call weather based on lat and long'
-    And User clicks on Create Function button
+    And User clicks on Connect button to create function
     And User clicks on Copy Catalog ID
     And User clicks on Access Control button
     And User clicks Make 'Function' Discoverable button

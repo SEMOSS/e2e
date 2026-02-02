@@ -74,11 +74,10 @@ Feature: Validate catalog user permissions for all catalog types
     Then User should see 'Read-Only' role user is removed from members list
 
     Examples: 
-      | CATALOG  | BUTTON_NAME  | FILE_NAME                        | CARD              | CATALOG_NAME        |
-      | Vector   | Add Vector   | VectorDatabase/TestVector.zip    | Vector Settings   | TestVector          |
-      | Function | Add Function | Function/weatherFunctionTest.zip | Function Settings | WeatherFunctionTest |
+      | CATALOG | BUTTON_NAME | FILE_NAME                     | CARD            | CATALOG_NAME |
+      | Vector  | Add Vector  | VectorDatabase/TestVector.zip | Vector Settings | TestVector   |
 
-  ## Creating below new scenario for new UI.
+  ## Creating below new scenario for UI.
   @LoginWithAuthor @DeleteTestCatalog @Regression
   Scenario Outline: Validate user access permissions of '<CATALOG>'
     Given User opens Main Menu
@@ -153,10 +152,11 @@ Feature: Validate catalog user permissions for all catalog types
     Then User should see 'Read-Only' role user is removed from members list
 
     Examples: 
-      | CATALOG  | BUTTON_NAME  | FILE_NAME                     | CARD              | CATALOG_NAME        |
-      | Model    | Add Model    | Model/Llama3-70B-Instruct.zip | Model Settings    | Llama3-70B-Instruct |
-      | Database | Add Database | Database/TestDatabase.zip     | Database Settings | TestDatabase        |
-      | Storage  | Add Storage  | Storage/Localminio.zip        | Storage Settings  | localminio          |
+      | CATALOG  | BUTTON_NAME  | FILE_NAME                        | CARD              | CATALOG_NAME        |
+      | Model    | Add Model    | Model/Llama3-70B-Instruct.zip    | Model Settings    | Llama3-70B-Instruct |
+      | Database | Add Database | Database/TestDatabase.zip        | Database Settings | TestDatabase        |
+      | Function | Add Function | Function/weatherFunctionTest.zip | Function Settings | WeatherFunctionTest |
+      | Storage  | Add Storage  | Storage/Localminio.zip           | Storage Settings  | localminio          |
 
   @LoginWithAuthor @DeleteCreatedTestApp @Regression
   Scenario: Validate user access permissions of Apps

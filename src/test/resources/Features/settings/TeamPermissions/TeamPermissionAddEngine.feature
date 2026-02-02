@@ -22,8 +22,8 @@ Feature: Add Engine for Team Permission
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestDatabase'
-    Given User opens Main Menu
-    When User clicks on Open Settings
+    And User opens Main Menu
+    And User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
@@ -48,12 +48,12 @@ Feature: Add Engine for Team Permission
     When User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'weatherFunctionTest'
     And User clicks on Add Function
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Function/weatherFunctionTest.zip'
-    And User clicks on Create Function button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
-    Given User opens Main Menu
-    When User clicks on Open Settings
+    And User opens Main Menu
+    And User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
@@ -87,8 +87,8 @@ Feature: Add Engine for Team Permission
     And User clicks on Connect button to create storage
     And User clicks on Copy Catalog ID
     Then User can see create storage success toast message as 'Successfully added new storage to catalog'
-    Given User opens Main Menu
-    When User clicks on Open Settings
+    When User opens Main Menu
+    And User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
@@ -113,7 +113,7 @@ Feature: Add Engine for Team Permission
     When User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-     And User selects 'OpenAI' type
+    And User selects 'OpenAI' type
     And User selects 'GPT 3.5 Turbo'
     And User enters Catalog Name as 'Catalog'
     And User enters Open AI Key as 'Test@1234'
@@ -122,8 +122,8 @@ Feature: Add Engine for Team Permission
     When User clicks on Edit button
     And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
-    Given User is on Home page
-    When User opens Main Menu
+    And User is on Home page
+    And User opens Main Menu
     And User clicks on Open Vector
     When User clicks on Add Vector button
     And User selects 'FAISS' connection
@@ -136,8 +136,8 @@ Feature: Add Engine for Team Permission
     Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as 'FAISS Vector DB01'
     And User clicks on Copy Catalog ID
-    Given User opens Main Menu
-    When User clicks on Open Settings
+    And User opens Main Menu
+    And User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Team Permissions' Card
     Then User can see team name as "Test Team" in the list
