@@ -15,8 +15,8 @@ public class SettingsModelPageUtils {
 
 	private static final String MODEL_GROUP_TAB_XPATH = "//span[text()='{groupTabName}']";
 	private static final String MODELS_OPTIONS_XPATH = "//p[text()='{modelOptionName}']";
-	private static final String EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
-	private static final String UPDATE_SMSS_BUTTON_XPATH = "//span[text()='Update SMSS']";
+	private static final String EDIT_SMSS_BUTTON_XPATH = "//button[@aria-label='Unlock Editor']";
+	private static final String UPDATE_SMSS_BUTTON_XPATH = "//button[@aria-label='Update SMSS Properties']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
 	private static final String TILE_SECTION_TITLE_XPATH = "//p[text()='{title}']";
 	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Private']/following-sibling::p";
@@ -131,7 +131,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyRowsPerPageDropdownIsVisible(Page page) {
-		Locator ROWS_PER_PAGE_DROPDOWN = page.locator(ROWS_PER_PAGE_DROPDOWN_XPATH);
+		Locator ROWS_PER_PAGE_DROPDOWN = page.locator(ROWS_PER_PAGE_DROPDOWN_XPATH).first();
 		AICorePageUtils.waitFor(ROWS_PER_PAGE_DROPDOWN);
 		ROWS_PER_PAGE_DROPDOWN.scrollIntoViewIfNeeded();
 		boolean isRowsPerPageDropdownVisible = ROWS_PER_PAGE_DROPDOWN.isVisible();

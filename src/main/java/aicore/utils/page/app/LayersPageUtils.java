@@ -12,7 +12,7 @@ import aicore.utils.CommonUtils;
 public class LayersPageUtils {
 	private static final Logger logger = LogManager.getLogger(DragAndDropBlocksPageUtils.class);
 
-	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}";
+	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}-layers";
 	private static final String ADD_NEW_PAGE_ICON_XPATH = "//button/*[@data-testid='AddIcon']";
 	private static final String LEFT_PANE_PAGE_XPATH = "//h6[text()='{pageName}']";
 	private static final String SELECTED_PAGE_XPATH = "//div[@id='{pageName}']";

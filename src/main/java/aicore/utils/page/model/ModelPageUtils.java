@@ -45,6 +45,22 @@ public class ModelPageUtils {
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
 	private static final String MODEL_TOAST_MESSAGE_TESTID = "notification-success-alert";
+	private static final String MODEL_ID_TESTID = "engineHeader-Model-id";
+	private static final String MODEL_NAME_TESTID = "Title";
+
+	// Chat field
+	private static final String CHAT_TAB_XPATH = "//button[text()='Chat']";
+	private static final String CHAT_TITLE_XPATH = "//div//*[text()='{title}']";
+	private static final String CHAT_TEMPERATURE_XPATH = "//div//p[text()='Temperature']/../../span[contains(text(),'Current')]";
+	private static final String CHAT_MAX_TOKENS_XPATH = "//div//p[contains(text(),'Max Tokens')]/../../div//input";
+	private static final String CHAT_INPUT_XPATH = "//div//input[@name='prompt']";
+	private static final String CHAT_SEND_BUTTON_XPATH = "//button[@aria-label='Send message']";
+	private static final String EMPTY_CHAT_WINDOW_XPATH = "//div//p[contains(text(),'Start a conversation')]";
+	private static final String CHAT_CLEAR_ALL_BUTTON_XPATH = "//button/span[text()='Clear Chat']";
+	private static final String CHAT_RESPONSE_XPATH = "//div//*[text()='Response']";
+	private static final String CHAT_OUTPUT_XPATH = "//div//*[text()='Response']/../div//p[1]";
+	private static final String CHAT_MODEL_ID_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model ID')]/..";
+	private static final String CHAT_MODEL_NAME_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model Name')]/..";
 
 	// SMSS field
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
@@ -112,60 +128,62 @@ public class ModelPageUtils {
 		Locator fieldLocator = null;
 		String fieldName = field.replace(" ", "-");
 		switch (field) {
-		case "Catalog Name":
-		case "Model":
-		case "Init Script":
-		case "Tag":
-		case "Project":
-		case "GCP Region":
-		case "Service Account Credentials":
-		case "Model ID":
-		case "Region":
-		case "Model Name":
-		case "API Version":
-			fieldLocator = page.locator(
-					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Chat Type":
-		case "Record Questions and Responses":
-		case "Keep Conversation History":
-		case "Deployment Type":
-		case "Completion Type":
-		case "Type":
-			fieldLocator = page.locator(
-					DROPDOWN_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Open AI Key":
-		case "OPEN AI Key":
-		case "OpenAI API Key":
-		case "AWS Access Key ID":
-		case "AWS Secret Access Key":
-		case "Azure Open AI Key":
-			fieldLocator = page.locator(
-					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Max Input Tokens":
-		case "Max Tokens":
-		case "Max Completion Tokens":
-		case "Context Window":
-		case "Max Tokens (Max Completion Tokens)":
-			fieldLocator = page.locator(
-					NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Endpoint":
-		case "Azure Endpoint":
-			Locator urlField = page.locator(
-					URL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			Locator textField = page.locator(
-					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			if (urlField.count() > 0) {
-				fieldLocator = urlField;
-			} else {
-				fieldLocator = textField;
-			}
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid field provided for section fields: " + field);
+			case "Catalog Name":
+			case "Model":
+			case "Init Script":
+			case "Tag":
+			case "Project":
+			case "GCP Region":
+			case "Service Account Credentials":
+			case "Model ID":
+			case "Region":
+			case "Model Name":
+			case "API Version":
+				fieldLocator = page.locator(
+						TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+				break;
+			case "Chat Type":
+			case "Record Questions and Responses":
+			case "Keep Conversation History":
+			case "Deployment Type":
+			case "Completion Type":
+			case "Type":
+				fieldLocator = page.locator(
+						DROPDOWN_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}",
+								fieldName));
+				break;
+			case "Open AI Key":
+			case "OPEN AI Key":
+			case "OpenAI API Key":
+			case "AWS Access Key ID":
+			case "AWS Secret Access Key":
+			case "Azure Open AI Key":
+				fieldLocator = page.locator(
+						CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}",
+								fieldName));
+				break;
+			case "Max Input Tokens":
+			case "Max Tokens":
+			case "Max Completion Tokens":
+			case "Context Window":
+			case "Max Tokens (Max Completion Tokens)":
+				fieldLocator = page.locator(
+						NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+				break;
+			case "Endpoint":
+			case "Azure Endpoint":
+				Locator urlField = page.locator(
+						URL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+				Locator textField = page.locator(
+						TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+				if (urlField.count() > 0) {
+					fieldLocator = urlField;
+				} else {
+					fieldLocator = textField;
+				}
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid field provided for section fields: " + field);
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
@@ -175,54 +193,54 @@ public class ModelPageUtils {
 		Locator fieldLocator = null;
 		String fieldName = field.replace(" ", "-");
 		switch (field) {
-		case "Catalog Name":
-		case "Model":
-		case "Init Script":
-		case "Tag":
-		case "Project":
-		case "GCP Region":
-		case "Service Account Credentials":
-		case "Model ID":
-		case "Region":
-		case "Model Name":
-		case "API Version":
-			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Chat Type":
-		case "Record Questions and Responses":
-		case "Keep Conversation History":
-		case "Deployment Type":
-		case "Completion Type":
-		case "Type":
-			fieldLocator = page.locator(MANDATORY_DROPDOWN_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Open AI Key":
-		case "OPEN AI Key":
-		case "OpenAI API Key":
-		case "AWS Access Key ID":
-		case "AWS Secret Access Key":
-		case "Azure Open AI Key":
-			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Max Input Tokens":
-		case "Max Tokens":
-		case "Max Completion Tokens":
-		case "Context Window":
-		case "Max Tokens (Max Completion Tokens)":
-			fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Endpoint":
-		case "Azure Endpoint":
-			Locator urlField = page.locator(MANDATORY_URL_FIELDS_XPATH.replace("{field}", fieldName));
-			Locator textField = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
-			if (urlField.count() > 0) {
-				fieldLocator = urlField;
-			} else {
-				fieldLocator = textField;
-			}
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid mandatory field provided: " + field);
+			case "Catalog Name":
+			case "Model":
+			case "Init Script":
+			case "Tag":
+			case "Project":
+			case "GCP Region":
+			case "Service Account Credentials":
+			case "Model ID":
+			case "Region":
+			case "Model Name":
+			case "API Version":
+				fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
+				break;
+			case "Chat Type":
+			case "Record Questions and Responses":
+			case "Keep Conversation History":
+			case "Deployment Type":
+			case "Completion Type":
+			case "Type":
+				fieldLocator = page.locator(MANDATORY_DROPDOWN_FIELDS_XPATH.replace("{field}", fieldName));
+				break;
+			case "Open AI Key":
+			case "OPEN AI Key":
+			case "OpenAI API Key":
+			case "AWS Access Key ID":
+			case "AWS Secret Access Key":
+			case "Azure Open AI Key":
+				fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
+				break;
+			case "Max Input Tokens":
+			case "Max Tokens":
+			case "Max Completion Tokens":
+			case "Context Window":
+			case "Max Tokens (Max Completion Tokens)":
+				fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
+				break;
+			case "Endpoint":
+			case "Azure Endpoint":
+				Locator urlField = page.locator(MANDATORY_URL_FIELDS_XPATH.replace("{field}", fieldName));
+				Locator textField = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
+				if (urlField.count() > 0) {
+					fieldLocator = urlField;
+				} else {
+					fieldLocator = textField;
+				}
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid mandatory field provided: " + field);
 		}
 		fieldLocator.first().scrollIntoViewIfNeeded();
 		return fieldLocator.first().isVisible();
@@ -233,80 +251,82 @@ public class ModelPageUtils {
 		String fieldName = field.replace(" ", "-");
 		String fieldType = "";
 		switch (field) {
-		case "Catalog Name":
-		case "Model":
-		case "Init Script":
-		case "Tag":
-		case "Project":
-		case "GCP Region":
-		case "Service Account Credentials":
-		case "Model ID":
-		case "Region":
-		case "Model Name":
-		case "API Version":
-			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
-			fieldType = "Text";
-			break;
-		case "Chat Type":
-		case "Record Questions and Responses":
-		case "Keep Conversation History":
-		case "Deployment Type":
-		case "Completion Type":
-		case "Type":
-			fieldLocator = page.getByTestId(DROPDOWN_FIELDS_DATA_TESTID.replace("{field}", fieldName));
-			fieldType = "Dropdown";
-			break;
-		case "Open AI Key":
-		case "OPEN AI Key":
-		case "OpenAI API Key":
-		case "AWS Access Key ID":
-		case "AWS Secret Access Key":
-		case "Azure Open AI Key":
-			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
-					.locator("input");
-			fieldType = "Credential";
-			break;
-		case "Max Input Tokens":
-		case "Max Tokens":
-		case "Max Completion Tokens":
-		case "Context Window":
-		case "Max Tokens (Max Completion Tokens)":
-			fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
-			fieldType = "Number";
-			break;
-		case "Endpoint":
-		case "Azure Endpoint":
-			Locator urlField = page.getByTestId(URL_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
-			Locator textField = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName))
-					.locator("input");
-			if (urlField.count() > 0) {
-				fieldLocator = urlField;
-			} else {
-				fieldLocator = textField;
-			}
-			fieldType = "Url";
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid field: " + field);
+			case "Catalog Name":
+			case "Model":
+			case "Init Script":
+			case "Tag":
+			case "Project":
+			case "GCP Region":
+			case "Service Account Credentials":
+			case "Model ID":
+			case "Region":
+			case "Model Name":
+			case "API Version":
+				fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
+				fieldType = "Text";
+				break;
+			case "Chat Type":
+			case "Record Questions and Responses":
+			case "Keep Conversation History":
+			case "Deployment Type":
+			case "Completion Type":
+			case "Type":
+				fieldLocator = page.getByTestId(DROPDOWN_FIELDS_DATA_TESTID.replace("{field}", fieldName));
+				fieldType = "Dropdown";
+				break;
+			case "Open AI Key":
+			case "OPEN AI Key":
+			case "OpenAI API Key":
+			case "AWS Access Key ID":
+			case "AWS Secret Access Key":
+			case "Azure Open AI Key":
+				fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
+						.locator("input");
+				fieldType = "Credential";
+				break;
+			case "Max Input Tokens":
+			case "Max Tokens":
+			case "Max Completion Tokens":
+			case "Context Window":
+			case "Max Tokens (Max Completion Tokens)":
+				fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName))
+						.locator("input");
+				fieldType = "Number";
+				break;
+			case "Endpoint":
+			case "Azure Endpoint":
+				Locator urlField = page.getByTestId(URL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
+						.locator("input");
+				Locator textField = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName))
+						.locator("input");
+				if (urlField.count() > 0) {
+					fieldLocator = urlField;
+				} else {
+					fieldLocator = textField;
+				}
+				fieldType = "Url";
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid field: " + field);
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		switch (fieldType) {
-		case "Text":
-		case "Credential":
-		case "Number":
-		case "Url":
-			if (field.equalsIgnoreCase("Catalog Name")) {
-				fieldLocator.fill(fieldValue + timestamp);
-			} else {
-				fieldLocator.fill(fieldValue);
-			}
-			break;
-		case "Dropdown":
-			fieldLocator.click();
-			page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue)).click();
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid field type");
+			case "Text":
+			case "Credential":
+			case "Number":
+			case "Url":
+				if (field.equalsIgnoreCase("Catalog Name")) {
+					fieldLocator.fill(fieldValue + timestamp);
+				} else {
+					fieldLocator.fill(fieldValue);
+				}
+				break;
+			case "Dropdown":
+				fieldLocator.click();
+				page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue)).click();
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid field type");
 		}
 	}
 
@@ -348,6 +368,131 @@ public class ModelPageUtils {
 		Locator actualmodelTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(modelTitle));
 		actualmodelTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return actualmodelTitle.textContent().trim();
+	}
+
+	public static void clickOnChatTab(Page page) {
+		Locator chatTab = page.locator(CHAT_TAB_XPATH);
+		AICorePageUtils.waitFor(chatTab);
+		chatTab.click();
+		page.waitForTimeout(2000);
+	}
+
+	public static void verifyChatSectionDisplayed(Page page, String title) {
+		Locator chatTabTitle = page.locator(CHAT_TITLE_XPATH.replace("{title}", title));
+		AICorePageUtils.waitFor(chatTabTitle);
+		if (!chatTabTitle.isVisible())
+			throw new RuntimeException("Chat tab title is not displayed");
+	}
+
+	public static void verifyTemperatureValue(Page page, String temperatureValue) {
+		Locator temperatureField = page.locator(CHAT_TEMPERATURE_XPATH);
+		AICorePageUtils.waitFor(temperatureField);
+		String actualTemperatureValue = temperatureField.textContent().trim().split(" ")[1];
+		if (!actualTemperatureValue.equalsIgnoreCase(temperatureValue)) {
+			throw new PlaywrightException("Temperature value is not matching. Expected: " + temperatureValue
+					+ " but found: " + actualTemperatureValue);
+		}
+	}
+
+	public static void verifyMaxTokensValue(Page page, String maxTokensValue) {
+		Locator maxTokensField = page.locator(CHAT_MAX_TOKENS_XPATH);
+		AICorePageUtils.waitFor(maxTokensField);
+		String actualMaxTokensValue = maxTokensField.getAttribute("value");
+		if (!actualMaxTokensValue.equalsIgnoreCase(maxTokensValue)) {
+			throw new PlaywrightException("Max tokens value is not matching. Expected: " + maxTokensValue
+					+ " but found: " + actualMaxTokensValue);
+		}
+	}
+
+	public static void verifyInputTextboxPlaceholder(Page page, String defaultValue) {
+		Locator inputField = page.locator(CHAT_INPUT_XPATH);
+		AICorePageUtils.waitFor(inputField);
+		String placeholderInputValue = inputField.getAttribute("placeholder").trim();
+		if (!placeholderInputValue.equalsIgnoreCase(defaultValue)) {
+			throw new PlaywrightException("Input textbox placeholder is not matching. Expected: " + defaultValue
+					+ " but found: " + placeholderInputValue);
+		}
+	}
+
+	public static void verifyAndActivateSendButton(Page page, String inputText) {
+		Locator inputField = page.locator(CHAT_INPUT_XPATH);
+		Locator sendButton = page.locator(CHAT_SEND_BUTTON_XPATH);
+		AICorePageUtils.waitFor(inputField);
+		AICorePageUtils.waitFor(sendButton);
+		inputField.fill(inputText);
+		if (!sendButton.isEnabled()) {
+			throw new PlaywrightException("Send button is not enabled");
+		}
+	}
+
+	public static void clickOnSendButton(Page page) {
+		Locator sendButton = page.locator(CHAT_SEND_BUTTON_XPATH);
+		AICorePageUtils.waitFor(sendButton);
+		if (!sendButton.isEnabled()) {
+			throw new PlaywrightException("Send button is not enabled");
+		} else {
+			sendButton.click();
+		}
+	}
+
+	public static void clickOnClearAllButton(Page page) {
+		Locator clearAllButton = page.locator(CHAT_CLEAR_ALL_BUTTON_XPATH);
+		AICorePageUtils.waitFor(clearAllButton);
+		if (!clearAllButton.isEnabled()) {
+			throw new PlaywrightException("Clear all button is not enabled");
+		} else {
+			clearAllButton.click();
+		}
+	}
+
+	public static void verifyChatWindowCleared(Page page) {
+		Locator emptyChatWindow = page.locator(EMPTY_CHAT_WINDOW_XPATH);
+		AICorePageUtils.waitFor(emptyChatWindow);
+		if (!emptyChatWindow.isVisible()) {
+			throw new PlaywrightException("Chat window is not cleared after clicking on Clear all button");
+		}
+	}
+
+	public static void verifyLoaderDisplayed(Page page) {
+		page.waitForTimeout(2000); // wait for response to be generated
+		Locator response = page.locator(CHAT_RESPONSE_XPATH);
+		AICorePageUtils.waitFor(response);
+		if (!response.isVisible()) {
+			throw new PlaywrightException("Response is not generated after submitting the query");
+		}
+	}
+
+	public static void verifyResponseGeneratedInChatWindow(Page page) {
+		Locator Output = page.locator(CHAT_OUTPUT_XPATH);
+		AICorePageUtils.waitFor(Output);
+		String outputText = Output.textContent().trim();
+		if (!(outputText.length() > 0)) {
+			throw new PlaywrightException("Output is not generated after submitting the query");
+		}
+	}
+
+	public static void verifyModelIDAndNameDisplayed(Page page) {
+		Locator modelID = page.getByTestId(MODEL_ID_TESTID);
+		Locator modelName = page.getByTestId(MODEL_NAME_TESTID);
+		AICorePageUtils.waitFor(modelID);
+		AICorePageUtils.waitFor(modelName);
+		String modelIDText = modelID.textContent().trim();
+		String modelNameText = modelName.textContent().trim();
+		Locator chatModelID = page.locator(CHAT_MODEL_ID_XPATH);
+		Locator chatModelName = page.locator(CHAT_MODEL_NAME_XPATH);
+		AICorePageUtils.waitFor(chatModelID);
+		AICorePageUtils.waitFor(chatModelName);
+		String chatModelIDText = chatModelID.textContent().trim().split(" ")[2];
+		String chatModelNameText = chatModelName.textContent().trim().split(" ")[2];
+		if (!modelIDText.equalsIgnoreCase(chatModelIDText)) {
+			throw new PlaywrightException("Model ID in Chat section does not match with Model Information section"
+					+ modelIDText + " " + chatModelIDText);
+		}
+		if (!modelNameText.equalsIgnoreCase(chatModelNameText)) {
+			throw new PlaywrightException("Model Name in Chat section does not match with Model Information section"
+					+ modelNameText + " " + chatModelNameText);
+		}
+
 	}
 
 	public static void clickOnSMSSTab(Page page) {
@@ -461,27 +606,27 @@ public class ModelPageUtils {
 	public static String getAllFieldsInSMSSProperties(Page page, String fieldName) {
 		Locator locator = null;
 		switch (fieldName) {
-		case "ENDPOINT":
-			locator = page.locator(ENDPOINT_SMSSPROPERTIES_XPATH);
-			break;
-		case "INIT_MODEL_ENGINE":
-			// Custom handling for partial text match
-			locator = page.locator(INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH);
-			break;
-		case "MODEL":
-			Locator allModels = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
-			int count = allModels.count();
-			for (int i = 0; i < count; i++) {
-				String text = allModels.nth(i).textContent().replace('\u00A0', ' ').trim();
-				if (text.startsWith("MODEL ") && !text.startsWith("MODEL_")) {
-					locator = allModels.nth(i);
-					break;
+			case "ENDPOINT":
+				locator = page.locator(ENDPOINT_SMSSPROPERTIES_XPATH);
+				break;
+			case "INIT_MODEL_ENGINE":
+				// Custom handling for partial text match
+				locator = page.locator(INIT_MODEL_ENGINE_SMSSPROPERTIES_XPATH);
+				break;
+			case "MODEL":
+				Locator allModels = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
+				int count = allModels.count();
+				for (int i = 0; i < count; i++) {
+					String text = allModels.nth(i).textContent().replace('\u00A0', ' ').trim();
+					if (text.startsWith("MODEL ") && !text.startsWith("MODEL_")) {
+						locator = allModels.nth(i);
+						break;
+					}
 				}
-			}
-			break;
-		default:
-			locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
-			break;
+				break;
+			default:
+				locator = page.locator(SMSS_PROPERTIES_FIELDS_COMMON_XPATH.replace("{fieldName}", fieldName));
+				break;
 		}
 		AICorePageUtils.waitFor(locator);
 		locator.scrollIntoViewIfNeeded();

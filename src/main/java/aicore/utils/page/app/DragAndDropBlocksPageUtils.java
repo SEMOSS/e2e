@@ -152,10 +152,10 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
 	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
 	private static final String THEME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Theme-Block";
-	private static final String BLOCK_SETTINGS_PANEL_TITLE_XPATH = "//span[normalize-space()='Add Blocks']";
+	private static final String SETTINGS_PANEL_TITLE_XPATH = "//span[normalize-space()='{sectionName}']";
 	private static final String SECTION_ON_BLOCK_SETTINGS_XPATH = "//button[normalize-space()='{sectionName}']";
 	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
-	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}";
+	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -1033,9 +1033,9 @@ public class DragAndDropBlocksPageUtils {
 		page.mouse().up();
 	}
 
-	public static String getBlockSettingsPanelTitle(Page page, String option) {
+	public static String getBlockSettingsPanelTitle(Page page, String expectedTitle, String option) {
 		page.getByTestId(APP_LEFT_PANEL_OPTION_DATATESTID.replace("{option}", option)).first().isEnabled();
-		return page.locator(BLOCK_SETTINGS_PANEL_TITLE_XPATH).textContent();
+		return page.locator(SETTINGS_PANEL_TITLE_XPATH.replace("{sectionName}", expectedTitle)).textContent();
 	}
 
 	public static boolean userSeesTheSection(Page page, String sectionName) {
