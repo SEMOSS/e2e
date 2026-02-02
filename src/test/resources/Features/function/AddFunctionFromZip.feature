@@ -5,11 +5,11 @@ Feature: Add Function From Zip
     When User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Function/weatherFunctionTest.zip'
-    And User clicks on Create Function button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
-    And User sees success toast message 'ZIP uploaded successfully'
+    And User sees success toast message 'Successfully Created Function Database'
     And User can see the Catalog title as 'WeatherFunctionTest'
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
@@ -55,7 +55,7 @@ Feature: Add Function From Zip
     Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     And User logs out from the application
     And User login as "Admin"
-   
+
   @LoginWithAdmin
   Scenario Outline: Delete Function
     Given User can see the Catalog title as 'WeatherFunctionTest'

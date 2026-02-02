@@ -7,19 +7,24 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class AddFunctionPageUtils {
 
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
-	private static final String CATALOG_NAME = "importForm-NAME-textField";
-	private static final String URL = "importForm-URL-textField";
-	private static final String HTTP_METHOD = "importForm-HTTP_METHOD-select";
-	private static final String POST_BODY_MESSAGE = "importForm-CONTENT_TYPE-select";
-	private static final String HEADERS = "importForm-HEADERS-textField";
-	private static final String FUNCTION_PARAMETERS = "importForm-FUNCTION_PARAMETERS-textField";
-	private static final String FUNCTION_REQUIRED_PARAMETERS = "importForm-FUNCTION_REQUIRED_PARAMETERS-textField";
-	private static final String FUNCTION_NAME = "importForm-FUNCTION_NAME-textField";
-	private static final String FUNCTION_DESCRIPTION = "importForm-FUNCTION_DESCRIPTION-textField";
-	private static final String FUNCTION_TYPE = "importForm-FUNCTION_TYPE-textField";
-	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
-	private static final String CREATE_FUNCTION_BUTTON = "Create Function";
+	private static final String CATALOG_NAME_XPATH = "//div[@data-testid='function-form-input-NAME']//input[@type='text'] | .//textarea";
+	private static final String URL_XPATH = "//div[@data-testid='function-form-input-URL']//input[@type='text'] | .//textarea";
+	private static final String HTTP_METHOD_XPATH = "//div[@data-testid='function-form-input-HTTP_METHOD']//*[@role='button' or @aria-haspopup='listbox']";
+	private static final String POST_BODY_MESSAGE_XPATH = "//div[@data-testid='function-form-input-CONTENT_TYPE']//*[@role='button' or @aria-haspopup='listbox']";
+	private static final String HEADERS_XPATH = "//div[@data-testid='function-form-input-HEADERS']//input[@type='text'] | .//textarea";
+	private static final String FUNCTION_PARAMETERS_XPATH = "//div[@data-testid='function-form-input-FUNCTION_PARAMETERS']//input[@type='text'] | .//textarea";
+	private static final String FUNCTION_REQUIRED_PARAMETERS_XPATH = "//div[@data-testid='function-form-input-FUNCTION_REQUIRED_PARAMETERS']//input[@type='text'] | .//textarea";
+	private static final String FUNCTION_NAME_XPATH = "//div[@data-testid='function-form-input-FUNCTION_NAME']//input[@type='text'] | .//textarea";
+	private static final String FUNCTION_DESCRIPTION_XPATH = "//div[@data-testid='function-form-input-FUNCTION_DESCRIPTION']//input[@type='text'] | .//textarea";
+	private static final String FUNCTION_TYPE_XPATH = "//div[@data-testid='function-form-input-FUNCTION_TYPE']//*[@role='button' or @aria-haspopup='listbox']";
+	private static final String FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='function-form-input-{fieldName}']";
+	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//span[text()='*']";
+	private static final String FIELDS_DATA_TESTID = "function-form-input-{fieldName}";
+	private static final String INPUT_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//input[@type='text'] | .//textarea";
+	private static final String DROPDOWN_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//*[@role='button' or @aria-haspopup='listbox']";
+	private static final String PASSWORD_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//input[@type='password'] | .//textarea";
+	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
+	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
@@ -34,7 +39,8 @@ public class AddFunctionPageUtils {
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
-	private static final String HTTP_METHOD_TYPE_TESTID = "importForm-{type}-item";
+	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
+	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
 	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='engineIndexPage-searchBar-{catalog}']//input";
 
 	public static void clickOnAddFunctionButton(Page page) {
@@ -43,92 +49,135 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void selectFunction(Page page, String functionType) {
-		page.getByText(functionType).isVisible();
-		page.getByText(functionType).click();
+		page.getByText(functionType).first().isVisible();
+		page.getByText(functionType).first().click();
+	}
+
+	private static String getFieldNameForTestId(String field) {
+		String fieldNamesForDataTestid = switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Function Name (metadata)" -> "Function Name";
+		case "Function Description (metadata)" -> "Function Description";
+		case "S3 Bucket Engine Id" -> "S3BucketEngineId";
+		case "Google Bucket Engine Id" -> "Google Bucket EngineId";
+		case "Upload Service Account File" -> "File";
+		case "POST Message Body Type" -> "Content Type";
+		case "Http Headers" -> "Headers";
+		default -> field;
+		};
+		return fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+	}
+
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		String fieldName = getFieldNameForTestId(field);
+		Locator fieldLocator = page
+				.locator(FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldName));
+		fieldLocator.scrollIntoViewIfNeeded();
+		return fieldLocator.isVisible();
+	}
+
+	public static boolean isFieldMandatory(Page page, String field) {
+		String fieldName = getFieldNameForTestId(field);
+		Locator fieldLocator = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		fieldLocator.first().scrollIntoViewIfNeeded();
+		return fieldLocator.first().isVisible();
+	}
+
+	public static void fillFunctionCreationForm(Page page, String field, String fieldValue, String timestamp) {
+		String fieldName = getFieldNameForTestId(field);
+		Locator fieldContainer = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldName));
+		fieldContainer.scrollIntoViewIfNeeded();
+		Locator dropdownField = page.locator(DROPDOWN_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		Locator inputField = page.locator(INPUT_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		Locator passwordField = page.locator(PASSWORD_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		if (dropdownField.count() > 0) {
+			dropdownField.first().click();
+			Locator dropdownOption = page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue));
+			dropdownOption.click();
+		} else if (passwordField.count() > 0) {
+			passwordField.first().fill(fieldValue);
+		} else {
+			if (field.contains("Catalog Name")) {
+				fieldValue = fieldValue + timestamp;
+			}
+			inputField.first().fill(fieldValue);
+		}
 	}
 
 	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
 		catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
-		page.getByTestId(CATALOG_NAME).click();
-		page.getByTestId(CATALOG_NAME).fill(catalogName);
-
+		page.locator(CATALOG_NAME_XPATH).click();
+		page.locator(CATALOG_NAME_XPATH).fill(catalogName);
 	}
 
 	public static void enterUrl(Page page, String url) {
-		page.getByTestId(URL).click();
-		page.getByTestId(URL).fill(url);
+		page.locator(URL_XPATH).click();
+		page.locator(URL_XPATH).fill(url);
 	}
 
 	public static void selectHttpMethod(Page page, String httpMethod) {
-		page.getByTestId(HTTP_METHOD).isVisible();
-		page.getByTestId(HTTP_METHOD).click();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", httpMethod)).isVisible();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", httpMethod)).click();
+		page.locator(HTTP_METHOD_XPATH).isVisible();
+		page.locator(HTTP_METHOD_XPATH).click();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).isVisible();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).click();
 	}
 
 	public static void selectPostBodyMessage(Page page, String postBodyMessage) {
-		page.getByTestId(POST_BODY_MESSAGE).isVisible();
-		page.getByTestId(POST_BODY_MESSAGE).click();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", postBodyMessage)).isVisible();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", postBodyMessage)).click();
-	}
-
-	public static void verifyAsteriskMarkOnFields(Page page, String fieldLabels) {
-		String[] labels = fieldLabels.split(",");
-		for (String label : labels) {
-			String asteriskSelector = "//label[text()='%s']/span[text()='*']".replace("%s", label.trim());
-			Locator mandatoryField = page.locator(asteriskSelector);
-			AICorePageUtils.waitFor(mandatoryField);
-			if (!mandatoryField.isVisible() || !mandatoryField.textContent().contains("*")) {
-				throw new AssertionError(
-						"Asterisk mark is not visible or does not contain '*' for the field: " + label.trim());
-			}
-		}
+		page.locator(POST_BODY_MESSAGE_XPATH).isVisible();
+		page.locator(POST_BODY_MESSAGE_XPATH).click();
+		page.getByTestId(POST_MESSAGE_BODY_TYPE_TESTID.replace("{type}", postBodyMessage)).isVisible();
+		page.getByTestId(POST_MESSAGE_BODY_TYPE_TESTID.replace("{type}", postBodyMessage)).click();
 	}
 
 	public static void enterHeaders(Page page, String headers) {
-		page.getByTestId(HEADERS).click();
-		page.getByTestId(HEADERS).fill(headers);
+		page.locator(HEADERS_XPATH).click();
+		page.locator(HEADERS_XPATH).fill(headers);
 	}
 
 	public static void enterFunctionParameters(Page page, String functionParameters) {
-		page.getByTestId(FUNCTION_PARAMETERS).click();
-		page.getByTestId(FUNCTION_PARAMETERS).fill(functionParameters);
+		page.locator(FUNCTION_PARAMETERS_XPATH).click();
+		page.locator(FUNCTION_PARAMETERS_XPATH).fill(functionParameters);
 	}
 
 	public static void enterFunctionName(Page page, String functionName) {
-		page.getByTestId(FUNCTION_NAME).click();
-		page.getByTestId(FUNCTION_NAME).fill(functionName);
+		page.locator(FUNCTION_NAME_XPATH).click();
+		page.locator(FUNCTION_NAME_XPATH).fill(functionName);
 	}
 
 	public static void enterFunctionDescription(Page page, String functionDescription) {
-		page.getByTestId(FUNCTION_DESCRIPTION).click();
-		page.getByTestId(FUNCTION_DESCRIPTION).fill(functionDescription);
+		page.locator(FUNCTION_DESCRIPTION_XPATH).click();
+		page.locator(FUNCTION_DESCRIPTION_XPATH).fill(functionDescription);
 	}
 
 	public static void selectFunctionType(Page page, String functionType) {
-		page.getByTestId(FUNCTION_TYPE).isVisible();
-		page.getByTestId(FUNCTION_TYPE).click();
-		page.getByTestId(FUNCTION_TYPE).fill(functionType);
+		page.locator(FUNCTION_TYPE_XPATH).isVisible();
+		page.locator(FUNCTION_TYPE_XPATH).click();
+		page.locator(FUNCTION_TYPE_XPATH).fill(functionType);
 	}
 
 	public static boolean verifyCreateFunctionButtonDisabled(Page page) {
-		return page.getByText(CREATE_FUNCTION_BUTTON).isDisabled();
+		return page.getByTestId(CONNECT_BUTTON_DATA_TESTID).isDisabled();
 	}
 
 	public static void enterFunctionRequiredParameters(Page page, String functionRequiredParameters) {
-		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).click();
-		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).fill(functionRequiredParameters);
+		page.locator(FUNCTION_REQUIRED_PARAMETERS_XPATH).click();
+		page.locator(FUNCTION_REQUIRED_PARAMETERS_XPATH).fill(functionRequiredParameters);
 	}
 
 	public static void checkCreateFunctionButton(Page page) {
-		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
+		page.getByTestId(CONNECT_BUTTON_DATA_TESTID).isVisible();
 	}
 
-	public static void clickOnCreateFunctionButton(Page page) {
-		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
-		page.getByText(CREATE_FUNCTION_BUTTON).isEnabled();
-		page.getByText(CREATE_FUNCTION_BUTTON).click();
+	public static boolean validateConnectButtonEnabled(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		return connectButton.isEnabled();
+	}
+
+	public static void clickOnConnectButton(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		connectButton.click();
 	}
 
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
@@ -186,7 +235,7 @@ public class AddFunctionPageUtils {
 	}
 
 	public static boolean verifyMissingInputField(Page page) {
-		Locator missingFieldParent = page.getByTestId(URL).locator("..");
+		Locator missingFieldParent = page.locator(URL_XPATH).locator("..");
 		missingFieldParent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String missingFieldClass = missingFieldParent.getAttribute("class");
 		return missingFieldClass.contains("Mui-focused");
