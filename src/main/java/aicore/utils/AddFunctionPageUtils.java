@@ -83,7 +83,7 @@ public class AddFunctionPageUtils {
 		return fieldLocator.first().isVisible();
 	}
 
-	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
+	public static void fillFunctionCreationForm(Page page, String field, String fieldValue, String timestamp) {
 		String fieldName = getFieldNameForTestId(field);
 		Locator fieldContainer = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldName));
 		fieldContainer.scrollIntoViewIfNeeded();

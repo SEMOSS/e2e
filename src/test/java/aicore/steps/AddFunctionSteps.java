@@ -79,7 +79,7 @@ public class AddFunctionSteps {
 			String[] keyValue = field.split("=", 2);
 			String fieldName = keyValue[0].trim();
 			String fieldValue = keyValue[1].trim();
-			addFunctionToCatalogPage.fillModelCreationForm(fieldName, fieldValue);
+			addFunctionToCatalogPage.fillFunctionCreationForm(fieldName, fieldValue);
 		}
 	}
 
