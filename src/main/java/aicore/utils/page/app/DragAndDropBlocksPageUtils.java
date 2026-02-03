@@ -216,7 +216,6 @@ public class DragAndDropBlocksPageUtils {
 				Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
 				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 20);
 				page.mouse().up();
-
 			}
 		default:
 			Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
