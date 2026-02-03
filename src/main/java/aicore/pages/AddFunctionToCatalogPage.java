@@ -46,6 +46,18 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
 	}
 
+	public boolean fieldUnderSection(String section, String field) {
+		return AddFunctionPageUtils.fieldUnderSection(page, section, field);
+	}
+
+	public boolean isFieldMandatory(String field) {
+		return AddFunctionPageUtils.isFieldMandatory(page, field);
+	}
+
+	public void fillFunctionCreationForm(String fieldName, String fieldValue) {
+		AddFunctionPageUtils.fillFunctionCreationForm(page, fieldName, fieldValue, timestamp);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		AddFunctionPageUtils.enterCatalogName(page, catalogName, timestamp);
 	}
@@ -61,10 +73,10 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	public void selectPostBodyMessage(String postBodyMessage) {
 		AddFunctionPageUtils.selectPostBodyMessage(page, postBodyMessage);
 	}
-
-	public void verifyAsteriskMarkOnFields(String fieldLabels) {
-		AddFunctionPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
-	}
+//
+//	public void verifyAsteriskMarkOnFields(String fieldLabels) {
+//		AddFunctionPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
+//	}
 
 	public void enterHeaders(String headers) {
 		AddFunctionPageUtils.enterHeaders(page, headers);
@@ -98,8 +110,12 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.checkCreateFunctionButton(page);
 	}
 
-	public void clickOnCreateFunctionButton() {
-		AddFunctionPageUtils.clickOnCreateFunctionButton(page);
+	public boolean validateConnectButtonEnabled() {
+		return AddFunctionPageUtils.validateConnectButtonEnabled(page);
+	}
+
+	public void clickOnConnectButton() {
+		AddFunctionPageUtils.clickOnConnectButton(page);
 	}
 
 	public String verifyFunctionNameInCatalog(String catalogName) {
@@ -142,9 +158,10 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, catalogName);
 	}
 
-	public void deleteCatalog(String catalog ,String catalogName) {
-		AddFunctionPageUtils.deleteCatalog(page,catalog ,catalogName);
+	public void deleteCatalog(String catalog, String catalogName) {
+		AddFunctionPageUtils.deleteCatalog(page, catalog, catalogName);
 	}
+
 	public void closeToastMessage() {
 		AddFunctionPageUtils.closeToastMessage(page);
 	}

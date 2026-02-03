@@ -11,35 +11,41 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class StoragePageUtils {
 
 	private static final String ADD_STORAGE_BUTTON_XPATH = "//button[@aria-label='Navigate to import Storage']";
-	private static final String CREATE_STORAGE_BUTTON = "//span[text()='Create storage']";
-	private static final String STORAGE_CREATE_SUCCESS_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added to catalog storage']";
 	private static final String STORAGE_TITLE_XPATH = "//h4[text()='{title}']";
 	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String S3_REGION_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_REGION')]";
 	private static final String S3_BUCKET_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_BUCKET')]";
 	private static final String S3_ACCESS_KEY_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_ACCESS_KEY')]";
-	private static final String CATALOG_NAME_TEXTBOX_DATATESTID = "importForm-NAME-textField";
-	private static final String REGION_TEXTBOX_DATATESTID = "importForm-S3_REGION-textField";
-	private static final String BUCKET_TEXTBOX_DATATESTID = "importForm-S3_BUCKET-textField";
-	private static final String ACCESS_KEY_TEXTBOX_DATATESTID = "importForm-S3_ACCESS_KEY-textField";
-	private static final String SECRET_KEY_TEXTBOX_DATATESTID = "importForm-S3_SECRET_KEY-textField";
-	private static final String VIEW_STORAGE_XPATH = "//button[@aria-label=\"copy Storage ID\"]/parent::span";
-	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
+	private static final String CATALOG_NAME_XPATH = "//div[@data-testid='storage-form-input-NAME']//input[@type='text'] | .//textarea";
+	private static final String REGION_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_REGION']//input[@type='text'] | .//textarea";
+	private static final String BUCKET_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_BUCKET']//input[@type='text'] | .//textarea";
+	private static final String ACCESS_KEY_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_ACCESS_KEY']//input[@type='text'] | .//textarea";
+	private static final String SECRET_KEY_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_SECRET_KEY']//input[@type='password'] | .//textarea";
+	private static final String FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='storage-form-input-{fieldName}']";
+	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//span[text()='*']";
+	private static final String FIELDS_DATA_TESTID = "storage-form-input-{fieldName}";
+	private static final String INPUT_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='text'] | .//textarea";
+	private static final String DROPDOWN_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//*[@role='button' or @aria-haspopup='listbox']";
+	private static final String PASSWORD_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='password'] | .//textarea";
+	private static final String NUMBER_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='number'] | .//textarea";
+	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
+	private static final String CONNECT_BUTTON_DATA_TESTID = "storage-form-submit";
+	private static final String VIEW_STORAGE_XPATH = "//button[@aria-label='copy Storage ID']/parent::span";
+	private static final String COPY_ID_ICON_XPATH = "[data-testid='ContentCopyOutlinedIcon']";
 	private static final String STORAGE_DESCRIPTION_XPATH = "//h6[text()='{StorageDescription}']";
 	private static final String OVERVIEW_TAB_XPATH = "//button[text()='Overview']";
 	private static final String EDIT_BTN_XPATH = "//span[text()='Edit']";
 	private static final String TAGS_XPATH = "//span[text()='Tag']/ancestor::fieldset/parent::div//input";
 	private static final String SUBMIT_BTN_XPATH = "//span[text()='Submit']";
 	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
-	private static final String DATE_LAST_UPDATED_XPATH = "//p[contains(text(),'{User}]";
 	private static final String PUBLISHED_BY_INFO_XPATH = "//p[text()='Published by:']";
 	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='Change Access']";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[span[text()='Cancel']]";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
-	private static final String LOCAL_PATH_PREFIX_DATATESTID = "importForm-PATH_PREFIX-textField";
+	private static final String LOCAL_PATH_PREFIX_XPATH = "//div[@data-testid='storage-form-input-PATH_PREFIX']//input[@type='text'] | .//textarea";
 	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
@@ -53,34 +59,145 @@ public class StoragePageUtils {
 	}
 
 	public static void selectStorage(Page page, String storageName) {
-		Locator locator = page.locator("p", new Page.LocatorOptions().setHasText(storageName));
+		Locator locator = page.getByText(storageName).first();
 		locator.click();
 		page.waitForLoadState();
 	}
 
+	private static String getFieldNameForTestId(String storageType, String field) {
+		storageType = storageType.trim().toUpperCase();
+		field = field.trim().replaceAll("\\s+", " ");
+		String fieldNamesForDataTestid = switch (storageType) {
+		case "S3" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Region" -> "S3_REGION";
+		case "Bucket" -> "S3_BUCKET";
+		case "Access Key" -> "S3 Access Key";
+		case "Secret Key" -> "S3 Secret Key";
+		default -> field;
+		};
+		case "CEPH" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Endpoint" -> "CEPH Endpoint";
+		case "Root Bucket Path" -> "CEPH Bucket";
+		case "Access Key" -> "CEPH Access Key";
+		case "Secret Key" -> "CEPH Secret Key";
+		default -> field;
+		};
+		case "GCS" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Region" -> "GCS Region";
+		case "Bucket" -> "GCS Bucket";
+		case "Service Account File" -> "GCS Service Account File";
+		default -> field;
+		};
+		case "LOCAL" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Local Path Prefix" -> "Path Prefix";
+		default -> field;
+		};
+		case "AZURE" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Account Name" -> "Az Account Name";
+		case "Generate Dynamic SAS" -> "Az Generate Dynamic SAS";
+		case "Primary Key" -> "Az Primary Key";
+		case "Connection String" -> "Az Conn String";
+		default -> field;
+		};
+		case "MINIO" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Region" -> "MINIO Region";
+		case "Endpoint" -> "MINIO Endpoint";
+		case "Root Bucket Path" -> "MINIO Bucket";
+		case "Access Key" -> "MINIO Access Key";
+		case "Secret Key" -> "MINIO Secret Key";
+		default -> field;
+		};
+		case "NFS" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Network Path Prefix" -> "Path Prefix";
+		default -> field;
+		};
+		case "SFTP" -> switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Host" -> "Hostname";
+		default -> field;
+		};
+		default -> throw new IllegalArgumentException("Invalid storage type: " + storageType);
+		};
+		return fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+	}
+
+	public static boolean fieldUnderSection(Page page, String storageType, String section, String field) {
+		String fieldName = getFieldNameForTestId(storageType, field);
+		Locator fieldLocator = page
+				.locator(FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldName));
+		fieldLocator.scrollIntoViewIfNeeded();
+		return fieldLocator.isVisible();
+	}
+
+	public static boolean isFieldMandatory(Page page, String storageType, String field) {
+		String fieldName = getFieldNameForTestId(storageType, field);
+		Locator fieldLocator = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		fieldLocator.first().scrollIntoViewIfNeeded();
+		return fieldLocator.first().isVisible();
+	}
+
+	public static void fillCatalogCreationForm(Page page, String storageType, String field, String fieldValue,
+			String timestamp) {
+		String fieldName = getFieldNameForTestId(storageType, field);
+		Locator fieldContainer = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldName));
+		fieldContainer.scrollIntoViewIfNeeded();
+		Locator dropdownField = page.locator(DROPDOWN_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		Locator inputField = page.locator(INPUT_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		Locator passwordField = page.locator(PASSWORD_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		Locator numberField = page.locator(NUMBER_FIELDS_XPATH.replace("{fieldName}", fieldName));
+		if (dropdownField.count() > 0) {
+			dropdownField.first().click();
+			Locator dropdownOption = page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue));
+			dropdownOption.click();
+		} else if (passwordField.count() > 0) {
+			passwordField.first().fill(fieldValue);
+		} else if (numberField.count() > 0) {
+			numberField.first().fill(fieldValue);
+		} else {
+			if (field.contains("Catalog Name")) {
+				fieldValue = fieldValue + timestamp;
+			}
+			inputField.first().fill(fieldValue);
+		}
+	}
+
 	public static void enterCatalogName(Page page, String catalogName) {
-		page.getByTestId(CATALOG_NAME_TEXTBOX_DATATESTID).fill(catalogName);
+		page.locator(CATALOG_NAME_XPATH).fill(catalogName);
 	}
 
 	public static void enterRegionName(Page page, String regionName) {
-		page.getByTestId(REGION_TEXTBOX_DATATESTID).fill(regionName);
+		page.locator(REGION_TEXTBOX_XPATH).fill(regionName);
 	}
 
 	public static void enterBucket(Page page, String bucket) {
-		page.getByTestId(BUCKET_TEXTBOX_DATATESTID).fill(bucket);
+		page.locator(BUCKET_TEXTBOX_XPATH).fill(bucket);
 	}
 
 	public static void enterAccessKey(Page page, String accessKey) {
-		page.getByTestId(ACCESS_KEY_TEXTBOX_DATATESTID).fill(accessKey);
+		page.locator(ACCESS_KEY_TEXTBOX_XPATH).fill(accessKey);
 	}
 
 	public static void enterSecretKey(Page page, String secreteKey) {
-		page.getByTestId(SECRET_KEY_TEXTBOX_DATATESTID).fill(secreteKey);
+		page.locator(SECRET_KEY_TEXTBOX_XPATH).fill(secreteKey);
 	}
 
-	public static void clickOnCreateStorageButton(Page page) {
-		page.locator(CREATE_STORAGE_BUTTON).isVisible();
-		page.locator(CREATE_STORAGE_BUTTON).click();
+	public static boolean validateConnectButtonEnabled(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		return connectButton.isEnabled();
+	}
+
+	public static void clickOnConnectButton(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		connectButton.click();
 	}
 
 	public static String verifyStorageCreatedToastMessage(Page page) {
@@ -135,41 +252,33 @@ public class StoragePageUtils {
 		}
 	}
 
-	public static boolean verifyCreateStorageButtonDisabled(Page page) {
-		Locator createStorageButton = page.locator(CREATE_STORAGE_BUTTON);
-		return createStorageButton.isDisabled();
-	}
-
-	public static boolean verifyCreateStorageButtonEnabled(Page page) {
-		Locator createStorageButton = page.locator(CREATE_STORAGE_BUTTON);
-		return createStorageButton.isEnabled();
+	public static boolean verifyConnectButtonDisabled(Page page) {
+		return page.getByTestId(CONNECT_BUTTON_DATA_TESTID).isDisabled();
 	}
 
 	public static boolean verifyFieldIsVisible(Page page, String fieldName) {
 		Locator fieldLocator = null;
 		switch (fieldName) {
 		case "Catalog Name":
-			fieldLocator = page.getByTestId(CATALOG_NAME_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(CATALOG_NAME_XPATH);
 			break;
 		case "Region":
-			fieldLocator = page.getByTestId(REGION_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(REGION_TEXTBOX_XPATH);
 			break;
 		case "Bucket":
-			fieldLocator = page.getByTestId(BUCKET_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(BUCKET_TEXTBOX_XPATH);
 			break;
 		case "Access key":
-			fieldLocator = page.getByTestId(ACCESS_KEY_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(ACCESS_KEY_TEXTBOX_XPATH);
 			break;
 		case "Secret key":
-			fieldLocator = page.getByTestId(SECRET_KEY_TEXTBOX_DATATESTID);
-			break;
-		case "Create Storage button":
-			fieldLocator = page.locator(CREATE_STORAGE_BUTTON);
+			fieldLocator = page.locator(SECRET_KEY_TEXTBOX_XPATH);
 			break;
 		default:
 			System.out.println("Invalid Field name" + fieldName);
 			return false;
 		}
+		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator != null && fieldLocator.isVisible();
 	}
 
@@ -177,22 +286,22 @@ public class StoragePageUtils {
 		Locator fieldLocator = null;
 		switch (fieldName) {
 		case "Catalog Name":
-			fieldLocator = page.getByTestId(CATALOG_NAME_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(CATALOG_NAME_XPATH);
 			if (fieldValue != null && !fieldValue.trim().isEmpty()) {
 				fieldValue = fieldValue + "" + timestamp;
 			}
 			break;
 		case "Region":
-			fieldLocator = page.getByTestId(REGION_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(REGION_TEXTBOX_XPATH);
 			break;
 		case "Bucket":
-			fieldLocator = page.getByTestId(BUCKET_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(BUCKET_TEXTBOX_XPATH);
 			break;
 		case "Access key":
-			fieldLocator = page.getByTestId(ACCESS_KEY_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(ACCESS_KEY_TEXTBOX_XPATH);
 			break;
 		case "Secret key":
-			fieldLocator = page.getByTestId(SECRET_KEY_TEXTBOX_DATATESTID);
+			fieldLocator = page.locator(SECRET_KEY_TEXTBOX_XPATH);
 			break;
 		default:
 			System.out.println("Invalid Field name" + fieldName);
@@ -252,7 +361,7 @@ public class StoragePageUtils {
 	}
 
 	public static void enterLocalPathPrefix(Page page, String path) {
-		page.getByTestId(LOCAL_PATH_PREFIX_DATATESTID).fill(path);
+		page.locator(LOCAL_PATH_PREFIX_XPATH).fill(path);
 	}
 
 	public static void searchStorage(Page page, String storageName) {
