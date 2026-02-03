@@ -64,7 +64,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void enterVectorTag(String vTag) {
-		Locator tagInput = page.getByTestId(VECTOR_TAG_XPATH);
+		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH);
 		tagInput.fill(vTag);
 	}
 	public void selectModelfromEmbedderDropdown(String modelName) {

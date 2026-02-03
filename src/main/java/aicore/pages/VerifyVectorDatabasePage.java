@@ -1,14 +1,13 @@
 package aicore.pages;
 
 import com.microsoft.playwright.Page;
-
 import aicore.utils.VerifyVectorDatabasePageUtils;
 
 public class VerifyVectorDatabasePage {
     private Page page;
+
     public VerifyVectorDatabasePage(Page page) {
         this.page = page;
-        
     }
 
     public void selectVectorDatabaseFromConnectionTypes(String dbType) {
