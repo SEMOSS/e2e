@@ -27,6 +27,7 @@ public class CodeAppPageUtils {
 	private static final String EDIT_TITLE_OF_TITLE_SECOND_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Stock')]";
 	private static final String EDIT_TITLE_OF_TITLE_FIRST_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Get')]";
 	private static final String CODEAPPBOOKMARK_ICON_DATATESTID = "viewAppPage-bookmark-btn";
+	private static final String CODE_APP_SETTINGS_TAB = "workspace-Settings-image";
 
 	public static void clickOnFileUploadButton(Page page) {
 		page.getByTestId(FILE_UPLOAD_TESTID).click();
@@ -189,4 +190,15 @@ public class CodeAppPageUtils {
 		page.getByTestId(CODEAPPBOOKMARK_ICON_DATATESTID).click();
 	}
 
+	public static void clickOnSettingsTab(Page page) {
+		page.getByTestId(CODE_APP_SETTINGS_TAB).click();
+	}
+
+	public static void clickOnGeneralTab(Page page) {
+		page.getByLabel("General").click();
+	}
+
+	public static void clickOnAppsTab(Page page) {
+		page.getByLabel("Apps").click();
+	}
 }

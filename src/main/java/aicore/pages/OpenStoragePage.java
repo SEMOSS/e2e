@@ -22,6 +22,18 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.selectStorage(page, storageName);
 	}
 
+	public boolean fieldUnderSection(String storageType, String section, String field) {
+		return StoragePageUtils.fieldUnderSection(page, storageType, section, field);
+	}
+
+	public boolean isFieldMandatory(String storageType, String field) {
+		return StoragePageUtils.isFieldMandatory(page, storageType, field);
+	}
+
+	public void fillCatalogCreationForm(String storageType, String fieldName, String fieldValue) {
+		StoragePageUtils.fillCatalogCreationForm(page, storageType, fieldName, fieldValue, timestamp);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		StoragePageUtils.enterCatalogName(page, catalogName);
 	}
@@ -46,8 +58,12 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.searchStorage(page, storageName);
 	}
 
-	public void clickOnCreateStorageButton() {
-		StoragePageUtils.clickOnCreateStorageButton(page);
+	public boolean validateConnectButtonEnabled() {
+		return StoragePageUtils.validateConnectButtonEnabled(page);
+	}
+
+	public void clickOnConnectButton() {
+		StoragePageUtils.clickOnConnectButton(page);
 	}
 
 	public String verifyStorageCreatedToastMessage() {
@@ -82,12 +98,8 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
 	}
 
-	public boolean verifyCreateStorageButtonDisabled() {
-		return StoragePageUtils.verifyCreateStorageButtonDisabled(page);
-	}
-
-	public boolean verifyCreateStorageButtonEnabled() {
-		return StoragePageUtils.verifyCreateStorageButtonEnabled(page);
+	public boolean verifyConnectButtonDisabled() {
+		return StoragePageUtils.verifyConnectButtonDisabled(page);
 	}
 
 	public boolean verifyFieldIsVisible(String fieldname) {

@@ -18,11 +18,11 @@ Feature: Playground Home Chat
 
   @LoginWithAdmin @Regression @DeleteTestCatalog @DeleteCreatedTestApp.
   Scenario: Validate Playground chat validatinos - add/remove histroy prompt
-    Given User sees the Prompt textarea with placeholder 'What do you want to do today?'
-    And User verifies that the 'Prompt the Model' button is 'disabled'
+    Given User sees the Prompt textarea with placeholder '/ to add capability'
+    And User verifies that the 'Ask the AI' button is 'disabled'
     When User enters prompt in the Prompt textarea 'tell me a joke'
-    Then User verifies that the 'Prompt the Model' button is 'enabled'
-    When User clicks on the "Prompt the Model" button
+    Then User verifies that the 'Ask the AI' button is 'enabled'
+    When User clicks on the "Ask the AI" button
     And User waits for the response from the model
     Then User verifies that the response from the model is displayed as Prompt
     When User clicks on sidbar toggle button
