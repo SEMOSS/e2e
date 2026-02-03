@@ -115,7 +115,7 @@ public class CreateAppUsingDragAndDropSteps {
 		appCreatePopup.clickOnCreateButton();
 	}
 
-	@And("User fetch the app name for drag and drop app")
+	@And("User fetch the app name")
 	public void user_fetch_app_name() {
 		String fetchName = appCreatePopup.userFetchAppName();
 		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
@@ -608,6 +608,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_variable_type_as(String variableType) {
 		appVariablePage.selectVariableType(variableType);
 	}
+
 	@Then("User clicks on variable type")
 	public void user_clicks_on_variable_type() {
 		appVariablePage.clickVariableType();
@@ -854,7 +855,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User see the {string} as title of the {string} option")
 	public void user_see_the_as_title_of_the_block_settings_panel(String expectedTitle, String option) {
-		String actualTitle = blocksPage.getBlockSettingsPanelTitle(expectedTitle,option);
+		String actualTitle = blocksPage.getBlockSettingsPanelTitle(expectedTitle, option);
 		assertEquals(expectedTitle, actualTitle, "Mismatch between the expected and actual Block Settings panel title");
 	}
 

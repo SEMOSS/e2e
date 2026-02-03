@@ -21,7 +21,7 @@ Feature: Create Diabetes Record Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Notebook
     And User clicks on Query name as 'insert-diabetes-record'
     And User selects 'TestDatabase' database from the dropdown
@@ -39,7 +39,7 @@ Feature: Create Diabetes Record Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Preview app button
     And user add value "1234" in "ID" field
     And user add value "23" in "AGE" field
@@ -59,7 +59,7 @@ Feature: Create Diabetes Record Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Preview app button
     And user add value "16767" in "ID" field
     And user add value "35" in "AGE" field

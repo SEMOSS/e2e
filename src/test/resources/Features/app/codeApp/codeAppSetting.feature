@@ -1,4 +1,4 @@
-@DeleteCreatedTestApp @Regression
+@Regression @LoginWithAdmin
 Feature: Code App - Setting page
 
   Background: Create the code app
@@ -11,9 +11,9 @@ Feature: Code App - Setting page
     And User enters description as 'Created by automation script'
     And User enters tags 'MCP' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
-    
-     @DeleteCreatedTestApp
+    And User fetch the app name
+
+  @DeleteCreatedTestApp
   Scenario: Setting page - View Title, Member, Apps, General option
     Given User click on Settings
     Then 'Admin' user can 'view' Settings
@@ -63,14 +63,13 @@ Feature: Code App - Setting page
     Then User can see the 'General' page open on right side panel
     And User can see the 'Private' section on General setting page
     And User turn OFF the Private option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* global'
+    And 'Admin' user can see toaster message is 'Successfully made .* global'
     And User turn ON the Private option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* non-global'
+    And 'Admin' user can see toaster message is 'Successfully made .* non-global'
     And User can see the 'Non Discoverable' section on General setting page
     And User turn OFF the Non Discoverable option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* discoverable'
+    And 'Admin' user can see toaster message is 'Successfully made .* discoverable'
     And User turn ON the Non Discoverable option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* undiscoverable'
+    And 'Admin' user can see toaster message is 'Successfully made .* undiscoverable'
     And User can see the 'Delete Project' section on General setting page
-    And 'Author' user 'can' Delete Catalog
-    
+    And 'Admin' user 'can' Delete Catalog

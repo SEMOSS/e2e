@@ -11,7 +11,7 @@ Feature: Variable Guide App
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User see the 'page-1'
     And User see the 'Variables Example' block
     And User views description as 'This is an app used to help you understand the usage of our variables within our drag and drop app  builder'

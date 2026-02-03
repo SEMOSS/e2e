@@ -9,7 +9,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -27,7 +27,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -45,7 +45,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User searches 'Accordion' block in the block searchbox
     And User captures screenshot for "Accordion"
@@ -60,7 +60,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User searches 'Accordion' block in the block searchbox
     And User drags the 'Accordion' block and drops it on the page
@@ -77,7 +77,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User searches 'Accordion' block in the block searchbox
     And User drags the 'Accordion' block and drops it on the page
@@ -95,7 +95,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -113,7 +113,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -131,7 +131,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Divider Block Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User searches 'Divider' block in the block searchbox
     And User captures a 'blocksection' and highlights the "Divider" with name "DNDdivider"
@@ -146,7 +146,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Input Block Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User search the 'Input' block from blocks section
     And User drags the 'Input' block and drops it on the page
@@ -162,7 +162,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'DND Layout Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Blocks
     And User search the 'Container' block from blocks section
     And User drags the 'Container' block and drops it on the page
@@ -183,7 +183,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'DND Theme Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User clicks on Blocks
     And User search the 'Theme Block' block from blocks section
@@ -205,7 +205,7 @@ Feature: Documentation for Accordion Block Settings
   And User clicks on Get Started button in "Drag and Drop"
   And User enters app name as 'DND Layer Test App'
   And User clicks on Create button
-  And User fetch the app name for drag and drop app
+  And User fetch the app name 
   And User clicks on Block Settings option
   And User clicks on Blocks
   And User search the 'Text' block from blocks section
