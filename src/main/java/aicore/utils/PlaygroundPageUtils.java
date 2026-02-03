@@ -1,5 +1,6 @@
 package aicore.utils;
 
+import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
@@ -9,11 +10,13 @@ public class PlaygroundPageUtils {
 
     private static final String PLAYGROUND_APP_BUTTON_XPATH = "//*[text()='Experiment in our Playground™']/../../..//a";
     private static final String PROMPT_THE_MODEL_BUTTON_LABEL = "Prompt the Model";
+    private static final String PROMPT_INPUT_XPATH = "//input[@type='file']";
+    private static final String PLACEHOLDER_PROMPT_XPATH = "//div//div[contains(text(),'{prompt}')]";
     private static final String CONFIGURATION_MENU_XPATH = "//form";
     private static final String ADD_MCP_TOOL_XPATH = "//div[text()='MCPs']/following-sibling::button";
     private static final String ADD_KNOWLEDGE_TOOL_XPATH = "//div[text()='Knowledge']/following-sibling::button";
     private static final String SAVE_BUTTON_XPATH = "//button[text()='Save']";
-    private static final String MCP_TOOL_XPATH = "//p[contains(text(),'{MCP}')]";
+    private static final String MCP_TOOL_XPATH = "//div[contains(text(),'{MCP}')]";
     private static final String CREATE_WORKSPACE_XPATH = "//button[text()='Create a Workspace']";
     private static final String CARD_TITLE_XPATH = "//div[@data-slot='card-title']";
     private static final String WORKSPACE_PROFILE_XPATH = "//span[@data-slot='tooltip-trigger']//button//span";
@@ -26,17 +29,17 @@ public class PlaygroundPageUtils {
     private static final String NO_WORKSPACE_PRESENT_XPATH = "//*[text()='No results found']";
     private static final String WORKSPACE_MENU_OPTION_XPATH = "//*[contains(@role, 'menuitem') and text()='{optionName}']";
     private static final String SIDEBAR_TOGGLE_XPATH = "//button[@data-slot='sidebar-trigger']";
-    private static final String NO_PROMPT_EXIST_XPATH = "//div[@data-slot='sidebar-group']//*[text()='No rooms found']";
+    private static final String NO_PROMPT_EXIST_XPATH = "//div[@data-slot='sidebar-content']//*[text()='No rooms found']";
     private static final String PROMPT_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']";
     private static final String PROMPT_DELETE_BUTTON_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']//following-sibling::button";
     private static final String SIDEBAR_XPATH = "//div[@data-slot='sidebar-group']";
     private static final String RESPONSE_XPATH = "//div//span[text()='Llama3-70B-Instruct']";
     private static final String LOADING_SPINNER_XPATH = "//button[@aria-label='Prompt the Model']//*[@aria-label='Loading']";
-    private static final String MCP_SEARCH_BAR_XPATH = "//label[text()='Available Tools']//..//..//input[@placeholder='Search']";
-    private static final String MCP_CHECKBOX_XPATH = "//p[contains(text(),'{MCP}')]//../../button";
+    private static final String MCP_SEARCH_BAR_XPATH = "//*[text()='Edit Toolbox']//..//..//input[@placeholder='Search']";
+    private static final String MCP_CHECKBOX_XPATH = "//*[contains(text(),'{MCP}')]//../../button";
     private static final String KNOWLEDGE_CHECKBOX_XPATH = "//*[contains(text(),'{KNOWLEDGE}')]//../../button";
     private static final String KNOWLEDGE_CHECKBOX_STATUS_XPATH = "//*[contains(text(),'{KNOWLEDGE}')]//../../button[@role='checkbox']//span";
-    private static final String MCP_ADDED_MODEL_XPATH = "//*[contains(text(),'Selected Tools')]//..//span";
+    private static final String MCP_ADDED_XPATH = "//*[@data-slot='badge']//div[contains(text(),'{MCP}')]";
     private static final String KNOWLEDGE_LIST_XPATH = "//div[text()='Knowledge']//../..//div/span";
     private static final String TEMPERATURE_INPUT_XPATH = "//label[contains(text(),'Temperature')]";
     private static final String MAX_TOKEN_INPUT_XPATH = "//*[text()='Max Token']//../../input";
@@ -67,10 +70,9 @@ public class PlaygroundPageUtils {
     }
 
     public static void verifyTextareaPlaceholder(Page page, String placeholder) {
-        Locator textarea = page.locator("textarea");
-        String actualPlaceholder = textarea.getAttribute("placeholder");
-        if (!actualPlaceholder.equals(placeholder)) {
-            throw new AssertionError("Expected placeholder: " + placeholder + ", but found: " + actualPlaceholder);
+        Locator textarea = page.locator(PLACEHOLDER_PROMPT_XPATH.replace("{prompt}", placeholder));
+        if (!textarea.isVisible()) {
+            throw new AssertionError("Expected placeholder: " + placeholder + ", but found: " + textarea.textContent());
         }
     }
     public static void clickOnWorkspaceButton(Page page) {
@@ -219,8 +221,10 @@ public class PlaygroundPageUtils {
     }
 
     public static void enterPromptInTextarea(Page page, String prompt) {
-        Locator textarea = page.locator("textarea");
-        textarea.fill(prompt);
+        Locator textarea = page.locator("//div[@role='textbox']//p");
+        AICorePageUtils.waitFor(textarea);
+        textarea.click();
+        page.keyboard().type(prompt, new Keyboard.TypeOptions().setDelay(50));
     }
 
     public static void clickOnOpenConfigurationMenuButton(Page page, String buttonName) {
@@ -507,7 +511,7 @@ public class PlaygroundPageUtils {
     public static void verifyMCPModelRemovedMCPSection(Page page, String modelName) {
         Locator MCPListToolMessage = page.locator(MCP_LIST_MESSAGE_XPATH);
         AICorePageUtils.waitFor(MCPListToolMessage);
-        String expectedMessage = "No MCPs added";
+        String expectedMessage = "No Toolbox Found";
         String actualMessage = MCPListToolMessage.textContent();
         if (!actualMessage.equals(expectedMessage)) {
             throw new AssertionError("Expected message: '" + expectedMessage + "', but found: '" + actualMessage + "'");
@@ -552,7 +556,7 @@ public class PlaygroundPageUtils {
     }
 
     public static void verifyAddedMCPAppSelectedList(Page page, String modelName) {
-        Locator MCPListToolLocator = page.locator(MCP_ADDED_MODEL_XPATH.replace("{MCP}", modelName)).first();
+        Locator MCPListToolLocator = page.locator(MCP_ADDED_XPATH.replace("{MCP}", modelName)).first();
         AICorePageUtils.waitFor(MCPListToolLocator);
         if (!MCPListToolLocator.isVisible()) {
             throw new AssertionError("MCP Tool is not added/visible in the selected list.");

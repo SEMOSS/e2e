@@ -125,7 +125,12 @@ public class TeamPermissionsSettingsUtils {
 
 	// add engine to all catalog with different
 	public static void userClickOnCreatedTeamName(Page page, String teamName, String timestamp) {
-		page.getByText(teamName + " " + timestamp).click();
+		Locator teamNameLocator = page.locator("//p[text()='" + teamName + " " + timestamp+"']");
+		AICorePageUtils.waitFor(teamNameLocator);
+		if(!teamNameLocator.isVisible()) {
+			throw new AssertionError("Team name: " + teamName + " with timestamp: " + timestamp + " is not visible.");
+		}
+		teamNameLocator.click();
 	}
 
 	public static void userClickOnAddEngineButton(Page page, String addCatalogName) {

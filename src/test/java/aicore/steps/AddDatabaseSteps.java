@@ -370,4 +370,23 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		boolean isTileVisible = addDatabaseToCatalogPage.verifyRefreshingTileForDataColumns(text);
 		Assertions.assertTrue(isTileVisible, "Tile is not visible");
 	}
+
+	@And("User sees the Save button is {string}")
+	public void user_sees_the_save_button_is(String state) {
+		boolean isDisabled = state.equalsIgnoreCase("disabled");
+		boolean isSaveButtonDisabled = addDatabaseToCatalogPage.isSaveButtonDisabled();
+		Assertions.assertEquals(isDisabled, isSaveButtonDisabled, 
+			"Save button state is not " + state);
+	}
+	
+	@And("User clicks on Save button of Metadata tab")
+	public void user_clicks_on_save_button_of_metadata_tab() {
+		addDatabaseToCatalogPage.clickOnSaveButtonOfMetadataTab();
+	}	
+
+	@Then("User sees Database Catalog page")
+	public void user_sees_database_catalog_page() {
+		addDatabaseToCatalogPage.verifyDatabaseCatalogPage();	
+	}	
+
 }
