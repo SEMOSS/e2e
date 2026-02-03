@@ -1,6 +1,6 @@
 Feature: Validate storage creation form
 
-@LoginWithAdmin @Regression
+  @LoginWithAdmin @Regression
   Scenario Outline: View and fill '<FUNCTION_NAME>' storage creation form
     Given User is on Home page
     When User opens Main Menu
@@ -18,10 +18,10 @@ Feature: Validate storage creation form
       | Secret key   | Test123           |
 
     Examples: 
-      | FUNCTION_NAME | FIELD_NAMES                                                                 | REQUIRED_FIELDS              |
-      | Amazon S3     | Catalog Name, Region, Bucket, Access key, Secret key, Create Storage button | Catalog Name, Region, Bucket |
+      | FUNCTION_NAME | FIELD_NAMES                                          | REQUIRED_FIELDS              |
+      | Amazon S3     | Catalog Name, Region, Bucket, Access key, Secret key | Catalog Name, Region, Bucket |
 
-	@DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression
   Scenario: Submit and validate 'Amazon S3' storage creation form
     Given User is on Home page
     When User opens Main Menu
@@ -33,25 +33,25 @@ Feature: Validate storage creation form
       | Catalog Name |             |
       | Region       | India       |
       | Bucket       | BucketTest  |
-    When User sees the Create Storage button disabled
+    Then User sees the Connect button is disabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
       | Region       |                   |
       | Bucket       | BucketTest        |
-    When User sees the Create Storage button disabled
+    Then User sees the Connect button is disabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
       | Region       | India             |
       | Bucket       |                   |
-    When User sees the Create Storage button disabled
+    Then User sees the Connect button is disabled
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
       | Region       | India             |
       | Bucket       | BucketTest        |
-    When User sees the Create Storage button is enabled
+    Then User can see 'Connect' button becomes enabled to create storage
     When User enters value in below fields
       | FIELD_NAME   | FIELD_VALUE       |
       | Catalog Name | Amazon S3 Storage |
@@ -59,7 +59,7 @@ Feature: Validate storage creation form
       | Bucket       | BucketTest        |
       | Access key   | Test123           |
       | Secret key   | Test123           |
-    And User clicks on Create Storage button
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    Then User clicks on Connect button to create storage
+    And User can see create storage success toast message as 'Successfully added new storage to catalog'
     And User clicks on Copy Catalog ID
     And User can see the Storage title as 'Amazon S3 Storage'

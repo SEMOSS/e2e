@@ -46,9 +46,9 @@ Feature: Search app and catalogs
     When User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file 'Function/weatherFunctionTest.zip'
-    And User clicks on Create Function button
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home
@@ -123,7 +123,7 @@ Feature: Search app and catalogs
     And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
-    And User clicks on Create Storage button
+    And User clicks on Connect button to create storage
     And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Home

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.TeamPermissionsSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
-import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -76,14 +75,14 @@ public class TeamPermissionsSettingSteps {
 
 	@Then("User can see team name as {string} in the list")
 	public void user_can_see_team_name_as_in_the_list(String name) {
-		String actualName = teamPermissionsSettings.verifyName(name);
+		String actualName = teamPermissionsSettings.verifyName(name + " " + timestamp);
 		String expectedName = name + " " + timestamp;
 		Assertions.assertEquals(expectedName, actualName);
 	}
 
 	@Then("User can see description as {string} in the list")
 	public void user_can_see_description_as_in_the_list(String description) {
-		String actualDescription = teamPermissionsSettings.validateDescription(description);
+		String actualDescription = teamPermissionsSettings.validateDescription(description + " " + timestamp);
 		String expectedDesc = description + " " + timestamp;
 		Assertions.assertEquals(expectedDesc, actualDescription);
 	}
@@ -117,7 +116,7 @@ public class TeamPermissionsSettingSteps {
 
 	@And("User see the added {string} in the engine list with access as {string}")
 	public void user_sees_the_with_role_added_in_the_list(String catalogName, String role) {
-		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(catalogName, role);
+		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(catalogName + timestamp, role);
 		Assertions.assertTrue(isEnginePresent, "Engine with the specified role is not present in the list.");
 	}
 
@@ -163,9 +162,8 @@ public class TeamPermissionsSettingSteps {
 		teamPermissionsSettings.clickOnDeleteButton();
 	}
 
-	
 	@And("User adds {string} from the member list")
-	public void user_adds_from_the_member_list(String member){
+	public void user_adds_from_the_member_list(String member) {
 		teamPermissionsSettings.addmultipleMembers(member);
 	}
 
@@ -181,7 +179,8 @@ public class TeamPermissionsSettingSteps {
 	}
 
 	@And("User creates {string} {string} apps with app name {string}, description {string}, and tags {string}")
-	public void user_creates_apps_with_app_name_description_and_tags(String appCount, String appType, String appName, String appDescription, String appTags) {
+	public void user_creates_apps_with_app_name_description_and_tags(String appCount, String appType, String appName,
+			String appDescription, String appTags) {
 		for (int i = 1; i <= Integer.parseInt(appCount); i++) {
 			String appNameWithTimestamp = appName + System.currentTimeMillis();
 			createAppPopupPage.createMultipleApps(appType, appNameWithTimestamp, appDescription, appTags);
