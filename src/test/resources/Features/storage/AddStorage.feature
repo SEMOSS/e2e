@@ -13,9 +13,9 @@ Feature: Add Storage
     And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
-    And User clicks on Create Storage button
+    And User clicks on Connect button to create storage
     And User clicks on Copy Catalog ID
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    Then User can see create storage success toast message as 'Successfully added new storage to catalog'
 
   @DeleteTestCatalog @Regression
   Scenario: Validate usage of storage

@@ -69,6 +69,8 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureBlockSectionScreenshot(page, elementName);
 		case "promptcontext":
 			return CaptureElementUtils.capturePromptContextScreenshot(page, elementName);
+		case "label":
+			return CaptureElementUtils.captureLabelElementScreenshot(page, elementName);
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}

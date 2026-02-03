@@ -66,6 +66,64 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.selectStorage(storageName);
 	}
 
+	@Then("User can see {string} storage creation form with following sections with fields:")
+	public void user_can_see_storage_creation_form_with_following_sections_with_fields(String storageType,
+			DataTable dataTable) {
+		{
+			List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+			for (Map<String, String> row : rows) {
+				String sectionName = row.get("SECTION_NAME");
+				String fieldsValue = row.get("FIELDS");
+				if (sectionName == null || sectionName.trim().isEmpty() || fieldsValue == null
+						|| fieldsValue.trim().isEmpty()) {
+					continue;
+				}
+				String[] fields = fieldsValue.split(", ");
+				for (String field : fields) {
+					boolean isFieldVisible = storagePage.fieldUnderSection(storageType, sectionName, field);
+					Assertions.assertTrue(isFieldVisible, field + " is not visible under " + sectionName + " section");
+				}
+			}
+		}
+	}
+
+	@Then("User can see {string} storage creation form with following mandatory fields")
+	public void user_can_see_storage_creation_form_with_following_mandatory_fields(String storageType,
+			DataTable dataTable) {
+		String singleCell = dataTable.cells().get(0).get(0);
+		String[] fields = singleCell.split(", ");
+		for (String field : fields) {
+			boolean isFieldMandatory = storagePage.isFieldMandatory(storageType, field);
+			Assertions.assertTrue(isFieldMandatory, field + " is not mandatory field");
+		}
+	}
+
+	@When("User fills the {string} storage creation form with:")
+	public void user_fills_the_storage_creation_form_with(String storageType, DataTable dataTable) {
+		String singleCell = dataTable.cells().get(0).get(0);
+		String[] fields = singleCell.split(", ");
+		for (String field : fields) {
+			if (!field.contains("=")) {
+				continue;
+			}
+			String[] keyValue = field.split("=", 2);
+			String fieldName = keyValue[0].trim();
+			String fieldValue = keyValue[1].trim();
+			storagePage.fillCatalogCreationForm(storageType, fieldName, fieldValue);
+		}
+	}
+
+	@Then("User can see {string} button becomes enabled to create storage")
+	public void user_can_see_button_becomes_enabled_to_create_function(String string) {
+		boolean isButtonEnabled = storagePage.validateConnectButtonEnabled();
+		Assertions.assertTrue(isButtonEnabled, "'Connect' button is not enabled");
+	}
+
+	@When("User clicks on Connect button to create storage")
+	public void user_clicks_on_connect_button_to_create_storage() {
+		storagePage.clickOnConnectButton();
+	}
+
 	@And("User enters storage Catalog name as {string}")
 	public void user_enters_storage_catalog_name_as(String catalogName) {
 		catalogName = catalogName + timestamp;
@@ -106,11 +164,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@And("User enters Secret Key as {string}")
 	public void user_enters_secret_key_as(String secretKey) {
 		storagePage.enterSecretKey(secretKey);
-	}
-
-	@And("User clicks on Create Storage button")
-	public void user_clicks_on_create_storage_button() {
-		storagePage.clickOnCreateStorageButton();
 	}
 
 	@Then("User can see create storage success toast message as {string}")
@@ -163,16 +216,10 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.verifyAsteriskMarkOnFields(requiredFields);
 	}
 
-	@Then("User sees the Create Storage button disabled")
+	@Then("User sees the Connect button is disabled")
 	public void user_sees_the_create_storage_button_disabled() {
-		boolean isButtonDisabled = storagePage.verifyCreateStorageButtonDisabled();
+		boolean isButtonDisabled = storagePage.verifyConnectButtonDisabled();
 		Assertions.assertTrue(isButtonDisabled, "Create Storage button is not disabled");
-	}
-
-	@Then("User sees the Create Storage button is enabled")
-	public void user_sees_the_create_storage_button_is_enabled() {
-		boolean isButtonEnabled = storagePage.verifyCreateStorageButtonEnabled();
-		Assertions.assertTrue(isButtonEnabled, "Create Storage button is not enabled");
 	}
 
 	@When("User enters value in below fields")
@@ -267,12 +314,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@When("User enters Path Prefix as {string}")
 	public void User_enters_Path_Prefix_as(String pathPrefix) {
 		storagePage.enterLocalPathPrefix(pathPrefix);
-	}
-
-	@Then("User clicks on Settings Tab for storage")
-	public void user_clicks_on_settings_tab_for_storage() {
-		// TODO cucumber should be clicks on access control
-		storagePage.clickOnSettingsTab();
 	}
 
 	@Then("User clicks on Delete button for storage")
