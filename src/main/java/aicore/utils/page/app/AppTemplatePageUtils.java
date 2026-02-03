@@ -30,7 +30,7 @@ public class AppTemplatePageUtils {
 	private static final String PREVIEW_APP_SUBMIT_BUTTON_XPATH = "//div[@role='dialog']//div[@data-block='submit']";
 	private static final String LANDING_PAGE_TITLE_TEXT_XPATH = "//p[text()='{titleText}']";
 	private static final String DESCRIPTION_BELOW_TITLE_XPATH = "//p[text()='{descriptionText}']";
-	private static final String SELECT_TEMPLATE_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
+	private static final String SELECT_TEMPLATE_XPATH = "//div[text()='{templateName}']/../following-sibling::div//button";
 	private static final String TEXT_XPATH = "//a[text()='{text}']";
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
@@ -395,9 +395,9 @@ public class AppTemplatePageUtils {
 		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
 
 		return switch (condition.toLowerCase()) {
-		case "above" -> ages.stream().allMatch(age -> age > number);
-		case "below" -> ages.stream().allMatch(age -> age < number);
-		default -> false;
+			case "above" -> ages.stream().allMatch(age -> age > number);
+			case "below" -> ages.stream().allMatch(age -> age < number);
+			default -> false;
 		};
 	}
 
@@ -418,6 +418,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static List<String> ids = ModelPageUtils.createdModelIds;
+
 	public static boolean verifyCreatedModelsInList(Page page) {
 		if (ids == null || ids.isEmpty()) {
 			return false;
@@ -431,11 +432,40 @@ public class AppTemplatePageUtils {
 			}
 			foundCount++;
 		}
-		
+
 		if (foundCount > ids.size()) {
 			return false;
 		}
 
 		return foundCount == ids.size();
 	}
+
+	public static void verifyAppTemplateTitle(String title, Page page) {
+		boolean appTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(title)).isVisible();
+		if (!appTitle) {
+			throw new AssertionError("App template title does not match");
+		}
+	}
+
+	public static void verifyDialogText(String expectedText, Page page) {
+		page.getByRole(AriaRole.DIALOG).getByText(expectedText).isVisible();
+	}
+
+	public static void verifyButtonIsEnabled(String buttonName, Page page) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName)).isVisible();
+		boolean isEnabled = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName))
+				.isEnabled();
+		if (!isEnabled) {
+			throw new AssertionError(buttonName + " is not enabled");
+		}
+	}
+
+	public static void verifyTabIsVisible(String tabName, Page page) {
+		boolean isVisible = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).isVisible();
+		if (!isVisible) {
+			throw new AssertionError("Tab is not visible: " + tabName);
+		}
+		page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).click();
+	}
+
 }
