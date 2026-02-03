@@ -24,7 +24,7 @@ public class CatlogAccessPageUtility {
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Settings']";
+	private static final String CLICK_ON_SETTINGS_DATATESTID = "workspace-Settings-image";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
@@ -93,7 +93,7 @@ public class CatlogAccessPageUtility {
 
 	// create app class
 	public static void clickOnSettings(Page page) {
-		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH);
+		Locator settingOption = page.getByTestId(CLICK_ON_SETTINGS_DATATESTID);
 		AICorePageUtils.waitFor(settingOption);
 		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			settingOption.click();

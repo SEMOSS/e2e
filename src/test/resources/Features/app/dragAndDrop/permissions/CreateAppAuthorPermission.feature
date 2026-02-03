@@ -9,7 +9,7 @@ Feature: App setting for Author permission
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User click on Settings
 

@@ -1,17 +1,17 @@
-@LoginWithAdmin @Regression
-Feature: Drag and Drop App setting Page
+@Regression @LoginWithAdmin
+Feature: Code App - Setting page
 
-  Background: Create Drag and Drop app and navigate to Setting Page
-    Given User opens Main Menu
-    And User is on Home page
+  Background: Create the code app
+    Given User is on Home page
+    And User opens Main Menu
     And User clicks on Open App Library
-    When User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test app'
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Develop in code"
+    And User enters app name as 'Code app'
+    And User enters description as 'Created by automation script'
+    And User enters tags 'MCP' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
-    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-    And User clicks on Block Settings option
+    And User fetch the app name
 
   @DeleteCreatedTestApp
   Scenario: Setting page - View Title, Member, Apps, General option
@@ -23,7 +23,7 @@ Feature: Drag and Drop App setting Page
     And 'Admin' user can 'view' General
 
   @DeleteCreatedTestApp
-  Scenario: Setting page - validate the Member option for drag and drop app
+  Scenario: Setting page - validate the Member option for code app
     Given User click on Settings
     When User clicks on 'Members' option under Settings
     Then User can see the 'Members' page open on right side panel
@@ -39,7 +39,7 @@ Feature: Drag and Drop App setting Page
     And User deletes the 'Read' user
 
   @DeleteCreatedTestApp
-  Scenario: Setting page - validate the Apps option for drag and drop app
+  Scenario: Setting page - validate the Apps option for code app
     Given User click on Settings
     When User clicks on 'Apps' option under Settings
     Then User can see the 'Apps' page open on right side panel
@@ -57,19 +57,19 @@ Feature: Drag and Drop App setting Page
     And User uploads the file 'dummy-pdf.pdf'
     And User click on 'Update' button on setting page
 
-  Scenario: Setting page - validate the General option for drag and drop app
+  Scenario: Setting page - validate the General option for code app
     Given User click on Settings
     When User clicks on 'General' option under Settings
     Then User can see the 'General' page open on right side panel
     And User can see the 'Private' section on General setting page
     And User turn OFF the Private option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* global'
+    And 'Admin' user can see toaster message is 'Successfully made .* global'
     And User turn ON the Private option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* non-global'
+    And 'Admin' user can see toaster message is 'Successfully made .* non-global'
     And User can see the 'Non Discoverable' section on General setting page
     And User turn OFF the Non Discoverable option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* discoverable'
+    And 'Admin' user can see toaster message is 'Successfully made .* discoverable'
     And User turn ON the Non Discoverable option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* undiscoverable'
+    And 'Admin' user can see toaster message is 'Successfully made .* undiscoverable'
     And User can see the 'Delete Project' section on General setting page
     And 'Admin' user 'can' Delete Catalog

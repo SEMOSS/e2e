@@ -11,7 +11,7 @@ Feature: Bookmark app - Code app files
     And User enters description as 'Created by automation script'
     And User enters tags 'MCP' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
 
   Scenario: Bookmark the code app and app display in bookmark section
     Given User opens Main Menu
