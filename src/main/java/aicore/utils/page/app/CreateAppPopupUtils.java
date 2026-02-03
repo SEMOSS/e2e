@@ -12,7 +12,7 @@ import aicore.utils.HomePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
-	private static final String CODE_APP_GET_STARTED_BUTTON_DATA_TESTID = "createAppSection-new-app-code-btn-btn";
+	private static final String CODE_APP_GET_STARTED_BUTTON_XPATH = "//div[.//div[normalize-space()='Develop in code']]//button[normalize-space()='Get Started']";
 	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -29,7 +29,7 @@ public class CreateAppPopupUtils {
 		} else if (appType.toLowerCase().contains("drag and drop")) {
 			page.getByTestId("createAppSection-new-app-drag-btn-btn").click();
 		} else {
-			page.getByTestId(CODE_APP_GET_STARTED_BUTTON_DATA_TESTID).click();
+			page.locator(CODE_APP_GET_STARTED_BUTTON_XPATH).click();
 		}
 	}
 
