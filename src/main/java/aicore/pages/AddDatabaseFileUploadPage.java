@@ -36,8 +36,8 @@ public AddDatabaseFileUploadPage(Page page) {
          AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
     }
 
-    public void verifyTableName(String tableName) {
-        AddDatabaseFileUploadUtils.verifyTableName(page, tableName);
+    public boolean verifyTableName(String tableName) {
+        return AddDatabaseFileUploadUtils.verifyTableName(page, tableName);
     }
     
     public void verifyFullScreenBtn() {

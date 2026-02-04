@@ -36,12 +36,12 @@ public class CatlogAccessPageUtility {
 	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
-	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
+	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
 	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
-	private static final String CATALOG_ID_XPATH = "//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p";
+	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
 	private static final String PENDING_REQUEST_ACCEPT_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String PENDING_REQUEST_REJECT_XPATH = "//*[name()='svg'][@data-testid='CloseIcon']";
 	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";

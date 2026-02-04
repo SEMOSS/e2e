@@ -52,8 +52,8 @@ public class AddDatabasePageUtils {
 	private static final String COPY_ID_XPATH = "//span[text()='{message}']";
 	private static final String SELECT_ALL_DATABASE_XPATH = "//span[text()='(Select searched items)']";
 	private static final String MANDATORY_FIELD_XPATH = "//div//label[text()='{fieldName}']//span";
-	private static final String FORM_SECTION_XPATH = "//h6[text()='{sectionName}']";
-	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-form-advanced-toggle']//*)[1]";
+	private static final String FORM_SECTION_XPATH = "//h4[text()='{sectionName}']";
+	private static final String ADVANCED_SECTION_XPATH = "database-advanced-settings-title";
 	private static final String SECTION_FIELD_XPATH = "../following-sibling::div//label[text()='{fieldName}']";
 	private static final String QUERY_TAB_DATA_TESTID = "engineLayout-Query-tab";
 	private static final String QUERY_ENTER_TEXTAREA_XPATH = ".monaco-editor .native-edit-context";
@@ -66,6 +66,8 @@ public class AddDatabasePageUtils {
 	private static final String EXPAND_TABLE_ARROW_XPATH = "//button[@title='{name}']";
 	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
 	private static final String DATABASE_CATALOG_HEADER_XPATH = "//h4[normalize-space() ='Database Catalog']";
+	private static final String CONNECT_BUTTON_DATA_TESTID = "database-form-connect-button";
+	private static final String DATABASE_SAVE_BUTTON_DATA_TESTID = "engineMetadata-save-btn";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -457,6 +459,18 @@ public class AddDatabasePageUtils {
 		Locator databaseCatalogHeader = page.locator(DATABASE_CATALOG_HEADER_XPATH);
 		AICorePageUtils.waitFor(databaseCatalogHeader);
 		return databaseCatalogHeader.isVisible();
+	}
+
+	public static void clickOnConnectButton(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		AICorePageUtils.waitFor(connectButton);
+		connectButton.click();
+	}
+
+	public static void clickOnSaveButton(Page page) {
+		Locator saveButton = page.getByTestId(DATABASE_SAVE_BUTTON_DATA_TESTID);
+		AICorePageUtils.waitFor(saveButton);
+		saveButton.click();
 	}
 
 }

@@ -389,4 +389,14 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.verifyDatabaseCatalogPage();	
 	}	
 
+	@And("User click on Connect button")
+	public void user_click_on_connect_button() {
+		addDatabaseToCatalogPage.clickOnConnectButton();
+	}
+
+	@And("User clicks on Save button for database")
+	public void user_clicks_on_save_button_for_database() {
+		addDatabaseToCatalogPage.clickOnSaveButton();
+	}
+
 }

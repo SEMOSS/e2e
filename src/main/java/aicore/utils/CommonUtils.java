@@ -48,7 +48,8 @@ public class CommonUtils {
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
 	private static final String SEARCH_CATALOG_LABEL = "Search";
-	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
+	private static final String SEARCH_CATALOG_DATATESTID = "search-bar";
+	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
@@ -315,7 +316,7 @@ public class CommonUtils {
 			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
-			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
+			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
 			page.waitForTimeout(500);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
 

@@ -16,10 +16,10 @@ public class CatalogCreationFromZipUtil {
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
+	private static final String ADD_FILE_NAME_XPATH = "//p[normalize-space()='{fileName}']";
 	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
-	
- 		public static void openCatalog(Page page, String catalogName) {
+
+	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = null;
 		switch (catalogName) {
 		case "Model":
