@@ -14,16 +14,16 @@ public class AddCatalogPageBaseUtils {
 	private static final String DATABASE_SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
 	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
 	private static final String DATABASE_OPTIONS_ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
-	private static final String CATALOG_NAME_XPATH = "//h4[text()='{CatalogName}']";
+	private static final String CATALOG_NAME_TESTID = "Title";
 	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='SearchOutlinedIcon']";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div";
-	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
+	private static final String COPY_ID_ICON_XPATH = "//button[contains(@data-testid,'engineHeader')]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//span[text()='{ToastMessage}']";
-	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
-	private static final String TAG_TEXTBOX = "Tag";
-	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
+	private static final String EDIT_BUTTON_XPATH = "//*[contains(@data-testid,'editEngineDetails')]";
+	private static final String TAG_TEXTBOX = "editEngineDetails-Tag-autocomplete";
+	private static final String SUBMIT_BUTTON_XPATH = "editEngineDetails-submit-btn";
 	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
@@ -98,7 +98,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {
-		Locator locator = page.locator(CATALOG_NAME_XPATH.replace("{CatalogName}", catalogName));
+		Locator locator = page.getByTestId(CATALOG_NAME_TESTID);
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
@@ -118,7 +118,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void clickCopyIcon(Page page) {
-		page.locator(COPY_ID_ICON_XPATH).click();
+		page.locator(COPY_ID_ICON_XPATH).first().click();
 	}
 
 	public static boolean verifyCopyToastMessage(Page page, String toastMessage) {
@@ -136,13 +136,13 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void enterTagName(Page page, String tagName) {
-		page.getByLabel(TAG_TEXTBOX).click();
-		page.getByLabel(TAG_TEXTBOX).fill(tagName);
-		page.getByLabel(TAG_TEXTBOX).press("Enter");
+		page.getByTestId(TAG_TEXTBOX).click();
+		page.getByTestId(TAG_TEXTBOX).fill(tagName);
+		page.getByTestId(TAG_TEXTBOX).press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {
-		page.click(SUBMIT_BUTTON_XPATH);
+		page.getByTestId(SUBMIT_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnClose(Page page) {

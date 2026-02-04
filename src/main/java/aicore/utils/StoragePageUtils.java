@@ -365,8 +365,8 @@ public class StoragePageUtils {
 	}
 
 	public static void searchStorage(Page page, String storageName) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(storageName);
+		page.getByTestId("search-bar").click();
+		page.getByTestId("search-bar").fill(storageName);
 	}
 
 	public static void clickOnCreatedStorage(Page page, String storageName) {
