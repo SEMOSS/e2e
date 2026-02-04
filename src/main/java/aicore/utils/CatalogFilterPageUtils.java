@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 
 public class CatalogFilterPageUtils {
 
-	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
+	private static final String SELECT_FILTER_VALUE_XPATH = "//*[text()='{filterCategory}']/ancestor::button/following-sibling::div//span[text()='{filterValue}']";
 	private static final String CATALOG_NAME = "{CatalogName}";
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
 	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[contains(text(),'{catalogName}')]";

@@ -42,7 +42,7 @@ public class SettingsModelPageUtils {
 	private static final String CONFIRM_BUTTON_XPATH = "//button[span[text()='Confirm']]";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
-	private static final String USAGE_CODE_SECTION_XPATH = "//h6[text()='{sectionName}']/following-sibling::pre";
+	private static final String USAGE_CODE_SECTION_XPATH = "//*[text()='{sectionName}']/../div/pre";
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String SEARCH_BOX_XPATH = "//div[@data-testid='settingsIndexPage-searchBar']//input[@placeholder='Search']";

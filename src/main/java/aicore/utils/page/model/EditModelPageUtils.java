@@ -19,21 +19,21 @@ public class EditModelPageUtils {
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String DETAILS_TEXTBOX_XPATH = "//*[@class='view-lines monaco-mouse-cursor-text']//div";
 	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
-	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
-	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[text()='Data classification']/parent::div//input[@aria-autocomplete='list']";
-	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/parent::div//input[@aria-autocomplete='list']";
-	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
-	private static final String MODEL_TAGS_XPATH = "//div[contains(@class,'MuiStack-root')]//div[contains(@class,'MuiChip-root MuiChip-outlined')]//span";
+	private static final String DOMAIN_TEXTBOX_XPATH = "editEngineDetails-Domain-autocomplete";
+	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[text()='Data classification']/parent::div//span[text()='{option}']/../input";
+	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/parent::div//span[text()='{option}']/../input";
+	private static final String DESCRIPTION_TEXT_XPATH = "Description";
+	private static final String MODEL_TAGS_XPATH = "//p[@data-testid='Description']/..//div//span[@data-testid='tag-chip']";
 	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
-	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Tag')]]/following-sibling::div";
-	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Domain')]]/following-sibling::div";
+	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Tag')]]/following-sibling::div//span";
+	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Domain')]]/following-sibling::div//span";
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data classification')]]/following-sibling::div";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 
 	public static void searchModelCatalog(Page page, String modelName) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(modelName);
+		page.getByTestId("search-bar").click();
+		page.getByTestId("search-bar").fill(modelName);
 	}
 
 	public static void selectModelFromSearchOptions(Page page, String modelName) {
@@ -73,22 +73,22 @@ public class EditModelPageUtils {
 	}
 
 	public static void enterDomainName(Page page, String domainName) {
-		page.getByLabel(DOMAIN_TEXTBOX_LABEL).fill(domainName);
-		page.getByLabel(DOMAIN_TEXTBOX_LABEL).press("Enter");
+		page.getByTestId(DOMAIN_TEXTBOX_XPATH).fill(domainName);
+		page.getByTestId(DOMAIN_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void selectDataClassificationOption(Page page, String option) {
-		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH);
-		page.fill(DATA_CLASSIFICATION_TEXTBOX_XPATH, option);
-		page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("ArrowDown");
-		page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("Enter");
+		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH.replace("{option}", option));
+		// page.fill(DATA_CLASSIFICATION_TEXTBOX_XPATH, option);
+		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("ArrowDown");
+		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void selectDataRestrictionsOption(Page page, String option) {
-		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH);
-		page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
-		page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
-		page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
+		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH.replace("{option}", option));
+	// 	page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
+	// 	page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
+	// 	page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {
@@ -107,7 +107,7 @@ public class EditModelPageUtils {
 	}
 
 	public static String verifyDescriptionText(Page page) {
-		String descriptionText = page.textContent(DESCRIPTION_TEXT_XPATH).trim();
+		String descriptionText = page.getByTestId(DESCRIPTION_TEXT_XPATH).textContent().trim();
 		return descriptionText;
 	}
 

@@ -21,9 +21,9 @@ public class AddCatalogPageBaseUtils {
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div";
 	private static final String COPY_ID_ICON_XPATH = "[data-testid=\"ContentCopyOutlinedIcon\"]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//span[text()='{ToastMessage}']";
-	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
-	private static final String TAG_TEXTBOX = "Tag";
-	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
+	private static final String EDIT_BUTTON_XPATH = "//button[contains(@data-testid,'edit-btn')]";
+	private static final String TAG_TEXTBOX = "editEngineDetails-Tag-autocomplete";
+	private static final String SUBMIT_BUTTON_XPATH = "editEngineDetails-submit-btn";
 	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
@@ -136,13 +136,13 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void enterTagName(Page page, String tagName) {
-		page.getByLabel(TAG_TEXTBOX).click();
-		page.getByLabel(TAG_TEXTBOX).fill(tagName);
-		page.getByLabel(TAG_TEXTBOX).press("Enter");
+		page.getByTestId(TAG_TEXTBOX).click();
+		page.getByTestId(TAG_TEXTBOX).fill(tagName);
+		page.getByTestId(TAG_TEXTBOX).press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {
-		page.click(SUBMIT_BUTTON_XPATH);
+		page.getByTestId(SUBMIT_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnClose(Page page) {

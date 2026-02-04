@@ -27,24 +27,24 @@ public class ModelPageUtils {
 	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
-	private static final String TEXT_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='importForm-{field}-textField']";
-	private static final String DROPDOWN_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-select']";
-	private static final String CREDENTIAL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-password']";
-	private static final String NUMBER_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}']";
-	private static final String URL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='model-importForm-{field}-url']";
-	private static final String MANDATORY_TEXT_FIELDS_XPATH = "//div[@data-testid='importForm-{field}-textField']//span[text()='*']";
-	private static final String MANDATORY_DROPDOWN_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-select']//span[text()='*']";
-	private static final String MANDATORY_CREDENTIAL_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-password']//span[text()='*']";
-	private static final String MANDATORY_NUMBER_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}']//span[text()='*']";
-	private static final String MANDATORY_URL_FIELDS_XPATH = "//div[@data-testid='model-importForm-{field}-url']//span[text()='*']";
+	private static final String TEXT_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='importForm-{field}-textField']";
+	private static final String DROPDOWN_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//button[@data-testid='model-importForm-{field}-select']";
+	private static final String CREDENTIAL_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}-password']";
+	private static final String NUMBER_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}']";
+	private static final String URL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}-url']";
+	private static final String MANDATORY_TEXT_FIELDS_XPATH = "//input[@data-testid='importForm-{field}-textField']/../label//span[text()='*']";
+	private static final String MANDATORY_DROPDOWN_FIELDS_XPATH = "//button[@data-testid='model-importForm-{field}-select']/../label//span[text()='*']";
+	private static final String MANDATORY_CREDENTIAL_FIELDS_XPATH = "//input[@data-testid='model-importForm-{field}-password']/../label//span[text()='*']";
+	private static final String MANDATORY_NUMBER_FIELDS_XPATH = "//input[@data-testid='model-importForm-{field}']/../label//span[text()='*']";
+	private static final String MANDATORY_URL_FIELDS_XPATH = "//input[@data-testid='model-importForm-{field}-url']/../label//span[text()='*']";
 	private static final String TEXT_FIELDS_DATA_TESTID = "importForm-{field}-textField";
 	private static final String DROPDOWN_FIELDS_DATA_TESTID = "model-importForm-{field}-select";
 	private static final String CREDENTIAL_FIELDS_DATA_TESTID = "model-importForm-{field}-password";
 	private static final String NUMBER_FIELDS_DATA_TESTID = "model-importForm-{field}";
 	private static final String URL_FIELDS_DATA_TESTID = "model-importForm-{field}-url";
-	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
+	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//div[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
-	private static final String MODEL_TOAST_MESSAGE_TESTID = "notification-success-alert";
+	private static final String MODEL_TOAST_MESSAGE_TESTID = "//*[@class='toaster group']//li//div//div";
 	private static final String MODEL_ID_TESTID = "engineHeader-Model-id";
 	private static final String MODEL_NAME_TESTID = "Title";
 
@@ -53,10 +53,10 @@ public class ModelPageUtils {
 	private static final String CHAT_TITLE_XPATH = "//div//*[text()='{title}']";
 	private static final String CHAT_TEMPERATURE_XPATH = "//div//p[text()='Temperature']/../../span[contains(text(),'Current')]";
 	private static final String CHAT_MAX_TOKENS_XPATH = "//div//p[contains(text(),'Max Tokens')]/../../div//input";
-	private static final String CHAT_INPUT_XPATH = "//div//input[@name='prompt']";
+	private static final String CHAT_INPUT_XPATH = "//div//textarea[@name='prompt']";
 	private static final String CHAT_SEND_BUTTON_XPATH = "//button[@aria-label='Send message']";
-	private static final String EMPTY_CHAT_WINDOW_XPATH = "//div//p[contains(text(),'Start a conversation')]";
-	private static final String CHAT_CLEAR_ALL_BUTTON_XPATH = "//button/span[text()='Clear Chat']";
+	private static final String EMPTY_CHAT_WINDOW_XPATH = "//div//span[contains(text(),'Start Conversation by typing a message')]";
+	private static final String CHAT_CLEAR_ALL_BUTTON_XPATH = "//button[text()='Clear Chat']";
 	private static final String CHAT_RESPONSE_XPATH = "//div//*[text()='Response']";
 	private static final String CHAT_OUTPUT_XPATH = "//div//*[text()='Response']/../div//p[1]";
 	private static final String CHAT_MODEL_ID_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model ID')]/..";
@@ -262,7 +262,7 @@ public class ModelPageUtils {
 			case "Region":
 			case "Model Name":
 			case "API Version":
-				fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName)).locator("input");
+				fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName));
 				fieldType = "Text";
 				break;
 			case "Chat Type":
@@ -280,8 +280,7 @@ public class ModelPageUtils {
 			case "AWS Access Key ID":
 			case "AWS Secret Access Key":
 			case "Azure Open AI Key":
-				fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
-						.locator("input");
+				fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName));
 				fieldType = "Credential";
 				break;
 			case "Max Input Tokens":
@@ -289,16 +288,13 @@ public class ModelPageUtils {
 			case "Max Completion Tokens":
 			case "Context Window":
 			case "Max Tokens (Max Completion Tokens)":
-				fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName))
-						.locator("input");
+				fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName));
 				fieldType = "Number";
 				break;
 			case "Endpoint":
 			case "Azure Endpoint":
-				Locator urlField = page.getByTestId(URL_FIELDS_DATA_TESTID.replace("{field}", fieldName))
-						.locator("input");
-				Locator textField = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName))
-						.locator("input");
+				Locator urlField = page.getByTestId(URL_FIELDS_DATA_TESTID.replace("{field}", fieldName));
+				Locator textField = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName));
 				if (urlField.count() > 0) {
 					fieldLocator = urlField;
 				} else {
@@ -336,16 +332,21 @@ public class ModelPageUtils {
 		return connectButton.isEnabled();
 	}
 
+	public static void clickOnCreateModelButton(Page page, String buttonName) {
+		Locator createButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		createButton.scrollIntoViewIfNeeded();
+		createButton.click();
+	}
 	public static void enterCatalogName(Page page, String catalogName) {
 		Locator catalogNameField = page.getByTestId(CATALOG_NAME_DATA_TESTID);
-		Locator catalogNameInput = catalogNameField.locator("input");
-		catalogNameInput.fill(catalogName);
+//		Locator catalogNameInput = catalogNameField.locator("input");
+		catalogNameField.fill(catalogName);
 	}
 
 	public static void enterOpenAIKey(Page page, String openAIKey) {
 		Locator openAIKeyField = page.getByTestId(OPEN_AI_KEY_DATA_TESTID);
-		Locator openAIKeyInput = openAIKeyField.locator("input");
-		openAIKeyInput.fill(openAIKey);
+//		Locator openAIKeyInput = openAIKeyField.locator("input");
+		openAIKeyField.fill(openAIKey);
 	}
 
 	public static void clickOnCreateModelButton(Page page) {
@@ -356,7 +357,7 @@ public class ModelPageUtils {
 	}
 
 	public static String modelCreationToastMessage(Page page) {
-		Locator alert = page.getByTestId(MODEL_TOAST_MESSAGE_TESTID);
+		Locator alert = page.locator(MODEL_TOAST_MESSAGE_TESTID);
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
