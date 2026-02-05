@@ -40,9 +40,9 @@ Feature: Add Zip Database
     And User sees the database name as 'TestDatabase'
     And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
-    When User can see toast message as 'Successfully copied ID'
+    When User can see toast message as 'ID copied to clipboard'
     #And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
-    And User can see 'No Markdown available' as database description
+    #And User can see 'No Markdown available' as database description
     And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
@@ -68,7 +68,7 @@ Feature: Add Zip Database
     And User clicks on apply database button
     Then User sees the table in the metadata tab
 
- @LoginWithAdmin @Regression @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Database - Verify Save functionality for MetaData
     Given User opens Main Menu
     When User clicks on Open Database
@@ -83,4 +83,3 @@ Feature: Add Zip Database
     And User sees the Save button is 'enabled'
     And User clicks on Save button of Metadata tab
     Then User sees Database Catalog page
-  

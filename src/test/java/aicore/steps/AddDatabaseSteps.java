@@ -172,7 +172,8 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Then("User sees an example of {string} with example code for Database")
 	public void user_sees_an_example_of_with_example_code_for_database(String usageType) {
-		viewUsagePage.verifyExample(usageType);
+		boolean isExampleVisible = viewUsagePage.verifyExample(usageType);
+		Assertions.assertTrue(isExampleVisible, usageType + " example is not visible");
 	}
 
 	@Then("User should see Search bar to filter database options")
@@ -257,9 +258,6 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
 	@When("User clicks on MetaData tab")
 	public void user_clicks_on_metadata_tab() {
-		// TODO this should be user clicks on Metadata tab
-		// if you fix this you need to update in all the places it is used in cucumber
-		// files
 		addDatabaseToCatalogPage.clickOnMetaDataTab();
 	}
 
@@ -375,19 +373,18 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_sees_the_save_button_is(String state) {
 		boolean isDisabled = state.equalsIgnoreCase("disabled");
 		boolean isSaveButtonDisabled = addDatabaseToCatalogPage.isSaveButtonDisabled();
-		Assertions.assertEquals(isDisabled, isSaveButtonDisabled, 
-			"Save button state is not " + state);
+		Assertions.assertEquals(isDisabled, isSaveButtonDisabled, "Save button state is not " + state);
 	}
-	
+
 	@And("User clicks on Save button of Metadata tab")
 	public void user_clicks_on_save_button_of_metadata_tab() {
 		addDatabaseToCatalogPage.clickOnSaveButtonOfMetadataTab();
-	}	
+	}
 
 	@Then("User sees Database Catalog page")
 	public void user_sees_database_catalog_page() {
-		addDatabaseToCatalogPage.verifyDatabaseCatalogPage();	
-	}	
+		addDatabaseToCatalogPage.verifyDatabaseCatalogPage();
+	}
 
 	@And("User click on Connect button")
 	public void user_click_on_connect_button() {

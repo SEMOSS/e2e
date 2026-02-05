@@ -27,34 +27,34 @@ public class AddDatabasePageUtils {
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
 	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
 	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";
-	private static final String EDIT_BTN_XPATH = "EditRoundedIcon";
+	private static final String EDIT_BTN_XPATH = "//button[text()='Edit']";
 	private static final String TAGS_XPATH = "//span[text()='Tag']/ancestor::fieldset/parent::div//input";
 	private static final String SUBMIT_BTN_XPATH = "//span[text()='Submit']";
 	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
-	private static final String EXPORT_BTN_XPATH = "Export";
-	private static final String EDIT_POPUP_XPATH = "//div[contains(text(),\"Edit\")]";
-	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH = "//label//following-sibling::div//input";
+	private static final String EXPORT_BTN_DATATESTID = "engineHeader-Database-export-btn";
+	private static final String EDIT_POPUP_XPATH = "//div//h2[contains(text(),'Edit')]";
+	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID = "search-bar";
 	private static final String SEARCHED_DATABASE_XPATH = "//p[text()='{catalogName}']";
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
-	private static final String HOST_NAME_XPATH = "//div[@data-testid='database-form-input-hostname']//div//input";
-	private static final String CATALOG_NAME_XPATH = "//div[@data-testid='database-form-input-NAME']//div//input";
-	private static final String PORT_NUMBER_XPATH = "//div[@data-testid='database-form-input-port']//div//input";
-	private static final String SCHEMA_NAME_XPATH = "//div[@data-testid='database-form-input-schema']//div//input";
-	private static final String JDBC_URL_XPATH = "//div[@data-testid='database-form-input-CONNECTION_URL']//div//input";
-	private static final String USER_NAME_XPATH = "//div[@data-testid='database-form-input-USERNAME']//div//input";
+	private static final String HOST_NAME_XPATH = "//input[@data-testid='database-form-input-hostname']";
+	private static final String CATALOG_NAME_XPATH = "//input[@data-testid='database-form-input-NAME']";
+	private static final String PORT_NUMBER_XPATH = "//input[@data-testid='database-form-input-port']";
+	private static final String SCHEMA_NAME_XPATH = "//input[@data-testid='database-form-input-schema']";
+	private static final String JDBC_URL_XPATH = "//input[@data-testid='database-form-input-CONNECTION_URL']";
+	private static final String USER_NAME_XPATH = "//input[@data-testid='database-form-input-USERNAME']";
 	private static final String APPLY_BUTTON_XPATH = "model-upload-submit-button";
-	private static final String APPLY_DATABASE_BUTTON_XPATH = "//span[text()='Apply']";
-	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//span[text()='Import']";
+	private static final String APPLY_DATABASE_BUTTON_XPATH = "//button[text()='Apply']";
+	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//button[text()='Import']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
 	private static final String COPY_ID_XPATH = "//span[text()='{message}']";
-	private static final String SELECT_ALL_DATABASE_XPATH = "//span[text()='(Select searched items)']";
+	private static final String SELECT_ALL_DATABASE_XPATH = "//label[text()='(Select searched items)']";
 	private static final String MANDATORY_FIELD_XPATH = "//div//label[text()='{fieldName}']//span";
 	private static final String FORM_SECTION_XPATH = "//h4[text()='{sectionName}']";
-	private static final String ADVANCED_SECTION_XPATH = "database-advanced-settings-title";
-	private static final String SECTION_FIELD_XPATH = "../following-sibling::div//label[text()='{fieldName}']";
+	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-advanced-settings-toggle'])[1]";
+	private static final String SECTION_FIELD_XPATH = "//h4[normalize-space()='{sectionName}']/ancestor::div//label[text()='{fieldName}']";
 	private static final String QUERY_TAB_DATA_TESTID = "engineLayout-Query-tab";
 	private static final String QUERY_ENTER_TEXTAREA_XPATH = ".monaco-editor .native-edit-context";
 	private static final String OUTPUT_TABLE = "//table";
@@ -65,7 +65,7 @@ public class AddDatabasePageUtils {
 	private static final String DATA_COLUMNS_REFRESHING_TILE_XPATH = "//p[contains(text(),'{text}')]";
 	private static final String EXPAND_TABLE_ARROW_XPATH = "//button[@title='{name}']";
 	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
-	private static final String DATABASE_CATALOG_HEADER_XPATH = "//h4[normalize-space() ='Database Catalog']";
+	private static final String DATABASE_CATALOG_HEADER_XPATH = "//p[normalize-space() ='Database Catalog']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "database-form-connect-button";
 	private static final String DATABASE_SAVE_BUTTON_DATA_TESTID = "engineMetadata-save-btn";
 
@@ -104,22 +104,18 @@ public class AddDatabasePageUtils {
 			}
 			Locator dropdownLocator = page.locator(ADVANCED_SECTION_XPATH);
 			AICorePageUtils.waitFor(dropdownLocator);
-			String attributeVal = dropdownLocator.getAttribute("data-testid");
+			String attributeVal = dropdownLocator.getAttribute("aria-expanded");
 			dropdownLocator.scrollIntoViewIfNeeded();
-			if (!sectionLocator.isVisible()) {
+			if (!dropdownLocator.isVisible()) {
 				throw new AssertionError("Advanced Settings dropdown is not visible.");
 			}
-			if (attributeVal.equals("ExpandMoreIcon")) {
-
+			if (attributeVal.equals("false")) {
 				dropdownLocator.click();
 			}
-
 		}
-
-		if (!sectionLocator.isVisible()) {
-			throw new AssertionError("Section '" + sectionName + "' is not visible.");
-		}
-		Locator fieldLocator = sectionLocator.locator(SECTION_FIELD_XPATH.replace("{fieldName}", fieldName));
+		Locator fieldLocator = page
+				.locator(SECTION_FIELD_XPATH.replace("{sectionName}", sectionName).replace("{fieldName}", fieldName));
+		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
 
 	}
@@ -306,9 +302,9 @@ public class AddDatabasePageUtils {
 	}
 
 	public static Path clickOnExportButton(Page page) throws IOException {
-		page.getByText(EXPORT_BTN_XPATH).isVisible();
+		page.getByTestId(EXPORT_BTN_DATATESTID).isVisible();
 		Download download = page.waitForDownload(() -> {
-			page.getByText(EXPORT_BTN_XPATH).click();
+			page.getByTestId(EXPORT_BTN_DATATESTID).click();
 		});
 		Path downloadPath = download.path();
 		if (isZipFile(downloadPath)) {
@@ -330,13 +326,13 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnEditButton(Page page) {
-		page.getByTestId(EDIT_BTN_XPATH).isVisible();
-		page.getByTestId(EDIT_BTN_XPATH).click();
+		page.locator(EDIT_BTN_XPATH).isVisible();
+		page.locator(EDIT_BTN_XPATH).click();
 		page.locator(EDIT_POPUP_XPATH).isVisible();
 	}
 
 	public static void searchDatabaseCatalog(Page page, String catalogName) {
-		Locator searchcatalog = page.locator(DATABASE_CATALOG_SEARCH_TEXTBOX_XPATH);
+		Locator searchcatalog = page.getByTestId(DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID);
 		AICorePageUtils.waitFor(searchcatalog);
 		searchcatalog.click();
 		searchcatalog.fill(catalogName);
@@ -446,13 +442,13 @@ public class AddDatabasePageUtils {
 	public static boolean isSaveButtonDisabled(Page page) {
 		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
 		AICorePageUtils.waitFor(saveButton);
-		return !saveButton.isEnabled();
+		return saveButton.isDisabled();
 	}
 
 	public static void clickOnSaveButtonOfMetadataTab(Page page) {
 		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
 		AICorePageUtils.waitFor(saveButton);
-		saveButton.click();
+		saveButton.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static boolean verifyDatabaseCatalogPage(Page page) {
@@ -472,5 +468,4 @@ public class AddDatabasePageUtils {
 		AICorePageUtils.waitFor(saveButton);
 		saveButton.click();
 	}
-
 }
