@@ -88,6 +88,7 @@ Feature: Model Catalog Permission - Editor
   @Regression @Smoke
   Scenario: Model Catalog - Editor -  Delete Model as Author
     Given User opens Main Menu
+    And User clicks on Open Model
     And User logs out from the application
     Then User login as "Author"
     And User opens Main Menu

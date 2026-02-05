@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 
 public class CatalogFilterPageUtils {
 
+
 	private static final String SELECT_FILTER_VALUE_XPATH = "filterbox-{FilterValue}-filterBtn";
 	private static final String CATALOG_NAME = "{CatalogName}";
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";

@@ -21,7 +21,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div";
 	private static final String COPY_ID_ICON_XPATH = "//button[contains(@data-testid,'engineHeader')]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//span[text()='{ToastMessage}']";
-	private static final String EDIT_BUTTON_XPATH = "//*[contains(@data-testid,'editEngineDetails')]";
+	private static final String EDIT_BUTTON_XPATH = "//button[contains(@data-testid,'edit-btn')]";
 	private static final String TAG_TEXTBOX = "editEngineDetails-Tag-autocomplete";
 	private static final String SUBMIT_BUTTON_XPATH = "editEngineDetails-submit-btn";
 	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
