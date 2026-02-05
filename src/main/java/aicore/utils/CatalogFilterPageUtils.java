@@ -5,18 +5,21 @@ import com.microsoft.playwright.Page;
 
 public class CatalogFilterPageUtils {
 
-	private static final String SELECT_FILTER_VALUE_XPATH = "//*[text()='{filterCategory}']/ancestor::button/following-sibling::div//span[text()='{filterValue}']";
+
+	private static final String SELECT_FILTER_VALUE_XPATH = "filterbox-{FilterValue}-filterBtn";
 	private static final String CATALOG_NAME = "{CatalogName}";
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
-	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[contains(text(),'{catalogName}')]";
+	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//p[text()='Bookmarked']//following-sibling::div[1]//p[contains(text(),'{catalogName}')]";
 
 	public static void searchFilterValue(Page page, String filterValue) {
 		page.getByPlaceholder("Search by...").fill(filterValue);
 	}
 
-	public static void selectFilterValue(Page page, String filterCategory, String filterValue) {
-		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
-				.replace("{filterValue}", filterValue));
+	public static void selectFilterValue(Page page , String filterValue) {
+		if (filterValue.contains(" ")) {
+			filterValue = filterValue.replace(" ", "-");
+		}
+		Locator filterValueLocator = page.getByTestId(SELECT_FILTER_VALUE_XPATH.replace("{FilterValue}", filterValue));
 		AICorePageUtils.waitFor(filterValueLocator);
 		filterValueLocator.click();
 	}

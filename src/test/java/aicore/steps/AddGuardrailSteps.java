@@ -1,5 +1,8 @@
 package aicore.steps;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
@@ -12,6 +15,7 @@ public class AddGuardrailSteps {
 	private HomePage homePage;
 	private GuardrailPage guardrailPage;
 	protected static String timestamp;
+	private Path downloadedZip;
 
 	public AddGuardrailSteps() {
 		timestamp = SetupHooks.getTimestamp();
@@ -50,4 +54,31 @@ public class AddGuardrailSteps {
 		String expGuardrailTitle = guardrailTitle + timestamp;
 		Assertions.assertEquals(expGuardrailTitle, actualGuardrailTitle, "Guardrail title does not match");
 	}
+
+	@When("User clicks on Export button")
+	public void user_clicks_on_export_button() {
+		downloadedZip = guardrailPage.downloadCatalog();
+	}
+
+	@Then("User sees catalog zip file downloaded")
+	public void user_sees_catalog_zip_file_downloaded() {
+		Assertions.assertNotNull(downloadedZip, "file download path is null");
+		Assertions.assertTrue(Files.exists(downloadedZip), "file was not downloaded");
+		Assertions.assertTrue(downloadedZip.toString().endsWith(".zip"), "Downloaded file is not a ZIP");
+	}
+
+	@Then("User sees downloaded zip file name contains {string}")
+	public void user_sees_downloaded_zip_file_name_contains(String expectedText) {
+		String fileName = downloadedZip.getFileName().toString();
+		Assertions.assertTrue(fileName.toLowerCase().contains(expectedText.toLowerCase()),
+				"File name does not contain expected text");
+	}
+
+	@Then("User sees export success toast message as {string}")
+	public void user_sees_export_success_toast_message_as(String expectedToastMessage) {
+		String actualToastMessage = guardrailPage.verifyToastMessage();
+		Assertions.assertEquals(expectedToastMessage, actualToastMessage,
+				"toast message is not matching with expected");
+	}
+
 }

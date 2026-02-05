@@ -16,3 +16,4 @@ src/test/resources/data/screenshots/
 /screenshots/**/actualChart.png
 /screenshots/**/diffChart.png
 /testresults/
+/downloads
