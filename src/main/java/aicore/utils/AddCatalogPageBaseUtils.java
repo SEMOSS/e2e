@@ -98,7 +98,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {
-		Locator locator = page.getByTestId(CATALOG_NAME_TESTID);
+		Locator locator = page.locator(CATALOG_NAME_XPATH);
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}

@@ -30,6 +30,7 @@ public class EditModelPageUtils {
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data classification')]]/following-sibling::div";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
+	private static final String DOMAIN_TEXTBOX_XPATH = "editEngineDetails-Domain-autocomplete";
 
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
@@ -86,9 +87,9 @@ public class EditModelPageUtils {
 
 	public static void selectDataRestrictionsOption(Page page, String option) {
 		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH.replace("{option}", option));
-	// 	page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
-	// 	page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
-	// 	page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
+		// page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
+		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
+		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {
