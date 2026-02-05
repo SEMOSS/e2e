@@ -217,4 +217,11 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
         return AddDatabasePageUtils.verifyDatabaseCatalogPage(page);
     }
 
+    public void clickOnConnectButton() {
+        AddDatabasePageUtils.clickOnConnectButton(page);
+    }
+    public void clickOnSaveButton() {
+        AddDatabasePageUtils.clickOnSaveButtonOfMetadataTab(page);
+    }
+
 }

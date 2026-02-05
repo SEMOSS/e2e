@@ -142,8 +142,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		return AddFunctionPageUtils.verifyDeleteToastMessage(page);
 	}
 
-	public String verifySuccessToastMessage() {
-		return AddFunctionPageUtils.verifySuccessToastMessage(page);
+	public String verifySuccessToastMessage(String toastMessage) {
+		return AddFunctionPageUtils.verifySuccessToastMessage(page, toastMessage);
 	}
 
 	public boolean verifyMissingInputField() {

@@ -36,12 +36,13 @@ public class AddFunctionPageUtils {
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
 	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make {catalogName} discoverable']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
-	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
-	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "search-bar";
-	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
+	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
+	private static final String SEARCHED_FUNCTION_DATATESTID = "genericEngineCards-DATABASE-{catalogName}";
 	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
-	private static final String SEARCH_BAR_XPATH = "search-bar";
+	private static final String SEARCH_BAR_DATATESTID = "search-bar";
+	private static final String TOASTER_MESSAGE_XPATH = "//div[text()='{toastMessage}']";
 
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
@@ -229,8 +230,8 @@ public class AddFunctionPageUtils {
 		return toastMessage;
 	}
 
-	public static String verifySuccessToastMessage(Page page) {
-		Locator alert = page.getByTestId("notification-success-alert");
+	public static String verifySuccessToastMessage(Page page, String toastMessage) {
+		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage));
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -277,15 +278,15 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
-		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
-		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
+		page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName)).isVisible();
+		page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
-		Locator searchBar = page.getByTestId(SEARCH_BAR_XPATH);
+		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
 		searchBar.fill(catalog);
-		Locator catalogLocator = page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)));
+		Locator catalogLocator = page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName));
 		if (catalogLocator.isVisible()) {
 			catalogLocator.click();
 			clickOnAccessControl(page);
