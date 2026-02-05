@@ -341,7 +341,7 @@ public class CommonUtils {
 			HomePageUtils.clickOnOpenAppLibrary(page);
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
 			page.waitForTimeout(500);
-			page.getByTestId(THREE_DOT_ICON_DATATESTID).click();
+			page.getByTestId(THREE_DOT_ICON_DATATESTID).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
 			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
