@@ -63,7 +63,7 @@ public class ModelPageUtils {
 	private static final String CHAT_MODEL_NAME_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model Name')]/..";
 
 	// SMSS field
-	private static final String SMSS_TAB_XPATH = "//button[text()='SMSS']";
+	private static final String SMSS_TAB_XPATH = "engineLayout-SMSS-tab";
 	private static final String NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'NAME')]";
 	private static final String VAR_NAME_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'VAR_NAME')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'] [starts-with(normalize-space(string(.)), '{fieldName}')]";
@@ -497,7 +497,7 @@ public class ModelPageUtils {
 	}
 
 	public static void clickOnSMSSTab(Page page) {
-		page.click(SMSS_TAB_XPATH);
+		page.getByTestId(SMSS_TAB_XPATH).click();
 		page.waitForTimeout(2000);
 	}
 
