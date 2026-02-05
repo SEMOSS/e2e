@@ -43,6 +43,7 @@ public class AddFunctionPageUtils {
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
 	private static final String SEARCH_BAR_DATATESTID = "search-bar";
 	private static final String TOASTER_MESSAGE_XPATH = "//div[text()='{toastMessage}']";
+	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
 
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
