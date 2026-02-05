@@ -28,7 +28,7 @@ public class HomePageUtils {
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
-	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
+	private static final String APP_MENU_BUTTON_XPATH = "sidebar-Apps-btn";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
 	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
@@ -143,7 +143,7 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
-		Locator locator = page.locator(APP_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(APP_MENU_BUTTON_XPATH);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
