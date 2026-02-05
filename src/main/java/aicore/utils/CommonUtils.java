@@ -47,8 +47,8 @@ public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
-	private static final String SEARCH_CATALOG_LABEL = "Search";
-	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
+	private static final String SEARCH_CATALOG_LABEL = "search-bar";
+	private static final String CLICK_ON_CATALOG_XPATH = "//div[contains(@data-testid,'genericEngineCards')]//img";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
@@ -307,15 +307,15 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			switch (catalogType) {
-			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
-			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
+				case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
+				default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
-			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
+			page.getByTestId(SEARCH_CATALOG_LABEL).fill(catalogId);
 			page.waitForTimeout(500);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
 

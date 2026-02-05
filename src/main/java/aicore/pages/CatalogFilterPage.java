@@ -15,8 +15,8 @@ public class CatalogFilterPage {
 		CatalogFilterPageUtils.searchFilterValue(page, filterValue);
 	}
 
-	public void selectFilterValue(String filterCategory, String filterValue) {
-		CatalogFilterPageUtils.selectFilterValue(page, filterCategory, filterValue);
+	public void selectFilterValue(String filterValue) {
+		CatalogFilterPageUtils.selectFilterValue(page , filterValue);
 	}
 
 	public boolean verifyCatalogIsVisibleOnCatalogPage(String catalogName) {

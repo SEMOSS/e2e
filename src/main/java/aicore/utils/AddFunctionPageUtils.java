@@ -26,7 +26,7 @@ public class AddFunctionPageUtils {
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
-	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
+	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards-FUNCTION')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
@@ -36,12 +36,12 @@ public class AddFunctionPageUtils {
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
 	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make {catalogName} discoverable']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
-	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
-	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
+	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "search-bar";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
-	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='engineIndexPage-searchBar-{catalog}']//input";
+	private static final String SEARCH_BAR_XPATH = "search-bar";
 
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
@@ -266,11 +266,11 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void clickOnDiscoverableFunctionsbutton(Page page) {
-		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
+		page.getByTestId(DISCOVERABLE_FUNCTIONS_BUTTON_TESTID).click();
 	}
 
 	public static void searchFunctionCatalog(Page page, String catalogName) {
-		Locator searchbox = page.getByLabel(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
+		Locator searchbox = page.getByTestId(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
 		AICorePageUtils.waitFor(searchbox);
 		searchbox.click();
 		searchbox.fill(catalogName);
@@ -282,7 +282,7 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
-		Locator searchBar = page.locator(SEARCH_BAR_XPATH.replace("{catalog}", catalog));
+		Locator searchBar = page.getByTestId(SEARCH_BAR_XPATH);
 		searchBar.click();
 		searchBar.fill(catalog);
 		Locator catalogLocator = page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)));

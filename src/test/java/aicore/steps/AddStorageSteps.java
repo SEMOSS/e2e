@@ -336,8 +336,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@When("User clicks on created storage {string}")
 	public void User_clicks_on_created_storage(String storageName) {
-		storageName = storageName + timestamp;
-		storagePage.clickOnCreatedStorage(storageName);
+		storagePage.clickOnCreatedStorage(storageName + timestamp);
 	}
 
 	@And("User clicks on Discoverable Storages button")

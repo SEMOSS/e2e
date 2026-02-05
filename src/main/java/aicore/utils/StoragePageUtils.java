@@ -51,7 +51,7 @@ public class StoragePageUtils {
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Storage";
 	private static final String STORAGE_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
-	private static final String DISCOVERABLE_STORAGES_XPATH = "//button[text()='Discoverable Storages']";
+	private static final String DISCOVERABLE_STORAGES_XPATH = "engineIndexPage-Storages-discoverable-switch";
 	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
 
 	public static void clickOnAddStorageButton(Page page) {
@@ -365,8 +365,8 @@ public class StoragePageUtils {
 	}
 
 	public static void searchStorage(Page page, String storageName) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(storageName);
+		page.getByTestId("search-bar").click();
+		page.getByTestId("search-bar").fill(storageName);
 	}
 
 	public static void clickOnCreatedStorage(Page page, String storageName) {
@@ -394,7 +394,7 @@ public class StoragePageUtils {
 	}
 
 	public static void clickOnDiscoverableStoragesButton(Page page) {
-		page.locator(DISCOVERABLE_STORAGES_XPATH).click();
+		page.getByTestId(DISCOVERABLE_STORAGES_XPATH).click();
 	}
 
 	public static void clickOnButton(Page page, String buttonName) {
