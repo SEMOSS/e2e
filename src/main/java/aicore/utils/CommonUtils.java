@@ -308,13 +308,13 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			switch (catalogType) {
-			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
-			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
+				case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
+				case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
+				default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
 			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
 			page.waitForTimeout(500);
@@ -342,7 +342,7 @@ public class CommonUtils {
 			HomePageUtils.clickOnOpenAppLibrary(page);
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
 			page.waitForTimeout(500);
-			page.getByTestId(THREE_DOT_ICON_DATATESTID).click();
+			page.getByTestId(THREE_DOT_ICON_DATATESTID).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
 			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");

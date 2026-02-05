@@ -98,7 +98,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {
-		Locator locator = page.locator(CATALOG_NAME_XPATH.replace("{CatalogName}", catalogName));
+		Locator locator = page.getByTestId(CATALOG_NAME_TESTID);
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
@@ -142,7 +142,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void clickOnSubmit(Page page) {
-		page.click(SUBMIT_BUTTON_XPATH);
+		page.getByTestId(SUBMIT_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnClose(Page page) {

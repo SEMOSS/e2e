@@ -11,10 +11,10 @@ import aicore.framework.ConfigUtils;
 
 public class CatlogAccessPageUtility {
 	private static final Logger logger = LogManager.getLogger(CatlogAccessPageUtility.class);
-	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
-	private static final String VIEW_USAGE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Usage']";
-	private static final String VIEW_SMSS_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='SMSS']";
-	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
+	private static final String VIEW_OVERVIEW_TAB_XPATH = "engineLayout-Overview-tab";
+	private static final String VIEW_USAGE_TAB_XPATH = "engineLayout-Usage-tab";
+	private static final String VIEW_SMSS_TAB_XPATH = "engineLayout-SMSS-tab";
+	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//*[@data-test-id='updateSMSS-updateSNSS-btn']";
 	// new database catalog
 	private static final String VIEW_ACCESSCONTROL_Text = "Access Control";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
@@ -53,19 +53,19 @@ public class CatlogAccessPageUtility {
 	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
 
 	public static boolean canViewOverview(Page page) {
-		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
+		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewUsage(Page page) {
-		return page.isVisible(VIEW_USAGE_TAB_XPATH);
+		return page.getByTestId(VIEW_USAGE_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewSMSSDetails(Page page) {
-		return page.isVisible(VIEW_SMSS_TAB_XPATH);
+		return page.getByTestId(VIEW_SMSS_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewEditSMSS(Page page) {
-		return page.isVisible(VIEW_EDIT_SMSS_BUTTON_XPATH);
+		return page.locator(VIEW_EDIT_SMSS_BUTTON_XPATH).isVisible();
 	}
 
 	public static boolean canViewAccessControl(Page page) {

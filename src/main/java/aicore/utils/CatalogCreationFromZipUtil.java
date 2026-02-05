@@ -55,7 +55,7 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void clickOnFileUploadIcon(Page page) {
-		Locator icon = page.getByTestId("FileUploadOutlinedIcon");
+		Locator icon = page.locator("//button[contains(@data-testid,'upload-file-button')]");
 		AICorePageUtils.waitFor(icon);
 		icon.click();
 	}

@@ -26,7 +26,7 @@ public class AddFunctionPageUtils {
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
-	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
+	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards-FUNCTION')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
@@ -267,11 +267,11 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void clickOnDiscoverableFunctionsbutton(Page page) {
-		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
+		page.getByTestId(DISCOVERABLE_FUNCTIONS_BUTTON_TESTID).click();
 	}
 
 	public static void searchFunctionCatalog(Page page, String catalogName) {
-		Locator searchbox = page.getByLabel(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
+		Locator searchbox = page.getByTestId(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
 		AICorePageUtils.waitFor(searchbox);
 		searchbox.click();
 		searchbox.fill(catalogName);

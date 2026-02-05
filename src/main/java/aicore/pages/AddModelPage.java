@@ -61,6 +61,10 @@ public class AddModelPage {
 		return ModelPageUtils.validateConnectButtonEnabled(page);
 	}
 
+	public void clickOnCreateModelButton(String buttonName) {
+		ModelPageUtils.clickOnCreateModelButton(page, buttonName);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
 	}

@@ -1,12 +1,11 @@
 package aicore.steps;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -121,6 +120,11 @@ public class AddModelSteps {
 	public void user_can_see_button_becomes_enabled(String buttonName) {
 		boolean isButtonEnabled = openModelPage.validateConnectButtonEnabled();
 		Assertions.assertTrue(isButtonEnabled, "'Connect' button is not enabled");
+	}
+
+	@Then("User clicks on model {string} button")
+	public void user_clicks_on_model_button(String buttonName) {
+		openModelPage.clickOnCreateModelButton(buttonName);
 	}
 
 	@When("User selects {string}")
