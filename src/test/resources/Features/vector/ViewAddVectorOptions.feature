@@ -9,5 +9,4 @@ Feature: View add Vector options on the page
     Then User should see Search bar to filter vector options
     And User should see the following 'vector' options with icons on the Connect to Vector page
       | GROUP        | VECTOR_OPTIONS                                                                   |
-      | Connections  | Chroma, Elastic Search, FAISS, Milvus, Open Search, PGVector, Pinecone, Weaviate |
-      | File Uploads | ZIP                                                                              |
+      | Connections  | Azure AI Search, Chroma, Elastic Search, FAISS, Milvus, Open Search, PGVector, Pinecone, Weaviate |

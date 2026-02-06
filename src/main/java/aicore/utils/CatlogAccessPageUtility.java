@@ -11,10 +11,10 @@ import aicore.framework.ConfigUtils;
 
 public class CatlogAccessPageUtility {
 	private static final Logger logger = LogManager.getLogger(CatlogAccessPageUtility.class);
-	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
-	private static final String VIEW_USAGE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Usage']";
-	private static final String VIEW_SMSS_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='SMSS']";
-	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
+	private static final String VIEW_OVERVIEW_TAB_XPATH = "engineLayout-Overview-tab";
+	private static final String VIEW_USAGE_TAB_XPATH = "engineLayout-Usage-tab";
+	private static final String VIEW_SMSS_TAB_XPATH = "engineLayout-SMSS-tab";
+	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//*[@data-test-id='updateSMSS-updateSNSS-btn']";
 	// new database catalog
 	private static final String VIEW_ACCESSCONTROL_Text = "Access Control";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
@@ -24,7 +24,7 @@ public class CatlogAccessPageUtility {
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Settings']";
+	private static final String CLICK_ON_SETTINGS_DATATESTID = "workspace-Settings-image";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
 	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
@@ -36,12 +36,12 @@ public class CatlogAccessPageUtility {
 	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
-	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
+	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
 	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
-	private static final String CATALOG_ID_XPATH = "//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p";
+	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
 	private static final String PENDING_REQUEST_ACCEPT_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String PENDING_REQUEST_REJECT_XPATH = "//*[name()='svg'][@data-testid='CloseIcon']";
 	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
@@ -53,19 +53,19 @@ public class CatlogAccessPageUtility {
 	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
 
 	public static boolean canViewOverview(Page page) {
-		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
+		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewUsage(Page page) {
-		return page.isVisible(VIEW_USAGE_TAB_XPATH);
+		return page.getByTestId(VIEW_USAGE_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewSMSSDetails(Page page) {
-		return page.isVisible(VIEW_SMSS_TAB_XPATH);
+		return page.getByTestId(VIEW_SMSS_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewEditSMSS(Page page) {
-		return page.isVisible(VIEW_EDIT_SMSS_BUTTON_XPATH);
+		return page.locator(VIEW_EDIT_SMSS_BUTTON_XPATH).isVisible();
 	}
 
 	public static boolean canViewAccessControl(Page page) {
@@ -93,7 +93,7 @@ public class CatlogAccessPageUtility {
 
 	// create app class
 	public static void clickOnSettings(Page page) {
-		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH);
+		Locator settingOption = page.getByTestId(CLICK_ON_SETTINGS_DATATESTID);
 		AICorePageUtils.waitFor(settingOption);
 		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			settingOption.click();

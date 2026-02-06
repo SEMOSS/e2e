@@ -11,7 +11,7 @@ Feature: Documentation for Code App
     And User enters app name as 'Code app'
     And User enters description as 'Created by automation script'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Settings tab
     And User clicks on General tab
     And User clicks on Apps tab

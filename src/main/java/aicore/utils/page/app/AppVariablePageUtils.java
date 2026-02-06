@@ -17,7 +17,7 @@ public class AppVariablePageUtils {
 	private static final String VariableValueInputDropdownList = "//ul[@role='listbox']//li//span[text()='{value}']";
 	private static final String CreateVariableButton = "//span[text()='Add']";
 	private static final String ToastMessage = "//*[contains(@class, 'MuiAlert-message')]";
-	private static final String CatalogVariable = "//div[@id='home__content']//h4";
+	private static final String CatalogVariable = "//div[@id='home__content']//h1";
 	private static final String VariableListItem = "//button//div//p[text()='{variableName}']";
 	private static final String SAVEVARIABLE = "//span[text()='Save']";
 	private static final String OpenMenuOption = "//p[text()='{variableName}']/../../../../..//following-sibling::div//div//button[@title=\"Open Menu\"]";

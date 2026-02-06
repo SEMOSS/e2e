@@ -17,7 +17,7 @@ Feature: App Library Documentation
     And User enters tags 'travel planner, itinerary creator' and presses Enter
     And User captures screenshot for "New App Popup"
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User captures a 'button' and highlights the 'Preview App'
     And User captures a 'button' and highlights the 'Save App'
     And User captures a 'button' and highlights the 'Share App'
@@ -68,7 +68,7 @@ Feature: App Library Documentation
     And User enters app name as 'Test app'
     And User captures a 'buttonType' and highlights the "submit" with name "AskCSV2"
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User captures a 'Block' and highlights the "upload" with name "AskCSV3"
     And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
 
@@ -92,7 +92,7 @@ Feature: App Library Documentation
     And User captures screenshot for "AskLLMcreation"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on description block
     And User clicks on the Block Settings option
     And User adds description as "When did covid start"
@@ -132,7 +132,7 @@ Feature: App Library Documentation
     And User enters app name as 'Demo landing page'
     Then User captures a "buttontype" and highlights the "submit" with name "landingone"
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User completes screenshot capture and triggers comparison for 'Landing Page Template'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
@@ -179,7 +179,7 @@ Feature: App Library Documentation
     And User selects "Ask LLM" from Template List
     And User enters app name as 'Test app'
     When User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Variable
     Then User captures a "testidelement , blocksettingelement" and highlights the "workspace-Variables , model" with name "modelchange"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
@@ -218,7 +218,7 @@ Feature: App Library Documentation
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User clicks on Block Settings option
     When User clicks on Notebook
@@ -265,7 +265,7 @@ Feature: App Library Documentation
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User clicks on Block Settings option
     When User clicks on Notebook
@@ -315,7 +315,7 @@ Feature: App Library Documentation
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User clicks on Block Settings option
     When User clicks on Notebook

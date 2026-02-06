@@ -26,7 +26,7 @@ public class AddFunctionPageUtils {
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
-	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
+	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards-FUNCTION')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
@@ -38,10 +38,12 @@ public class AddFunctionPageUtils {
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
-	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
+	private static final String SEARCHED_FUNCTION_DATATESTID = "genericEngineCards-DATABASE-{catalogName}";
 	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
-	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='engineIndexPage-searchBar-{catalog}']//input";
+	private static final String SEARCH_BAR_DATATESTID = "search-bar";
+	private static final String TOASTER_MESSAGE_XPATH = "//div[text()='{toastMessage}']";
+	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
 
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
@@ -229,8 +231,8 @@ public class AddFunctionPageUtils {
 		return toastMessage;
 	}
 
-	public static String verifySuccessToastMessage(Page page) {
-		Locator alert = page.getByTestId("notification-success-alert");
+	public static String verifySuccessToastMessage(Page page, String toastMessage) {
+		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage));
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -266,26 +268,26 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void clickOnDiscoverableFunctionsbutton(Page page) {
-		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
+		page.getByTestId(DISCOVERABLE_FUNCTIONS_BUTTON_TESTID).click();
 	}
 
 	public static void searchFunctionCatalog(Page page, String catalogName) {
-		Locator searchbox = page.getByLabel(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
+		Locator searchbox = page.getByTestId(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
 		AICorePageUtils.waitFor(searchbox);
 		searchbox.click();
 		searchbox.fill(catalogName);
 	}
 
 	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
-		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
-		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
+		page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName)).isVisible();
+		page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
-		Locator searchBar = page.locator(SEARCH_BAR_XPATH.replace("{catalog}", catalog));
+		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
 		searchBar.fill(catalog);
-		Locator catalogLocator = page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)));
+		Locator catalogLocator = page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName));
 		if (catalogLocator.isVisible()) {
 			catalogLocator.click();
 			clickOnAccessControl(page);

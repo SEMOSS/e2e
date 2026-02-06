@@ -168,7 +168,7 @@ Feature: Validate catalog user permissions for all catalog types
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User opens Main Menu
     And User clicks on Open Settings
     When User selects the 'App Settings' card
