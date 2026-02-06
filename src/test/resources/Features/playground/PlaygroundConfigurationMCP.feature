@@ -13,7 +13,7 @@ Feature: Playground Home model MCP to verify configuration tab
     Given User is on Home page
     When User clicks on Build button
     And User clicks on Try it out hyperlink for Experiment in our Playground
-    And User clicks on the "Open Configuration Menu" button
+    And User clicks on the "Open settings" button
     And User clicks on the MCP dropdown
     Then User should see and select the 'PlaygroundMCP app' in the MCP availale tools
     And User verify added 'PlaygroundMCP app' is updated in selected list

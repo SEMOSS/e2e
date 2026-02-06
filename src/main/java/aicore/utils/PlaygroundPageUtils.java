@@ -4,7 +4,6 @@ import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaygroundPageUtils {
 
@@ -13,7 +12,7 @@ public class PlaygroundPageUtils {
     private static final String PROMPT_INPUT_XPATH = "//input[@type='file']";
     private static final String PLACEHOLDER_PROMPT_XPATH = "//div//div[contains(text(),'{prompt}')]";
     private static final String CONFIGURATION_MENU_XPATH = "//form";
-    private static final String ADD_MCP_TOOL_XPATH = "//div[text()='MCPs']/following-sibling::button";
+    private static final String ADD_MCP_TOOL_XPATH = "//div[text()='Toolbox']/following-sibling::button";
     private static final String ADD_KNOWLEDGE_TOOL_XPATH = "//div[text()='Knowledge']/following-sibling::button";
     private static final String SAVE_BUTTON_XPATH = "//button[text()='Save']";
     private static final String MCP_TOOL_XPATH = "//div[contains(text(),'{MCP}')]";
@@ -33,7 +32,9 @@ public class PlaygroundPageUtils {
     private static final String PROMPT_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']";
     private static final String PROMPT_DELETE_BUTTON_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']//following-sibling::button";
     private static final String SIDEBAR_XPATH = "//div[@data-slot='sidebar-group']";
-    private static final String RESPONSE_XPATH = "//div//span[text()='Llama3-70B-Instruct']";
+    private static final String RESPONSE_XPATH = "//div//span[text()='Llama3-70B-Instruct']/..//following-sibling::div[@data-slot='markdown']";
+    private static final String SETTINGS_XPATH = "//span[text()='Settings']";
+    private static final String ASK_XPATH = "//span[text()='Ask']";
     private static final String LOADING_SPINNER_XPATH = "//button[@aria-label='Prompt the Model']//*[@aria-label='Loading']";
     private static final String MCP_SEARCH_BAR_XPATH = "//*[text()='Edit Toolbox']//..//..//input[@placeholder='Search']";
     private static final String MCP_CHECKBOX_XPATH = "//*[contains(text(),'{MCP}')]//../../button";
@@ -229,11 +230,19 @@ public class PlaygroundPageUtils {
 
     public static void clickOnOpenConfigurationMenuButton(Page page, String buttonName) {
         Locator button = page.getByLabel(buttonName);
-        if (button.isEnabled()) {
-            button.click();
-        } else {
-            throw new AssertionError("The button '" + buttonName + "' is disabled and cannot be clicked.");
-        }
+        Locator openSettingButton = page.locator(SETTINGS_XPATH);
+        Locator askModeButton = page.locator(ASK_XPATH);
+         if (button.isEnabled()) {
+             button.click();
+            if (openSettingButton.isVisible()) {
+                openSettingButton.click();
+                askModeButton.click();
+            } else {
+                throw new AssertionError("The 'Open Settings' button is not visible and cannot be clicked.");
+            }
+         } else {
+             throw new AssertionError("The button '" + buttonName + "' is disabled and cannot be clicked.");
+         }
     }
 
     public static void verifyModelCatalogDropdownPresent(Page page, String modelName) {
@@ -412,7 +421,9 @@ public class PlaygroundPageUtils {
     }
 
     public static void verifyModelResponseDisplayed(Page page) {
-        Locator responseLocator = page.locator(RESPONSE_XPATH);
+        page.waitForTimeout(3000); // wait for 3 second to ensure response is rendered from the model
+        Locator responseLocator = page.locator(RESPONSE_XPATH).first();
+        AICorePageUtils.waitFor(responseLocator);
         if (!responseLocator.isVisible()) {
             throw new AssertionError("Model response/output is not generated.");
         }

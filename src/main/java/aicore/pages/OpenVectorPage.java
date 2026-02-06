@@ -11,7 +11,7 @@ import aicore.utils.CommonUtils;
 public class OpenVectorPage extends AbstractAddCatalogPageBase {
 
 	private String timestamp;
-	private static final String ADD_VECTOR_BUTTON_XPATH = "//button/span[text()='Add ']";
+	private static final String ADD_VECTOR_BUTTON_XPATH = "//button[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "//*[@data-testid='vector-form-input-NAME']//input";
 	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";

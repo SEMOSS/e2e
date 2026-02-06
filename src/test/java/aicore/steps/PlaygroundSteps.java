@@ -152,6 +152,7 @@ public class PlaygroundSteps {
     public void user_Clicks_On_The_MCP_Dropdown() {
         playgroundPage.clickOnMCPDropdown();
     }
+
     @When("User clicks on the Knowledge dropdown")
     public void user_Clicks_On_The_Knowledge_Dropdown() {
         playgroundPage.clickOnKnowledgeDropdown();
@@ -278,7 +279,7 @@ public class PlaygroundSteps {
         }
     }
 
-    @When("User clicks on sidbar toggle button")
+    @When("User clicks on sidebar toggle button")
     public void user_Clicks_On_Sidebar_Toggle_Button() {
         playgroundPage.clickOnSidebarToggleButton();
     }
