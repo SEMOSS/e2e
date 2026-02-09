@@ -46,11 +46,11 @@ public class PlaygroundPageUtils {
     private static final String MAX_TOKEN_INPUT_XPATH = "//*[text()='Max Token']//../../input";
     private static final String INSTRUCTION_INPUT_XPATH = "//*[text()='Instructions']//../../textarea";
     private static final String KNOWLEDGE_DELETE_XPATH = "//div[text()='Knowledge']//../..//span[contains(text(),'{KNOWLEDGE}')]//following-sibling::button";
-    private static final String MCP_LIST_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'{MCP}')]";
-    private static final String MCP_DELETED_LIST_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'Play')]/..";
+    private static final String MCP_LIST_XPATH = "//div[text()='Toolbox']//../..//span[contains(text(),'{MCP}')]";
+    private static final String MCP_DELETED_LIST_XPATH = "//div[text()='Toolbox']//../..//span[contains(text(),'Play')]/..";
     private static final String KNOWLEDGE_LIST_MESSAGE_XPATH = "//div[text()='Knowledge']//../..//span";
-    private static final String MCP_LIST_MESSAGE_XPATH = "//div[text()='MCPs']//../..//span";
-    private static final String MCP_DELETE_XPATH = "//div[text()='MCPs']//../..//span[contains(text(),'{MCP}')]//following-sibling::button";
+    private static final String MCP_LIST_MESSAGE_XPATH = "//div[text()='Toolbox']//../..//span";
+    private static final String MCP_DELETE_XPATH = "//div[text()='Toolbox']//../..//span[contains(text(),'{MCP}')]//following-sibling::button";
     private static final String MODEL_CATALOG_DROPDOWN = "//div//label[text()='Model']//following-sibling::button//span";
     private static final String MODEL_CATALOG_DROPDOWN_CHECKED = "//div[@role='group']//div//span[contains(text(),'{catalogName}')]/../../*[1]";
     private static final String MODEL_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
@@ -432,7 +432,7 @@ public class PlaygroundPageUtils {
         }
     }
 
-    public static void clickOnMCPDropdown(Page page) {
+    public static void clickOnToolboxDropdown(Page page) {
         Locator addMcpToolLocator = page.locator(ADD_MCP_TOOL_XPATH);
         if (!addMcpToolLocator.isVisible()) {
             throw new AssertionError("Add MCP Tool button is not visible.");
@@ -532,6 +532,17 @@ public class PlaygroundPageUtils {
         }
 
     }
+    public static void verifyMCPRemovedToolboxSection(Page page, String MCPName) {
+        Locator MCPListToolMessage = page.locator(MCP_LIST_MESSAGE_XPATH);
+        AICorePageUtils.waitFor(MCPListToolMessage);
+        String expectedMessage = "No Toolbox Found";
+        String actualMessage = MCPListToolMessage.textContent();
+        if (!actualMessage.equals(expectedMessage)) {
+            throw new AssertionError("Expected message: '" + expectedMessage + "', but found: '" + actualMessage + "'");
+        }
+
+    }
+
     public static void verifyKnowledgeRemovedKnowledgeSection(Page page, String knowledgeName) {
         Locator knowledgeListToolMessage = page.locator(KNOWLEDGE_LIST_MESSAGE_XPATH);
         AICorePageUtils.waitFor(knowledgeListToolMessage);

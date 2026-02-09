@@ -91,8 +91,8 @@ public class PlaygroundPage {
     public void clickOnOpenConfigurationMenuButton(String buttonName) {
         PlaygroundPageUtils.clickOnOpenConfigurationMenuButton(page, buttonName);
     }
-    public void clickOnMCPDropdown() {
-        PlaygroundPageUtils.clickOnMCPDropdown(page);
+    public void clickOnToolboxDropdown() {
+        PlaygroundPageUtils.clickOnToolboxDropdown(page);
     }
     public void clickOnKnowledgeDropdown() {
         PlaygroundPageUtils.clickOnKnowledgeDropdown(page);
@@ -130,6 +130,10 @@ public class PlaygroundPage {
     }
     public void deleteAddedMCPModelMCPSection(String modelName) {
         PlaygroundPageUtils.deleteAddedMCPModelMCPSection(page, modelName);
+    }
+
+    public void verifyMCPRemovedToolboxSection(String MCPName) {
+        PlaygroundPageUtils.verifyMCPRemovedToolboxSection(page, MCPName);
     }
 
     public void verifyKnowledgeRemovedKnowledgeSection(String knowledgeName) {
