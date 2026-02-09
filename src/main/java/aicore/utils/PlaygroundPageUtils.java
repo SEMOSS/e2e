@@ -18,7 +18,7 @@ public class PlaygroundPageUtils {
     private static final String MCP_TOOL_XPATH = "//div[contains(text(),'{MCP}')]";
     private static final String CREATE_WORKSPACE_XPATH = "//button[text()='Create a Workspace']";
     private static final String CARD_TITLE_XPATH = "//div[@data-slot='card-title']";
-    private static final String WORKSPACE_PROFILE_XPATH = "//span[@data-slot='tooltip-trigger']//button//span";
+    private static final String WORKSPACE_PROFILE_XPATH = "//div[@role='menuitem']//span[text()='{workspaceName}']";
     private static final String SEARCH_WORKSPACE_XPATH = "//div/div[@role='group']//input[@placeholder='Search']";
     private static final String WORKSPACE_NAME_INPUT_XPATH = "workspaceForm-textField-name";
     private static final String WORKSPACE_DESCRIPTION_INPUT_XPATH = "workspaceForm-description-txt";
@@ -212,12 +212,15 @@ public class PlaygroundPageUtils {
         }
     }
 
-    public static void verifyWorkspaceSelection(Page page, String workspaceName) {
-        Locator workspaceProfile = page.locator(WORKSPACE_PROFILE_XPATH);
+    public static void verifyWorkspaceSelectionInMenu(Page page, String workspaceName, String menuName) {
+        Locator button = page.getByLabel(menuName);
+         if (button.isEnabled()) {
+             button.click();
+         }
+        Locator workspaceProfile = page.locator(WORKSPACE_PROFILE_XPATH.replace("{workspaceName}", workspaceName));
         AICorePageUtils.waitFor(workspaceProfile);
-        String workspaceProfileName = workspaceProfile.textContent();
-        if (!workspaceProfileName.equals(workspaceName)) {
-            throw new AssertionError("did not select the correct workspace. Expected workspace: " + workspaceName + ", but found: " + workspaceProfileName);
+        if (!workspaceProfile.isVisible()) {
+            throw new AssertionError("did not select the correct workspace. Expected workspace: " + workspaceName + ", but workspace profile is not visible.");
         }
     }
 

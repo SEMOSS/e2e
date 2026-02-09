@@ -73,9 +73,9 @@ public class PlaygroundSteps {
     public void user_Selects_the_as_new_chat_from_the_workspace_list(String workspaceName) {
         playgroundPage.selectWorkspaceChatFromList(workspaceName);
     }
-    @When("User verifies that {string} workspace is selected in the workspace chat")
-    public void user_verifies_that_workspace_is_selected_in_the_workspace_chat(String workspaceName) {
-        playgroundPage.verifyWorkspaceSelection(workspaceName);
+    @When("User verifies that {string} workspace is selected in the workspace {string} menu")
+    public void user_verifies_that_workspace_is_selected_in_the_workspace_menu(String workspaceName, String menuName) {
+        playgroundPage.verifyWorkspaceSelectionInMenu(workspaceName, menuName);
     }
 
     @Then("User verifies that {string} workspace is selected in the workspace list")

@@ -44,8 +44,8 @@ public class PlaygroundPage {
     public void selectWorkspaceChatFromList(String workspaceName) {
         PlaygroundPageUtils.selectWorkspaceChatFromList(page, workspaceName);
     }
-    public void verifyWorkspaceSelection(String workspaceName) {
-        PlaygroundPageUtils.verifyWorkspaceSelection(page, workspaceName);
+    public void verifyWorkspaceSelectionInMenu(String workspaceName, String menuName) {
+        PlaygroundPageUtils.verifyWorkspaceSelectionInMenu(page, workspaceName, menuName);
     }
 
     public void verifyWorkspaceSelectedInList(String workspaceName) {
