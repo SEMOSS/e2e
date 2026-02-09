@@ -229,7 +229,7 @@ Feature: Documentation for Accordion Block Settings
   And User clicks on Get Started button in "Drag and Drop"
   And User enters app name as 'DND Text Test App'
   And User clicks on Create button
-  And User fetch the app name for drag and drop app
+  And User fetch the app name
   And User clicks on Blocks if it is not selected by default
   And User closes the Block Settings button
   And User drags the 'Markdown' block and drops it on the page

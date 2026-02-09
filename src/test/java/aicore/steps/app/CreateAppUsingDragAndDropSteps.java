@@ -110,6 +110,24 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
+	@And("User add {string} app with details {string} {string} {string} {string}")
+	public void user_add_app_with_details(String count, String appType, String appName,
+			String appDescription, String tag) {
+		int appCount = Integer.parseInt(count);
+		for (int i = 0; i < appCount; i++) {
+			appCreatePopup.enterAppName(appName+i);
+			appCreatePopup.enterAppDescription(appDescription);
+			appCreatePopup.enterTags(tag);
+			appCreatePopup.clickOnCreateButton();
+			if (i < appCount - 1) {
+				homePage.openMainMenu();
+				homePage.clickOnOpenAppLibrary();
+				appPage.clickOnCreateNewAppButton();
+				appCreatePopup.clickOnGetStartedButton(appType);
+			}
+		}
+	}
+
 	@And("User clicks on Create button")
 	public void user_clicks_on_create_button() {
 		appCreatePopup.clickOnCreateButton();

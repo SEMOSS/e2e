@@ -44,8 +44,8 @@ public class PlaygroundPage {
     public void selectWorkspaceChatFromList(String workspaceName) {
         PlaygroundPageUtils.selectWorkspaceChatFromList(page, workspaceName);
     }
-    public void verifyWorkspaceSelection(String workspaceName) {
-        PlaygroundPageUtils.verifyWorkspaceSelection(page, workspaceName);
+    public void verifyWorkspaceSelectionInMenu(String workspaceName, String menuName) {
+        PlaygroundPageUtils.verifyWorkspaceSelectionInMenu(page, workspaceName, menuName);
     }
 
     public void verifyWorkspaceSelectedInList(String workspaceName) {
@@ -91,8 +91,8 @@ public class PlaygroundPage {
     public void clickOnOpenConfigurationMenuButton(String buttonName) {
         PlaygroundPageUtils.clickOnOpenConfigurationMenuButton(page, buttonName);
     }
-    public void clickOnMCPDropdown() {
-        PlaygroundPageUtils.clickOnMCPDropdown(page);
+    public void clickOnToolboxDropdown() {
+        PlaygroundPageUtils.clickOnToolboxDropdown(page);
     }
     public void clickOnKnowledgeDropdown() {
         PlaygroundPageUtils.clickOnKnowledgeDropdown(page);
@@ -130,6 +130,10 @@ public class PlaygroundPage {
     }
     public void deleteAddedMCPModelMCPSection(String modelName) {
         PlaygroundPageUtils.deleteAddedMCPModelMCPSection(page, modelName);
+    }
+
+    public void verifyMCPRemovedToolboxSection(String MCPName) {
+        PlaygroundPageUtils.verifyMCPRemovedToolboxSection(page, MCPName);
     }
 
     public void verifyKnowledgeRemovedKnowledgeSection(String knowledgeName) {
