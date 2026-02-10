@@ -1,0 +1,63 @@
+name: Run Docker Compose and playground Tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'  # This runs at 5 AM ET during Daylight Saving Time (9 AM UTC)
+ 
+jobs:
+  test:
+    #runs-on: ubuntu-latest
+    runs-on: CICD-GitHubRunner-e2e
+    # container:
+    #   image: quay.io/semoss/test-quay:ubuntu-dind
+    
+    steps:
+    
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set environment variables
+      run: echo "UID=$(id -u)" >> $GITHUB_ENV && echo "GID=$(id -g)" >> $GITHUB_ENV
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Build and run Docker Compose
+      run: |
+        docker compose -f docker-playground.yaml up --remove-orphans --build --exit-code-from semoss
+      env:
+        COMPOSE_DOCKER_CLI_BUILD: 1
+        DOCKER_BUILDKIT: 1
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: cucumber-report.html
+        path: target/cucumber-report.html # Adjust this path to where your test results are stored
+
+#    - name: Upload Test Results
+#      if: always()
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: testFailureVideos
+#        path: videos/
+#        retention-days: 1
+#
+#    - name: Upload Documentation Images
+#      if: always()
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: documentation-images
+#        path: Version0.0.1-SNAPSHOT/
+#        retention-days: 2
+
+    # - name: Clean workspace
+    #   if: always()
+    #   run: |
+    #     /usr/bin/chown -R ubuntu:ubuntu $GITHUB_WORKSPACE
+    #     find $GITHUB_WORKSPACE -mindepth 1 -delete

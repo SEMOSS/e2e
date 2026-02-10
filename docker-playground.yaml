@@ -14,9 +14,7 @@ services:
       SEMOSS_BRANCH: dev
       MONOLITH_BRANCH: dev
       UI_BRANCH: dev
-      TEST_SUITE: FullSuite
-
-
+      TEST_SUITE: PlaygroundSuite
     user: "${UID}:${GID}"  # Run the container as the current user
     volumes:
       - .:/workspace
