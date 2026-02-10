@@ -1,11 +1,12 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
@@ -188,7 +189,8 @@ public class AddModelSteps {
 	}
 
 	@And("User should see the Max Tokens value displayed as {string} in Model information section by default")
-	public void user_Should_See_The_Max_Tokens_Value_Displayed_As_In_Model_Information_Section_By_Default(String maxTokens) {
+	public void user_Should_See_The_Max_Tokens_Value_Displayed_As_In_Model_Information_Section_By_Default(
+			String maxTokens) {
 		openModelPage.verifyMaxTokensValue(maxTokens);
 	}
 
@@ -310,7 +312,7 @@ public class AddModelSteps {
 	public void user_can_see_a_edit_success_toast_message_as(String expectedToastMessage) {
 		String actualToastMessage = viewCatalogPage.verifyEditSuccessfullToastMessage();
 		Assertions.assertEquals(actualToastMessage, expectedToastMessage);
-		viewCatalogPage.waitForEditSuccessToastMessageToDisappear();
+		// viewCatalogPage.waitForEditSuccessToastMessageToDisappear();
 	}
 
 	@And("User should see description as {string} on the page")
@@ -401,14 +403,14 @@ public class AddModelSteps {
 	public void user_can_see_updated_value_in_field_as(String field, String newValue) {
 		String fullText = null;
 		switch (field) {
-			case "VAR_NAME":
-				fullText = openModelPage.verifyVarNameInSMSS();
-				break;
-			case "KEEP_CONVERSATION_HISTORY":
-				fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
-				break;
-			default:
-				System.out.println("Invalid field name " + field);
+		case "VAR_NAME":
+			fullText = openModelPage.verifyVarNameInSMSS();
+			break;
+		case "KEEP_CONVERSATION_HISTORY":
+			fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
+			break;
+		default:
+			System.out.println("Invalid field name " + field);
 		}
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
 		assertEquals(actualVarName, newValue);
@@ -527,20 +529,17 @@ public class AddModelSteps {
 			}
 			// Field-specific validation logic
 			switch (fieldName) {
-				// case "ENDPOINT":
-				// Assertions.assertEquals(expectedValue, fullText, "Field validation failed for
-				// '" + fieldName + "'");
-				// break;
-				case "INIT_MODEL_ENGINE":
-					Assertions.assertTrue(actualValue.contains(expectedValue),
-							"Field validation failed for '" + fieldName
-									+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue
-									+ ">");
-					break;
-				default:
-					Assertions.assertEquals(expectedValue, actualValue,
-							"Field validation failed for '" + fieldName + "'");
-					break;
+			// case "ENDPOINT":
+			// Assertions.assertEquals(expectedValue, fullText, "Field validation failed for
+			// '" + fieldName + "'");
+			// break;
+			case "INIT_MODEL_ENGINE":
+				Assertions.assertTrue(actualValue.contains(expectedValue), "Field validation failed for '" + fieldName
+						+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue + ">");
+				break;
+			default:
+				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
+				break;
 			}
 		}
 	}

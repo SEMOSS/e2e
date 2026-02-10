@@ -45,12 +45,12 @@ public class AddDatabasePageUtils {
 	private static final String JDBC_URL_XPATH = "//input[@data-testid='database-form-input-CONNECTION_URL']";
 	private static final String USER_NAME_XPATH = "//input[@data-testid='database-form-input-USERNAME']";
 	private static final String APPLY_BUTTON_XPATH = "model-upload-submit-button";
-	private static final String APPLY_DATABASE_BUTTON_XPATH = "//button[text()='Apply']";
+	private static final String APPLY_DATABASE_BUTTON_XPATH = "//button[text()='Sync']";
 	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//button[text()='Import']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
-	private static final String COPY_ID_XPATH = "//span[text()='{message}']";
-	private static final String SELECT_ALL_DATABASE_XPATH = "//label[text()='(Select searched items)']";
+	private static final String COPY_ID_XPATH = "//div[text()='{message}']";
+	private static final String SELECT_ALL_DATABASE_DATATESTID = "sync-changes-table-{dbName}";
 	private static final String MANDATORY_FIELD_XPATH = "//div//label[text()='{fieldName}']//span";
 	private static final String FORM_SECTION_XPATH = "//h4[text()='{sectionName}']";
 	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-advanced-settings-toggle'])[1]";
@@ -352,13 +352,13 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnRefreshButton(Page page) {
-		page.getByText("Refresh Data").isVisible();
-		page.getByText("Refresh Data").click();
+		page.getByTestId("engineMetadata-refresh-btn").isVisible();
+		page.getByTestId("engineMetadata-refresh-btn").click();
 	}
 
 	public static void selectDatabaseFromDropdown(Page page, String dbName) {
-		page.locator(SELECT_ALL_DATABASE_XPATH).isVisible();
-		page.locator(SELECT_ALL_DATABASE_XPATH).click();
+		page.getByTestId(SELECT_ALL_DATABASE_DATATESTID.replace("{dbName}", dbName)).isVisible();
+		page.getByTestId(SELECT_ALL_DATABASE_DATATESTID.replace("{dbName}", dbName)).click();
 	}
 
 	public static void clickOnQueryTab(Page page) {
@@ -442,13 +442,14 @@ public class AddDatabasePageUtils {
 	}
 
 	public static boolean isSaveButtonDisabled(Page page) {
-		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		Locator saveButton = page.getByTestId("engineMetadata-save-btn");
 		AICorePageUtils.waitFor(saveButton);
 		return saveButton.isDisabled();
 	}
 
 	public static void clickOnSaveButtonOfMetadataTab(Page page) {
-		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		Locator saveButton = page.getByTestId("engineMetadata-save-btn");
+		saveButton.isEnabled();
 		AICorePageUtils.waitFor(saveButton);
 		saveButton.click(new Locator.ClickOptions().setForce(true));
 	}
