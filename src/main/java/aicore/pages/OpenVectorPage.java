@@ -11,7 +11,7 @@ import aicore.utils.CommonUtils;
 public class OpenVectorPage extends AbstractAddCatalogPageBase {
 
 	private String timestamp;
-	private static final String ADD_VECTOR_BUTTON_XPATH = "//button/span[text()='Add ']";
+	private static final String ADD_VECTOR_BUTTON_XPATH = "//button[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
 	private static final String CATALOG_NAME_TEXTBOX_ID = "//*[@data-testid='vector-form-input-NAME']//input";
 	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
@@ -40,7 +40,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
 	private static final String COPIED_TOAST_DATA_TESTID = "notification-success-message";
 	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
-	private static final String VECTOR_TAGS_XPATH = "//h6[text()='Tag']/../../..//div//div//span[text()='{tagName}']";
+	private static final String VECTOR_TAGS_XPATH = "vector-form-input-TAGS";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
 	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
 	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[text()='Discoverable Vectors']";
@@ -64,9 +64,11 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void enterVectorTag(String vTag) {
-		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH);
+		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH).locator("input");
 		tagInput.fill(vTag);
+		tagInput.press("Enter");
 	}
+
 	public void selectModelfromEmbedderDropdown(String modelName) {
 		page.click(EMBEDDER_DROPDOWN_XPATH);
 		page.locator(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName)).click();

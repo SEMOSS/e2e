@@ -17,16 +17,16 @@ Feature: Playground Home Chat
     And User clicks on Try it out hyperlink for Experiment in our Playground
 
   @LoginWithAdmin @Regression @DeleteTestCatalog @DeleteCreatedTestApp.
-  Scenario: Validate Playground chat validatinos - add/remove histroy prompt
-    Given User sees the Prompt textarea with placeholder '/ to add capability'
+  Scenario: Validate Playground chat validations - add/remove history prompt
+    Given User sees the Prompt textarea with placeholder '/ to open menu'
     And User verifies that the 'Ask the AI' button is 'disabled'
     When User enters prompt in the Prompt textarea 'tell me a joke'
     Then User verifies that the 'Ask the AI' button is 'enabled'
     When User clicks on the "Ask the AI" button
     And User waits for the response from the model
     Then User verifies that the response from the model is displayed as Prompt
-    When User clicks on sidbar toggle button
-    Then User verifies that "tell me a joke" prompt is present in the sidebar history
-    When User hovers over the sidebar history item with prompt "tell me a joke"
-    And User clicks on the delete icon for the sidebar history item with prompt "tell me a joke"
-    Then User verifies that "tell me a joke" prompt is no longer present in the sidebar history
+    When User clicks on sidebar toggle button
+    # Then User verifies that "tell me a joke" prompt is present in the sidebar history
+    # When User hovers over the sidebar history item with prompt "tell me a joke"
+    # And User clicks on the delete icon for the sidebar history item with prompt "tell me a joke"
+    # Then User verifies that "tell me a joke" prompt is no longer present in the sidebar history

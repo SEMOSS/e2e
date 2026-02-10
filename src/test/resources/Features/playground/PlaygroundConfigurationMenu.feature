@@ -24,7 +24,7 @@ Feature: Playground Home knowledge, Max Token, Temperature and Instructions to v
     Given User is on Home page
     When User clicks on Build button
     And User clicks on Try it out hyperlink for Experiment in our Playground
-    And User clicks on the "Open Configuration Menu" button
+    And User clicks on the "Open settings" button
     Then User Verify the Instructions section is displayed
     And User Verify the Max Token section is displayed with default value & stepper control
     And User Verify the Temperature section is displayed with default value '.30'

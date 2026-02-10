@@ -73,9 +73,9 @@ public class PlaygroundSteps {
     public void user_Selects_the_as_new_chat_from_the_workspace_list(String workspaceName) {
         playgroundPage.selectWorkspaceChatFromList(workspaceName);
     }
-    @When("User verifies that {string} workspace is selected in the workspace chat")
-    public void user_verifies_that_workspace_is_selected_in_the_workspace_chat(String workspaceName) {
-        playgroundPage.verifyWorkspaceSelection(workspaceName);
+    @When("User verifies that {string} workspace is selected in the workspace {string} menu")
+    public void user_verifies_that_workspace_is_selected_in_the_workspace_menu(String workspaceName, String menuName) {
+        playgroundPage.verifyWorkspaceSelectionInMenu(workspaceName, menuName);
     }
 
     @Then("User verifies that {string} workspace is selected in the workspace list")
@@ -148,17 +148,18 @@ public class PlaygroundSteps {
         playgroundPage.verifyModelResponseDisplayed();
     }
 
-    @When("User clicks on the MCP dropdown")
-    public void user_Clicks_On_The_MCP_Dropdown() {
-        playgroundPage.clickOnMCPDropdown();
+    @When("User clicks on the Toolbox dropdown")
+    public void user_Clicks_On_The_Toolbox_Dropdown() {
+        playgroundPage.clickOnToolboxDropdown();
     }
+
     @When("User clicks on the Knowledge dropdown")
     public void user_Clicks_On_The_Knowledge_Dropdown() {
         playgroundPage.clickOnKnowledgeDropdown();
     }
 
-    @And("User should see and select the {string} in the MCP availale tools")
-    public void user_Should_See_And_Select_The_In_The_MCP_Availale_Tools(String appName) {
+    @And("User should see and select the {string} in the Toolbox available tools")
+    public void user_Should_See_And_Select_The_In_The_Toolbox_Available_Tools(String appName) {
         playgroundPage.clickOverifyMCPAppVisibleInAvailableTools(appName);
     }
 
@@ -177,13 +178,13 @@ public class PlaygroundSteps {
         playgroundPage.saveAddedKnowledgeList();
     }
 
-    @When("User saves the added MCP list")
-    public void user_Saves_The_Added_MCP_List() {
+    @When("User saves the added Toolbox list")
+    public void user_Saves_The_Added_Toolbox_List() {
         playgroundPage.saveAddedMCPList();
     }
 
-    @Then("User verify the added {string} is displayed in MCP section")
-    public void user_Verify_The_Added_Is_Displayed_In_MCP_Section(String appName) {
+    @Then("User verify the added {string} is displayed in Toolbox section")
+    public void user_Verify_The_Added_Is_Displayed_In_Toolbox_Section(String appName) {
         playgroundPage.verifyAddedMCPModelMCPSection(appName);
     }
 
@@ -196,9 +197,14 @@ public class PlaygroundSteps {
     public void user_Deletes_The_Added_From_Knowledge_Section(String knowledgeName) {
         playgroundPage.deleteAddedKnowledgeModelKnowledgeSection(knowledgeName);
     }
-    @When("User deletes the added {string} from MCP section")
-    public void user_Deletes_The_Added_From_MCP_Section(String appName) {
+    @When("User deletes the added {string} from Toolbox section")
+    public void user_Deletes_The_Added_From_Toolbox_Section(String appName) {
         playgroundPage.deleteAddedMCPModelMCPSection(appName);
+    }
+
+    @Then("User verify the {string} is removed from Toolbox section")
+    public void user_Verify_The_Is_Removed_From_Toolbox_Section(String appName) {
+        playgroundPage.verifyMCPRemovedToolboxSection(appName);
     }
 
     @Then("User verify the {string} is removed from Knowledge section")
@@ -210,8 +216,8 @@ public class PlaygroundSteps {
         playgroundPage.verifyMCPModelRemovedMCPSection(appName);
     }
 
-    @When("User search for {string} in the MCP available tools & selects it")
-    public void user_search_for_app_in_mcp_and_select(String appName) {
+    @When("User search for {string} in the Toolbox available tools & selects it")
+    public void user_search_for_app_in_toolbox_and_select(String appName) {
         playgroundPage.searchAndSelectMCPModel(appName);
     }
 
@@ -278,7 +284,7 @@ public class PlaygroundSteps {
         }
     }
 
-    @When("User clicks on sidbar toggle button")
+    @When("User clicks on sidebar toggle button")
     public void user_Clicks_On_Sidebar_Toggle_Button() {
         playgroundPage.clickOnSidebarToggleButton();
     }
