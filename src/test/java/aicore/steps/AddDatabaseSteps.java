@@ -396,4 +396,13 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		addDatabaseToCatalogPage.clickOnSaveButton();
 	}
 
+	@And("User clicks on Reset button for database")
+	public void user_clicks_on_reset_button_for_database() {
+		addDatabaseToCatalogPage.clickOnResetButton();
+	}
+
+	@And("User clicks on Run Query button")
+	public void user_clicks_on_run_query_button() {
+		addDatabaseToCatalogPage.clickOnRunQueryButton();
+	}
 }

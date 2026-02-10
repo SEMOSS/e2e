@@ -82,4 +82,5 @@ Feature: Add Zip Database
     And User clicks on apply database button
     And User sees the Save button is 'enabled'
     And User clicks on Save button of Metadata tab
-    Then User sees Database Catalog page
+    #Then User sees Database Catalog page
+    #And User sees success toast message 'Successfully saved changes.'

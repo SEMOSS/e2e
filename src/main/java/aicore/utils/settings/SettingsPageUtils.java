@@ -24,7 +24,7 @@ public class SettingsPageUtils {
 	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
 	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
 	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
-	private static final String TAB_XPATH = "//button[text()='{tabName}'] |//p[text()='{tabName}']";
+	private static final String TAB_XPATH = "//button[normalize-space()='Discoverable Databases']";
 
 	public static boolean checkAdminButton(Page page) {
 		return page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible();
