@@ -37,10 +37,10 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String VECTOR_CARD_XPATH = "//p[text()='{catalogName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
 	private static final String VECTOR_ID = "//*[@data-testid=\"ContentCopyOutlinedIcon\"]/../..";
-	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
-	private static final String COPIED_TOAST_DATA_TESTID = "notification-success-message";
+	private static final String COPY_VECTOR_ID = "engineHeader-copy-Vector-id-btn";
+	private static final String COPIED_TOAST_DATA_XPATH = "//div[text()='ID copied to clipboard']";
 	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
-	private static final String VECTOR_TAGS_XPATH = "vector-form-input-TAGS";
+	private static final String VECTOR_TAGS_XPATH = "//span[text()='{tagName}']";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
 	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
 	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[text()='Discoverable Vectors']";
@@ -117,7 +117,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void verifyVectorTitle(String vectorTitle) {
-		Locator vector = page.locator("h4:has-text('" + vectorTitle + "')");
+		Locator vector = page.getByTestId("Title");// page.locator("h4:has-text('" + vectorTitle + "')");
 		vector.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!vector.isVisible()) {
 			throw new AssertionError("Vector title '" + vectorTitle + "' is not visible on the page.");
@@ -182,9 +182,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public String copiedSuccessToastMessage() {
-		page.getByTestId(COPIED_TOAST_DATA_TESTID)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.getByTestId(COPIED_TOAST_DATA_TESTID).textContent();
+		page.locator(COPIED_TOAST_DATA_XPATH);
+		String toastMessage = page.locator(COPIED_TOAST_DATA_XPATH).textContent();
 		return toastMessage;
 	}
 
@@ -203,8 +202,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void verifyCurrentUrlContainsVectorId() {
-		page.locator(VECTOR_ID).isVisible();
-		String vectorIdText = page.locator(VECTOR_ID).textContent().trim();
+		page.getByTestId(COPY_VECTOR_ID).isVisible();
+		String vectorIdText = page.getByTestId(COPY_VECTOR_ID).textContent().trim();
 		String currentUrl = page.url();
 		if (!currentUrl.contains(vectorIdText)) {
 			throw new AssertionError("Vector ID is not present or wrong in Vector catalog: " + vectorIdText);
@@ -212,8 +211,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void verifyVectorTags(String tagName) {
-		page.locator(VECTOR_TAGS_XPATH.replace("{tagName}", tagName)).isVisible();
-		if (!page.locator((VECTOR_TAGS_XPATH.replace("{tagName}", tagName))).isVisible()) {
+		page.locator(VECTOR_TAGS_XPATH.replace("{tagName}", tagName)).first().isVisible();
+		if (!page.locator((VECTOR_TAGS_XPATH.replace("{tagName}", tagName))).first().isVisible()) {
 			throw new AssertionError("Tag " + tagName + " is not visible on the Vector page.");
 		}
 	}
