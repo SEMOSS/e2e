@@ -13,9 +13,9 @@ public class VerifyVectorDatabasePageUtils {
 
 	private static final String VECTOR_CONNECTIONS_TESTID = "importPageContent-connect-to-{vectorDB}-img";
 	private static final String FORM_SECTION_XPATH = "//h6[text()='{sectionName}']";
-	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='vector-form-advanced-toggle'])";
+	private static final String ADVANCED_SECTION_XPATH = "//button[@data-testid='vector-form-advanced-toggle']";
 	private static final String SECTION_FIELD_XPATH = "//h6[normalize-space()='{sectionName}']/ancestor::div//label[text()='{fieldName}']";
-	private static final String MANDATORY_FIELD_XPATH = "//div//h6[text()='{fieldName}']";
+	private static final String MANDATORY_FIELD_XPATH = "//legend//span[text()='{fieldName}']";
 
 	public static void selectVectorDatabaseFromConnectionTypes(Page page, String dbType) {
 		String dbTypeFormatted = dbType.replace(" ", "-");
@@ -28,25 +28,25 @@ public class VerifyVectorDatabasePageUtils {
 
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
 		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
-		if (sectionName.toLowerCase().equals("advanced settings")) {
-			if (fieldName.toLowerCase().equals("not available")) {
+		if (sectionName.equalsIgnoreCase("advanced settings")) {
+			if (fieldName.equalsIgnoreCase("not available")) {
 				return true;
 			}
-			Locator dropdownLocator = page.locator(ADVANCED_SECTION_XPATH);
+			Locator dropdownLocator = page.locator("//button[@data-testid='vector-form-advanced-toggle']");
 			AICorePageUtils.waitFor(dropdownLocator);
-			String attributeVal = dropdownLocator.getAttribute("data-testid");
 			dropdownLocator.scrollIntoViewIfNeeded();
-			if (!sectionLocator.isVisible()) {
+			if (!dropdownLocator.isVisible()) {
 				throw new Error("Advanced Settings dropdown is not visible.");
 			}
-			if (attributeVal.equals("ExpandMoreIcon")) {
-
+			Locator iconLocator = dropdownLocator.locator("svg");
+			String iconState = iconLocator.getAttribute("data-testid");
+			if ("ExpandMoreIcon".equals(iconState)) {
 				dropdownLocator.click();
 			}
-
 		}
 		Locator fieldLocator = page
 				.locator(SECTION_FIELD_XPATH.replace("{sectionName}", sectionName).replace("{fieldName}", fieldName));
+
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
 	}
