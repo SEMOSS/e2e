@@ -15,7 +15,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
 	private static final String DATABASE_OPTIONS_ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h1[text()='{CatalogName}']";
-	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='SearchOutlinedIcon']";
+	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='search-box']";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div//span";
@@ -23,7 +23,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
 	private static final String TAG_TEXTBOX = "Tag";
-	private static final String SUBMIT_BUTTON_XPATH = "editEngineDetails-submit-btn";
+	private static final String SUBMIT_BUTTON_DATATESTID = "editEngineDetails-submit-btn";
 	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "//div[text()='Successfully set the new metadata values for the engine']";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
@@ -98,7 +98,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCatalogName(Page page, String catalogName) {
-		Locator locator = page.locator(CATALOG_NAME_XPATH);
+		Locator locator = page.locator(CATALOG_NAME_XPATH.replace("{CatalogName}", catalogName));
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
@@ -142,7 +142,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void clickOnSubmit(Page page) {
-		page.getByTestId(SUBMIT_BUTTON_XPATH).click();
+		page.getByTestId(SUBMIT_BUTTON_DATATESTID).click();
 	}
 
 	public static void clickOnClose(Page page) {

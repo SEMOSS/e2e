@@ -45,29 +45,31 @@ public class AddDatabasePageUtils {
 	private static final String JDBC_URL_XPATH = "//input[@data-testid='database-form-input-CONNECTION_URL']";
 	private static final String USER_NAME_XPATH = "//input[@data-testid='database-form-input-USERNAME']";
 	private static final String APPLY_BUTTON_XPATH = "model-upload-submit-button";
-	private static final String APPLY_DATABASE_BUTTON_XPATH = "//button[text()='Apply']";
+	private static final String APPLY_DATABASE_BUTTON_XPATH = "//button[text()='Sync']";
 	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//button[text()='Import']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
 	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
-	private static final String COPY_ID_XPATH = "//span[text()='{message}']";
-	private static final String SELECT_ALL_DATABASE_XPATH = "//label[text()='(Select searched items)']";
+	private static final String COPY_ID_XPATH = "//div[text()='{message}']";
+	private static final String SELECT_ALL_DATABASE_DATATESTID = "sync-changes-table-{dbName}";
 	private static final String MANDATORY_FIELD_XPATH = "//div//label[text()='{fieldName}']//span";
 	private static final String FORM_SECTION_XPATH = "//h4[text()='{sectionName}']";
 	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-advanced-settings-toggle'])[1]";
 	private static final String SECTION_FIELD_XPATH = "//h4[normalize-space()='{sectionName}']/ancestor::div//label[text()='{fieldName}']";
 	private static final String QUERY_TAB_DATA_TESTID = "engineLayout-Query-tab";
-	private static final String QUERY_ENTER_TEXTAREA_XPATH = ".monaco-editor .native-edit-context";
+	private static final String QUERY_ENTER_TEXTAREA_XPATH = ".view-line";
 	private static final String OUTPUT_TABLE = "//table";
-	private static final String COLLAPSE_COLUMNS_XPATH = "//table//tbody";
+	private static final String COLLAPSE_COLUMNS_XPATH = "//div[@class='bg-muted/5']";
 	private static final String COLLAPSE_COLUMNS_HEADER_XPATH = "//table//thead//tr[contains(@class,'closed')]";
-	private static final String DATA_COLUMNS_XPATH = "//table//tbody//tr";
+	private static final String DATA_COLUMNS_XPATH = "//div[@class='flex flex-1 items-center gap-2.5']";// "//table//tbody//tr";
 	private static final String DATA_COLUMNS_REFRESH_BUTTON_XPATH = "//button[@title='Refresh database structure']";
 	private static final String DATA_COLUMNS_REFRESHING_TILE_XPATH = "//p[contains(text(),'{text}')]";
 	private static final String EXPAND_TABLE_ARROW_XPATH = "//button[@title='{name}']";
-	private static final String BUTTON_XPATH = "//span[text()='{buttonName}']";
+	private static final String BUTTON_XPATH = "//button[text()='{buttonName}']";
 	private static final String DATABASE_CATALOG_HEADER_XPATH = "//p[normalize-space() ='Database Catalog']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "database-form-connect-button";
 	private static final String DATABASE_SAVE_BUTTON_DATA_TESTID = "engineMetadata-save-btn";
+	private static final String RESET_BUTTON_XPATH = "//button[text()='Reset']";
+	private static final String RUN_QUER_BUTTON_XPATH = "//span[text()='Run Query']";
 
 	public static void clickAddDatabaseButton(Page page) {
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
@@ -350,13 +352,13 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnRefreshButton(Page page) {
-		page.getByText("Refresh Data").isVisible();
-		page.getByText("Refresh Data").click();
+		page.getByTestId("engineMetadata-refresh-btn").isVisible();
+		page.getByTestId("engineMetadata-refresh-btn").click();
 	}
 
 	public static void selectDatabaseFromDropdown(Page page, String dbName) {
-		page.locator(SELECT_ALL_DATABASE_XPATH).isVisible();
-		page.locator(SELECT_ALL_DATABASE_XPATH).click();
+		page.getByTestId(SELECT_ALL_DATABASE_DATATESTID.replace("{dbName}", dbName)).isVisible();
+		page.getByTestId(SELECT_ALL_DATABASE_DATATESTID.replace("{dbName}", dbName)).click();
 	}
 
 	public static void clickOnQueryTab(Page page) {
@@ -377,7 +379,7 @@ public class AddDatabasePageUtils {
 
 	public static void verifyQueryFieldIsEmpty(Page page) {
 		Locator cell = page.locator(QUERY_ENTER_TEXTAREA_XPATH).first();
-		String queryText = cell.textContent();
+		String queryText = cell.innerText();
 		if (queryText != null && !queryText.trim().isEmpty()) {
 			throw new AssertionError("Query field is not empty.");
 		}
@@ -385,8 +387,8 @@ public class AddDatabasePageUtils {
 
 	public static boolean verifyAllColumnsAreCollapsed(Page page) {
 		Locator collapseColumns = page.locator(COLLAPSE_COLUMNS_XPATH);
-		Locator collapsedHeaders = page.locator(COLLAPSE_COLUMNS_HEADER_XPATH);
-		if (!collapseColumns.isVisible() && collapsedHeaders.count() > 0) {
+		// Locator collapsedHeaders = page.locator(COLLAPSE_COLUMNS_HEADER_XPATH);
+		if (!collapseColumns.isVisible()) {
 			return true;
 		} else {
 			throw new AssertionError("All data columns are not collapsed.");
@@ -428,7 +430,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static boolean verifyRefreshingTileForDataColumns(Page page, String text) {
-		Locator refreshingTile = page.locator(DATA_COLUMNS_REFRESHING_TILE_XPATH.replace("{text}", text));
+		Locator refreshingTile = page.locator(DATA_COLUMNS_REFRESHING_TILE_XPATH.replace("{text}", text)).first();
 		AICorePageUtils.waitFor(refreshingTile);
 		return refreshingTile.isVisible();
 	}
@@ -440,13 +442,14 @@ public class AddDatabasePageUtils {
 	}
 
 	public static boolean isSaveButtonDisabled(Page page) {
-		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		Locator saveButton = page.getByTestId("engineMetadata-save-btn");
 		AICorePageUtils.waitFor(saveButton);
 		return saveButton.isDisabled();
 	}
 
 	public static void clickOnSaveButtonOfMetadataTab(Page page) {
-		Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		Locator saveButton = page.getByTestId("engineMetadata-save-btn");
+		saveButton.isEnabled();
 		AICorePageUtils.waitFor(saveButton);
 		saveButton.click(new Locator.ClickOptions().setForce(true));
 	}
@@ -467,5 +470,15 @@ public class AddDatabasePageUtils {
 		Locator saveButton = page.getByTestId(DATABASE_SAVE_BUTTON_DATA_TESTID);
 		AICorePageUtils.waitFor(saveButton);
 		saveButton.click();
+	}
+
+	public static void clickOnResetButton(Page page) {
+		Locator resetBtn = page.locator(RESET_BUTTON_XPATH);
+		resetBtn.click();
+		page.waitForTimeout(200);
+	}
+
+	public static void clickOnRunQueryButton(Page page) {
+		page.locator(RUN_QUER_BUTTON_XPATH).click();
 	}
 }
