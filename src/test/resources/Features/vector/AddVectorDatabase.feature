@@ -138,6 +138,9 @@ Feature: Add Vector Database
     And User selects 'author' access
     And User types a comment as 'Access Request'
     And User clicks on Request button
+    And User logs out from the application
+    Then User login as "Author"
+    
 
     #Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     Examples: 

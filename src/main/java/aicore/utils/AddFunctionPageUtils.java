@@ -39,6 +39,7 @@ public class AddFunctionPageUtils {
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
 	private static final String SEARCHED_FUNCTION_DATATESTID = "genericEngineCards-DATABASE-{catalogName}";
+	private static final String SEARCHED_CATALOG_DATATESTID = "genericEngineCards-{catalogType}-{catalogName}";
 	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
 	private static final String SEARCH_BAR_DATATESTID = "search-bar";
@@ -287,10 +288,12 @@ public class AddFunctionPageUtils {
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
 		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
-		searchBar.fill(catalog);
-		Locator catalogLocator = page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName));
+		searchBar.fill(catalogName);
+		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID
+				.replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
 		if (catalogLocator.isVisible()) {
-			catalogLocator.click();
+			catalogLocator.first().waitFor();
+			catalogLocator.first().click();
 			clickOnAccessControl(page);
 			clickOnDeleteButton(page);
 			clickOnDeleteConfirmationButton(page);

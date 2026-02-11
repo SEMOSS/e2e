@@ -15,7 +15,7 @@ public class CatalogCreationFromZipUtil {
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[normalize-space()='{fileName}']";
+	private static final String ADD_FILE_NAME_XPATH = "//p[normalize-space()='{fileName}']";
 	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "//span[normalize-space()='Upload']";
 
