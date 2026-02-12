@@ -13,9 +13,9 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private String timestamp;
 	private static final String ADD_VECTOR_BUTTON_XPATH = "//button[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
-	private static final String CATALOG_NAME_TEXTBOX_ID = "//*[@data-testid='vector-form-input-NAME']//input";
-	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
-	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//li[text()='{modelName}']";
+	private static final String CATALOG_NAME_TEXTBOX_ID = "//*[@data-testid='vector-form-input-NAME']";
+	private static final String EMBEDDER_DROPDOWN_XPATH = "vector-form-input-EMBEDDER_ENGINE_ID";
+	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//span[text()='{modelName}']";
 	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
 	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{strategyName}']";
 	private static final String CONTENT_LENGTH_ID = "//*[@data-testid='vector-form-input-CONTENT_LENGTH']//input";
@@ -64,13 +64,13 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void enterVectorTag(String vTag) {
-		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH).locator("input");
+		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH);
 		tagInput.fill(vTag);
 		tagInput.press("Enter");
 	}
 
 	public void selectModelfromEmbedderDropdown(String modelName) {
-		page.click(EMBEDDER_DROPDOWN_XPATH);
+		page.getByTestId(EMBEDDER_DROPDOWN_XPATH).click();
 		page.locator(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName)).click();
 	}
 

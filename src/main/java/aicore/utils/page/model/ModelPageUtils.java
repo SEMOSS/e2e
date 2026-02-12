@@ -73,7 +73,7 @@ public class ModelPageUtils {
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String DELETE_BUTTON_XPATH = "settingsTiles-Model-delete-btn";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String CLICK_ON_CREATED_MODEL_XPATH = "//div[contains(@data-testid,'genericEngineCards')]";
 	private static final String INIT_SCRIPT_DATA_TESTID = "importForm-INIT_MODEL_ENGINE-textField";
@@ -556,7 +556,7 @@ public class ModelPageUtils {
 				page.waitForTimeout(500);
 				page.locator(CLICK_ON_CATALOG_XPATH).click();
 				page.locator(ACCESS_CONTROL_XPATH).click();
-				page.locator(DELETE_BUTTON_XPATH).click();
+				page.getByTestId(DELETE_BUTTON_XPATH).click();
 				page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 
 			} catch (Exception e) {
