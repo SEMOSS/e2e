@@ -95,6 +95,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_selects_from_embedder_field(String modelName) {
 		switch (modelName) {
 		case "TextEmbeddings BAAI-Large-En-V1.5":
+		case "Llama3-70B-Instruct":
 		case "Model":
 			vectorPage.selectModelfromEmbedderDropdown(modelName);
 			break;
@@ -143,8 +144,9 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Then("User can see vector database created success toast message as {string}")
 	public void User_can_see_vector_database_created_success_toast_message_as(String expectedToastMessage) {
-		String actualMessage = vectorPage.verifyToastMessage();
-		Assertions.assertEquals(expectedToastMessage, actualMessage, "catalog is not created successfully");
+		boolean toasterMessage = vectorPage.verifyToastMessage(expectedToastMessage);
+		Assertions.assertTrue(toasterMessage,
+				"Toaster Message is not visible or not matching expected message: " + expectedToastMessage);
 	}
 
 	@Then("User can see the Vector title as {string}")
@@ -222,8 +224,11 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Then("User sees deleted Vector success toast message {string}")
 	public void user_sees_deleted_Vector_success_toast_message(String toastMessage) {
-		String actualMessage = vectorPage.verifyToastMessage();
-		Assertions.assertEquals(toastMessage, actualMessage, "catalog is deleted successfully");
+		boolean actualMessage = vectorPage.verifyToastMessage(toastMessage);
+		Assertions.assertTrue(actualMessage,
+				"Catalog is not deleted because Toaster Message is not visible or not matching expected message: "
+						+ toastMessage);
+
 	}
 
 	@And("User clicks on Usage tab for Vector DB")
@@ -382,5 +387,53 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	public void user_should_see_the_button_in_enable() {
 		boolean buttonEnabled = vectorPage.verifyButtonIsEnabled();
 		Assertions.assertTrue(buttonEnabled, "Generate Answer button is not enabled under Q&A Tab for vector.");
+	}
+
+	@And("User clicks on the Q&A tab")
+	public void user_clicks_on_the_q_a_tab() {
+		vectorPage.clickOnQandATab();
+	}
+
+	@And("User clicks on Select Model dropdown")
+	public void user_clicks_on_select_model_dropdown() {
+		vectorPage.clickOnSelectModelDropdown();
+	}
+
+	@And("User selects a model {string}")
+	public void user_selects_a_model(String modelName) {
+		vectorPage.selectModelFromDropdown(modelName);
+	}
+
+	@And("Selected model should be shown in dropdown {string}")
+	public void selected_model_should_be_shown_in_dropdown(String modelName) {
+		boolean isModelSelected = vectorPage.verifySelectedModelInDropdown(modelName);
+		Assertions.assertTrue(isModelSelected, "Selected model is not shown in Select Model dropdown.");
+	}
+
+	@And("User adjusts {string} slider to {string}")
+	public void user_adjusts_slider_to(String sliderName, String value) {
+		vectorPage.adjustSlider(sliderName, value);
+	}
+
+	@And("The value should be updated as {string} for {string}")
+	public void the_value_should_be_updated_as(String value, String sliderName) {
+		String actualValue = vectorPage.getCurrentSliderValue(value, sliderName);
+		Assertions.assertEquals(value, actualValue, "Slider value is not updated as expected.");
+	}
+
+	@And("User enters a question {string} in the question input textbox")
+	public void user_enters_a_question_in_the_question_input_textbox(String question) {
+		vectorPage.enterQuestionInInputBox(question);
+	}
+
+	@And("User clicks on Generate Answer button")
+	public void user_clicks_on_generate_answer_button() {
+		vectorPage.clickOnGenerateAnswerButton();
+	}
+
+	@And("User sees the answer generated for the question")
+	public void user_sees_the_answer_generated_for_the_question() {
+		boolean isAnswerDisplayed = vectorPage.verifyAnswerIsDisplayed();
+		Assertions.assertTrue(isAnswerDisplayed, "Answer is not generated for the question.");
 	}
 }
