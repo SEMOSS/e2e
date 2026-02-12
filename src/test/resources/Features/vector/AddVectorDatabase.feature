@@ -12,7 +12,7 @@ Feature: Add Vector Database
     And User enters Catalog Name as 'Catalog'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
-    #Then User can see a toast message as 'Successfully added LLM to catalog'
+    ##Then User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
     When User clicks on Edit button
     And User add Tags 'embeddings' and presses Enter
@@ -32,7 +32,7 @@ Feature: Add Vector Database
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
     And User clicks on Copy Catalog ID
-    #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as '<catalog_name>'
     When User clicks on SMSS
     Then User can see vector catalog name in 'NAME' field as '<catalog_name>' in SMSS properties
@@ -62,7 +62,7 @@ Feature: Add Vector Database
     And User enters value of Content Overlap as '17'
     And User clicks on Create Vector button
     And User clicks on Copy Catalog ID
-    #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User can see the Vector title as 'FAISS Vector DB00'
     When User clicks on Usage tab for Vector DB
     Then User sees an example of "How to use in Javascript" with example code for Vector DB
@@ -83,7 +83,7 @@ Feature: Add Vector Database
     And User enters value of Content Length as '<content_length>'
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
-    #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User clicks on Copy Catalog ID
     And 'Admin' user clicks on Settings
     And User clicks on Add Member button
@@ -123,7 +123,7 @@ Feature: Add Vector Database
     And User enters value of Content Length as '<content_length>'
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
-    #Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
     And User clicks on Copy Catalog ID
     And 'Author' user clicks on Settings
     And User clicks on Add Member button
@@ -138,11 +138,10 @@ Feature: Add Vector Database
     And User selects 'author' access
     And User types a comment as 'Access Request'
     And User clicks on Request button
+    Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     And User logs out from the application
-    Then User login as "Author"
-    
+    Then User login as 'author'
 
-    #Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
     Examples: 
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
       | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |

@@ -46,7 +46,7 @@ Feature: View existing Vectors on Vector Catalog Page
     #Then User sees the catalog name 'FAISSVector' in the Bookmarked section
     #When User clicks on bookmark button to unbookmark 'FAISSVector' catalog
 
-  @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regression  @LoginWithAdmin
   Scenario: view and validate filter functionality - Discoverable Vectors
     Given User opens Main Menu
     When User clicks on Open Vector
