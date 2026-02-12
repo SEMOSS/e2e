@@ -24,6 +24,7 @@ public class AddDatabaseFileUploadUtils {
 	private static final String ADD_RELATIONSHIP_BUTTON_TESTID = "add-connection";
 	private static final String SAVE_RELATIONSHIP_BUTTON_TESTID = "save-connection";
 	private static final String FULL_SCREEN_CLOSE_BUTTON_XPATH = "//button[@aria-label='Close']";
+	private static final String CREATE_CONNECTION_XPATH = "//button[text()='Add']";
 
 	public static void selectTab(Page page, String tabName) {
 		page.getByTestId(TAB_SELECTION_TESTID.replace("{tabName}", tabName)).click();
@@ -137,5 +138,10 @@ public class AddDatabaseFileUploadUtils {
 	public static void verifyCancelBtn(Page page) {
 		page.getByTestId(CANCEL_BUTTON_TESTID).isVisible();
 		page.getByTestId(CANCEL_BUTTON_TESTID).isEnabled();
+	}
+
+	public static void verifyAddBtnForCreateConnection(Page page) {
+		page.locator(CREATE_CONNECTION_XPATH).isEnabled();
+		page.locator(CREATE_CONNECTION_XPATH).click();
 	}
 }

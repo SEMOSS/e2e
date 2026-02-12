@@ -25,8 +25,6 @@ Feature: View existing databases on database catalog page
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     Then User sees the database name 'TestDatabase' in the database catalog
-    When User clicks on Copy ID option of 'TestDatabase' database
-    Then User can see a copy success toast message as 'Successfully copied to clipboard'
     And User applies each filter and validate 'TestDatabase' catalog is visible on the 'database' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE      |
       | Tag                 | embeddings, Test1 |

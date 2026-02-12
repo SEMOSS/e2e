@@ -233,6 +233,7 @@ public class AddFunctionPageUtils {
 
 	public static String verifySuccessToastMessage(Page page, String toastMessage) {
 		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage));
+		alert.scrollIntoViewIfNeeded();
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 

@@ -83,6 +83,7 @@ Feature: Add TSV Database
     And User clicks on create relationship button and creates relationship between '<Parent_Table>' and '<Child_Table>' tables
     And User verifies save button is enabled
     And User verifies cancel button is enabled
+    #And User clicks on Add button for Create Connection
     And User clicks on Save button for database
     #And User sees success toast message '<Toast_Message>'
     And User can see the Catalog title as '<Database_Name>'
