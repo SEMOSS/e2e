@@ -243,4 +243,45 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	public void clickOnQnAButton() {
 		page.getByTestId("engineLayout-Q&A-tab").click();
 	}
+
+	private static final String Q_A_TAB_XPATH="//button[text()='Q&A']";
+	private static final String ADJUST_CONFIGURATIONS_PANEL_XPATH="//span[text()={panelName}]/parent::div[contains(@class,'flex items-center')]";
+	private static final String SELECT_MODEL_DROPDOWN_XPATH="//p[normalize-space()='Select Model:']/following::button[@data-slot='select-trigger']";
+	private static final String SLIDER_XPATH="//div[//p[normalize-space()={sliderName}]] /following-sibling::div//span[@data-slot='slider']";
+	private static final String HOVER_ON_ICON_XPATH="//div//p[normalize-space()={iconName}]/following::button[@data-slot='tooltip-trigger']";
+	
+	public boolean verifyQandATabIsDisplayed() {
+		return page.locator(Q_A_TAB_XPATH).isVisible();
+	}
+
+	public boolean verifyPanelIsVisible(String panelName) {
+		return page.locator(ADJUST_CONFIGURATIONS_PANEL_XPATH.replace("{panelName}", panelName)).isVisible();
+	}
+
+	public boolean verifyDropdownIsPresent(String dropdownName) {
+		return page.locator("SELECT_MODEL_DROPDOWN_XPATH").isVisible();
+	}
+
+	public boolean verifySliderIsVisible(String sliderName) {
+		return page.locator(SLIDER_XPATH.replace("{sliderName}", sliderName)).first().isVisible();
+	}
+
+	public boolean verifyTooltipOnHover(String optionName, String expectedTooltip) {
+		Locator hoverIcon = page.locator(HOVER_ON_ICON_XPATH.replace("{iconName}", "'" + optionName + "'"));
+		hoverIcon.hover();
+		String actualTooltip = page.locator("div[role='tooltip']").textContent().trim();
+		return actualTooltip.equals(expectedTooltip);
+	}
+	
+	public boolean verifyQandAHeaderIsDisplayed() {
+		return page.getByTestId("engineQa-titletestId").isVisible();
+	}
+
+	public boolean verifyQuestionInputBoxIsVisible() {
+		return page.getByTestId("engineQa-question-input").isVisible();
+	}
+
+	public boolean verifyButtonIsEnabled() {
+		return page.getByTestId("engineQa-generate-answer-btn").isEnabled();
+	}
 }

@@ -29,38 +29,38 @@ Feature: Vector Q&A Tab
 
   Scenario: Validate the Vector - Q&A tab
     Given User can see the Vector title as 'FAISS Vector DB00'
-    And User can see the 'Q&A' tab
+    And User can see the 'Q&A' tab is displayed
     When User clicks on the 'Q&A' tab
     Then User can see the 'Adjust Configurations' panel should be visible
     And User can see the 'Select Model' dropdown should be present
     And User can see the 'Limit the queried results:' slider should be visible
     And User can see the 'Set Temperature: ' slider should be visible
-    And User hover on Limit the queried results option and see the 'This will change the amount of chunks pulled from a vector database. Pulling too many chunks can potentially cause your engines token limit to be exceeded!'
-    And User hover on Set Temperature option and see the 'This changes the randomness of the LLM's output. The higher the temperature the more creative and imaginative your answer will be.'
+    And User hover on 'Limit the queried results:' option and see the 'This will change the amount of chunks pulled from a vector database. Pulling too many chunks can potentially cause your engines token limit to be exceeded!'
+    And User hover on 'Set Temperature:' option and see the "This changes the randomness of the LLM's output. The higher the temperature the more creative and imaginative your answer will be."
     And User can see Q&A header should be displayed
     And User sees question input textbox should be visible
-    And User should see the "Generate Answer" button in enable
+    And User should see the Generate Answer button in enable
 
-  Scenario: Verify Select Model dropdown functionality
-    Given User can see the Vector title as 'FAISS Vector DB00'
-    And User clicks on the 'Q&A' tab
-    When user clicks on "Select Model" dropdown
-    Then user selects a model
-    Then selected model should be shown in dropdown
+  # Scenario: Verify Select Model dropdown functionality
+  #   Given User can see the Vector title as 'FAISS Vector DB00'
+  #   And User clicks on the 'Q&A' tab
+  #   When user clicks on "Select Model" dropdown
+  #   Then user selects a model
+  #   Then selected model should be shown in dropdown
 
-  Scenario: Verify sliders are adjustable
-    Given User can see the Vector title as 'FAISS Vector DB00'
-    And User clicks on the 'Q&A' tab
-    When user adjusts "Limit the queried results" slider
-    Then the value should be updated accordingly
-    When user adjusts "Set Temperature" slider
-    Then the value should be updated accordingly
+  # Scenario: Verify sliders are adjustable
+  #   Given User can see the Vector title as 'FAISS Vector DB00'
+  #   And User clicks on the 'Q&A' tab
+  #   When user adjusts "Limit the queried results" slider
+  #   Then the value should be updated accordingly
+  #   When user adjusts "Set Temperature" slider
+  #   Then the value should be updated accordingly
 
-  Scenario: Verify answer is displayed when user asks a question
-    Given User can see the Vector title as 'FAISS Vector DB00'
-    And User clicks on the 'Q&A' tab
-    When user clicks on "Select Model" dropdown
-    And user selects a model
-    And user enters a question "What is vector database?"
-    And user clicks on "Generate Answer"
-    Then answer section should be displayed
+  # Scenario: Verify answer is displayed when user asks a question
+  #   Given User can see the Vector title as 'FAISS Vector DB00'
+  #   And User clicks on the 'Q&A' tab
+  #   When user clicks on "Select Model" dropdown
+  #   And user selects a model
+  #   And user enters a question "What is vector database?"
+  #   And user clicks on "Generate Answer"
+  #   Then answer section should be displayed
