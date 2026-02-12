@@ -15,8 +15,9 @@ public class CatalogCreationFromZipUtil {
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//p[normalize-space()='{fileName}']";
+	private static final String ADD_FILE_NAME_XPATH = "//span[normalize-space()='{fileName}']";
 	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
+	private static final String UPLOAD_FILE_BUTTON_XPATH = "//span[normalize-space()='Upload']";
 
 	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = null;
@@ -97,9 +98,7 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void clickOnUploadButton(Page page, String label) {
-		Locator buttonLocator = page.getByTestId("database-upload-submit-button");
-		// page.getByRole(AriaRole.BUTTON,
-		// new Page.GetByRoleOptions().setName(label).setExact(true));
+		Locator buttonLocator = page.locator(UPLOAD_FILE_BUTTON_XPATH);
 		buttonLocator.scrollIntoViewIfNeeded();
 		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		buttonLocator.click();
