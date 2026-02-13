@@ -19,7 +19,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//select//option[text()='{modelName}']";
 	private static final String CHUNKING_STRATEGY_DROPDOWN_DATATESTID = "vector-form-input-CHUNKING_STRATEGY";
 	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//option[text()='{strategyName}']";
-	private static final String CONTENT_LENGTH_ID = "//*[@data-testid='vector-form-input-CONTENT_LENGTH']//input";
+	private static final String CONTENT_LENGTH_ID = "//input[@data-testid='vector-form-input-CONTENT_LENGTH']";
 	private static final String CONTENT_OVERLAP_ID = "//input[@data-testid='vector-form-input-CONTENT_OVERLAP']";
 	private static final String HOST_NAME_ID = "//*[@data-testid='vector-form-input-HOSTNAME']//input";
 	private static final String API_KEY_ID = "//*[@data-testid='vector-form-input-API_KEY']//input";
@@ -93,9 +93,11 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(strategyName)).click();
 	}
 
-	public void enterContentLength(String contentLength) {
-		if (page.locator(CONTENT_LENGTH_ID).isVisible()) {
-			page.fill(CONTENT_LENGTH_ID, contentLength);
+	public void enterContentLength(String contentLengthValue) {
+		Locator contentLength = page.locator(CONTENT_LENGTH_ID);
+		if (contentLength.isVisible()) {
+			contentLength.fill("");
+			contentLength.fill(contentLengthValue);
 		}
 	}
 

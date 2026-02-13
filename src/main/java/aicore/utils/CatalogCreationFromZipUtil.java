@@ -17,7 +17,7 @@ public class CatalogCreationFromZipUtil {
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//p[normalize-space()='{fileName}']";
 	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
-	private static final String UPLOAD_FILE_BUTTON_XPATH = "//span[normalize-space()='Upload']";
+	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
 
 	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = null;
