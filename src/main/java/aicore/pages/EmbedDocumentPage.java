@@ -11,13 +11,15 @@ public class EmbedDocumentPage {
 
 	private static final String TOAST_MESSAGE_XPATH = "//div[text()='Successfully added document']";
 	private static final String FILES_XPATH = "//button[text()='Files']";
-	private static final String EMBED_DOCUMENT_BUTTON = "AddIcon";
-	private static final String EMBED_BUTTON = "//span[text()='Embed']";
+	private static final String EMBED_DOCUMENT_DATATESTID = "embed-new-document-btn";
+	private static final String EMBED_BUTTON = "//button[text()='Embed']";
 	private static final String FILE_NAME_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[2]";
 	private static final String DATE_UPLOADED_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[3]";
 	private static final String FILE_SIZE_XPATH = "//tr[contains(@class,'MuiTableRow-root')][1]//td[4]";
 	private static final String DELETE_BUTTON = "DeleteIcon";
-	private static final String CHANGE_ACCESS_XPATH = "//span[text()='Change Access']";
+	private static final String CHANGE_ACCESS_XPATH = "//button[text()='Change Access']";
+	private static final String REQUEST_ACCESS_BUTTON = "//button[text()='Request Access']";
+	private static final String CLICK_ON_DOCUMENT_DATATESTID = "engineLayout-Documents-tab";
 
 	public EmbedDocumentPage(Page page) {
 		this.page = page;
@@ -29,8 +31,8 @@ public class EmbedDocumentPage {
 	}
 
 	public void clickOnAddEmbedDocument() {
-		page.getByTestId(EMBED_DOCUMENT_BUTTON).isVisible();
-		page.getByTestId(EMBED_DOCUMENT_BUTTON).click();
+		page.getByTestId(EMBED_DOCUMENT_DATATESTID).isVisible();
+		page.getByTestId(EMBED_DOCUMENT_DATATESTID).click();
 	}
 
 	public void clickOnEmbedDocument() {
@@ -74,7 +76,11 @@ public class EmbedDocumentPage {
 	}
 
 	public void clickOnRequestAccessButton() {
-		page.getByTestId("AddIcon").click();
+		page.locator(REQUEST_ACCESS_BUTTON).click();
+	}
+
+	public void clickOnDocumentsTab() {
+		page.getByTestId(CLICK_ON_DOCUMENT_DATATESTID).click();
 	}
 
 }

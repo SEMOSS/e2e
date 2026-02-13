@@ -152,7 +152,7 @@ public class AddModelSteps {
 	public void user_can_a_see_toast_message_as(String toastMessage) {
 		String actualMessage = openModelPage.modelCreationToastMessage();
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
-		openModelPage.closeModelCreationToastMessage();
+		// openModelPage.closeModelCreationToastMessage();
 	}
 
 	@Then("User can see the Model title as {string}")
@@ -617,6 +617,16 @@ public class AddModelSteps {
 	@And("User click on Create {string} button")
 	public void user_click_on_create_button(String buttonName) {
 		openModelPage.clickOnCreateButton(buttonName);
+	}
+
+	@And("User select the zip icon option to upload file for {string}")
+	public void user_select_the_zip_icon_option_to_upload_file_for(String option) {
+		openModelPage.selectAddModelOption(option);
+	}
+
+	@And("User click on Upload button for {string}")
+	public void user_click_on_upload_button_for(String buttonName) {
+		openModelPage.clickOnUploadButton(buttonName);
 	}
 
 }

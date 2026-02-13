@@ -58,8 +58,8 @@ public class CommonUtils {
 	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
 
 	private static final String THREE_DOT_ICON_DATATESTID = "MoreVertIcon";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
 	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
@@ -308,13 +308,13 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			switch (catalogType) {
-				case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
-				case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
-				case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
-				case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
-				case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
-				case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
-				default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
+			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
+			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
 			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
 			page.waitForTimeout(500);
@@ -328,7 +328,7 @@ public class CommonUtils {
 			}
 			page.locator(DELETE_BUTTON_XPATH).click();
 			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
-			return page.locator(DELETE_TOAST_MESSAGE_XPATH).isVisible();
+			return page.locator(DELETE_TOAST_MESSAGE_XPATH).first().isVisible();
 		} catch (Exception e) {
 			logger.warn("Catalog deletion failed due to an exception", e);
 			return false;
