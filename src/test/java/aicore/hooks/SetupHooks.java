@@ -284,49 +284,85 @@ private static void performLoginBasedOnTags(Scenario scenario) {
 		}
 
 		context.close();
-		Path og = null;
-		if (GenericSetupUtils.useVideo()) {
-			og = page.video().path();
-		}
-
 		page.close();
 
 		if (GenericSetupUtils.useVideo()) {
             logger.info("saving video");
-            if (failed) {
-                String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
-                Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
-                Path newDir = Paths.get("videos", "features", feature);
-                if (!Files.exists(newDir)) {
-                    Files.createDirectories(newDir);
-                }
+            // Find the actual video file created by Playwright
+            Optional<Path> videoFile = findRecentVideoFile(Paths.get(System.getProperty("user.dir")));
+            
+            if (videoFile.isPresent()) {
+                Path sourceVideo = videoFile.get();
+                logger.info("Found video file: {}", sourceVideo);
+                
+                if (failed) {
+                    // Rename video for failed scenarios
+                    String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
+                    Path targetDir = Paths.get("videos", "features", feature);
+                    if (!Files.exists(targetDir)) {
+                        Files.createDirectories(targetDir);
+                    }
 
-                int i = 0;
-                while (Files.exists(newPath) && i < 30) {
-                    i++;
-                    newPath =  Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
-                    logger.info("File exists getting new path: {}", newPath);
-                    logger.info("loop: {}", i);
-                }
-                try {
-                    Files.move(og, newPath);
-                } catch (IOException e) {
-                    // Handle race condition in parallel execution - find next available slot
-                    int j = i + 1;
-                    while (j < 100) {
-                        Path fallbackPath = Paths.get("videos", "features", feature, scenarioNameSafe + j + ".webm");
+                    // Determine target path with collision avoidance
+                    Path newPath = Paths.get(targetDir.toString(), scenarioNameSafe + ".webm");
+                    int counter = 1;
+                    while (Files.exists(newPath) && counter < 1000) {
+                        newPath = Paths.get(targetDir.toString(), scenarioNameSafe + "_" + counter + ".webm");
+                        counter++;
+                    }
+
+                    try {
+                        Files.move(sourceVideo, newPath);
+                        logger.info("Video successfully renamed and moved to: {}", newPath);
+                    } catch (IOException moveEx) {
+                        logger.warn("Failed to move video from {} to {}: {}", sourceVideo, newPath, moveEx.getMessage());
+                        // If move fails, try to copy and delete as fallback
                         try {
-                            Files.move(og, fallbackPath);
-                            logger.info("Moved video to fallback path due to race condition: {}", fallbackPath);
-                            break;
-                        } catch (IOException ignore) {
-                            j++;
+                            Files.copy(sourceVideo, newPath);
+                            Files.deleteIfExists(sourceVideo);
+                            logger.info("Video copied to destination as fallback: {}", newPath);
+                        } catch (IOException copyEx) {
+                            logger.error("Failed to copy video as fallback: {}", copyEx.getMessage());
                         }
+                    }
+                } else {
+                    // Delete video for passed scenarios
+                    try {
+                        Files.deleteIfExists(sourceVideo);
+                        logger.info("Video deleted for passing scenario: {}", scenarioName);
+                    } catch (IOException delEx) {
+                        logger.warn("Failed to delete video for passing scenario {}: {}", scenarioName, delEx.getMessage());
                     }
                 }
             } else {
-                Files.deleteIfExists(og);
+                logger.warn("No video file found for scenario: {}", scenarioName);
             }
+		}
+	}
+
+	private static Optional<Path> findRecentVideoFile(Path searchDir) {
+		try {
+			long cutoffTime = System.currentTimeMillis() - (5 * 60 * 1000); // Last 5 minutes
+			return Files.walk(searchDir, 3)
+					.filter(Files::isRegularFile)
+					.filter(p -> p.toString().endsWith(".webm"))
+					.filter(p -> {
+						try {
+							return Files.getLastModifiedTime(p).toMillis() > cutoffTime;
+						} catch (IOException e) {
+							return false;
+						}
+					})
+					.max(Comparator.comparingLong(p -> {
+						try {
+							return Files.getLastModifiedTime(p).toMillis();
+						} catch (IOException e) {
+							return 0;
+						}
+					}));
+		} catch (IOException e) {
+			logger.warn("Error searching for video files: {}", e.getMessage());
+			return Optional.empty();
 		}
 	}
 
