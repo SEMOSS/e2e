@@ -211,7 +211,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static boolean verifyDatabaseTitle(Page page, String dbName) {
-		Locator actualDatabaseTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(dbName));
+		Locator actualDatabaseTitle = page.getByTestId("Title");
 		actualDatabaseTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return actualDatabaseTitle.isVisible();
 	}

@@ -67,4 +67,8 @@ public AddDatabaseFileUploadPage(Page page) {
     public void verifyAddBtnForCreateConnection() {
         AddDatabaseFileUploadUtils.verifyAddBtnForCreateConnection(page);
     }
+
+    public void verifySaveBtnForCreateRelationship() {
+        AddDatabaseFileUploadUtils.verifySaveBtnForCreateRelationship(page);
+    }
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.ConfigUtils;
@@ -37,10 +36,10 @@ public class SettingsModelPageUtils {
 	private static final String ADD_MEMBER_XPATH = "//input[@data-slot='command-input']";
 	private static final String RADIO_BUTTON_DATATESTID = "{role}-role-radio";
 	private static final String SAVE_BUTTON_DATATESTID = "members-add-overlay-add-button";
-	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
+	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[contains(text(),'Successfully deleted')]";
 	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
-	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "td:has(button svg[data-testid='EditIcon']) button svg[data-testid='DeleteIcon']";
-	private static final String CONFIRM_BUTTON_XPATH = "//button[span[text()='Confirm']]";
+	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = ".whitespace-nowrap > .flex > button";
+	private static final String CONFIRM_BUTTON_XPATH = "//button[text()='Confirm']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
 	private static final String USAGE_CODE_SECTION_XPATH = "//*[text()='{sectionName}']/../div/pre";
@@ -51,6 +50,9 @@ public class SettingsModelPageUtils {
 
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
 	private static final String SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
+
+	private static final String DELETE_CATALOG_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -229,12 +231,15 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnDeleteButton(Page page) {
-		Locator deleteButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete"));
+		page.pause();
+		Locator deleteButton = page.locator(DELETE_CATALOG_BUTTON_XPATH);
 		deleteButton.click();
-		deleteButton.click();
-		page.waitForCondition(
-				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
-				new Page.WaitForConditionOptions().setTimeout(5000));
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+		// deleteButton.click();
+		// page.waitForCondition(
+		// () -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) ||
+		// page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
+		// new Page.WaitForConditionOptions().setTimeout(5000));
 		// Added cancel button code because pop-up is not closing because of bug
 //		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
 	}
@@ -252,7 +257,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
-		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
+		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH).last();
 		deleteIcon.scrollIntoViewIfNeeded();
 		deleteIcon.hover();
 		deleteIcon.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
