@@ -20,8 +20,9 @@ public class AppVariablePageUtils {
 	private static final String CatalogVariable = "//div[@id='home__content']//h1";
 	private static final String VariableListItem = "//button//div//p[text()='{variableName}']";
 	private static final String SAVEVARIABLE = "//span[text()='Save']";
-	private static final String OpenMenuOption = "//p[text()='{variableName}']/../../../../..//following-sibling::div//div//button[@title=\"Open Menu\"]";
-	private static final String EditVariableOption = "//li[@value=\"Edit\"]";
+	private static final String OpenMenuOption = "//p[text()='{variableName}']/parent::div/following-sibling::div//*[@data-testid='ChevronRightIcon']";
+	private static final String EditVariableOption = "//li[@value='Edit']";
+	private static final String MORE_VERTICAL_ICON_XPATH = "//span[text()='{variableName}']/ancestor::div/following-sibling::div//button[@data-testid='notebook-variable-more-btn']";
 
 	public static void clickOnVariableOption(Page page) {
 		Locator variables = page.locator(VariableOption);
@@ -55,6 +56,7 @@ public class AppVariablePageUtils {
 			throw new RuntimeException("Variable Type dropdown is not visible");
 		}
 	}
+
 	public static void selectVariableType(Page page, String variableType) {
 		Locator variableTypeButton = page.locator(VariableTypeDropdown);
 		if (variableTypeButton.isVisible()) {
@@ -162,7 +164,8 @@ public class AppVariablePageUtils {
 //		}
 	}
 
-	public static void clickOnEditVariableOption(Page page) {
+	public static void clickOnEditVariableOption(Page page, String variableName) {
+		page.locator(MORE_VERTICAL_ICON_XPATH.replace("{variableName}", variableName)).first().click();
 		page.locator(EditVariableOption).click();
 	}
 
@@ -175,6 +178,6 @@ public class AppVariablePageUtils {
 	public static void clickOnSaveVariableButton(Page page) {
 		page.locator(SAVEVARIABLE).isVisible();
 		page.locator(SAVEVARIABLE).click();
-	}	
+	}
 
 }

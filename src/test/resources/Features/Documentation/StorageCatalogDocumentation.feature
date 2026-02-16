@@ -10,7 +10,7 @@ Feature: Storage Catalog Documentation
     When User clicks on Add Storage button
     And User captures a 'list item' and highlights the 'Amazon S3'
     And User selects 'Amazon S3' storage
-    And User enter storage Catalog name as 'Test Storage'
+    And User enters storage Catalog name as 'Test Storage'
     And User enters Region as 'India'
     And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
