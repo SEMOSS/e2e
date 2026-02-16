@@ -30,7 +30,7 @@ public class AppTemplatePageUtils {
 	private static final String PREVIEW_APP_SUBMIT_BUTTON_XPATH = "//div[@role='dialog']//div[@data-block='submit']";
 	private static final String LANDING_PAGE_TITLE_TEXT_XPATH = "//p[text()='{titleText}']";
 	private static final String DESCRIPTION_BELOW_TITLE_XPATH = "//p[text()='{descriptionText}']";
-	private static final String SELECT_TEMPLATE_XPATH = "//p[text()='{templateName}']/../../../../../following-sibling::div//button";
+	private static final String SELECT_TEMPLATE_XPATH = "//div[@data-slot='card']//div[text()='{templateName}']/parent::div/following-sibling::div//button";
 	private static final String TEXT_XPATH = "//a[text()='{text}']";
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
@@ -339,7 +339,8 @@ public class AppTemplatePageUtils {
 	public static void clickOnResponseBlock(Page page) {
 		page.waitForTimeout(5000);
 		if (page.locator(ASK_LOADER_XPATH).isVisible()) {
-			page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+			page.locator(ASK_LOADER_XPATH)
+					.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(60000));
 		}
 		Locator responseBlock = page.locator(RESPONSE_BOX_XPATH);
 		AICorePageUtils.waitFor(responseBlock);
@@ -418,6 +419,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static List<String> ids = ModelPageUtils.createdModelIds;
+
 	public static boolean verifyCreatedModelsInList(Page page) {
 		if (ids == null || ids.isEmpty()) {
 			return false;
@@ -431,7 +433,7 @@ public class AppTemplatePageUtils {
 			}
 			foundCount++;
 		}
-		
+
 		if (foundCount > ids.size()) {
 			return false;
 		}

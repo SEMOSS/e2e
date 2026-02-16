@@ -121,4 +121,9 @@ public class MemberSettingSteps {
 		settingPage.clickOnTab(tabName);
 	}
 
+	@When("User click on {string} section")
+	public void user_clicks_on_section(String sectionName) {
+		settingPage.clickOnSection(sectionName);
+	}
+
 }

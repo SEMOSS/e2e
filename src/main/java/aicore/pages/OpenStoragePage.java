@@ -66,8 +66,8 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 		StoragePageUtils.clickOnConnectButton(page);
 	}
 
-	public String verifyStorageCreatedToastMessage() {
-		return StoragePageUtils.verifyStorageCreatedToastMessage(page);
+	public String verifyStorageCreatedToastMessage(String toastMessage) {
+		return StoragePageUtils.verifyStorageCreatedToastMessage(page, toastMessage);
 	}
 
 	public String verifyStorageTitle(String storageTitle) {

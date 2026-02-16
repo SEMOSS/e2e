@@ -1,7 +1,6 @@
 Feature: Vector Catalog documentation
 
-  ## Embede file upload fails bug- https://github.com/SEMOSS/semoss-ui/issues/1950 ###
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE @Documentation 
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation 
   Scenario: Create a Vector
     Given User captures documentation screenshot for 'PlatformNavigation/Vector Catalog'
     When User is on Home page
@@ -62,7 +61,7 @@ Feature: Vector Catalog documentation
     And User clicks on Documents tab
     And User clicks on Embed New Document
     And User captures screenshot for "Embed New Document"
-    And User uploads the file 'Vector_Embed_file.pdf'
+    And User uploads the file 'VectorDatabase/Vector_Embed_file.pdf'
     And User clicks on Embed button
     Then User sees file embeded success toast message 'Successfully added document'
     And User captures screenshot for "File List"
