@@ -178,7 +178,6 @@ public class BISystemAppPage {
 	}
 
 	public void clickOnToolsOption() {
-		// page.pause();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("TOOLS")).isVisible();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("TOOLS")).click();
 	}

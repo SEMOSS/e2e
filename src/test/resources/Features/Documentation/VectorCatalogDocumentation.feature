@@ -1,7 +1,7 @@
 Feature: Vector Catalog documentation
 
   ## Embede file upload fails bug- https://github.com/SEMOSS/semoss-ui/issues/1950 ###
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE @Documentation @ApplicationBugFailure
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @BLOCKED_BY_BE @Documentation 
   Scenario: Create a Vector
     Given User captures documentation screenshot for 'PlatformNavigation/Vector Catalog'
     When User is on Home page
@@ -11,7 +11,7 @@ Feature: Vector Catalog documentation
     And User clicks on file upload icon
     And User uploads the file 'VectorDatabase/Text_Embedding_model.zip'
     And User clicks on 'Upload' button to create catalog
-    And User sees success toast message 'Successfully Created Database'
+    And User can see a toast message as 'Model uploaded successfully!'
     And User can see the Catalog title as 'TextEmbeddings BAAI-Large-En-V1.5'
     And User clicks on Copy Catalog ID
     When User opens Main Menu
@@ -59,10 +59,10 @@ Feature: Vector Catalog documentation
     And User clicks on Open Vector
     And User searches the 'FAISS Vector DB01' in the Vector Catalog searchbox
     And User selects the 'FAISS Vector DB01' from the Vector catalog
-    And User clicks on files
+    And User clicks on Documents tab
     And User clicks on Embed New Document
     And User captures screenshot for "Embed New Document"
-    And User uploads the file 'VectorDatabase/Text_Embedding_model.zip'
+    And User uploads the file 'Vector_Embed_file.pdf'
     And User clicks on Embed button
     Then User sees file embeded success toast message 'Successfully added document'
     And User captures screenshot for "File List"

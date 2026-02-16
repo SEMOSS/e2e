@@ -34,11 +34,12 @@ public class AddFunctionPageUtils {
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
-	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make {catalogName} discoverable']";
+	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{catalogName}-makeDiscoverable-switch";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
 	private static final String SEARCHED_FUNCTION_DATATESTID = "genericEngineCards-DATABASE-{catalogName}";
+	private static final String SEARCHED_CATALOG_DATATESTID = "genericEngineCards-{catalogType}-{catalogName}";
 	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
 	private static final String SEARCH_BAR_DATATESTID = "search-bar";
@@ -233,6 +234,7 @@ public class AddFunctionPageUtils {
 
 	public static String verifySuccessToastMessage(Page page, String toastMessage) {
 		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage));
+		alert.scrollIntoViewIfNeeded();
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -262,7 +264,7 @@ public class AddFunctionPageUtils {
 
 	public static void clickOnMakeDiscoverableButton(Page page, String catalogName) {
 		Locator makeDiscoverableButton = page
-				.locator(MAKE_DISCOVERABLE_BUTTON_XPATH.replace("{catalogName}", catalogName));
+				.getByTestId(MAKE_DISCOVERABLE_BUTTON_DATATESTID.replace("{catalogName}", catalogName));
 		makeDiscoverableButton.isVisible();
 		makeDiscoverableButton.click();
 	}
@@ -286,10 +288,12 @@ public class AddFunctionPageUtils {
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
 		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
-		searchBar.fill(catalog);
-		Locator catalogLocator = page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName));
+		searchBar.fill(catalogName);
+		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID
+				.replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
 		if (catalogLocator.isVisible()) {
-			catalogLocator.click();
+			catalogLocator.first().waitFor();
+			catalogLocator.first().click();
 			clickOnAccessControl(page);
 			clickOnDeleteButton(page);
 			clickOnDeleteConfirmationButton(page);

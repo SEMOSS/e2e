@@ -2,6 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.ConfigUtils;
@@ -13,13 +14,13 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private String timestamp;
 	private static final String ADD_VECTOR_BUTTON_XPATH = "//button[text()='Add ']";
 	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
-	private static final String CATALOG_NAME_TEXTBOX_ID = "//*[@data-testid='vector-form-input-NAME']//input";
-	private static final String EMBEDDER_DROPDOWN_XPATH = "(//div[contains(@class ,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[1]";
-	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//li[text()='{modelName}']";
-	private static final String CHUNKING_STRATEGY_DROPDOWN_XPATH = "(//div[contains(@class,'MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input')])[2]";
-	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li[text()='{strategyName}']";
-	private static final String CONTENT_LENGTH_ID = "//*[@data-testid='vector-form-input-CONTENT_LENGTH']//input";
-	private static final String CONTENT_OVERLAP_ID = "//*[@data-testid='vector-form-input-CONTENT_OVERLAP']//input";
+	private static final String CATALOG_NAME_TEXTBOX_ID = "//input[@data-testid='vector-form-input-NAME']";
+	private static final String EMBEDDER_DROPDOWN_DATATESTID = "vector-form-input-EMBEDDER_ENGINE_ID";
+	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//select//option[text()='{modelName}']";
+	private static final String CHUNKING_STRATEGY_DROPDOWN_DATATESTID = "vector-form-input-CHUNKING_STRATEGY";
+	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//option[text()='{strategyName}']";
+	private static final String CONTENT_LENGTH_ID = "//input[@data-testid='vector-form-input-CONTENT_LENGTH']";
+	private static final String CONTENT_OVERLAP_ID = "//input[@data-testid='vector-form-input-CONTENT_OVERLAP']";
 	private static final String HOST_NAME_ID = "//*[@data-testid='vector-form-input-HOSTNAME']//input";
 	private static final String API_KEY_ID = "//*[@data-testid='vector-form-input-API_KEY']//input";
 	private static final String NAME_SPACE_ID = "//*[@data-testid='vector-form-input-NAMESPACE']//input";
@@ -37,13 +38,26 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String VECTOR_CARD_XPATH = "//p[text()='{catalogName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
 	private static final String VECTOR_ID = "//*[@data-testid=\"ContentCopyOutlinedIcon\"]/../..";
-	private static final String COPY_VECTOR_ID = "ContentCopyOutlinedIcon";
-	private static final String COPIED_TOAST_DATA_TESTID = "notification-success-message";
+	private static final String COPY_VECTOR_ID = "engineHeader-copy-Vector-id-btn";
+	private static final String COPIED_TOAST_DATA_XPATH = "//div[text()='ID copied to clipboard']";
 	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
-	private static final String VECTOR_TAGS_XPATH = "vector-form-input-TAGS";
+	private static final String VECTOR_TAGS_XPATH = "//span[text()='{tagName}']";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
 	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
-	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[text()='Discoverable Vectors']";
+	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[normalize-space()='Discoverable Vectors']";
+	private static final String TOASTER_MESSAGE_XPATH = "//div[text()='{toasterMessage}']";
+	private static final String Q_A_TAB_XPATH = "//button[text()='Q&A']";
+	private static final String ADJUST_CONFIGURATIONS_PANEL_XPATH = "//span[text()='{panelName}']/parent::div[contains(@class,'flex items-center')]";
+	private static final String SELECT_MODEL_DROPDOWN_XPATH = "//p[normalize-space()='Select Model:']/following::button[@data-slot='select-trigger']";
+	private static final String SLIDER_XPATH = "//div[//p[normalize-space()='{sliderName}']] /following-sibling::div//span[@data-slot='slider']";
+	private static final String HOVER_ON_ICON_XPATH = "//div//p[normalize-space()='{iconName}']/following::button[@data-slot='tooltip-trigger']";
+	private static final String GENRATED_ANSWER_XPATH = "//div[@class='mt-4 flex flex-col gap-2']//div[text()='Policy Extraction Response:']";
+	private static final String CLICK_ON_QA_TAB_DATATESTID = "engineLayout-Q&A-tab";
+	private static final String SLIDER_TOOLTIP_XPATH = "//div[@data-slot='tooltip-content' and @data-state='delayed-open']";
+	private static final String Q_A_HEADER_TITLE_DATATESTID = "engineQa-title";
+	private static final String INPUT_BOX_DATATESTID = "engineQa-question-input";
+	private static final String GENERATE_BUTTON_DATATESTID = "engineQa-generate-btn";
+	private static final String SLIDER_BAR_XPATH = "//p[text()='{sliderName}']/following::span[@role='slider']";
 
 	public OpenVectorPage(Page page, String timestamp) {
 		this.page = page;
@@ -70,18 +84,20 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void selectModelfromEmbedderDropdown(String modelName) {
-		page.click(EMBEDDER_DROPDOWN_XPATH);
-		page.locator(EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH.replace("{modelName}", modelName)).click();
+		page.getByTestId(EMBEDDER_DROPDOWN_DATATESTID).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(modelName)).click();
 	}
 
 	public void selectStrategyfromChunkingStrategyDropdown(String strategyName) {
-		page.click(CHUNKING_STRATEGY_DROPDOWN_XPATH);
-		page.click(CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH.replace("{strategyName}", strategyName));
+		page.getByTestId(CHUNKING_STRATEGY_DROPDOWN_DATATESTID).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(strategyName)).click();
 	}
 
-	public void enterContentLength(String contentLength) {
-		if (page.locator(CONTENT_LENGTH_ID).isVisible()) {
-			page.fill(CONTENT_LENGTH_ID, contentLength);
+	public void enterContentLength(String contentLengthValue) {
+		Locator contentLength = page.locator(CONTENT_LENGTH_ID);
+		if (contentLength.isVisible()) {
+			contentLength.fill("");
+			contentLength.fill(contentLengthValue);
 		}
 	}
 
@@ -117,7 +133,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void verifyVectorTitle(String vectorTitle) {
-		Locator vector = page.locator("h4:has-text('" + vectorTitle + "')");
+		Locator vector = page.getByTestId("Title");
 		vector.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!vector.isVisible()) {
 			throw new AssertionError("Vector title '" + vectorTitle + "' is not visible on the page.");
@@ -171,9 +187,12 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 		page.locator(VECTOR_CARD_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
-	public String verifyToastMessage() {
-		Locator alert = page.getByTestId("notification-success-alert");
-		return AICorePageUtils.verifySuccessToastMessage(page, alert);
+	public boolean verifyToastMessage(String expectedToastMessage) {
+		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage));
+		String actualToastMessage = page
+				.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage)).textContent().trim();
+		return actualToastMessage.equals(expectedToastMessage);
+		// return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	public void copyVectorId() {
@@ -182,9 +201,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public String copiedSuccessToastMessage() {
-		page.getByTestId(COPIED_TOAST_DATA_TESTID)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.getByTestId(COPIED_TOAST_DATA_TESTID).textContent();
+		page.locator(COPIED_TOAST_DATA_XPATH);
+		String toastMessage = page.locator(COPIED_TOAST_DATA_XPATH).textContent();
 		return toastMessage;
 	}
 
@@ -203,8 +221,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void verifyCurrentUrlContainsVectorId() {
-		page.locator(VECTOR_ID).isVisible();
-		String vectorIdText = page.locator(VECTOR_ID).textContent().trim();
+		page.getByTestId(COPY_VECTOR_ID).isVisible();
+		String vectorIdText = page.getByTestId(COPY_VECTOR_ID).textContent().trim();
 		String currentUrl = page.url();
 		if (!currentUrl.contains(vectorIdText)) {
 			throw new AssertionError("Vector ID is not present or wrong in Vector catalog: " + vectorIdText);
@@ -212,8 +230,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void verifyVectorTags(String tagName) {
-		page.locator(VECTOR_TAGS_XPATH.replace("{tagName}", tagName)).isVisible();
-		if (!page.locator((VECTOR_TAGS_XPATH.replace("{tagName}", tagName))).isVisible()) {
+		page.locator(VECTOR_TAGS_XPATH.replace("{tagName}", tagName)).first().isVisible();
+		if (!page.locator((VECTOR_TAGS_XPATH.replace("{tagName}", tagName))).first().isVisible()) {
 			throw new AssertionError("Tag " + tagName + " is not visible on the Vector page.");
 		}
 	}
@@ -242,6 +260,97 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnQnAButton() {
-		page.getByTestId("engineLayout-Q&A-tab").click();
+		page.getByTestId(CLICK_ON_QA_TAB_DATATESTID).click();
+	}
+
+	public boolean verifyQandATabIsDisplayed() {
+		return page.locator(Q_A_TAB_XPATH).isVisible();
+	}
+
+	public boolean verifyPanelIsVisible(String panelName) {
+		return page.locator(ADJUST_CONFIGURATIONS_PANEL_XPATH.replace("{panelName}", panelName)).isVisible();
+	}
+
+	public boolean verifyDropdownIsPresent(String dropdownName) {
+		return page.locator(SELECT_MODEL_DROPDOWN_XPATH).isVisible();
+	}
+
+	public boolean verifySliderIsVisible(String sliderName) {
+		return page.locator(SLIDER_XPATH.replace("{sliderName}", sliderName)).first().isVisible();
+	}
+
+	public boolean verifyTooltipOnHover(String optionName, String expectedTooltip) {
+		Locator hoverIcon = page.locator(HOVER_ON_ICON_XPATH.replace("{iconName}", optionName)).first();
+		hoverIcon.hover();
+		Locator tooltip = page.locator(SLIDER_TOOLTIP_XPATH);
+		tooltip.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		String actualTooltip = tooltip.innerText();
+		actualTooltip = actualTooltip.replaceAll("\\s+", " ").trim();
+		expectedTooltip = expectedTooltip.replaceAll("\\s+", " ").trim();
+		return actualTooltip.contains(expectedTooltip);
+	}
+
+	public boolean verifyQandAHeaderIsDisplayed() {
+		return page.getByTestId(Q_A_HEADER_TITLE_DATATESTID).isVisible();
+	}
+
+	public boolean verifyQuestionInputBoxIsVisible() {
+		return page.getByTestId(INPUT_BOX_DATATESTID).isVisible();
+	}
+
+	public boolean verifyButtonIsEnabled() {
+		return page.getByTestId(GENERATE_BUTTON_DATATESTID).isEnabled();
+	}
+
+	public void clickOnQandATab() {
+		page.getByTestId(CLICK_ON_QA_TAB_DATATESTID).click();
+	}
+
+	public void clickOnSelectModelDropdown() {
+		page.locator(SELECT_MODEL_DROPDOWN_XPATH).click();
+	}
+
+	public void selectModelFromDropdown(String modelName) {
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(modelName)).click();
+	}
+
+	public boolean verifySelectedModelInDropdown(String modelName) {
+		String selectedModel = page.locator(SELECT_MODEL_DROPDOWN_XPATH).textContent().trim();
+		return selectedModel.equals(modelName);
+	}
+
+	public void adjustSlider(String sliderName, String target) {
+		double targetValue = Double.parseDouble(target);
+		Locator slider = page.locator(SLIDER_BAR_XPATH.replace("{sliderName}", sliderName)).first();
+		slider.focus();
+		double current = Double.parseDouble(slider.getAttribute("aria-valuenow"));
+		while (current != targetValue) {
+			if (current < targetValue) {
+				slider.press("ArrowRight");
+			} else {
+				slider.press("ArrowLeft");
+			}
+			current = Double.parseDouble(slider.getAttribute("aria-valuenow"));
+		}
+	}
+
+	public String getCurrentSliderValue(String value, String sliderName) {
+		Locator slidervalue = page.locator(SLIDER_BAR_XPATH.replace("{sliderName}", sliderName)).first();
+		AICorePageUtils.waitFor(slidervalue);
+		return slidervalue.getAttribute("aria-valuenow");
+	}
+
+	public void enterQuestionInInputBox(String question) {
+		page.getByTestId(INPUT_BOX_DATATESTID).fill(question);
+	}
+
+	public void clickOnGenerateAnswerButton() {
+		page.getByTestId(GENERATE_BUTTON_DATATESTID).click();
+	}
+
+	public boolean verifyAnswerIsDisplayed() {
+		Locator answerBox = page.locator(GENRATED_ANSWER_XPATH);
+		AICorePageUtils.waitFor(answerBox);
+		return answerBox.isVisible();
 	}
 }

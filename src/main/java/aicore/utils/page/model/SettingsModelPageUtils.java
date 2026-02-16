@@ -33,9 +33,10 @@ public class SettingsModelPageUtils {
 	private static final String ADD_MEMBERS_BUTTON_XPATH = "//div[text()='Add Members']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//*[name()='svg'][@data-testid='ArrowDropDownIcon']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li";
-	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
-	private static final String RADIO_BUTTON_XPATH = "//span[div[contains(text(),'{role}')]]/ancestor::div[contains(@class, 'MuiCardHeader-root')]//input[@type='radio']";
-	private static final String SAVE_BUTTON_XPATH = "//button[contains(@class, 'MuiButton-containedPrimary') and .//span[text()='Save']]";
+	private static final String CLICK_ON_SEARCH_USER_DATATESTID = "members-add-overlay-autocomplete";
+	private static final String ADD_MEMBER_XPATH = "//input[@data-slot='command-input']";
+	private static final String RADIO_BUTTON_DATATESTID = "{role}-role-radio";
+	private static final String SAVE_BUTTON_DATATESTID = "members-add-overlay-add-button";
 	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
 	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
 	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "td:has(button svg[data-testid='EditIcon']) button svg[data-testid='DeleteIcon']";
@@ -205,6 +206,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
+		page.getByTestId(CLICK_ON_SEARCH_USER_DATATESTID).click();
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		if (useDocker) {
 			username = username + " lastname";
@@ -217,12 +219,13 @@ public class SettingsModelPageUtils {
 			page.locator(ADD_MEMBER_XPATH).press("ArrowDown");
 			page.locator(ADD_MEMBER_XPATH).press("Enter");
 		}
-		page.click(RADIO_BUTTON_XPATH.replace("{role}", role));
-		page.click(SAVE_BUTTON_XPATH);
-		Locator alertCloseLocator = page.locator("//button[@aria-label='Close']");
-		AICorePageUtils.waitFor(alertCloseLocator);
-		alertCloseLocator.click();
-		alertCloseLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+		page.getByTestId(RADIO_BUTTON_DATATESTID.replace("{role}", role));
+		page.getByTestId(SAVE_BUTTON_DATATESTID).click();
+		// Locator alertCloseLocator = page.locator("//button[@aria-label='Close']");
+		// AICorePageUtils.waitFor(alertCloseLocator);
+		// alertCloseLocator.click();
+		// alertCloseLocator.waitFor(new
+		// Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
 	public static void clickOnDeleteButton(Page page) {

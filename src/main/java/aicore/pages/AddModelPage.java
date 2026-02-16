@@ -494,4 +494,10 @@ public class AddModelPage {
 		ModelPageUtils.clickOnCreateButton(page, buttonName);
 	}
 
+	public void selectAddModelOption(String option) {
+		ModelPageUtils.selectAddModelOption(page, option);
+	}
+	public void clickOnUploadButton(String buttonName) {
+		ModelPageUtils.clickOnUploadButton(page, buttonName);
+	}
 }

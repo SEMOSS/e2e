@@ -20,7 +20,7 @@ public class CatlogAccessPageUtility {
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
 	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
-	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
+	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
 	// create app variable declaration

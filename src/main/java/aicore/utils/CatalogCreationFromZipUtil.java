@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class CatalogCreationFromZipUtil {
@@ -18,6 +17,7 @@ public class CatalogCreationFromZipUtil {
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//p[normalize-space()='{fileName}']";
 	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
+	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
 
 	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = null;
@@ -98,8 +98,7 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void clickOnUploadButton(Page page, String label) {
-		Locator buttonLocator = page.getByRole(AriaRole.BUTTON,
-				new Page.GetByRoleOptions().setName(label).setExact(true));
+		Locator buttonLocator = page.locator(UPLOAD_FILE_BUTTON_XPATH);
 		buttonLocator.scrollIntoViewIfNeeded();
 		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		buttonLocator.click();

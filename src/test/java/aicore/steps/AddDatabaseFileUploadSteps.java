@@ -82,4 +82,9 @@ public class AddDatabaseFileUploadSteps {
 	public void user_verifies_cancel_button_is_enabled() {
 		addDatabaseCSVFileUploadPage.verifyCancelBtn();
 	}
+
+	@And("User clicks on Add button for Create Connection")
+	public void user_cliks_on_add_button_for_create_connection() {
+		addDatabaseCSVFileUploadPage.verifyAddBtnForCreateConnection();
+	}
 }
