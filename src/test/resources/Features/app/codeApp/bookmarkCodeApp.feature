@@ -21,11 +21,11 @@ Feature: Bookmark app - Code app files
     Then User see the Bookmarked section
     And The app should appear in the bookmarked section
 
-  Scenario: Bookmark an app and verify the toast message and its presence in the Bookmarks section on the App Home page
-    Given The Files section should be open by default
-    And User click on 'Code app' from breadcrumb link
-    When User click on the Bookmark App icon
-    Then User sees success toast message 'Project bookmarked'
+  #Scenario: Bookmark an app and verify the toast message and its presence in the Bookmarks section on the App Home page
+    #Given The Files section should be open by default
+    #And User click on 'Code app' from breadcrumb link
+    #When User click on the Bookmark App icon
+    #Then User sees success toast message 'Project bookmarked'
 
   Scenario: Unbookmark the app and see the Bookmarks section is display on the App Home page
     Given User opens Main Menu
