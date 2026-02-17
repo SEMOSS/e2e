@@ -22,8 +22,8 @@ public class StoragePageUtils {
 	private static final String BUCKET_TEXTBOX_DATA_TESTID = "storage-form-input-S3_BUCKET";
 	private static final String ACCESS_KEY_TEXTBOX_DATA_TESTID = "storage-form-input-S3_ACCESS_KEY";
 	private static final String SECRET_KEY_TEXTBOX_DATA_TESTID = "storage-form-input-S3_SECRET_KEY";
-	private static final String FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='storage-form-input-{fieldName}']";
-	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//span[text()='*']";
+	private static final String FIELDS_UNDER_SECTION_XPATH = "//h4[normalize-space()='{sectionName}']/ancestor::div//input[@data-testid='storage-form-input-{fieldName}']";
+	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='storage-form-field-{fieldName}']//span[text()='*']";
 	private static final String FIELDS_DATA_TESTID = "storage-form-input-{fieldName}";
 	private static final String INPUT_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='text'] | .//textarea";
 	private static final String DROPDOWN_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//*[@role='button' or @aria-haspopup='listbox']";
@@ -131,8 +131,8 @@ public class StoragePageUtils {
 
 	public static boolean fieldUnderSection(Page page, String storageType, String section, String field) {
 		String fieldName = getFieldNameForTestId(storageType, field);
-		Locator fieldLocator = page
-				.locator(FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldName));
+		Locator fieldLocator = page.locator(
+				FIELDS_UNDER_SECTION_XPATH.replace("{sectionName}", section).replace("{fieldName}", fieldName));
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
 	}
