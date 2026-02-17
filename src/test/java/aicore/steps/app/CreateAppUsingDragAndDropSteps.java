@@ -111,11 +111,11 @@ public class CreateAppUsingDragAndDropSteps {
 	}
 
 	@And("User add {string} app with details {string} {string} {string} {string}")
-	public void user_add_app_with_details(String count, String appType, String appName,
-			String appDescription, String tag) {
+	public void user_add_app_with_details(String count, String appType, String appName, String appDescription,
+			String tag) {
 		int appCount = Integer.parseInt(count);
 		for (int i = 0; i < appCount; i++) {
-			appCreatePopup.enterAppName(appName+i);
+			appCreatePopup.enterAppName(appName + i);
 			appCreatePopup.enterAppDescription(appDescription);
 			appCreatePopup.enterTags(tag);
 			appCreatePopup.clickOnCreateButton();
@@ -729,9 +729,9 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in System Apps section");
 	}
 
-	@And("User clicks on edit variable option")
-	public void user_clicks_on_edit_variable_option() {
-		appVariablePage.clickOnEditVariableOption();
+	@And("User clicks on {string} edit variable option")
+	public void user_clicks_on_edit_variable_option(String variableName) {
+		appVariablePage.clickOnEditVariableOption(variableName);
 	}
 
 	@And("User clicks on {string} open menu")

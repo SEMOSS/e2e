@@ -7,16 +7,16 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class AddFunctionPageUtils {
 
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
-	private static final String CATALOG_NAME_XPATH = "//div[@data-testid='function-form-input-NAME']//input[@type='text'] | .//textarea";
-	private static final String URL_XPATH = "//div[@data-testid='function-form-input-URL']//input[@type='text'] | .//textarea";
-	private static final String HTTP_METHOD_XPATH = "//div[@data-testid='function-form-input-HTTP_METHOD']//*[@role='button' or @aria-haspopup='listbox']";
-	private static final String POST_BODY_MESSAGE_XPATH = "//div[@data-testid='function-form-input-CONTENT_TYPE']//*[@role='button' or @aria-haspopup='listbox']";
-	private static final String HEADERS_XPATH = "//div[@data-testid='function-form-input-HEADERS']//input[@type='text'] | .//textarea";
-	private static final String FUNCTION_PARAMETERS_XPATH = "//div[@data-testid='function-form-input-FUNCTION_PARAMETERS']//input[@type='text'] | .//textarea";
-	private static final String FUNCTION_REQUIRED_PARAMETERS_XPATH = "//div[@data-testid='function-form-input-FUNCTION_REQUIRED_PARAMETERS']//input[@type='text'] | .//textarea";
-	private static final String FUNCTION_NAME_XPATH = "//div[@data-testid='function-form-input-FUNCTION_NAME']//input[@type='text'] | .//textarea";
-	private static final String FUNCTION_DESCRIPTION_XPATH = "//div[@data-testid='function-form-input-FUNCTION_DESCRIPTION']//input[@type='text'] | .//textarea";
-	private static final String FUNCTION_TYPE_XPATH = "//div[@data-testid='function-form-input-FUNCTION_TYPE']//*[@role='button' or @aria-haspopup='listbox']";
+	private static final String CATALOG_NAME_DATA_TESTID = "function-form-input-NAME";
+	private static final String URL_DATA_TESTID = "function-form-input-URL";
+	private static final String HTTP_METHOD_DATA_TESTID = "function-form-input-HTTP_METHOD";
+	private static final String POST_BODY_MESSAGE_DATA_TESTID = "function-form-input-CONTENT_TYPE";
+	private static final String HEADERS_DATA_TESTID = "function-form-input-HEADERS";
+	private static final String FUNCTION_PARAMETERS_DATA_TESTID = "function-form-input-FUNCTION_PARAMETERS";
+	private static final String FUNCTION_REQUIRED_PARAMETERS_DATA_TESTID = "function-form-input-FUNCTION_REQUIRED_PARAMETERS";
+	private static final String FUNCTION_NAME_DATA_TESTID = "function-form-input-FUNCTION_NAME";
+	private static final String FUNCTION_DESCRIPTION_DATA_TESTID = "function-form-input-FUNCTION_DESCRIPTION";
+	private static final String FUNCTION_TYPE_DATA_TESTID = "function-form-input-FUNCTION_TYPE";
 	private static final String FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='function-form-input-{fieldName}']";
 	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//span[text()='*']";
 	private static final String FIELDS_DATA_TESTID = "function-form-input-{fieldName}";
@@ -30,9 +30,9 @@ public class AddFunctionPageUtils {
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
 	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{catalogName}-makeDiscoverable-switch";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
@@ -109,53 +109,53 @@ public class AddFunctionPageUtils {
 
 	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
 		catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
-		page.locator(CATALOG_NAME_XPATH).click();
-		page.locator(CATALOG_NAME_XPATH).fill(catalogName);
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).click();
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
 	}
 
 	public static void enterUrl(Page page, String url) {
-		page.locator(URL_XPATH).click();
-		page.locator(URL_XPATH).fill(url);
+		page.getByTestId(URL_DATA_TESTID).click();
+		page.getByTestId(URL_DATA_TESTID).fill(url);
 	}
 
 	public static void selectHttpMethod(Page page, String httpMethod) {
-		page.locator(HTTP_METHOD_XPATH).isVisible();
-		page.locator(HTTP_METHOD_XPATH).click();
+		page.getByTestId(HTTP_METHOD_DATA_TESTID).isVisible();
+		page.getByTestId(HTTP_METHOD_DATA_TESTID).click();
 		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).isVisible();
 		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).click();
 	}
 
 	public static void selectPostBodyMessage(Page page, String postBodyMessage) {
-		page.locator(POST_BODY_MESSAGE_XPATH).isVisible();
-		page.locator(POST_BODY_MESSAGE_XPATH).click();
+		page.getByTestId(POST_BODY_MESSAGE_DATA_TESTID).isVisible();
+		page.getByTestId(POST_BODY_MESSAGE_DATA_TESTID).click();
 		page.getByTestId(POST_MESSAGE_BODY_TYPE_TESTID.replace("{type}", postBodyMessage)).isVisible();
 		page.getByTestId(POST_MESSAGE_BODY_TYPE_TESTID.replace("{type}", postBodyMessage)).click();
 	}
 
 	public static void enterHeaders(Page page, String headers) {
-		page.locator(HEADERS_XPATH).click();
-		page.locator(HEADERS_XPATH).fill(headers);
+		page.getByTestId(HEADERS_DATA_TESTID).click();
+		page.getByTestId(HEADERS_DATA_TESTID).fill(headers);
 	}
 
 	public static void enterFunctionParameters(Page page, String functionParameters) {
-		page.locator(FUNCTION_PARAMETERS_XPATH).click();
-		page.locator(FUNCTION_PARAMETERS_XPATH).fill(functionParameters);
+		page.getByTestId(FUNCTION_PARAMETERS_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_PARAMETERS_DATA_TESTID).fill(functionParameters);
 	}
 
 	public static void enterFunctionName(Page page, String functionName) {
-		page.locator(FUNCTION_NAME_XPATH).click();
-		page.locator(FUNCTION_NAME_XPATH).fill(functionName);
+		page.getByTestId(FUNCTION_NAME_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_NAME_DATA_TESTID).fill(functionName);
 	}
 
 	public static void enterFunctionDescription(Page page, String functionDescription) {
-		page.locator(FUNCTION_DESCRIPTION_XPATH).click();
-		page.locator(FUNCTION_DESCRIPTION_XPATH).fill(functionDescription);
+		page.getByTestId(FUNCTION_DESCRIPTION_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_DESCRIPTION_DATA_TESTID).fill(functionDescription);
 	}
 
 	public static void selectFunctionType(Page page, String functionType) {
-		page.locator(FUNCTION_TYPE_XPATH).isVisible();
-		page.locator(FUNCTION_TYPE_XPATH).click();
-		page.locator(FUNCTION_TYPE_XPATH).fill(functionType);
+		page.getByTestId(FUNCTION_TYPE_DATA_TESTID).isVisible();
+		page.getByTestId(FUNCTION_TYPE_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_TYPE_DATA_TESTID).fill(functionType);
 	}
 
 	public static boolean verifyCreateFunctionButtonDisabled(Page page) {
@@ -163,8 +163,8 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void enterFunctionRequiredParameters(Page page, String functionRequiredParameters) {
-		page.locator(FUNCTION_REQUIRED_PARAMETERS_XPATH).click();
-		page.locator(FUNCTION_REQUIRED_PARAMETERS_XPATH).fill(functionRequiredParameters);
+		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS_DATA_TESTID).fill(functionRequiredParameters);
 	}
 
 	public static void checkCreateFunctionButton(Page page) {
@@ -239,7 +239,7 @@ public class AddFunctionPageUtils {
 	}
 
 	public static boolean verifyMissingInputField(Page page) {
-		Locator missingFieldParent = page.locator(URL_XPATH).locator("..");
+		Locator missingFieldParent = page.getByTestId(URL_DATA_TESTID).locator("..");
 		missingFieldParent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String missingFieldClass = missingFieldParent.getAttribute("class");
 		return missingFieldClass.contains("Mui-focused");
