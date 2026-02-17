@@ -152,7 +152,6 @@ public class CatlogAccessPageUtility {
 		AICorePageUtils.waitFor(editButton);
 		switch (action) {
 		case "Enable":
-			page.waitForTimeout(1000);
 			return editButton.isEnabled();
 		case "Disable":
 			String ariaDisabled = editButton.getAttribute("aria-disabled");
