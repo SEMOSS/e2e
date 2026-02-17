@@ -25,7 +25,7 @@ public class StoragePageUtils {
 	private static final String FIELDS_UNDER_SECTION_XPATH = "//h4[normalize-space()='{sectionName}']/ancestor::div//input[@data-testid='storage-form-input-{fieldName}']";
 	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='storage-form-field-{fieldName}']//span[text()='*']";
 	private static final String FIELDS_DATA_TESTID = "storage-form-input-{fieldName}";
-	private static final String INPUT_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='text'] | .//textarea";
+	private static final String INPUT_FIELDS_XPATH = "//input[@data-testid='storage-form-input-{fieldName}']";
 	private static final String DROPDOWN_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//*[@role='button' or @aria-haspopup='listbox']";
 	private static final String PASSWORD_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='password'] | .//textarea";
 	private static final String NUMBER_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//input[@type='number'] | .//textarea";
@@ -45,7 +45,7 @@ public class StoragePageUtils {
 	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[text()='Cancel']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
-	private static final String LOCAL_PATH_PREFIX_XPATH = "//div[@data-testid='storage-form-input-PATH_PREFIX']//input[@type='text'] | .//textarea";
+	private static final String LOCAL_PATH_PREFIX_DATATESTID = "storage-form-input-PATH_PREFIX";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
@@ -362,7 +362,7 @@ public class StoragePageUtils {
 	}
 
 	public static void enterLocalPathPrefix(Page page, String path) {
-		page.locator(LOCAL_PATH_PREFIX_XPATH).fill(path);
+		page.getByTestId(LOCAL_PATH_PREFIX_DATATESTID).fill(path);
 	}
 
 	public static void searchStorage(Page page, String storageName) {
