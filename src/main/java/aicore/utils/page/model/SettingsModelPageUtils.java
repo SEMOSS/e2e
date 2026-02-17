@@ -231,18 +231,10 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnDeleteButton(Page page) {
-		page.pause();
 		Locator deleteButton = page.locator(DELETE_CATALOG_BUTTON_XPATH);
 		deleteButton.click();
 		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
-		// deleteButton.click();
-		// page.waitForCondition(
-		// () -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) ||
-		// page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
-		// new Page.WaitForConditionOptions().setTimeout(5000));
-		// Added cancel button code because pop-up is not closing because of bug
-//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
-	}
+			}
 
 	public static boolean isDeleteSuccessful(Page page) {
 		return page.isVisible(DELETE_SUCCESS_TOAST_XPATH);

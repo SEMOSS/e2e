@@ -14,6 +14,7 @@ import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddDatabasePageUtils {
@@ -448,10 +449,17 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnSaveButtonOfMetadataTab(Page page) {
-		Locator saveButton = page.getByTestId("engineMetadata-save-btn");
-		saveButton.isEnabled();
-		AICorePageUtils.waitFor(saveButton);
-		saveButton.click(new Locator.ClickOptions().setForce(true));
+		Locator saveBtn = page.getByTestId("engineMetadata-save-btn");
+
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+
+		page.waitForSelector("[data-testid='engineMetadata-save-btn']:not([disabled])");
+
+		saveBtn.scrollIntoViewIfNeeded();
+		saveBtn.focus();
+		saveBtn.click();
+
+		page.waitForLoadState(LoadState.NETWORKIDLE);
 	}
 
 	public static boolean verifyDatabaseCatalogPage(Page page) {

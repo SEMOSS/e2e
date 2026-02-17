@@ -105,8 +105,6 @@ public class AddDatabaseFileUploadUtils {
 		page.getByTestId(TABLE_LIST_BUTTON_TESTID).isEnabled();
 		page.getByTestId(TABLE_LIST_BUTTON_TESTID).click();
 		if (page.getByRole(AriaRole.MENU).isVisible()) {
-			// page.getByTestId(TABLE_LIST_BUTTON_TESTID).click(new
-			// Locator.ClickOptions().setForce(true));
 			page.locator("html").click();
 		} else {
 			throw new AssertionError("Select table Menu is not enabled");
@@ -130,8 +128,7 @@ public class AddDatabaseFileUploadUtils {
 		page.getByRole(AriaRole.COMBOBOX).filter(new Locator.FilterOptions().setHasText("Select or type child table"))
 				.click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(childTable)).click();
-		page.getByTestId(ADD_RELATIONSHIP_BUTTON_TESTID).click();
-		page.getByTestId(SAVE_RELATIONSHIP_BUTTON_TESTID).click();
+		
 	}
 
 	public static void verifySaveBtn(Page page) {
@@ -146,16 +143,16 @@ public class AddDatabaseFileUploadUtils {
 	}
 
 	public static void verifyAddBtnForCreateConnection(Page page) {
-		Locator addButton = page.getByTestId(CREATE_CONNECTION_DATATESTID);
+		Locator addButton = page.getByTestId(ADD_RELATIONSHIP_BUTTON_TESTID);
 		AICorePageUtils.waitFor(addButton);
-		addButton.isEnabled();
-		addButton.click(new Locator.ClickOptions().setForce(true));
+		addButton.hover();
+		addButton.click();
 	}
 
 	public static void verifySaveBtnForCreateRelationship(Page page) {
 		Locator createRelationshipButton = page.getByTestId(SAVE_RELATIONSHIP_BUTTON_TESTID);
 		AICorePageUtils.waitFor(createRelationshipButton);
-		createRelationshipButton.isEnabled();
-		createRelationshipButton.click();
+		createRelationshipButton.focus();
+		createRelationshipButton.click(new Locator.ClickOptions().setForce(true));
 	}
 }

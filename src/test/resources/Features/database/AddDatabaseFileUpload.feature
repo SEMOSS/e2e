@@ -37,7 +37,7 @@ Feature: Add TSV Database
     And User uploads the file '<File_Path>'
     And User click on Connect button
     And User clicks on Save button for database
-    #And User sees success toast message '<Toast_Message>'
+    And User sees success toast message '<Toast_Message>'
     And User can see the Catalog title as '<Database_Name>'
     And User clicks on Copy Catalog ID
 
@@ -57,7 +57,7 @@ Feature: Add TSV Database
     And User click on Connect button
     And User sees the colunm names with edit button and delete button
     And User clicks on Import button
-    #And User sees success toast message '<Toast_Message>'
+    And User sees success toast message '<Toast_Message>'
     And User can see the Catalog title as '<Database_Name>'
     And User clicks on Copy Catalog ID
 
@@ -79,12 +79,12 @@ Feature: Add TSV Database
     And User clicks on the select table button and verifies the table is selected
     And User reset button is enabled
     And User clicks on create relationship button and creates relationship between '<Parent_Table>' and '<Child_Table>' tables
-    And User verifies save button is enabled
-    And User verifies cancel button is enabled
     And User clicks on Add button for Create Connection
     And User clicks on Save button for Create Relationship
+    And User verifies cancel button is enabled
+    And User verifies save button is enabled
     And User clicks on Save button for database
-    #And User sees success toast message '<Toast_Message>'
+    And User sees success toast message '<Toast_Message>'
     And User can see the Catalog title as '<Database_Name>'
     And User clicks on Copy Catalog ID
 
