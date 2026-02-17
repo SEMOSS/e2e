@@ -16,9 +16,9 @@ public class CatlogAccessPageUtility {
 	private static final String VIEW_SMSS_TAB_XPATH = "engineLayout-SMSS-tab";
 	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//*[@data-test-id='updateSMSS-updateSNSS-btn']";
 	// new database catalog
-	private static final String VIEW_ACCESSCONTROL_Text = "Access Control";
+	private static final String VIEW_ACCESSCONTROL_DATA_TESTID = "engineLayout-Access Control-tab";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
-	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
+	private static final String MEMBER_SEARCH_ICON_DATA_TESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
@@ -69,7 +69,8 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean canViewAccessControl(Page page) {
-		return page.getByText(VIEW_ACCESSCONTROL_Text).isVisible();
+		Locator accessControl = page.getByTestId(VIEW_ACCESSCONTROL_DATA_TESTID);
+		return accessControl.isVisible();
 	}
 
 	// new
@@ -78,7 +79,7 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void searchUserBasedOnRole(Page page, String role) {
-		Locator searchIcon = page.locator(CLICK_ON_SEARCH_ICON_XPATH);
+		Locator searchIcon = page.getByTestId(MEMBER_SEARCH_ICON_DATA_TESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
@@ -198,7 +199,7 @@ public class CatlogAccessPageUtility {
 	// 🔹 Common reusable method
 
 	public static void searchUser(Page page, String role, boolean useDocker) {
-		Locator searchIcon = page.locator(CLICK_ON_SEARCH_ICON_XPATH);
+		Locator searchIcon = page.getByTestId(MEMBER_SEARCH_ICON_DATA_TESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
