@@ -339,7 +339,8 @@ public class AppTemplatePageUtils {
 	public static void clickOnResponseBlock(Page page) {
 		page.waitForTimeout(5000);
 		if (page.locator(ASK_LOADER_XPATH).isVisible()) {
-			page.locator(ASK_LOADER_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
+			page.locator(ASK_LOADER_XPATH)
+					.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(60000));
 		}
 		Locator responseBlock = page.locator(RESPONSE_BOX_XPATH);
 		AICorePageUtils.waitFor(responseBlock);
@@ -418,6 +419,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static List<String> ids = ModelPageUtils.createdModelIds;
+
 	public static boolean verifyCreatedModelsInList(Page page) {
 		if (ids == null || ids.isEmpty()) {
 			return false;
@@ -431,7 +433,7 @@ public class AppTemplatePageUtils {
 			}
 			foundCount++;
 		}
-		
+
 		if (foundCount > ids.size()) {
 			return false;
 		}
