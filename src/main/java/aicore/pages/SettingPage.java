@@ -61,6 +61,7 @@ public class SettingPage {
 	public void clickNumberOfRows(String rowsPerPageValue) {
 		SettingsPageUtils.clickNumberOfRows(page, rowsPerPageValue);
 	}
+
 	public void clickOnSearchButton() {
 		SettingsPageUtils.clickOnSearchButton(page);
 	}
@@ -76,9 +77,12 @@ public class SettingPage {
 	public String checkUsername(String username) {
 		return SettingsPageUtils.checkUsername(page, username);
 	}
-	
+
 	public void clickOnTab(String tabName) {
 		SettingsPageUtils.clickOnTab(page, tabName);
 	}
-}
 
+	public void clickOnSection(String sectionName) {
+		SettingsPageUtils.clickOnSection(page, sectionName);
+	}
+}

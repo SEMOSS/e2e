@@ -11,8 +11,13 @@ Feature: Add Zip Database
     And User clicks on Copy Catalog ID
     And User sees success toast message 'Successfully Created Database'
     And User can see the Catalog title as 'TestDatabase'
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    And User clicks on Save button of Metadata tab
 
-    @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Capture a screenshot of the notebook query entry for documentation
     Given User captures documentation screenshot for 'Navigating/Create New App'
     When User opens Main Menu
@@ -21,7 +26,7 @@ Feature: Add Zip Database
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User closes the Block Settings button
     And User clicks on Notebook
     And User deletes the notebook named 'mcp_driver'
@@ -36,6 +41,6 @@ Feature: Add Zip Database
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    And User click on Import data menu 
+    And User click on Import data menu
     And User captures screenshot for app screens "NB4"
     And User completes screenshot capture and triggers comparison for 'Notebook'
