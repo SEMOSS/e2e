@@ -37,10 +37,10 @@ public class SettingsModelPageUtils {
 	private static final String ADD_MEMBER_XPATH = "//input[@data-slot='command-input']";
 	private static final String RADIO_BUTTON_DATATESTID = "{role}-role-radio";
 	private static final String SAVE_BUTTON_DATATESTID = "members-add-overlay-add-button";
-	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
+	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[normalize-space()='Successfully deleted']";
 	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
-	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "td:has(button svg[data-testid='EditIcon']) button svg[data-testid='DeleteIcon']";
-	private static final String CONFIRM_BUTTON_XPATH = "//button[span[text()='Confirm']]";
+	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//td//*[contains(@class,'lucide-trash')]";
+	private static final String CONFIRM_BUTTON_XPATH = "//button[text()='Confirm']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
 	private static final String USAGE_CODE_SECTION_XPATH = "//*[text()='{sectionName}']/../div/pre";
@@ -235,8 +235,8 @@ public class SettingsModelPageUtils {
 		page.waitForCondition(
 				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
 				new Page.WaitForConditionOptions().setTimeout(5000));
-		// Added cancel button code because pop-up is not closing because of bug
-//		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
+//		// Added cancel button code because pop-up is not closing because of bug
+////		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
 	}
 
 	public static boolean isDeleteSuccessful(Page page) {

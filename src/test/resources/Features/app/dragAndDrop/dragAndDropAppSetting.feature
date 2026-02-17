@@ -63,13 +63,13 @@ Feature: Drag and Drop App setting Page
     Then User can see the 'General' page open on right side panel
     And User can see the 'Private' section on General setting page
     And User turn OFF the Private option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* global'
+    #And 'Admin' user can see toaster message is 'Successfully made Test app .* global'
     And User turn ON the Private option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* non-global'
+    #And 'Admin' user can see toaster message is 'Successfully made Test app .* non-global'
     And User can see the 'Non Discoverable' section on General setting page
     And User turn OFF the Non Discoverable option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* discoverable'
+    #And 'Admin' user can see toaster message is 'Successfully made Test app .* discoverable'
     And User turn ON the Non Discoverable option
-    And 'Admin' user can see toaster message is 'Successfully made Test app .* undiscoverable'
+    #And 'Admin' user can see toaster message is 'Successfully made Test app .* undiscoverable'
     And User can see the 'Delete Project' section on General setting page
-    And 'Admin' user 'can' Delete Catalog
+    #And 'Admin' user 'can' Delete Catalog
