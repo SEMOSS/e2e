@@ -28,7 +28,7 @@ Feature: Database Catalog permissions for Editor user
     Then 'Editor' user can 'View' Overview
     And 'Editor' user can 'View' Usage
     And 'Editor' user can 'View' Metadata
-    And 'Editor' user can 'not View' Access Control
+    And 'Editor' user can 'View' Access Control
    	And User logs out from the application
     And User login as 'Author'
 
@@ -39,25 +39,24 @@ Feature: Database Catalog permissions for Editor user
     And User logs out from the application
     And User login as 'Author'
 
-	##In latest UI change Editor User not able to see the Access Control Option we are commenting below Step
-  #Scenario: Database Catalog - Editor - Add and Delete read Member
-    #Given User selects the 'TestDatabase' from the database catalog
-    #And 'Editor' user clicks on Access Control
-    #Then User clicks on Add Member button
-    #And User adds one user and assigns them as 'Read'
-    #And User Search 'Read' user from Access Control
-    #And User deletes the 'Read' user
-    #And User logs out from the application
-    #And User login as 'Author'
-#
- #@DeleteTestCatalog
-  #Scenario: Database Catalog - Editor - Delete Database
-   #Given User selects the 'TestDatabase' from the database catalog
-    #And 'Editor' user clicks on Access Control
-    #Then 'Editor' user clicks on delete button and see the permission error toast message
-    #And User opens Main Menu
-    #And User clicks on Open Database
-    #Then User searches the 'TestDatabase' in the database Catalog searchbox
-    #And User sees the database name 'TestDatabase' in the database catalog
-    #And User logs out from the application
-    #And User login as 'Author'
+  Scenario: Database Catalog - Editor - Add and Delete read Member
+    Given User selects the 'TestDatabase' from the database catalog
+    And 'Editor' user clicks on Access Control
+    Then User clicks on Add Member button
+    And User adds one user and assigns them as 'Read'
+    And User Search 'Read' user from Access Control
+    And User deletes the 'Read' user
+    And User logs out from the application
+    And User login as 'Author'
+
+ @DeleteTestCatalog
+  Scenario: Database Catalog - Editor - Delete Database
+   Given User selects the 'TestDatabase' from the database catalog
+    And 'Editor' user clicks on Access Control
+    Then 'Editor' user clicks on delete button and see the permission error toast message
+    And User opens Main Menu
+    And User clicks on Open Database
+    Then User searches the 'TestDatabase' in the database Catalog searchbox
+    And User sees the database name 'TestDatabase' in the database catalog
+    And User logs out from the application
+    And User login as 'Author'
