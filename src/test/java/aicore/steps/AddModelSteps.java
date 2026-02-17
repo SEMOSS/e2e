@@ -150,7 +150,7 @@ public class AddModelSteps {
 
 	@And("User can see a toast message as {string}")
 	public void user_can_a_see_toast_message_as(String toastMessage) {
-		String actualMessage = openModelPage.modelCreationToastMessage();
+		String actualMessage = openModelPage.modelCreationToastMessage(toastMessage);
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
 		// openModelPage.closeModelCreationToastMessage();
 	}

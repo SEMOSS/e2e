@@ -44,7 +44,7 @@ public class ModelPageUtils {
 	private static final String URL_FIELDS_DATA_TESTID = "model-importForm-{field}-url";
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//div[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
-	private static final String MODEL_TOAST_MESSAGE_TESTID = "//div[text()='Model uploaded successfully!']";
+	private static final String MODEL_TOAST_MESSAGE_TESTID = "//div[text()='{toastMessage}']";
 	private static final String MODEL_ID_TESTID = "engineHeader-Model-id";
 	private static final String MODEL_NAME_TESTID = "Title";
 
@@ -69,12 +69,12 @@ public class ModelPageUtils {
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'] [starts-with(normalize-space(string(.)), '{fieldName}')]";
 
 	public static List<String> createdModelIds = new ArrayList<>();
-	private static final String SEARCH_CATALOG_LABEL = "Search";
-	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
+	private static final String SEARCH_CATALOG_DATA_TESTID = "search-bar";
+	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String CLICK_ON_CREATED_MODEL_XPATH = "//div[contains(@data-testid,'genericEngineCards')]";
 	private static final String INIT_SCRIPT_DATA_TESTID = "importForm-INIT_MODEL_ENGINE-textField";
 	private static final String GCP_REGION_DATA_TESTID = "importForm-GCP_REGION-textField";
@@ -357,8 +357,8 @@ public class ModelPageUtils {
 		createButtonLocator.click();
 	}
 
-	public static String modelCreationToastMessage(Page page) {
-		Locator alert = page.locator(MODEL_TOAST_MESSAGE_TESTID);
+	public static String modelCreationToastMessage(Page page, String toastMessage) {
+		Locator alert = page.locator(MODEL_TOAST_MESSAGE_TESTID.replace("{toastMessage}", toastMessage));
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -535,7 +535,7 @@ public class ModelPageUtils {
 		Locator createButton = page.locator(CREATE_MODEL_BUTTON_XPATH);
 		createButton.scrollIntoViewIfNeeded();
 		createButton.click();
-		Locator copyId = page.getByTestId("ContentCopyOutlinedIcon");
+		Locator copyId = page.getByTestId("engineHeader-copy-Model-id-btn");
 		AICorePageUtils.waitFor(copyId);
 		copyId.click();
 		String modelId = CommonUtils.readCopiedTextFromClipboard(page);
@@ -543,7 +543,7 @@ public class ModelPageUtils {
 	}
 
 	public static void userClickOnCreatedModel(Page page) {
-		page.getByLabel(SEARCH_CATALOG_LABEL).fill("Model 2");
+		page.getByTestId(SEARCH_CATALOG_DATA_TESTID).fill("Model 2");
 		page.locator(CLICK_ON_CREATED_MODEL_XPATH).first().click();
 
 	}
@@ -554,7 +554,7 @@ public class ModelPageUtils {
 			try {
 				HomePageUtils.openMainMenu(page);
 				HomePageUtils.clickOnOpenModel(page);
-				page.getByLabel(SEARCH_CATALOG_LABEL).fill(modelId);
+				page.getByTestId(SEARCH_CATALOG_DATA_TESTID).fill(modelId);
 				page.waitForTimeout(500);
 				page.locator(CLICK_ON_CATALOG_XPATH).click();
 				page.locator(ACCESS_CONTROL_XPATH).click();

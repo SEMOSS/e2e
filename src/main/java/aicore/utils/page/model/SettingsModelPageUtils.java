@@ -46,11 +46,9 @@ public class SettingsModelPageUtils {
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String SEARCH_BOX_XPATH = "//div[@data-testid='settingsIndexPage-searchBar']//input[@placeholder='Search']";
-	private static final String DISCOVERABLE_MODELS_BUTTON_XPATH = "//button[text()='Discoverable Models']";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
-	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
-	private static final String SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
+	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -239,7 +237,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
-		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
+		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH);
 		deleteIcon.scrollIntoViewIfNeeded();
 		deleteIcon.hover();
 		deleteIcon.click();
@@ -287,6 +285,6 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnDiscoverableModelsButton(Page page) {
-		page.click(DISCOVERABLE_MODELS_BUTTON_XPATH);
+		page.getByTestId(DISCOVERABLE_MODELS_BUTTON_DATA_TESTID).click();
 	}
 }

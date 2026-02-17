@@ -77,8 +77,8 @@ public class AddModelPage {
 		ModelPageUtils.clickOnCreateModelButton(page);
 	}
 
-	public String modelCreationToastMessage() {
-		return ModelPageUtils.modelCreationToastMessage(page);
+	public String modelCreationToastMessage(String toastMessage) {
+		return ModelPageUtils.modelCreationToastMessage(page, toastMessage);
 	}
 
 	public void closeModelCreationToastMessage() {
@@ -497,6 +497,7 @@ public class AddModelPage {
 	public void selectAddModelOption(String option) {
 		ModelPageUtils.selectAddModelOption(page, option);
 	}
+
 	public void clickOnUploadButton(String buttonName) {
 		ModelPageUtils.clickOnUploadButton(page, buttonName);
 	}

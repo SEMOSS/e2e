@@ -14,7 +14,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String DATABASE_SECTION_NAME_XPATH = "//button[text()='{sectionName}']";
 	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
 	private static final String DATABASE_OPTIONS_ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
-	private static final String CATALOG_NAME_XPATH = "//h1[text()='{CatalogName}']";
+	private static final String CATALOG_NAME_XPATH = "//h1[contains(text(),'{CatalogName}')]";
 	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='search-box']";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
