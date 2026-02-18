@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.ConfigUtils;
@@ -20,25 +19,25 @@ public class SettingsModelPageUtils {
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
 	private static final String TILE_SECTION_TITLE_XPATH = "//p[text()='{title}']";
 	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Private']/following-sibling::p";
-	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model public']";
+	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_DATA_TESTID = "settingsTiles-make-Model-public-private-switch";
 	private static final String MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Non Discoverable']/following-sibling::p";
-	private static final String MAKE_DISCOVERABLE_TOGGLE_BUTTON_XPATH = "//span[@title='Make Model discoverable']";
+	private static final String MAKE_DISCOVERABLE_TOGGLE_BUTTON_DATA_TESTID = "settingsTiles-Model-makeDiscoverable-switch";
 	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Delete Model']/following-sibling::p";
-	private static final String DELETE_BUTTON_XPATH = "//button//span[text()='Delete']";
-	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h6[text()='Pending Requests']";
-	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h6[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
-	private static final String MEMBER_SECTION_TITLE_XPATH = "//h6[text()='Permissions']";
-	private static final String MEMBER_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
+	private static final String DELETE_BUTTON_DATA_TESTID = "settingsTiles-Model-delete-btn";
+	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h4[text()='Pending Requests']";
+	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h4[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
+	private static final String MEMBER_SECTION_TITLE_XPATH = "//h4[text()='Permissions']";
+	private static final String MEMBER_SEARCH_ICON_DATA_TESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
-	private static final String ADD_MEMBERS_BUTTON_XPATH = "//div[text()='Add Members']";
-	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//*[name()='svg'][@data-testid='ArrowDropDownIcon']";
+	private static final String ADD_MEMBERS_BUTTON_DATA_TESTID = "membersTables-addMembers-btn";
+	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//h4[text()='Permissions']/parent::div/../following-sibling::div//span[contains(text(),'Rows per page:')]";
 	private static final String ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li";
 	private static final String CLICK_ON_SEARCH_USER_DATATESTID = "members-add-overlay-autocomplete";
 	private static final String ADD_MEMBER_XPATH = "//input[@data-slot='command-input']";
 	private static final String RADIO_BUTTON_DATATESTID = "{role}-role-radio";
 	private static final String SAVE_BUTTON_DATATESTID = "members-add-overlay-add-button";
-	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[normalize-space()='Successfully deleted']";
-	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
+	private static final String DELETE_SUCCESS_TOAST_XPATH = "//li[@data-type='success']";
+	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//li[@data-type='error']";
 	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//td//*[contains(@class,'lucide-trash')]";
 	private static final String CONFIRM_BUTTON_XPATH = "//button[text()='Confirm']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
@@ -47,10 +46,9 @@ public class SettingsModelPageUtils {
 	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String SEARCH_BOX_XPATH = "//div[@data-testid='settingsIndexPage-searchBar']//input[@placeholder='Search']";
+	private static final String DELETE_CATALOG_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
-
-	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Members\"]";
-	private static final String SEARCH_ICON_XPATH = "//button[contains(@class,'MuiButtonBase-root MuiIconButton-root')]//*[name()='svg'][@data-testid='SearchIcon']";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -67,8 +65,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyMakePublicToggleButtonIsVisible(Page page) {
-		boolean isMakePublicToggleButtonVisible = page.isVisible(MAKE_PUBLIC_TOGGLE_BUTTON_XPATH);
-		return isMakePublicToggleButtonVisible;
+		return page.getByTestId(MAKE_PUBLIC_TOGGLE_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static boolean verifyMakeDiscoverableSectionIsVisible(Page page, String title) {
@@ -82,8 +79,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyMakeDiscoverableToggleButtonIsVisible(Page page) {
-		boolean isMakeDiscoverableToggleButtonVisible = page.isVisible(MAKE_DISCOVERABLE_TOGGLE_BUTTON_XPATH);
-		return isMakeDiscoverableToggleButtonVisible;
+		return page.getByTestId(MAKE_DISCOVERABLE_TOGGLE_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static boolean verifyDeleteSectionIsVisible(Page page, String title) {
@@ -97,8 +93,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyDeleteButtonIsVisible(Page page) {
-		boolean isDeleteButtonVisible = page.isVisible(DELETE_BUTTON_XPATH);
-		return isDeleteButtonVisible;
+		return page.getByTestId(DELETE_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static boolean verifyPendingRequestsSectionIsVisible(Page page) {
@@ -121,22 +116,20 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifySearchMembersSearchBoxIsVisible(Page page) {
-		page.click(MEMBER_SEARCH_ICON_XPATH);
+		page.getByTestId(MEMBER_SEARCH_ICON_DATA_TESTID).click();
 		boolean isSearchMembersTextBoxVisible = page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).isVisible();
 		return isSearchMembersTextBoxVisible;
 	}
 
 	public static boolean verifyAddMembersButtonIsVisible(Page page) {
-		boolean isAddMembersButtonVisible = page.isVisible(ADD_MEMBERS_BUTTON_XPATH);
-		return isAddMembersButtonVisible;
+		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static boolean verifyRowsPerPageDropdownIsVisible(Page page) {
 		Locator ROWS_PER_PAGE_DROPDOWN = page.locator(ROWS_PER_PAGE_DROPDOWN_XPATH).first();
 		AICorePageUtils.waitFor(ROWS_PER_PAGE_DROPDOWN);
 		ROWS_PER_PAGE_DROPDOWN.scrollIntoViewIfNeeded();
-		boolean isRowsPerPageDropdownVisible = ROWS_PER_PAGE_DROPDOWN.isVisible();
-		return isRowsPerPageDropdownVisible;
+		return ROWS_PER_PAGE_DROPDOWN.isVisible();
 	}
 
 	public static List<String> verifyRowsPerPageDropdownOptions(Page page) {
@@ -202,7 +195,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnAddMembersButton(Page page) {
-		page.click(ADD_MEMBERS_BUTTON_XPATH);
+		page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).click();
 	}
 
 	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
@@ -227,14 +220,9 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnDeleteButton(Page page) {
-		Locator deleteButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete"));
+		Locator deleteButton = page.locator(DELETE_CATALOG_BUTTON_XPATH);
 		deleteButton.click();
-		deleteButton.click();
-		page.waitForCondition(
-				() -> page.isVisible(DELETE_SUCCESS_TOAST_XPATH) || page.isVisible(DELETE_PERMISSION_ERROR_TOAST_XPATH),
-				new Page.WaitForConditionOptions().setTimeout(5000));
-//		// Added cancel button code because pop-up is not closing because of bug
-////		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
+		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 	}
 
 	public static boolean isDeleteSuccessful(Page page) {
@@ -246,14 +234,13 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean isAddMemberButtonVisible(Page page) {
-		return page.isVisible(ADD_MEMBERS_BUTTON_XPATH);
+		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
-		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role));
+		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH);
 		deleteIcon.scrollIntoViewIfNeeded();
 		deleteIcon.hover();
-		deleteIcon.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		deleteIcon.click();
 		page.locator(CONFIRM_BUTTON_XPATH).click();
 	}

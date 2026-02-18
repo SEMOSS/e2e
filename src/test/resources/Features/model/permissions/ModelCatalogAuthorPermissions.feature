@@ -37,24 +37,24 @@ Feature: Model catalog permission - Author
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Member setting
-    And 'Author' user clicks on Settings
+    And 'Author' user clicks on Access Control
     Then 'Author' user 'can' see Member Setting
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Add Editor Member
-    And 'Author' user clicks on Settings
+    And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Add Read Member
-    And 'Author' user clicks on Settings
+    And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Delete editor Member
-    And 'Author' user clicks on Settings
+    And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User Search the 'Editor' user from Access Control
@@ -62,12 +62,12 @@ Feature: Model catalog permission - Author
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Delete read Member
-    And 'Author' user clicks on Settings
+    And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User Search the 'Read' user from Access Control
     And User deletes the 'Read' user
 
   Scenario: Model Catalog - Author - Delete Model
-    And 'Author' user clicks on Settings
+    And 'Author' user clicks on Access Control
     Then 'Author' user 'can' Delete Catalog
