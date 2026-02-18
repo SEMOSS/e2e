@@ -36,9 +36,9 @@ public class SettingsModelPageUtils {
 	private static final String ADD_MEMBER_XPATH = "//input[@data-slot='command-input']";
 	private static final String RADIO_BUTTON_DATATESTID = "{role}-role-radio";
 	private static final String SAVE_BUTTON_DATATESTID = "members-add-overlay-add-button";
-	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[contains(text(),'Successfully deleted')]";
+	private static final String DELETE_SUCCESS_TOAST_XPATH = "//div[normalize-space()='Successfully deleted']";
 	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//div[contains(@class, 'MuiAlert-message') and contains(text(), 'does not exist or user does not have permissions')]";
-	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = ".whitespace-nowrap > .flex > button";
+	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//td//*[contains(@class,'lucide-trash')]";
 	private static final String CONFIRM_BUTTON_XPATH = "//button[text()='Confirm']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";

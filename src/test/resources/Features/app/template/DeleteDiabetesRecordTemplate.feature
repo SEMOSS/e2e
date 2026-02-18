@@ -1,14 +1,20 @@
-@DeleteTestCatalog @DeleteCreatedTestApp
+@DeleteTestCatalog @DeleteCreatedTestApp @ApplicationBugFailure
 Feature: Create app using Delete diabetesTemplate
 
   Background: User create the Diabetes database using zip file
     Given User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
     And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
+    And User clicks on MetaData tab
+    And User clicks on Refresh button
+    And User selects the 'DIABETES' from the dropdown
+    And User clicks on apply database button
+    Then User sees the table in the metadata tab
 
   @LoginWithAdmin @Regression
   Scenario: Create app using delete Diabetes Record Template

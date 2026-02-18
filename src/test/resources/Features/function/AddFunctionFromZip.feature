@@ -52,7 +52,7 @@ Feature: Add Function From Zip
     #And User selects 'author' access
     #And User types a comment as 'Access Request'
     #And User clicks on Request button
-    #Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
+    #Then User should successfully request access and a toast message as 'Successfully requested access to engine'
     #And User logs out from the application
     #And User login as "Admin"
 
