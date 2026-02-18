@@ -192,7 +192,7 @@ public class AddFunctionSteps {
 
 	@Then("User sees deleted function success toast message {string}")
 	public void user_sees_deleted_function_success_toast_message(String toastMessage) {
-		String expectedMessage = addFunctionToCatalogPage.verifyDeleteToastMessage();
+		String expectedMessage = addFunctionToCatalogPage.verifyDeleteToastMessage(toastMessage);
 		String actualMessage = toastMessage;
 		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
 	}
@@ -202,10 +202,6 @@ public class AddFunctionSteps {
 		boolean missingFieldFlag = addFunctionToCatalogPage.verifyMissingInputField();
 		Assertions.assertTrue(missingFieldFlag, "missing input field is not highlighted/redirected");
 	}
-//	@When("User clicks Make Discoverable button")
-//	public void user_clicks_make_discoverable_button() {
-//		addFunctionToCatalogPage.clickOnMakeDiscoverableButton();
-//	}
 
 	@When("User clicks Make {string} Discoverable button")
 	public void user_clicks_make_discoverable_button(String catalogName) {

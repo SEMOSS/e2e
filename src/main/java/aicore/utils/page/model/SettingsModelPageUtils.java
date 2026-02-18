@@ -219,13 +219,11 @@ public class SettingsModelPageUtils {
 			page.locator(ADD_MEMBER_XPATH).press("ArrowDown");
 			page.locator(ADD_MEMBER_XPATH).press("Enter");
 		}
-		page.getByTestId(RADIO_BUTTON_DATATESTID.replace("{role}", role));
+		if (role.equalsIgnoreCase("Read")) {
+			role = "readonly";
+		}
+		page.getByTestId(RADIO_BUTTON_DATATESTID.replace("{role}", role.toLowerCase())).click();
 		page.getByTestId(SAVE_BUTTON_DATATESTID).click();
-		// Locator alertCloseLocator = page.locator("//button[@aria-label='Close']");
-		// AICorePageUtils.waitFor(alertCloseLocator);
-		// alertCloseLocator.click();
-		// alertCloseLocator.waitFor(new
-		// Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN));
 	}
 
 	public static void clickOnDeleteButton(Page page) {
