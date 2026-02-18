@@ -18,21 +18,21 @@ public class CatlogAccessPageUtility {
 	// new database catalog
 	private static final String VIEW_ACCESSCONTROL_DATA_TESTID = "engineLayout-Access Control-tab";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
-	private static final String MEMBER_SEARCH_ICON_DATA_TESTID = "membersTable-searchIcon";
+	private static final String CLICK_ON_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
 	// create app variable declaration
 	private static final String CLICK_ON_SETTINGS_DATATESTID = "workspace-Settings-image";
-	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
 	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
 	private static final String CLICK_ON_DATA_APPS_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Apps')]";
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
-	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
-	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//span[contains(@title,'discoverable')]";
+	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//button[contains(@title,'public')]";
+	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//button[contains(@title,'discoverable')]";
 	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
@@ -46,7 +46,7 @@ public class CatlogAccessPageUtility {
 	private static final String PENDING_REQUEST_REJECT_DATA_TESTID = "deny-pending-member-btn";
 	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
 	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
-	private static final String SETTING_SECTION_XPATH = "//h6[normalize-space()='{section}']";
+	private static final String SETTING_SECTION_XPATH = "//h4[normalize-space()='{section}']";
 	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div//p[normalize-space()='Enable the publishing of the portal.']/following::span[contains(@class,'Mui-checked')]//input[@type='checkbox']";
 	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button//span[normalize-space()='Publish']";
 	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//span[normalize-space()='{buttonName}']";
@@ -79,7 +79,7 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void searchUserBasedOnRole(Page page, String role) {
-		Locator searchIcon = page.getByTestId(MEMBER_SEARCH_ICON_DATA_TESTID);
+		Locator searchIcon = page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
@@ -199,7 +199,7 @@ public class CatlogAccessPageUtility {
 	// 🔹 Common reusable method
 
 	public static void searchUser(Page page, String role, boolean useDocker) {
-		Locator searchIcon = page.getByTestId(MEMBER_SEARCH_ICON_DATA_TESTID);
+		Locator searchIcon = page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
@@ -253,6 +253,9 @@ public class CatlogAccessPageUtility {
 
 	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
 		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));
+		if (!sectionLocator.isVisible()) {
+			sectionLocator = page.locator("//h6[normalize-space()='" + section + "']");
+		}
 		return sectionLocator.isVisible();
 	}
 

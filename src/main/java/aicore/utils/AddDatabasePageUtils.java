@@ -23,7 +23,7 @@ public class AddDatabasePageUtils {
 	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
 	private static final String COPY_ID_OPTION_TEXT = "copy";
-	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
+	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/..//following-sibling::div//span[text()='{filterValue}']";
 	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
 	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
 	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";

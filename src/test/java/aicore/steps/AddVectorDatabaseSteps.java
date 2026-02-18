@@ -271,11 +271,12 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		chnageAccessPopUpPage.clickOnRequestButton();
 	}
 
-	@Then("User should successfully request access given the Vector is requestable with a toast message as {string}")
+	@Then("User should successfully request access and a toast message as {string}")
 	public void user_should_successfully_request_access_given_the_vector_is_requestable_with_a_toast_message_as(
 			String expectedMessage) {
-		boolean toastVisible = chnageAccessPopUpPage.isRequestSuccessToastVisible();
-		Assertions.assertTrue(toastVisible, "Expected toast message to be visible: " + expectedMessage);
+		String toastText = chnageAccessPopUpPage.isRequestSuccessToastVisible();
+		Assertions.assertTrue(toastText != null && toastText.contains(expectedMessage),
+				"Expected toast message to contain: '" + expectedMessage + "' but got: '" + toastText + "'");
 	}
 
 	@And("User clicks on Discoverable Vectors button")
