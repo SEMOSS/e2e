@@ -85,7 +85,11 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickSaveButton(Page page) {
-		page.locator(ADD_MEMBER_TYPE_SAVE_XPATH).click();
+		page.setViewportSize(1350, 650);
+		Locator saveButton = page.locator(ADD_MEMBER_TYPE_SAVE_XPATH);
+		saveButton.scrollIntoViewIfNeeded();
+		saveButton.hover();
+		saveButton.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static String userCreationToastMessage(Page page) {
