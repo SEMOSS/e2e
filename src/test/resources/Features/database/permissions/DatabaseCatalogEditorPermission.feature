@@ -1,4 +1,4 @@
-@LoginWithAuthor @Regression  @DeleteTestCatalog
+@LoginWithAuthor @Regression @DeleteTestCatalog
 Feature: Database Catalog permissions for Editor user
   Adding LLm to the Catlog
 
@@ -21,15 +21,14 @@ Feature: Database Catalog permissions for Editor user
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
-   
 
   Scenario: Database Catalog - Editor - View Overview,Usage,Metadat,Access Control
-  Given User selects the 'TestDatabase' from the database catalog
+    Given User selects the 'TestDatabase' from the database catalog
     Then 'Editor' user can 'View' Overview
     And 'Editor' user can 'View' Usage
     And 'Editor' user can 'View' Metadata
     And 'Editor' user can 'View' Access Control
-   	And User logs out from the application
+    And User logs out from the application
     And User login as 'Author'
 
   Scenario: Database Catalog - Editor - Not View SMSS Deatils,Edit SMSS
@@ -49,9 +48,9 @@ Feature: Database Catalog permissions for Editor user
     And User logs out from the application
     And User login as 'Author'
 
- @DeleteTestCatalog
+  @DeleteTestCatalog
   Scenario: Database Catalog - Editor - Delete Database
-   Given User selects the 'TestDatabase' from the database catalog
+    Given User selects the 'TestDatabase' from the database catalog
     And 'Editor' user clicks on Access Control
     Then 'Editor' user clicks on delete button and see the permission error toast message
     And User opens Main Menu

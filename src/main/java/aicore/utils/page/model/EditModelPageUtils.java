@@ -29,7 +29,6 @@ public class EditModelPageUtils {
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Domain')]/parent::section//span";
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data classification')]/parent::section//span";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data restrictions')]/parent::section//span";
-
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 	private static final String DOMAIN_TEXTBOX_XPATH = "editEngineDetails-Domain-autocomplete";
 
@@ -81,16 +80,10 @@ public class EditModelPageUtils {
 
 	public static void selectDataClassificationOption(Page page, String option) {
 		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH.replace("{option}", option));
-		// page.fill(DATA_CLASSIFICATION_TEXTBOX_XPATH, option);
-		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("ArrowDown");
-		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void selectDataRestrictionsOption(Page page, String option) {
 		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH.replace("{option}", option));
-		// page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
-		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
-		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {

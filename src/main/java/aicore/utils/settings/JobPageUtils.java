@@ -88,9 +88,6 @@ public class JobPageUtils {
 	}
 
 	public static void clickCheckBox(Page page, String jobTitle) {
-		// Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}",
-		// jobTitle));
-		// String title = actualJobTitle.textContent();
 		page.locator(CHECKBOX_XPATH.replace("{jobName}", jobTitle)).isVisible();
 		page.locator(CHECKBOX_XPATH.replace("{jobName}", jobTitle)).click();
 	}
@@ -246,5 +243,4 @@ public class JobPageUtils {
 		historyTableLocator.scrollIntoViewIfNeeded();
 		historyTableLocator.click();
 	}
-
 }
