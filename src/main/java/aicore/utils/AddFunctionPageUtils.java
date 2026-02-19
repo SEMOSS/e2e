@@ -2,6 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddFunctionPageUtils {
@@ -17,13 +18,11 @@ public class AddFunctionPageUtils {
 	private static final String FUNCTION_NAME_DATA_TESTID = "function-form-input-FUNCTION_NAME";
 	private static final String FUNCTION_DESCRIPTION_DATA_TESTID = "function-form-input-FUNCTION_DESCRIPTION";
 	private static final String FUNCTION_TYPE_DATA_TESTID = "function-form-input-FUNCTION_TYPE";
-	private static final String FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='function-form-input-{fieldName}']";
-	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//span[text()='*']";
+	private static final String FIELDS_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='{section}']]/following-sibling::div//*[@data-testid='function-form-input-{fieldName}']";
+	private static final String FILE_FIELD_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='Settings']]/following-sibling::div[@data-testid='function-form-field-{fieldName}']";
+	private static final String MANDATORY_FIELDS_XPATH = "//label[text()='{fieldName}']//span[text()='*']";
 	private static final String FIELDS_DATA_TESTID = "function-form-input-{fieldName}";
-	private static final String INPUT_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//input[@type='text'] | .//textarea";
-	private static final String DROPDOWN_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//*[@role='button' or @aria-haspopup='listbox']";
-	private static final String PASSWORD_FIELDS_XPATH = "//div[@data-testid='function-form-input-{fieldName}']//input[@type='password'] | .//textarea";
-	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//li[normalize-space()='{fieldValue}']";
+	private static final String DROPDOWN_FIELDS_XPATH = "//button[@data-testid='function-form-input-{fieldName}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards-FUNCTION')]//p[(text()='{FunctionName}')]";
@@ -33,12 +32,12 @@ public class AddFunctionPageUtils {
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
-	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
+	private static final String DELETE_TOAST_MESSAGE = "//div[text()='{toastMessage}']";
 	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{catalogName}-makeDiscoverable-switch";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
-	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
-	private static final String SEARCHED_FUNCTION_DATATESTID = "genericEngineCards-DATABASE-{catalogName}";
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "search-bar";
+	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 	private static final String SEARCHED_CATALOG_DATATESTID = "genericEngineCards-{catalogType}-{catalogName}";
 	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
@@ -72,38 +71,43 @@ public class AddFunctionPageUtils {
 	}
 
 	public static boolean fieldUnderSection(Page page, String section, String field) {
-		String fieldName = getFieldNameForTestId(field);
-		Locator fieldLocator = page
-				.locator(FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldName));
-		fieldLocator.scrollIntoViewIfNeeded();
-		return fieldLocator.isVisible();
+		String fieldNameForTestId = getFieldNameForTestId(field);
+		Locator fileFieldLocator = page.locator(FILE_FIELD_UNDER_SECTION_XPATH.replace("{section}", section)
+				.replace("{fieldName}", fieldNameForTestId));
+		Locator fieldLocator = page.locator(
+				FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldNameForTestId));
+		if (fieldLocator.isVisible()) {
+			fieldLocator.scrollIntoViewIfNeeded();
+			return fieldLocator.isVisible();
+		}
+		if (fileFieldLocator.isVisible()) {
+			fileFieldLocator.scrollIntoViewIfNeeded();
+			return fileFieldLocator.isVisible();
+		}
+		return false;
 	}
 
 	public static boolean isFieldMandatory(Page page, String field) {
-		String fieldName = getFieldNameForTestId(field);
-		Locator fieldLocator = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", fieldName));
-		fieldLocator.first().scrollIntoViewIfNeeded();
-		return fieldLocator.first().isVisible();
+		Locator mandatoryField = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", field));
+		if (mandatoryField.textContent().contains("*")) {
+			return true;
+		}
+		return false;
 	}
 
-	public static void fillFunctionCreationForm(Page page, String field, String fieldValue, String timestamp) {
-		String fieldName = getFieldNameForTestId(field);
-		Locator fieldContainer = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldName));
-		fieldContainer.scrollIntoViewIfNeeded();
-		Locator dropdownField = page.locator(DROPDOWN_FIELDS_XPATH.replace("{fieldName}", fieldName));
-		Locator inputField = page.locator(INPUT_FIELDS_XPATH.replace("{fieldName}", fieldName));
-		Locator passwordField = page.locator(PASSWORD_FIELDS_XPATH.replace("{fieldName}", fieldName));
+	public static void fillFunctionCreationForm(Page page, String fieldName, String fieldValue, String timestamp) {
+		String fieldNameForTestId = getFieldNameForTestId(fieldName);
+		Locator field = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldNameForTestId));
+		field.scrollIntoViewIfNeeded();
+		Locator dropdownField = page.locator(DROPDOWN_FIELDS_XPATH.replace("{fieldName}", fieldNameForTestId));
 		if (dropdownField.count() > 0) {
 			dropdownField.first().click();
-			Locator dropdownOption = page.locator(SELECT_DROPDOWN_VALUE_XPATH.replace("{fieldValue}", fieldValue));
-			dropdownOption.click();
-		} else if (passwordField.count() > 0) {
-			passwordField.first().fill(fieldValue);
+			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(fieldValue)).click();
 		} else {
-			if (field.contains("Catalog Name")) {
+			if (fieldName.contains("Catalog Name")) {
 				fieldValue = fieldValue + timestamp;
 			}
-			inputField.first().fill(fieldValue);
+			field.first().fill(fieldValue);
 		}
 	}
 
@@ -225,11 +229,8 @@ public class AddFunctionPageUtils {
 		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 	}
 
-	public static String verifyDeleteToastMessage(Page page) {
-		page.getByText(DELETE_TOAST_MESSAGE)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
-		return toastMessage;
+	public static String verifyDeleteToastMessage(Page page, String toastMessage) {
+		return page.locator(DELETE_TOAST_MESSAGE.replace("{toastMessage}", toastMessage)).first().textContent();
 	}
 
 	public static String verifySuccessToastMessage(Page page, String toastMessage) {
@@ -282,8 +283,8 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
-		page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName)).isVisible();
-		page.getByTestId(SEARCHED_FUNCTION_DATATESTID.replace("{catalogName}", catalogName)).click();
+		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).isVisible();
+		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {

@@ -67,14 +67,14 @@ Feature: Add Model
     #Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see description as '<DESCRIPTION>' on the page
     And User should see '<TAGS>' on the page
-    #And User should see '<DETAILS>' in the overview Details section
+    And User should see '<DETAILS>' in the overview Details section
     And User should see '<TAGS>' in the overview Tag section
     And User should see '<DOMAINS>' in the overview Domain section
     And User should see '<DATA_CLASSIFICATION>' in the overview Data classification section
     And User should see '<DATA_RESTRICTIONS>' in the overview Data restrictions section
 
     Examples: 
-      | MODEL_NAME | DETAILS       | DESCRIPTION                | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
+      | MODEL_NAME | DETAILS             | DESCRIPTION                      | TAGS              | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
       | Model      | GPT 3.5 Turbo model | This is GPT 3.5 Turbo test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
   @DeleteTestCatalog

@@ -3,7 +3,7 @@ Feature: Model settings
   I want to use this feature file for all the scenarios related to Model settings
 
   Background: Create a model
-  Given User opens Main Menu
+    Given User opens Main Menu
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'OpenAI' type
@@ -13,8 +13,8 @@ Feature: Model settings
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
     #Then User can see a toast message as 'Successfully added LLM to catalog'
-    
- @DeleteCreatedDatabaseCatalog
+ 
+  @DeleteCreatedDatabaseCatalog
   Scenario: Validate Model Settings page
     When User clicks on Model Setting tab
     Then User can see 'Private' section
@@ -32,4 +32,3 @@ Feature: Model settings
     And User can see 'Search Members' textbox
     And User can see 'Add Members' button
     And User can see 'Rows per page' selection dropdown
-    #And User can see 'Rows per page' dropdown has options "5, 10, 20"

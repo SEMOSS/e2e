@@ -31,8 +31,7 @@ public abstract class AbstractChangeAccessPopUpPage {
 		ChangeAccessPopUpPageUtils.clickOnRequestButton(page);
 	}
 
-	public boolean isRequestSuccessToastVisible() {
+	public String isRequestSuccessToastVisible() {
 		return ChangeAccessPopUpPageUtils.isRequestSuccessToastVisible(page);
 	}
-
 }

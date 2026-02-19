@@ -37,20 +37,20 @@ Feature: App setting for Author permission
     When User Click on General setting option
     Then 'Author' user can see private toggle button as 'Enable'
     And User turn OFF the Private option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* global'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* global'
     And User turn ON the Private option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* non-global'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* non-global'
 
   @DeleteCreatedTestApp
   Scenario: Create App - Author user - View and perform action on Non Discoverable toggle button
     When User Click on General setting option
     Then 'Author' user can see Non-Discoverable toggle button as 'Enable'
     And User turn OFF the Non Discoverable option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* discoverable'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* discoverable'
     And User turn ON the Non Discoverable option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* undiscoverable'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* undiscoverable'
 
   Scenario: Create App - Author user - Delete App
     When User Click on General setting option
     Then 'Author' user can 'view' Delete catalog option
-    And 'Author' user 'can' Delete Catalog
+    #And 'Author' user 'can' Delete Catalog

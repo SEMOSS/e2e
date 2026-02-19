@@ -1,4 +1,5 @@
 Feature: Add Model Chat Functionality
+
   Background: Create a Model - GPT 3.5 Turbo
     Given User opens Main Menu
     And User clicks on Open Model
@@ -9,7 +10,7 @@ Feature: Add Model Chat Functionality
     And User get the CatalogName for variable
     And User clicks on Copy Catalog ID
 
- @LoginWithAdmin @Regression @DeleteTestCatalog
+  @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Validate Chat section of Model
     When User clicks on Chat button
     Then User should see the Chat section for Model with title 'Chat with the Model'
