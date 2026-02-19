@@ -17,7 +17,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//button[@role='combobox']";
 	private static final String TEAM_NAME_XPATH = "//label[text()='Name']/parent::div//input";
 	private static final String DESCRIPTION_XPATH = "//label[text()='Description']/parent::div//textarea";
-	private static final String ADD_BUTTON_XPATH = "//button[text()='{buttonName}']";
+	private static final String ADD_BUTTON_XPATH = "//button[text()='{buttonName}'] | //span[text()='{buttonName}']";
 	private static final String TEAM_BUTTON_XPATH = "//button//span[contains(text(), 'Add Members')]";
 	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
@@ -62,11 +62,13 @@ public class TeamPermissionsSettingsUtils {
 
 	public static void clickOnAddButton(Page page, String button) {
 		page.click(ADD_BUTTON_XPATH.replace("{buttonName}", button));
-		page.reload(); // added because of stale element
+		page.reload();
 	}
 
 	public static void clickOnAddMemberButton(Page page, String button) {
-		page.click(ADD_BUTTON_XPATH.replace("{buttonName}", button));
+		Locator buttonLocator = page.locator(ADD_BUTTON_XPATH.replace("{buttonName}", button));
+		AICorePageUtils.waitFor(buttonLocator);
+		buttonLocator.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static void clickOnAddTeamButton(Page page, String button) {
