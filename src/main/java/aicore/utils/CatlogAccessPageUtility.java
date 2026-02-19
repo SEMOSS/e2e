@@ -16,7 +16,7 @@ public class CatlogAccessPageUtility {
 	private static final String VIEW_SMSS_TAB_XPATH = "engineLayout-SMSS-tab";
 	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//*[@data-test-id='updateSMSS-updateSNSS-btn']";
 	// new database catalog
-	private static final String VIEW_ACCESSCONTROL_Text = "Access Control";
+	private static final String VIEW_ACCESSCONTROL_DATA_TESTID = "engineLayout-Access Control-tab";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
 	private static final String CLICK_ON_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
@@ -69,7 +69,8 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean canViewAccessControl(Page page) {
-		return page.getByText(VIEW_ACCESSCONTROL_Text).isVisible();
+		Locator accessControl = page.getByTestId(VIEW_ACCESSCONTROL_DATA_TESTID);
+		return accessControl.isVisible();
 	}
 
 	// new
@@ -253,7 +254,7 @@ public class CatlogAccessPageUtility {
 
 	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
 		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));
-		if(!sectionLocator.isVisible()) {
+		if (!sectionLocator.isVisible()) {
 			sectionLocator = page.locator("//h6[normalize-space()='" + section + "']");
 		}
 		return sectionLocator.isVisible();
