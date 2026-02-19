@@ -120,7 +120,6 @@ public class AddDatabasePageUtils {
 				.locator(SECTION_FIELD_XPATH.replace("{sectionName}", sectionName).replace("{fieldName}", fieldName));
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
-
 	}
 
 	public static void clickOnApplyButton(Page page) {
@@ -228,13 +227,10 @@ public class AddDatabasePageUtils {
 	public static String verifyDatabaseNameInCatalog(Page page, String dbName) {
 		Locator databaseName = page.locator(DB_CATALOG_XPATH.replace("{dbName}", dbName));
 		AICorePageUtils.waitFor(databaseName);
-		// databaseName.waitFor(new
-		// Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!databaseName.isVisible()) {
 			throw new AssertionError("Database name '" + dbName + "' is not visible in the catalog.");
 		}
 		return databaseName.textContent();
-
 	}
 
 	public static void clickOnDatabaseNameInCatalog(Page page, String dbName) {
@@ -388,7 +384,6 @@ public class AddDatabasePageUtils {
 
 	public static boolean verifyAllColumnsAreCollapsed(Page page) {
 		Locator collapseColumns = page.locator(COLLAPSE_COLUMNS_XPATH);
-		// Locator collapsedHeaders = page.locator(COLLAPSE_COLUMNS_HEADER_XPATH);
 		if (!collapseColumns.isVisible()) {
 			return true;
 		} else {
@@ -450,15 +445,11 @@ public class AddDatabasePageUtils {
 
 	public static void clickOnSaveButtonOfMetadataTab(Page page) {
 		Locator saveBtn = page.getByTestId("engineMetadata-save-btn");
-
 		page.waitForLoadState(LoadState.NETWORKIDLE);
-
 		page.waitForSelector("[data-testid='engineMetadata-save-btn']:not([disabled])");
-
 		saveBtn.scrollIntoViewIfNeeded();
 		saveBtn.focus();
 		saveBtn.click();
-
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 	}
 

@@ -33,8 +33,8 @@ public class GuardrailPage {
 		return GuardrailPageUtils.verifyGuardrailTitle(page, guardrailTitle);
 	}
 
-	public String verifyToastMessage() {
-		return GuardrailPageUtils.verifyToastMessage(page);
+	public String verifyToastMessage(String toastMessage) {
+		return GuardrailPageUtils.verifyToastMessage(page, toastMessage);
 	}
 
 	public Path downloadCatalog() {

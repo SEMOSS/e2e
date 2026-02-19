@@ -14,7 +14,6 @@ import aicore.framework.UrlUtils;
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
-
 	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue("applicationName") + "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
 	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search']";
@@ -166,26 +165,6 @@ public class HomePageUtils {
 		button.scrollIntoViewIfNeeded();
 		AICorePageUtils.waitFor(button);
 		return button.isVisible();
-//		if (!button.isVisible()) {
-//			throw new RuntimeException("Get Started button for " + buttonName + " is not visible");
-//		} else {
-//			button.click();
-//			if (buttonName.equalsIgnoreCase("drag") || buttonName.equalsIgnoreCase("code")) {
-//				if (!page.locator(BUILD_PAGE_POPUP_XPATH).isVisible()) {
-//					throw new RuntimeException("POP-Up is not showing after clicking on " + buttonName);
-//				} else {
-//					page.locator(BUILD_PAGE_POPUP_CLOSE_XPATH).click();
-//				}
-//			} else {
-//				String currentUrl = page.url();
-//				page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-//				if (!currentUrl.contains("prompt")) {
-//					throw new RuntimeException("Browser Prompt page is not opened");
-//				} else {
-//					page.goBack();
-//				}
-//			}
-
 	}
 
 	public static void verifyBuildPageButton(Page page, String buttonName) {
@@ -226,7 +205,6 @@ public class HomePageUtils {
 		locator.click();
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 

@@ -17,6 +17,7 @@ public class GuardrailPageUtils {
 	private static final String DEFAULT_THRESHOLD_FIELD_DATATESTID = "guardrail-form-input-DEFAULT_THRESHOLD";
 	private static final String EXPORT_BUTTON_DATA_TESTID = "engineHeader-Guardrail-export-btn";
 	private static final String TOAST_MESSAGE_DATA_TESTID = "notification-success-message";
+	private static final String GUARDRAIL_TOAST_MESSAGE_XPATH = "//div[text()='{toastMessage}']";
 
 	public static void clickOnAddGuardrailButton(Page page) {
 		page.getByTestId(ADD_GUARDRAIL_BUTTON_DATA_TESTID).click();
@@ -42,8 +43,8 @@ public class GuardrailPageUtils {
 		return actualGuardrailTitle.textContent().trim();
 	}
 
-	public static String verifyToastMessage(Page page) {
-		Locator toast = page.getByTestId(TOAST_MESSAGE_DATA_TESTID);
+	public static String verifyToastMessage(Page page, String toastMessage) {
+		Locator toast = page.locator(GUARDRAIL_TOAST_MESSAGE_XPATH.replace("{toastMessage}", toastMessage));
 		return AICorePageUtils.verifySuccessToastMessage(page, toast);
 	}
 

@@ -56,12 +56,10 @@ public class AddDatabaseFileUploadUtils {
 			if (column.count() == 0) {
 				break;
 			}
-
 			// check column is visible
 			if (!column.isVisible()) {
 				throw new AssertionError("Column at index " + index + " is not visible");
 			}
-
 			// check toggle button visibility and enabled state
 			String toggleTestId = TOGGLE_BUTTON_TESTID.replace("{columnIndex}", String.valueOf(index));
 			Locator toggleButton = page.getByTestId(toggleTestId);
@@ -69,7 +67,6 @@ public class AddDatabaseFileUploadUtils {
 				throw new AssertionError(
 						"Toggle button for column " + index + " is missing, not visible or not enabled");
 			}
-
 			// check edit button visibility and enabled state
 			String editTestId = EDIT_BUTTON_TESTID.replace("{columnIndex}", String.valueOf(index));
 			Locator editButton = page.getByTestId(editTestId);
@@ -128,7 +125,6 @@ public class AddDatabaseFileUploadUtils {
 		page.getByRole(AriaRole.COMBOBOX).filter(new Locator.FilterOptions().setHasText("Select or type child table"))
 				.click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(childTable)).click();
-		
 	}
 
 	public static void verifySaveBtn(Page page) {

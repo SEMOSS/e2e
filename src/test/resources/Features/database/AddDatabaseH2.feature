@@ -1,4 +1,3 @@
-
 Feature: Add H2 Database
 
   Background: Create H2 database
@@ -12,7 +11,6 @@ Feature: Add H2 Database
     And User Upload 'PUBLIC' as Schema Name
     And User add 'sa' as Username
     And User add 'H2' as JDBC URL for 'h2' database
-    #And User clicks on Next button for Create Database
     And User click on Connect button
     And User clicks on Apply button
     And User clicks on Import database button
