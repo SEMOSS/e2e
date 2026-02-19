@@ -87,4 +87,9 @@ public class AddDatabaseFileUploadSteps {
 	public void user_cliks_on_add_button_for_create_connection() {
 		addDatabaseCSVFileUploadPage.verifyAddBtnForCreateConnection();
 	}
+
+	@And("User clicks on Save button for Create Relationship")
+	public void user_clicks_on_save_button_for_create_relationship() {
+		addDatabaseCSVFileUploadPage.verifySaveBtnForCreateRelationship();
+	}
 }

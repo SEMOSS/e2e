@@ -24,7 +24,7 @@ public class AddDatabaseFileUploadUtils {
 	private static final String ADD_RELATIONSHIP_BUTTON_TESTID = "add-connection";
 	private static final String SAVE_RELATIONSHIP_BUTTON_TESTID = "save-connection";
 	private static final String FULL_SCREEN_CLOSE_BUTTON_XPATH = "//button[@aria-label='Close']";
-	private static final String CREATE_CONNECTION_XPATH = "//button[text()='Add']";
+	private static final String CREATE_CONNECTION_DATATESTID = "add-connection";
 
 	public static void selectTab(Page page, String tabName) {
 		page.getByTestId(TAB_SELECTION_TESTID.replace("{tabName}", tabName)).click();
@@ -100,20 +100,22 @@ public class AddDatabaseFileUploadUtils {
 	}
 
 	public static void verifySelectTableBtn(Page page) {
-		page.getByTestId(TABLE_LIST_BUTTON_TESTID).isVisible();
+		Locator selectTable = page.getByTestId(TABLE_LIST_BUTTON_TESTID);
+		AICorePageUtils.waitFor(selectTable);
 		page.getByTestId(TABLE_LIST_BUTTON_TESTID).isEnabled();
 		page.getByTestId(TABLE_LIST_BUTTON_TESTID).click();
 		if (page.getByRole(AriaRole.MENU).isVisible()) {
-			page.getByTestId(TABLE_LIST_BUTTON_TESTID).click(new Locator.ClickOptions().setForce(true));
+			page.locator("html").click();
 		} else {
 			throw new AssertionError("Select table Menu is not enabled");
 		}
 	}
 
 	public static void verifyResetbtn(Page page) {
-		page.getByTestId(REFRESH_BUTTON_TESTID).isVisible();
-		page.getByTestId(REFRESH_BUTTON_TESTID).isEnabled();
-		page.getByTestId(REFRESH_BUTTON_TESTID).click();
+		Locator resetButton = page.getByTestId(REFRESH_BUTTON_TESTID);
+		AICorePageUtils.waitFor(resetButton);
+		resetButton.isEnabled();
+		resetButton.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static void verifyCreateRealtionshipBtn(Page page, String parentTable, String childTable) {
@@ -126,13 +128,13 @@ public class AddDatabaseFileUploadUtils {
 		page.getByRole(AriaRole.COMBOBOX).filter(new Locator.FilterOptions().setHasText("Select or type child table"))
 				.click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(childTable)).click();
-		page.getByTestId(ADD_RELATIONSHIP_BUTTON_TESTID).click();
-		page.getByTestId(SAVE_RELATIONSHIP_BUTTON_TESTID).click();
+		
 	}
 
 	public static void verifySaveBtn(Page page) {
-		page.getByTestId(SAVE_BUTTON_TESTID).isVisible();
-		page.getByTestId(SAVE_BUTTON_TESTID).isEnabled();
+		Locator saveButton = page.getByTestId(SAVE_BUTTON_TESTID);
+		AICorePageUtils.waitFor(saveButton);
+		saveButton.isEnabled();
 	}
 
 	public static void verifyCancelBtn(Page page) {
@@ -141,7 +143,16 @@ public class AddDatabaseFileUploadUtils {
 	}
 
 	public static void verifyAddBtnForCreateConnection(Page page) {
-		page.locator(CREATE_CONNECTION_XPATH).isEnabled();
-		page.locator(CREATE_CONNECTION_XPATH).click();
+		Locator addButton = page.getByTestId(ADD_RELATIONSHIP_BUTTON_TESTID);
+		AICorePageUtils.waitFor(addButton);
+		addButton.hover();
+		addButton.click();
+	}
+
+	public static void verifySaveBtnForCreateRelationship(Page page) {
+		Locator createRelationshipButton = page.getByTestId(SAVE_RELATIONSHIP_BUTTON_TESTID);
+		AICorePageUtils.waitFor(createRelationshipButton);
+		createRelationshipButton.focus();
+		createRelationshipButton.click(new Locator.ClickOptions().setForce(true));
 	}
 }
