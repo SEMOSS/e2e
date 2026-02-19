@@ -29,6 +29,7 @@ public class EditModelPageUtils {
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Domain')]/parent::section//span";
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data classification')]/parent::section//span";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data restrictions')]/parent::section//span";
+
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 	private static final String DOMAIN_TEXTBOX_XPATH = "editEngineDetails-Domain-autocomplete";
 
