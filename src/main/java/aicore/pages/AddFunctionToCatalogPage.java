@@ -138,8 +138,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnDeleteConfirmationButton(page);
 	}
 
-	public String verifyDeleteToastMessage() {
-		return AddFunctionPageUtils.verifyDeleteToastMessage(page);
+	public String verifyDeleteToastMessage(String toastMessage) {
+		return AddFunctionPageUtils.verifyDeleteToastMessage(page, toastMessage);
 	}
 
 	public String verifySuccessToastMessage(String toastMessage) {

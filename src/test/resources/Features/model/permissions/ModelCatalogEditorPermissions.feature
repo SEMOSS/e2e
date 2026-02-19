@@ -25,7 +25,7 @@ Feature: Model Catalog Permission - Editor
     Given User can see the Model title as 'Catalog'
     Then 'Editor' user can 'View' Overview
 
-  @DeleteTestCatalog  @Regression
+  @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - View usage
     Then 'Editor' user can 'View' Usage
     And User logs out from the application
@@ -58,9 +58,11 @@ Feature: Model Catalog Permission - Editor
     And User login as 'Author'
 
   #Scenario: Model Catalog - Editor -  Delete Model
-  #Then 'Editor' user 'can not' Delete Model
-  #And User logs out from the application
-  #Then User login as "author"
+    #And 'Editor' user clicks on Access Control
+    #Then 'Editor' user clicks on delete button and see the permission error toast message
+    #And User logs out from the application
+    #Then User login as "author"
+
   @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - Add Read
     And 'Editor' user clicks on Access Control
