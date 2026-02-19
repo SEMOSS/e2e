@@ -35,7 +35,7 @@ public class UserManagementPageUtils {
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
-	private static final String ADFS_TOAST_MESSAGE_XPATH = "//div[text()='{message}']";
+	private static final String ADFS_TOAST_MESSAGE_XPATH = "//span[text()='{message}']";
 
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
