@@ -331,6 +331,7 @@ public class NotebookPageUtils {
 		page.waitForTimeout(300);
 		page.getByText(databaseName).click();
 	}
+
 	public static void clickOnImportDropdown(Page page) {
 		Locator selectDatabaseDropdown = page.locator(SELECT_DATABASE_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(selectDatabaseDropdown);

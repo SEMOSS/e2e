@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
 
 public class EmbedDocumentPage {
@@ -31,8 +32,9 @@ public class EmbedDocumentPage {
 	}
 
 	public void clickOnAddEmbedDocument() {
-		page.getByTestId(EMBED_DOCUMENT_DATATESTID).isVisible();
-		page.getByTestId(EMBED_DOCUMENT_DATATESTID).click();
+		Locator embedButton = page.getByTestId(EMBED_DOCUMENT_DATATESTID);
+		AICorePageUtils.waitFor(embedButton);
+		embedButton.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public void clickOnEmbedDocument() {

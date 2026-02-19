@@ -37,13 +37,13 @@ public class CatlogAccessPageUtility {
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
-	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//button[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]";
-	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//button[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]";
+	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//button[contains(@data-testid,'makeDiscoverable-switch')]";
+	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
 	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
 	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
-	private static final String PENDING_REQUEST_ACCEPT_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
-	private static final String PENDING_REQUEST_REJECT_XPATH = "//*[name()='svg'][@data-testid='CloseIcon']";
+	private static final String PENDING_REQUEST_ACCEPT_DATA_TESTID = "approve-pending-member-btn";
+	private static final String PENDING_REQUEST_REJECT_DATA_TESTID = "deny-pending-member-btn";
 	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
 	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
 	private static final String SETTING_SECTION_XPATH = "//h4[normalize-space()='{section}']";
@@ -152,7 +152,6 @@ public class CatlogAccessPageUtility {
 		AICorePageUtils.waitFor(editButton);
 		switch (action) {
 		case "Enable":
-			page.waitForTimeout(1000);
 			return editButton.isEnabled();
 		case "Disable":
 			String ariaDisabled = editButton.getAttribute("aria-disabled");
@@ -230,13 +229,13 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void acceptPendingRequest(Page page) {
-		Locator acceptButton = page.locator(PENDING_REQUEST_ACCEPT_XPATH);
+		Locator acceptButton = page.getByTestId(PENDING_REQUEST_ACCEPT_DATA_TESTID);
 		AICorePageUtils.waitFor(acceptButton);
 		acceptButton.click();
 	}
 
 	public static void rejectPendingRequest(Page page) {
-		Locator rejectButton = page.locator(PENDING_REQUEST_REJECT_XPATH);
+		Locator rejectButton = page.getByTestId(PENDING_REQUEST_REJECT_DATA_TESTID);
 		AICorePageUtils.waitFor(rejectButton);
 		rejectButton.click();
 	}

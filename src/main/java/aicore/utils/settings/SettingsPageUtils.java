@@ -24,7 +24,8 @@ public class SettingsPageUtils {
 	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
 	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
 	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
-	private static final String TAB_XPATH = "//button[normalize-space()='Discoverable Databases']";
+	private static final String TAB_XPATH = "//button[normalize-space()='{tabName}']";
+	private static final String SECTION_DATA_TESTID = "engineLayout-{sectionName}-tab";
 
 	public static boolean checkAdminButton(Page page) {
 		return page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible();
@@ -121,5 +122,9 @@ public class SettingsPageUtils {
 
 	public static void clickOnTab(Page page, String tabName) {
 		page.locator(TAB_XPATH.replace("{tabName}", tabName)).click();
+	}
+
+	public static void clickOnSection(Page page, String sectionName) {
+		page.getByTestId(SECTION_DATA_TESTID.replace("{sectionName}", sectionName)).click();
 	}
 }

@@ -17,11 +17,11 @@ public class StoragePageUtils {
 	private static final String S3_REGION_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_REGION')]";
 	private static final String S3_BUCKET_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_BUCKET')]";
 	private static final String S3_ACCESS_KEY_SMSS_PROPERTIES_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), 'S3_ACCESS_KEY')]";
-	private static final String CATALOG_NAME_XPATH = "//div[@data-testid='storage-form-input-NAME']//input[@type='text'] | .//textarea";
-	private static final String REGION_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_REGION']//input[@type='text'] | .//textarea";
-	private static final String BUCKET_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_BUCKET']//input[@type='text'] | .//textarea";
-	private static final String ACCESS_KEY_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_ACCESS_KEY']//input[@type='text'] | .//textarea";
-	private static final String SECRET_KEY_TEXTBOX_XPATH = "//div[@data-testid='storage-form-input-S3_SECRET_KEY']//input[@type='password'] | .//textarea";
+	private static final String CATALOG_NAME_DATA_TESTID = "storage-form-input-NAME";
+	private static final String REGION_TEXTBOX_DATA_TESTID = "storage-form-input-S3_REGION";
+	private static final String BUCKET_TEXTBOX_DATA_TESTID = "storage-form-input-S3_BUCKET";
+	private static final String ACCESS_KEY_TEXTBOX_DATA_TESTID = "storage-form-input-S3_ACCESS_KEY";
+	private static final String SECRET_KEY_TEXTBOX_DATA_TESTID = "storage-form-input-S3_SECRET_KEY";
 	private static final String FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[@data-testid='storage-form-input-{fieldName}']";
 	private static final String MANDATORY_FIELDS_XPATH = "//div[@data-testid='storage-form-input-{fieldName}']//span[text()='*']";
 	private static final String FIELDS_DATA_TESTID = "storage-form-input-{fieldName}";
@@ -46,13 +46,14 @@ public class StoragePageUtils {
 	private static final String CANCEL_BUTTON_XPATH = "//button[text()='Cancel']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 	private static final String LOCAL_PATH_PREFIX_XPATH = "//div[@data-testid='storage-form-input-PATH_PREFIX']//input[@type='text'] | .//textarea";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Storage";
 	private static final String STORAGE_CARD_XPATH = "//p[contains(text(),'{catalogName}')]";
 	private static final String DISCOVERABLE_STORAGES_XPATH = "engineIndexPage-Storages-discoverable-switch";
-	private static final String BUTTON_XPATH = "//button[text()='{buttonName}']";
+	private static final String BUTTON_XPATH = "//button[text()='{buttonName}'] | //span[text()='{buttonName}']";
+	private static final String TOAST_MESSAGE_XPATH = "//div[text()='{message}']";
 
 	public static void clickOnAddStorageButton(Page page) {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
@@ -169,23 +170,23 @@ public class StoragePageUtils {
 	}
 
 	public static void enterCatalogName(Page page, String catalogName) {
-		page.locator(CATALOG_NAME_XPATH).fill(catalogName);
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
 	}
 
 	public static void enterRegionName(Page page, String regionName) {
-		page.locator(REGION_TEXTBOX_XPATH).fill(regionName);
+		page.getByTestId(REGION_TEXTBOX_DATA_TESTID).fill(regionName);
 	}
 
 	public static void enterBucket(Page page, String bucket) {
-		page.locator(BUCKET_TEXTBOX_XPATH).fill(bucket);
+		page.getByTestId(BUCKET_TEXTBOX_DATA_TESTID).fill(bucket);
 	}
 
 	public static void enterAccessKey(Page page, String accessKey) {
-		page.locator(ACCESS_KEY_TEXTBOX_XPATH).fill(accessKey);
+		page.getByTestId(ACCESS_KEY_TEXTBOX_DATA_TESTID).fill(accessKey);
 	}
 
 	public static void enterSecretKey(Page page, String secreteKey) {
-		page.locator(SECRET_KEY_TEXTBOX_XPATH).fill(secreteKey);
+		page.getByTestId(SECRET_KEY_TEXTBOX_DATA_TESTID).fill(secreteKey);
 	}
 
 	public static boolean validateConnectButtonEnabled(Page page) {
@@ -200,8 +201,8 @@ public class StoragePageUtils {
 		connectButton.click();
 	}
 
-	public static String verifyStorageCreatedToastMessage(Page page) {
-		Locator alert = page.getByTestId("notification-success-alert");
+	public static String verifyStorageCreatedToastMessage(Page page, String toastMessage) {
+		Locator alert = page.locator(TOAST_MESSAGE_XPATH.replace("{message}", toastMessage));
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -260,19 +261,19 @@ public class StoragePageUtils {
 		Locator fieldLocator = null;
 		switch (fieldName) {
 		case "Catalog Name":
-			fieldLocator = page.locator(CATALOG_NAME_XPATH);
+			fieldLocator = page.getByTestId(CATALOG_NAME_DATA_TESTID);
 			break;
 		case "Region":
-			fieldLocator = page.locator(REGION_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(REGION_TEXTBOX_DATA_TESTID);
 			break;
 		case "Bucket":
-			fieldLocator = page.locator(BUCKET_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(BUCKET_TEXTBOX_DATA_TESTID);
 			break;
 		case "Access key":
-			fieldLocator = page.locator(ACCESS_KEY_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(ACCESS_KEY_TEXTBOX_DATA_TESTID);
 			break;
 		case "Secret key":
-			fieldLocator = page.locator(SECRET_KEY_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(SECRET_KEY_TEXTBOX_DATA_TESTID);
 			break;
 		default:
 			System.out.println("Invalid Field name" + fieldName);
@@ -286,22 +287,22 @@ public class StoragePageUtils {
 		Locator fieldLocator = null;
 		switch (fieldName) {
 		case "Catalog Name":
-			fieldLocator = page.locator(CATALOG_NAME_XPATH);
+			fieldLocator = page.getByTestId(CATALOG_NAME_DATA_TESTID);
 			if (fieldValue != null && !fieldValue.trim().isEmpty()) {
 				fieldValue = fieldValue + "" + timestamp;
 			}
 			break;
 		case "Region":
-			fieldLocator = page.locator(REGION_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(REGION_TEXTBOX_DATA_TESTID);
 			break;
 		case "Bucket":
-			fieldLocator = page.locator(BUCKET_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(BUCKET_TEXTBOX_DATA_TESTID);
 			break;
 		case "Access key":
-			fieldLocator = page.locator(ACCESS_KEY_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(ACCESS_KEY_TEXTBOX_DATA_TESTID);
 			break;
 		case "Secret key":
-			fieldLocator = page.locator(SECRET_KEY_TEXTBOX_XPATH);
+			fieldLocator = page.getByTestId(SECRET_KEY_TEXTBOX_DATA_TESTID);
 			break;
 		default:
 			System.out.println("Invalid Field name" + fieldName);

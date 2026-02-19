@@ -161,5 +161,5 @@ public class LayersPageUtils {
 	public static boolean isLayerDuplicated(Page page, String layerName) {
 		return page.locator(LAYER_BLOCK_XPATH.replace("{layerName}", layerName.toLowerCase())).count() > 1;
 	}
-	
+
 }

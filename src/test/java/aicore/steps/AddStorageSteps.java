@@ -130,14 +130,9 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.enterCatalogName(catalogName);
 	}
 
-	@And("User enter storage Catalog name as {string}")
-	public void user_enter_storage_catalog_name_as(String catalogName) {
-		storagePage.enterCatalogName(catalogName);
-	}
-
 	@Then("User can see the Storage title {string}")
 	public void user_can_see_the_storage_title(String storageTitle) {
-		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle);
+		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle + timestamp);
 		Assertions.assertTrue(flag, "Storage title is not visible");
 	}
 
@@ -153,7 +148,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User select the {string} from the storage catalog")
 	public void user_select_the_from_the_storage_catalog(String catalogName) {
-		catalogPage.selectCatalogFromSearchOptions(catalogName);
+		catalogPage.selectCatalogFromSearchOptions(catalogName + timestamp);
 	}
 
 	@And("User enters Access Key as {string}")
@@ -168,7 +163,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User can see create storage success toast message as {string}")
 	public void user_can_see_create_storage_success_toast_message_as(String expectedMessage) {
-		String actualMessage = storagePage.verifyStorageCreatedToastMessage();
+		String actualMessage = storagePage.verifyStorageCreatedToastMessage(expectedMessage);
 		Assertions.assertEquals(actualMessage, expectedMessage, "Storage creation is failed");
 	}
 
