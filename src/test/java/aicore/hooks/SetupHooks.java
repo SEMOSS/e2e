@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
 
 import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
@@ -22,6 +24,7 @@ import aicore.base.GenericSetupUtils;
 import aicore.utils.CaptureScreenShotUtils;
 import aicore.utils.CommonUtils;
 import aicore.framework.ConfigUtils;
+import aicore.framework.Resource;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.framework.UrlUtils;
 import io.cucumber.java.After;
@@ -42,9 +45,7 @@ public class SetupHooks {
 	public static void beforeAll() throws IOException {
 		logger.info("BEFORE ALL");
 		GenericSetupUtils.initialize();
-		// not sure how this works with parallel?
-		// before all runs outside of parallelization but what about in between features?
-		//scenarioNumberOfFeatureFile = 0;
+		// Do not create browser/playwright here - setup is done per-thread when a feature starts
 	}
 
 	@Before
@@ -54,53 +55,72 @@ public class SetupHooks {
 		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
 		String feature = ResourcePool.get().getFeature();
         String scenarioName = scenario.getName();
-        boolean failed = ResourcePool.get().isFailed();
-		// If new feature -> reset | if not -> continue
-		if (!tempFeature.equals(feature)) {
-            logger.info("resetting due to first scenario of feature");
-			ResourcePool.get().resetTimestamp();
-			ResourcePool.get().resetScenarioNumberOfFeatureFile();
-			setupFirstScenarioOfFeature(scenario);
-			ResourcePool.get().incrementFeatureNumber();
-		} else if (failed) {
-            logger.info("resetting due to previous scenario failed");
-            setupFirstScenarioOfFeature(scenario);
-        }
+        
+		// If new feature OR resource not initialized -> logout previous, reset and login
+		Resource res = ResourcePool.get();
+		if (res.getPage() == null || !tempFeature.equals(feature)) {
+			logger.info("New feature or uninitialized resource detected: {} (current feature: {})", tempFeature, feature);
+			// Logout from previous feature if exists and we have an active page
+			if (feature != null && res.getPage() != null) {
+				try {
+					GenericSetupUtils.logout(res.getPage());
+				} catch (Exception e) {
+					logger.warn("Failed to logout from previous feature: {}", e.getMessage());
+				}
+			}
 
-        logger.info("update resource");
+			// If there is no page, create it; if feature changed and there is a page, recreate context
+			if (res.getPage() == null) {
+				setupFirstScenarioOfFeature();
+				try {
+					GenericSetupUtils.navigateToHomePage(res.getPage());
+				} catch (Throwable t) {
+					logger.warn("Navigation after setup failed: {}", t.getMessage());
+				}
+			} else {
+				// Feature changed while a page already exists -> close context and reinitialize
+				res.closeContext();
+				setupFirstScenarioOfFeature();
+			}
+
+			performLoginBasedOnTags(scenario);
+			res.resetTimestamp();
+			res.resetScenarioNumberOfFeatureFile();
+			res.incrementFeatureNumber();
+		}
+
 		ResourcePool.get().setFeature(tempFeature);
         ResourcePool.get().setScenarioName(scenarioName);
 		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
 		ResourcePool.get().resetStep();
         ResourcePool.get().setFailed(false);
-        logger.info("start");
 	}
 
-	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
-		// Not First scenario, reset page
-		if (ResourcePool.get().getFeatureNumber() != 0) {
-			try {
-				GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
-				logoutAndSave();
-			} catch (Exception | Error e) {
-				logger.error("ATTEMPTING TO LOGOUT AND SAVE", e);
-			}
-			ResourcePool.get().getPlaywright().close();
+	private static void setupFirstScenarioOfFeature() throws IOException {
+
+		Resource res = ResourcePool.get();
+
+		// If browser/playwright not created for this resource, create them once and reuse across features
+		if (res.getBrowser() == null || res.getPlaywright() == null) {
+			logger.info("Creating playwright/browser for resource {} with url {}", res.getResourceNumber(), res.getUrl());
+			Playwright playwright = Playwright.create();
+			res.setPlaywright(playwright);
+
+			Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+			res.setBrowser(browser);
+		} else {
+			logger.info("Reusing existing browser for resource {}", res.getResourceNumber());
 		}
 
-
-		Playwright playwright = Playwright.create();
-		ResourcePool.get().setPlaywright(playwright);
-
-		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-		ResourcePool.get().setBrowser(browser);
+		// Always create a fresh context + page per feature to isolate state, closing prior context if present
+		res.closeContext();
 
 		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1)
 				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
 				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
-		BrowserContext context = browser.newContext(newContextOptions);
-		ResourcePool.get().setContext(context);
+		BrowserContext context = res.getBrowser().newContext(newContextOptions);
+		res.setContext(context);
 
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 
@@ -111,21 +131,25 @@ public class SetupHooks {
 
 		Page page = context.newPage();
 
-		ResourcePool.get().setPage(page);
+		res.setPage(page);
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
 
 		GenericSetupUtils.setupLoggers(page);
+	}
 
 //		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
 //			logger.info("Creating users");
 //			GenericSetupUtils.createUsers(page);
 //		}
-
+private static void performLoginBasedOnTags(Scenario scenario) {
+		Page page = ResourcePool.get().getPage();
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
 
 		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
+		performLogin(sourceTagName, page);
+	}
 
-		// Use switch to handle different sourceTagNames
+	private static void performLogin(String sourceTagName, Page page) {
 		switch (sourceTagName) {
 		case "@LoginWithMS":
 			String MsUsername = ConfigUtils.getValue("ms_username");
@@ -182,11 +206,49 @@ public class SetupHooks {
 		logger.info("AFTER: {}", scenario.getName());
         ResourcePool.get().setFailed(scenario.isFailed());
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+		
+		int currentScenarioCount = ResourcePool.get().getScenarioNumberOfFeatureFile();
+		int totalScenarioCount = 0;
+		try {
+			Path featurePath = null;
+			// Prefer using the URI directly to avoid Windows leading-slash issues ("/D:/...")
+			try {
+				featurePath = Paths.get(scenario.getUri());
+			} catch (IllegalArgumentException ex) {
+				String p = scenario.getUri().getPath();
+				if (p != null && p.startsWith("/") && p.length() > 2 && p.charAt(2) == ':') {
+					// Strip leading slash for Windows absolute paths like "/D:/..."
+					p = p.substring(1);
+				}
+				featurePath = Paths.get(p);
+			}
+			if (Files.exists(featurePath)) {
+				totalScenarioCount = (int) Files.readAllLines(featurePath).stream()
+					.filter(line -> line.trim().startsWith("Scenario:"))
+					.count();
+			} else {
+				logger.warn("Feature file not found when counting scenarios: {}", featurePath);
+			}
+		} catch (IOException e) {
+			logger.warn("Unable to read feature file to count scenarios: {}", e.getMessage());
+		}
+		if (currentScenarioCount == totalScenarioCount && totalScenarioCount > 0) {
+			logger.info("Last scenario of the feature: {}. Logging out and closing context.", ResourcePool.get().getFeature());
+			logoutAndSave();
+		}
 	}
 
 	@AfterAll
 	public static void afterAll() throws IOException {
-		logger.info("AFTER ALL");
+		logger.info("AFTER ALL - cleaning up current resource context only");
+		// Only close the context (page + context) for this thread's resource. Do NOT
+		// close the browser or Playwright here because multiple workers run in the
+		// same JVM and other workers may still be using their browsers.
+		try {
+			ResourcePool.get().closeContext();
+		} catch (Exception e) {
+			logger.warn("Error closing context in AfterAll: {}", e.getMessage());
+		}
 	}
 
 	private static void logoutAndSave() throws IOException {
@@ -194,12 +256,13 @@ public class SetupHooks {
 		Page page = ResourcePool.get().getPage();
 		BrowserContext context = ResourcePool.get().getContext();
 		String feature = ResourcePool.get().getFeature();
+		
         String scenarioName = ResourcePool.get().getScenarioName();
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
 			GenericSetupUtils.logout(page);
-		} catch (Throwable t) {
-			logger.error("Could not logout with throwable message: {}", t.getMessage());
+		} catch (Exception e) {
+			logger.warn("Failed to logout: {}", e.getMessage());
 		}
 
         boolean failed = ResourcePool.get().isFailed();
@@ -221,36 +284,86 @@ public class SetupHooks {
 		}
 
 		context.close();
-		Path og = null;
-		if (GenericSetupUtils.useVideo()) {
-			og = page.video().path();
-		}
-
 		page.close();
 
 		if (GenericSetupUtils.useVideo()) {
             logger.info("saving video");
-            if (failed) {
-                String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
-                Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
-                Path newDir = Paths.get("videos", "features", feature);
-                if (!Files.exists(newDir)) {
-                    Files.createDirectories(newDir);
-                }
+            // Find the actual video file created by Playwright
+            Optional<Path> videoFile = findRecentVideoFile(Paths.get(System.getProperty("user.dir")));
+            
+            if (videoFile.isPresent()) {
+                Path sourceVideo = videoFile.get();
+                logger.info("Found video file: {}", sourceVideo);
+                
+                if (failed) {
+                    // Rename video for failed scenarios
+                    String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
+                    Path targetDir = Paths.get("videos", "features", feature);
+                    if (!Files.exists(targetDir)) {
+                        Files.createDirectories(targetDir);
+                    }
 
-                int i = 0;
-                while (Files.exists(newPath) && i < 30) {
-                    i++;
-                    newPath =  Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
-                    logger.info("File exists getting new path: {}", newPath);
-                    logger.info("loop: {}", i);
+                    // Determine target path with collision avoidance
+                    Path newPath = Paths.get(targetDir.toString(), scenarioNameSafe + ".webm");
+                    int counter = 1;
+                    while (Files.exists(newPath) && counter < 1000) {
+                        newPath = Paths.get(targetDir.toString(), scenarioNameSafe + "_" + counter + ".webm");
+                        counter++;
+                    }
+
+                    try {
+                        Files.move(sourceVideo, newPath);
+                        logger.info("Video successfully renamed and moved to: {}", newPath);
+                    } catch (IOException moveEx) {
+                        logger.warn("Failed to move video from {} to {}: {}", sourceVideo, newPath, moveEx.getMessage());
+                        // If move fails, try to copy and delete as fallback
+                        try {
+                            Files.copy(sourceVideo, newPath);
+                            Files.deleteIfExists(sourceVideo);
+                            logger.info("Video copied to destination as fallback: {}", newPath);
+                        } catch (IOException copyEx) {
+                            logger.error("Failed to copy video as fallback: {}", copyEx.getMessage());
+                        }
+                    }
+                } else {
+                    // Delete video for passed scenarios
+                    try {
+                        Files.deleteIfExists(sourceVideo);
+                        logger.info("Video deleted for passing scenario: {}", scenarioName);
+                    } catch (IOException delEx) {
+                        logger.warn("Failed to delete video for passing scenario {}: {}", scenarioName, delEx.getMessage());
+                    }
                 }
-                Files.move(og, newPath);
             } else {
-                Files.deleteIfExists(og);
+                logger.warn("No video file found for scenario: {}", scenarioName);
             }
 		}
+	}
 
+	private static Optional<Path> findRecentVideoFile(Path searchDir) {
+		try {
+			long cutoffTime = System.currentTimeMillis() - (5 * 60 * 1000); // Last 5 minutes
+			return Files.walk(searchDir, 3)
+					.filter(Files::isRegularFile)
+					.filter(p -> p.toString().endsWith(".webm"))
+					.filter(p -> {
+						try {
+							return Files.getLastModifiedTime(p).toMillis() > cutoffTime;
+						} catch (IOException e) {
+							return false;
+						}
+					})
+					.max(Comparator.comparingLong(p -> {
+						try {
+							return Files.getLastModifiedTime(p).toMillis();
+						} catch (IOException e) {
+							return 0;
+						}
+					}));
+		} catch (IOException e) {
+			logger.warn("Error searching for video files: {}", e.getMessage());
+			return Optional.empty();
+		}
 	}
 
     public static String makeScenarioNameFileSafe(String scenarioName) {
