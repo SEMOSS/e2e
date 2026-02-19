@@ -23,7 +23,7 @@ Feature: App setting for Editor permission
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
 
-  @LoginWithAdmin
+  
   Scenario: Create App - Editor user - View Member, General, Apps option
     Then 'Editor' user Edit option should be 'Enable'
     And User clicks on app Edit button
