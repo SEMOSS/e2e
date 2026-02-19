@@ -41,7 +41,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String COPY_VECTOR_ID = "engineHeader-copy-Vector-id-btn";
 	private static final String COPIED_TOAST_DATA_XPATH = "//div[text()='ID copied to clipboard']";
 	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
-	private static final String VECTOR_TAGS_XPATH = "//span[text()='{tagName}']";
+	private static final String VECTOR_TAGS_XPATH = "vector-form-input-TAGS";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
 	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
 	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[normalize-space()='Discoverable Vectors']";
@@ -78,7 +78,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void enterVectorTag(String vTag) {
-		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH).locator("input");
+		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH);
 		tagInput.fill(vTag);
 		tagInput.press("Enter");
 	}

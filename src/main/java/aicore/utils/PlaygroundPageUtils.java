@@ -16,7 +16,7 @@ public class PlaygroundPageUtils {
     private static final String ADD_KNOWLEDGE_TOOL_XPATH = "//div[text()='Knowledge']/following-sibling::button";
     private static final String SAVE_BUTTON_XPATH = "//button[text()='Save']";
     private static final String MCP_TOOL_XPATH = "//div[contains(text(),'{MCP}')]";
-    private static final String CREATE_WORKSPACE_XPATH = "//button[text()='Create a Workspace']";
+    private static final String CREATE_WORKSPACE_XPATH = "//button[text()='Create an Agent']";
     private static final String CARD_TITLE_XPATH = "//div[@data-slot='card-title']";
     private static final String WORKSPACE_PROFILE_XPATH = "//div[@role='menuitem']//span[text()='{workspaceName}']";
     private static final String SEARCH_WORKSPACE_XPATH = "//div/div[@role='group']//input[@placeholder='Search']";
@@ -77,7 +77,7 @@ public class PlaygroundPageUtils {
         }
     }
     public static void clickOnWorkspaceButton(Page page) {
-        Locator workspaceButton = page.locator("//li//a[@aria-label ='Workspace']");
+        Locator workspaceButton = page.locator("//li//a[@aria-label ='agent']");
         if (workspaceButton.isEnabled()) {
             workspaceButton.click();
         } else {
@@ -229,6 +229,15 @@ public class PlaygroundPageUtils {
         AICorePageUtils.waitFor(textarea);
         textarea.click();
         page.keyboard().type(prompt, new Keyboard.TypeOptions().setDelay(50));
+    }
+
+    public static void clickOnChatInterfaceButton(Page page, String buttonName) {
+        Locator button = page.getByLabel(buttonName);
+        if (button.isEnabled()) {
+            button.click();
+        } else {
+            throw new AssertionError("The button '" + buttonName + "' is disabled and cannot be clicked.");
+        }
     }
 
     public static void clickOnOpenConfigurationMenuButton(Page page, String buttonName) {

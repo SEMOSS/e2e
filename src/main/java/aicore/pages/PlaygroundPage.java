@@ -91,6 +91,11 @@ public class PlaygroundPage {
     public void clickOnOpenConfigurationMenuButton(String buttonName) {
         PlaygroundPageUtils.clickOnOpenConfigurationMenuButton(page, buttonName);
     }
+
+    public void clickOnChatInterfaceButton(String buttonName) {
+        PlaygroundPageUtils.clickOnChatInterfaceButton(page, buttonName);
+    }
+
     public void clickOnToolboxDropdown() {
         PlaygroundPageUtils.clickOnToolboxDropdown(page);
     }
