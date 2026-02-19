@@ -22,10 +22,10 @@ public class EditModelPageUtils {
 	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
 	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[normalize-space()='Data classification']/following-sibling::div//span[normalize-space()='{option}']";
 	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/following-sibling::div//span[normalize-space()='{option}']";
-	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
+	private static final String DESCRIPTION_TEXT_XPATH = "//p[@data-testid='Description']";
 	private static final String MODEL_TAGS_XPATH = "//div[contains(@class,'flex flex-1 flex-col')]//span";
-	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
-	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Tag')]]/following-sibling::div//span";
+	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//h4[text()='Details']/following::p";
+	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//h4[text()='Tag']/following-sibling::span";
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Domain')]]/following-sibling::div//span";
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data classification')]]/following-sibling::div";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
@@ -108,7 +108,7 @@ public class EditModelPageUtils {
 	}
 
 	public static String verifyDescriptionText(Page page) {
-		String descriptionText = page.getByTestId(DESCRIPTION_TEXT_XPATH).textContent().trim();
+		String descriptionText = page.locator(DESCRIPTION_TEXT_XPATH).textContent().trim();
 		return descriptionText;
 	}
 
@@ -120,7 +120,7 @@ public class EditModelPageUtils {
 	}
 
 	public static String verifyDetailsTextUnderOverview(Page page) {
-		Locator shadowElement = page.locator(DETAILS_UNDER_OVERVIEW_XPATH).locator("p");
+		Locator shadowElement = page.locator(DETAILS_UNDER_OVERVIEW_XPATH);// .locator("p");
 		shadowElement.waitFor();
 		String text = shadowElement.innerText().trim();
 		return text;
