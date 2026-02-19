@@ -41,10 +41,8 @@ Feature: Validate catalog user permissions for all catalog types
     When 'Editor' user deletes 'Editor' role user from members list
     Then User should see 'Editor' role user is removed from members list
     When User search for 'Author' user in members search box
-    And 'Editor' user changes 'Author' role to 'Read-Only'
-    Then 'Editor' user cannot change the 'Author' user role and sees 'Author' user in members list
-    When 'Editor' user deletes 'Author' role user from members list
-    Then 'Editor' user cannot delete the 'Author' user and sees 'Author' user in members list
+    And 'Editor' user can see 'Edit' option is disable for 'Author' role
+    And 'Editor' user can see 'Delete' option is disable for 'Author' role
     When User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     When User logs out from the application
@@ -77,7 +75,7 @@ Feature: Validate catalog user permissions for all catalog types
       | CATALOG | BUTTON_NAME | FILE_NAME                     | CARD            | CATALOG_NAME |
       | Vector  | Add Vector  | VectorDatabase/TestVector.zip | Vector Settings | TestVector   |
 
-  ## Creating below new scenario for UI.
+  #### Creating below new scenario for UI.
   @LoginWithAuthor @DeleteTestCatalog @Regression
   Scenario Outline: Validate user access permissions of '<CATALOG>'
     Given User opens Main Menu
@@ -119,10 +117,8 @@ Feature: Validate catalog user permissions for all catalog types
     When 'Editor' user deletes 'Editor' role user from members list
     Then User should see 'Editor' role user is removed from members list
     When User search for 'Author' user in members search box
-    And 'Editor' user changes 'Author' role to 'Read-Only'
-    Then 'Editor' user cannot change the 'Author' user role and sees 'Author' user in members list
-    When 'Editor' user deletes 'Author' role user from members list
-    Then 'Editor' user cannot delete the 'Author' user and sees 'Author' user in members list
+    And 'Editor' user can see 'Edit' option is disable for 'Author' role
+    And 'Editor' user can see 'Delete' option is disable for 'Author' role
     When User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     When User logs out from the application
@@ -168,7 +164,7 @@ Feature: Validate catalog user permissions for all catalog types
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User opens Main Menu
     And User clicks on Open Settings
     When User selects the 'App Settings' card
@@ -200,10 +196,8 @@ Feature: Validate catalog user permissions for all catalog types
     When 'Editor' user deletes 'Editor' role user from members list
     Then User should see 'Editor' role user is removed from members list
     When User search for 'Author' user in members search box
-    And 'Editor' user changes 'Author' role to 'Read-Only'
-    Then 'Editor' user cannot change the 'Author' user role and sees 'Author' user in members list
-    When 'Editor' user deletes 'Author' role user from members list
-    Then 'Editor' user cannot delete the 'Author' user and sees 'Author' user in members list
+    Then User can see 'Editor' user 'delete' icon is disabled
+    And User can see 'Editor' user 'edit' icon is disabled
     When User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     When User logs out from the application
