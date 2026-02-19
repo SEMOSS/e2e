@@ -249,24 +249,18 @@ public class TeamPermissionsSettingsUtils {
 		Locator search = page.locator("//label[text()='Search']/parent::div//input");
 		search.click();
 		search.fill(members);
-		page.waitForTimeout(10000);
-//		Locator Memberlist = page.getByText(members);
+		page.waitForTimeout(1000);
 		int count = page.getByRole(AriaRole.OPTION).count();
 		System.out.println(count);
 		dropdownLocator.click();
 		for (int i = 1; i <= count; i++) {
 			dropdownLocator.click();
-//			Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", members + i));
-//			AICorePageUtils.waitFor(listMember);
-//			listMember.click();
-//			dropdownLocator.click();
 			search.fill(members + i);
 			Locator option = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(members + i));
 			option.waitFor();
 			option.click();
 		}
 		dropdownLocator.click();
-//		page.locator(HEADINGS_XPATH).click();
 	}
 
 	public static int calculateTotalPages(Page page) {
