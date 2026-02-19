@@ -43,7 +43,7 @@ Next, Under system variables (bottom section), locate the Path variable, select 
 
 In the window that appears, click New 
 
-In the new row that appears, paste `%JAVA_HOME%\bin` without the quotation marks
+In the new row that appears, paste `%JAVA_HOME%\bin`
 
 Click OK 
 
