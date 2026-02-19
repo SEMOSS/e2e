@@ -51,8 +51,8 @@ public class ModelPageUtils {
 	// Chat field
 	private static final String CHAT_TAB_XPATH = "//button[text()='Chat']";
 	private static final String CHAT_TITLE_XPATH = "//div//*[text()='{title}']";
-	private static final String CHAT_TEMPERATURE_XPATH = "//div//p[text()='Temperature']/../../span[contains(text(),'Current')]";
-	private static final String CHAT_MAX_TOKENS_XPATH = "//div//p[contains(text(),'Max Tokens')]/../../div//input";
+	private static final String CHAT_TEMPERATURE_XPATH = "//span[text()='Temperature']/parent::div/following-sibling::p[contains(text(),'Current')]";
+	private static final String CHAT_MAX_TOKENS_XPATH = "//div//span[contains(text(),'Max Tokens')]/parent::div/parent::div//input";
 	private static final String CHAT_INPUT_XPATH = "//div//textarea[@name='prompt']";
 	private static final String CHAT_SEND_BUTTON_XPATH = "//button[@aria-label='Send message']";
 	private static final String EMPTY_CHAT_WINDOW_XPATH = "//div//span[contains(text(),'Start Conversation by typing a message')]";
