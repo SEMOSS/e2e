@@ -1,4 +1,7 @@
 # Developer setup guide and tips
+- ### Dev Setup
+
+  - [Eclipse Setup](setup/EclipseSetup.md)
 
 - ### Dev Info
   - [Git Commit Standard](hooks/README.md)
