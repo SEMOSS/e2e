@@ -146,12 +146,10 @@ public class CatlogAccessStep {
 			// Verify only success message appears
 			Assertions.assertTrue(openModelPage.isDeleteSuccessful(),
 					userRole + " should be able to delete the catalog, but permission error appeared.");
-			System.out.println(userRole + " successfully deleted the catalog.");
 		} else if ("can not".equalsIgnoreCase(expectedOutcome)) {
 			// Verify only permission error appears
 			Assertions.assertTrue(openModelPage.isPermissionErrorDisplayed(),
 					userRole + " should not be able to delete the catalog, but success message appeared.");
-			System.out.println(userRole + " does not have permission to delete the catalog.");
 		} else {
 			throw new IllegalArgumentException("Invalid expected outcome: " + expectedOutcome);
 		}
@@ -173,12 +171,10 @@ public class CatlogAccessStep {
 			// Assert that the button is visible
 			Assertions.assertTrue(isButtonVisible,
 					userRole + " should be able to see the Add Member button, but it is not visible.");
-			System.out.println(userRole + " can see the Add Member button.");
 		} else if ("can not".equalsIgnoreCase(expectedOutcome)) {
 			// Assert that the button is NOT visible
 			Assertions.assertFalse(isButtonVisible,
 					userRole + " should NOT be able to see the Add Member button, but it is visible.");
-			System.out.println(userRole + " cannot see the Add Member button.");
 		} else {
 			throw new IllegalArgumentException("Invalid expected outcome: " + expectedOutcome);
 		}
