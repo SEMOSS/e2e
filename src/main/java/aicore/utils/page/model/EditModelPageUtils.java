@@ -80,16 +80,10 @@ public class EditModelPageUtils {
 
 	public static void selectDataClassificationOption(Page page, String option) {
 		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH.replace("{option}", option));
-		// page.fill(DATA_CLASSIFICATION_TEXTBOX_XPATH, option);
-		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("ArrowDown");
-		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void selectDataRestrictionsOption(Page page, String option) {
 		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH.replace("{option}", option));
-		// page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
-		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
-		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {

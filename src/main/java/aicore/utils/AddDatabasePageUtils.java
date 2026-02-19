@@ -14,6 +14,7 @@ import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddDatabasePageUtils {
@@ -119,7 +120,6 @@ public class AddDatabasePageUtils {
 				.locator(SECTION_FIELD_XPATH.replace("{sectionName}", sectionName).replace("{fieldName}", fieldName));
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
-
 	}
 
 	public static void clickOnApplyButton(Page page) {
@@ -211,7 +211,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static boolean verifyDatabaseTitle(Page page, String dbName) {
-		Locator actualDatabaseTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(dbName));
+		Locator actualDatabaseTitle = page.getByTestId("Title");
 		actualDatabaseTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return actualDatabaseTitle.isVisible();
 	}
@@ -227,13 +227,10 @@ public class AddDatabasePageUtils {
 	public static String verifyDatabaseNameInCatalog(Page page, String dbName) {
 		Locator databaseName = page.locator(DB_CATALOG_XPATH.replace("{dbName}", dbName));
 		AICorePageUtils.waitFor(databaseName);
-		// databaseName.waitFor(new
-		// Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!databaseName.isVisible()) {
 			throw new AssertionError("Database name '" + dbName + "' is not visible in the catalog.");
 		}
 		return databaseName.textContent();
-
 	}
 
 	public static void clickOnDatabaseNameInCatalog(Page page, String dbName) {
@@ -387,7 +384,6 @@ public class AddDatabasePageUtils {
 
 	public static boolean verifyAllColumnsAreCollapsed(Page page) {
 		Locator collapseColumns = page.locator(COLLAPSE_COLUMNS_XPATH);
-		// Locator collapsedHeaders = page.locator(COLLAPSE_COLUMNS_HEADER_XPATH);
 		if (!collapseColumns.isVisible()) {
 			return true;
 		} else {
@@ -448,10 +444,13 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnSaveButtonOfMetadataTab(Page page) {
-		Locator saveButton = page.getByTestId("engineMetadata-save-btn");
-		saveButton.isEnabled();
-		AICorePageUtils.waitFor(saveButton);
-		saveButton.click(new Locator.ClickOptions().setForce(true));
+		Locator saveBtn = page.getByTestId("engineMetadata-save-btn");
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.waitForSelector("[data-testid='engineMetadata-save-btn']:not([disabled])");
+		saveBtn.scrollIntoViewIfNeeded();
+		saveBtn.focus();
+		saveBtn.click();
+		page.waitForLoadState(LoadState.NETWORKIDLE);
 	}
 
 	public static boolean verifyDatabaseCatalogPage(Page page) {

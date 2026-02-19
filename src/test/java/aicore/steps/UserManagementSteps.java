@@ -181,16 +181,10 @@ public class UserManagementSteps {
 			userpage.fillPassword(password);
 			Thread.sleep(5000);
 			userpage.clickSaveButton();
-
-//			String actualMessage = userpage.userCreationToastMessage();
-//			Assertions.assertEquals(toastMessage, actualMessage, "User creation failed for user " + userId);
-
-			// store last created credentials in a static map or variable for later steps
 			LastCreatedUser.setUserId(userId);
 			LastCreatedUser.setPassword(password);
 			LastCreatedUser.setName(name);
 			LastCreatedUser.setEmail(email);
-
 		}
 	}
 

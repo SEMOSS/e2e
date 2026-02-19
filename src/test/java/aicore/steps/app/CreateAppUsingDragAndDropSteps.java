@@ -162,14 +162,15 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User able to see the {string} button")
 	public void user_able_to_see_the_button(String buttonName) {
-		homePage.verifyBuildPageButtons(buttonName);
+		homePage.verifyBuildPageButton(buttonName);
 	}
 
-	@Then("User able to see the following Buttons:")
-	public void user_able_to_see_the_buttons(io.cucumber.datatable.DataTable dataTable) {
-		List<String> buttons = dataTable.asList(String.class);
-		for (String buttonName : buttons) {
-			homePage.verifyBuildPageButton(buttonName);
+	@Then("User able to see the {string} buttons in below cards:")
+	public void user_able_to_see_the_buttons_in_below_cards(String buttonName, DataTable dataTable) {
+		List<String> cards = dataTable.asList(String.class);
+		for (String cardName : cards) {
+			boolean isButtonVisible = homePage.verifyBuildPageButtons(cardName, buttonName);
+			Assertions.assertTrue(isButtonVisible, buttonName + "button not present in " + cardName + "card");
 		}
 	}
 

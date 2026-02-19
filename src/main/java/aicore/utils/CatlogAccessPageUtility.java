@@ -21,8 +21,8 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
-	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
-	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
+	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//div[contains(text(),'does not exist or user does not have permissions to delete the engine. User must be the owner to perform this function.')]";
+	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
 	// create app variable declaration
 	private static final String CLICK_ON_SETTINGS_DATATESTID = "workspace-Settings-image";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
@@ -84,6 +84,7 @@ public class CatlogAccessPageUtility {
 			searchIcon.click();
 		}
 		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
+		// page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID).fill(role);
 		page.waitForTimeout(1000);
 	}
 
@@ -171,9 +172,9 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String editorUserSeeToastMessageText(Page page) {
-		page.getByTestId(EDITOR_SEE_TOASTER_MESSAGE_DATATESTID)
+		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toasterMessage = page.getByTestId(EDITOR_SEE_TOASTER_MESSAGE_DATATESTID).innerText();
+		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).innerText();
 		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
 		return toasterMessage;
 	}
