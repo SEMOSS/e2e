@@ -137,7 +137,11 @@ public class PlaygroundSteps {
     public void user_Clicks_On_The_Open_Configuration_Menu_Button(String buttonName) {
         playgroundPage.clickOnOpenConfigurationMenuButton(buttonName);
     }
-
+    @And("User clicks on the {string} button in the chat interface")
+    public void user_Clicks_On_The_Button_In_The_Chat_Interface(String buttonName) {
+        playgroundPage.clickOnChatInterfaceButton(buttonName);
+    }
+    
     @And("User waits for the response from the model")
     public void user_Waits_For_The_Response_From_The_Model() {
         playgroundPage.waitForModelResponse();

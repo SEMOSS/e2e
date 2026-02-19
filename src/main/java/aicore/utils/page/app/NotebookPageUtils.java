@@ -21,7 +21,7 @@ public class NotebookPageUtils {
 
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
-	private static final String CODE_ENTER_TEXTAREA = ".monaco-editor .native-edit-context";
+	private static final String CODE_ENTER_TEXTAREA = ".view-line";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
@@ -356,7 +356,8 @@ public class NotebookPageUtils {
 	}
 
 	public static void selectDatabaseType(Page page, String databaseName) {
-		page.getByTitle("Select Database").click();
+		page.getByTitle("Select Database").isVisible();
+		page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]").click(new Locator.ClickOptions().setForce(true));
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
 	}
 
@@ -385,7 +386,8 @@ public class NotebookPageUtils {
 
 	public static List<String> getNotebookOutputTableHeader(Page page) {
 		Locator tableHeader = page.locator(OUTPUT_TABLE).last().locator("th");
-		AICorePageUtils.waitFor(tableHeader);
+		Locator table = page.locator(OUTPUT_TABLE);
+		AICorePageUtils.waitFor(table);
 		return tableHeader.allTextContents();
 	}
 

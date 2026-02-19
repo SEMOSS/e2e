@@ -231,6 +231,15 @@ public class PlaygroundPageUtils {
         page.keyboard().type(prompt, new Keyboard.TypeOptions().setDelay(50));
     }
 
+    public static void clickOnChatInterfaceButton(Page page, String buttonName) {
+        Locator button = page.getByLabel(buttonName);
+        if (button.isEnabled()) {
+            button.click();
+        } else {
+            throw new AssertionError("The button '" + buttonName + "' is disabled and cannot be clicked.");
+        }
+    }
+
     public static void clickOnOpenConfigurationMenuButton(Page page, String buttonName) {
         Locator button = page.getByLabel(buttonName);
         Locator openSettingButton = page.locator(SETTINGS_XPATH);
