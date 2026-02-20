@@ -154,3 +154,16 @@ Feature: Function documentation
     And User logs out from the application
     And User login as 'Admin'
     And User completes screenshot capture and triggers comparison for 'Function Engines'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+    Scenario: Create a Function Form Document 
+    Given User captures documentation screenshot for 'FunctionEngines'
+    And User opens Main Menu
+    When User clicks on Open Function
+    And User clicks on Add Function
+    And User selects function 'Azure Document Intelligence'
+    Then User captures screenshot for "create_func"
+    And User completes screenshot capture and triggers comparison for 'Function Engines'
+
+    
+    

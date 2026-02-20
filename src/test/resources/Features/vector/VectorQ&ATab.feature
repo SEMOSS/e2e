@@ -1,4 +1,4 @@
-@LoginWithAdmin @Regressions @DeleteTestCatalog
+@LoginWithAdmin @Regression @DeleteTestCatalog
 Feature: Vector Q&A Tab
 
   Background: Add Model and Vector database
