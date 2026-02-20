@@ -155,8 +155,8 @@ Feature: Function documentation
     And User login as 'Admin'
     And User completes screenshot capture and triggers comparison for 'Function Engines'
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
-    Scenario: Create a Function form document 
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+    Scenario: Create a Function Form Document 
     Given User captures documentation screenshot for 'FunctionEngines'
     And User opens Main Menu
     When User clicks on Open Function
