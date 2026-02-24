@@ -122,7 +122,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifyAddMembersButtonIsVisible(Page page) {
-		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).isVisible();
+		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).first().isVisible();
 	}
 
 	public static boolean verifyRowsPerPageDropdownIsVisible(Page page) {
@@ -234,7 +234,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean isAddMemberButtonVisible(Page page) {
-		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).isVisible();
+		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).first().isVisible();
 	}
 
 	public static void deleteAddedMember(Page page, String role) {

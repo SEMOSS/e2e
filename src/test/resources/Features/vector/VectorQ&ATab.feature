@@ -41,26 +41,26 @@ Feature: Vector Q&A Tab
     And User sees question input textbox should be visible
     And User should see the Generate Answer button in enable
 
-   Scenario: Verify Select Model dropdown functionality
-     Given User can see the Vector title as 'FAISS Vector DB00'
-     And User clicks on the Q&A tab
-     When User clicks on Select Model dropdown
-     Then User selects a model 'Llama3-70B-Instruct'
-     Then Selected model should be shown in dropdown 'Llama3-70B-Instruct'
+  Scenario: Verify Select Model dropdown functionality
+    Given User can see the Vector title as 'FAISS Vector DB00'
+    And User clicks on the Q&A tab
+    When User clicks on Select Model dropdown
+    Then User selects a model 'Llama3-70B-Instruct'
+    Then Selected model should be shown in dropdown 'Llama3-70B-Instruct'
 
-   Scenario: Verify sliders are adjustable
-     Given User can see the Vector title as 'FAISS Vector DB00'
-     And User clicks on the Q&A tab
-     When User adjusts "Limit the queried results:" slider to '8'
-     Then The value should be updated as '8' for "Limit the queried results:" 
-     When User adjusts "Set Temperature:" slider to '0.6'
-     Then The value should be updated as '0.6' for "Set Temperature:"
+  Scenario: Verify sliders are adjustable
+    Given User can see the Vector title as 'FAISS Vector DB00'
+    And User clicks on the Q&A tab
+    When User adjusts "Limit the queried results:" slider to '8'
+    Then The value should be updated as '8' for "Limit the queried results:"
+    When User adjusts "Set Temperature:" slider to '0.6'
+    Then The value should be updated as '0.6' for "Set Temperature:"
 
-   Scenario: Verify answer is displayed when user asks a question
-     Given User can see the Vector title as 'FAISS Vector DB00'
-     And User clicks on the Q&A tab
-     And User clicks on Select Model dropdown
-     And User selects a model 'Llama3-70B-Instruct'
-     When User enters a question "What is vector database?" in the question input textbox
-     And User clicks on Generate Answer button
-     Then User sees the answer generated for the question
+  Scenario: Verify answer is displayed when user asks a question
+    Given User can see the Vector title as 'FAISS Vector DB00'
+    And User clicks on the Q&A tab
+    And User clicks on Select Model dropdown
+    And User selects a model 'Llama3-70B-Instruct'
+    When User enters a question "What is vector database?" in the question input textbox
+    And User clicks on Generate Answer button
+    Then User sees the answer generated for the question
