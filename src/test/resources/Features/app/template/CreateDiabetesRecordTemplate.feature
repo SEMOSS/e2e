@@ -1,9 +1,10 @@
-@DeleteTestCatalog @DeleteCreatedTestApp
+@DeleteTestCatalog @DeleteCreatedTestApp @ApplicationBugFailure
 Feature: Create Diabetes Record Template
 
   Background: User create the Diabetes database using zip file
     Given User opens Main Menu
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
     And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'

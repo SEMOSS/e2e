@@ -22,7 +22,7 @@ Feature: Playground Home Chat
     And User verifies that the 'Ask the AI' button is 'disabled'
     When User enters prompt in the Prompt textarea 'tell me a joke'
     Then User verifies that the 'Ask the AI' button is 'enabled'
-    When User clicks on the "Ask the AI" button
+    When User clicks on the "Ask the AI" button in the chat interface
     And User waits for the response from the model
     Then User verifies that the response from the model is displayed as Prompt
     When User clicks on sidebar toggle button

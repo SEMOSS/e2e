@@ -6,11 +6,12 @@ Feature: Verify All Vector Database
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Vector
+    And User checks if 'Vetcor' catalog created and Deletes the 'TestVector'
     And User clicks on Add Vector button
     And User clicks on file upload icon
     And User uploads the file 'VectorDatabase/TestVector.zip'
     And User clicks on 'Upload' button to create catalog
-    #And User sees success toast message 'Successfully Created Vector Database'
+    And User sees success toast message 'Successfully Created Vector Database'
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestVector'
 

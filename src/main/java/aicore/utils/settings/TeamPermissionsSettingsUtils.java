@@ -14,12 +14,12 @@ import aicore.utils.page.model.ModelPageUtils;
 
 public class TeamPermissionsSettingsUtils {
 
-	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//legend/span[text()='Type*']/ancestor::div[contains(@class,'MuiInputBase-root')]//div[@role='combobox']";
-	private static final String TEAM_NAME_XPATH = "//legend/span[text()='Name*']/ancestor::div[contains(@class,'MuiInputBase-root')]//input";
-	private static final String DESCRIPTION_XPATH = "//label[text()='Description']/parent::div/child::div//textarea";
-	private static final String ADD_BUTTON_XPATH = "//button[.//span[normalize-space()='{buttonName}']]";
+	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//button[@role='combobox']";
+	private static final String TEAM_NAME_XPATH = "//label[text()='Name']/parent::div//input";
+	private static final String DESCRIPTION_XPATH = "//label[text()='Description']/parent::div//textarea";
+	private static final String ADD_BUTTON_XPATH = "//button[text()='{buttonName}'] | //span[text()='{buttonName}']";
 	private static final String TEAM_BUTTON_XPATH = "//button//span[contains(text(), 'Add Members')]";
-	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']"; //// *[contains(text(), '{Member}')]";
+	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
 	private static final String LIST_DROPDOWN = "ArrowDropDownIcon";
 	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message')]";
@@ -47,7 +47,7 @@ public class TeamPermissionsSettingsUtils {
 		AICorePageUtils.waitFor(selectTypeFromDropdown);
 		selectTypeFromDropdown.click();
 		page.waitForTimeout(300);
-		page.getByText(type).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(type)).click();
 	}
 
 	public static void fillTeamName(Page page, String value) {
@@ -62,11 +62,13 @@ public class TeamPermissionsSettingsUtils {
 
 	public static void clickOnAddButton(Page page, String button) {
 		page.click(ADD_BUTTON_XPATH.replace("{buttonName}", button));
-		page.reload(); // added because of stale element
+		page.reload();
 	}
 
 	public static void clickOnAddMemberButton(Page page, String button) {
-		page.click(ADD_BUTTON_XPATH.replace("{buttonName}", button));
+		Locator buttonLocator = page.locator(ADD_BUTTON_XPATH.replace("{buttonName}", button));
+		AICorePageUtils.waitFor(buttonLocator);
+		buttonLocator.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static void clickOnAddTeamButton(Page page, String button) {
@@ -125,9 +127,9 @@ public class TeamPermissionsSettingsUtils {
 
 	// add engine to all catalog with different
 	public static void userClickOnCreatedTeamName(Page page, String teamName, String timestamp) {
-		Locator teamNameLocator = page.locator("//p[text()='" + teamName + " " + timestamp+"']");
+		Locator teamNameLocator = page.locator("//p[text()='" + teamName + " " + timestamp + "']");
 		AICorePageUtils.waitFor(teamNameLocator);
-		if(!teamNameLocator.isVisible()) {
+		if (!teamNameLocator.isVisible()) {
 			throw new AssertionError("Team name: " + teamName + " with timestamp: " + timestamp + " is not visible.");
 		}
 		teamNameLocator.click();
@@ -244,16 +246,21 @@ public class TeamPermissionsSettingsUtils {
 		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
-		Locator Memberlist = page.getByText(members);
-		int count = Memberlist.count();
+		Locator search = page.locator("//label[text()='Search']/parent::div//input");
+		search.click();
+		search.fill(members);
+		page.waitForTimeout(1000);
+		int count = page.getByRole(AriaRole.OPTION).count();
+		System.out.println(count);
+		dropdownLocator.click();
 		for (int i = 1; i <= count; i++) {
-			Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", members + i));
-			AICorePageUtils.waitFor(listMember);
-			listMember.click();
 			dropdownLocator.click();
+			search.fill(members + i);
+			Locator option = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(members + i));
+			option.waitFor();
+			option.click();
 		}
 		dropdownLocator.click();
-		page.locator(HEADINGS_XPATH).click();
 	}
 
 	public static int calculateTotalPages(Page page) {

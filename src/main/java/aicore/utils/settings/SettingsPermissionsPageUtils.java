@@ -11,15 +11,15 @@ public class SettingsPermissionsPageUtils {
 	private static final String PROJECT_SEARCHBOX_PLACEHOLDER = "Project";
 	private static final String CATALOG_CARD_XPATH = "//p[text()='{catalogName}']";
 	private static final String APP_CARD_XPATH = "//span[text()='{appName}']";
-	private static final String MEMBER_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
-	private static final String SEARCH_MEMBER_SEARCHBOX_XPATH = "//div[@data-testid='membersTables-searchMembers-searchBar}']//input";
-	private static final String ACCESS_RADIO_BUTTON_XPATH = "//input[@type='radio' and @value='{role}']";
-	private static final String USER_DELETE_ICON_XPATH = "//tr[.//input[@type='radio' and @value='{role}' and @checked]]//*[@data-testid='DeleteIcon']";
-	private static final String DELETE_USER_CONFIRM_BUTTON_XPATH = "//span[text()='Confirm']";
-	private static final String USER_EDIT_ICON_XPATH = "//tr[.//input[@type='radio' and @value='{role}' and @checked]]//*[@data-testid='EditIcon']";
-	private static final String EDIT_MEMBER_ACCESS_BUTTON_XPATH = "//div[contains(@class,'MuiFormGroup-root MuiRadioGroup')]//input[@type='radio' and @value='{role}']";
-	private static final String EDIT_MEMBER_UPDATE_BUTTON_XPATH = "//span[text()='Update']";
-	private static final String USER_PERMISSION_DATE_XPATH = "//tr[.//input[@type='radio' and @value='{role}' and @checked]]//td[4]";
+	private static final String MEMBER_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
+	private static final String SEARCH_MEMBER_SEARCHBOX_DATATESTID = "membersTables-searchMembers-searchBar}";
+	private static final String ACCESS_RADIO_BUTTON_XPATH = "//button[@role='radio' and @value='{role}']";
+	private static final String USER_DELETE_ICON_XPATH = "//tr[.//button[@role='radio' and @value='{role}']]//td//button//*[contains(@class,'lucide-trash')]";
+	private static final String DELETE_USER_CONFIRM_BUTTON_XPATH = "//button[text()='Confirm']";
+	private static final String USER_EDIT_ICON_XPATH = "//tr[.//button[@role='radio' and @value='{role}']]//td//button//*[contains(@class,'lucide-pencil')]";
+	private static final String EDIT_MEMBER_ACCESS_BUTTON_XPATH = "//div[@role='dialog']//button[@Value='{role}' and @role='radio']";
+	private static final String EDIT_MEMBER_UPDATE_BUTTON_DATATESTID = "members-add-overlay-update-button";
+	private static final String USER_PERMISSION_DATE_XPATH = "//tr[.//button[@Value='{role}']]//td[4]";
 
 	public static void selectCard(Page page, String cardName) {
 		String card = cardName.replace(" ", "-");
@@ -38,6 +38,7 @@ public class SettingsPermissionsPageUtils {
 	}
 
 	public static void clickOnCatalogCard(Page page, String catalogName) {
+		page.waitForTimeout(1000);
 		Locator catalogCardLocator = page.locator(CATALOG_CARD_XPATH.replace("{catalogName}", catalogName));
 		Locator appCardLocator = page.locator(APP_CARD_XPATH.replace("{appName}", catalogName));
 		if (appCardLocator.isVisible()) {
@@ -76,11 +77,11 @@ public class SettingsPermissionsPageUtils {
 
 	public static void searchUserInUserSearchbar(Page page, String userType) {
 		String userName = getUserNameFromConfig(page, userType);
-		Locator searchIcon = page.locator(MEMBER_SEARCH_ICON_XPATH);
+		Locator searchIcon = page.getByTestId(MEMBER_SEARCH_ICON_DATATESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
-		Locator searchBox = page.locator(SEARCH_MEMBER_SEARCHBOX_XPATH);
+		Locator searchBox = page.getByTestId(SEARCH_MEMBER_SEARCHBOX_DATATESTID);
 		searchBox.clear();
 		searchBox.fill(userName);
 		page.waitForTimeout(1000);
@@ -91,7 +92,7 @@ public class SettingsPermissionsPageUtils {
 		editIcon.isVisible();
 		editIcon.click();
 		page.locator(EDIT_MEMBER_ACCESS_BUTTON_XPATH.replace("{role}", newRole)).click();
-		page.locator(EDIT_MEMBER_UPDATE_BUTTON_XPATH).click();
+		page.getByTestId(EDIT_MEMBER_UPDATE_BUTTON_DATATESTID).click();
 		page.waitForTimeout(500);
 	}
 
@@ -123,5 +124,17 @@ public class SettingsPermissionsPageUtils {
 
 	public static String getUserPermissionDate(Page page, String role) {
 		return page.locator(USER_PERMISSION_DATE_XPATH.replace("{role}", role)).innerText();
+	}
+
+	public static boolean isOptionDisabled(Page page, String currentRole, String option, String newRole) {
+		Locator editIconLocator = page.locator(USER_EDIT_ICON_XPATH.replace("{role}", newRole));
+		Locator deleteIconLocator = page.locator(USER_DELETE_ICON_XPATH.replace("{role}", newRole));
+		if (option.equalsIgnoreCase("Edit")) {
+			return editIconLocator.isDisabled();
+		} else if (option.equalsIgnoreCase("Delete")) {
+			return deleteIconLocator.isDisabled();
+		} else {
+			throw new IllegalArgumentException("Unknown option type: " + option);
+		}
 	}
 }

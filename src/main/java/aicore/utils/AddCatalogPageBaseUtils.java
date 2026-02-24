@@ -15,11 +15,11 @@ public class AddCatalogPageBaseUtils {
 	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
 	private static final String DATABASE_OPTIONS_ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h1[contains(text(),'{CatalogName}')]";
-	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='search-box']";
+	private static final String SEARCH_BAR_DATA_PLACEHOLDERTEXT = "Search";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div//span";
-	private static final String COPY_ID_ICON_DATATTESTID = "engineHeader-copy-Database-id-btn";
+	private static final String COPY_ID_ICON_XPATH = "//button[contains(@data-testid,'engineHeader-copy')]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
 	private static final String TAG_TEXTBOX = "Tag";
@@ -92,7 +92,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean isSearchBarPresent(Page page) {
-		Locator searchBar = page.locator(SEARCH_BAR_XPATH);
+		Locator searchBar = page.getByPlaceholder(SEARCH_BAR_DATA_PLACEHOLDERTEXT);
 		AICorePageUtils.waitFor(searchBar);
 		return searchBar.isVisible();
 	}
@@ -114,11 +114,11 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean checkCopyIcon(Page page) {
-		return page.getByTestId(COPY_ID_ICON_DATATTESTID).isVisible();
+		return page.locator(COPY_ID_ICON_XPATH).isVisible();
 	}
 
 	public static void clickCopyIcon(Page page) {
-		page.getByTestId(COPY_ID_ICON_DATATTESTID).click();
+		page.locator(COPY_ID_ICON_XPATH).click();
 	}
 
 	public static boolean verifyCopyToastMessage(Page page, String toastMessage) {
