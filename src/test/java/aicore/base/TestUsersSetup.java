@@ -19,8 +19,6 @@ public class TestUsersSetup {
 
 		logger.info("Creating users");
 		GenericSetupUtils.createUsers(page);
-		
-		page.navigate("https://www.google.com");
 	}
 
 }
