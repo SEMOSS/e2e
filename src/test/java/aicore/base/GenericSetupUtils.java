@@ -296,19 +296,20 @@ public class GenericSetupUtils {
 				logger.info("Failed to click Accept button: " + e.getMessage());
 			}
 		}
-//   Added page reload because after creating a new user and logging in with that user, the page needs to be refreshed (BUG).
+// Added page reload because after adding a new user in app and logging in with that user, the page needs to be refreshed.
 		page.reload();
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.getByTestId("loginPage-textField-username").click();
-
 		page.getByTestId("loginPage-textField-username").fill(user);
 		page.getByTestId("loginPage-textField-password").click();
 		page.getByTestId("loginPage-textField-password").fill(password);
+
+// Commented below code due to the set-cookie header removed from api/auth/login.
+
 //		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
 //				() -> page.getByTestId("loginPage-button-login").click());
 //
 //		assertEquals(200, response.status());
-
 //		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
 //		Map<String, String> newMap = new HashMap<>();
 //		newMap.put("cookie", cookie);
@@ -363,7 +364,6 @@ public class GenericSetupUtils {
 
 	private static void setupInitialAdmin(Page page, String userName) {
 		page.navigate(UrlUtils.getApi("setAdmin/"));
-
 		logger.info("Page is: {}", page.url());
 		assertEquals(UrlUtils.getApi("setAdmin/"), page.url());
 		logger.info("Going to fill initial admin.");
