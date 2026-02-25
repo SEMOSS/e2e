@@ -4,26 +4,24 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Map;
 
-import aicore.framework.ResourcePool;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.opentest4j.TestAbortedException;
 
-import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
+import aicore.framework.ConfigUtils;
+import aicore.framework.ResourcePool;
+import aicore.framework.UrlUtils;
 import aicore.utils.CaptureScreenShotUtils;
 import aicore.utils.CommonUtils;
-import aicore.framework.ConfigUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.framework.UrlUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
@@ -31,7 +29,6 @@ import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
-import org.opentest4j.TestAbortedException;
 
 public class SetupHooks {
 
@@ -89,38 +86,8 @@ public class SetupHooks {
 		}
 
 
-		Playwright playwright = Playwright.create();
-		ResourcePool.get().setPlaywright(playwright);
-
-		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-		ResourcePool.get().setBrowser(browser);
-
-		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
-				.setDeviceScaleFactor(1)
-				.setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
-				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
-		BrowserContext context = browser.newContext(newContextOptions);
-		ResourcePool.get().setContext(context);
-
-		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
-
-		if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
-			Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
-			context.tracing().start(startOptions);
-		}
-
-		Page page = context.newPage();
-
-		ResourcePool.get().setPage(page);
-		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
-
-		GenericSetupUtils.setupLoggers(page);
-
-//		if (GenericSetupUtils.useDocker() && RunInfo.isNeedToCreateUser()) {
-//			logger.info("Creating users");
-//			GenericSetupUtils.createUsers(page);
-//		}
-
+		Page page = GenericSetupUtils.setupPlaywright();
+		
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
 
 		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
