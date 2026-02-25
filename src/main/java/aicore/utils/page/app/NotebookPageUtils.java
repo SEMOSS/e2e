@@ -21,7 +21,7 @@ public class NotebookPageUtils {
 
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
-	private static final String CODE_ENTER_TEXTAREA = ".view-line";
+	private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
@@ -37,7 +37,7 @@ public class NotebookPageUtils {
 	private static final String TOTAL_COUNT_OF_ROWS_XPATH = "(//span[contains(text(),'This is a preview of ingested data')])[1]";
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
-	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
+	private static final String PYTHON_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='Notebook']/..//following::div//p[text()='{notebookName}']";
 	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
 	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
@@ -358,7 +358,8 @@ public class NotebookPageUtils {
 
 	public static void selectDatabaseType(Page page, String databaseName) {
 		page.getByTitle("Select Database").isVisible();
-		page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]").click(new Locator.ClickOptions().setForce(true));
+		page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]")
+				.click(new Locator.ClickOptions().setForce(true));
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
 	}
 
@@ -387,7 +388,7 @@ public class NotebookPageUtils {
 
 	public static List<String> getNotebookOutputTableHeader(Page page) {
 		Locator tableHeader = page.locator(OUTPUT_TABLE).last().locator("th");
-		Locator table = page.locator(OUTPUT_TABLE);
+		Locator table = page.locator(OUTPUT_TABLE).first();
 		AICorePageUtils.waitFor(table);
 		return tableHeader.allTextContents();
 	}
@@ -467,7 +468,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void getPythonOutput(Page page, String output) {
-		String pythonOutput = page.locator(PYTHON_OUTPUT_XPATH).textContent();
+		String pythonOutput = page.locator(PYTHON_OUTPUT_XPATH.replace("{codeOutput}", output)).textContent();
 		if (pythonOutput == null || !pythonOutput.contains(output)) {
 			throw new AssertionError("Expected Python output: " + output + ", but got: " + pythonOutput);
 		}

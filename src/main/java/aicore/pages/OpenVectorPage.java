@@ -41,7 +41,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String COPY_VECTOR_ID = "engineHeader-copy-Vector-id-btn";
 	private static final String COPIED_TOAST_DATA_XPATH = "//div[text()='ID copied to clipboard']";
 	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
-	private static final String VECTOR_TAGS_XPATH = "vector-form-input-TAGS";
+	private static final String VECTOR_TAGS_XPATH = "//div[contains(@class,'flex flex-1 flex-col')]//span";
+	private static final String VECTOR_TAGS_FIELD_DATA_TESTID = "vector-form-input-TAGS";
 	private static final String UPDATED_BY_XPATH = "//*[@id='home__content']//p[contains(text(),'Updated by ')]";
 	private static final String UPDATED_AT_XPATH = "//*[@id='home__content']//p[contains(text(),'at ')]";
 	private static final String DISCOVERABLE_VECTORS_XPATH = "//button[normalize-space()='Discoverable Vectors']";
@@ -78,7 +79,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void enterVectorTag(String vTag) {
-		Locator tagInput = page.getByTestId(VECTOR_TAGS_XPATH);
+		Locator tagInput = page.getByTestId(VECTOR_TAGS_FIELD_DATA_TESTID);
 		tagInput.fill(vTag);
 		tagInput.press("Enter");
 	}
@@ -282,7 +283,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	public boolean verifyTooltipOnHover(String optionName, String expectedTooltip) {
 		Locator hoverIcon = page.locator(HOVER_ON_ICON_XPATH.replace("{iconName}", optionName)).first();
 		hoverIcon.hover();
-		Locator tooltip = page.locator(SLIDER_TOOLTIP_XPATH);
+		Locator tooltip = page.locator(SLIDER_TOOLTIP_XPATH).first();
 		tooltip.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String actualTooltip = tooltip.innerText();
 		actualTooltip = actualTooltip.replaceAll("\\s+", " ").trim();
