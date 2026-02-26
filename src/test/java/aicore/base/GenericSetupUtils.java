@@ -29,7 +29,6 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
 import aicore.framework.ConfigUtils;
-import aicore.framework.EnvUtils;
 import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
@@ -55,7 +54,6 @@ public class GenericSetupUtils {
 	private static void doInit() throws IOException {
 		logCheck();
 
-		loadEnv();
 		loadUrls();
 
 		useDocker = Boolean.parseBoolean(ConfigUtils.getValue("use_docker"));
@@ -100,33 +98,18 @@ public class GenericSetupUtils {
 		logger.info("Log check end");
 	}
 
-	private static void loadEnv() throws IOException {
-		RunInfo.setEnvVariables(EnvUtils.loadEnv());
-	}
-
 	private static void loadUrls() {
-		String environmentUrls = RunInfo.getEnvVariables().get("URLS");
+		String environmentUrls = ConfigUtils.getValue("URLS");
 		List<String> urls = new ArrayList<>();
-		int parallelCount = RunInfo.getParallelism();
-		// Check to see if urls were set manually. If so, use them
-		if (environmentUrls != null && !environmentUrls.isEmpty()) {
-			logger.info("Environment urls were set manually: {}", environmentUrls);
-			String[] arr = environmentUrls.split(",");
-			for (int i = 0; i < parallelCount; i++) {
-				String s = arr[i].trim();
-				if (!s.endsWith("/")) {
-					s = s + "/";
-				}
-				urls.add(s);
+		int parallelCount = Integer.parseInt(ConfigUtils.getValue("PARALLEL_COUNT"));
+		logger.info("URLS: {}, parallelCount: {}", environmentUrls, parallelCount);
+		String[] arr = environmentUrls.split(",");
+		for (int i = 0; i < parallelCount; i++) {
+			String s = arr[i].trim();
+			if (!s.endsWith("/")) {
+				s = s + "/";
 			}
-		} else {
-			// Generate URLS based off of how docker containers are generated
-			String urlStart = "http://e2e-semoss-";
-			String urlEnd = ":8080/";
-			for (int i = 1; i <= parallelCount; i++) {
-				String url = urlStart + i + urlEnd;
-				urls.add(url);
-			}
+			urls.add(s);
 		}
 
 		RunInfo.setURLS(urls);

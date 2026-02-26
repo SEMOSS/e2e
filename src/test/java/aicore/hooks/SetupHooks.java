@@ -124,6 +124,11 @@ public class SetupHooks {
 			GenericSetupUtils.login(page, nativeReadUser, nativeReadPassword);
 			break;
 
+		case "@LoginWithSSO":
+			//do nothing and navigate to home page
+			GenericSetupUtils.navigateToHomePage(page);
+			break;
+
 		default:
 			String nativeUser = ConfigUtils.getValue("native_username");
 			String nativePassword = ConfigUtils.getValue("native_password");

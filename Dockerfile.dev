@@ -233,7 +233,7 @@ COPY src src
 #COPY videos videos
 COPY tester.sh tester.sh
 COPY state.json state.json
-COPY .env .env
+COPY .env.defaults .env.defaults
 
 WORKDIR /app
 CMD ["/app/scripts.sh"]

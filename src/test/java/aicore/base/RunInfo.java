@@ -3,9 +3,7 @@ package aicore.base;
 import aicore.framework.ConfigUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RunInfo {
 
@@ -13,7 +11,6 @@ public class RunInfo {
     private static boolean needToCreateUser = true;
     private static Boolean accept_cookies_popup = null;
 
-    private static Map<String, String> ENV_VARIABLES = new HashMap<>();
     private static List<String> URLS = new ArrayList<>();
 
     public static boolean isFirstRun() {
@@ -40,19 +37,11 @@ public class RunInfo {
     }
 
     public static String getApiEndpoint() {
-        return ENV_VARIABLES.get("API_ENDPOINT");
-    }
-
-    public static void setEnvVariables(Map<String, String> envVariables) {
-        ENV_VARIABLES = envVariables;
-    }
-
-    public static Map<String, String> getEnvVariables() {
-        return ENV_VARIABLES;
+        return ConfigUtils.getValue("API_ENDPOINT");
     }
 
     public static int getParallelism() {
-        return Integer.parseInt(ENV_VARIABLES.get("PARALLEL_COUNT"));
+        return Integer.parseInt(ConfigUtils.getValue("PARALLEL_COUNT"));
     }
 
     public static void setURLS(List<String> urls) {
