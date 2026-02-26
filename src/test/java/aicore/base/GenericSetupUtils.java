@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,7 +72,7 @@ public class GenericSetupUtils {
 			if (Files.isDirectory(p)) {
 				logger.info("Cleaning directory: {}", p.toString());
 				FileUtils.deleteDirectory(p.toFile());
-                Files.createDirectory(p);
+				Files.createDirectory(p);
 			}
 		}
 
@@ -112,10 +111,9 @@ public class GenericSetupUtils {
 	}
 
 	private static Map<String, String> getEnvironment(Path file) throws IOException {
-        return Files.readAllLines(file).stream().map(String::trim)
-                .filter(s -> !s.isEmpty()).filter(s -> !s.startsWith("#")).filter(s -> s.contains("="))
-                .map(s -> s.split("=", 2))
-                .collect(Collectors.toMap(s -> s[0].trim(), s -> s.length > 1 ? s[1].trim() : ""));
+		return Files.readAllLines(file).stream().map(String::trim).filter(s -> !s.isEmpty())
+				.filter(s -> !s.startsWith("#")).filter(s -> s.contains("=")).map(s -> s.split("=", 2))
+				.collect(Collectors.toMap(s -> s[0].trim(), s -> s.length > 1 ? s[1].trim() : ""));
 	}
 
 	private static void loadUrls() {
@@ -304,26 +302,37 @@ public class GenericSetupUtils {
 //		} catch (Error | Exception e) {
 //			logger.info(e.getMessage());
 //		}
+// Added page reload because after adding a new user in app and logging in with that user, the page needs to be refreshed.
+		page.reload();
+		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.getByTestId("loginPage-textField-username").click();
 
 		page.getByTestId("loginPage-textField-username").fill(user);
 		page.getByTestId("loginPage-textField-password").click();
 		page.getByTestId("loginPage-textField-password").fill(password);
-		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
+// Commented below code due to the set-cookie header removed from api/auth/login.
+
+//		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
+//				() -> page.getByTestId("loginPage-button-login").click());
+//
+//		assertEquals(200, response.status());
+//
+//		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
+//		Map<String, String> newMap = new HashMap<>();
+//		newMap.put("cookie", cookie);
+//		page.setExtraHTTPHeaders(newMap);
+//		page.reload();
+//		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+//		page.waitForLoadState(LoadState.NETWORKIDLE);
+//		page.waitForLoadState(LoadState.LOAD);
+//		navigateToHomePage(page);
+//		return cookie;
+		Response response = page.waitForResponse(
+				resp -> resp.url().contains("/api/auth/login") && resp.request().method().equals("POST"),
 				() -> page.getByTestId("loginPage-button-login").click());
-
 		assertEquals(200, response.status());
-
-		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
-		Map<String, String> newMap = new HashMap<>();
-		newMap.put("cookie", cookie);
-		page.setExtraHTTPHeaders(newMap);
-		page.reload();
-		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForLoadState(LoadState.LOAD);
-		navigateToHomePage(page);
-		return cookie;
+		return "Login Successful";
 	}
 
 	public static void navigateToHomePage(Page page) {
