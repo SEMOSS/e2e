@@ -304,7 +304,6 @@ public class GenericSetupUtils {
 		page.getByTestId("loginPage-textField-username").fill(user);
 		page.getByTestId("loginPage-textField-password").click();
 		page.getByTestId("loginPage-textField-password").fill(password);
-
 // Commented below code due to the set-cookie header removed from api/auth/login.
 
 //		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),

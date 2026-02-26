@@ -13,6 +13,7 @@ public class CatalogCreationFromZipUtil {
 	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
 	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
+	private static final String GUARDRAIL_MENU_BUTTON_XPATH = "//div[@aria-label='Guardrail']";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//*[normalize-space()='{fileName}']";
@@ -37,6 +38,9 @@ public class CatalogCreationFromZipUtil {
 			break;
 		case "Vector":
 			locator = page.locator(VECTOR_MENU_BUTTON_XPATH);
+			break;
+		case "Guardrail":
+			locator = page.locator(GUARDRAIL_MENU_BUTTON_XPATH);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid block name: " + catalogName);
