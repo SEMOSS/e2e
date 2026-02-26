@@ -345,7 +345,7 @@ public class GenericSetupUtils {
 		page.navigate(url);
 		page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
 		Page page1 = page.waitForPopup(() -> {
-			page.locator("//span[(text()='Deloitte Login')]").click();
+			page.locator("//span[(text()='Login')]").click();
 		});
 		page1.locator("//input[@type='email']").fill(Username);
 		page1.locator("#idSIButton9").click();
@@ -405,7 +405,7 @@ public class GenericSetupUtils {
 		visible.get(2).fill(userName);
 
 		visible.get(3).click();
-		visible.get(3).fill(userName + "@deloitte.com");
+		visible.get(3).fill(userName + "@test.com");
 
 		List<Locator> passwords = page.locator("input[type='password']").all();
 		List<Locator> visiblePasswords = new ArrayList<>();

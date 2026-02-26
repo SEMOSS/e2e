@@ -22,7 +22,7 @@ public class RestCaller {
                 .bodyForm(Form.form()
                         .add("name", userId)
                         .add("username", userId)
-                        .add("email", userId + "@deloitte.com")
+                        .add("email", userId + "@test.com")
                         .add("password", "Test123!")
                         .build());
 
