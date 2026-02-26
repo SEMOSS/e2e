@@ -1,5 +1,6 @@
 package e2e;
 
+import aicore.base.RunInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +28,8 @@ public class HttpLogger {
 	private static final String RESPONSE_LOG = RESPONSE_SB.toString();
 
 	public static void logRequest(Request s) {
-		if (s.url().contains("/Monolith/")) {
+		String endpoint = RunInfo.getApiEndpoint();
+		if (s.url().contains("/" + endpoint + "/")) {
 			try {
 				logger.info(REQUEST_LOG, s, s.url(), s.method(), s.allHeaders(), s.postData());
 			} catch (Exception e) {
@@ -37,7 +39,8 @@ public class HttpLogger {
 	}
 
 	public static void logResponse(Response s) {
-		if (s.url().contains("/Monolith/")) {
+		String endpoint = RunInfo.getApiEndpoint();
+		if (s.url().contains("/" + endpoint + "/")) {
 			if (s.url().contains("milkyway.jpg")) {
 				logger.info("Milkway.jpg {}", s.status());
 			} else {
