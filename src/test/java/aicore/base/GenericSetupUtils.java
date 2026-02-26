@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,10 +18,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StartOptions;
@@ -99,7 +102,6 @@ public class GenericSetupUtils {
 	}
 
 	private static void loadEnv() throws IOException {
-
 		Path file = Paths.get(".env");
 		Map<String, String> projectEnvironment = getEnvironment(file);
 
@@ -163,7 +165,6 @@ public class GenericSetupUtils {
 		lp.setHeadless(Boolean.parseBoolean(ConfigUtils.getValue("headless")));
 		lp.setSlowMo(Double.parseDouble(ConfigUtils.getValue("slowmo")));
 		lp.setTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
-
 		return lp;
 	}
 
@@ -195,7 +196,39 @@ public class GenericSetupUtils {
 
 		// response handling
 		page.onResponse(HttpLogger::logResponse);
+	}
+	
+	public static Page setupPlaywright() {
+		// create playwright
+		Playwright playwright = Playwright.create();
+		ResourcePool.get().setPlaywright(playwright);
 
+		// setup browser
+		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+		ResourcePool.get().setBrowser(browser);
+
+		// get browser context options
+		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
+				.setDeviceScaleFactor(1).setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
+				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
+		BrowserContext context = browser.newContext(newContextOptions);
+		ResourcePool.get().setContext(context);
+		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
+
+		// setup tracing
+		if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+			Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
+			context.tracing().start(startOptions);
+		}
+
+		// create page
+		Page page = context.newPage();
+		ResourcePool.get().setPage(page);
+		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
+
+		GenericSetupUtils.setupLoggers(page);
+
+		return page;
 	}
 
 	public static void reset() {
@@ -207,7 +240,6 @@ public class GenericSetupUtils {
 		// setup admin user
 		String adminUser = ConfigUtils.getValue("native_username");
 		String adminPassword = ConfigUtils.getValue("native_password");
-
 		setupInitialAdmin(page, adminUser);
 
 		// test admin user login
