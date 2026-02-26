@@ -1,4 +1,4 @@
-package e2e;
+package aicore.framework;
 
 import aicore.base.RunInfo;
 import org.apache.logging.log4j.LogManager;

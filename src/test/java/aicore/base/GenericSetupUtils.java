@@ -34,7 +34,7 @@ import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
 import aicore.utils.AICorePageUtils;
-import e2e.HttpLogger;
+import aicore.framework.HttpLogger;
 
 public class GenericSetupUtils {
 
