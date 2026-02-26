@@ -15,7 +15,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String DATABASE_OPTIONS_UNDER_SECTION_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']";
 	private static final String DATABASE_OPTIONS_ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h1[contains(text(),'{CatalogName}')]";
-	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='search-box']";
+	private static final String SEARCH_BAR_DATA_PLACEHOLDERTEXT = "Search";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div//span";
@@ -92,7 +92,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean isSearchBarPresent(Page page) {
-		Locator searchBar = page.locator(SEARCH_BAR_XPATH);
+		Locator searchBar = page.getByPlaceholder(SEARCH_BAR_DATA_PLACEHOLDERTEXT);
 		AICorePageUtils.waitFor(searchBar);
 		return searchBar.isVisible();
 	}

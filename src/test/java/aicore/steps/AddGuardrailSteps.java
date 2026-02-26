@@ -76,8 +76,8 @@ public class AddGuardrailSteps {
 
 	@Then("User sees export success toast message as {string}")
 	public void user_sees_export_success_toast_message_as(String expectedToastMessage) {
-		String actualToastMessage = guardrailPage.verifyToastMessage();
-		Assertions.assertEquals(expectedToastMessage, actualToastMessage,
+		String actualToastMessage = guardrailPage.verifyToastMessage(expectedToastMessage);
+		Assertions.assertEquals(actualToastMessage, expectedToastMessage,
 				"toast message is not matching with expected");
 	}
 

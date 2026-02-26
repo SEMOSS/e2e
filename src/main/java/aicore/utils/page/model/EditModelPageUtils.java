@@ -22,13 +22,13 @@ public class EditModelPageUtils {
 	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
 	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[normalize-space()='Data classification']/following-sibling::div//span[normalize-space()='{option}']";
 	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/following-sibling::div//span[normalize-space()='{option}']";
-	private static final String DESCRIPTION_TEXT_XPATH = "//div[@class='css-1xfr4eb']//h6";
+	private static final String DESCRIPTION_TEXT_DATA_TESTID = "Description";
 	private static final String MODEL_TAGS_XPATH = "//div[contains(@class,'flex flex-1 flex-col')]//span";
-	private static final String DETAILS_UNDER_OVERVIEW_XPATH = "//div[h6[text()='Details']]/following-sibling::div[contains(@class,'MuiStack-root')]";
-	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Tag')]]/following-sibling::div//span";
-	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Domain')]]/following-sibling::div//span";
-	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data classification')]]/following-sibling::div";
-	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//div[h6[contains(text(), 'Data restrictions')]]/following-sibling::div";
+	private static final String DETAILS_UNDER_OVERVIEW_DATA_TESTID = "engine-overview-markdown";
+	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Tag')]/parent::section/child::div";
+	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Domain')]/parent::section//span";
+	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data classification')]/parent::section//span";
+	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data restrictions')]/parent::section//span";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 	private static final String DOMAIN_TEXTBOX_XPATH = "editEngineDetails-Domain-autocomplete";
 
@@ -80,16 +80,10 @@ public class EditModelPageUtils {
 
 	public static void selectDataClassificationOption(Page page, String option) {
 		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH.replace("{option}", option));
-		// page.fill(DATA_CLASSIFICATION_TEXTBOX_XPATH, option);
-		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("ArrowDown");
-		// page.locator(DATA_CLASSIFICATION_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void selectDataRestrictionsOption(Page page, String option) {
 		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH.replace("{option}", option));
-		// page.fill(DATA_RESTRICTIONS_TEXTBOX_XPATH, option);
-		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("ArrowDown");
-		// page.locator(DATA_RESTRICTIONS_TEXTBOX_XPATH).press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {
@@ -108,7 +102,7 @@ public class EditModelPageUtils {
 	}
 
 	public static String verifyDescriptionText(Page page) {
-		String descriptionText = page.getByTestId(DESCRIPTION_TEXT_XPATH).textContent().trim();
+		String descriptionText = page.getByTestId(DESCRIPTION_TEXT_DATA_TESTID).textContent().trim();
 		return descriptionText;
 	}
 
@@ -120,7 +114,7 @@ public class EditModelPageUtils {
 	}
 
 	public static String verifyDetailsTextUnderOverview(Page page) {
-		Locator shadowElement = page.locator(DETAILS_UNDER_OVERVIEW_XPATH).locator("p");
+		Locator shadowElement = page.getByTestId(DETAILS_UNDER_OVERVIEW_DATA_TESTID);
 		shadowElement.waitFor();
 		String text = shadowElement.innerText().trim();
 		return text;

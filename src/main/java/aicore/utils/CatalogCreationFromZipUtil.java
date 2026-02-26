@@ -18,6 +18,7 @@ public class CatalogCreationFromZipUtil {
 	private static final String ADD_FILE_NAME_XPATH = "//*[normalize-space()='{fileName}']";
 	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
+	private static final String ZIP_UPLOAD_ICON_XPATH = "//button[contains(@data-testid,'-upload-file-button')]";
 
 	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = null;
@@ -50,8 +51,8 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void selectAddCatalogOption(Page page, String option) {
-		page.getByText(option).isVisible();
-		page.getByText(option).click();
+		page.locator(ZIP_UPLOAD_ICON_XPATH).isVisible();
+		page.locator(ZIP_UPLOAD_ICON_XPATH).click();
 	}
 
 	public static void clickOnFileUploadIcon(Page page) {
@@ -93,8 +94,8 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void clickOnCreateCatalogButton(Page page) {
-		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).isVisible();
-		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).click();
+		page.locator(UPLOAD_FILE_BUTTON_XPATH).isVisible();
+		page.locator(UPLOAD_FILE_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnUploadButton(Page page, String label) {

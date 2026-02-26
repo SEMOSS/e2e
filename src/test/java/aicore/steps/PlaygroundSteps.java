@@ -11,311 +11,321 @@ import io.cucumber.java.en.When;
 
 public class PlaygroundSteps {
 
-    private PlaygroundPage playgroundPage;
+	private PlaygroundPage playgroundPage;
 
-    public PlaygroundSteps() {
-        this.playgroundPage = new PlaygroundPage(SetupHooks.getPage());
-    }
+	public PlaygroundSteps() {
+		this.playgroundPage = new PlaygroundPage(SetupHooks.getPage());
+	}
 
-   @And("User clicks on Try it out hyperlink for Experiment in our Playground")
-    public void click_On_Try_It_Out_Hyperlink_for_Experiment_In_Our_Playground() {
-        playgroundPage.clickOnPlaygroundAppButton();
-    }
+	@And("User clicks on Try it out hyperlink for Experiment in our Playground")
+	public void click_On_Try_It_Out_Hyperlink_for_Experiment_In_Our_Playground() {
+		playgroundPage.clickOnPlaygroundAppButton();
+	}
 
-    @And("User is able to see the following Buttons:")
-    public void user_Is_Able_To_SeeTheFollowingButtons(DataTable dataTable) {
-        List<String> buttons = dataTable.asList(String.class);
+	@And("User is able to see the following Buttons:")
+	public void user_Is_Able_To_SeeTheFollowingButtons(DataTable dataTable) {
+		List<String> buttons = dataTable.asList(String.class);
 		for (String buttonName : buttons) {
 			playgroundPage.verifyButtons(buttonName);
 		}
-    }
+	}
 
-    @And("User sees the Prompt textarea with placeholder {string}")
-    public void user_Sees_The_Prompt_Textarea_With_Placeholder(String placeholder) {
-       playgroundPage.verifyTextareaPlaceholder(placeholder);
-    }
+	@And("User sees the Prompt textarea with placeholder {string}")
+	public void user_Sees_The_Prompt_Textarea_With_Placeholder(String placeholder) {
+		playgroundPage.verifyTextareaPlaceholder(placeholder);
+	}
 
-    @When("User click on the workspace button")
-    public void user_Clicks_On_Workspace_Button() {
-        playgroundPage.clickOnWorkspaceButton();
-    }
+	@When("User click on the workspace button")
+	public void user_Clicks_On_Workspace_Button() {
+		playgroundPage.clickOnWorkspaceButton();
+	}
 
-    @And("User clicks on Create New Workspace button")
-    public void user_Clicks_On_Create_New_Workspace_Button() {
-        playgroundPage.clickOnCreateNewWorkspaceButton();
-    }
+	@And("User clicks on Create New Workspace button")
+	public void user_Clicks_On_Create_New_Workspace_Button() {
+		playgroundPage.clickOnCreateNewWorkspaceButton();
+	}
 
-    @And("User enters workspace name as {string}")
-    public void user_Enters_Workspace_Name_As(String name) {
-        playgroundPage.enterWorkspaceName(name);
-    }
+	@And("User enters workspace name as {string}")
+	public void user_Enters_Workspace_Name_As(String name) {
+		playgroundPage.enterWorkspaceName(name);
+	}
 
-    @And("User enters workspace description as {string}")
-    public void user_Enters_Workspace_Description_As(String desc) {
-        playgroundPage.enterWorkspaceDescription(desc);
-    }
+	@And("User enters workspace description as {string}")
+	public void user_Enters_Workspace_Description_As(String desc) {
+		playgroundPage.enterWorkspaceDescription(desc);
+	}
 
-    @And("User clicks on Create button to create workspace")
-    public void user_Clicks_On_Create_Button_To_Create_Workspace() {
-        playgroundPage.clickOnNewCreateWorkspaceButton();
-    }
+	@And("User clicks on Create button to create workspace")
+	public void user_Clicks_On_Create_Button_To_Create_Workspace() {
+		playgroundPage.clickOnNewCreateWorkspaceButton();
+	}
 
-    @Then("User verifies that {string} workspace is created with description {string}")
-    public void user_Verifies_Workspace_Created_With_Description(String name, String desc) {
-        playgroundPage.verifyWorkspaceCreatedWithDescription(name, desc);
-    }
+	@Then("User verifies that {string} workspace is created with description {string}")
+	public void user_Verifies_Workspace_Created_With_Description(String name, String desc) {
+		playgroundPage.verifyWorkspaceCreatedWithDescription(name, desc);
+	}
 
-    @When("User selects the {string} from the workspace list")
-    public void user_Selects_Workspace_From_List(String name) {
-        playgroundPage.selectWorkspaceFromList(name);
-    }
-    @When("User selects the {string} as new chat from the workspace list")
-    public void user_Selects_the_as_new_chat_from_the_workspace_list(String workspaceName) {
-        playgroundPage.selectWorkspaceChatFromList(workspaceName);
-    }
-    @When("User verifies that {string} workspace is selected in the workspace {string} menu")
-    public void user_verifies_that_workspace_is_selected_in_the_workspace_menu(String workspaceName, String menuName) {
-        playgroundPage.verifyWorkspaceSelectionInMenu(workspaceName, menuName);
-    }
+	@When("User selects the {string} from the workspace list")
+	public void user_Selects_Workspace_From_List(String name) {
+		playgroundPage.selectWorkspaceFromList(name);
+	}
 
-    @Then("User verifies that {string} workspace is selected in the workspace list")
-    public void user_Verifies_Workspace_Selected_In_List(String name) {
-        playgroundPage.verifyWorkspaceSelectedInList(name);
-    }
+	@When("User selects the {string} as new chat from the workspace list")
+	public void user_Selects_the_as_new_chat_from_the_workspace_list(String workspaceName) {
+		playgroundPage.selectWorkspaceChatFromList(workspaceName);
+	}
 
-    @And("User clicks on Delete Workspace button")
-    public void user_Clicks_On_Delete_Workspace_Button() {
-        playgroundPage.clickOnDeleteWorkspaceButton();
-    }
+	@When("User verifies that {string} workspace is selected in the workspace {string} menu")
+	public void user_verifies_that_workspace_is_selected_in_the_workspace_menu(String workspaceName, String menuName) {
+		playgroundPage.verifyWorkspaceSelectionInMenu(workspaceName, menuName);
+	}
 
-    @Then("User verifies that workspace is deleted and not present in the workspace list")
-    public void user_Verifies_Workspace_Deleted() {
-        playgroundPage.verifyWorkspaceDeleted();
-    }
+	@Then("User verifies that {string} workspace is selected in the workspace list")
+	public void user_Verifies_Workspace_Selected_In_List(String name) {
+		playgroundPage.verifyWorkspaceSelectedInList(name);
+	}
 
-    @And("User clicks on Edit Workspace button")
-    public void user_Clicks_On_Edit_Workspace_Button() {
-        playgroundPage.clickOnEditWorkspaceButton();
-    }
+	@And("User clicks on Delete Workspace button")
+	public void user_Clicks_On_Delete_Workspace_Button() {
+		playgroundPage.clickOnDeleteWorkspaceButton();
+	}
 
-    @And("User updates workspace name to {string}")
-    public void user_Updates_Workspace_Name_To(String newName) {
-        playgroundPage.enterWorkspaceName(newName);
-    }
+	@Then("User verifies that workspace is deleted and not present in the workspace list")
+	public void user_Verifies_Workspace_Deleted() {
+		playgroundPage.verifyWorkspaceDeleted();
+	}
 
-    @And("User updates workspace description to {string}")
-    public void user_Updates_Workspace_Description_To(String newDesc) {
-        playgroundPage.enterWorkspaceDescription(newDesc);
-    }
+	@And("User clicks on Edit Workspace button")
+	public void user_Clicks_On_Edit_Workspace_Button() {
+		playgroundPage.clickOnEditWorkspaceButton();
+	}
 
-    @And("User clicks on Save button to save workspace changes")
-    public void user_Clicks_On_Save_Button_To_Save_Workspace_Changes() {
-        playgroundPage.clickOnSaveWorkspaceButton();
-    }
+	@And("User updates workspace name to {string}")
+	public void user_Updates_Workspace_Name_To(String newName) {
+		playgroundPage.enterWorkspaceName(newName);
+	}
 
-    @Then("User verifies that {string} workspace is updated with new description {string}")
-    public void user_Verifies_Workspace_Updated_With_New_Description(String name, String desc) {
-        playgroundPage.verifyWorkspaceUpdatedWithDescription(name, desc);
-    }
+	@And("User updates workspace description to {string}")
+	public void user_Updates_Workspace_Description_To(String newDesc) {
+		playgroundPage.enterWorkspaceDescription(newDesc);
+	}
 
-    @And("User enters {string} in the workspace search box")
-    public void user_Enters_In_Workspace_Search_Box(String workspaceName) {
-        playgroundPage.searchWorkspace(workspaceName);
-    }
+	@And("User clicks on Save button to save workspace changes")
+	public void user_Clicks_On_Save_Button_To_Save_Workspace_Changes() {
+		playgroundPage.clickOnSaveWorkspaceButton();
+	}
 
-    @Then("User verifies that {string} workspace is displayed in the search results")
-    public void user_Verifies_Workspace_Displayed_In_Search_Results(String name) {
-        playgroundPage.verifyWorkspaceDisplayedInSearchResults(name);
-    }
+	@Then("User verifies that {string} workspace is updated with new description {string}")
+	public void user_Verifies_Workspace_Updated_With_New_Description(String name, String desc) {
+		playgroundPage.verifyWorkspaceUpdatedWithDescription(name, desc);
+	}
 
-    @When("User enters prompt in the Prompt textarea {string}")
-    public void user_Enters_Prompt_In_The_Textarea(String prompt) {
-        playgroundPage.enterPromptInTextarea(prompt);
-    }
+	@And("User enters {string} in the workspace search box")
+	public void user_Enters_In_Workspace_Search_Box(String workspaceName) {
+		playgroundPage.searchWorkspace(workspaceName);
+	}
 
-    @And("User clicks on the {string} button")
-    public void user_Clicks_On_The_Open_Configuration_Menu_Button(String buttonName) {
-        playgroundPage.clickOnOpenConfigurationMenuButton(buttonName);
-    }
+	@Then("User verifies that {string} workspace is displayed in the search results")
+	public void user_Verifies_Workspace_Displayed_In_Search_Results(String name) {
+		playgroundPage.verifyWorkspaceDisplayedInSearchResults(name);
+	}
 
-    @And("User waits for the response from the model")
-    public void user_Waits_For_The_Response_From_The_Model() {
-        playgroundPage.waitForModelResponse();
-    }
+	@When("User enters prompt in the Prompt textarea {string}")
+	public void user_Enters_Prompt_In_The_Textarea(String prompt) {
+		playgroundPage.enterPromptInTextarea(prompt);
+	}
 
-    @Then("User verifies that the response from the model is displayed as Prompt")
-    public void user_Verifies_That_The_Response_From_The_Model_Is_Displayed_As_Prompt() {
-        playgroundPage.verifyModelResponseDisplayed();
-    }
+	@And("User clicks on the {string} button")
+	public void user_Clicks_On_The_Open_Configuration_Menu_Button(String buttonName) {
+		playgroundPage.clickOnOpenConfigurationMenuButton(buttonName);
+	}
 
-    @When("User clicks on the Toolbox dropdown")
-    public void user_Clicks_On_The_Toolbox_Dropdown() {
-        playgroundPage.clickOnToolboxDropdown();
-    }
+	@And("User clicks on the {string} button in the chat interface")
+	public void user_Clicks_On_The_Button_In_The_Chat_Interface(String buttonName) {
+		playgroundPage.clickOnChatInterfaceButton(buttonName);
+	}
 
-    @When("User clicks on the Knowledge dropdown")
-    public void user_Clicks_On_The_Knowledge_Dropdown() {
-        playgroundPage.clickOnKnowledgeDropdown();
-    }
+	@And("User waits for the response from the model")
+	public void user_Waits_For_The_Response_From_The_Model() {
+		playgroundPage.waitForModelResponse();
+	}
 
-    @And("User should see and select the {string} in the Toolbox available tools")
-    public void user_Should_See_And_Select_The_In_The_Toolbox_Available_Tools(String appName) {
-        playgroundPage.clickOverifyMCPAppVisibleInAvailableTools(appName);
-    }
+	@Then("User verifies that the response from the model is displayed as Prompt")
+	public void user_Verifies_That_The_Response_From_The_Model_Is_Displayed_As_Prompt() {
+		playgroundPage.verifyModelResponseDisplayed();
+	}
 
-    @And("User should see and select the {string} in the Knowledge available tools")
-    public void user_Should_See_And_Select_The_In_The_Knowledge_Available_Tools(String knowledgeName) {
-        playgroundPage.clickVerifyKnowledgeAppVisibleInAvailableTools(knowledgeName);
-    }
+	@When("User clicks on the Toolbox dropdown")
+	public void user_Clicks_On_The_Toolbox_Dropdown() {
+		playgroundPage.clickOnToolboxDropdown();
+	}
 
-    @And("User verify added {string} is updated in selected list")
-    public void user_Verify_Added_Is_Updated_In_Selected_List(String appName) {
-        playgroundPage.verifyAddedMCPAppSelectedList(appName);
-    }
+	@When("User clicks on the Knowledge dropdown")
+	public void user_Clicks_On_The_Knowledge_Dropdown() {
+		playgroundPage.clickOnKnowledgeDropdown();
+	}
 
-    @When("User saves the added Knowledge list")
-    public void user_Saves_The_Added_Knowledge_List() {
-        playgroundPage.saveAddedKnowledgeList();
-    }
+	@And("User should see and select the {string} in the Toolbox available tools")
+	public void user_Should_See_And_Select_The_In_The_Toolbox_Available_Tools(String appName) {
+		playgroundPage.clickOverifyMCPAppVisibleInAvailableTools(appName);
+	}
 
-    @When("User saves the added Toolbox list")
-    public void user_Saves_The_Added_Toolbox_List() {
-        playgroundPage.saveAddedMCPList();
-    }
+	@And("User should see and select the {string} in the Knowledge available tools")
+	public void user_Should_See_And_Select_The_In_The_Knowledge_Available_Tools(String knowledgeName) {
+		playgroundPage.clickVerifyKnowledgeAppVisibleInAvailableTools(knowledgeName);
+	}
 
-    @Then("User verify the added {string} is displayed in Toolbox section")
-    public void user_Verify_The_Added_Is_Displayed_In_Toolbox_Section(String appName) {
-        playgroundPage.verifyAddedMCPModelMCPSection(appName);
-    }
+	@And("User verify added {string} is updated in selected list")
+	public void user_Verify_Added_Is_Updated_In_Selected_List(String appName) {
+		playgroundPage.verifyAddedMCPAppSelectedList(appName);
+	}
 
-    @Then("User verify the added {string} is displayed in Knowledge section")
-    public void user_Verify_The_Added_Is_Displayed_In_Knowledge_Section(String knowledgeName) {
-        playgroundPage.verifyAddedKnowledgeModelKnowledgeSection(knowledgeName);
-    }
+	@When("User saves the added Knowledge list")
+	public void user_Saves_The_Added_Knowledge_List() {
+		playgroundPage.saveAddedKnowledgeList();
+	}
 
-    @When("User deletes the added {string} from Knowledge section")
-    public void user_Deletes_The_Added_From_Knowledge_Section(String knowledgeName) {
-        playgroundPage.deleteAddedKnowledgeModelKnowledgeSection(knowledgeName);
-    }
-    @When("User deletes the added {string} from Toolbox section")
-    public void user_Deletes_The_Added_From_Toolbox_Section(String appName) {
-        playgroundPage.deleteAddedMCPModelMCPSection(appName);
-    }
+	@When("User saves the added Toolbox list")
+	public void user_Saves_The_Added_Toolbox_List() {
+		playgroundPage.saveAddedMCPList();
+	}
 
-    @Then("User verify the {string} is removed from Toolbox section")
-    public void user_Verify_The_Is_Removed_From_Toolbox_Section(String appName) {
-        playgroundPage.verifyMCPRemovedToolboxSection(appName);
-    }
+	@Then("User verify the added {string} is displayed in Toolbox section")
+	public void user_Verify_The_Added_Is_Displayed_In_Toolbox_Section(String appName) {
+		playgroundPage.verifyAddedMCPModelMCPSection(appName);
+	}
 
-    @Then("User verify the {string} is removed from Knowledge section")
-    public void user_Verify_The_Is_Removed_From_Knowledge_Section(String knowledgeName) {
-        playgroundPage.verifyKnowledgeRemovedKnowledgeSection(knowledgeName);
-    }
-    @Then("User verify the {string} is removed from MCP section")
-    public void user_Verify_The_Is_Removed_From_MCP_Section(String appName) {
-        playgroundPage.verifyMCPModelRemovedMCPSection(appName);
-    }
+	@Then("User verify the added {string} is displayed in Knowledge section")
+	public void user_Verify_The_Added_Is_Displayed_In_Knowledge_Section(String knowledgeName) {
+		playgroundPage.verifyAddedKnowledgeModelKnowledgeSection(knowledgeName);
+	}
 
-    @When("User search for {string} in the Toolbox available tools & selects it")
-    public void user_search_for_app_in_toolbox_and_select(String appName) {
-        playgroundPage.searchAndSelectMCPModel(appName);
-    }
+	@When("User deletes the added {string} from Knowledge section")
+	public void user_Deletes_The_Added_From_Knowledge_Section(String knowledgeName) {
+		playgroundPage.deleteAddedKnowledgeModelKnowledgeSection(knowledgeName);
+	}
 
-     @Then("User verify the model catalog dropdown is present with default model with {string} name")
-    public void user_Verify_The_Model_Catalog_Dropdown_Is_Present_With_Default_Model_With(String modelName) {
-        playgroundPage.verifyModelCatalogDropdownPresent(modelName);
-    }
+	@When("User deletes the added {string} from Toolbox section")
+	public void user_Deletes_The_Added_From_Toolbox_Section(String appName) {
+		playgroundPage.deleteAddedMCPModelMCPSection(appName);
+	}
 
-    @When("User clicks on the Model dropdown")
-    public void user_Clicks_On_The_Model_Dropdown() {
-        playgroundPage.clickOnModelCatalogDropdown();
-    }
+	@Then("User verify the {string} is removed from Toolbox section")
+	public void user_Verify_The_Is_Removed_From_Toolbox_Section(String appName) {
+		playgroundPage.verifyMCPRemovedToolboxSection(appName);
+	}
 
-    @Then("User verify {string} model should be checked in the model catalog dropdown")
-    public void user_Verify_The_Model_Should_Be_Checked_In_The_Model_Catalog_Dropdown(String modelName) {
-        playgroundPage.verifyModelIsChecked(modelName);
-    }
+	@Then("User verify the {string} is removed from Knowledge section")
+	public void user_Verify_The_Is_Removed_From_Knowledge_Section(String knowledgeName) {
+		playgroundPage.verifyKnowledgeRemovedKnowledgeSection(knowledgeName);
+	}
 
-    @Then("User verify {string} knowledge should be checked in the knowledge catalog dropdown")
-    public void user_Verify_Knowledge_Should_Be_Checked_In_The_Knowledge_Catalog_Dropdown(String knowledgeName) {
-        playgroundPage.verifyKnowledgeIsChecked(knowledgeName);
-    }
+	@Then("User verify the {string} is removed from MCP section")
+	public void user_Verify_The_Is_Removed_From_MCP_Section(String appName) {
+		playgroundPage.verifyMCPModelRemovedMCPSection(appName);
+	}
 
-    @When("User searches the {string} configuration tab in the model catalog searchbox")
-    public void user_Searches_The_Configuration_Tab_In_The_Model_Catalog_Searchbox(String modelName) {
-        playgroundPage.searchModelInSearchbox(modelName);
-    }
-    @When("User searches the {string} configuration tab in the Knowledge catalog searchbox")
-    public void user_Searches_The_Configuration_Tab_In_The_Knowledge_Catalog_Searchbox(String knowledgeName) {
-        playgroundPage.searchKnowledgeInSearchbox(knowledgeName);
-    }
+	@When("User search for {string} in the Toolbox available tools & selects it")
+	public void user_search_for_app_in_toolbox_and_select(String appName) {
+		playgroundPage.searchAndSelectMCPModel(appName);
+	}
 
-    @Then("User should see the {string} in the model catalog dropdown")
-    public void user_Should_See_The_In_The_Model_Catalog_Dropdown(String modelName) {
-        playgroundPage.verifyModelVisibleInDropdown(modelName);
-    }
+	@Then("User verify the model catalog dropdown is present with default model with {string} name")
+	public void user_Verify_The_Model_Catalog_Dropdown_Is_Present_With_Default_Model_With(String modelName) {
+		playgroundPage.verifyModelCatalogDropdownPresent(modelName);
+	}
 
-    @Then("User Verify the Max Token section is displayed with default value & stepper control")
-    public void user_Verify_The_Max_Token_Section_Is_Displayed_With_Default_Value_Stepper_Control() {
-        playgroundPage.verifyMaxTokenSectionIsDisplayed();
-    }
-    
-    @Then("User Verify the Instructions section is displayed")
-    public void user_Verify_The_Instructions_Section_Is_Displayed() {
-        playgroundPage.verifyInstructionsSectionIsDisplayed();
-    }
+	@When("User clicks on the Model dropdown")
+	public void user_Clicks_On_The_Model_Dropdown() {
+		playgroundPage.clickOnModelCatalogDropdown();
+	}
 
-    @Then("User Verify the Temperature section is displayed with default value {string}")
-    public void user_Verify_The_Temperature_Section_Is_Displayed_With_Default_Value(String temperature) {
-        playgroundPage.verifyTemperatureSectionIsDisplayed(temperature);
-    }
+	@Then("User verify {string} model should be checked in the model catalog dropdown")
+	public void user_Verify_The_Model_Should_Be_Checked_In_The_Model_Catalog_Dropdown(String modelName) {
+		playgroundPage.verifyModelIsChecked(modelName);
+	}
 
-    @When("User selects the {string} from the model catalog dropdown")
-    public void user_Selects_The_From_The_Model_Catalog_Dropdown(String modelName) {
-        playgroundPage.selectModelFromDropdown(modelName);
-    }
+	@Then("User verify {string} knowledge should be checked in the knowledge catalog dropdown")
+	public void user_Verify_Knowledge_Should_Be_Checked_In_The_Knowledge_Catalog_Dropdown(String knowledgeName) {
+		playgroundPage.verifyKnowledgeIsChecked(knowledgeName);
+	}
 
-    @Then("User verifies that the {string} button is {string}")
-    public void user_Verifies_That_The_Prompt_The_Model_Button_Is_Enabled(String buttonName, String state) {
-        if (state.equals("enabled")) {
-            playgroundPage.verifyButtonIsEnabled(buttonName);
-        } else {
-            playgroundPage.verifyButtonIsDisabled(buttonName);
-        }
-    }
+	@When("User searches the {string} configuration tab in the model catalog searchbox")
+	public void user_Searches_The_Configuration_Tab_In_The_Model_Catalog_Searchbox(String modelName) {
+		playgroundPage.searchModelInSearchbox(modelName);
+	}
 
-    @When("User clicks on sidebar toggle button")
-    public void user_Clicks_On_Sidebar_Toggle_Button() {
-        playgroundPage.clickOnSidebarToggleButton();
-    }
+	@When("User searches the {string} configuration tab in the Knowledge catalog searchbox")
+	public void user_Searches_The_Configuration_Tab_In_The_Knowledge_Catalog_Searchbox(String knowledgeName) {
+		playgroundPage.searchKnowledgeInSearchbox(knowledgeName);
+	}
 
-    @Then("User verifies that {string} prompt is present in the sidebar history")
-    public void user_Verifies_That_Prompt_Is_Present_In_The_Sidebar_History(String prompt) {
-        playgroundPage.verifyPromptPresentInSidebarHistory(prompt);
-    }
+	@Then("User should see the {string} in the model catalog dropdown")
+	public void user_Should_See_The_In_The_Model_Catalog_Dropdown(String modelName) {
+		playgroundPage.verifyModelVisibleInDropdown(modelName);
+	}
 
-    @When("User hovers over the sidebar history item with prompt {string}")
-    public void user_Hovers_Over_The_Sidebar_History_Item_With_Prompt(String prompt) {
-        playgroundPage.hoverOverSidebarHistoryItem(prompt);
-    }
+	@Then("User Verify the Max Token section is displayed with default value & stepper control")
+	public void user_Verify_The_Max_Token_Section_Is_Displayed_With_Default_Value_Stepper_Control() {
+		playgroundPage.verifyMaxTokenSectionIsDisplayed();
+	}
 
-    @And("User clicks on the delete icon for the sidebar history item with prompt {string}")
-    public void user_Clicks_On_The_Delete_Icon_For_The_Sidebar_History_Item_With_Prompt(String prompt) {
-        playgroundPage.clickDeleteIconForSidebarHistoryItem(prompt);
-    }
+	@Then("User Verify the Instructions section is displayed")
+	public void user_Verify_The_Instructions_Section_Is_Displayed() {
+		playgroundPage.verifyInstructionsSectionIsDisplayed();
+	}
 
-    @Then("User verifies that {string} prompt is no longer present in the sidebar history")
-    public void user_Verifies_That_Prompt_Is_No_Longer_Present_In_The_Sidebar_History(String prompt) {
-        playgroundPage.verifyPromptNotPresentInSidebarHistory(prompt);
-    }
+	@Then("User Verify the Temperature section is displayed with default value {string}")
+	public void user_Verify_The_Temperature_Section_Is_Displayed_With_Default_Value(String temperature) {
+		playgroundPage.verifyTemperatureSectionIsDisplayed(temperature);
+	}
 
-    @Then("User verifies that the sidebar is {string}")
-    public void user_Verifies_That_The_Sidebar_Is(String state) {
-        playgroundPage.verifySidebarState(state);
-    }
+	@When("User selects the {string} from the model catalog dropdown")
+	public void user_Selects_The_From_The_Model_Catalog_Dropdown(String modelName) {
+		playgroundPage.selectModelFromDropdown(modelName);
+	}
 
-    @Then("User sees the Configuration Menu is opened")
-    public void user_Sees_The_Configuration_Menu_Is_Opened() {
-        playgroundPage.verifyConfigurationMenuIsOpened();
-    }
+	@Then("User verifies that the {string} button is {string}")
+	public void user_Verifies_That_The_Prompt_The_Model_Button_Is_Enabled(String buttonName, String state) {
+		if (state.equals("enabled")) {
+			playgroundPage.verifyButtonIsEnabled(buttonName);
+		} else {
+			playgroundPage.verifyButtonIsDisabled(buttonName);
+		}
+	}
+
+	@When("User clicks on sidebar toggle button")
+	public void user_Clicks_On_Sidebar_Toggle_Button() {
+		playgroundPage.clickOnSidebarToggleButton();
+	}
+
+	@Then("User verifies that {string} prompt is present in the sidebar history")
+	public void user_Verifies_That_Prompt_Is_Present_In_The_Sidebar_History(String prompt) {
+		playgroundPage.verifyPromptPresentInSidebarHistory(prompt);
+	}
+
+	@When("User hovers over the sidebar history item with prompt {string}")
+	public void user_Hovers_Over_The_Sidebar_History_Item_With_Prompt(String prompt) {
+		playgroundPage.hoverOverSidebarHistoryItem(prompt);
+	}
+
+	@And("User clicks on the delete icon for the sidebar history item with prompt {string}")
+	public void user_Clicks_On_The_Delete_Icon_For_The_Sidebar_History_Item_With_Prompt(String prompt) {
+		playgroundPage.clickDeleteIconForSidebarHistoryItem(prompt);
+	}
+
+	@Then("User verifies that {string} prompt is no longer present in the sidebar history")
+	public void user_Verifies_That_Prompt_Is_No_Longer_Present_In_The_Sidebar_History(String prompt) {
+		playgroundPage.verifyPromptNotPresentInSidebarHistory(prompt);
+	}
+
+	@Then("User verifies that the sidebar is {string}")
+	public void user_Verifies_That_The_Sidebar_Is(String state) {
+		playgroundPage.verifySidebarState(state);
+	}
+
+	@Then("User sees the Configuration Menu is opened")
+	public void user_Sees_The_Configuration_Menu_Is_Opened() {
+		playgroundPage.verifyConfigurationMenuIsOpened();
+	}
 }
