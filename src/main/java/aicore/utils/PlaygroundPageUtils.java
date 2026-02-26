@@ -434,7 +434,7 @@ public class PlaygroundPageUtils {
 		// Wait for loading spinner to disappear (become hidden)
 		long timeout = System.currentTimeMillis() + 12000; // 12 second timeout
 		while (loadingSpinner.isVisible() && System.currentTimeMillis() < timeout) {
-			page.waitForTimeout(500);
+			page.waitForTimeout(1000);
 		}
 
 		if (System.currentTimeMillis() >= timeout) {

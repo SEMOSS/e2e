@@ -296,17 +296,10 @@ public class GenericSetupUtils {
 				logger.info("Failed to click Accept button: " + e.getMessage());
 			}
 		}
-//		try {
-//			page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept")).click();
-//
-//		} catch (Error | Exception e) {
-//			logger.info(e.getMessage());
-//		}
 // Added page reload because after adding a new user in app and logging in with that user, the page needs to be refreshed.
 		page.reload();
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		page.getByTestId("loginPage-textField-username").click();
-
 		page.getByTestId("loginPage-textField-username").fill(user);
 		page.getByTestId("loginPage-textField-password").click();
 		page.getByTestId("loginPage-textField-password").fill(password);
@@ -316,7 +309,6 @@ public class GenericSetupUtils {
 //				() -> page.getByTestId("loginPage-button-login").click());
 //
 //		assertEquals(200, response.status());
-//
 //		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
 //		Map<String, String> newMap = new HashMap<>();
 //		newMap.put("cookie", cookie);
@@ -332,6 +324,7 @@ public class GenericSetupUtils {
 				() -> page.getByTestId("loginPage-button-login").click());
 		assertEquals(200, response.status());
 		page.waitForLoadState(LoadState.NETWORKIDLE);
+		navigateToHomePage(page);
 		return "Login Successful";
 	}
 
@@ -370,7 +363,6 @@ public class GenericSetupUtils {
 
 	private static void setupInitialAdmin(Page page, String userName) {
 		page.navigate(UrlUtils.getApi("setAdmin/"));
-
 		logger.info("Page is: {}", page.url());
 		assertEquals(UrlUtils.getApi("setAdmin/"), page.url());
 		logger.info("Going to fill initial admin.");

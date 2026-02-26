@@ -1,4 +1,3 @@
-
 @LoginWithAuthor @DeleteCreatedTestApp @Regression
 Feature: App setting for Editor permission
 
@@ -10,7 +9,7 @@ Feature: App setting for Editor permission
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User click on Settings
     And User Click on Members setting option
@@ -23,7 +22,6 @@ Feature: App setting for Editor permission
     And User searches 'Test app' app in the app searchbox
     And User clicks on 'Test app' app from the My Apps
 
-  
   Scenario: Create App - Editor user - View Member, General, Apps option
     Then 'Editor' user Edit option should be 'Enable'
     And User clicks on app Edit button
@@ -47,7 +45,7 @@ Feature: App setting for Editor permission
     And User logs out from the application
     And User login as 'Author'
 
-@ApplicationBugFailure
+  @ApplicationBugFailure
   Scenario: Create APP - Editor user - View Member setting and add and delete the Editor and Read User
     Given User clicks on app Edit button
     And User click on Settings
