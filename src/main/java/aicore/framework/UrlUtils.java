@@ -4,19 +4,25 @@ import java.net.URI;
 
 public class UrlUtils {
 
-	private static String api = ConfigUtils.getValue("baseUrl") + "Monolith/";
-	private static String baseUrl = ConfigUtils.getValue("baseUrl") + "SemossWeb/";
+	private static String api = ConfigUtils.getValue("baseUrl") + EnvUtils.get("API_ENDPOINT") + "/";
+	private static String baseUrl = ConfigUtils.getValue("baseUrl") + EnvUtils.get("FRONTEND") + "/";
 	private static String newWebRoute = "packages/client/dist/";
 
 	public static String getApi(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + "Monolith/" + path;
+		String x = base + EnvUtils.get("API_ENDPOINT") + "/" + path;
 		return x;
 	}
 
 	public static String getUrl(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + "SemossWeb/" + newWebRoute + path;
+		String x = base + EnvUtils.get("FRONTEND") +"/" + newWebRoute + path;
+		return x;
+	}
+
+	public static String getBaseFrontendUrl(String path) {
+		String base = ResourcePool.get().getUrl();
+		String x = base + EnvUtils.get("FRONTEND") +"/" + path;
 		return x;
 	}
 
