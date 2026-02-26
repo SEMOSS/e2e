@@ -9,7 +9,7 @@ state.json
 .project
 /.settings
 .idea/
-src/main/resources/local.properties
+.env
 /results
 src/test/resources/data/screenshots/
 .env.local
