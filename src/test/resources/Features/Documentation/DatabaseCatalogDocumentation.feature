@@ -6,6 +6,7 @@ Feature: Database Catalog Documentation
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Database'
     And User clicks on Open Database
+    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User captures a 'button' and highlights the 'Add Database'
     And User clicks on Add Database
     And User captures screenshot for "Database Options"

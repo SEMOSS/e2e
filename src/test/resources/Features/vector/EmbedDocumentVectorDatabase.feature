@@ -1,14 +1,18 @@
 ######### NEED to set up pinecone in docker
-# @Regression
+#@Regression
 #Feature: Embed file into the Vector Database
 #
   #@LoginWithAdmin
   #Scenario Outline: Add Model and Vector database
-    #Given User clicks on Open Model
-    #When User clicks on Add Model
-    #And User selects the 'ZIP' option to upload file
+    #Given User is on Home page
+    #When User opens Main Menu
+    #And User clicks on Open Model
+    #And User clicks on Add Model
+    #And User clicks on file upload icon
     #And User uploads the file '<file_Name>'
-    #And User clicks on Create Model button
+    #And User clicks on 'Upload' button to create catalog
+    #And User clicks on Copy Catalog ID
+#	 	And User opens Main Menu    
     #And User clicks on Open Vector
     #And User clicks on Add Vector button
     #And User selects '<connection>' connection
@@ -27,7 +31,7 @@
     #Examples: 
       #| connection | catalog_name       | model_name                        | chunking_strategy | content_length | content_overlap | Namespace | file_Name                               |
       #| Pinecone   | Pinecone Vector DB | TextEmbeddings BAAI-Large-En-V1.5 | Token             |            510 |              17 | Default   | VectorDatabase/Text_Embedding_model.zip |
-#
+
   #@LoginWithAdmin
   #Scenario Outline: Embed a document in Vector DB
     #Given User clicks on Open Vector

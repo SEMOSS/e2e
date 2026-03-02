@@ -12,7 +12,7 @@ import aicore.utils.HomePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
-	private static final String CODE_APP_GET_STARTED_BUTTON_DATA_TESTID = "createAppSection-new-app-code-btn-btn";
+	private static final String CODE_APP_GET_STARTED_BUTTON_XPATH = "//div[@data-slot='card' and .//div[@data-slot='card-title' and normalize-space(.)='Develop in code']]//button[normalize-space(.)='Get Started']";
 	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
 	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
@@ -22,14 +22,16 @@ public class CreateAppPopupUtils {
 	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//div";
 	public static List<String> createdAppNames = new ArrayList<>();
 	private static final String BREADCRUMB_LINK_XPATH = "//a//div[text()='{appName}']";
+	private static final String DRAG_AND_DROP_GET_STARTED_XPATH = "//div[@data-slot='card' and .//div[@data-slot='card-title' and normalize-space(.)='Drag and drop blocks']]//button[normalize-space(.)='Get Started']";
+	private static final String AGENT_BUILDER_GET_STARTED_XPATH = "//div[@data-slot='card' and .//div[@data-slot='card-title' and normalize-space(.)='Construct an agent']]//button[normalize-space(.)='Get Started']";
 
 	public static void clickOnGetStartedButton(Page page, String appType) {
 		if (appType.toLowerCase().contains("agent")) {
-			page.getByTestId("createAppSection-new-app-agent-btn-btn").click();
+			page.locator(AGENT_BUILDER_GET_STARTED_XPATH).click();
 		} else if (appType.toLowerCase().contains("drag and drop")) {
-			page.getByTestId("createAppSection-new-app-drag-btn-btn").click();
+			page.locator(DRAG_AND_DROP_GET_STARTED_XPATH).click();
 		} else {
-			page.getByTestId(CODE_APP_GET_STARTED_BUTTON_DATA_TESTID).click();
+			page.locator(CODE_APP_GET_STARTED_BUTTON_XPATH).click();
 		}
 	}
 

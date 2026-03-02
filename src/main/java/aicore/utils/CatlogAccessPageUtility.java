@@ -11,58 +11,66 @@ import aicore.framework.ConfigUtils;
 
 public class CatlogAccessPageUtility {
 	private static final Logger logger = LogManager.getLogger(CatlogAccessPageUtility.class);
-	private static final String VIEW_OVERVIEW_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Overview']";
-	private static final String VIEW_USAGE_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='Usage']";
-	private static final String VIEW_SMSS_TAB_XPATH = "//button[contains(@class, 'MuiTab-root') and text()='SMSS']";
-	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//span[text()='Edit SMSS']";
+	private static final String VIEW_OVERVIEW_TAB_XPATH = "engineLayout-Overview-tab";
+	private static final String VIEW_USAGE_TAB_XPATH = "engineLayout-Usage-tab";
+	private static final String VIEW_SMSS_TAB_XPATH = "engineLayout-SMSS-tab";
+	private static final String VIEW_EDIT_SMSS_BUTTON_XPATH = "//*[@data-test-id='updateSMSS-updateSNSS-btn']";
 	// new database catalog
-	private static final String VIEW_ACCESSCONTROL_Text = "Access Control";
+	private static final String VIEW_ACCESSCONTROL_DATA_TESTID = "engineLayout-Access Control-tab";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
-	private static final String CLICK_ON_SEARCH_ICON_XPATH = "//h6[text()='Permissions']/parent::div/following-sibling::div//*[@data-testid='SearchIcon']";
+	private static final String CLICK_ON_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
-	private static final String EXPORT_OPTION_TEXT = "//span[text()='Export']";
-	private static final String EDITOR_SEE_TOASTER_MESSAGE_DATATESTID = "notification-error-alert";
-	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[@type='button' and .//span[normalize-space(text())='Cancel']]";
+	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
+	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//li[@data-type='error']";
+	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Settings']";
-	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//span[text()='Delete']";
+	private static final String CLICK_ON_SETTINGS_XPATH = "//img[@data-testid='workspace-Settings-image']/../..";
+	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
 	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
 	private static final String CLICK_ON_DATA_APPS_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Apps')]";
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
-	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//span[contains(@title,'public')]";
-	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//span[contains(@title,'discoverable')]";
+	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//button[contains(@title,'public')]";
+	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//button[contains(@title,'discoverable')]";
 	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
-	private static final String CATALOG_TYPE_XPATH = "//a[@color='inherit']";
-	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'makeDiscoverable-switch')]//input[@type='checkbox']";
-	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
+	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
+	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//button[contains(@data-testid,'makeDiscoverable-switch')]";
+	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//p[text()='Private']/../../following-sibling::div//button[contains(@data-testid,'settingsTiles')]";
 	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
-	private static final String CATALOG_ID_XPATH = "//button[.//*[@data-testid='ContentCopyOutlinedIcon']]/preceding-sibling::p";
-	private static final String PENDING_REQUEST_ACCEPT_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
-	private static final String PENDING_REQUEST_REJECT_XPATH = "//*[name()='svg'][@data-testid='CloseIcon']";
+	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
+	private static final String PENDING_REQUEST_ACCEPT_DATA_TESTID = "approve-pending-member-btn";
+	private static final String PENDING_REQUEST_REJECT_DATA_TESTID = "deny-pending-member-btn";
+	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
+	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
+	private static final String SETTING_SECTION_XPATH = "//h4[normalize-space()='{section}']";
+	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div//p[normalize-space()='Enable the publishing of the portal.']/following::span[contains(@class,'Mui-checked')]//input[@type='checkbox']";
+	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button//span[normalize-space()='Publish']";
+	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//span[normalize-space()='{buttonName}'] | //button[normalize-space()='{buttonName}']";
+	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
 
 	public static boolean canViewOverview(Page page) {
-		return page.isVisible(VIEW_OVERVIEW_TAB_XPATH);
+		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewUsage(Page page) {
-		return page.isVisible(VIEW_USAGE_TAB_XPATH);
+		return page.getByTestId(VIEW_USAGE_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewSMSSDetails(Page page) {
-		return page.isVisible(VIEW_SMSS_TAB_XPATH);
+		return page.getByTestId(VIEW_SMSS_TAB_XPATH).isVisible();
 	}
 
 	public static boolean canViewEditSMSS(Page page) {
-		return page.isVisible(VIEW_EDIT_SMSS_BUTTON_XPATH);
+		return page.locator(VIEW_EDIT_SMSS_BUTTON_XPATH).isVisible();
 	}
 
 	public static boolean canViewAccessControl(Page page) {
-		return page.getByText(VIEW_ACCESSCONTROL_Text).isVisible();
+		Locator accessControl = page.getByTestId(VIEW_ACCESSCONTROL_DATA_TESTID);
+		return accessControl.isVisible();
 	}
 
 	// new
@@ -71,11 +79,12 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void searchUserBasedOnRole(Page page, String role) {
-		Locator searchIcon = page.locator(CLICK_ON_SEARCH_ICON_XPATH);
+		Locator searchIcon = page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
 		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
+		// page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID).fill(role);
 		page.waitForTimeout(1000);
 	}
 
@@ -86,7 +95,7 @@ public class CatlogAccessPageUtility {
 
 	// create app class
 	public static void clickOnSettings(Page page) {
-		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH);
+		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH).first();
 		AICorePageUtils.waitFor(settingOption);
 		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			settingOption.click();
@@ -163,9 +172,9 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String editorUserSeeToastMessageText(Page page) {
-		page.getByTestId(EDITOR_SEE_TOASTER_MESSAGE_DATATESTID)
+		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH)
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toasterMessage = page.getByTestId(EDITOR_SEE_TOASTER_MESSAGE_DATATESTID).innerText();
+		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).innerText();
 		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
 		return toasterMessage;
 	}
@@ -191,7 +200,7 @@ public class CatlogAccessPageUtility {
 	// 🔹 Common reusable method
 
 	public static void searchUser(Page page, String role, boolean useDocker) {
-		Locator searchIcon = page.locator(CLICK_ON_SEARCH_ICON_XPATH);
+		Locator searchIcon = page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
@@ -222,15 +231,63 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void acceptPendingRequest(Page page) {
-		Locator acceptButton = page.locator(PENDING_REQUEST_ACCEPT_XPATH);
+		Locator acceptButton = page.getByTestId(PENDING_REQUEST_ACCEPT_DATA_TESTID);
 		AICorePageUtils.waitFor(acceptButton);
 		acceptButton.click();
 	}
 
 	public static void rejectPendingRequest(Page page) {
-		Locator rejectButton = page.locator(PENDING_REQUEST_REJECT_XPATH);
+		Locator rejectButton = page.getByTestId(PENDING_REQUEST_REJECT_DATA_TESTID);
 		AICorePageUtils.waitFor(rejectButton);
 		rejectButton.click();
 	}
 
+	public static void clickOnSettingsOption(Page page, String option) {
+		page.locator(SEETING_OPTION_XPATH.replace("{option}", option)).click();
+	}
+
+	public static boolean userSeeThePageOpenOnRightSidePanel(Page page, String pageName) {
+		Locator rightSidePage = page.locator(RIGHT_SIDE_OPEN_PAGE_XPATH.replace("{pageName}", pageName));
+		AICorePageUtils.waitFor(rightSidePage);
+		return rightSidePage.isVisible();
+	}
+
+	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
+		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));
+		if (!sectionLocator.isVisible()) {
+			sectionLocator = page.locator("//h6[normalize-space()='" + section + "']");
+		}
+		return sectionLocator.isVisible();
+	}
+
+	public static boolean isPortalToggleInExpectedState(Page page, String action) {
+		Locator enableToggle = page.locator(PUBLISH_ENABLE_TOGGLE_XPATH);
+		AICorePageUtils.waitFor(enableToggle);
+		boolean shouldEnable = action.equalsIgnoreCase("enable");
+		boolean isCurrentlyEnabled = enableToggle.isVisible();
+		if (isCurrentlyEnabled != shouldEnable) {
+			enableToggle.click();
+		}
+		return enableToggle.isVisible() == shouldEnable;
+	}
+
+	public static boolean clickOnPublishPortalButton(Page page) {
+		Locator publishButton = page.locator(CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH);
+		if (publishButton.isEnabled()) {
+			publishButton.click();
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public static void clickOnAppSettingsOption(Page page, String buttonName) {
+		page.locator(SETTING_PAGE_APP_OPTION_XPATH.replace("{buttonName}", buttonName)).click();
+	}
+
+	public static boolean userCanSeeSectionUnderGeneralSetting(Page page, String sectionName) {
+		Locator sectionLocator = page.locator(GENERAL_SETTING_SECTION_XPATH.replace("{section}", sectionName));
+		return sectionLocator.isVisible();
+	}
 }

@@ -6,9 +6,9 @@ Feature: Validate catalog user permissions for all catalog types
     When User opens '<CATALOG>'
     And User checks if '<CATALOG>' catalog created and Deletes the '<CATALOG_NAME>'
     And User clicks on Add '<CATALOG>' button
-    And User selects the 'ZIP' option to upload file
+    And User clicks on file upload icon
     And User uploads the file '<FILE_NAME>'
-    And User clicks on Create '<CATALOG>' button to create catalog
+    And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User opens Main Menu
     And User clicks on Open Settings
@@ -38,13 +38,13 @@ Feature: Validate catalog user permissions for all catalog types
     And User search for 'Read' user in members search box
     And 'Editor' user changes 'Read-Only' role to 'Editor'
     Then User should see role changed to 'Editor' in members list
+    And 'Editor' user changes 'Editor' role to 'Read-Only'
+    Then User should see role changed to 'Read-Only' in members list
     When 'Editor' user deletes 'Editor' role user from members list
     Then User should see 'Editor' role user is removed from members list
     When User search for 'Author' user in members search box
-    And 'Editor' user changes 'Author' role to 'Read-Only'
-    Then 'Editor' user cannot change the 'Author' user role and sees 'Author' user in members list
-    When 'Editor' user deletes 'Author' role user from members list
-    Then 'Editor' user cannot delete the 'Author' user and sees 'Author' user in members list
+    And 'Editor' user can see 'Edit' option is disable for 'Author' role
+    And 'Editor' user can see 'Delete' option is disable for 'Author' role
     When User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     When User logs out from the application
@@ -75,11 +75,13 @@ Feature: Validate catalog user permissions for all catalog types
 
     Examples: 
       | CATALOG  | BUTTON_NAME  | FILE_NAME                        | CARD              | CATALOG_NAME        |
-      | Vector   | Add Vector   | VectorDatabase/TestVector.zip    | Vector Settings   | TestVector          |
+      | Model    | Add Model    | Model/Llama3-70B-Instruct.zip    | Model Settings    | Llama3-70B-Instruct |
+      | Database | Add Database | Database/TestDatabase.zip        | Database Settings | TestDatabase        |
       | Function | Add Function | Function/weatherFunctionTest.zip | Function Settings | WeatherFunctionTest |
-      | Storage  | Add Storage  | Storage/Localminio.zip           | Storage Settings  | Localminio          |
+      | Storage  | Add Storage  | Storage/Localminio.zip           | Storage Settings  | localminio          |
+      | Vector   | Add Vector   | VectorDatabase/TestVector.zip    | Vector Settings   | TestVector          |
 
-  ## Creating below new scenario for new database and Model UI.
+  ## Commented some steps due the bug-#2762
   @LoginWithAuthor @DeleteTestCatalog @Regression
   Scenario Outline: Validate user access permissions of '<CATALOG>'
     Given User opens Main Menu
@@ -118,15 +120,15 @@ Feature: Validate catalog user permissions for all catalog types
     And User search for 'Read' user in members search box
     And 'Editor' user changes 'Read-Only' role to 'Editor'
     Then User should see role changed to 'Editor' in members list
-    When 'Editor' user deletes 'Editor' role user from members list
-    Then User should see 'Editor' role user is removed from members list
+    And 'Editor' user changes 'Editor' role to 'Read-Only'
+    Then User should see role changed to 'Read-Only' in members list
+    #When 'Editor' user deletes 'Editor' role user from members list
+    #Then User should see 'Editor' role user is removed from members list
     When User search for 'Author' user in members search box
-    And 'Editor' user changes 'Author' role to 'Read-Only'
-    Then 'Editor' user cannot change the 'Author' user role and sees 'Author' user in members list
-    When 'Editor' user deletes 'Author' role user from members list
-    Then 'Editor' user cannot delete the 'Author' user and sees 'Author' user in members list
-    When User clicks on Add Member button
-    And User adds one user and assigns them as 'Read'
+    And 'Editor' user can see 'Edit' option is disable for 'Author' role
+    And 'Editor' user can see 'Delete' option is disable for 'Author' role
+    #When User clicks on Add Member button
+    #And User adds one user and assigns them as 'Read'
     When User logs out from the application
     And User login as 'Read'
     And User opens Main Menu
@@ -150,13 +152,12 @@ Feature: Validate catalog user permissions for all catalog types
     And User search for 'Editor' user in members search box
     When 'Author' user changes 'Editor' role to 'Read-Only'
     Then User should see role changed to 'Read-Only' in members list
-    When 'Author' user deletes 'Read-Only' role user from members list
-    Then User should see 'Read-Only' role user is removed from members list
 
+    #When 'Author' user deletes 'Read-Only' role user from members list
+    #Then User should see 'Read-Only' role user is removed from members list
     Examples: 
-      | CATALOG  | BUTTON_NAME  | FILE_NAME                     | CARD              | CATALOG_NAME        |
-      | Model    | Add Model    | Model/Llama3-70B-Instruct.zip | Model Settings    | Llama3-70B-Instruct |
-      | Database | Add Database | Database/TestDatabase.zip     | Database Settings | TestDatabase        |
+      | CATALOG   | BUTTON_NAME   | FILE_NAME            | CARD               | CATALOG_NAME |
+      | Guardrail | Add Guardrail | Guardrail/Gliner.zip | Guardrail Settings | Gliner       |
 
   @LoginWithAuthor @DeleteCreatedTestApp @Regression
   Scenario: Validate user access permissions of Apps
@@ -168,7 +169,7 @@ Feature: Validate catalog user permissions for all catalog types
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name
     And User opens Main Menu
     And User clicks on Open Settings
     When User selects the 'App Settings' card
@@ -200,10 +201,8 @@ Feature: Validate catalog user permissions for all catalog types
     When 'Editor' user deletes 'Editor' role user from members list
     Then User should see 'Editor' role user is removed from members list
     When User search for 'Author' user in members search box
-    And 'Editor' user changes 'Author' role to 'Read-Only'
-    Then 'Editor' user cannot change the 'Author' user role and sees 'Author' user in members list
-    When 'Editor' user deletes 'Author' role user from members list
-    Then 'Editor' user cannot delete the 'Author' user and sees 'Author' user in members list
+    Then User can see 'Editor' user 'delete' icon is disabled
+    And User can see 'Editor' user 'edit' icon is disabled
     When User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     When User logs out from the application

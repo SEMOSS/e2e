@@ -66,12 +66,12 @@ public class CatalogFilterSteps {
 			String[] filterValuesArray = filterValues.split(", ");
 			for (String filterValue : filterValuesArray) {
 				catalogFilterPage.searchFilterValue(filterValue);
-				catalogFilterPage.selectFilterValue(filterCategory, filterValue);
+				catalogFilterPage.selectFilterValue(filterValue);
 				boolean isCatalogVisible = catalogFilterPage.verifyCatalogIsVisibleOnCatalogPage(catalogName);
 				Assertions.assertTrue(isCatalogVisible,
 						"Catalog is not present for " + "'" + filterValue + "'" + " filter value");
 				// To de-select selected filter we again call this method
-				catalogFilterPage.selectFilterValue(filterCategory, filterValue);
+				catalogFilterPage.selectFilterValue(filterValue);
 			}
 		}
 	}

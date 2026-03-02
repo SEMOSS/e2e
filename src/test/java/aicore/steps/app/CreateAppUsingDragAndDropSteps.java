@@ -110,12 +110,30 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
+	@And("User add {string} app with details {string} {string} {string} {string}")
+	public void user_add_app_with_details(String count, String appType, String appName, String appDescription,
+			String tag) {
+		int appCount = Integer.parseInt(count);
+		for (int i = 0; i < appCount; i++) {
+			appCreatePopup.enterAppName(appName + i);
+			appCreatePopup.enterAppDescription(appDescription);
+			appCreatePopup.enterTags(tag);
+			appCreatePopup.clickOnCreateButton();
+			if (i < appCount - 1) {
+				homePage.openMainMenu();
+				homePage.clickOnOpenAppLibrary();
+				appPage.clickOnCreateNewAppButton();
+				appCreatePopup.clickOnGetStartedButton(appType);
+			}
+		}
+	}
+
 	@And("User clicks on Create button")
 	public void user_clicks_on_create_button() {
 		appCreatePopup.clickOnCreateButton();
 	}
 
-	@And("User fetch the app name for drag and drop app")
+	@And("User fetch the app name")
 	public void user_fetch_app_name() {
 		String fetchName = appCreatePopup.userFetchAppName();
 		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
@@ -144,14 +162,15 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User able to see the {string} button")
 	public void user_able_to_see_the_button(String buttonName) {
-		homePage.verifyBuildPageButtons(buttonName);
+		homePage.verifyBuildPageButton(buttonName);
 	}
 
-	@Then("User able to see the following Buttons:")
-	public void user_able_to_see_the_buttons(io.cucumber.datatable.DataTable dataTable) {
-		List<String> buttons = dataTable.asList(String.class);
-		for (String buttonName : buttons) {
-			homePage.verifyBuildPageButton(buttonName);
+	@Then("User able to see the {string} buttons in below cards:")
+	public void user_able_to_see_the_buttons_in_below_cards(String buttonName, DataTable dataTable) {
+		List<String> cards = dataTable.asList(String.class);
+		for (String cardName : cards) {
+			boolean isButtonVisible = homePage.verifyBuildPageButtons(cardName, buttonName);
+			Assertions.assertTrue(isButtonVisible, buttonName + "button not present in " + cardName + "card");
 		}
 	}
 
@@ -608,6 +627,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_variable_type_as(String variableType) {
 		appVariablePage.selectVariableType(variableType);
 	}
+
 	@Then("User clicks on variable type")
 	public void user_clicks_on_variable_type() {
 		appVariablePage.clickVariableType();
@@ -710,9 +730,9 @@ public class CreateAppUsingDragAndDropSteps {
 		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in System Apps section");
 	}
 
-	@And("User clicks on edit variable option")
-	public void user_clicks_on_edit_variable_option() {
-		appVariablePage.clickOnEditVariableOption();
+	@And("User clicks on {string} edit variable option")
+	public void user_clicks_on_edit_variable_option(String variableName) {
+		appVariablePage.clickOnEditVariableOption(variableName);
 	}
 
 	@And("User clicks on {string} open menu")
@@ -854,7 +874,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User see the {string} as title of the {string} option")
 	public void user_see_the_as_title_of_the_block_settings_panel(String expectedTitle, String option) {
-		String actualTitle = blocksPage.getBlockSettingsPanelTitle(option);
+		String actualTitle = blocksPage.getBlockSettingsPanelTitle(expectedTitle, option);
 		assertEquals(expectedTitle, actualTitle, "Mismatch between the expected and actual Block Settings panel title");
 	}
 

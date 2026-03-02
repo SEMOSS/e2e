@@ -204,4 +204,32 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	public void clickOnExpandTableArrow(String name) {
 		AddDatabasePageUtils.clickOnExpandTableArrow(page, name);
 	}
+
+	public boolean isSaveButtonDisabled() {
+		return AddDatabasePageUtils.isSaveButtonDisabled(page);
+	}
+
+	public void clickOnSaveButtonOfMetadataTab() {
+		AddDatabasePageUtils.clickOnSaveButtonOfMetadataTab(page);
+	}
+
+	public boolean verifyDatabaseCatalogPage() {
+		return AddDatabasePageUtils.verifyDatabaseCatalogPage(page);
+	}
+
+	public void clickOnConnectButton() {
+		AddDatabasePageUtils.clickOnConnectButton(page);
+	}
+
+	public void clickOnSaveButton() {
+		AddDatabasePageUtils.clickOnSaveButtonOfMetadataTab(page);
+	}
+
+	public void clickOnResetButton() {
+		AddDatabasePageUtils.clickOnResetButton(page);
+	}
+
+	public void clickOnRunQueryButton() {
+		AddDatabasePageUtils.clickOnRunQueryButton(page);
+	}
 }

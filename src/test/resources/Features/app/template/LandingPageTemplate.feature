@@ -11,7 +11,7 @@ Feature: Landing Page Template
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     Then User sees title of the block as 'Landing Page Title'
     And User views description as 'Drag and drop your content below to start populating your page.  Add images, text, and links to customize your landing page and make it your own.  Whether you are setting up a portfolio, a business page, or a personal blog, this is the first step to creating something unique and engaging.  Make your vision come to life!'
     And User sees the hyperlink with text "Explore" should point to the url "SemossWeb/packages/client/dist"

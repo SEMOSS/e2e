@@ -13,7 +13,7 @@ Feature: Database Catalog permissions for Author
     And User clicks on Copy Catalog ID
     And User sees success toast message 'Successfully Created Database'
     And User can see the Catalog title as 'TestDatabase'
-
+         
   @DeleteTestCatalog
   Scenario: Database Catalog - Author - View Overview,Metadata,Usage,Access Control,SMSS deatils
     Then 'Author' user can 'View' Overview

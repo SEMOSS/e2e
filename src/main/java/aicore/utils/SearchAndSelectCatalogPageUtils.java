@@ -12,7 +12,7 @@ public class SearchAndSelectCatalogPageUtils {
 	}
 
 	public static void searchCatalog(Page page, String catalogName) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(catalogName);
+		page.getByTestId("search-bar").click();
+		page.getByTestId("search-bar").fill(catalogName);
 	}
 }

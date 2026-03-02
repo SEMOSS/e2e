@@ -35,7 +35,7 @@ public class UserManagementPageUtils {
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
-	private static final String ADFS_TOAST_MESSAGE_XPATH = "//div[text()='{message}']";
+	private static final String ADFS_TOAST_MESSAGE_XPATH = "//span[text()='{message}']";
 
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
@@ -85,7 +85,11 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickSaveButton(Page page) {
-		page.locator(ADD_MEMBER_TYPE_SAVE_XPATH).click();
+		page.setViewportSize(1350, 650);
+		Locator saveButton = page.locator(ADD_MEMBER_TYPE_SAVE_XPATH);
+		saveButton.scrollIntoViewIfNeeded();
+		saveButton.hover();
+		saveButton.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static String userCreationToastMessage(Page page) {
@@ -147,9 +151,10 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchUser(Page page) {
-		String Base = ConfigUtils.getValue("baseUrl");
+		String Base = ConfigUtils.getValue("URLS").split(",")[0].trim();
 		if (Base.contains("8080")) {
-			String responseURL = Base + "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+			String endpoint = ConfigUtils.getValue("API_ENDPOINT");
+			String responseURL = Base + endpoint + "/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
 			page.waitForResponse(responseURL, () -> {
 				// Triggers the response
 				page.fill(SEARCH_BUTTON_XPATH, "UserId");

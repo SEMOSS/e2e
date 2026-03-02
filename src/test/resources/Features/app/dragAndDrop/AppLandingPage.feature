@@ -9,7 +9,7 @@ Feature: App landing page
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Verify app card details
@@ -76,7 +76,7 @@ Feature: App landing page
       | FILTER_CATEGORY | FILTER_VALUE |
       | Tag             | Test1, Test2 |
 
-  @DeleteCreatedTestApp
+  @DeleteCreatedTestApp @Regression
   Scenario: Bookmark an app successfully
     Given User opens Main Menu
     And User clicks on Open App Library
@@ -85,7 +85,7 @@ Feature: App landing page
     Then User see the Bookmarked section
     And The app should appear in the bookmarked section
 
-  @DeleteCreatedTestApp
+  @DeleteCreatedTestApp @Regression
   Scenario: Remove app from bookmarks
     Given User opens Main Menu
     And User clicks on Open App Library

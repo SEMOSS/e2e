@@ -137,4 +137,32 @@ public class CatlogPermissionsPage {
 	public void rejectPendingRequest() {
 		CatlogAccessPageUtility.rejectPendingRequest(page);
 	}
+
+	public void clickOnSettingsOption(String option) {
+		CatlogAccessPageUtility.clickOnSettingsOption(page, option);
+	}
+
+	public boolean userSeeThePageOpenOnRightSidePanel(String pageName) {
+		return CatlogAccessPageUtility.userSeeThePageOpenOnRightSidePanel(page, pageName);
+	}
+
+	public boolean userCanSeeSectionUnderSetting(String section) {
+		return CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, section);
+	}
+
+	public boolean isPortalToggleInExpectedState(String action) {
+		return CatlogAccessPageUtility.isPortalToggleInExpectedState(page, action);
+	}
+
+	public boolean clickOnPublishPortalButton() {
+		return CatlogAccessPageUtility.clickOnPublishPortalButton(page);
+	}
+
+	public void clickOnAppSettingsOption(String buttonName) {
+		CatlogAccessPageUtility.clickOnAppSettingsOption(page, buttonName);
+	}
+
+	public boolean userCanSeeSectionUnderGeneralSetting(String sectionName) {
+		return CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page, sectionName);
+	}
 }

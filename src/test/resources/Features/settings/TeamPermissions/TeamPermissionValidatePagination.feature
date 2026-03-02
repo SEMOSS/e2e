@@ -18,7 +18,6 @@ Feature: Validate Pagination in Team Permission Settings
     And User fills "Test Team1" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
-    And User clicks on the team name 'Test Team1' in the list
     And User clicks on "Add Member" button in Add Team Page
     And User adds "PaginationUser" from the member list
     And User clicks on save button
@@ -43,7 +42,7 @@ Feature: Validate Pagination in Team Permission Settings
     And User fills "Test Team2" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
-    And User clicks on the team name 'Test Team2' in the list
+    #And User clicks on the team name 'Test Team2' in the list
     And User clicks on 'Add Engine' button in Team Permission page
     And User adds multiple engines to the team
     And User select the engine access as 'Editor'
@@ -63,7 +62,7 @@ Feature: Validate Pagination in Team Permission Settings
     And User fills "Test Team3" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
-    And User clicks on the team name 'Test Team3' in the list
+    #And User clicks on the team name 'Test Team3' in the list
     And User clicks on 'Add Apps' button in Team Permission page
     And User adds multiple projects to the team
     And User select the engine access as 'Editor'

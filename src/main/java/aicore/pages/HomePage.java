@@ -64,8 +64,8 @@ public class HomePage {
 		HomePageUtils.verifyBuildPageButton(page, buttonName);
 	}
 
-	public void verifyBuildPageButtons(String buttonName) {
-		HomePageUtils.verifyBuildPageButtons(page, buttonName);
+	public boolean verifyBuildPageButtons(String sectionName, String buttonName) {
+		return HomePageUtils.verifyBuildPageButtons(page, sectionName, buttonName);
 	}
 
 	public void verifyTitleIsVisible(String titleName) {

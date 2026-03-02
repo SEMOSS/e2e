@@ -8,12 +8,12 @@ Feature: Add Local File System Storage
     And User selects 'Local File System' storage
     And User enters storage Catalog name as 'Local File System Storage'
     And User enters Path Prefix as 'local_storage'
-    And User clicks on Create Storage button
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    And User clicks on Connect button to create storage
+    Then User can see create storage success toast message as 'Successfully added new storage to catalog'
     And User clicks on Copy Catalog ID
     And User can see the Storage title as 'Local File System Storage'
 
-  @LoginWithAdmin @DeleteTestCatalog @Regression
+  @LoginWithAdmin @Regression
   Scenario: Delete Local File System Storage
     Given User is on Home page
     When User opens Main Menu

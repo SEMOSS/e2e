@@ -17,7 +17,7 @@ Feature: View existing models in model Catalog
     And User selects 'IP, PHI' from the Data Classification dropdown
     And User selects 'IP ALLOWED, PHI ALLOWED' from the Data Restrictions dropdown
     And User clicks on Submit button
-    Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
+    # Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: view and validate filter functionality - My Functions

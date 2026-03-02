@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class CatalogCreationFromZipUtil {
@@ -14,12 +13,15 @@ public class CatalogCreationFromZipUtil {
 	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
 	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
+	private static final String GUARDRAIL_MENU_BUTTON_XPATH = "//div[@aria-label='Guardrail']";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
+	private static final String ADD_FILE_NAME_XPATH = "//*[normalize-space()='{fileName}']";
 	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
-	
- 		public static void openCatalog(Page page, String catalogName) {
+	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
+	private static final String ZIP_UPLOAD_ICON_XPATH = "//button[contains(@data-testid,'-upload-file-button')]";
+
+	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = null;
 		switch (catalogName) {
 		case "Model":
@@ -37,6 +39,9 @@ public class CatalogCreationFromZipUtil {
 		case "Vector":
 			locator = page.locator(VECTOR_MENU_BUTTON_XPATH);
 			break;
+		case "Guardrail":
+			locator = page.locator(GUARDRAIL_MENU_BUTTON_XPATH);
+			break;
 		default:
 			throw new IllegalArgumentException("Invalid block name: " + catalogName);
 		}
@@ -50,12 +55,12 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void selectAddCatalogOption(Page page, String option) {
-		page.getByText(option).isVisible();
-		page.getByText(option).click();
+		page.locator(ZIP_UPLOAD_ICON_XPATH).isVisible();
+		page.locator(ZIP_UPLOAD_ICON_XPATH).click();
 	}
 
 	public static void clickOnFileUploadIcon(Page page) {
-		Locator icon = page.getByTestId("FileUploadOutlinedIcon");
+		Locator icon = page.locator("//button[contains(@data-testid,'upload-file-button')]");
 		AICorePageUtils.waitFor(icon);
 		icon.click();
 	}
@@ -93,13 +98,12 @@ public class CatalogCreationFromZipUtil {
 	}
 
 	public static void clickOnCreateCatalogButton(Page page) {
-		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).isVisible();
-		page.getByTestId(CREATE_CATALOG_BUTTON_DATA_TESTID).click();
+		page.locator(UPLOAD_FILE_BUTTON_XPATH).isVisible();
+		page.locator(UPLOAD_FILE_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnUploadButton(Page page, String label) {
-		Locator buttonLocator = page.getByRole(AriaRole.BUTTON,
-				new Page.GetByRoleOptions().setName(label).setExact(true));
+		Locator buttonLocator = page.locator(UPLOAD_FILE_BUTTON_XPATH);
 		buttonLocator.scrollIntoViewIfNeeded();
 		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		buttonLocator.click();

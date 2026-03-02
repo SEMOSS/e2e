@@ -11,7 +11,7 @@ Feature: Create Custome Frame to Visualization App using Template
     And User enters description as "Test to add description"
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User see the 'page-1'
     And User see the 'Create Pandas Frame Help Guide' block
     And User views description as 'This is simply an app that shows you how to create a custom pandas frame in notebook.  Use this as inspiration for the cool visualizations you can build off of this.  Ask the LLM to create JSON out of data, manually import database engine data and construct a custom pandas frame off of that data (use imagination on how to interact that pulled data with the LLM).'

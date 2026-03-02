@@ -38,6 +38,7 @@ import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.ConfigUtils;
 import aicore.framework.UrlUtils;
@@ -47,7 +48,8 @@ public class CommonUtils {
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
 	private static final String SEARCH_CATALOG_LABEL = "Search";
-	private static final String CLICK_ON_CATALOG_XPATH = "//div[@role='img' and contains(@class,'MuiCardMedia-root')]";
+	private static final String SEARCH_CATALOG_DATATESTID = "search-bar";
+	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
@@ -56,8 +58,8 @@ public class CommonUtils {
 	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
 
 	private static final String THREE_DOT_ICON_DATATESTID = "MoreVertIcon";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
+	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
 	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
@@ -314,7 +316,7 @@ public class CommonUtils {
 			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
-			page.getByLabel(SEARCH_CATALOG_LABEL).fill(catalogId);
+			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
 			page.waitForTimeout(500);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
 
@@ -326,7 +328,7 @@ public class CommonUtils {
 			}
 			page.locator(DELETE_BUTTON_XPATH).click();
 			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
-			return page.locator(DELETE_TOAST_MESSAGE_XPATH).isVisible();
+			return page.locator(DELETE_TOAST_MESSAGE_XPATH).first().isVisible();
 		} catch (Exception e) {
 			logger.warn("Catalog deletion failed due to an exception", e);
 			return false;
@@ -340,12 +342,13 @@ public class CommonUtils {
 			HomePageUtils.clickOnOpenAppLibrary(page);
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
 			page.waitForTimeout(500);
-			page.getByTestId(THREE_DOT_ICON_DATATESTID).click();
+			page.getByTestId(THREE_DOT_ICON_DATATESTID).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
 			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {
 				page.locator(TOAST_CLOSE_XPATH).click();
+				toasterMessage.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
 				return true;
 			}
 			return false;

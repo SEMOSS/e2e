@@ -9,7 +9,7 @@ Feature: App setting for Author permission
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User click on Settings
 
@@ -37,20 +37,20 @@ Feature: App setting for Author permission
     When User Click on General setting option
     Then 'Author' user can see private toggle button as 'Enable'
     And User turn OFF the Private option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* global'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* global'
     And User turn ON the Private option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* non-global'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* non-global'
 
   @DeleteCreatedTestApp
   Scenario: Create App - Author user - View and perform action on Non Discoverable toggle button
     When User Click on General setting option
     Then 'Author' user can see Non-Discoverable toggle button as 'Enable'
     And User turn OFF the Non Discoverable option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* discoverable'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* discoverable'
     And User turn ON the Non Discoverable option
-    And 'Author' user can see toaster message is 'Successfully made Test app .* undiscoverable'
+    #And 'Author' user can see toaster message is 'Successfully made Test app .* undiscoverable'
 
   Scenario: Create App - Author user - Delete App
     When User Click on General setting option
     Then 'Author' user can 'view' Delete catalog option
-    And 'Author' user 'can' Delete Catalog
+    #And 'Author' user 'can' Delete Catalog

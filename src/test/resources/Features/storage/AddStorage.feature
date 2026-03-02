@@ -13,9 +13,9 @@ Feature: Add Storage
     And User enters Bucket as 'BucketTest'
     And User enters Access Key as 'Test123'
     And User enters Secret Key as 'Test123'
-    And User clicks on Create Storage button
+    And User clicks on Connect button to create storage
     And User clicks on Copy Catalog ID
-    Then User can see create storage success toast message as 'Successfully added to catalog storage'
+    Then User can see create storage success toast message as 'Successfully added new storage to catalog'
 
   @DeleteTestCatalog @Regression
   Scenario: Validate usage of storage
@@ -35,12 +35,12 @@ Feature: Add Storage
     And User can see storage bucket in 'S3_BUCKET' field as 'BucketTest' in SMSS properties
     And User can see storage access key in 'S3_ACCESS_KEY' field as 'Test123' in SMSS properties
 
-  @DeleteTestCatalog @Regression
+  @DeleteTestCatalog @Regressions
   Scenario: View Storage Overview
     Given User can see the Storage title as 'Amazon S3 Storage'
     When User can see 'copy Storage ID' Storage ID along with copy icon
     And User clicks on copy icon of Storage ID
-    When User can see toast message as 'Successfully copied ID'
+    When User can see toast message as 'ID copied to clipboard'
     #And User can see 'Please use the Edit button to provide a description for this Storage. A description will help others find the Storage and understand how to use it. To include more details associated with the Storage, edit the markdown located in the Overview section.' as storage description
     When User clicks on Edit button
     And User add Tags 'embeddings' and presses Enter
@@ -105,6 +105,6 @@ Feature: Add Storage
     And User selects 'author' access
     And User types a comment as 'Access Request'
     And User clicks on Request button
-    Then User should successfully request access given the Vector is requestable with a toast message as 'Successfully requested access to engine'
+    Then User should successfully request access and a toast message as 'Successfully requested access to engine'
     And User logs out from the application
     Then User login as "Author"

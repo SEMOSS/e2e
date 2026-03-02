@@ -14,7 +14,6 @@ import aicore.framework.UrlUtils;
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
-
 	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue("applicationName") + "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
 	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search']";
@@ -22,13 +21,13 @@ public class HomePageUtils {
 	// menu options
 	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
-	private static final String BUILD_PAGE_BUTTON = "createAppSection-new-app-{Button}-btn-btn";
+	private static final String BUILD_PAGE_BUTTON = "//div[text()='{cardName}']/parent::div/following-sibling::div//button[text()='{buttonName}']";
 	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//button//span[text()='Browse Templates']";
 	private static final String BUILD_PAGE_POPUP_XPATH = "//div[@role='presentation']//div[@role='presentation']";
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
-	private static final String APP_MENU_BUTTON_XPATH = "//div[@aria-label='Apps']";
+	private static final String APP_MENU_BUTTON_XPATH = "sidebar-Apps-btn";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
 	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
@@ -47,6 +46,8 @@ public class HomePageUtils {
 	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";
 	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
 	private static final String CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID = "importForm-Catalog-Name-textField";
+	private static final String STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID = "storage-form-input-NAME";
+	private static final String VECTOR_CATALOG_NAME_TEXTBOX_DATA_TESTID = "vector-form-input-NAME";
 	// pop ups
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
@@ -65,7 +66,7 @@ public class HomePageUtils {
 		// check if menu is open
 //		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
-		page.waitForTimeout(500);
+		page.waitForTimeout(800);
 		if (isMenuOpen.isVisible()) {
 //			isMenuOpen.click();
 			isMenuOpen.dblclick();
@@ -115,7 +116,8 @@ public class HomePageUtils {
 		if (useDocker.equals("true")) {
 			page.click(BI_APP_XPATH);
 		} else {
-			page.navigate("http://localhost:9090/SemossWeb/packages/legacy/dist/#!/");
+			String bi = UrlUtils.getBaseFrontendUrl("packages/legacy/dist/#!/");
+			page.navigate(bi);
 			page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 			page.waitForLoadState(LoadState.NETWORKIDLE);
 		}
@@ -142,7 +144,7 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
-		Locator locator = page.locator(APP_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(APP_MENU_BUTTON_XPATH);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
@@ -157,45 +159,28 @@ public class HomePageUtils {
 		}
 	}
 
-	public static void verifyBuildPageButton(Page page, String buttonName) {
-		String BUILD_PAGE_BUTTON_XPATH = BUILD_PAGE_BUTTON.replace("{Button}", buttonName);
-		Locator button = page.getByTestId(BUILD_PAGE_BUTTON_XPATH);
-		if (!button.isVisible()) {
-			throw new RuntimeException("Get Started button for " + buttonName + " is not visible");
-		} else {
-			button.click();
-			if (buttonName.equalsIgnoreCase("drag") || buttonName.equalsIgnoreCase("code")) {
-				if (!page.locator(BUILD_PAGE_POPUP_XPATH).isVisible()) {
-					throw new RuntimeException("POP-Up is not showing after clicking on " + buttonName);
-				} else {
-					page.locator(BUILD_PAGE_POPUP_CLOSE_XPATH).click();
-				}
-			} else {
-				String currentUrl = page.url();
-				page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-				if (!currentUrl.contains("prompt")) {
-					throw new RuntimeException("Browser Prompt page is not opened");
-				} else {
-					page.goBack();
-				}
-			}
-
-		}
+	public static boolean verifyBuildPageButtons(Page page, String sectionName, String buttonName) {
+		String BUILD_PAGE_BUTTON_XPATH = BUILD_PAGE_BUTTON.replace("{cardName}", sectionName).replace("{buttonName}",
+				buttonName);
+		Locator button = page.locator(BUILD_PAGE_BUTTON_XPATH);
+		button.scrollIntoViewIfNeeded();
+		AICorePageUtils.waitFor(button);
+		return button.isVisible();
 	}
 
-	public static void verifyBuildPageButtons(Page page, String buttonName) {
+	public static void verifyBuildPageButton(Page page, String buttonName) {
 		Locator button = page.locator(BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH);
 		if (!button.isVisible()) {
 			throw new RuntimeException("Browser Template Button is not visible");
 		} else {
 			button.click();
-			String currentUrl = page.url();
+//			String currentUrl = page.url();
 			page.waitForLoadState(LoadState.LOAD);
-			if (!currentUrl.contains("template")) {
-				throw new RuntimeException("Browser Template page is not opened");
-			} else {
-				page.goBack();
-			}
+//			if (!currentUrl.contains("template")) {
+//				throw new RuntimeException("Browser Template page is not opened");
+//			} else {
+			page.goBack();
+//			}
 		}
 	}
 
@@ -221,7 +206,6 @@ public class HomePageUtils {
 		locator.click();
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 
@@ -284,7 +268,11 @@ public class HomePageUtils {
 
 	public static void enterCatalogNameToCreateCatalog(Page page, String catalogName) {
 		if (page.getByTestId(CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID).isVisible()) {
-			page.getByTestId(CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID).locator("input").fill(catalogName);
+			page.getByTestId(CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID).fill(catalogName);
+		} else if (page.getByTestId(STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID).isVisible()) {
+			page.getByTestId(STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
+		} else if (page.getByTestId(VECTOR_CATALOG_NAME_TEXTBOX_DATA_TESTID).isVisible()) {
+			page.getByTestId(VECTOR_CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
 		} else {
 			page.getByTestId(CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
 		}

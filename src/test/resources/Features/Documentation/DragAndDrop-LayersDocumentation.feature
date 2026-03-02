@@ -9,7 +9,7 @@ Feature: Documentation for Layers Panel
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User captures a 'testidelement' and highlights the "workspace-Layers" with name "AppLanding"
     And User completes screenshot capture and triggers comparison for 'App Landing'
 
@@ -22,7 +22,7 @@ Feature: Documentation for Layers Panel
     And User clicks on Get Started button in 'Drag and Drop'
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User clicks on Blocks if it is not selected by default
     And User drags the 'Markdown' block and drops it on the page
@@ -40,7 +40,7 @@ Feature: Documentation for Layers Panel
     And User clicks on Get Started button in 'Drag and Drop'
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User clicks on Blocks if it is not selected by default
     And User drags the 'Container' block and drops it on the page
@@ -60,7 +60,7 @@ Feature: Documentation for Layers Panel
     And User clicks on Get Started button in 'Drag and Drop'
     And User enters app name as 'Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User clicks on Blocks if it is not selected by default
     And User drags the 'Markdown' block and drops it on the page
@@ -79,7 +79,7 @@ Feature: Documentation for Layers Panel
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Unnest Layer Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User clicks on Blocks if it is not selected by default
     And User drags the 'Markdown' block and drops it on the page
@@ -99,7 +99,7 @@ Feature: Documentation for Layers Panel
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Reorder Layer Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User clicks on Blocks if it is not selected by default
     And User drags the 'Markdown' block and drops it on the page
@@ -119,7 +119,7 @@ Feature: Documentation for Layers Panel
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Reorder Layer Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User clicks on Blocks if it is not selected by default
     And User drags the 'Markdown' block and drops it on the page

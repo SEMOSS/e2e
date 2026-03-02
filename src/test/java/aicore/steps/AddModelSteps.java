@@ -50,12 +50,13 @@ public class AddModelSteps {
 	}
 
 	@And("User add {string} models with details {string} {string} {string} {string} {string}")
-    public void user_add_models_with_details(String index, String modelType, String modelName, String catalogName, String apiKey, String tags) {
+	public void user_add_models_with_details(String index, String modelType, String modelName, String catalogName,
+			String apiKey, String tags) {
 		int modelCount = Integer.parseInt(index);
 		for (int i = 0; i < modelCount; i++) {
 			openModelPage.selectModelType(modelType);
 			openModelPage.selectModel(modelName);
-			openModelPage.enterCatalogName(catalogName+""+(i+1));
+			openModelPage.enterCatalogName(catalogName + "" + (i + 1));
 			openModelPage.enterOpenAIKey(apiKey);
 			openModelPage.clickOnCreateModelButton();
 			viewCatalogPage.clickEditIcon();
@@ -64,10 +65,10 @@ public class AddModelSteps {
 				viewCatalogPage.enterTagName(tag);
 			}
 			viewCatalogPage.clickOnSubmit();
-			if(i < modelCount -1) {
-			homePage.openMainMenu();
-			homePage.clickOnOpenModel();
-			openModelPage.clickAddModelButton();
+			if (i < modelCount - 1) {
+				homePage.openMainMenu();
+				homePage.clickOnOpenModel();
+				openModelPage.clickAddModelButton();
 			}
 		}
 	}
@@ -122,6 +123,11 @@ public class AddModelSteps {
 		Assertions.assertTrue(isButtonEnabled, "'Connect' button is not enabled");
 	}
 
+	@Then("User clicks on model {string} button")
+	public void user_clicks_on_model_button(String buttonName) {
+		openModelPage.clickOnCreateModelButton(buttonName);
+	}
+
 	@When("User selects {string}")
 	public void user_selects(String aiModelName) {
 		openModelPage.selectModel(aiModelName);
@@ -144,9 +150,9 @@ public class AddModelSteps {
 
 	@And("User can see a toast message as {string}")
 	public void user_can_a_see_toast_message_as(String toastMessage) {
-		String actualMessage = openModelPage.modelCreationToastMessage();
+		String actualMessage = openModelPage.modelCreationToastMessage(toastMessage);
 		Assertions.assertEquals(actualMessage, toastMessage, "Model creation failed");
-		openModelPage.closeModelCreationToastMessage();
+		// openModelPage.closeModelCreationToastMessage();
 	}
 
 	@Then("User can see the Model title as {string}")
@@ -159,6 +165,68 @@ public class AddModelSteps {
 	@Then("User clicks on SMSS")
 	public void user_clicks_on_smss() {
 		openModelPage.clickOnSMSSTab();
+	}
+
+	@And("User clicks on Chat button")
+	public void user_Clicks_On_Chat_Button() {
+		openModelPage.clickOnChatTab();
+	}
+
+	@Then("User should see the Chat section for Model with title {string}")
+	public void user_Should_See_The_Chat_Section_For_Model_with_title(String title) {
+		openModelPage.verifyChatSectionDisplayed(title);
+	}
+
+	@And("User should see the Model ID and Model Name displayed in Model information section")
+	public void user_Should_See_The_Model_ID_And_Model_Name_Displayed_In_Model_Information_Section() {
+		openModelPage.verifyModelIDAndNameDisplayed();
+	}
+
+	@And("User should see the Temperature value displayed as {string} in Model information section by default")
+	public void user_Should_See_The_Temperature_Value_Displayed_As_In_Model_Information_Section_By_Default(
+			String tempValue) {
+		openModelPage.verifyTemperatureValue(tempValue);
+	}
+
+	@And("User should see the Max Tokens value displayed as {string} in Model information section by default")
+	public void user_Should_See_The_Max_Tokens_Value_Displayed_As_In_Model_Information_Section_By_Default(
+			String maxTokens) {
+		openModelPage.verifyMaxTokensValue(maxTokens);
+	}
+
+	@And("User should see the input textbox with placeholder as {string}")
+	public void user_Should_See_The_Input_Textbox_With_Placeholder_As(String placeholder) {
+		openModelPage.verifyInputTextboxPlaceholder(placeholder);
+	}
+
+	@And("User should see the send button get active on entering text {string} in the input textbox")
+	public void user_Should_See_The_Send_Button_Get_Active_On_Entering_Text_In_The_Input_Textbox(String inputText) {
+		openModelPage.verifyAndActivateSendButton(inputText);
+	}
+
+	@When("User click on send button to submit the query")
+	public void user_Click_On_Send_Button_To_Submit_The_Query() {
+		openModelPage.clickOnSendButton();
+	}
+
+	@When("User click on clear all button")
+	public void user_Click_On_Clear_All_Button() {
+		openModelPage.clickOnClearAllButton();
+	}
+
+	@Then("User should see the chat window is cleared of previous conversation")
+	public void user_Should_See_The_Chat_Window_Is_Cleared_Of_Previous_Conversation() {
+		openModelPage.verifyChatWindowCleared();
+	}
+
+	@Then("User should see the loader indicating that the response is being generated for the query")
+	public void user_Should_See_The_Loader_Indicating_That_The_Response_Is_Being_Generated_For_The_Query() {
+		openModelPage.verifyLoaderDisplayed();
+	}
+
+	@And("User should see the response generated for the query in the chat window")
+	public void user_Should_See_The_Response_Generated_For_The_Query_In_The_Chat_Window() {
+		openModelPage.verifyResponseGeneratedInChatWindow();
 	}
 
 	@Then("User can see name in {string} field as {string} in SMSS properties")
@@ -244,7 +312,7 @@ public class AddModelSteps {
 	public void user_can_see_a_edit_success_toast_message_as(String expectedToastMessage) {
 		String actualToastMessage = viewCatalogPage.verifyEditSuccessfullToastMessage();
 		Assertions.assertEquals(actualToastMessage, expectedToastMessage);
-		viewCatalogPage.waitForEditSuccessToastMessageToDisappear();
+		// viewCatalogPage.waitForEditSuccessToastMessageToDisappear();
 	}
 
 	@And("User should see description as {string} on the page")
@@ -335,14 +403,14 @@ public class AddModelSteps {
 	public void user_can_see_updated_value_in_field_as(String field, String newValue) {
 		String fullText = null;
 		switch (field) {
-			case "VAR_NAME":
-				fullText = openModelPage.verifyVarNameInSMSS();
-				break;
-			case "KEEP_CONVERSATION_HISTORY":
-				fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
-				break;
-			default:
-				System.out.println("Invalid field name " + field);
+		case "VAR_NAME":
+			fullText = openModelPage.verifyVarNameInSMSS();
+			break;
+		case "KEEP_CONVERSATION_HISTORY":
+			fullText = openModelPage.verifyKeepConversationHistoryValueInSMSS(field);
+			break;
+		default:
+			System.out.println("Invalid field name " + field);
 		}
 		String actualVarName = CommonUtils.splitTrimValue(fullText, field);
 		assertEquals(actualVarName, newValue);
@@ -461,20 +529,17 @@ public class AddModelSteps {
 			}
 			// Field-specific validation logic
 			switch (fieldName) {
-				// case "ENDPOINT":
-				// Assertions.assertEquals(expectedValue, fullText, "Field validation failed for
-				// '" + fieldName + "'");
-				// break;
-				case "INIT_MODEL_ENGINE":
-					Assertions.assertTrue(actualValue.contains(expectedValue),
-							"Field validation failed for '" + fieldName
-									+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue
-									+ ">");
-					break;
-				default:
-					Assertions.assertEquals(expectedValue, actualValue,
-							"Field validation failed for '" + fieldName + "'");
-					break;
+			// case "ENDPOINT":
+			// Assertions.assertEquals(expectedValue, fullText, "Field validation failed for
+			// '" + fieldName + "'");
+			// break;
+			case "INIT_MODEL_ENGINE":
+				Assertions.assertTrue(actualValue.contains(expectedValue), "Field validation failed for '" + fieldName
+						+ "' ==> expected partial text: <" + expectedValue + "> but was: <" + actualValue + ">");
+				break;
+			default:
+				Assertions.assertEquals(expectedValue, actualValue, "Field validation failed for '" + fieldName + "'");
+				break;
 			}
 		}
 	}
@@ -552,6 +617,16 @@ public class AddModelSteps {
 	@And("User click on Create {string} button")
 	public void user_click_on_create_button(String buttonName) {
 		openModelPage.clickOnCreateButton(buttonName);
+	}
+
+	@And("User select the zip icon option to upload file for {string}")
+	public void user_select_the_zip_icon_option_to_upload_file_for(String option) {
+		openModelPage.selectAddModelOption(option);
+	}
+
+	@And("User click on Upload button for {string}")
+	public void user_click_on_upload_button_for(String buttonName) {
+		openModelPage.clickOnUploadButton(buttonName);
 	}
 
 }

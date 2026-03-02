@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.SettingsPermissionsPage;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -133,5 +134,12 @@ public class SettingsPermissionsSteps {
 	public void user_can_see_user_icon_is_disabled(String role, String iconType) {
 		boolean isIconDisabled = catalogSettingsPage.isIconDisabled(role, iconType);
 		Assertions.assertTrue(isIconDisabled, "for " + role + " user " + iconType + " icon is not disabled");
+	}
+
+	@And("{string} user can see {string} option is disable for {string} role")
+	public void user_can_see_option_is_disabled_for_role(String currentrole, String option, String newRole) {
+		boolean isOptionDisabled = catalogSettingsPage.isOptionDisabled(currentrole, option, newRole);
+		Assertions.assertTrue(isOptionDisabled,
+				"for " + currentrole + " user " + option + " option is not disabled for role " + newRole);
 	}
 }

@@ -14,10 +14,13 @@ services:
       SEMOSS_BRANCH: dev
       MONOLITH_BRANCH: dev
       UI_BRANCH: dev
+      TEST_SUITE: FullSuite
+
+
     user: "${UID}:${GID}"  # Run the container as the current user
     volumes:
       - .:/workspace
     ipc: host
     cap_add:
       - SYS_ADMIN
-    command: /bin/bash -c "/app/scripts.sh"
+    command: /bin/bash -c "/app/scripts.sh" #add some kind of variable and insert it into dockerFile

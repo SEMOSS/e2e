@@ -1,8 +1,8 @@
-@LoginWithAuthor @Regression
+@LoginWithAuthor @Regression @DeleteTestCatalog
 Feature: Database Catalog permissions for Read user
   Adding LLm to the Catlog
 
-  Scenario: Create DataBase Using Zip File
+  Background: Create DataBase Using Zip File
     Given User opens Main Menu
     When User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
@@ -21,47 +21,38 @@ Feature: Database Catalog permissions for Read user
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User selects the 'TestDatabase' from the database catalog
-
+    
   Scenario: Database Catalog - Read - View overview,Usage,Metadat
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User selects the 'TestDatabase' from the database catalog
+    Given User selects the 'TestDatabase' from the database catalog
     Then 'Read' user can 'View' Overview
     And 'Read' user can 'View' Usage
     And 'Read' user can 'View' Metadata
+    And User logs out from the application
+    And User login as 'Author'
 
   Scenario: Database Catalog - Read - Not View SMSS Details,Access Control
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User selects the 'TestDatabase' from the database catalog
+    Given User selects the 'TestDatabase' from the database catalog
     Then 'Read' user can 'Not View' SMSS Details
     And 'Read' user can 'Not View' Access Control
+    And User logs out from the application
+    And User login as 'Author'
 
   Scenario: Database Catalog - Read - Not View Edit SMSS
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User selects the 'TestDatabase' from the database catalog
+    Given User selects the 'TestDatabase' from the database catalog
     And 'Read' user can 'Not View' SMSS Details
     Then 'Read' user can 'Not View' Edit SMSS
+    And User logs out from the application
+    And User login as 'Author'
 
   Scenario: Database Catalog - Read - Member setting
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User selects the 'TestDatabase' from the database catalog
+    Given User selects the 'TestDatabase' from the database catalog
     Then 'Read' user can 'Not View' Access Control
     Then 'Read' user 'can not' see Member Setting
+    And User logs out from the application
+    And User login as 'Author'
 
-  @DeleteTestCatalog
   Scenario: Database Catalog - Read -  Delete Database
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User searches the 'TestDatabase' in the database Catalog searchbox
-    And User selects the 'TestDatabase' from the database catalog
+    Given User selects the 'TestDatabase' from the database catalog
     Then 'Read' user can 'Not View' Access Control
     And User logs out from the application
     And User login as 'Author'

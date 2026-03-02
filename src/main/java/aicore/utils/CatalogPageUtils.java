@@ -9,7 +9,6 @@ import com.microsoft.playwright.Page;
 public class CatalogPageUtils {
 
 	public static void clickOnMetadataTab(Page page) {
-		// TODO need datatestid
 		Locator locator = page.getByTestId("engineLayout-Metadata-tab");
 		AICorePageUtils.waitFor(locator);
 		locator.isVisible();

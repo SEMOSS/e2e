@@ -4,14 +4,14 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class ChangeAccessPopUpPageUtils {
-	private static final String AUTHOR_OPTION_XPATH = "//div[contains(@class,'MuiCardHeader-content')]//div[contains(., 'Author')]/ancestor::div[contains(@class,'MuiCard-root')]//input[@type='radio']";
-	private static final String EDITOR_OPTION_XPATH = "//div[contains(@class,'MuiCardHeader-content')]//div[contains(., 'Editor')]/ancestor::div[contains(@class,'MuiCard-root')]//input[@type='radio']";
-	private static final String READONLY_OPTION_XPATH = "//div[contains(@class,'MuiCardHeader-content')]//div[contains(., 'Read-Only')]/ancestor::div[contains(@class,'MuiCard-root')]//input[@type='radio']";
+	private static final String AUTHOR_OPTION_XPATH = "//button[@value='OWNER' and @data-slot='radio-group-item']";
+	private static final String EDITOR_OPTION_XPATH = "//button[@value='EDIT' and @data-slot='radio-group-item']";
+	private static final String READONLY_OPTION_XPATH = "//button[@value='READ_ONLY' and @data-slot='radio-group-item']";
 	private static final String COMMENT_BOX_XPATH = "//textarea[not(@aria-hidden) and not(@readonly)]";
-	private static final String CANCEL_BUTTON_XPATH = "//button[contains(., 'Cancel')]";
-	private static final String REQUEST_BUTTON_XPATH = "//span[text()= 'Request']";
+	private static final String CANCEL_BUTTON_XPATH = "//button[text()= 'Cancel']";
+	private static final String REQUEST_BUTTON_XPATH = "//button[text()= 'Request']";
 	private static final String CHANGE_ACCESS_POPUP_XPATH = "//h2[text()='Change Access']";
-	private static final String REQUEST_SUCCESS_TOAST_TESTID = "notification-success-alert";
+	private static final String REQUEST_SUCCESS_TOAST_XPATH = "//div[contains(text(),'Successfully requested access to engine')]";
 
 	public static String isChangeAccessPopupVisible(Page page) {
 		return page.locator(CHANGE_ACCESS_POPUP_XPATH).textContent();
@@ -63,7 +63,9 @@ public class ChangeAccessPopUpPageUtils {
 		button.click();
 	}
 
-	public static boolean isRequestSuccessToastVisible(Page page) {
-		return page.getByTestId(REQUEST_SUCCESS_TOAST_TESTID).isVisible();
+	public static String isRequestSuccessToastVisible(Page page) {
+		Locator toastMessage = page.locator(REQUEST_SUCCESS_TOAST_XPATH);
+		AICorePageUtils.waitFor(toastMessage);
+		return toastMessage.innerText().trim();
 	}
 }

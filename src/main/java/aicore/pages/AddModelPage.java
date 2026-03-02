@@ -61,6 +61,10 @@ public class AddModelPage {
 		return ModelPageUtils.validateConnectButtonEnabled(page);
 	}
 
+	public void clickOnCreateModelButton(String buttonName) {
+		ModelPageUtils.clickOnCreateModelButton(page, buttonName);
+	}
+
 	public void enterCatalogName(String catalogName) {
 		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
 	}
@@ -73,8 +77,8 @@ public class AddModelPage {
 		ModelPageUtils.clickOnCreateModelButton(page);
 	}
 
-	public String modelCreationToastMessage() {
-		return ModelPageUtils.modelCreationToastMessage(page);
+	public String modelCreationToastMessage(String toastMessage) {
+		return ModelPageUtils.modelCreationToastMessage(page, toastMessage);
 	}
 
 	public void closeModelCreationToastMessage() {
@@ -87,6 +91,54 @@ public class AddModelPage {
 
 	public String getExpectedCatalogTitle(String modelTitle) {
 		return ModelPageUtils.getExpectedCatalogTitle(modelTitle + timestamp);
+	}
+
+	public void clickOnChatTab() {
+		ModelPageUtils.clickOnChatTab(page);
+	}
+
+	public void verifyChatSectionDisplayed(String title) {
+		ModelPageUtils.verifyChatSectionDisplayed(page, title);
+	}
+
+	public void verifyModelIDAndNameDisplayed() {
+		ModelPageUtils.verifyModelIDAndNameDisplayed(page);
+	}
+
+	public void verifyTemperatureValue(String expectedValue) {
+		ModelPageUtils.verifyTemperatureValue(page, expectedValue);
+	}
+
+	public void verifyMaxTokensValue(String expectedValue) {
+		ModelPageUtils.verifyMaxTokensValue(page, expectedValue);
+	}
+
+	public void verifyInputTextboxPlaceholder(String expectedValue) {
+		ModelPageUtils.verifyInputTextboxPlaceholder(page, expectedValue);
+	}
+
+	public void verifyAndActivateSendButton(String inputText) {
+		ModelPageUtils.verifyAndActivateSendButton(page, inputText);
+	}
+
+	public void clickOnSendButton() {
+		ModelPageUtils.clickOnSendButton(page);
+	}
+
+	public void clickOnClearAllButton() {
+		ModelPageUtils.clickOnClearAllButton(page);
+	}
+
+	public void verifyChatWindowCleared() {
+		ModelPageUtils.verifyChatWindowCleared(page);
+	}
+
+	public void verifyLoaderDisplayed() {
+		ModelPageUtils.verifyLoaderDisplayed(page);
+	}
+
+	public void verifyResponseGeneratedInChatWindow() {
+		ModelPageUtils.verifyResponseGeneratedInChatWindow(page);
 	}
 
 	public void clickOnSMSSTab() {
@@ -442,4 +494,11 @@ public class AddModelPage {
 		ModelPageUtils.clickOnCreateButton(page, buttonName);
 	}
 
+	public void selectAddModelOption(String option) {
+		ModelPageUtils.selectAddModelOption(page, option);
+	}
+
+	public void clickOnUploadButton(String buttonName) {
+		ModelPageUtils.clickOnUploadButton(page, buttonName);
+	}
 }

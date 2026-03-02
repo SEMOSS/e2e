@@ -13,10 +13,11 @@ Feature: Playground Home model to verify configuration tab
     Given User is on Home page
     When User clicks on Build button
     And User clicks on Try it out hyperlink for Experiment in our Playground
-    And User clicks on the "Open Configuration Menu" button
+    And User clicks on the "Open settings" button
     Then User verify the model catalog dropdown is present with default model with 'Model' name
     When User clicks on the Model dropdown
     Then User verify "default" model should be checked in the model catalog dropdown
+    When User clicks on the Model dropdown
     And User searches the 'Model2' configuration tab in the model catalog searchbox
     Then User should see the 'Model2' in the model catalog dropdown
     When User selects the 'Model2' from the model catalog dropdown

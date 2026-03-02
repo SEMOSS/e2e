@@ -2,40 +2,48 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddFunctionPageUtils {
 
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
-	private static final String CATALOG_NAME = "importForm-NAME-textField";
-	private static final String URL = "importForm-URL-textField";
-	private static final String HTTP_METHOD = "importForm-HTTP_METHOD-select";
-	private static final String POST_BODY_MESSAGE = "importForm-CONTENT_TYPE-select";
-	private static final String HEADERS = "importForm-HEADERS-textField";
-	private static final String FUNCTION_PARAMETERS = "importForm-FUNCTION_PARAMETERS-textField";
-	private static final String FUNCTION_REQUIRED_PARAMETERS = "importForm-FUNCTION_REQUIRED_PARAMETERS-textField";
-	private static final String FUNCTION_NAME = "importForm-FUNCTION_NAME-textField";
-	private static final String FUNCTION_DESCRIPTION = "importForm-FUNCTION_DESCRIPTION-textField";
-	private static final String FUNCTION_TYPE = "importForm-FUNCTION_TYPE-textField";
-	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
-	private static final String CREATE_FUNCTION_BUTTON = "Create Function";
+	private static final String CATALOG_NAME_DATA_TESTID = "function-form-input-NAME";
+	private static final String URL_DATA_TESTID = "function-form-input-URL";
+	private static final String HTTP_METHOD_DATA_TESTID = "function-form-input-HTTP_METHOD";
+	private static final String POST_BODY_MESSAGE_DATA_TESTID = "function-form-input-CONTENT_TYPE";
+	private static final String HEADERS_DATA_TESTID = "function-form-input-HEADERS";
+	private static final String FUNCTION_PARAMETERS_DATA_TESTID = "function-form-input-FUNCTION_PARAMETERS";
+	private static final String FUNCTION_REQUIRED_PARAMETERS_DATA_TESTID = "function-form-input-FUNCTION_REQUIRED_PARAMETERS";
+	private static final String FUNCTION_NAME_DATA_TESTID = "function-form-input-FUNCTION_NAME";
+	private static final String FUNCTION_DESCRIPTION_DATA_TESTID = "function-form-input-FUNCTION_DESCRIPTION";
+	private static final String FUNCTION_TYPE_DATA_TESTID = "function-form-input-FUNCTION_TYPE";
+	private static final String FIELDS_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='{section}']]/following-sibling::div//*[@data-testid='function-form-input-{fieldName}']";
+	private static final String FILE_FIELD_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='Settings']]/following-sibling::div[@data-testid='function-form-field-{fieldName}']";
+	private static final String MANDATORY_FIELDS_XPATH = "//label[text()='{fieldName}']//span[text()='*']";
+	private static final String FIELDS_DATA_TESTID = "function-form-input-{fieldName}";
+	private static final String DROPDOWN_FIELDS_XPATH = "//button[@data-testid='function-form-input-{fieldName}']";
+	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
-	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@class,'MuiCard-root')]//p[(text()='{FunctionName}')]";
+	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards-FUNCTION')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
-	private static final String DELETE_BUTTON_XPATH = "//span[text()='Delete']";
-	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
-	private static final String DELETE_TOAST_MESSAGE = "Successfully deleted Function";
-	private static final String MAKE_DISCOVERABLE_BUTTON_XPATH = "//span[@title='Make {catalogName} discoverable']";
+	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
+	private static final String CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
+	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
+	private static final String DELETE_TOAST_MESSAGE = "//div[text()='{toastMessage}']";
+	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{catalogName}-makeDiscoverable-switch";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
-	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "Search";
+	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "search-bar";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
-	private static final String HTTP_METHOD_TYPE_TESTID = "importForm-{type}-item";
-	private static final String SEARCH_BAR_XPATH = "//*[@data-testid='engineIndexPage-searchBar-{catalog}']//input";
+	private static final String SEARCHED_CATALOG_DATATESTID = "genericEngineCards-{catalogType}-{catalogName}";
+	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
+	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
+	private static final String SEARCH_BAR_DATATESTID = "search-bar";
+	private static final String TOASTER_MESSAGE_XPATH = "//*[text()='{toastMessage}']";
+	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
 
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
@@ -43,92 +51,140 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void selectFunction(Page page, String functionType) {
-		page.getByText(functionType).isVisible();
-		page.getByText(functionType).click();
+		page.getByText(functionType).first().isVisible();
+		page.getByText(functionType).first().click();
+	}
+
+	private static String getFieldNameForTestId(String field) {
+		String fieldNamesForDataTestid = switch (field) {
+		case "Catalog Name" -> "Name";
+		case "Function Name (metadata)" -> "Function Name";
+		case "Function Description (metadata)" -> "Function Description";
+		case "S3 Bucket Engine Id" -> "S3BucketEngineId";
+		case "Google Bucket Engine Id" -> "Google Bucket EngineId";
+		case "Upload Service Account File" -> "File";
+		case "POST Message Body Type" -> "Content Type";
+		case "Http Headers" -> "Headers";
+		default -> field;
+		};
+		return fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
+	}
+
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		String fieldNameForTestId = getFieldNameForTestId(field);
+		Locator fileFieldLocator = page.locator(FILE_FIELD_UNDER_SECTION_XPATH.replace("{section}", section)
+				.replace("{fieldName}", fieldNameForTestId));
+		Locator fieldLocator = page.locator(
+				FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{fieldName}", fieldNameForTestId));
+		if (fieldLocator.isVisible()) {
+			fieldLocator.scrollIntoViewIfNeeded();
+			return fieldLocator.isVisible();
+		}
+		if (fileFieldLocator.isVisible()) {
+			fileFieldLocator.scrollIntoViewIfNeeded();
+			return fileFieldLocator.isVisible();
+		}
+		return false;
+	}
+
+	public static boolean isFieldMandatory(Page page, String field) {
+		Locator mandatoryField = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", field));
+		if (mandatoryField.textContent().contains("*")) {
+			return true;
+		}
+		return false;
+	}
+
+	public static void fillFunctionCreationForm(Page page, String fieldName, String fieldValue, String timestamp) {
+		String fieldNameForTestId = getFieldNameForTestId(fieldName);
+		Locator field = page.getByTestId(FIELDS_DATA_TESTID.replace("{fieldName}", fieldNameForTestId));
+		field.scrollIntoViewIfNeeded();
+		Locator dropdownField = page.locator(DROPDOWN_FIELDS_XPATH.replace("{fieldName}", fieldNameForTestId));
+		if (dropdownField.count() > 0) {
+			dropdownField.first().click();
+			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(fieldValue)).click();
+		} else {
+			if (fieldName.contains("Catalog Name")) {
+				fieldValue = fieldValue + timestamp;
+			}
+			field.first().fill(fieldValue);
+		}
 	}
 
 	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
 		catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
-		page.getByTestId(CATALOG_NAME).click();
-		page.getByTestId(CATALOG_NAME).fill(catalogName);
-
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).click();
+		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
 	}
 
 	public static void enterUrl(Page page, String url) {
-		page.getByTestId(URL).click();
-		page.getByTestId(URL).fill(url);
+		page.getByTestId(URL_DATA_TESTID).click();
+		page.getByTestId(URL_DATA_TESTID).fill(url);
 	}
 
 	public static void selectHttpMethod(Page page, String httpMethod) {
-		page.getByTestId(HTTP_METHOD).isVisible();
-		page.getByTestId(HTTP_METHOD).click();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", httpMethod)).isVisible();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", httpMethod)).click();
+		page.getByTestId(HTTP_METHOD_DATA_TESTID).isVisible();
+		page.getByTestId(HTTP_METHOD_DATA_TESTID).click();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).isVisible();
+		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).click();
 	}
 
 	public static void selectPostBodyMessage(Page page, String postBodyMessage) {
-		page.getByTestId(POST_BODY_MESSAGE).isVisible();
-		page.getByTestId(POST_BODY_MESSAGE).click();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", postBodyMessage)).isVisible();
-		page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{type}", postBodyMessage)).click();
-	}
-
-	public static void verifyAsteriskMarkOnFields(Page page, String fieldLabels) {
-		String[] labels = fieldLabels.split(",");
-		for (String label : labels) {
-			String asteriskSelector = "//label[text()='%s']/span[text()='*']".replace("%s", label.trim());
-			Locator mandatoryField = page.locator(asteriskSelector);
-			AICorePageUtils.waitFor(mandatoryField);
-			if (!mandatoryField.isVisible() || !mandatoryField.textContent().contains("*")) {
-				throw new AssertionError(
-						"Asterisk mark is not visible or does not contain '*' for the field: " + label.trim());
-			}
-		}
+		page.getByTestId(POST_BODY_MESSAGE_DATA_TESTID).isVisible();
+		page.getByTestId(POST_BODY_MESSAGE_DATA_TESTID).click();
+		page.getByTestId(POST_MESSAGE_BODY_TYPE_TESTID.replace("{type}", postBodyMessage)).isVisible();
+		page.getByTestId(POST_MESSAGE_BODY_TYPE_TESTID.replace("{type}", postBodyMessage)).click();
 	}
 
 	public static void enterHeaders(Page page, String headers) {
-		page.getByTestId(HEADERS).click();
-		page.getByTestId(HEADERS).fill(headers);
+		page.getByTestId(HEADERS_DATA_TESTID).click();
+		page.getByTestId(HEADERS_DATA_TESTID).fill(headers);
 	}
 
 	public static void enterFunctionParameters(Page page, String functionParameters) {
-		page.getByTestId(FUNCTION_PARAMETERS).click();
-		page.getByTestId(FUNCTION_PARAMETERS).fill(functionParameters);
+		page.getByTestId(FUNCTION_PARAMETERS_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_PARAMETERS_DATA_TESTID).fill(functionParameters);
 	}
 
 	public static void enterFunctionName(Page page, String functionName) {
-		page.getByTestId(FUNCTION_NAME).click();
-		page.getByTestId(FUNCTION_NAME).fill(functionName);
+		page.getByTestId(FUNCTION_NAME_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_NAME_DATA_TESTID).fill(functionName);
 	}
 
 	public static void enterFunctionDescription(Page page, String functionDescription) {
-		page.getByTestId(FUNCTION_DESCRIPTION).click();
-		page.getByTestId(FUNCTION_DESCRIPTION).fill(functionDescription);
+		page.getByTestId(FUNCTION_DESCRIPTION_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_DESCRIPTION_DATA_TESTID).fill(functionDescription);
 	}
 
 	public static void selectFunctionType(Page page, String functionType) {
-		page.getByTestId(FUNCTION_TYPE).isVisible();
-		page.getByTestId(FUNCTION_TYPE).click();
-		page.getByTestId(FUNCTION_TYPE).fill(functionType);
+		page.getByTestId(FUNCTION_TYPE_DATA_TESTID).isVisible();
+		page.getByTestId(FUNCTION_TYPE_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_TYPE_DATA_TESTID).fill(functionType);
 	}
 
 	public static boolean verifyCreateFunctionButtonDisabled(Page page) {
-		return page.getByText(CREATE_FUNCTION_BUTTON).isDisabled();
+		return page.getByTestId(CONNECT_BUTTON_DATA_TESTID).isDisabled();
 	}
 
 	public static void enterFunctionRequiredParameters(Page page, String functionRequiredParameters) {
-		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).click();
-		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS).fill(functionRequiredParameters);
+		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS_DATA_TESTID).click();
+		page.getByTestId(FUNCTION_REQUIRED_PARAMETERS_DATA_TESTID).fill(functionRequiredParameters);
 	}
 
 	public static void checkCreateFunctionButton(Page page) {
-		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
+		page.getByTestId(CONNECT_BUTTON_DATA_TESTID).isVisible();
 	}
 
-	public static void clickOnCreateFunctionButton(Page page) {
-		page.getByText(CREATE_FUNCTION_BUTTON).isVisible();
-		page.getByText(CREATE_FUNCTION_BUTTON).isEnabled();
-		page.getByText(CREATE_FUNCTION_BUTTON).click();
+	public static boolean validateConnectButtonEnabled(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		return connectButton.isEnabled();
+	}
+
+	public static void clickOnConnectButton(Page page) {
+		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
+		connectButton.scrollIntoViewIfNeeded();
+		connectButton.click();
 	}
 
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
@@ -173,20 +229,19 @@ public class AddFunctionPageUtils {
 		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 	}
 
-	public static String verifyDeleteToastMessage(Page page) {
-		page.getByText(DELETE_TOAST_MESSAGE)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
-		return toastMessage;
+	public static String verifyDeleteToastMessage(Page page, String toastMessage) {
+		return page.locator(DELETE_TOAST_MESSAGE.replace("{toastMessage}", toastMessage)).first().textContent();
 	}
 
-	public static String verifySuccessToastMessage(Page page) {
-		Locator alert = page.getByTestId("notification-success-alert");
+	public static String verifySuccessToastMessage(Page page, String toastMessage) {
+		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage));
+		alert.scrollIntoViewIfNeeded();
+		AICorePageUtils.waitFor(alert);
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	public static boolean verifyMissingInputField(Page page) {
-		Locator missingFieldParent = page.getByTestId(URL).locator("..");
+		Locator missingFieldParent = page.getByTestId(URL_DATA_TESTID).locator("..");
 		missingFieldParent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		String missingFieldClass = missingFieldParent.getAttribute("class");
 		return missingFieldClass.contains("Mui-focused");
@@ -211,34 +266,36 @@ public class AddFunctionPageUtils {
 
 	public static void clickOnMakeDiscoverableButton(Page page, String catalogName) {
 		Locator makeDiscoverableButton = page
-				.locator(MAKE_DISCOVERABLE_BUTTON_XPATH.replace("{catalogName}", catalogName));
+				.getByTestId(MAKE_DISCOVERABLE_BUTTON_DATATESTID.replace("{catalogName}", catalogName));
 		makeDiscoverableButton.isVisible();
 		makeDiscoverableButton.click();
 	}
 
 	public static void clickOnDiscoverableFunctionsbutton(Page page) {
-		page.locator(DISCOVERABLE_FUNCTIONS_BUTTON_XPATH).click();
+		page.getByTestId(DISCOVERABLE_FUNCTIONS_BUTTON_TESTID).click();
 	}
 
 	public static void searchFunctionCatalog(Page page, String catalogName) {
-		Locator searchbox = page.getByLabel(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
+		Locator searchbox = page.getByTestId(FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID);
 		AICorePageUtils.waitFor(searchbox);
 		searchbox.click();
 		searchbox.fill(catalogName);
 	}
 
 	public static void selectFunctionFromSearchOptions(Page page, String catalogName) {
-		page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName))).isVisible();
+		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).isVisible();
 		page.locator(SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
-		Locator searchBar = page.locator(SEARCH_BAR_XPATH.replace("{catalog}", catalog));
+		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
-		searchBar.fill(catalog);
-		Locator catalogLocator = page.locator((SEARCHED_FUNCTION_XPATH.replace("{catalogName}", catalogName)));
+		searchBar.fill(catalogName);
+		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID
+				.replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
 		if (catalogLocator.isVisible()) {
-			catalogLocator.click();
+			catalogLocator.first().waitFor();
+			catalogLocator.first().click();
 			clickOnAccessControl(page);
 			clickOnDeleteButton(page);
 			clickOnDeleteConfirmationButton(page);

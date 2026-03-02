@@ -6,6 +6,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.OpenVectorPage;
 import aicore.utils.CommonUtils;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -84,9 +85,13 @@ public class VectorDatabaseSteps {
 		Assertions.assertEquals(actualToastMessage, expectedToastMessage, "Vector Id is not copied successfully");
 	}
 
-	
 	@Then("User clicks on Q&A button")
 	public void user_clicks_on_qa_button() {
 		vectorPage.clickOnQnAButton();
+	}
+
+	@And("User clicks on Documents tab")
+	public void user_clicks_on_documents_tab() {
+		embedDocumentPage.clickOnDocumentsTab();
 	}
 }

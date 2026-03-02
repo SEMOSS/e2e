@@ -258,4 +258,14 @@ public abstract class CaptureElementUtils {
 		return locators;
 	}
 
+	public static List<Locator> captureLabelElementScreenshot(Page page, String elementName) {
+		Locator locator = page.getByLabel(elementName);
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			locators.add(locator.nth(i));
+		}
+		return locators;
+	}
+
 }

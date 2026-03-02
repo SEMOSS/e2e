@@ -377,7 +377,7 @@ public class NotebookCreationAndExecutionSteps {
 
 	@And("User can see {string} column values as todays date along with current time")
 	public void user_can_see_column_values_as_todays_date_along_with_current_time(String columnName) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDate today = LocalDate.now();
 		List<String> columnValues = notebookPage.getColumnValues(columnName);
 		for (String columnValue : columnValues) {

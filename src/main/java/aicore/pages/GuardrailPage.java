@@ -1,5 +1,7 @@
 package aicore.pages;
 
+import java.nio.file.Path;
+
 import com.microsoft.playwright.Page;
 
 import aicore.utils.GuardrailPageUtils;
@@ -30,4 +32,13 @@ public class GuardrailPage {
 	public String verifyGuardrailTitle(String guardrailTitle) {
 		return GuardrailPageUtils.verifyGuardrailTitle(page, guardrailTitle);
 	}
+
+	public String verifyToastMessage(String toastMessage) {
+		return GuardrailPageUtils.verifyToastMessage(page, toastMessage);
+	}
+
+	public Path downloadCatalog() {
+		return GuardrailPageUtils.downloadCatalog(page);
+	}
+
 }

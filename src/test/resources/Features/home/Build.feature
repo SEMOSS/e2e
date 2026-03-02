@@ -8,19 +8,19 @@ Feature: Validate the Build Page
       | Empower your ideas with SEMOSS   |
       | Experiment in our Playground™    |
       | Simplify tasks with AI Conductor |
-      | Get started with our tools       |
+      #| Get started with our tools       |
       | Drag and drop blocks             |
       | Develop in code                  |
       | Construct an agent               |
       | Try these fan favorites          |
       | BI                               |
       | Terminal                         |
-    And User able to see the following Buttons:
-      | drag  |
-      | code  |
-      | agent |
+    And User able to see the 'Get Started' buttons in below cards:
+      | Drag and drop blocks |
+      | Develop in code      |
+      | Construct an agent   |
     And User able to see the "Browse Templates" button
-    
+
   Scenario: Verify BI and Terminal apps are displayed under System apps
     Given User opens Main Menu
     And User clicks on Open App Library

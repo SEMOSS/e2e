@@ -56,4 +56,7 @@ public class SettingsPermissionsPage {
 	public String getUserPermissionDate(String role) {
 		return SettingsPermissionsPageUtils.getUserPermissionDate(page, role);
 	}
+	public boolean isOptionDisabled(String currentRole, String option, String newRole) {
+		return SettingsPermissionsPageUtils.isOptionDisabled(page, currentRole, option, newRole);
+	}
 }

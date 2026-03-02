@@ -9,7 +9,7 @@ Feature: Documentation for Notebook
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User closes the Block Settings button
     And User clicks on Notebook
     And User deletes the notebook named 'mcp_driver'

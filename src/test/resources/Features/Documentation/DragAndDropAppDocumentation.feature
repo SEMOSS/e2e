@@ -29,7 +29,7 @@ Feature: Create Drag and Drop app documentation
      And User clicks on Get Started button in 'Drag and Drop'
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name 
     And User clicks on Block Settings option
     And User click on the 'Layers' tab in the left panel
     And User captures a 'testidelement' and highlights the 'AddIcon' with name 'NewPage'

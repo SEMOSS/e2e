@@ -35,9 +35,11 @@ public class AppVariablePage {
 	public void setVariableValue(String variableValue) {
 		AppVariablePageUtils.setVariableValue(page, variableValue);
 	}
+
 	public void enterVariableValue(String variableValue) {
 		AppVariablePageUtils.enterVariableValue(page, variableValue);
 	}
+
 	public void enterVariable(String variableValue) {
 		AppVariablePageUtils.enterVariable(page, variableValue);
 	}
@@ -58,8 +60,8 @@ public class AppVariablePage {
 		AppVariablePageUtils.verifyVariablePresentInList(page, variableName, variableType);
 	}
 
-	public void clickOnEditVariableOption() {
-		AppVariablePageUtils.clickOnEditVariableOption(page);
+	public void clickOnEditVariableOption(String variableName) {
+		AppVariablePageUtils.clickOnEditVariableOption(page, variableName);
 	}
 
 	public void clickOnVariableOpenMenu(String variableName) {

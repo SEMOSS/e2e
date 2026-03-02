@@ -16,7 +16,8 @@ public class ViewUsagePage {
         ViewUsagePageUtils.clickOnUsageTab(page);
     }
 
-    public void verifyExample(String example) {
-        ViewUsagePageUtils.verifyExample(page, example);
+
+    public boolean verifyExample(String example) {
+        return ViewUsagePageUtils.verifyExample(page, example);
     }
 }
