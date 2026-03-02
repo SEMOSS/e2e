@@ -151,9 +151,10 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchUser(Page page) {
-		String Base = ConfigUtils.getValue("baseUrl");
+		String Base = ConfigUtils.getValue("URLS").split(",")[0].trim();
 		if (Base.contains("8080")) {
-			String responseURL = Base + "Monolith/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+			String endpoint = ConfigUtils.getValue("API_ENDPOINT");
+			String responseURL = Base + endpoint + "/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
 			page.waitForResponse(responseURL, () -> {
 				// Triggers the response
 				page.fill(SEARCH_BUTTON_XPATH, "UserId");

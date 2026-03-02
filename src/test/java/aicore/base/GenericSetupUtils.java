@@ -8,19 +8,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StartOptions;
@@ -32,7 +33,7 @@ import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
 import aicore.utils.AICorePageUtils;
-import e2e.HttpLogger;
+import aicore.framework.HttpLogger;
 
 public class GenericSetupUtils {
 
@@ -53,7 +54,6 @@ public class GenericSetupUtils {
 	private static void doInit() throws IOException {
 		logCheck();
 
-		loadEnv();
 		loadUrls();
 
 		useDocker = Boolean.parseBoolean(ConfigUtils.getValue("use_docker"));
@@ -98,47 +98,18 @@ public class GenericSetupUtils {
 		logger.info("Log check end");
 	}
 
-	private static void loadEnv() throws IOException {
-
-		Path file = Paths.get(".env");
-		Map<String, String> projectEnvironment = getEnvironment(file);
-
-		if (Files.exists(Paths.get(".env.local"))) {
-			projectEnvironment.putAll(getEnvironment(Paths.get(".env.local")));
-		}
-
-		RunInfo.setEnvVariables(projectEnvironment);
-	}
-
-	private static Map<String, String> getEnvironment(Path file) throws IOException {
-		return Files.readAllLines(file).stream().map(String::trim).filter(s -> !s.isEmpty())
-				.filter(s -> !s.startsWith("#")).filter(s -> s.contains("=")).map(s -> s.split("=", 2))
-				.collect(Collectors.toMap(s -> s[0].trim(), s -> s.length > 1 ? s[1].trim() : ""));
-	}
-
 	private static void loadUrls() {
-		String environmentUrls = RunInfo.getEnvVariables().get("URLS");
+		String environmentUrls = ConfigUtils.getValue("URLS");
 		List<String> urls = new ArrayList<>();
-		int parallelCount = RunInfo.getParallelism();
-		// Check to see if urls were set manually. If so, use them
-		if (environmentUrls != null && !environmentUrls.isEmpty()) {
-			logger.info("Environment urls were set manually: {}", environmentUrls);
-			String[] arr = environmentUrls.split(",");
-			for (int i = 0; i < parallelCount; i++) {
-				String s = arr[i].trim();
-				if (!s.endsWith("/")) {
-					s = s + "/";
-				}
-				urls.add(s);
+		int parallelCount = Integer.parseInt(ConfigUtils.getValue("PARALLEL_COUNT"));
+		logger.info("URLS: {}, parallelCount: {}", environmentUrls, parallelCount);
+		String[] arr = environmentUrls.split(",");
+		for (int i = 0; i < parallelCount; i++) {
+			String s = arr[i].trim();
+			if (!s.endsWith("/")) {
+				s = s + "/";
 			}
-		} else {
-			// Generate URLS based off of how docker containers are generated
-			String urlStart = "http://e2e-semoss-";
-			String urlEnd = ":8080/";
-			for (int i = 1; i <= parallelCount; i++) {
-				String url = urlStart + i + urlEnd;
-				urls.add(url);
-			}
+			urls.add(s);
 		}
 
 		RunInfo.setURLS(urls);
@@ -163,7 +134,6 @@ public class GenericSetupUtils {
 		lp.setHeadless(Boolean.parseBoolean(ConfigUtils.getValue("headless")));
 		lp.setSlowMo(Double.parseDouble(ConfigUtils.getValue("slowmo")));
 		lp.setTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
-
 		return lp;
 	}
 
@@ -195,7 +165,39 @@ public class GenericSetupUtils {
 
 		// response handling
 		page.onResponse(HttpLogger::logResponse);
+	}
+	
+	public static Page setupPlaywright() {
+		// create playwright
+		Playwright playwright = Playwright.create();
+		ResourcePool.get().setPlaywright(playwright);
 
+		// setup browser
+		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+		ResourcePool.get().setBrowser(browser);
+
+		// get browser context options
+		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
+				.setDeviceScaleFactor(1).setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
+				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
+		BrowserContext context = browser.newContext(newContextOptions);
+		ResourcePool.get().setContext(context);
+		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
+
+		// setup tracing
+		if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+			Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
+			context.tracing().start(startOptions);
+		}
+
+		// create page
+		Page page = context.newPage();
+		ResourcePool.get().setPage(page);
+		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
+
+		GenericSetupUtils.setupLoggers(page);
+
+		return page;
 	}
 
 	public static void reset() {
@@ -207,7 +209,6 @@ public class GenericSetupUtils {
 		// setup admin user
 		String adminUser = ConfigUtils.getValue("native_username");
 		String adminPassword = ConfigUtils.getValue("native_password");
-
 		setupInitialAdmin(page, adminUser);
 
 		// test admin user login
@@ -303,7 +304,6 @@ public class GenericSetupUtils {
 		page.getByTestId("loginPage-textField-username").fill(user);
 		page.getByTestId("loginPage-textField-password").click();
 		page.getByTestId("loginPage-textField-password").fill(password);
-
 // Commented below code due to the set-cookie header removed from api/auth/login.
 
 //		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
@@ -345,7 +345,7 @@ public class GenericSetupUtils {
 		page.navigate(url);
 		page.locator("//div[@class='MuiStack-root css-bcmwpg']//button").click();
 		Page page1 = page.waitForPopup(() -> {
-			page.locator("//span[(text()='Deloitte Login')]").click();
+			page.locator("//span[(text()='Login')]").click();
 		});
 		page1.locator("//input[@type='email']").fill(Username);
 		page1.locator("#idSIButton9").click();
@@ -405,7 +405,7 @@ public class GenericSetupUtils {
 		visible.get(2).fill(userName);
 
 		visible.get(3).click();
-		visible.get(3).fill(userName + "@deloitte.com");
+		visible.get(3).fill(userName + "@test.com");
 
 		List<Locator> passwords = page.locator("input[type='password']").all();
 		List<Locator> visiblePasswords = new ArrayList<>();

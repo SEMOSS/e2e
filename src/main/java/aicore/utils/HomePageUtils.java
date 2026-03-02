@@ -116,7 +116,8 @@ public class HomePageUtils {
 		if (useDocker.equals("true")) {
 			page.click(BI_APP_XPATH);
 		} else {
-			page.navigate("http://localhost:9090/SemossWeb/packages/legacy/dist/#!/");
+			String bi = UrlUtils.getBaseFrontendUrl("packages/legacy/dist/#!/");
+			page.navigate(bi);
 			page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 			page.waitForLoadState(LoadState.NETWORKIDLE);
 		}
