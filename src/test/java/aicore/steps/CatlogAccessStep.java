@@ -18,6 +18,7 @@ import aicore.pages.LoginPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class CatlogAccessStep {
 
@@ -482,5 +483,13 @@ public class CatlogAccessStep {
 	public void user_can_see_the_section_on_general_setting_page(String sectionName) {
 		boolean isSectionVisible = catlogpermission.userCanSeeSectionUnderGeneralSetting(sectionName);
 		Assertions.assertTrue(isSectionVisible, sectionName + " section is not visible on General setting page");
+	}
+
+	@When("User resize the browser window size to {string}")
+	public void user_changes_browser_window_size(String size) {
+		String[] dimensions = size.split(",");
+		int width = Integer.parseInt(dimensions[0].trim());
+		int height = Integer.parseInt(dimensions[1].trim());
+		catlogpermission.changeBrowserWindowSize(width, height);
 	}
 }
