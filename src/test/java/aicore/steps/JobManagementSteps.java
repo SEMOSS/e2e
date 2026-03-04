@@ -48,11 +48,6 @@ public class JobManagementSteps {
 		jobManagementPage.clickAddButton();
 	}
 
-//	@Then("User can see {string} in the list")
-//	public void user_can_see_in_the_list(String jobTitle) {
-//
-//	}
-
 	@Then("User can see {string} in the {string} section list")
 	public void user_can_see_in_the_section_list(String jobTitle, String sectionName) {
 		boolean isJobVisible = jobManagementPage.verifyJobTitle(jobTitle, sectionName);
