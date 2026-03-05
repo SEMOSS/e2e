@@ -2,7 +2,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Accordion Dimensions
-    Given User captures documentation screenshot for 'DragAndDrop'
+    Given User captures documentation screenshot for 'BuildingApps/DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -20,7 +20,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Accordion Color
-    Given User captures documentation screenshot for 'DragAndDrop'
+    Given User captures documentation screenshot for 'BuildingApps/DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -38,7 +38,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Accordion block
-    Given User captures documentation screenshot for 'DragAndDrop'
+    Given User captures documentation screenshot for 'BuildingApps/DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -53,7 +53,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Accordion block Settings
-    Given User captures documentation screenshot for 'DragAndDrop'
+    Given User captures documentation screenshot for 'BuildingApps/DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -70,7 +70,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Accordion Content
-    Given User captures documentation screenshot for 'DragAndDrop'
+    Given User captures documentation screenshot for 'BuildingApps/DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -88,7 +88,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Accordion Spacing
-    Given User captures documentation screenshot for 'DragAndDrop'
+    Given User captures documentation screenshot for 'BuildingApps/DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -106,7 +106,7 @@ Feature: Documentation for Accordion Block Settings
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: DragAndDrop - Documentation for Accordion Border
-    Given User captures documentation screenshot for 'DragAndDrop'
+    Given User captures documentation screenshot for 'BuildingApps/DragAndDrop'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
