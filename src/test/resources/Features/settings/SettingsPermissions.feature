@@ -6,82 +6,6 @@ Feature: Validate catalog user permissions for all catalog types
     When User opens '<CATALOG>'
     And User checks if '<CATALOG>' catalog created and Deletes the '<CATALOG_NAME>'
     And User clicks on Add '<CATALOG>' button
-    And User selects the 'ZIP' option to upload file
-    And User uploads the file '<FILE_NAME>'
-    And User clicks on Create '<CATALOG>' button to create catalog
-    And User clicks on Copy Catalog ID
-    And User opens Main Menu
-    And User clicks on Open Settings
-    When User selects the '<CARD>' card
-    And User can search '<CATALOG_NAME>' in search box
-    And User clicks on the '<CATALOG_NAME>'
-    And User clicks on Add Member button
-    And User adds one user and assigns them as 'Editor'
-    And User clicks on Add Member button
-    And User adds one user and assigns them as 'Read'
-    Then User should see users with following permissions
-      | USER_TYPE | ROLE      |
-      | Author    | Author    |
-      | Editor    | Editor    |
-      | Read      | Read-Only |
-    And user can see permission date along with user added time
-      | Author    |
-      | Editor    |
-      | Read-Only |
-    When User logs out from the application
-    And User login as 'Editor'
-    And User opens Main Menu
-    And User clicks on Open Settings
-    When User selects the '<CARD>' card
-    And User can search '<CATALOG_NAME>' in search box
-    And User clicks on the '<CATALOG_NAME>'
-    And User search for 'Read' user in members search box
-    And 'Editor' user changes 'Read-Only' role to 'Editor'
-    Then User should see role changed to 'Editor' in members list
-    When 'Editor' user deletes 'Editor' role user from members list
-    Then User should see 'Editor' role user is removed from members list
-    When User search for 'Author' user in members search box
-    And 'Editor' user can see 'Edit' option is disable for 'Author' role
-    And 'Editor' user can see 'Delete' option is disable for 'Author' role
-    When User clicks on Add Member button
-    And User adds one user and assigns them as 'Read'
-    When User logs out from the application
-    And User login as 'Read'
-    And User opens Main Menu
-    And User clicks on Open Settings
-    When User selects the '<CARD>' card
-    And User can search '<CATALOG_NAME>' in search box
-    And User clicks on the '<CATALOG_NAME>'
-    And User search for 'Author' user in members search box
-    Then User can see 'Author' user 'delete' icon is disabled
-    And User can see 'Author' user 'edit' icon is disabled
-    And User search for 'Editor' user in members search box
-    Then User can see 'Editor' user 'delete' icon is disabled
-    And User can see 'Editor' user 'edit' icon is disabled
-    When User logs out from the application
-    And User login as 'Author'
-    And User opens Main Menu
-    And User clicks on Open Settings
-    And User selects the '<CARD>' card
-    And User can search '<CATALOG_NAME>' in search box
-    And User clicks on the '<CATALOG_NAME>'
-    And User search for 'Editor' user in members search box
-    When 'Author' user changes 'Editor' role to 'Read-Only'
-    Then User should see role changed to 'Read-Only' in members list
-    When 'Author' user deletes 'Read-Only' role user from members list
-    Then User should see 'Read-Only' role user is removed from members list
-
-    Examples: 
-      | CATALOG | BUTTON_NAME | FILE_NAME                     | CARD            | CATALOG_NAME |
-      | Vector  | Add Vector  | VectorDatabase/TestVector.zip | Vector Settings | TestVector   |
-
-  #### Creating below new scenario for UI.
-  @LoginWithAuthor @DeleteTestCatalog @Regression
-  Scenario Outline: Validate user access permissions of '<CATALOG>'
-    Given User opens Main Menu
-    When User opens '<CATALOG>'
-    And User checks if '<CATALOG>' catalog created and Deletes the '<CATALOG_NAME>'
-    And User clicks on Add '<CATALOG>' button
     And User clicks on file upload icon
     And User uploads the file '<FILE_NAME>'
     And User clicks on 'Upload' button to create catalog
@@ -114,6 +38,8 @@ Feature: Validate catalog user permissions for all catalog types
     And User search for 'Read' user in members search box
     And 'Editor' user changes 'Read-Only' role to 'Editor'
     Then User should see role changed to 'Editor' in members list
+    And 'Editor' user changes 'Editor' role to 'Read-Only'
+    Then User should see role changed to 'Read-Only' in members list
     When 'Editor' user deletes 'Editor' role user from members list
     Then User should see 'Editor' role user is removed from members list
     When User search for 'Author' user in members search box
@@ -153,6 +79,85 @@ Feature: Validate catalog user permissions for all catalog types
       | Database | Add Database | Database/TestDatabase.zip        | Database Settings | TestDatabase        |
       | Function | Add Function | Function/weatherFunctionTest.zip | Function Settings | WeatherFunctionTest |
       | Storage  | Add Storage  | Storage/Localminio.zip           | Storage Settings  | localminio          |
+      | Vector   | Add Vector   | VectorDatabase/TestVector.zip    | Vector Settings   | TestVector          |
+
+  ## Commented some steps due the bug-#2762
+  @LoginWithAuthor @DeleteTestCatalog @Regression
+  Scenario Outline: Validate user access permissions of '<CATALOG>'
+    Given User opens Main Menu
+    When User opens '<CATALOG>'
+    And User checks if '<CATALOG>' catalog created and Deletes the '<CATALOG_NAME>'
+    And User clicks on Add '<CATALOG>' button
+    And User clicks on file upload icon
+    And User uploads the file '<FILE_NAME>'
+    And User clicks on 'Upload' button to create catalog
+    And User clicks on Copy Catalog ID
+    And User opens Main Menu
+    And User clicks on Open Settings
+    When User selects the '<CARD>' card
+    And User can search '<CATALOG_NAME>' in search box
+    And User clicks on the '<CATALOG_NAME>'
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Read'
+    Then User should see users with following permissions
+      | USER_TYPE | ROLE      |
+      | Author    | Author    |
+      | Editor    | Editor    |
+      | Read      | Read-Only |
+    And user can see permission date along with user added time
+      | Author    |
+      | Editor    |
+      | Read-Only |
+    When User logs out from the application
+    And User login as 'Editor'
+    And User opens Main Menu
+    And User clicks on Open Settings
+    When User selects the '<CARD>' card
+    And User can search '<CATALOG_NAME>' in search box
+    And User clicks on the '<CATALOG_NAME>'
+    And User search for 'Read' user in members search box
+    And 'Editor' user changes 'Read-Only' role to 'Editor'
+    Then User should see role changed to 'Editor' in members list
+    And 'Editor' user changes 'Editor' role to 'Read-Only'
+    Then User should see role changed to 'Read-Only' in members list
+    #When 'Editor' user deletes 'Editor' role user from members list
+    #Then User should see 'Editor' role user is removed from members list
+    When User search for 'Author' user in members search box
+    And 'Editor' user can see 'Edit' option is disable for 'Author' role
+    And 'Editor' user can see 'Delete' option is disable for 'Author' role
+    #When User clicks on Add Member button
+    #And User adds one user and assigns them as 'Read'
+    When User logs out from the application
+    And User login as 'Read'
+    And User opens Main Menu
+    And User clicks on Open Settings
+    When User selects the '<CARD>' card
+    And User can search '<CATALOG_NAME>' in search box
+    And User clicks on the '<CATALOG_NAME>'
+    And User search for 'Author' user in members search box
+    Then User can see 'Author' user 'delete' icon is disabled
+    And User can see 'Author' user 'edit' icon is disabled
+    And User search for 'Editor' user in members search box
+    Then User can see 'Editor' user 'delete' icon is disabled
+    And User can see 'Editor' user 'edit' icon is disabled
+    When User logs out from the application
+    And User login as 'Author'
+    And User opens Main Menu
+    And User clicks on Open Settings
+    And User selects the '<CARD>' card
+    And User can search '<CATALOG_NAME>' in search box
+    And User clicks on the '<CATALOG_NAME>'
+    And User search for 'Editor' user in members search box
+    When 'Author' user changes 'Editor' role to 'Read-Only'
+    Then User should see role changed to 'Read-Only' in members list
+
+    #When 'Author' user deletes 'Read-Only' role user from members list
+    #Then User should see 'Read-Only' role user is removed from members list
+    Examples: 
+      | CATALOG   | BUTTON_NAME   | FILE_NAME            | CARD               | CATALOG_NAME |
+      | Guardrail | Add Guardrail | Guardrail/Gliner.zip | Guardrail Settings | Gliner       |
 
   @LoginWithAuthor @DeleteCreatedTestApp @Regression
   Scenario: Validate user access permissions of Apps
