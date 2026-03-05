@@ -290,4 +290,8 @@ public class CatlogAccessPageUtility {
 		Locator sectionLocator = page.locator(GENERAL_SETTING_SECTION_XPATH.replace("{section}", sectionName));
 		return sectionLocator.isVisible();
 	}
+
+	public static void changeBrowserWindowSize(Page page, int width, int height) {
+		page.setViewportSize(width, height);
+	}
 }

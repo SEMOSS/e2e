@@ -9,7 +9,7 @@ Feature: Job Management
     And User fills 'Test Job' in Name field
     And User fills '2+2' in Pixel field
     And User clicks Add button
-    Then User can see 'Test Job' in the list
+    Then User can see 'Test Job' in the 'All' section list
 
   @LoginWithAdmin @Regression
   Scenario: Edit Job
