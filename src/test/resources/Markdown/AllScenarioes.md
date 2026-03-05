@@ -1,6 +1,6 @@
 # All Cucumber BDD Steps Documentation
 
-> **Last Updated:** Auto-generated  
+
 > **Project:** SemossWebQA E2E Tests  
 > **Feature Path:** `src/test/resources/Features/`
 
@@ -56,10 +56,6 @@
 | 1 | `Then User can navigate to home page` | AI Core Application | Validates successful navigation to home page after login |
 | 2 | `Then User can see 'Account registration successful. Log in below.' message on login page` | Register New User | Validates registration success message |
 | 3 | `Then User should navigate to home page` | Register New User | Validates newly registered user navigates to home page after login |
-
-### Steps Count: Given: 2 | When: 6 | Then: 3 | **Total: 11**
-
----
 
 ---
 
@@ -204,10 +200,6 @@
 | 5 | `Then User can see '{string}' in the search results` | Search App and Catalogs | Validates item appears in search results |
 | 6 | `Then User can see the catalog details page` | Search App and Catalogs | Validates catalog details page is displayed |
 | 7 | `Then User can see '{string}' app on the page` | Search App and Catalogs | Validates app is visible on page |
-
-### Steps Count: Given: 2 | When: 49 | Then: 7 | **Total: 58**
-
----
 
 ---
 
@@ -354,10 +346,6 @@
 | 20 | `Then User sees success toast message '{string}'` | Configuration MCP App | Validates success toast message |
 | 21 | `Then User can see the Playground page` | Chat | Validates Playground page is loaded |
 | 22 | `Then User can see chat history` | Chat | Validates chat history is displayed |
-
-### Steps Count: Given: 3 | When: 57 | Then: 22 | **Total: 82**
-
----
 
 ---
 
@@ -594,10 +582,6 @@
 | 21 | `Then '{string}' user can '{string}' Members` | App Settings | Validates user permission for Members |
 | 22 | `Then User sees success toast message '{string}'` | Various | Validates success toast message |
 
-### Steps Count: Given: 3 | When: 97 | Then: 59 | **Total: 159**
-
----
-
 ---
 
 # Model
@@ -742,10 +726,6 @@
 | 26 | `Then User can see the model is unbookmarked` | Add Model | Validates unbookmark |
 | 27-46 | *(Additional model validation steps for form fields, SMSS properties, permissions)* | Various | Various validation steps |
 
-### Steps Count: Given: 5 | When: 48 | Then: 46 | **Total: 99**
-
----
-
 ---
 
 # Vector
@@ -858,10 +838,6 @@
 | 14 | `Then User can see the vector '{string}' in Discoverable Vectors` | View Existing Vectors | Validates in Discoverable |
 | 15 | `Then User can see the vector is bookmarked` | View Existing Vectors | Validates bookmark |
 | 16 | `Then User can see the vector is unbookmarked` | View Existing Vectors | Validates unbookmark |
-
-### Steps Count: Given: 2 | When: 41 | Then: 16 | **Total: 59**
-
----
 
 ---
 
@@ -1003,10 +979,6 @@
 | 17 | `Then User can see the database is unbookmarked` | View Existing Databases | Validates unbookmark |
 | 18 | `Then User can see database created success toast message as '{string}'` | Add CSV/TSV/Excel Database | Validates creation toast |
 
-### Steps Count: Given: 5 | When: 74 | Then: 25 | **Total: 104**
-
----
-
 ---
 
 # Function
@@ -1126,10 +1098,6 @@
 | 14 | `Then User can see '{string}' function options with icons` | View Add Function Page | Validates function options |
 | 15 | `Then User can see Create button is '{string}'` | Add Function | Validates button state |
 
-### Steps Count: Given: 2 | When: 38 | Then: 15 | **Total: 55**
-
----
-
 ---
 
 # Storage
@@ -1226,10 +1194,6 @@
 | 12 | `Then User can see the storage is unbookmarked` | View Existing Storages | Validates unbookmark |
 | 13 | `Then User can see the storage is deleted` | Add Local File System, Add Storage (Amazon S3) | Validates deletion |
 
-### Steps Count: Given: 3 | When: 47 | Then: 22 | **Total: 72**
-
----
-
 ---
 
 # Guardrail
@@ -1303,10 +1267,6 @@
 | 10 | `Then User can see Guardrail Catalog title as '{string}'` | Validate Guardrail | Validates title |
 | 11 | `Then User can see guardrail name '{string}'` | Validate Guardrail | Validates name |
 | 12 | `Then User can see guardrail type '{string}'` | Validate Guardrail | Validates type |
-
-### Steps Count: Given: 2 | When: 21 | Then: 12 | **Total: 35**
-
----
 
 ---
 
@@ -1542,10 +1502,6 @@
 |---|----------------|-----------------|-------------|
 | 30 | `Then User can see vector '{string}' in vector settings` | Vector Settings | Validates vector in settings |
 
-### Steps Count: Given: 9 | When: 95 | Then: 62 | **Total: 166**
-
----
-
 ---
 
 # System Apps
@@ -1624,39 +1580,7 @@
 | 5 | `Then User can see Python output as '{string}'` | Terminal | Validates Python output |
 | 6 | `Then User can see 'Terminal' app in the System Apps section` | Terminal | Validates Terminal visible |
 
-### Steps Count: Given: 3 | When: 30 | Then: 6 | **Total: 39**
 
----
 
----
 
-# Grand Total
 
-| Section | Given | When | Then | Total |
-|---------|-------|------|------|-------|
-| Startup | 2 | 6 | 3 | **11** |
-| Home | 2 | 49 | 7 | **58** |
-| Playground | 3 | 57 | 22 | **82** |
-| App | 3 | 97 | 59 | **159** |
-| Model | 5 | 48 | 46 | **99** |
-| Vector | 2 | 41 | 16 | **59** |
-| Database | 5 | 74 | 25 | **104** |
-| Function | 2 | 38 | 15 | **55** |
-| Storage | 3 | 47 | 22 | **72** |
-| Guardrail | 2 | 21 | 12 | **35** |
-| Settings | 9 | 95 | 62 | **166** |
-| System Apps | 3 | 30 | 6 | **39** |
-| **GRAND TOTAL** | **41** | **603** | **295** | **939** |
-
----
-
-> **Note:** This document consolidates steps from all individual markdown files located in [`src/test/resources/Markdown/`](src/test/resources/Markdown/). For detailed scenario descriptions, test data, and feature file summaries, refer to the individual page-level documentation files:
-> - [startup.md](src/test/resources/Markdown/startup.md)
-> - [home.md](src/test/resources/Markdown/home.md)
-> - [playground.md](src/test/resources/Markdown/playground.md)
-> - [app.md](src/test/resources/Markdown/app.md)
-> - [model.md](src/test/resources/Markdown/model.md)
-> - [vector.md](src/test/resources/Markdown/vector.md)
-> - [database.md](src/test/resources/Markdown/database.md)
-> - [function.md](src/test/resources/Markdown/function.md)
-> - [storage…
