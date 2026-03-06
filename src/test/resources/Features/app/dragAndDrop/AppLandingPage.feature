@@ -9,7 +9,7 @@ Feature: App landing page
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Verify app card details
@@ -18,15 +18,13 @@ Feature: App landing page
     When User searches 'Test app' app in the app searchbox
     Then User can see 'Test app' app on the page
     And User can see the following details on the app card
-      | DETAIL_NAME         | VALUE                        |
-      | App Name            | Test app                     |
-      | App Description     | Created by automation script |
-      | Published date      | Published {date}             |
-      | Last Edited date    | Last Edited {date}           |
-      | Open App button     | Open App                     |
-      | View Details button | View Details                 |
-      | More Vert Icon      |                              |
-      | Bookmark Icon       |                              |
+      | DETAIL_NAME     | VALUE                        |
+      | App Name        | Test app                     |
+      | App Description | Created by automation script |
+      | Open App button | Open                         |
+      | Info button     | Info                         |
+      | More Vert Icon  |                              |
+      | Bookmark Icon   |                              |
 
   @DeleteCreatedTestApp @Regression
   Scenario: User copies the App Id successfully
@@ -35,7 +33,7 @@ Feature: App landing page
     And User searches 'Test app' app in the app searchbox
     And User clicks on more vertical icon of 'Test app' app
     And User clicks on 'Copy App ID' option
-    Then User can see 'Successfully copied to clipboard' toast message after copying the ID.
+    Then User can see 'App ID copied to clipboard' toast message after copying the ID.
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches copied id in the app searchbox
@@ -77,31 +75,23 @@ Feature: App landing page
       | Tag             | Test1, Test2 |
 
   @DeleteCreatedTestApp @Regression
-  Scenario: Bookmark an app successfully
+  Scenario: Verify bookmark and unbookmark an app
     Given User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     When User clicks on the Bookmark icon for 'Test app' App
-    Then User see the Bookmarked section
-    And The app should appear in the bookmarked section
+    Then User clicks on the Bookmarked Apps tab
+    And User can see 'Test app' in the Bookmarked Apps section
+    When User clicks on the Unbookmark icon for 'Test app' App
+    Then User cannot see 'Test app' in the Bookmarked Apps section
+    And User clicks on the My Apps tab
 
   @DeleteCreatedTestApp @Regression
-  Scenario: Remove app from bookmarks
-    Given User opens Main Menu
-    And User clicks on Open App Library
-    And User searches 'Test app' app in the app searchbox
-    And User can see 'Test app' app on the page
-    When User clicks on the Bookmark icon for 'Test app' App
-    And User clicks on the Unbookmark icon for 'Test app' App
-    Then The 'Test app' should be removed from the bookmarked section
-    And If no apps remain bookmarked the "Bookmarked" section should not be visible
-
-  @DeleteCreatedTestApp @Regression
-  Scenario: Created app is displayed in All Apps section
+  Scenario: Created app is displayed in My Apps section
     Given User opens Main Menu
     And User clicks on Open App Library
     When User searches 'Test app' app in the app searchbox
-    Then User can see 'Test app' app in the All Apps section
+    Then User can see 'Test app' app in the My Apps section
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario: Verify app is display under Discoverable
@@ -109,7 +99,7 @@ Feature: App landing page
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
     Then User can see 'Test app' app on the page
-    And User clicks on app 'View Details' button
+    And User clicks on app 'Info' button
     And User clicks on Access Control Tab
     And User turn OFF the Non Discoverable option
     And User logs out from the application
