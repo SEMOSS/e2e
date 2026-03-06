@@ -15,7 +15,7 @@ Feature: Create Agent builder app documentation
     Then User can see the Model title as 'Model'
 
   Scenario: Agent builder app Setting Prompt screenshot
-    Given User captures documentation screenshot for 'RAG'
+    Given User captures documentation screenshot for 'BuildingApps/AgentBuilder'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open App Library
@@ -29,7 +29,7 @@ Feature: Create Agent builder app documentation
     And User captures screenshot for "SettingPrompt"
 
   Scenario: Agent builder app Setting Prompt screenshot
-    Given User captures documentation screenshot for 'Navigating/Create New App'
+    Given User captures documentation screenshot for 'BuildingApps/AgentBuilder'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open App Library
@@ -56,7 +56,7 @@ Feature: Create Agent builder app documentation
     And User captures screenshot for 'AB20'
 
     Scenario: Agent builder Prompt context highlight screenshot
-    Given User captures documentation screenshot for 'Navigating/Create New App'
+    Given User captures documentation screenshot for 'BuildingApps/AgentBuilder'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open App Library
@@ -67,7 +67,7 @@ Feature: Create Agent builder app documentation
 
  @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for agent builder app options new screenshot
-    Given User captures documentation screenshot for 'AppUseCaseImages'
+    Given User captures documentation screenshot for 'BuildingApps/AgentBuilder'
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
