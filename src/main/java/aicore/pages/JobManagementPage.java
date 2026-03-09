@@ -94,8 +94,8 @@ public class JobManagementPage {
 		JobPageUtils.createJob(page, name, value);
 	}
 
-	public String verifyJobTitle(String jobTitle) {
-		return JobPageUtils.verifyJobTitle(page, jobTitle + " " + timestamp);
+	public boolean verifyJobTitle(String jobTitle, String sectionName) {
+		return JobPageUtils.verifyJobTitle(page, jobTitle + " " + timestamp, sectionName);
 	}
 
 	public void verifyAddedTag(String expectedText, String jobTitle) {
@@ -160,6 +160,18 @@ public class JobManagementPage {
 
 	public void expandHistoryTable() {
 		JobPageUtils.expandHistoryTable(page);
+	}
+
+	public void clickOnTab(String tabName) {
+		JobPageUtils.clickOnTab(page, tabName);
+	}
+
+	public String getStatusTileCount(String statusTile) {
+		return JobPageUtils.getStatusTileCount(page, statusTile);
+	}
+
+	public void clickOnRunJobIcon(String jobName) {
+		JobPageUtils.clickOnRunJobIcon(page, jobName + " " + timestamp);
 	}
 
 }

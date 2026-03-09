@@ -165,4 +165,8 @@ public class CatlogPermissionsPage {
 	public boolean userCanSeeSectionUnderGeneralSetting(String sectionName) {
 		return CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page, sectionName);
 	}
+
+	public void changeBrowserWindowSize(int width, int height) {
+		CatlogAccessPageUtility.changeBrowserWindowSize(page, width, height);
+	}
 }

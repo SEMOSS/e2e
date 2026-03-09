@@ -61,7 +61,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Edit button
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -82,7 +82,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Export button
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -103,7 +103,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create Function - Capture function AccessControl Screenshot
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -124,7 +124,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create Function - Capture function RequestAccess Screenshot
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -157,7 +157,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
     Scenario: Create a Function Form Document 
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
@@ -165,5 +165,20 @@ Feature: Function documentation
     Then User captures screenshot for "create_func"
     And User completes screenshot capture and triggers comparison for 'Function Engines'
 
-    
-    
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
+  Scenario: Function Engine Edit Interface Document
+    Given User captures documentation screenshot for 'FunctionEngines'
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
+    And User clicks on Add Function
+    And User clicks on file upload icon
+    And User uploads the file 'Function/weatherFunctionTest.zip'
+    And User clicks on 'Upload' button to create catalog
+    And User clicks on Copy Catalog ID
+    And User sees success toast message 'Successfully Created Function Database'
+    And User clicks on Edit button
+    When User resize the browser window size to '1200,1100'
+    Then User captures screenshot for "EditInterface"
+    And User resize the browser window size to '1280,720'
+    And User completes screenshot capture and triggers comparison for "EditInterface"

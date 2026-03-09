@@ -2,7 +2,7 @@ Feature: Documentation for Code App
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Code App - Documentation for Custom Reactor App Settings
-    Given User captures documentation screenshot for 'CustomReactor'
+    Given User captures documentation screenshot for 'Building Apps/CustomReactor'
     When User is on Home page
     And User opens Main Menu
     And User clicks on Open App Library

@@ -214,4 +214,20 @@ public class AppTemplatePage {
 	public boolean verifyCreatedModelsInList() {
 		return AppTemplatePageUtils.verifyCreatedModelsInList(page);
 	}
+
+	public void verifyAppTemplateTitle(String title) {
+		AppTemplatePageUtils.verifyAppTemplateTitle(title, page);
+	}
+
+	public void verifyDialogText(String expectedText) {
+		AppTemplatePageUtils.verifyDialogText(expectedText, page);
+	}
+
+	public void verifyButtonIsEnabled(String buttonName) {
+		AppTemplatePageUtils.verifyButtonIsEnabled(buttonName, page);
+	}
+
+	public void verifyTabIsVisible(String tabName) {
+		AppTemplatePageUtils.verifyTabIsVisible(tabName, page);
+	}
 }

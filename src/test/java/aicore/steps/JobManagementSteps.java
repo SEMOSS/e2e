@@ -48,11 +48,11 @@ public class JobManagementSteps {
 		jobManagementPage.clickAddButton();
 	}
 
-	@Then("User can see {string} in the list")
-	public void user_can_see_in_the_list(String jobTitle) {
-		String actualJobTitle = jobManagementPage.verifyJobTitle(jobTitle);
-		String expectedJobTitle = jobTitle + " " + timestamp;
-		Assertions.assertEquals(expectedJobTitle, actualJobTitle);
+	@Then("User can see {string} in the {string} section list")
+	public void user_can_see_in_the_section_list(String jobTitle, String sectionName) {
+		boolean isJobVisible = jobManagementPage.verifyJobTitle(jobTitle, sectionName);
+		Assertions.assertTrue(isJobVisible, "Job title not visible: " + jobTitle);
+
 	}
 
 	@When("User clicks on Edit Icon for added {string}")
@@ -243,4 +243,25 @@ public class JobManagementSteps {
 		Assertions.assertTrue(isMessageVisible, "No job history message not visible: " + message);
 	}
 
+	@When("User clicks on {string} tab")
+	public void user_clicks_on_tab(String tabName) {
+		jobManagementPage.clickOnTab(tabName);
+	}
+
+	@Then("User cannot see {string} in the {string} section list")
+	public void user_cannot_see_in_the_section_list(String jobTitle, String sectionName) {
+		boolean isJobVisible = jobManagementPage.verifyJobTitle(jobTitle, sectionName);
+		Assertions.assertFalse(isJobVisible, "Job is visible: " + jobTitle);
+	}
+
+	@Then("User can see {string} status tile count is {string}")
+	public void user_can_see_status_tile_count_is(String statusTile, String count) {
+		String actualCount = jobManagementPage.getStatusTileCount(statusTile);
+		Assertions.assertEquals(count, actualCount, "Status tile count does not match: " + statusTile);
+	}
+
+	@When("User clicks on Play icon for added {string}")
+	public void user_clicks_on_play_icon_for_added(String jobName) {
+		jobManagementPage.clickOnRunJobIcon(jobName);
+	}
 }

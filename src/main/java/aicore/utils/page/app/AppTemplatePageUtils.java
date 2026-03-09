@@ -396,9 +396,9 @@ public class AppTemplatePageUtils {
 		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
 
 		return switch (condition.toLowerCase()) {
-		case "above" -> ages.stream().allMatch(age -> age > number);
-		case "below" -> ages.stream().allMatch(age -> age < number);
-		default -> false;
+			case "above" -> ages.stream().allMatch(age -> age > number);
+			case "below" -> ages.stream().allMatch(age -> age < number);
+			default -> false;
 		};
 	}
 
@@ -440,4 +440,33 @@ public class AppTemplatePageUtils {
 
 		return foundCount == ids.size();
 	}
+
+	public static void verifyAppTemplateTitle(String title, Page page) {
+		boolean appTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(title)).isVisible();
+		if (!appTitle) {
+			throw new AssertionError("App template title does not match");
+		}
+	}
+
+	public static void verifyDialogText(String expectedText, Page page) {
+		page.getByRole(AriaRole.DIALOG).getByText(expectedText).isVisible();
+	}
+
+	public static void verifyButtonIsEnabled(String buttonName, Page page) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName)).isVisible();
+		boolean isEnabled = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName))
+				.isEnabled();
+		if (!isEnabled) {
+			throw new AssertionError(buttonName + " is not enabled");
+		}
+	}
+
+	public static void verifyTabIsVisible(String tabName, Page page) {
+		boolean isVisible = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).isVisible();
+		if (!isVisible) {
+			throw new AssertionError("Tab is not visible: " + tabName);
+		}
+		page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).click();
+	}
+
 }

@@ -3,6 +3,9 @@ package aicore.steps.app;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+
 import aicore.framework.UrlUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.app.AppTemplatePage;
@@ -304,6 +307,26 @@ public class createAppUsingTemplateSteps {
 	@Then("User checks the created models are visible in the list")
 	public void user_checks_the_created_models_are_visible_in_the_list() {
 		boolean areModelsVisible = appTemplatePage.verifyCreatedModelsInList();
-		assertTrue(areModelsVisible," Created models are not visible.");
+		assertTrue(areModelsVisible, " Created models are not visible.");
+	}
+
+	@And("User sees title {string}")
+	public void user_sees_title(String title) {
+		appTemplatePage.verifyAppTemplateTitle(title);
+	}
+
+	@And("User sees a dialog containing text {string}")
+	public void user_sees_a_dialog_containing_text(String text) {
+		appTemplatePage.verifyDialogText(text);
+	}
+
+	@And("User verifies {string} button is enabled")
+	public void user_verifies_button_is_enabled(String buttonName) {
+		appTemplatePage.verifyButtonIsEnabled(buttonName);
+	}
+
+	@And("User sees {string} tab")
+	public void user_sees_tab(String tabName) {
+		appTemplatePage.verifyTabIsVisible(tabName);
 	}
 }
