@@ -81,4 +81,15 @@ public class AddGuardrailSteps {
 				"toast message is not matching with expected");
 	}
 
+	@Then("User enters {string} in the search box")
+	public void user_enters_in_the_search_box(String searchText) {
+		guardrailPage.searchGuardrailCatalog(searchText);
+	}
+
+	@Then("User should see the Guardrail Catalog title as {string} in search results")
+	public void user_should_see_the_guardrail_catalog_title_as_in_search_results(String guardrailTitle) {
+		boolean isGuardrailVisible = guardrailPage.verifySearchedGuardrailCatalogTitle(guardrailTitle);
+		Assertions.assertTrue(isGuardrailVisible, "Guardrail title is not visible in search results");
+	}
+
 }
