@@ -22,12 +22,13 @@ public class TeamPermissionsSettingsUtils {
 	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
 	private static final String LIST_DROPDOWN = "ArrowDropDownIcon";
-	private static final String TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message')]";
+	private static final String TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
 	private static final String MEMBER_XPATH = "//div//p[contains(text(),'NATIVE ID: {member}')]";
 	private static final String NAME_XPATH = "//p[normalize-space()='{Name}']";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//p[normalize-space()='{description}']";
-	private static final String SELECT_ENGINE_ROLE_XPATH = "//input[@value='{role}']";
-	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//label[text()='{selectCatalog}']";
+	private static final String SELECT_ENGINE_ROLE_XPATH = "//button[@value='{role}']";
+	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//input[@placeholder='Search engines']";
+	private static final String SELECT_THE_APPS_DROPDOWN_XPATH = "//input[@placeholder='Search apps']";
 	private static final String CLICK_ON_ADD_CATALOG_TEXT = "{addCatalogName}";
 	private static final String ENGINE_ID_XPATH = "//p[contains(text(),'{EngineId}')]";
 	private static final String RADIO_XPATH = "//input[@type='radio' and @value='{radioIndex}']";
@@ -39,6 +40,10 @@ public class TeamPermissionsSettingsUtils {
 	private static final String PREV_BUTTON_XPATH = "//button[@title='Go to previous page']";
 	private static final String NEXT_BUTTON_XPATH = "//button[@title='Go to next page']";
 	private static final String HEADINGS_XPATH = "//h2[text()='Add Members']";
+	private static final String CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_XPATH = "//div[text()='{catalogName}']/parent::div/parent::div//button";
+	private static final String ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH = "//td//div[text()='catalogName']/ancestor::tr//button[@dir='ltr']//span[text()='role']";
+	private static final String DELETE_ADDED_CATALOG_XPATH = "//tr[.//*[text()='{catalogName}'] and .//*[text()='{role}']]//td//button[@data-slot='button']";
+	private static final String DELETE_USER_CONFIRMATION_XPATH = "//button[text()='Confirm']";
 
 	final static int ROWS_PER_PAGE = 5;
 
@@ -87,7 +92,7 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void validateToastMessage(Page page, String expectedMessage) {
-		Locator toastMessage = page.locator(TOAST_MESSAGE_XPATH);
+		Locator toastMessage = page.locator(TOAST_MESSAGE_XPATH).first();
 		AICorePageUtils.waitFor(toastMessage);
 		String actualMessage = toastMessage.textContent().trim();
 		if (!actualMessage.equals(expectedMessage)) {
@@ -140,26 +145,27 @@ public class TeamPermissionsSettingsUtils {
 				.setName(CLICK_ON_ADD_CATALOG_TEXT.replace("{addCatalogName}", addCatalogName))).click();
 	}
 
-	public static void userSelectEngineFromList(Page page, String catalogName, String timestamp, String selectCatalog,
+	public static void userSelectEngineFromList(Page page, String catalogName, String selectCatalog,
 			String catalogType) {
 		String catalogId = TestResourceTrackerHelper.getInstance().getCatalogId(catalogType);
-		Locator dropdownLocator = page
-				.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
+		Locator dropdownLocator = page.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH);
+		// .locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}",
+		// selectCatalog));
 		dropdownLocator.press("Enter");
 		page.keyboard().type(catalogId);
 		AICorePageUtils.waitFor(dropdownLocator);
-		page.keyboard().press("ArrowDown");
-		page.keyboard().press("Enter");
-
+		page.locator(CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_XPATH.replace("{catalogName}", catalogName)).click();
+		// page.keyboard().press("ArrowDown");
+		// page.keyboard().press("Enter");
 	}
 
 	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {
 		Locator dropdownLocator = page
-				.locator(SELELCT_THE_ENGINE_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
+				.locator(SELECT_THE_APPS_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
 		dropdownLocator.fill(catalogName);
 		AICorePageUtils.waitFor(dropdownLocator);
-		page.getByText(catalogName).click();
+		page.locator(CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_XPATH).click();
 	}
 
 	public static void userSelectEngineAccessRole(Page page, String role) {
@@ -170,25 +176,32 @@ public class TeamPermissionsSettingsUtils {
 		// Locator EngineSearchBar = page.locator(ENGINE_SEARCH_XPATH);
 		// EngineSearchBar.click();
 		// page.keyboard().press("Control+V");
-		String copiedId = (String) page.evaluate("() => navigator.clipboard.readText()");
-		page.locator(ENGINE_ID_XPATH.replace("{EngineId}", catalogName)).isVisible();
-		boolean EnginePresent = false;
-		// check role should be checked
-		switch (role) {
-		case "Author":
-			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "1")).isChecked();
-			break;
-		case "Editor":
-			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "2")).isChecked();
-			break;
-		case "Read-Only":
-			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "3")).isChecked();
-			break;
-		default:
-			EnginePresent = false;
-			break;
-		}
-		return EnginePresent;
+		// String copiedId = (String) page.evaluate("() =>
+		// navigator.clipboard.readText()");
+		// page.locator(ENGINE_ID_XPATH.replace("{EngineId}", catalogName)).isVisible();
+		Locator addedEngine = page.locator(
+				ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH.replace("catalogName", catalogName).replace("role", role));
+		return addedEngine.isVisible();
+//		boolean EnginePresent = false;
+//		// check role should be checked
+//		switch (role) {
+//		case "Author":
+//			EnginePresent = page.locator(
+//					ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH.replace("catalogName", catalogName).replace("role", role))
+//					.isVisible();
+//			// page.locator(RADIO_XPATH.replace("{radioIndex}", "1")).isChecked();
+//			break;
+//		case "Editor":
+//			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "2")).isChecked();
+//			break;
+//		case "Read-Only":
+//			EnginePresent = page.locator(RADIO_XPATH.replace("{radioIndex}", "3")).isChecked();
+//			break;
+//		default:
+//			EnginePresent = false;
+//			break;
+//		}
+//		return EnginePresent;
 	}
 
 	// delete team member
@@ -382,4 +395,13 @@ public class TeamPermissionsSettingsUtils {
 		}
 	}
 
+	public static void deleteAddedRole(Page page, String catalogName, String role) {
+		Locator deleteButton = page
+				.locator(DELETE_ADDED_CATALOG_XPATH.replace("{catalogName}", catalogName).replace("{role}", role))
+				.last();
+		AICorePageUtils.waitFor(deleteButton);
+		deleteButton.click();
+		page.locator(DELETE_USER_CONFIRMATION_XPATH).isVisible();
+		page.locator(DELETE_USER_CONFIRMATION_XPATH).click();
+	}
 }

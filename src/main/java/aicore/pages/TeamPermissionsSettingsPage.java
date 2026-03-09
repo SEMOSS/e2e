@@ -69,9 +69,8 @@ public class TeamPermissionsSettingsPage {
 		TeamPermissionsSettingsUtils.userClickOnAddEngineButton(page, addCatalogName);
 	}
 
-	public void userSelectEngineFromList(String catalogName, String timestamp, String selectCatalog,
-			String catlogType) {
-		TeamPermissionsSettingsUtils.userSelectEngineFromList(page, catalogName, timestamp, selectCatalog, catlogType);
+	public void userSelectEngineFromList(String catalogName, String selectCatalog, String catlogType) {
+		TeamPermissionsSettingsUtils.userSelectEngineFromList(page, catalogName, selectCatalog, catlogType);
 	}
 
 	public void userSelectAppFromList(String catalogName, String selectCatalog) {
@@ -129,6 +128,10 @@ public class TeamPermissionsSettingsPage {
 
 	public void addMultipleProjects() {
 		TeamPermissionsSettingsUtils.addMultipleProjects(page);
+	}
+
+	public void deleteAddedRole(String catalogName, String role) {
+		TeamPermissionsSettingsUtils.deleteAddedRole(page, catalogName, role);
 	}
 
 }

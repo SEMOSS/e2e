@@ -101,7 +101,13 @@ public class TeamPermissionsSettingSteps {
 	@And("User select the {string} in the {string} field of Add Engine form the {string}")
 	public void user_select_the_in_the_engine_field_of_add_engine_form(String catalogName, String selectCatalog,
 			String catlogType) {
-		teamPermissionsSettings.userSelectEngineFromList(catalogName, timestamp, selectCatalog, catlogType);
+		String finalCatalogName;
+		if (catalogName.equalsIgnoreCase("TestDatabase") || catalogName.equalsIgnoreCase("weatherFunctionTest")) {
+			finalCatalogName = catalogName; // no timestamp
+		} else {
+			finalCatalogName = catalogName + timestamp; // add timestamp
+		}
+		teamPermissionsSettings.userSelectEngineFromList(finalCatalogName, selectCatalog, catlogType);
 	}
 
 	@And("User select the {string} in the {string} field of Add App form")
@@ -116,7 +122,13 @@ public class TeamPermissionsSettingSteps {
 
 	@And("User see the added {string} in the engine list with access as {string}")
 	public void user_sees_the_with_role_added_in_the_list(String catalogName, String role) {
-		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(catalogName + timestamp, role);
+		String finalCatalogName;
+		if (catalogName.equalsIgnoreCase("TestDatabase") || catalogName.equalsIgnoreCase("weatherFunctionTest")) {
+			finalCatalogName = catalogName; // no timestamp
+		} else {
+			finalCatalogName = catalogName + timestamp; // add timestamp
+		}
+		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(finalCatalogName, role);
 		Assertions.assertTrue(isEnginePresent, "Engine with the specified role is not present in the list.");
 	}
 
@@ -195,5 +207,16 @@ public class TeamPermissionsSettingSteps {
 	@And("User Delete the created Apps")
 	public void user_deletes_all_the_created_apps() {
 		createAppPopupPage.deleteCreatedApps();
+	}
+
+	@And("User deletes the {string} added role as {string}")
+	public void user_deletes_the_added_role_as(String catalogName, String role) {
+		String finalCatalogName;
+		if (catalogName.equalsIgnoreCase("TestDatabase") || catalogName.equalsIgnoreCase("weatherFunctionTest")) {
+			finalCatalogName = catalogName; // no timestamp
+		} else {
+			finalCatalogName = catalogName + timestamp; // add timestamp
+		}
+		teamPermissionsSettings.deleteAddedRole(finalCatalogName, role);
 	}
 }

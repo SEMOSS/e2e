@@ -17,7 +17,7 @@ public class UserManagementPageUtils {
 	private static final String ADD_MEMBER_EMAIL_XPATH = "//label[text()='Email']/following-sibling::div/input";
 	private static final String ADD_MEMBER_PHONE_NUMBER_XPATH = "//label[text()='Phone Number']/following-sibling::div/input";
 	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/following-sibling::div/input";
-	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//span[text()='Save']";
+	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//button[text()='Save']";
 	private static final String ADD_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added user']";
 	private static final String EDIT_ICON_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td//*[name()='svg'][@data-testid='EditIcon']";
 	private static final String MODEL_DROPDOWN_XPATH = "//div[text()='None']";
@@ -154,7 +154,8 @@ public class UserManagementPageUtils {
 		String Base = ConfigUtils.getValue("URLS").split(",")[0].trim();
 		if (Base.contains("8080")) {
 			String endpoint = ConfigUtils.getValue("API_ENDPOINT");
-			String responseURL = Base + endpoint + "/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+			String responseURL = Base + endpoint
+					+ "/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
 			page.waitForResponse(responseURL, () -> {
 				// Triggers the response
 				page.fill(SEARCH_BUTTON_XPATH, "UserId");
@@ -225,5 +226,4 @@ public class UserManagementPageUtils {
 		AICorePageUtils.waitFor(resultButton);
 		resultButton.click();
 	}
-
 }
