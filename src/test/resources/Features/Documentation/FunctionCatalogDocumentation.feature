@@ -61,7 +61,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Edit button
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -82,7 +82,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Export button
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -103,7 +103,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create Function - Capture function AccessControl Screenshot
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -124,7 +124,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create Function - Capture function RequestAccess Screenshot
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -156,8 +156,8 @@ Feature: Function documentation
     And User completes screenshot capture and triggers comparison for 'Function Engines'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
-  Scenario: Create a Function Form Document
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Scenario: Create a Function Form Document 
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     When User clicks on Open Function
     And User clicks on Add Function
