@@ -199,20 +199,16 @@ public class DragAndDropBlocksPage {
 
 	}
 
-	public boolean userSeeBookMarkSection() {
-		return DragAndDropBlocksPageUtils.isBookmarkedSectionVisible(page);
+	public void clickOnBookmarkedAppTab() {
+		DragAndDropBlocksPageUtils.clickOnBookmarkedAppTab(page);
 	}
 
-	public boolean bookmarkAppSeeOnTheBookmarkSection() {
-		return DragAndDropBlocksPageUtils.bookmarkAppSeeOnTheBookmarkSection(page);
+	public void clickOnMyAppsTab() {
+		DragAndDropBlocksPageUtils.clickOnMyAppsTab(page);
 	}
 
-	public boolean isAppRemovedFromBookmarkSection(String appName) {
-		return DragAndDropBlocksPageUtils.isAppRemovedFromBookmarkSection(page, appName);
-	}
-
-	public boolean isBookmarkedSectionNotVisible() {
-		return DragAndDropBlocksPageUtils.isBookmarkedSectionNotVisible(page);
+	public boolean isBookmarkAppDisplayedInBookmarkSection(String appName) {
+		return DragAndDropBlocksPageUtils.isBookmarkAppDisplayedInBookmarkSection(page, appName);
 	}
 
 	// created app display in all apps section
@@ -305,10 +301,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
 
-	public String getBlockSettingsPanelTitle(String expectedTitle,String option) {
-		return DragAndDropBlocksPageUtils.getBlockSettingsPanelTitle(page, expectedTitle,option);
+	public String getBlockSettingsPanelTitle(String expectedTitle, String option) {
+		return DragAndDropBlocksPageUtils.getBlockSettingsPanelTitle(page, expectedTitle, option);
 	}
-	
+
 	public boolean userSeesTheSection(String sectionsName) {
 		return DragAndDropBlocksPageUtils.userSeesTheSection(page, sectionsName);
 	}

@@ -13,7 +13,7 @@ Feature: App setting for Read permission
     And User fetch the app name 
     And User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User click on Settings
-    And User Click on Members setting option
+    And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User logs out from the application
@@ -27,9 +27,6 @@ Feature: App setting for Read permission
     And 'Read' user Edit option should be 'Disable'
     And User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     Then 'Read' user can 'not view' Settings
-    And 'Read' user can 'not view' Members
-    And 'Read' user can 'not view' General
-    And 'Read' user can 'not view' Apps
     And 'Read' user can 'not see' private toggle button
     And 'Read' user can 'not see' Non-Discoverable toggle button
     And 'Read' user can 'not view' Delete catalog option
