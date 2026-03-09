@@ -41,4 +41,12 @@ public class GuardrailPage {
 		return GuardrailPageUtils.downloadCatalog(page);
 	}
 
+	public void searchGuardrailCatalog(String searchText) {
+		GuardrailPageUtils.searchGuardrailCatalog(page, searchText);
+	}
+
+	public boolean verifySearchedGuardrailCatalogTitle(String guardrailTitle) {
+		return GuardrailPageUtils.verifySearchedGuardrailCatalogTitle(page, guardrailTitle);
+	}
+
 }
