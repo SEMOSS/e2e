@@ -1,8 +1,10 @@
 package aicore.utils;
 
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddFunctionPageUtils {
@@ -303,7 +305,15 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void closeToastMessage(Page page) {
-		AICorePageUtils.closeToastMessage(page);
+		// AICorePageUtils.closeToastMessage(page);
+		Locator toast = page.locator("//li[@data-sonner-toast]").first();
+		toast.waitFor();
+		BoundingBox box = toast.boundingBox();
+		double startX = box.x + 2;
+		double startY = box.y + box.height / 2;
+		page.mouse().move(startX, startY);
+		page.mouse().down();
+		page.mouse().move(startX + box.width + 300, startY, new Mouse.MoveOptions().setSteps(25));
+		page.mouse().up();
 	}
-
 }

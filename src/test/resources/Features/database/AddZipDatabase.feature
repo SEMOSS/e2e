@@ -41,8 +41,8 @@ Feature: Add Zip Database
     And User can see 'copy Database ID' Database ID
     And User clicks on copy icon of Database ID
     When User can see toast message as 'ID copied to clipboard'
-    #And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
-    #And User can see 'No Markdown available' as database description
+    ##And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
+    ## And User can see 'No Markdown available' as database description
     And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
@@ -50,7 +50,7 @@ Feature: Add Zip Database
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
-    #And User can see last updated info
+    ##And User can see last updated info
     And User clicks on Export button that creates a Zip of DB when clicked
     And User sees an Edit button that opens a pop-up to edit
     And User clicks on Close button
