@@ -9,7 +9,7 @@ import aicore.framework.ConfigUtils;
 
 public class UserManagementPageUtils {
 
-	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
+	private static final String ADD_MEMBER_XPATH = "//button[text()='Add Members']";
 	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div";
 	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//li[text()='NATIVE']";
 	private static final String ADD_MEMBER_USERID_XPATH = "//label[text()='User Id']";

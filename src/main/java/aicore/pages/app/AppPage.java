@@ -16,7 +16,7 @@ public class AppPage {
 	public void clickOnCreateNewAppButton() {
 		AppPageUtils.clickOnCreateNewAppButton(page);
 	}
-	
+
 	public void clickOnAccessControlButton() {
 		AppPageUtils.clickOnAccessControlButton(page);
 	}
@@ -34,7 +34,7 @@ public class AppPage {
 	}
 
 	public void clickOnMoreVertIcon(String appName) {
-		AppPageUtils.clickOnMoreVertIcon(page, appName);
+		AppPageUtils.clickOnMoreVertIcon(page, appName, timestamp);
 	}
 
 	public String clickOnOption(String optionName) {
@@ -64,16 +64,21 @@ public class AppPage {
 	public boolean isAppDisplayedOnPage(String appName) {
 		return AppPageUtils.isAppDisplayedOnPage(page, appName, timestamp);
 	}
-	
-    public boolean isContentVisibleOnAppCard(String contentName, String contentValue) {
+
+	public boolean isContentVisibleOnAppCard(String contentName, String contentValue) {
 		return AppPageUtils.isContentVisibleOnAppCard(page, contentName, contentValue, timestamp);
 	}
+
 	public void clickOnDeleteButton(String buttonName) {
 		AppPageUtils.clickOnDeleteButton(page, buttonName);
 	}
 
 	public boolean isAppNotDisplayedOnPage(String appName) {
 		return AppPageUtils.isAppNotDisplayedOnPage(page, appName, timestamp);
+	}
+
+	public void clickOnFilterOption() {
+		AppPageUtils.clickOnFilterOption(page);
 	}
 
 	public void searchFilterValueOnAppPage(String filterValue) {
@@ -84,7 +89,7 @@ public class AppPage {
 		AppPageUtils.selectFilterValueOnAppPage(page, filterCategory, filterValue);
 	}
 
-	public void clickOnViewDetails(String buttonName) {
-		AppPageUtils.clickOnViewDetails(page,buttonName);
+	public void clickOnInfoButton(String buttonName) {
+		AppPageUtils.clickOnInfoButton(page, buttonName);
 	}
 }

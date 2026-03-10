@@ -62,4 +62,14 @@ public class GuardrailPageUtils {
 		return downloadPath;
 	}
 
+	public static void searchGuardrailCatalog(Page page, String searchText) {
+		Locator searchBox = page.getByTestId("search-bar");
+		searchBox.fill(searchText);
+	}
+
+	public static boolean verifySearchedGuardrailCatalogTitle(Page page, String guardrailTitle) {
+		Locator searchBox = page.getByTitle(guardrailTitle);
+		 return searchBox.isVisible();
+	}
+	
 }

@@ -11,7 +11,7 @@ Scenario: Create app using Template -Gmail
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name for drag and drop app
+    And User fetch the app name
     And User sees title "Gmail" 
     And User sees a dialog containing text "Logged in by :"
     And User verifies "Refresh" button is enabled 
