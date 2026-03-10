@@ -584,7 +584,7 @@ public class CreateAppUsingDragAndDropSteps {
 		for (Map<String, String> row : rows) {
 			String filterCategory = row.get(FILTER_CATEGORY_NAME);
 			String filterValues = row.get(FILTER_VALUE_NAME);
-
+			appPage.clickOnFilterOption();
 			String[] filterValuesArray = filterValues.split(", ");
 			for (String filterValue : filterValuesArray) {
 				appPage.searchFilterValueOnAppPage(filterValue);
@@ -600,7 +600,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Then("User clicks on app {string} button")
 	public void User_clicks_on_button(String buttonName) {
-		appPage.clickOnViewDetails(buttonName);
+		appPage.clickOnInfoButton(buttonName);
 	}
 
 	@And("User get the CatalogName for variable")
@@ -674,36 +674,35 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnUnbookmarkforApp(appName);
 	}
 
-	@Then("User see the Bookmarked section")
+	@Then("User clicks on the Bookmarked Apps tab")
 	public void user_see_bookmark_section() {
-		boolean isVisible = blocksPage.userSeeBookMarkSection();
-		Assertions.assertTrue(isVisible, "The user is unable to see the Bookmark section after Bookmark the App");
+		blocksPage.clickOnBookmarkedAppTab();
 	}
 
-	@And("The app should appear in the bookmarked section")
-	public void bookmark_app_see_on_bookmarksection() {
-		boolean isappDisplayedUnderBookmarkedSection = blocksPage.bookmarkAppSeeOnTheBookmarkSection();
+	@Then("User clicks on the My Apps tab")
+	public void user_see_my_apps_section() {
+		blocksPage.clickOnMyAppsTab();
+	}
+
+	@And("User can see {string} in the Bookmarked Apps section")
+	public void user_can_see_in_the_bookmarked_apps_section(String appName) {
+		boolean isappDisplayedUnderBookmarkedSection = blocksPage
+				.isBookmarkAppDisplayedInBookmarkSection(appName + " " + timestamp);
 		Assertions.assertTrue(isappDisplayedUnderBookmarkedSection,
 				"Bookmarked section does not contain the expected app");
 	}
 
-	@Then("The {string} should be removed from the bookmarked section")
-	public void app_should_be_removed_from_bookmarked_section(String appName) {
-		boolean isRemoved = blocksPage.isAppRemovedFromBookmarkSection(appName);
-		Assertions.assertTrue(isRemoved, "App is still visible under the bookmarked section after removal.");
-	}
-
-	@And("If no apps remain bookmarked the {string} section should not be visible")
-	public void bookmarked_section_should_not_be_visible(String sectionName) {
-		boolean isNotVisible = blocksPage.isBookmarkedSectionNotVisible();
-		Assertions.assertTrue(isNotVisible,
-				sectionName + " Section is still visible even though no apps are bookmarked.");
+	@And("User cannot see {string} in the Bookmarked Apps section")
+	public void user_cannot_see_in_the_bookmarked_apps_section(String appName) {
+		boolean isappDisplayedUnderBookmarkedSection = blocksPage
+				.isBookmarkAppDisplayedInBookmarkSection(appName + " " + timestamp);
+		Assertions.assertFalse(isappDisplayedUnderBookmarkedSection, "Bookmarked section contains the expected app");
 	}
 
 	// created app display in all apps section
-	@Then("User can see {string} app in the All Apps section")
-	public void user_see_the_created_app_in_all_apps_section(String appName) {
-		boolean isAppDisplayed = blocksPage.isAppDisplayedInAllAppsSection(appName);
+	@Then("User can see {string} app in the My Apps section")
+	public void user_see_the_created_app_in_my_apps_section(String appName) {
+		boolean isAppDisplayed = blocksPage.isAppDisplayedInAllAppsSection(appName + " " + timestamp);
 		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in All Apps section");
 	}
 

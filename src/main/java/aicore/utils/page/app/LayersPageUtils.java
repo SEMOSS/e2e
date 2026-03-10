@@ -25,8 +25,8 @@ public class LayersPageUtils {
 	private static final String LAYER_BLOCK_BELOW_XPATH = "//div[contains(@data-id,'{baseLayer}')]/following-sibling::div[contains(@data-id,'{reorderedLayer}')]";
 	private static final String CONTAINER_EXPAND_ARROW_DATA_TESTID = "ChevronRightIcon";
 	private static final String LAYER_MORE_VERT_ICON_XPATH = "//div[contains(@data-id,'{layerName}')]//button";
-	private static final String DELETE_LAYER_XPATH = "//li[@value='delete']";
-	private static final String DUPLICATE_LAYER_XPATH = "//li[@value='duplicate']";
+	private static final String DELETE_LAYER_XPATH = "//div[text()='Delete']";
+	private static final String DUPLICATE_LAYER_XPATH = "//div[text()='Duplicate']";
 
 	public static void clickOnTabInLeftPanel(Page page, String tabName) {
 		page.getByTestId(LEFT_PANEL_TAB_DATATESTID.replace("{tabName}", tabName)).first().click();

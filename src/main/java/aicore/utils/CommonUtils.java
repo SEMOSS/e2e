@@ -53,11 +53,11 @@ public class CommonUtils {
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
-	private static final String APP_DELETE_BUTTON_XPATH = "//li[@value='delete']";
+	private static final String APP_DELETE_BUTTON_XPATH = "//div[text()='Delete App']";
 	private static final String APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialogActions-root')]//button[normalize-space()='Delete']";
 	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
 
-	private static final String THREE_DOT_ICON_DATATESTID = "MoreVertIcon";
+	private static final String THREE_DOT_ICON_XPATH = "//button[@aria-label='More options']";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
@@ -342,7 +342,7 @@ public class CommonUtils {
 			HomePageUtils.clickOnOpenAppLibrary(page);
 			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
 			page.waitForTimeout(500);
-			page.getByTestId(THREE_DOT_ICON_DATATESTID).first().click();
+			page.locator(THREE_DOT_ICON_XPATH).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
 			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
