@@ -19,7 +19,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String TEAM_NAME_XPATH = "//label[text()='Name']/parent::div//input";
 	private static final String DESCRIPTION_XPATH = "//label[text()='Description']/parent::div//textarea";
 	private static final String ADD_BUTTON_XPATH = "//button[text()='{buttonName}'] | //span[text()='{buttonName}']";
-	private static final String TEAM_BUTTON_XPATH = "//button//span[contains(text(), 'Add Members')]";
+	private static final String TEAM_BUTTON_XPATH = "//button[contains(text(), '{buttonName}')]";
 	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
 	private static final String LIST_DROPDOWN = "ArrowDropDownIcon";
@@ -163,7 +163,7 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {
-			Locator dropdownLocator = page
+		Locator dropdownLocator = page
 				.locator(SELECT_THE_APPS_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
 		dropdownLocator.fill(catalogName);
@@ -259,24 +259,19 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void addmultipleMembers(Page page, String members) {
-		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
-		AICorePageUtils.waitFor(dropdownLocator);
-		dropdownLocator.click();
-		Locator search = page.locator("//label[text()='Search']/parent::div//input");
-		search.click();
+		Locator search = page.locator("//input[@placeholder='Search']");
+		search.waitFor();
 		search.fill(members);
 		page.waitForTimeout(1000);
-		int count = page.getByRole(AriaRole.OPTION).count();
-		System.out.println(count);
-		dropdownLocator.click();
+		Locator users = page.locator("//div[contains(@class,'rounded-md p-3')]");
+		int count = users.count();
 		for (int i = 1; i <= count; i++) {
-			dropdownLocator.click();
-			search.fill(members + i);
-			Locator option = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(members + i));
-			option.waitFor();
-			option.click();
+			String userName = members + i;
+			Locator row = page.locator("//div[contains(@class,'rounded-md p-3')][.//div[text()='" + userName + "']]");
+			row.waitFor();
+			Locator checkbox = row.getByRole(AriaRole.CHECKBOX).first();
+			checkbox.click();
 		}
-		dropdownLocator.click();
 	}
 
 	public static int calculateTotalPages(Page page) {
@@ -446,5 +441,5 @@ public class TeamPermissionsSettingsUtils {
 		Locator addedApp = page.locator(
 				ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH.replace("catalogName", catalogName).replace("role", access));
 		return addedApp.isVisible();
-}
+	}
 }
