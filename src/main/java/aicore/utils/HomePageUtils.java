@@ -26,6 +26,7 @@ public class HomePageUtils {
 	private static final String BUILD_PAGE_POPUP_XPATH = "//div[@role='presentation']//div[@role='presentation']";
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
+	private static final String APP_MENU_XPATH = "//button[@aria-label='Open sidebar']";
 	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
 	private static final String APP_MENU_BUTTON_XPATH = "sidebar-Apps-btn";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
@@ -71,9 +72,15 @@ public class HomePageUtils {
 //			isMenuOpen.click();
 			isMenuOpen.dblclick();
 		}
-		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
-		AICorePageUtils.waitFor(locator);
-		locator.click();
+		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESID);
+		Locator appMenu = page.locator(APP_MENU_XPATH);
+		if (appMenu.isVisible()) {
+			AICorePageUtils.waitFor(appMenu);
+			appMenu.click();
+		} else {
+			AICorePageUtils.waitFor(mainMenu);
+			mainMenu.click();
+		}
 	}
 
 	public static void closeMainMenu(Page page) {
@@ -201,9 +208,15 @@ public class HomePageUtils {
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.dblclick();
 		}
-		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
-		AICorePageUtils.waitFor(locator);
-		locator.click();
+		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESID);
+		Locator appMenu = page.locator(APP_MENU_XPATH);
+		if (appMenu.isVisible()) {
+			AICorePageUtils.waitFor(appMenu);
+			appMenu.click();
+		} else {
+			AICorePageUtils.waitFor(mainMenu);
+			mainMenu.click();
+		}
 		page.getByTestId("AccountCircleRoundedIcon").click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();

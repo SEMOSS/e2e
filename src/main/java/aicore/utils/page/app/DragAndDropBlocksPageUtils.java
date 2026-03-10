@@ -91,12 +91,14 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_COUNT_ON_PAGE_XPATH = "//canvas[@class='marks']";
 
 	// Bookmark app
-	private static final String APP_BOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkBorderIcon']";
-	private static final String APP_UNBOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkIcon']";
+	private static final String BOOKMARKED_APP_TAB_DATA_TESTID = "appCatalogPage-bookmarked-btn";
+	private static final String MY_APPS_TAB_DATA_TESTID = "appCatalogPage-myApps-btn";
+	private static final String APP_BOOKMARK_XPATH = "//button[@aria-label='Add bookmark']";
+	private static final String APP_UNBOOKMARK_XPATH = "//button[@aria-label='Remove bookmark']";
 	private static final String APP_BOOKMARK_SECTION_TEXT = "Bookmarked";
-	private static final String CATALOG_SEE_ON_BOOKMARKSECTIONXPATH = "//h6[normalize-space(text())='Bookmarked']/following-sibling::div[@class='css-uncsel']";
+	private static final String BOOKMARKED_APP_XPATH = "//h3[text()='{appName}']";
 	// App section
-	private static final String APP_DISPALY_APP_SECTION = "//div[contains(@data-testid,'appTileCard')]//a[@rel='noopener noreferrer']";
+	private static final String APP_DISPALY_APP_SECTION = "//button[@data-testid='appCatalogPage-myApps-btn']/ancestor::div//h3[text()='{appName}']";
 	private static final String APP_DISCOVRABLE_SECTION_DATATESTID = "appCatalogPage-discoverable-btn";
 	private static final String CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH = "//div[contains(@data-testid,'appTileCard')]";
 	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
@@ -718,16 +720,20 @@ public class DragAndDropBlocksPageUtils {
 		bookmarkIcon.click();
 	}
 
-	public static boolean isBookmarkedSectionVisible(Page page) {
-		Locator bookmarkSection = page.getByRole(AriaRole.HEADING,
-				new Page.GetByRoleOptions().setName(APP_BOOKMARK_SECTION_TEXT));
-		AICorePageUtils.waitFor(bookmarkSection);
-		return bookmarkSection.isVisible();
+	public static void clickOnBookmarkedAppTab(Page page) {
+		Locator bookmarkedTab = page.getByTestId(BOOKMARKED_APP_TAB_DATA_TESTID);
+		AICorePageUtils.waitFor(bookmarkedTab);
+		bookmarkedTab.click();
 	}
 
-	public static boolean bookmarkAppSeeOnTheBookmarkSection(Page page) {
-		Locator bookmarkedSection = page.locator(CATALOG_SEE_ON_BOOKMARKSECTIONXPATH).first();
-		AICorePageUtils.waitFor(bookmarkedSection);
+	public static void clickOnMyAppsTab(Page page) {
+		Locator myAppsTab = page.getByTestId(MY_APPS_TAB_DATA_TESTID);
+		AICorePageUtils.waitFor(myAppsTab);
+		myAppsTab.click();
+	}
+
+	public static boolean isBookmarkAppDisplayedInBookmarkSection(Page page, String appName) {
+		Locator bookmarkedSection = page.locator(BOOKMARKED_APP_XPATH.replace("{appName}", appName)).first();
 		return bookmarkedSection.isVisible();
 	}
 
@@ -738,19 +744,9 @@ public class DragAndDropBlocksPageUtils {
 		unbookmarkIcon.click();
 	}
 
-	public static boolean isAppRemovedFromBookmarkSection(Page page, String appName) {
-		Locator bookmarkedApp = page.locator(CATALOG_SEE_ON_BOOKMARKSECTIONXPATH).first();
-		return bookmarkedApp.isHidden();
-	}
-
-	public static boolean isBookmarkedSectionNotVisible(Page page) {
-		Locator bookmarkSection = page.getByText(APP_BOOKMARK_SECTION_TEXT);
-		return bookmarkSection.isHidden();
-	}
-
 	// created app display in all apps section
 	public static boolean isAppDisplayedInAllAppsSection(Page page, String appName) {
-		Locator appInAllAppsSection = page.locator(APP_DISPALY_APP_SECTION);
+		Locator appInAllAppsSection = page.locator(APP_DISPALY_APP_SECTION.replace("{appName}", appName));
 		AICorePageUtils.waitFor(appInAllAppsSection);
 		return appInAllAppsSection.isVisible();
 	}

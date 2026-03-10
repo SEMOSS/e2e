@@ -9,7 +9,7 @@ import aicore.framework.ConfigUtils;
 
 public class UserManagementPageUtils {
 
-	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
+	private static final String ADD_MEMBER_XPATH = "//button[text()='Add Members']";
 	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div";
 	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//li[text()='NATIVE']";
 	private static final String ADD_MEMBER_USERID_XPATH = "//label[text()='User Id']";
@@ -154,7 +154,8 @@ public class UserManagementPageUtils {
 		String Base = ConfigUtils.getValue("URLS").split(",")[0].trim();
 		if (Base.contains("8080")) {
 			String endpoint = ConfigUtils.getValue("API_ENDPOINT");
-			String responseURL = Base + endpoint + "/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
+			String responseURL = Base + endpoint
+					+ "/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
 			page.waitForResponse(responseURL, () -> {
 				// Triggers the response
 				page.fill(SEARCH_BUTTON_XPATH, "UserId");
