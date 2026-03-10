@@ -89,7 +89,7 @@ public class UserManagementPageUtils {
 		Locator saveButton = page.locator(ADD_MEMBER_TYPE_SAVE_XPATH);
 		saveButton.scrollIntoViewIfNeeded();
 		saveButton.hover();
-		saveButton.click(new Locator.ClickOptions().setForce(true));
+		saveButton.click();
 	}
 
 	public static String userCreationToastMessage(Page page) {

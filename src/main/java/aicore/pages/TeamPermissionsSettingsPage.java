@@ -138,8 +138,7 @@ public class TeamPermissionsSettingsPage {
 		return TeamPermissionsSettingsUtils.checkTeamWithAccess(page, teamName, access);
 	}
 
-	public boolean deleteCreatedTeam(String teamName) {
-		return TeamPermissionsSettingsUtils.deleteCreatedTeam(page, teamName);
+	public boolean userSeeAddedAppInTheList(String catalogName, String access) {
+		return TeamPermissionsSettingsUtils.userSeeAddedAppInTheList(page, catalogName, access);
 	}
-
 }

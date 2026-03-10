@@ -163,8 +163,7 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {
-		page.pause();
-		Locator dropdownLocator = page
+			Locator dropdownLocator = page
 				.locator(SELECT_THE_APPS_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
 		dropdownLocator.fill(catalogName);
@@ -427,7 +426,8 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static boolean checkTeamWithoutAccess(Page page, String teamName) {
-		Locator teamLocator = page.locator(TEAM_DISPLAY_ON_CATALOG_SETTING_PAGE_XPATH.replace("{catalogName}", teamName));
+		Locator teamLocator = page
+				.locator(TEAM_DISPLAY_ON_CATALOG_SETTING_PAGE_XPATH.replace("{catalogName}", teamName));
 		Locator nextButton = page.locator(NEXT_PAGE_CLICK_ON_TEAM_SECTION_XPATH);
 		while (true) {
 			if (teamLocator.isVisible()) {
@@ -442,7 +442,9 @@ public class TeamPermissionsSettingsUtils {
 		return true;
 	}
 
-	public static boolean deleteCreatedTeam(Page page, String teamName) {
-		
-	}
+	public static boolean userSeeAddedAppInTheList(Page page, String catalogName, String access) {
+		Locator addedApp = page.locator(
+				ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH.replace("catalogName", catalogName).replace("role", access));
+		return addedApp.isVisible();
+}
 }

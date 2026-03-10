@@ -227,9 +227,9 @@ public class TeamPermissionsSettingSteps {
 		Assertions.assertTrue(isTeamPresent, "Team with the specified access is not present in the list.");
 	}
 
-	@And("User delete the created team as {string} from team permission page")
-	public void user_delete_the_created_team_as_from_team_permission_page(String teamName) {
-		boolean isTeamDeleted = teamPermissionsSettings.deleteCreatedTeam(teamName + " " + timestamp);
-		Assertions.assertTrue(isTeamDeleted, "Failed to delete the created team.");
+	@And("User see the added {string} in the app list with access as {string}")
+	public void user_see_the_added_in_the_app_list_with_access_as(String catalogName, String access) {
+		boolean isAppPresent = teamPermissionsSettings.userSeeAddedAppInTheList(catalogName, access);
+		Assertions.assertTrue(isAppPresent, "App with the specified access is not present in the list.");
 	}
 }
