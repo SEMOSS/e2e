@@ -5,6 +5,7 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.LastCreatedUser;
@@ -44,6 +45,8 @@ public class TeamPermissionsSettingsUtils {
 	private static final String ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH = "//td//div[text()='catalogName']/ancestor::tr//button[@dir='ltr']//span[text()='role']";
 	private static final String DELETE_ADDED_CATALOG_XPATH = "//tr[.//*[text()='{catalogName}'] and .//*[text()='{role}']]//td//button[@data-slot='button']";
 	private static final String DELETE_USER_CONFIRMATION_XPATH = "//button[text()='Confirm']";
+	private static final String TEAM_DISPLAY_ON_CATALOG_SETTING_PAGE_XPATH = "//td[text()='{catalogName}']/following-sibling::td[text()='{role}']";
+	private static final String NEXT_PAGE_CLICK_ON_TEAM_SECTION_XPATH = "//h4[text()='Teams']/following::button[text()='>']";
 
 	final static int ROWS_PER_PAGE = 5;
 
@@ -403,5 +406,22 @@ public class TeamPermissionsSettingsUtils {
 		deleteButton.click();
 		page.locator(DELETE_USER_CONFIRMATION_XPATH).isVisible();
 		page.locator(DELETE_USER_CONFIRMATION_XPATH).click();
+	}
+
+	public static boolean checkTeamWithAccess(Page page, String teamName, String access) {
+		Locator teamLocator = page.locator(TEAM_DISPLAY_ON_CATALOG_SETTING_PAGE_XPATH.replace("{catalogName}", teamName)
+				.replace("{role}", access));
+		Locator nextButton = page.locator(NEXT_PAGE_CLICK_ON_TEAM_SECTION_XPATH);
+		while (true) {
+			if (teamLocator.isVisible()) {
+				return true;
+			}
+			if (!nextButton.isEnabled()) {
+				break;
+			}
+			nextButton.click();
+			page.waitForLoadState(LoadState.NETWORKIDLE);
+		}
+		return false;
 	}
 }

@@ -85,7 +85,7 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickSaveButton(Page page) {
-		page.setViewportSize(1350, 650);
+		// page.setViewportSize(1350, 650);
 		Locator saveButton = page.locator(ADD_MEMBER_TYPE_SAVE_XPATH);
 		saveButton.scrollIntoViewIfNeeded();
 		saveButton.hover();

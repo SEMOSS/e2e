@@ -219,4 +219,11 @@ public class TeamPermissionsSettingSteps {
 		}
 		teamPermissionsSettings.deleteAddedRole(finalCatalogName, role);
 	}
+
+	@And("User sees the team {string} with {string} in Team section on the the Access Settings page")
+	public void user_sees_the_team_with_access_in_team_section_on_the_the_access_settings_page(String teamName,
+			String access) {
+		boolean isTeamPresent = teamPermissionsSettings.checkTeamWithAccess(teamName + " " + timestamp, access);
+		Assertions.assertTrue(isTeamPresent, "Team with the specified access is not present in the list.");
+	}
 }

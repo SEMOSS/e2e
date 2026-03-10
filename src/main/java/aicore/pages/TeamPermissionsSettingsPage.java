@@ -134,4 +134,8 @@ public class TeamPermissionsSettingsPage {
 		TeamPermissionsSettingsUtils.deleteAddedRole(page, catalogName, role);
 	}
 
+	public boolean checkTeamWithAccess(String teamName, String access) {
+		return TeamPermissionsSettingsUtils.checkTeamWithAccess(page, teamName, access);
+	}
+
 }
