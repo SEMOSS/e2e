@@ -48,4 +48,5 @@ Feature: Team Permissions
     And User clicks on the database name 'TestDatabase' in the database catalog
     And 'Admin' user clicks on Access Control
     Then User sees the team 'Test Team' with 'Editor' in Team section on the the Access Settings page
+    And User delete the created team as 'Test Team' from team permission page
 		        

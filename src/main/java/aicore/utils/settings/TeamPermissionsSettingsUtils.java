@@ -163,12 +163,13 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {
+		page.pause();
 		Locator dropdownLocator = page
 				.locator(SELECT_THE_APPS_DROPDOWN_XPATH.replace("{selectCatalog}", selectCatalog));
 		dropdownLocator.press("Enter");
 		dropdownLocator.fill(catalogName);
 		AICorePageUtils.waitFor(dropdownLocator);
-		page.locator(CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_XPATH).click();
+		page.locator(CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_XPATH.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static void userSelectEngineAccessRole(Page page, String role) {
@@ -423,5 +424,25 @@ public class TeamPermissionsSettingsUtils {
 			page.waitForLoadState(LoadState.NETWORKIDLE);
 		}
 		return false;
+	}
+
+	public static boolean checkTeamWithoutAccess(Page page, String teamName) {
+		Locator teamLocator = page.locator(TEAM_DISPLAY_ON_CATALOG_SETTING_PAGE_XPATH.replace("{catalogName}", teamName));
+		Locator nextButton = page.locator(NEXT_PAGE_CLICK_ON_TEAM_SECTION_XPATH);
+		while (true) {
+			if (teamLocator.isVisible()) {
+				return false;
+			}
+			if (!nextButton.isEnabled()) {
+				break;
+			}
+			nextButton.click();
+			page.waitForLoadState(LoadState.NETWORKIDLE);
+		}
+		return true;
+	}
+
+	public static boolean deleteCreatedTeam(Page page, String teamName) {
+		
 	}
 }

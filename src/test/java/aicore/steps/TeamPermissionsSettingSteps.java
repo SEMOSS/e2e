@@ -226,4 +226,10 @@ public class TeamPermissionsSettingSteps {
 		boolean isTeamPresent = teamPermissionsSettings.checkTeamWithAccess(teamName + " " + timestamp, access);
 		Assertions.assertTrue(isTeamPresent, "Team with the specified access is not present in the list.");
 	}
+
+	@And("User delete the created team as {string} from team permission page")
+	public void user_delete_the_created_team_as_from_team_permission_page(String teamName) {
+		boolean isTeamDeleted = teamPermissionsSettings.deleteCreatedTeam(teamName + " " + timestamp);
+		Assertions.assertTrue(isTeamDeleted, "Failed to delete the created team.");
+	}
 }
