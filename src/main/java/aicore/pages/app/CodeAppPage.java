@@ -131,15 +131,27 @@ public class CodeAppPage {
 		CodeAppPageUtils.clickOnBookmarkAppIcon(page);
 	}
 
-	public void clickOnSettingsTab(){
-	 CodeAppPageUtils.clickOnSettingsTab(page);
+	public void clickOnSettingsTab() {
+		CodeAppPageUtils.clickOnSettingsTab(page);
 	}
-	
-	public void clickOnGeneralTab(){
+
+	public void clickOnGeneralTab() {
 		CodeAppPageUtils.clickOnGeneralTab(page);
 	}
-	
+
 	public void clickOnAppsTab() {
 		CodeAppPageUtils.clickOnAppsTab(page);
+	}
+
+	public void clickOnCreateAtIconOnFileSection() {
+		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
+	}
+
+	public void selectActionAs(String action) {
+		CodeAppPageUtils.selectActionAs(page, action);
+	}
+
+	public void clickOnUploadButtonToCreateCodeApp(String buttonName) {
+		CodeAppPageUtils.clickOnUploadButtonToCreateCodeApp(page, buttonName);
 	}
 }

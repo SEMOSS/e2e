@@ -178,14 +178,30 @@ public class CreateCodeAppSteps {
 	public void user_clicks_On_Settings_Tab() {
 		codeAppPage.clickOnSettingsTab();
 	}
-	
+
 	@And("User clicks on General tab")
 	public void user_clicks_On_General_Tab() {
 		codeAppPage.clickOnGeneralTab();
 	}
-	
+
 	@And("User clicks on Apps tab")
 	public void user_clicks_On_Apps_Tab() {
 		codeAppPage.clickOnAppsTab();
 	}
+
+	@And("User clicks on Create at Icon on File Tab")
+	public void user_clicks_on_create_at_icon_on_file_section() {
+		codeAppPage.clickOnCreateAtIconOnFileSection();
+	}
+
+	@And("User select Action as {string}")
+	public void user_select_action_as(String action) {
+		codeAppPage.selectActionAs(action);
+	}
+
+	@And("User clicks on {string} button to create code app")
+	public void user_clicks_on_upload_button_to_create_code_app(String buttonName) {
+		codeAppPage.clickOnUploadButtonToCreateCodeApp(buttonName);
+	}
+
 }
