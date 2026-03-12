@@ -1,4 +1,3 @@
-## The UI has changed and is currently in progress. Once it becomes stable, we will update the test cases accordingly.
 @DeleteCreatedTestApp @Regression
 Feature: Code app files
 
@@ -32,17 +31,17 @@ Feature: Code app files
     And User click on Create button
     Then User can see the 'TestFolder' folder in the Files section
 
-####Commiting the below scenario becuase of Save option is not available in UI when editing files in Code App #597
-  #Scenario: Create a file in the files section for code app
-    #Given User clicks on the file icon in the left panel
-    #And User clicks on Create at Icon on File Tab
-    #And User select Action as 'New File'
-    #When User enter the file name as 'TestFile'
-    #And User click on Create button
-    #Then User can see the 'TestFile' file in the Files section
-    #And User click on the created 'TestFile' file
-    #And User Edit File with some content as 'dummydata'
-    #And User Save the file
+	@ApplicationBugFailure
+  Scenario: Create a file in the files section for code app
+    Given User clicks on the file icon in the left panel
+    And User clicks on Create at Icon on File Tab
+    And User select Action as 'New File'
+    When User enter the file name as 'TestFile'
+    And User click on Create button
+    Then User can see the 'TestFile' file in the Files section
+    And User click on the created 'TestFile' file
+    And User Edit File with some content as 'dummydata'
+    And User Save the file
 
   Scenario: Create file and folder under the created Directory in the files section for code app
     Given User clicks on the file icon in the left panel
@@ -62,68 +61,65 @@ Feature: Code app files
     When User enter the file name as 'SubFile'
     And User click on Create button
     And User can see the 'SubFile' file under 'TestFolder' in the Files section
-#
-  #Scenario: Refresh Files option is enabled and clickable
-    #Given The Files section should be open by default
-    #When The Refresh Files option should be visible
-    #And The Refresh Files option should be clickable
-#
-  #Scenario: Check the Recompile Refactor option is enabled and clickable
-    #Given The Files section should be open by default
-    #When The Recompile Refactor option should be visible
-    #Then User click on the  Recompile Refactor option
-    #And User sees success toast message 'Successfully recompiled reactors. Remember to publish changes.'
-#
-  #Scenario: Publish code app and verify access using shared URL
-    #Given User clicks on the file icon in the left panel
-    #When User uploads the file 'PlaygroundMCP/mcp.zip'
-    #And User selects the unzip checkbox
-    #Then User clicks on 'Upload' button to create catalog
-    #And User can see the 'py' folder in the Files section
-    #And User can see the 'mcp' folder in the Files section
-    #And User clicks on the publish icon to publish the code app
-    #And User sees success toast message 'Successfully published'
-    #And User click on Share App link
-    #And User click on Copy button for Url
-    #And User sees success toast message 'Successfully copied to clipboard'
-    #And User open the new tab
-    #And User paste the URl on new tab
-    #And User able to see the 'Get Stock' title on the new tab page
-    #And User move to main page
-#
-  #Scenario: Edit the uploaded file in code app and verify changes in shared url link
-    #Given User clicks on the file icon in the left panel
-    #When User uploads the file 'PlaygroundMCP/mcp.zip'
-    #And User selects the unzip checkbox
-    #Then User clicks on 'Upload' button to create catalog
-    #And User can see the 'py' folder in the Files section
-    #And User can see the 'mcp' folder in the Files section
-    #And User can see the 'index.html' file under 'portals' in the Files section
-    #And User click on the created 'index.html' file
-    #And User edit file for change title as 'Get New Stock Updated'
-    #And User Save the file
-    #And User clicks on the publish icon to publish the code app
-    #And User sees success toast message 'Successfully published'
-    #And User click on Share App link
-    #And User click on Copy button for Url
-    #And User sees success toast message 'Successfully copied to clipboard'
-    #And User open the new tab
-    #And User paste the URl on new tab
-    #And User able to see the 'Get New Stock Updated' title on the new tab page
-    #And User move to main page
-#
-  #Scenario: Edit the uploaded file in code app and verify changes in code app preview
-    #Given User clicks on the file icon in the left panel
-    #When User uploads the file 'PlaygroundMCP/mcp.zip'
-    #And User selects the unzip checkbox
-    #Then User clicks on 'Upload' button to create catalog
-    #And User can see the 'py' folder in the Files section
-    #And User can see the 'mcp' folder in the Files section
-    #And User can see the 'index.html' file under 'portals' in the Files section
-    #And User click on the created 'index.html' file
-    #And User edit file for change title as 'Get New Stock Updated'
-    #And User Save the file
-    #And User clicks on the publish icon to publish the code app
-    #And User sees success toast message 'Successfully published'
-    #And User click on 'Code app' from breadcrumb link
-    #And User able to see the 'Get New Stock Updated' title on the page
+
+  Scenario: Refresh Files option is enabled and clickable
+    Given User clicks on the file icon in the left panel
+    When The Refresh Files option should be visible
+    And The Refresh Files option should be clickable
+  
+  Scenario: Publish code app and verify access using shared URL
+    Given User clicks on the file icon in the left panel
+    And User clicks on Create at Icon on File Tab
+    And User select Action as 'Upload Files'
+    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    Then User clicks on 'Upload' button to create code app
+    And User can see the 'mcp.zip' folder in the Files section
+    And User clicks on the publish icon to publish the code app
+    And User sees success toast message 'Successfully compiled and published'
+    And User click on Share App link
+    And User click on Copy button for Url
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User open the new tab
+    And User paste the URl on new tab
+    And User able to see the 'Code app' title on the new tab page
+    And User move to main page
+
+	@ApplicationBugFailure
+  Scenario: Edit the uploaded file in code app and verify changes in shared url link
+    Given User clicks on the file icon in the left panel
+    And User clicks on Create at Icon on File Tab
+    And User select Action as 'Upload Files'
+    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    And User clicks on 'Upload' button to create code app
+    And User can see the 'mcp.zip' folder in the Files section
+    And User clicks on three dot icon of 'mcp.zip' file
+    And User select the 'Unzip' file option
+    And User can see the 'py' folder in the Files section
+    And User click on the created 'index.html' file
+    And User edit file for change title as 'Get New Stock Updated'
+    And User Save the file
+    And User clicks on the publish icon to publish the code app
+    Then User sees success toast message 'Successfully compiled and published'
+    And User click on Share App link
+    And User click on Copy button for Url
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User open the new tab
+    And User paste the URl on new tab
+    And User able to see the 'Get New Stock Updated' title on the new tab page
+    And User move to main page
+
+  Scenario: Edit the uploaded file in code app and verify changes in code app preview
+    Given User clicks on the file icon in the left panel
+    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    And User selects the unzip checkbox
+    Then User clicks on 'Upload' button to create catalog
+    And User can see the 'py' folder in the Files section
+    And User can see the 'mcp' folder in the Files section
+    And User can see the 'index.html' file under 'portals' in the Files section
+    And User click on the created 'index.html' file
+    And User edit file for change title as 'Get New Stock Updated'
+    And User Save the file
+    And User clicks on the publish icon to publish the code app
+    And User sees success toast message 'Successfully published'
+    And User click on 'Code app' from breadcrumb link
+    And User able to see the 'Get New Stock Updated' title on the page

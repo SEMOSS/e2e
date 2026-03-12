@@ -154,4 +154,12 @@ public class CodeAppPage {
 	public void clickOnUploadButtonToCreateCodeApp(String buttonName) {
 		CodeAppPageUtils.clickOnUploadButtonToCreateCodeApp(page, buttonName);
 	}
+
+	public void clickOnThreeDotIcon(String fileName) {
+		CodeAppPageUtils.clickOnThreeDotIcon(page, fileName);
+	}
+
+	public void userSelectTheOptionFromThreeDotIcon(String optionName) {
+		CodeAppPageUtils.userSelectTheOptionFromThreeDotIcon(page, optionName);
+	}
 }

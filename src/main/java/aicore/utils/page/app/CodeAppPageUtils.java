@@ -19,7 +19,7 @@ public class CodeAppPageUtils {
 	private static final String EDIT_FILE_XPATH = "//div[@class='view-lines monaco-mouse-cursor-text']";
 	private static final String SEE_THE_FILES_IN_FILES_TAB_XPATH = "//div[normalize-space()='Files']";
 	private static final String CLICK_ON_THE_FILES_TAB_XPATH = "//img[@alt='Files']";
-	private static final String FILES_REFRESH_OPTION_XPATH = "//button[@aria-label='Refresh files']";
+	private static final String FILES_REFRESH_OPTION_XPATH = "//button//*[name()='svg'][contains(@class,'refresh-cw')]";
 	private static final String FILES_RECOMPILE_REACTOR_XPATH = "//button[@aria-label='Recompile reactors']";
 	private static Page newTab;
 	private static final String SHARE_APP_LINK_XPATH = "//button[@aria-label='Share App']";
@@ -35,6 +35,8 @@ public class CodeAppPageUtils {
 	private static final String FILE_UPLOAD_BUTTON_XPATH = "//button[text()='{buttonName}']";
 	private static final String CLICK_ON_CREATE_BUTTON_XPATH = "//button[text()='Create']";
 	private static final String FILE_NAME_INPUT_XPATH = "//label[text()='File Name']/parent::div//input";
+	private static final String CLICK_ON_THREE_DOT_ICON_OF_FILE_XPATH = "//div//span[text()='{fileName}']/parent::div//*[name()='svg'][contains(@class,'lucide-ellipsis')]";
+	private static final String SELECT_THE_OPTION_FROM_THREE_DOT_ICON = "//div[text()='{optionName}']";
 
 	public static void clickOnFileUploadButton(Page page) {
 		Locator unselectedFile = page.locator(FILE_SECTION_IS_DISABLE_XPATH);
@@ -223,5 +225,13 @@ public class CodeAppPageUtils {
 
 	public static void clickOnUploadButtonToCreateCodeApp(Page page, String buttonName) {
 		page.locator(FILE_UPLOAD_BUTTON_XPATH.replace("{buttonName}", buttonName)).click();
+	}
+
+	public static void clickOnThreeDotIcon(Page page, String fileName) {
+		page.locator(CLICK_ON_THREE_DOT_ICON_OF_FILE_XPATH.replace("{fileName}", fileName)).click();
+	}
+
+	public static void userSelectTheOptionFromThreeDotIcon(Page page, String optionName) {
+		page.locator(SELECT_THE_OPTION_FROM_THREE_DOT_ICON.replace("{optionName}", optionName)).click();
 	}
 }

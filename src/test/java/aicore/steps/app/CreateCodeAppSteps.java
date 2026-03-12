@@ -204,4 +204,13 @@ public class CreateCodeAppSteps {
 		codeAppPage.clickOnUploadButtonToCreateCodeApp(buttonName);
 	}
 
+	@And("User clicks on three dot icon of {string} file")
+	public void user_clicks_on_three_dot_icon(String fileName) {
+		codeAppPage.clickOnThreeDotIcon(fileName);
+	}
+
+	@And("User select the {string} file option")
+	public void user_selects_option_for_the_file(String optionName) {
+		codeAppPage.userSelectTheOptionFromThreeDotIcon(optionName);
+	}
 }
