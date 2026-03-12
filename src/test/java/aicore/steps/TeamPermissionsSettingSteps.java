@@ -116,13 +116,11 @@ public class TeamPermissionsSettingSteps {
 
 	@And("User see the added {string} in the engine list with access as {string}")
 	public void user_sees_the_with_role_added_in_the_list(String catalogName, String role) {
-		String finalCatalogName;
-		if (catalogName.equalsIgnoreCase("TestDatabase") || catalogName.equalsIgnoreCase("weatherFunctionTest")) {
-			finalCatalogName = catalogName; // no timestamp
-		} else {
-			finalCatalogName = catalogName + timestamp; // add timestamp
+		String nameWithTimestamp = catalogName + timestamp;
+		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(nameWithTimestamp, role);
+		if (!isEnginePresent) {
+			isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(catalogName, role);
 		}
-		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(finalCatalogName, role);
 		Assertions.assertTrue(isEnginePresent, "Engine with the specified role is not present in the list.");
 	}
 
