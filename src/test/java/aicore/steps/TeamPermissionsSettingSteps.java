@@ -203,13 +203,12 @@ public class TeamPermissionsSettingSteps {
 
 	@And("User deletes the {string} added role as {string}")
 	public void user_deletes_the_added_role_as(String catalogName, String role) {
-		String finalCatalogName;
-		if (catalogName.equalsIgnoreCase("TestDatabase") || catalogName.equalsIgnoreCase("weatherFunctionTest")) {
-			finalCatalogName = catalogName; // no timestamp
+		String nameWithTimestamp = catalogName + timestamp;
+		if (teamPermissionsSettings.userSeeAddedEngineInTheList(nameWithTimestamp, role)) {
+			teamPermissionsSettings.deleteAddedRole(nameWithTimestamp, role);
 		} else {
-			finalCatalogName = catalogName + timestamp; // add timestamp
+			teamPermissionsSettings.deleteAddedRole(catalogName, role);
 		}
-		teamPermissionsSettings.deleteAddedRole(finalCatalogName, role);
 	}
 
 	@And("User sees the team {string} with {string} in Team section on the the Access Settings page")
