@@ -55,8 +55,6 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickNativeDropdownValue(Page page) {
-		// page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).isVisible();
-		// page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).dblclick();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("NATIVE")).dblclick();
 	}
 
@@ -86,7 +84,6 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickSaveButton(Page page) {
-		// page.setViewportSize(1350, 650);
 		Locator saveButton = page.locator(ADD_MEMBER_TYPE_SAVE_XPATH);
 		saveButton.scrollIntoViewIfNeeded();
 		saveButton.hover();
@@ -94,10 +91,6 @@ public class UserManagementPageUtils {
 	}
 
 	public static String userCreationToastMessage(Page page) {
-		// page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
-		// .waitFor(new
-		// Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		// page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH).textContent().trim();
 		Locator toasterMessage = page.getByTestId("notification-success-alert");
 		AICorePageUtils.waitFor(toasterMessage);
 		String toastMessage = toasterMessage.textContent().trim();
@@ -217,12 +210,6 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchAndSelectOption(Page page, String optionText) {
-//		// Fill the search box
-//		Locator searchInput = page.locator(SEARCH_BAR_XPATH);
-//		searchInput.fill("");
-//		searchInput.fill(optionText);
-
-		// Click on the result button
 		Locator resultButton = page.locator("//button[.//span[text()='" + optionText + "']]");
 		AICorePageUtils.waitFor(resultButton);
 		resultButton.click();
