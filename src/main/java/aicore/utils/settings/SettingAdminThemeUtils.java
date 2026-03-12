@@ -8,7 +8,7 @@ public class SettingAdminThemeUtils {
 	private static final String SUBTITLE_XPATH = "//p[text()='{subtitle}']";
 	private static final String DROPDOWN_XPATH = "//button[@data-slot='select-trigger']";
 	private static final String NAME_INPUT_FIELD_PLACEHOLDERTEXT = "Enter name";
-	private static final String JSON_EDITOR_SECTION_XPATH = "//div[@class='view-line']";
+	private static final String JSON_EDITOR_SECTION_XPATH = "//div[@data-mode-id='json']";
 	private static final String ADMIN_THEME_PAGE_BUTTON_XPATH = "//button[text()='{buttonName}']";
 	private static final String PRIVACY_POLICY_LINK_DATA_TESTID = "settingsLayout-privacy-btn";
 	private static final String ADMIN_OPTION_DATA_TESTID = "AdminPanelSettingsOutlinedIcon";

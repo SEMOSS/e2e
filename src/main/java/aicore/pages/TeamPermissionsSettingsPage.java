@@ -131,4 +131,15 @@ public class TeamPermissionsSettingsPage {
 		TeamPermissionsSettingsUtils.addMultipleProjects(page);
 	}
 
+	public void deleteAddedRole(String catalogName, String role) {
+		TeamPermissionsSettingsUtils.deleteAddedRole(page, catalogName, role);
+	}
+
+	public boolean checkTeamWithAccess(String teamName, String access) {
+		return TeamPermissionsSettingsUtils.checkTeamWithAccess(page, teamName, access);
+	}
+
+	public boolean userSeeAddedAppInTheList(String catalogName, String access) {
+		return TeamPermissionsSettingsUtils.userSeeAddedAppInTheList(page, catalogName, access);
+	}
 }
