@@ -101,13 +101,7 @@ public class TeamPermissionsSettingSteps {
 	@And("User select the {string} in the {string} field of Add Engine form the {string}")
 	public void user_select_the_in_the_engine_field_of_add_engine_form(String catalogName, String selectCatalog,
 			String catlogType) {
-		String finalCatalogName;
-		if (catalogName.equalsIgnoreCase("TestDatabase") || catalogName.equalsIgnoreCase("weatherFunctionTest")) {
-			finalCatalogName = catalogName; // no timestamp
-		} else {
-			finalCatalogName = catalogName + timestamp; // add timestamp
-		}
-		teamPermissionsSettings.userSelectEngineFromList(finalCatalogName, selectCatalog, catlogType);
+		teamPermissionsSettings.userSelectEngineFromList(catalogName, timestamp, selectCatalog, catlogType);
 	}
 
 	@And("User select the {string} in the {string} field of Add App form")
