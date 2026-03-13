@@ -27,7 +27,7 @@ public class HomePageUtils {
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 	private static final String APP_MENU_XPATH = "//button[@aria-label='Open sidebar']";
-	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
+	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
 	private static final String APP_MENU_BUTTON_XPATH = "sidebar-Apps-btn";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
@@ -66,7 +66,7 @@ public class HomePageUtils {
 	public static void openMainMenu(Page page) {
 		// check if menu is open
 //		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
-		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		page.waitForTimeout(800);
 		if (isMenuOpen.isVisible()) {
 //			isMenuOpen.click();
@@ -85,7 +85,7 @@ public class HomePageUtils {
 
 	public static void closeMainMenu(Page page) {
 //		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
-		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
+		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
 //			menuOpen.click();
 			menuOpen.dblclick();
@@ -204,7 +204,7 @@ public class HomePageUtils {
 	}
 
 	public static void logout(Page page) {
-		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.dblclick();
 		}

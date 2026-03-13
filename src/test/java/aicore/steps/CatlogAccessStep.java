@@ -39,13 +39,10 @@ public class CatlogAccessStep {
 
 	@Then("{string} user can {string} Overview")
 	public void user_can_view_overview(String role, String action) {
-		// Check visibility of the Overview tab for different roles
 		boolean canSeeOverview = catlogpermission.canViewOverview();
 		if (action.equalsIgnoreCase("view")) {
-			// Assert that the user can see the Overview tab if action is "see"
 			Assertions.assertTrue(canSeeOverview, role + " user cannot view the Overview tab");
 		} else if (action.equalsIgnoreCase("not view")) {
-			// Assert that the user cannot see the Overview tab if action is "not see"
 			Assertions.assertTrue(canSeeOverview, role + " user should not view the Overview tab");
 		} else {
 			Assertions.fail("Invalid action: " + action);
@@ -491,5 +488,16 @@ public class CatlogAccessStep {
 		int width = Integer.parseInt(dimensions[0].trim());
 		int height = Integer.parseInt(dimensions[1].trim());
 		catlogpermission.changeBrowserWindowSize(width, height);
+	}
+
+	@And("User can see success toast message {string}")
+	public void user_see_toast_meassage_as(String toastMessage) {
+		String actualMessage = catlogpermission.seeToastMessageAs(toastMessage);
+		Assertions.assertEquals(toastMessage, actualMessage, "Toaster is not matching with expected");
+	}
+
+	@And("User clicks on {string} tab for Apps")
+	public void user_clicks_on_tab_for_apps(String tabName) {
+		catlogpermission.clickOnTab(tabName);
 	}
 }

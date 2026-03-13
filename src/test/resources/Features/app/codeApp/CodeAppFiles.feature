@@ -11,7 +11,7 @@ Feature: Code app files
     And User enters description as 'Created by automation script'
     And User enters tags 'MCP' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
 
   Scenario: Upload a file and publish file in the code app
     Given User clicks on the file icon in the left panel
@@ -24,14 +24,14 @@ Feature: Code app files
     And User sees success toast message 'Successfully compiled and published'
 
   Scenario: Create a Directory in the files section for code app
-   Given User clicks on the file icon in the left panel
+    Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
     And User select Action as 'New Directory'
     When User enter the folder name as 'TestFolder'
     And User click on Create button
     Then User can see the 'TestFolder' folder in the Files section
 
-	@ApplicationBugFailure
+  @ApplicationBugFailure
   Scenario: Create a file in the files section for code app
     Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
@@ -51,7 +51,7 @@ Feature: Code app files
     And User click on Create button
     Then User can see the 'TestFolder' folder in the Files section
     And User clicks on the 'TestFolder' folder in the Files section
-    And  User clicks on Create at Icon on File Tab
+    And User clicks on Create at Icon on File Tab
     And User select Action as 'New Directory'
     When User enter the folder name as 'SubFolder'
     And User click on Create button
@@ -66,7 +66,7 @@ Feature: Code app files
     Given User clicks on the file icon in the left panel
     When The Refresh Files option should be visible
     And The Refresh Files option should be clickable
-  
+
   Scenario: Publish code app and verify access using shared URL
     Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
@@ -84,7 +84,7 @@ Feature: Code app files
     And User able to see the 'Code app' title on the new tab page
     And User move to main page
 
-	@ApplicationBugFailure
+  @ApplicationBugFailure
   Scenario: Edit the uploaded file in code app and verify changes in shared url link
     Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
@@ -95,6 +95,7 @@ Feature: Code app files
     And User clicks on three dot icon of 'mcp.zip' file
     And User select the 'Unzip' file option
     And User can see the 'py' folder in the Files section
+    And User clicks on the 'portals' folder in the Files section
     And User click on the created 'index.html' file
     And User edit file for change title as 'Get New Stock Updated'
     And User Save the file
@@ -108,14 +109,18 @@ Feature: Code app files
     And User able to see the 'Get New Stock Updated' title on the new tab page
     And User move to main page
 
+@ApplicationBugFailure
   Scenario: Edit the uploaded file in code app and verify changes in code app preview
-    Given User clicks on the file icon in the left panel
+     Given User clicks on the file icon in the left panel
+    And User clicks on Create at Icon on File Tab
+    And User select Action as 'Upload Files'
     When User uploads the file 'PlaygroundMCP/mcp.zip'
-    And User selects the unzip checkbox
-    Then User clicks on 'Upload' button to create catalog
+    And User clicks on 'Upload' button to create code app
+    And User can see the 'mcp.zip' folder in the Files section
+    And User clicks on three dot icon of 'mcp.zip' file
+    And User select the 'Unzip' file option
     And User can see the 'py' folder in the Files section
-    And User can see the 'mcp' folder in the Files section
-    And User can see the 'index.html' file under 'portals' in the Files section
+    And User clicks on the 'portals' folder in the Files section
     And User click on the created 'index.html' file
     And User edit file for change title as 'Get New Stock Updated'
     And User Save the file

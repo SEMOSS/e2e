@@ -169,4 +169,12 @@ public class CatlogPermissionsPage {
 	public void changeBrowserWindowSize(int width, int height) {
 		CatlogAccessPageUtility.changeBrowserWindowSize(page, width, height);
 	}
+
+	public String seeToastMessageAs(String toastMessage) {
+		return CatlogAccessPageUtility.seeToastMessageAs(page, toastMessage);
+	}
+
+	public void clickOnTab(String tabName) {
+		CatlogAccessPageUtility.clickOnTab(page, tabName);
+	}
 }
