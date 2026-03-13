@@ -33,7 +33,7 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
 	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//button[contains(@title,'public')]";
 	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//button[contains(@title,'discoverable')]";
-	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
+	private static final String TOASTER_MEASSAGE_XAPTH = "//li[@data-type='success']";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
@@ -46,11 +46,13 @@ public class CatlogAccessPageUtility {
 	private static final String PENDING_REQUEST_REJECT_DATA_TESTID = "deny-pending-member-btn";
 	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
 	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
-	private static final String SETTING_SECTION_XPATH = "//h4[normalize-space()='{section}']";
-	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div//p[normalize-space()='Enable the publishing of the portal.']/following::span[contains(@class,'Mui-checked')]//input[@type='checkbox']";
-	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button//span[normalize-space()='Publish']";
-	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//span[normalize-space()='{buttonName}'] | //button[normalize-space()='{buttonName}']";
+	private static final String SETTING_SECTION_XPATH = "//h3[normalize-space()='{section}'] | //h2[normalize-space()='{section}']";
+	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div[h4[normalize-space()='Enable Publishing']]/following-sibling::button";
+	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button[normalize-space()='Publish']";
+	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//button[text()='{buttonName}']";
 	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
+	private static final String CLICK_ON_TAB_XPATH = "//button[text()='{tabName}']";
+	private static final String TOASTER_MESSAGE_DATATESTID = "notification-success-message";
 
 	public static boolean canViewOverview(Page page) {
 		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
@@ -134,8 +136,7 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String getToasterMessage(Page page) {
-		// Wait for toaster to appear and return text
-		Locator toasterMessage = page.locator(TOASTER_MEASSAGE_XAPTH);
+		Locator toasterMessage = page.locator(TOASTER_MEASSAGE_XAPTH).first();
 		AICorePageUtils.waitFor(toasterMessage);
 		return toasterMessage.textContent();
 	}
@@ -254,6 +255,7 @@ public class CatlogAccessPageUtility {
 
 	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
 		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));
+		sectionLocator.scrollIntoViewIfNeeded();
 		if (!sectionLocator.isVisible()) {
 			sectionLocator = page.locator("//h6[normalize-space()='" + section + "']");
 		}
@@ -283,7 +285,10 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void clickOnAppSettingsOption(Page page, String buttonName) {
-		page.locator(SETTING_PAGE_APP_OPTION_XPATH.replace("{buttonName}", buttonName)).click();
+		Locator selectOption = page.locator(SETTING_PAGE_APP_OPTION_XPATH.replace("{buttonName}", buttonName));
+		selectOption.scrollIntoViewIfNeeded();
+		selectOption.hover();
+		selectOption.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static boolean userCanSeeSectionUnderGeneralSetting(Page page, String sectionName) {
@@ -293,5 +298,15 @@ public class CatlogAccessPageUtility {
 
 	public static void changeBrowserWindowSize(Page page, int width, int height) {
 		page.setViewportSize(width, height);
+	}
+
+	public static String getToastMessage(Page page, String toastMessage) {
+		Locator toast = page.getByTestId(TOASTER_MESSAGE_DATATESTID);
+		String actualToastMessage = toast.innerText().trim();
+		return actualToastMessage;
+	}
+
+	public static void clickOnTab(Page page, String tabName) {
+		page.locator(CLICK_ON_TAB_XPATH.replace("{tabName}", tabName)).click();
 	}
 }

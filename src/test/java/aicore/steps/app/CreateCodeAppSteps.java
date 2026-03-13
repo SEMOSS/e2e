@@ -178,14 +178,39 @@ public class CreateCodeAppSteps {
 	public void user_clicks_On_Settings_Tab() {
 		codeAppPage.clickOnSettingsTab();
 	}
-	
+
 	@And("User clicks on General tab")
 	public void user_clicks_On_General_Tab() {
 		codeAppPage.clickOnGeneralTab();
 	}
-	
+
 	@And("User clicks on Apps tab")
 	public void user_clicks_On_Apps_Tab() {
 		codeAppPage.clickOnAppsTab();
+	}
+
+	@And("User clicks on Create at Icon on File Tab")
+	public void user_clicks_on_create_at_icon_on_file_section() {
+		codeAppPage.clickOnCreateAtIconOnFileSection();
+	}
+
+	@And("User select Action as {string}")
+	public void user_select_action(String action) {
+		codeAppPage.selectAction(action);
+	}
+
+	@And("User clicks on {string} button to create code app")
+	public void user_clicks_on_upload_button_to_create_code_app(String buttonName) {
+		codeAppPage.clickOnUploadButtonToCreateCodeApp(buttonName);
+	}
+
+	@And("User clicks on three dot icon of {string} file")
+	public void user_clicks_on_three_dot_icon(String fileName) {
+		codeAppPage.clickOnThreeDotIcon(fileName);
+	}
+
+	@And("User select the {string} file option")
+	public void user_selects_option_for_the_file(String optionName) {
+		codeAppPage.userSelectTheOptionFromThreeDotIcon(optionName);
 	}
 }
