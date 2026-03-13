@@ -15,7 +15,7 @@ Feature: Admin query
 
     Examples: 
       | DATABASE_NAME       | QUERY                          | COLUMN_COUNT | COLUMN_NAMES                                                                                                                                                                                                       |
-      | LocalMasterDatabase | select * from ENGINECONCEPT    |           14 | ENGINE, PARENTSEMOSSNAME, SEMOSSNAME, PARENTPHYSICALNAME, PARENTPHYSICALNAMEID, PHYSICALNAME, PHYSICALNAMEID, PARENTLOCALCONCEPTID, LOCALCONCEPTID, IGNORE_DATA, PK, ORIGINAL_TYPE, PROPERTY_TYPE, ADDITIONAL_TYPE |
+      | Local Master Database | select * from ENGINECONCEPT    |           14 | ENGINE, PARENTSEMOSSNAME, SEMOSSNAME, PARENTPHYSICALNAME, PARENTPHYSICALNAMEID, PHYSICALNAME, PHYSICALNAMEID, PARENTLOCALCONCEPTID, LOCALCONCEPTID, IGNORE_DATA, PK, ORIGINAL_TYPE, PROPERTY_TYPE, ADDITIONAL_TYPE |
       | security            | select * from ENGINEMETA       |            4 | ENGINEID, METAKEY, METAVALUE, METAORDER                                                                                                                                                                            |
       | scheduler           | select * from SMSS_JOB_RECIPES |           11 | USER_ID, JOB_ID, JOB_NAME, JOB_GROUP, CRON_EXPRESSION, CRON_TIMEZONE, PIXEL_RECIPE, PIXEL_RECIPE_PARAMETERS, JOB_CATEGORY, TRIGGER_ON_LOAD, UI_STATE                                                               |
       | themes              | select * from ADMIN_THEME      |            4 | ID, THEME_NAME, THEME_MAP, IS_ACTIVE                                                                                                                                                                               |
@@ -40,6 +40,6 @@ Feature: Admin query
 
     Examples: 
       | DATABASE_NAME       | QUERY                          | MAX_ROWS | ROW_COUNT | MODEL_COUNT | JOB_COUNT |
-      | LocalMasterDatabase | select * from ENGINECONCEPT    |        1 |         1 |           0 |         0 |
+      | Local Master Database | select * from ENGINECONCEPT    |        1 |         1 |           0 |         0 |
       | security            | select * from ENGINEMETA       |        5 |         5 |           5 |         0 |
       | scheduler           | select * from SMSS_JOB_RECIPES |       10 |        10 |           0 |        10 |
