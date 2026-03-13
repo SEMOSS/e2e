@@ -147,8 +147,8 @@ public class CodeAppPage {
 		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
 	}
 
-	public void selectActionAs(String action) {
-		CodeAppPageUtils.selectActionAs(page, action);
+	public void selectAction(String action) {
+		CodeAppPageUtils.selectAction(page, action);
 	}
 
 	public void clickOnUploadButtonToCreateCodeApp(String buttonName) {

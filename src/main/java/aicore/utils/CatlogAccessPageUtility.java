@@ -300,7 +300,7 @@ public class CatlogAccessPageUtility {
 		page.setViewportSize(width, height);
 	}
 
-	public static String seeToastMessageAs(Page page, String toastMessage) {
+	public static String getToastMessage(Page page, String toastMessage) {
 		Locator toast = page.getByTestId(TOASTER_MESSAGE_DATATESTID);
 		String actualToastMessage = toast.innerText().trim();
 		return actualToastMessage;

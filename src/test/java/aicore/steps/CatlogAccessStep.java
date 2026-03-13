@@ -491,8 +491,8 @@ public class CatlogAccessStep {
 	}
 
 	@And("User can see success toast message {string}")
-	public void user_see_toast_meassage_as(String toastMessage) {
-		String actualMessage = catlogpermission.seeToastMessageAs(toastMessage);
+	public void user_see_toast_meassage(String toastMessage) {
+		String actualMessage = catlogpermission.getToastMessage(toastMessage);
 		Assertions.assertEquals(toastMessage, actualMessage, "Toaster is not matching with expected");
 	}
 

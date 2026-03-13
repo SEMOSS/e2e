@@ -195,8 +195,8 @@ public class CreateCodeAppSteps {
 	}
 
 	@And("User select Action as {string}")
-	public void user_select_action_as(String action) {
-		codeAppPage.selectActionAs(action);
+	public void user_select_action(String action) {
+		codeAppPage.selectAction(action);
 	}
 
 	@And("User clicks on {string} button to create code app")

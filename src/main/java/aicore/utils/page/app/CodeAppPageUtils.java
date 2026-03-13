@@ -217,9 +217,8 @@ public class CodeAppPageUtils {
 		page.locator(CREATE_AT_ICON_XPATH).click();
 	}
 
-	public static void selectActionAs(Page page, String action) {
+	public static void selectAction(Page page, String action) {
 		page.locator(CLICK_TO_SELECT_OPTION_XPATH).click();
-		// page.locator(SELECT_OPTION_XPATH.replace("{action}", action)).click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(action)).click();
 	}
 
