@@ -123,6 +123,16 @@ public class AddModelSteps {
 		Assertions.assertTrue(isButtonEnabled, "'Connect' button is not enabled");
 	}
 
+	@And("User enters the following details in the model configuration")
+	public void user_enters_value_as_field_name(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("fieldName");
+			String fieldValue = row.get("fieldValue");
+				 openModelPage.fillModelCreationForm(fieldName, fieldValue);
+			}
+	}
+
 	@Then("User clicks on model {string} button")
 	public void user_clicks_on_model_button(String buttonName) {
 		openModelPage.clickOnCreateModelButton(buttonName);

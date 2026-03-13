@@ -10,14 +10,14 @@ import aicore.framework.ConfigUtils;
 public class UserManagementPageUtils {
 
 	private static final String ADD_MEMBER_XPATH = "//button[text()='Add Members']";
-	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div";
-	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//li[text()='NATIVE']";
-	private static final String ADD_MEMBER_USERID_XPATH = "//label[text()='User Id']";
-	private static final String ADD_MEMBER_NAME_XPATH = "//label[text()='Name']/following-sibling::div/input";
-	private static final String ADD_MEMBER_EMAIL_XPATH = "//label[text()='Email']/following-sibling::div/input";
-	private static final String ADD_MEMBER_PHONE_NUMBER_XPATH = "//label[text()='Phone Number']/following-sibling::div/input";
-	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/following-sibling::div/input";
-	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//span[text()='Save']";
+	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div//button";// "//label[text()='Type']/parent::div";
+	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//option[text()='NATIVE']";
+	private static final String ADD_MEMBER_USERID_XPATH = "//label[normalize-space()='User Id *']/parent::div//input[@data-slot='input']";
+	private static final String ADD_MEMBER_NAME_XPATH = "//label[text()='Name *']/parent::div//input";
+	private static final String ADD_MEMBER_EMAIL_XPATH = "//label[text()='Email']/parent::div/input";
+	private static final String ADD_MEMBER_PHONE_NUMBER_XPATH = "//label[text()='Phone Number']/parent::div/input";
+	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/parent::div/input";
+	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//button[text()='Save']";
 	private static final String ADD_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added user']";
 	private static final String EDIT_ICON_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td//*[name()='svg'][@data-testid='EditIcon']";
 	private static final String MODEL_DROPDOWN_XPATH = "//div[text()='None']";
@@ -27,10 +27,10 @@ public class UserManagementPageUtils {
 	private static final String WEEKELY_VALUE_XPATH = "//li[text()='{dropdown_option}']";
 	private static final String MODEL_LIMIT_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td[text()='{limitValue}']";
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Users\"]";
-	private static final String SELECT_ALL_BUTTON_XPATH = "//label[@id='userTable-checkbox-selectAll']";// "//th//label//span//input[@type='checkbox']";
+	private static final String SELECT_ALL_BUTTON_XPATH = "//button[@aria-label='Select all members']";// "//th//label//span//input[@type='checkbox']";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
-	private static final String DELETE_SELECTED_BUTTON_XPATH = "//span[text()='Delete Selected']";
-	private static final String SEARCH_ICON_XPATH = "//div[@id='home__content']//*[@data-testid='SearchIcon']";
+	private static final String DELETE_SELECTED_BUTTON_XPATH = "//button[text()='Delete Selected']";
+	private static final String SEARCH_ICON_XPATH = "//input[@placeholder='Search Users']";
 	private static final String SEARCH_BAR_XPATH = "//div[@role=\"region\"]//input[@placeholder='Search']";
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
@@ -55,8 +55,7 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickNativeDropdownValue(Page page) {
-		page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).isVisible();
-		page.locator(ADD_MEMBER_TYPE_NATIVE_XPATH).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("NATIVE")).dblclick();
 	}
 
 	public static void fillUserId(Page page, String UserId) throws InterruptedException {
@@ -85,18 +84,13 @@ public class UserManagementPageUtils {
 	}
 
 	public static void clickSaveButton(Page page) {
-		page.setViewportSize(1350, 650);
 		Locator saveButton = page.locator(ADD_MEMBER_TYPE_SAVE_XPATH);
 		saveButton.scrollIntoViewIfNeeded();
 		saveButton.hover();
-		saveButton.click(new Locator.ClickOptions().setForce(true));
+		saveButton.click();
 	}
 
 	public static String userCreationToastMessage(Page page) {
-		// page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH)
-		// .waitFor(new
-		// Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		// page.locator(ADD_MEMBER_TOAST_MESSAGE_XPATH).textContent().trim();
 		Locator toasterMessage = page.getByTestId("notification-success-alert");
 		AICorePageUtils.waitFor(toasterMessage);
 		String toastMessage = toasterMessage.textContent().trim();
@@ -216,15 +210,8 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchAndSelectOption(Page page, String optionText) {
-//		// Fill the search box
-//		Locator searchInput = page.locator(SEARCH_BAR_XPATH);
-//		searchInput.fill("");
-//		searchInput.fill(optionText);
-
-		// Click on the result button
 		Locator resultButton = page.locator("//button[.//span[text()='" + optionText + "']]");
 		AICorePageUtils.waitFor(resultButton);
 		resultButton.click();
 	}
-
 }

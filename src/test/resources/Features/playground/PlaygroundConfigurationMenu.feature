@@ -6,8 +6,10 @@ Feature: Playground Home knowledge, Max Token, Temperature and Instructions to v
     And User clicks on Add Model
     And User selects 'OpenAI' type
     And User selects 'GPT 3.5 Turbo'
-    And User enters Catalog Name as 'ModelCatalog'
-    And User enters Open AI Key as 'Test@1234'
+    And User enters the following details in the model configuration
+      | fieldName    | fieldValue   |
+      | Catalog Name | ModelCatalog |
+      | Open AI Key  | Test@1234    | 
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
     And User clicks on Edit button
