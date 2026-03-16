@@ -289,7 +289,7 @@ public class CommonUtils {
 
 	public static boolean getVersion(Page page) {
 		HomePageUtils.openMainMenu(page);
-		page.getByTestId("AccountCircleRoundedIcon").click();
+		page.locator("//div[@aria-label='Login']").click();
 		String version = CaptureScreenShotUtils.versionCapture(page);
 
 		logger.info("Version obtained: {}", version);
