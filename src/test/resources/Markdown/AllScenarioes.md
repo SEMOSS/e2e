@@ -20,7 +20,6 @@
 - [Guardrail](#guardrail)
 - [Settings](#settings)
 - [System Apps](#system-apps)
-- [Grand Total](#grand-total)
 
 ---
 
