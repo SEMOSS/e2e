@@ -37,7 +37,7 @@ public class HomePageUtils {
 	private static final String GUARDRAIL_MENU_BUTTON_DATA_TESTID = "sidebar-Guardrail-btn";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
-	private static final String SETTINGS_MENU_BUTTON_DATA_TESTID = "SettingsIcon";
+	private static final String SETTINGS_MENU_BUTTON_XPATH = "//div[@aria-label='Settings']";
 	private static final String HOME_MENU_BUTTON_DATA_TESTID = "HomeIcon";
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
@@ -52,6 +52,7 @@ public class HomePageUtils {
 	// pop ups
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
+	private static final String PROFILE_ICON_XPATH = "//div[@aria-label='Login']";
 
 	public static void navigateToHomePage(Page page) {
 		String homePage = UrlUtils.getUrl("#");
@@ -217,18 +218,18 @@ public class HomePageUtils {
 			AICorePageUtils.waitFor(mainMenu);
 			mainMenu.click();
 		}
-		page.getByTestId("AccountCircleRoundedIcon").click();
+		page.locator(PROFILE_ICON_XPATH).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 
 	public static void clickOnOpenSettings(Page page) {
-		page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TESTID).click();
+		page.locator(SETTINGS_MENU_BUTTON_XPATH).click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void checkOnOpenSetting(Page page) {
-		page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TESTID).isVisible();
+		page.locator(SETTINGS_MENU_BUTTON_XPATH).isVisible();
 	}
 
 	public static void clickOnOpenDatabase(Page page) {

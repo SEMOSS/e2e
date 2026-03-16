@@ -16,8 +16,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Browser.NewContextOptions;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -29,11 +29,11 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
 import aicore.framework.ConfigUtils;
+import aicore.framework.HttpLogger;
 import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
 import aicore.utils.AICorePageUtils;
-import aicore.framework.HttpLogger;
 
 public class GenericSetupUtils {
 
@@ -42,8 +42,10 @@ public class GenericSetupUtils {
 	private static boolean useVideo = false;
 	private static boolean useTrace = false;
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
-//	private static final String SEMOSS_OPEN_MEN_DATA_XPATH = "//a[@aria-label='Go Home']/parent::div//*[@data-testid='CloseIcon']";
-	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
+	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
+//	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
+	private static final String SETTINGS_XPATH = "//div[@aria-label='Settings']";
+	private static final String PROFILE_ICON_XPATH = "//div[@aria-label='Login']";
 
 	public static void initialize() throws IOException {
 		if (RunInfo.isFirstRun()) {
@@ -166,7 +168,7 @@ public class GenericSetupUtils {
 		// response handling
 		page.onResponse(HttpLogger::logResponse);
 	}
-	
+
 	public static Page setupPlaywright() {
 		// create playwright
 		Playwright playwright = Playwright.create();
@@ -238,7 +240,7 @@ public class GenericSetupUtils {
 
 	private static void makeAdminUserAdmin(Page page) {
 //		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
-		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		page.waitForTimeout(300);
 		if (isMenuOpen.isVisible()) {
 //			isMenuOpen.click();
@@ -247,9 +249,9 @@ public class GenericSetupUtils {
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
 		AICorePageUtils.waitFor(locator);
 		locator.click();
-		page.getByTestId("SettingsIcon").click();
+		page.locator(SETTINGS_XPATH).click();
 		// close menu
-		Locator menuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
+		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
 //			menuOpen.click();
 			menuOpen.dblclick();
@@ -267,7 +269,7 @@ public class GenericSetupUtils {
 	public static void logout(Page page) {
 		// going to logout
 //		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
-		Locator isMenuOpen = page.getByTestId(SEMOSS_OPEN_MEN_DATA_TESTID);
+		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (isMenuOpen.isVisible()) {
 			// isMenuOpen.click();
 			isMenuOpen.dblclick();
@@ -275,7 +277,7 @@ public class GenericSetupUtils {
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
 		AICorePageUtils.waitFor(locator);
 		locator.click();
-		page.getByTestId("AccountCircleRoundedIcon").click();
+		page.locator(PROFILE_ICON_XPATH).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
