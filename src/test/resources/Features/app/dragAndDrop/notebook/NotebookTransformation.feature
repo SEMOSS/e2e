@@ -36,7 +36,7 @@ Feature: Validate Transformation
 
   @Regression @LoginWithAdmin @DeleteCreatedTestApp @DeleteTestCatalog
   Scenario: Validate Timestamp function in Transformation
-    And User writes the query 'SELECT BMI FROM DIABETES LIMIT 20'
+    When User writes the query 'SELECT BMI FROM DIABETES LIMIT 20'
     And User clicks on Run cell button
     And User fetch the frame id
     And User mouse hover below the existing cell
@@ -46,9 +46,9 @@ Feature: Validate Transformation
     And User enters column name as 'BMI_IncludeTime'
     And User clicks on Include time checkbox
     And User click on Run All cell button
-    Then User can see header names as 'BMI, BMI_IncludeTime'
+    And User can see header names as 'BMI, BMI_IncludeTime'
     And User can see 'BMI_IncludeTime' column values as todays date along with current time
-    When User clicks on Include time checkbox
+    And User clicks on Include time checkbox
     And User enters column name as 'BMI_ExcludeTime'
     And User click on Run All cell button    
     Then User can see header names as 'BMI, BMI_ExcludeTime'
@@ -56,7 +56,7 @@ Feature: Validate Transformation
 
   @Regression @LoginWithAdmin @DeleteCreatedTestApp @DeleteTestCatalog
   Scenario: Validate Date Difference transformation using UI fields
-    And User writes the query 'SELECT START_DATE, END_DATE FROM DIABETES LIMIT 20'
+    When User writes the query 'SELECT START_DATE, END_DATE FROM DIABETES LIMIT 20'
     And User clicks on Run cell button
     And User fetch the frame id
     And User mouse hover below the existing cell

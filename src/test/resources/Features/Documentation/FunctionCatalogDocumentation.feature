@@ -5,9 +5,9 @@ Feature: Function documentation
     Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User captures a 'button' and highlights the 'Function'
-    When User clicks on Open Function
+    And User clicks on Open Function
     And User captures a 'button' and highlights the 'Add Function'
-    When User clicks on Add Function
+    And User clicks on Add Function
     And User captures screenshot for "Function Options"
     And User selects function 'REST'
     And User enters Catalog name 'TestFunction'
@@ -83,7 +83,7 @@ Feature: Function documentation
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
   Scenario: Create a Function document for the Export button
     Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
-    And User opens Main Menu
+    When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
     And User selects function 'REST'
@@ -98,7 +98,7 @@ Feature: Function documentation
     And User clicks on Connect button to create function
     And User clicks on Copy Catalog ID
     And User sees success toast message 'Successfully added function database to catalog'
-    And User captures a 'buttonType' and highlights the "Export" with name "Export"
+    Then User captures a 'buttonType' and highlights the "Export" with name "Export"
     And User completes screenshot capture and triggers comparison for 'Function Catalog Export Button'
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
@@ -119,7 +119,7 @@ Feature: Function documentation
     And User clicks on Connect button to create function
     And User clicks on Copy Catalog ID
     And User clicks on Access Control button
-    And User captures screenshot for "functionAccessControl"
+    Then User captures screenshot for "functionAccessControl"
     And User completes screenshot capture and triggers comparison for 'Function Engines'
 
   @LoginWithAdmin @SkipIfVersionMatch @DeleteTestCatalog @Documentation
@@ -149,7 +149,7 @@ Feature: Function documentation
     Then User sees the function name 'TestFunction' in the function catalog
     And User clicks on the function name 'TestFunction' in the function catalog
     And User click on the Request Access button
-    And User captures screenshot for "functionRequestAccess"
+    Then User captures screenshot for "functionRequestAccess"
     And User clicks on 'Cancel' button
     And User logs out from the application
     And User login as 'Admin'
@@ -158,8 +158,8 @@ Feature: Function documentation
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
     Scenario: Create a Function Form Document 
     Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
-    And User opens Main Menu
-    When User clicks on Open Function
+    When User opens Main Menu
+    And User clicks on Open Function
     And User clicks on Add Function
     And User selects function 'Azure Document Intelligence'
     Then User captures screenshot for "create_func"
@@ -168,7 +168,7 @@ Feature: Function documentation
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engine Edit Interface Document
     Given User captures documentation screenshot for 'FunctionEngines'
-    And User opens Main Menu
+    When User opens Main Menu
     And User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
@@ -178,7 +178,7 @@ Feature: Function documentation
     And User clicks on Copy Catalog ID
     And User sees success toast message 'Successfully Created Function Database'
     And User clicks on Edit button
-    When User resize the browser window size to '1200,1100'
+    And User resize the browser window size to '1200,1100'
     Then User captures screenshot for "EditInterface"
     And User resize the browser window size to '1280,720'
     And User completes screenshot capture and triggers comparison for "EditInterface"
@@ -186,18 +186,18 @@ Feature: Function documentation
  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
    Scenario: Function Engine - Capture Azure Document Intelligence form
      Given User captures documentation screenshot for 'FunctionEngines'
-     And User opens Main Menu
+     When User opens Main Menu
      And User clicks on Open Function
      And User clicks on Add Function
-     And User captures a 'testidelement, testidelement' and highlights the "importPageContent-connect-to-Azure-Document-Intelligence-img,tabs" with name "azure" 
+     Then User captures a 'testidelement, testidelement' and highlights the "importPageContent-connect-to-Azure-Document-Intelligence-img,tabs" with name "azure" 
      And User completes screenshot capture and triggers comparison for "FunctionEngines"
 
 @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engine - properties
     Given User captures documentation screenshot for 'FunctionEngines'
-    And User opens Main Menu
+    When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
     And User selects function 'Azure Document Intelligence'
-    And User captures a 'catalogformpage' and highlights the "function-form-box" with name "func-prop" 
+    Then User captures a 'catalogformpage' and highlights the "function-form-box" with name "func-prop" 
     And User completes screenshot capture and triggers comparison for "FunctionEngines"
