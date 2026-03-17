@@ -7,7 +7,7 @@ Feature: Playground Settings -Attachment Option
     And User click on Open Settings option button
     And User can see 'Attach Document' option
     When User uploads and verifies the files in Attach Document option on playground home page
-      | fileName                       |
+      | FILENAME                       |
       | Playground/Employee.xlsx       |
       | Playground/Image.png           |
       | Playground/dummy.pdf           |

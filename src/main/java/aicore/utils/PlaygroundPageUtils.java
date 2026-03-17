@@ -440,8 +440,7 @@ public class PlaygroundPageUtils {
 
 	public static void waitForModelResponse(Page page) {
 		Locator loadingSpinner = page.locator(LOADING_SPINNER_XPATH);
-		// Wait for loading spinner to disappear (become hidden)
-		long timeout = System.currentTimeMillis() + 12000; // 12 second timeout
+		long timeout = System.currentTimeMillis() + 12000;
 		while (loadingSpinner.isVisible() && System.currentTimeMillis() < timeout) {
 			page.waitForTimeout(1000);
 		}
@@ -454,7 +453,7 @@ public class PlaygroundPageUtils {
 	}
 
 	public static void verifyModelResponseDisplayed(Page page) {
-		page.waitForTimeout(3000); // wait for 3 second to ensure response is rendered from the model
+		page.waitForTimeout(3000);
 		Locator responseLocator = page.locator(RESPONSE_XPATH);
 		AICorePageUtils.waitFor(responseLocator);
 		if (!responseLocator.isVisible()) {
@@ -505,7 +504,6 @@ public class PlaygroundPageUtils {
 			throw new AssertionError("MCP Tool '" + modelName + "' is already selected.");
 		}
 		MCPToolLocator.click();
-		// wait for 600 ms to reflect the state change
 		page.waitForTimeout(600);
 		String afterState = MCPToolLocator.getAttribute("data-state");
 		if (!afterState.equals("checked")) {
@@ -525,7 +523,6 @@ public class PlaygroundPageUtils {
 			throw new AssertionError("Knowledge Tool '" + knowledgeName + "' is already selected.");
 		}
 		KnowledgeToolLocator.click();
-		// wait for 600 ms to reflect the state change
 		page.waitForTimeout(600);
 		String afterState = KnowledgeToolLocator.getAttribute("data-state");
 		if (!afterState.equals("checked")) {
@@ -539,7 +536,6 @@ public class PlaygroundPageUtils {
 		if (MCPListToolLocator.isVisible()) {
 			MCPListToolLocator.hover();
 			MCPToolLocator.click();
-			// wait for 600 ms to reflect the deletion
 			page.waitForTimeout(600);
 
 		}
@@ -551,7 +547,6 @@ public class PlaygroundPageUtils {
 		if (knowledgeListToolLocator.isVisible()) {
 			knowledgeListToolLocator.hover();
 			knowledgeToolLocator.click();
-			// wait for 600 ms to reflect the deletion
 			page.waitForTimeout(600);
 
 		}
@@ -608,7 +603,6 @@ public class PlaygroundPageUtils {
 			throw new AssertionError("MCP Tool '" + modelName + "' is already selected.");
 		}
 		newMCPToolLocator.click();
-		// wait for 600 ms to reflect the state change
 		page.waitForTimeout(600);
 		String afterState = newMCPToolLocator.getAttribute("data-state");
 		if (!afterState.equals("checked")) {

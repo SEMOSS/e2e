@@ -363,7 +363,7 @@ public class PlaygroundSteps {
 	public void user_uploads_and_verifies_files(DataTable dataTable) {
 		List<Map<String, String>> files = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> data : files) {
-			String fileName = data.get("fileName");
+			String fileName = data.get("FILENAME");
 			playgroundPage.uploadFileInPlaygrounds(fileName);
 			String actualFileName = playgroundPage.verifyUploadedFile();
 			String expectedFileName;
@@ -373,8 +373,8 @@ public class PlaygroundSteps {
 				expectedFileName = fileName;
 			}
 			Assertions.assertTrue(actualFileName != null && actualFileName.contains(expectedFileName),
-					"File upload verification failed.\n" + "Expected File: " + expectedFileName + "\n"
-							+ "Actual File from UI: " + actualFileName);
+					"File upload verification failed. Expected File: " + expectedFileName + " Actual File from UI: "
+							+ actualFileName);
 		}
 	}
 
