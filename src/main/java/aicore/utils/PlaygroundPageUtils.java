@@ -37,7 +37,7 @@ public class PlaygroundPageUtils {
 	private static final String PROMPT_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']";
 	private static final String PROMPT_DELETE_BUTTON_XPATH = "//div[@data-slot='sidebar-group']//*[text()='{prompt}']//following-sibling::button";
 	private static final String SIDEBAR_XPATH = "//div[@data-slot='sidebar-group']";
-	private static final String RESPONSE_XPATH = "//div//span[text()='Llama3-70B-Instruct']/..//following-sibling::div[@data-slot='markdown']";
+	private static final String RESPONSE_XPATH = "//div[@data-slot='markdown']";
 	private static final String SETTINGS_XPATH = "//span[text()='Open Settings']";
 	private static final String ASK_XPATH = "//span[text()='Ask']";
 	private static final String LOADING_SPINNER_XPATH = "//button[@aria-label='Prompt the Model']//*[@aria-label='Loading']";
@@ -455,7 +455,7 @@ public class PlaygroundPageUtils {
 
 	public static void verifyModelResponseDisplayed(Page page) {
 		page.waitForTimeout(3000); // wait for 3 second to ensure response is rendered from the model
-		Locator responseLocator = page.locator(RESPONSE_XPATH).first();
+		Locator responseLocator = page.locator(RESPONSE_XPATH);
 		AICorePageUtils.waitFor(responseLocator);
 		if (!responseLocator.isVisible()) {
 			throw new AssertionError("Model response/output is not generated.");
