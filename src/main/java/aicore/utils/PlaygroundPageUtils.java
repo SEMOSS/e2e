@@ -1,13 +1,18 @@
 package aicore.utils;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.microsoft.playwright.FileChooser;
 import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaygroundPageUtils {
 
-	private static final String PLAYGROUND_APP_BUTTON_XPATH = "//*[text()='Experiment in our Playground™']/../../..//a";
+	private static final String PLAYGROUND_APP_BUTTON_TEXT = "Launch Playground";
 	private static final String PROMPT_THE_MODEL_BUTTON_LABEL = "Prompt the Model";
 	private static final String PROMPT_INPUT_XPATH = "//input[@type='file']";
 	private static final String PLACEHOLDER_PROMPT_XPATH = "//div//div[contains(text(),'{prompt}')]";
@@ -57,9 +62,13 @@ public class PlaygroundPageUtils {
 	private static final String KNOWLEDGE_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
 	private static final String MODEL_ITEM_BY_NAME = "//div[@data-slot='command-group']//div//div//div//span[contains(text(),'{modelName}')]";
 	private static final String MODEL_CHECKBOX_BY_NAME = ".//div[contains(@class,'model-item') and normalize-space(text())='{MODEL}']//input[@type='checkbox']";
+	private static final String UPLOADED_FILE_CARD_XPATH = "//div[contains(@class,'overflow-hidden border')]";
+	private static final String FILE_TOOLTIP_XPATH = "//div[@data-slot='tooltip-content']";
+	private static final String OPEN_SETTING_ICON_XPATH = "//button[@aria-label='Open settings']";
+	private static final String ATTACHED_FILE_OPTION_TEXT = "Attach Document";
 
 	public static void clickOnPlaygroundAppButton(Page page) {
-		Locator anchor = page.locator(PLAYGROUND_APP_BUTTON_XPATH);
+		Locator anchor = page.getByText(PLAYGROUND_APP_BUTTON_TEXT);
 		CommonUtils.removeTargetAttribute(anchor);
 		anchor.click();
 		page.waitForLoadState(LoadState.NETWORKIDLE);
@@ -643,5 +652,39 @@ public class PlaygroundPageUtils {
 		if (button.isEnabled()) {
 			throw new AssertionError("Expected the button '" + buttonName + "' to be disabled, but it is enabled.");
 		}
+	}
+
+	public static void clickOnOpenSettingsOptionButton(Page page) {
+		page.waitForTimeout(2000);
+		Locator openSettingOption = page.locator(OPEN_SETTING_ICON_XPATH);
+		openSettingOption.isVisible();
+		openSettingOption.click();
+	}
+
+	public static boolean selectOption(Page page, String optionName) {
+		return page.getByText(optionName).isVisible();
+	}
+
+	public static String verifyUploadedFile(Page page) {
+		Locator fileCard = page.locator(UPLOADED_FILE_CARD_XPATH).last();
+		AICorePageUtils.waitFor(fileCard);
+		fileCard.hover();
+		Locator tooltip = page.locator(FILE_TOOLTIP_XPATH)
+				.filter(new Locator.FilterOptions().setHasNotText("Open Settings"));
+		tooltip.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return tooltip.textContent().trim();
+	}
+
+	public static void uploadFileInPlaygrounds(Page page, String fileName) {
+		Path filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "data", fileName);
+		Locator openSetting = page.locator(OPEN_SETTING_ICON_XPATH);
+		String isExpanded = openSetting.getAttribute("aria-expanded");
+		if (isExpanded == null || isExpanded.equals("false")) {
+			openSetting.click();
+		}
+		FileChooser fileChooser = page.waitForFileChooser(() -> {
+			page.getByText(ATTACHED_FILE_OPTION_TEXT).click();
+		});
+		fileChooser.setFiles(filePath);
 	}
 }
