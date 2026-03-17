@@ -7,11 +7,11 @@ Feature: Playground Settings -Attachment Option
     And User click on Open Settings option button
     And User can see 'Attach Document' option
     When User uploads and verifies the files in Attach Document option on playground home page
-      | fileName                                      |
-      | PlaygroundMCP/Attachments/Employee.xlsx       |
-      | PlaygroundMCP/Attachments/Image.png           |
-      | PlaygroundMCP/Attachments/dummy.pdf           |
-      | PlaygroundMCP/Attachments/cucumberreport.html |
-      | PlaygroundMCP/Attachments/mcp 1.zip           |
-      | PlaygroundMCP/Attachments/Document.docs       |
-      | PlaygroundMCP/Attachments/Test.txt            |
+      | fileName                       |
+      | Playground/Employee.xlsx       |
+      | Playground/Image.png           |
+      | Playground/dummy.pdf           |
+      | Playground/cucumberreport.html |
+      | Playground/mcp.zip             |
+      | Playground/Document.docs       |
+      | Playground/Test.txt            |

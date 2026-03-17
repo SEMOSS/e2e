@@ -366,8 +366,12 @@ public class PlaygroundSteps {
 			String fileName = data.get("fileName");
 			playgroundPage.uploadFileInPlaygrounds(fileName);
 			String actualFileName = playgroundPage.verifyUploadedFile();
-			String expectedFileName = fileName.contains("/") ? fileName.substring(fileName.lastIndexOf("/") + 1)
-					: fileName;
+			String expectedFileName;
+			if (fileName.contains("/")) {
+				expectedFileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+			} else {
+				expectedFileName = fileName;
+			}
 			Assertions.assertTrue(actualFileName != null && actualFileName.contains(expectedFileName),
 					"File upload verification failed.\n" + "Expected File: " + expectedFileName + "\n"
 							+ "Actual File from UI: " + actualFileName);
