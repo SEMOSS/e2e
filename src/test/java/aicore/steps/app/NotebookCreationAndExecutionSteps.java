@@ -156,6 +156,11 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.selectHiddenOptionDropdown(optionName);
 	}
 
+	@And("User selects {string} in the {string} dropdown")
+	public void user_selects_dropdown(String unit, String dropdownName) {
+		notebookPage.selectTransformationValueFromDropdown(unit, dropdownName);
+	}
+
 	@And("User click on Import data menu")
 	public void user_clicks_on_Import_data_menu() {
 		notebookPage.clickOnImportDropdown();
@@ -208,6 +213,24 @@ public class NotebookCreationAndExecutionSteps {
 		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
 		List<String> actualHeaderNames = notebookPage.getNotebookOutputTableHeader();
 		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
+	}
+
+	@Then("User can see {string} values greater than or equal to {string}")
+	public void user_can_see_values_greater_than_or_equal_to(String columnName, String minValue) {
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
+		double min = Double.parseDouble(minValue);
+		for (String val : columnValues) {
+			String cleaned = val.trim();
+			double numericValue;
+			try {
+				numericValue = Double.parseDouble(cleaned);
+			} catch (NumberFormatException e) {
+				Assertions.fail("Column value for " + columnName + " is not numeric: " + cleaned);
+				return;
+			}
+			Assertions.assertTrue(numericValue >= min,
+					"Expected " + columnName + " value to be greater than or equal to " + minValue + " but found " + numericValue);
+		}
 	}
 
 	@Then("User verifies the transformed data for {string} column is in uppercase format")

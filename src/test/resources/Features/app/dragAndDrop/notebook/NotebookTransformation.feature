@@ -53,3 +53,20 @@ Feature: Validate Transformation
     And User click on Run All cell button    
     Then User can see header names as 'BMI, BMI_ExcludeTime'
     And User can see 'BMI_ExcludeTime' column values as todays date along with '00:00:00' as timestamp
+
+  @Regression @LoginWithAdmin @DeleteCreatedTestApp @DeleteTestCatalog
+  Scenario: Validate Date Difference transformation using UI fields
+    And User writes the query 'SELECT START_DATE, END_DATE FROM DIABETES LIMIT 20'
+    And User clicks on Run cell button
+    And User fetch the frame id
+    And User mouse hover below the existing cell
+    And User selects 'Transformation' from the hidden options
+    And User selects 'Date Difference' from the Transformation options
+    And User selects the frame from the selected frame dropdown
+    And User selects 'START_DATE' in the 'Start Date Column' dropdown
+    And User selects 'END_DATE' in the 'End Date Column' dropdown
+    And User selects 'day' in the 'Unit of Measure' dropdown
+    And User enters column name as 'DATE_DIFF_DAYS'
+    And User click on Run All cell button    
+    Then User can see header names as 'DATE_DIFF_DAYS, END_DATE, START_DATE'
+    And User can see 'DATE_DIFF_DAYS' values greater than or equal to '0'

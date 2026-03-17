@@ -268,4 +268,13 @@ public abstract class CaptureElementUtils {
 		return locators;
 	}
 
+	public static List<Locator> captureCatalogFormPage(Page page, String testId) {
+		Locator locator = page.getByTestId(testId).locator("div").first();
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			locators.add(locator.nth(i));
+		}
+		return locators;
+	}
 }

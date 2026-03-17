@@ -182,3 +182,22 @@ Feature: Function documentation
     Then User captures screenshot for "EditInterface"
     And User resize the browser window size to '1280,720'
     And User completes screenshot capture and triggers comparison for "EditInterface"
+
+ @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
+   Scenario: Function Engine - Capture Azure Document Intelligence form
+     Given User captures documentation screenshot for 'FunctionEngines'
+     And User opens Main Menu
+     And User clicks on Open Function
+     And User clicks on Add Function
+     And User captures a 'testidelement, testidelement' and highlights the "importPageContent-connect-to-Azure-Document-Intelligence-img,tabs" with name "azure" 
+     And User completes screenshot capture and triggers comparison for "FunctionEngines"
+
+@LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
+  Scenario: Function Engine - properties
+    Given User captures documentation screenshot for 'FunctionEngines'
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Add Function
+    And User selects function 'Azure Document Intelligence'
+    And User captures a 'catalogformpage' and highlights the "function-form-box" with name "func-prop" 
+    And User completes screenshot capture and triggers comparison for "FunctionEngines"
