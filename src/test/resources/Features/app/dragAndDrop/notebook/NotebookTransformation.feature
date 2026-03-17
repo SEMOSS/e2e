@@ -24,7 +24,7 @@ Feature: Validate Transformation
     And User clicks on Create button
     And User fetch the app name 
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
-    And User clicks on Notebook
+    When User clicks on Notebook
     And User clicks on Create new notebook
     And User enters New Query name as 'Test'
     And User clicks on query Submit button
@@ -46,9 +46,9 @@ Feature: Validate Transformation
     And User enters column name as 'BMI_IncludeTime'
     And User clicks on Include time checkbox
     And User click on Run All cell button
-    And User can see header names as 'BMI, BMI_IncludeTime'
+    Then User can see header names as 'BMI, BMI_IncludeTime'
     And User can see 'BMI_IncludeTime' column values as todays date along with current time
-    And User clicks on Include time checkbox
+    When User clicks on Include time checkbox
     And User enters column name as 'BMI_ExcludeTime'
     And User click on Run All cell button    
     Then User can see header names as 'BMI, BMI_ExcludeTime'
