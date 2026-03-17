@@ -24,7 +24,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_DATATESTID = "editEngineDetails-submit-btn";
-	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
+	private static final String CLOSE_BUTTON_XPATH = "//button[text()='Cancel']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "//div[text()='Successfully set the new metadata values for the engine']";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
 
@@ -146,7 +146,9 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void clickOnClose(Page page) {
-		page.click(CLOSE_BUTTON_XPATH);
+		Locator closeButton = page.locator(CLOSE_BUTTON_XPATH);
+		closeButton.scrollIntoViewIfNeeded();
+		closeButton.click();
 	}
 
 	public static void waitForEditSuccessToastMessageToDisappear(Page page) {
