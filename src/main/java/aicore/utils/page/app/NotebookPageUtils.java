@@ -72,6 +72,7 @@ public class NotebookPageUtils {
 	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
 	private static final String NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH = "//div[contains(@class,'MuiPaper-elevation MuiPaper-rounded')]//div[@title='Database Not Editable']";
+	private static final String DROPDOWN_BUTTON_XPATH = "//label[text()='{dropdownName}']/..//button";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -722,6 +723,12 @@ public class NotebookPageUtils {
 		Locator columnTextbox = page.getByLabel("Column Name");
 		AICorePageUtils.waitFor(columnTextbox);
 		columnTextbox.fill(columnName);
+	}
+
+	public static void selectTransformationValueFromDropdown(Page page, String value, String dropdownName) {
+		page.locator (DROPDOWN_BUTTON_XPATH.replace("{dropdownName}", dropdownName)).click( new Locator.ClickOptions().setForce(true));
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).isVisible();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
 	}
 
 	public static List<String> getColumnValues(Page page, String columnName) {

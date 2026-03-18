@@ -274,6 +274,8 @@ public abstract class CaptureElementUtils {
 		return locators;
 	}
 
+	public static List<Locator> captureCatalogFormPage(Page page, String testId) {
+		Locator locator = page.getByTestId(testId).locator("div").first();
 	public static List<Locator> captureCardElementScreenshot(Page page, String elementName) {
 		Locator locator = page.locator(CARD_SECTION_XPATH.replace("{elementName}", elementName));
 		List<Locator> locators = new ArrayList<>();
