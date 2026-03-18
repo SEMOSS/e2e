@@ -73,6 +73,8 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureLabelElementScreenshot(page, elementName);
 		case "catalogformpage":
 			return CaptureElementUtils.captureCatalogFormPage(page, elementName);
+		case "card":
+			return CaptureElementUtils.captureCardElementScreenshot(page, elementName);
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}

@@ -57,7 +57,7 @@ public class AddDatabasePageUtils {
 	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-advanced-settings-toggle'])[1]";
 	private static final String SECTION_FIELD_XPATH = "//h4[normalize-space()='{sectionName}']/ancestor::div//label[text()='{fieldName}']";
 	private static final String QUERY_TAB_DATA_TESTID = "engineLayout-Query-tab";
-	private static final String QUERY_ENTER_TEXTAREA_XPATH = ".view-line";
+	private static final String QUERY_ENTER_TEXTAREA_XPATH = "//div[@class='view-line']/ancestor::div[contains(@class,'monaco-editor') and @role='code']";
 	private static final String OUTPUT_TABLE = "//table";
 	private static final String COLLAPSE_COLUMNS_XPATH = "//div[@class='bg-muted/5']";
 	private static final String COLLAPSE_COLUMNS_HEADER_XPATH = "//table//thead//tr[contains(@class,'closed')]";
