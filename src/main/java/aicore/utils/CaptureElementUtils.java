@@ -27,7 +27,8 @@ public abstract class CaptureElementUtils {
 	private static final String BLOCK_SETTING_ELEMENT_XPATH = "//p[text()='{blockName}']/../../../..";
 	private static final String SECTION_XPATH = "//h6[normalize-space()='{sectionName}']/ancestor::div[contains(@class,'MuiGrid-item')]//ul[@role='tree']";
 	private static final String BLOCK_SECTION_XPATH = "//div[normalize-space()='{blockSection}']/ancestor::div[contains(@class,'MuiGrid-item')]";
-	
+	private static final String CARD_SECTION_XPATH = "//h3[text()='{elementName}']/ancestor::div[@data-slot='card']";
+
 	public static List<Locator> captureButtonScreenshot(Page page, String buttonName) {
 		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
 		List<Locator> locators = new ArrayList<>();
@@ -186,6 +187,7 @@ public abstract class CaptureElementUtils {
 		}
 		return locators;
 	}
+
 	public static List<Locator> captureElementThroughtDataId(Page page, String dataTestId) {
 		Locator locator = page.locator(DATATESTID_LAYER_NAME.replace("{layerName}", dataTestId));
 		List<Locator> locators = new ArrayList<>();
@@ -197,6 +199,7 @@ public abstract class CaptureElementUtils {
 		}
 		return locators;
 	}
+
 	public static List<Locator> captureElementThroughTitle(Page page, String blockTitle) {
 		Locator locator = page.locator(BLOCK_TITLE_NAME.replace("{blockTitle}", blockTitle));
 		List<Locator> locators = new ArrayList<>();
@@ -208,6 +211,7 @@ public abstract class CaptureElementUtils {
 		}
 		return locators;
 	}
+
 	public static List<Locator> captureElementTextScreenshot(Page page, String elementText) {
 		Locator locator = page.locator(ELEMENT_TEXT_NAME.replace("{elementText}", elementText));
 		List<Locator> locators = new ArrayList<>();
@@ -239,7 +243,8 @@ public abstract class CaptureElementUtils {
 		}
 		return locators;
 	}
-		public static List<Locator> captureBlockSectionScreenshot(Page page, String blockName) {
+
+	public static List<Locator> captureBlockSectionScreenshot(Page page, String blockName) {
 		Locator locator = page.locator(BLOCK_SECTION_XPATH.replace("{blockSection}", blockName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
@@ -248,7 +253,8 @@ public abstract class CaptureElementUtils {
 		}
 		return locators;
 	}
-		public static List<Locator> capturePromptContextScreenshot(Page page, String blockName) {
+
+	public static List<Locator> capturePromptContextScreenshot(Page page, String blockName) {
 		Locator locator = page.locator(PROMPT_CONTEXT_NAME.replace("{elementName}", blockName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
@@ -260,6 +266,16 @@ public abstract class CaptureElementUtils {
 
 	public static List<Locator> captureLabelElementScreenshot(Page page, String elementName) {
 		Locator locator = page.getByLabel(elementName);
+		List<Locator> locators = new ArrayList<>();
+		int count = locator.count();
+		for (int i = 0; i < count; i++) {
+			locators.add(locator.nth(i));
+		}
+		return locators;
+	}
+
+	public static List<Locator> captureCardElementScreenshot(Page page, String elementName) {
+		Locator locator = page.locator(CARD_SECTION_XPATH.replace("{elementName}", elementName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {

@@ -30,3 +30,27 @@ Feature: Documentation for Code App
     And User clicks on app Edit button
     And User captures screenshot for "CodeEditorHomeScreen"
     And User completes screenshot capture and triggers comparison for 'CodeEditor'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Capture the screenshot of Code Editor - Member Permission for code app
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'MyApp2' app in the app searchbox
+    And User clicks on 'MyApp2' app from the My Apps
+    And User clicks on app Edit button
+    And User click on Settings
+    And User clicks on Access Control Tab
+    And User captures a 'text' and highlights the "Member Permissions" with name "MemberPermissions"
+    And User completes screenshot capture and triggers comparison for 'AccessControlMemberPermission'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Capture the screenshot of Code Editor - Upload File for code app
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'MyApp2' app in the app searchbox
+    And User clicks on 'MyApp2' app from the My Apps
+    And User clicks on app Edit button
+    And User click on Settings
+    And User clicks on 'Settings' tab for Apps
+    And User captures a 'card' and highlights the "Update Project" with name "UploadFiles"
+    And User completes screenshot capture and triggers comparison for 'SettingUpdateProject'
