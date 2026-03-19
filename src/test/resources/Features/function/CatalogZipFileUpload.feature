@@ -41,9 +41,10 @@ Feature: Validate zip catalog upload functionality in Files Section for all cata
     And User Edit File with some content as 'dummydata'
 
     Examples:
-      | CATALOG  | FILE_NAME                        | CATALOG_NAME        |
-      | Model    | Model/Llama3-70B-Instruct.zip    | Llama3-70B-Instruct |
-      | Database | Database/TestDatabase.zip        | TestDatabase        |
-      | Function | Function/weatherFunctionTest.zip | WeatherFunctionTest |
-      | Storage  | Storage/Localminio.zip           | localminio          |
-      | Vector   | VectorDatabase/TestVector.zip    | TestVector          |
+      | CATALOG   | FILE_NAME                        | CATALOG_NAME        |
+      | Model     | Model/Llama3-70B-Instruct.zip    | Llama3-70B-Instruct |
+      | Database  | Database/TestDatabase.zip        | TestDatabase        |
+      | Function  | Function/weatherFunctionTest.zip | WeatherFunctionTest |
+      | Storage   | Storage/Localminio.zip           | localminio          |
+      | Vector    | VectorDatabase/TestVector.zip    | TestVector          |
+      | Guardrail | Guardrail/Gliner.zip             | Gliner              |

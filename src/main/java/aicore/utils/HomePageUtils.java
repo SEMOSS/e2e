@@ -21,8 +21,8 @@ public class HomePageUtils {
 	// menu options
 	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
-	private static final String BUILD_PAGE_BUTTON = "//div[text()='{cardName}']/parent::div/following-sibling::div//button[text()='{buttonName}']";
-	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//button//span[text()='Browse Templates']";
+	private static final String BUILD_PAGE_BUTTON = "//div[text()='{cardName}']/parent::div/following-sibling::div//button//span[text()='{buttonName}']";
+	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//a[text()='Browse Templates']";
 	private static final String BUILD_PAGE_POPUP_XPATH = "//div[@role='presentation']//div[@role='presentation']";
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
@@ -38,7 +38,7 @@ public class HomePageUtils {
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String SETTINGS_MENU_BUTTON_XPATH = "//div[@aria-label='Settings']";
-	private static final String HOME_MENU_BUTTON_DATA_TESTID = "HomeIcon";
+	private static final String HOME_MENU_BUTTON_DATA_TESTID = "//span[text()='Home']";
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String APP_TAB_XPATH = "//button[text()='{tab}']";
@@ -200,7 +200,8 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnHome(Page page) {
-		page.getByTestId(HOME_MENU_BUTTON_DATA_TESTID).click();
+		page.locator(HOME_MENU_BUTTON_DATA_TESTID).click();
+		page.waitForTimeout(1000);//wait for home page to load and sync then close menu
 		HomePageUtils.closeMainMenu(page);
 	}
 
