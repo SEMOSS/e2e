@@ -40,7 +40,7 @@ public class PlaygroundPageUtils {
 	private static final String RESPONSE_XPATH = "//div[@data-slot='markdown']";
 	private static final String SETTINGS_XPATH = "//span[text()='Open Settings']";
 	private static final String ASK_XPATH = "//span[text()='Ask']";
-	private static final String LOADING_SPINNER_XPATH = "//button[@aria-label='Prompt the Model']//*[@aria-label='Loading']";
+	private static final String LOADING_SPINNER_XPATH = "//div[@role='textbox']";
 	private static final String MCP_SEARCH_BAR_XPATH = "//*[text()='Edit Toolbox']//..//..//input[@placeholder='Search']";
 	private static final String MCP_CHECKBOX_XPATH = "//*[contains(text(),'{MCP}')]//../../button";
 	private static final String KNOWLEDGE_CHECKBOX_XPATH = "//*[contains(text(),'{KNOWLEDGE}')]//../../button";
@@ -439,17 +439,12 @@ public class PlaygroundPageUtils {
 	}
 
 	public static void waitForModelResponse(Page page) {
-		Locator loadingSpinner = page.locator(LOADING_SPINNER_XPATH);
-		long timeout = System.currentTimeMillis() + 12000;
-		while (loadingSpinner.isVisible() && System.currentTimeMillis() < timeout) {
-			page.waitForTimeout(1000);
-		}
-
-		if (System.currentTimeMillis() >= timeout) {
+		Locator spinner = page.locator(LOADING_SPINNER_XPATH);
+		String attributeValue = spinner.getAttribute("aria-disabled");
+		if (!attributeValue.equals("true")) {
 			throw new AssertionError(
 					"Timeout waiting for loading spinner to disappear. Response loading took too long.");
 		}
-
 	}
 
 	public static void verifyModelResponseDisplayed(Page page) {

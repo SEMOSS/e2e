@@ -92,4 +92,14 @@ public class AddGuardrailSteps {
 		Assertions.assertTrue(isGuardrailVisible, "Guardrail title is not visible in search results");
 	}
 
+	@Then("User searches the {string} in the guardrail Catalog searchbox")
+	public void user_searches_the_in_the_guardrail_Catalog_searchbox(String catalogName) {
+		guardrailPage.searchGuardrailCatalog(catalogName + timestamp);
+	}
+
+	@Then("User selects the {string} from the guardrail catalog")
+	public void user_selects_the_from_the_guardrail_catalog(String guardrailTitle) {
+		guardrailPage.selectTheGuardrailCatalog(guardrailTitle + timestamp);
+	}
+
 }

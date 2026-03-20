@@ -223,4 +223,10 @@ public class TeamPermissionsSettingSteps {
 		boolean isAppPresent = teamPermissionsSettings.userSeeAddedAppInTheList(catalogName, access);
 		Assertions.assertTrue(isAppPresent, "App with the specified access is not present in the list.");
 	}
+
+	@And("User verifies the engine added time matches catalog time for {string}")
+	public void verify_engine_and_catalog_time(String teamName) {
+		boolean isValid = teamPermissionsSettings.isEngineAndCatalogTimeMatching(teamName + " " + timestamp);
+		Assertions.assertTrue(isValid, "Engine added time and catalog time are not matching within acceptable range");
+	}
 }
