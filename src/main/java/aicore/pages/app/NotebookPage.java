@@ -115,6 +115,10 @@ public class NotebookPage {
 		NotebookPageUtils.selectHiddenOptionDropdown(page, optionName);
 	}
 
+	public void selectTransformationValueFromDropdown(String value, String dropdownName) {
+		NotebookPageUtils.selectTransformationValueFromDropdown(page, value, dropdownName);
+	}
+
 	public void selectDatabaseFromDropdown(String databaseName) {
 		NotebookPageUtils.selectDatabaseFromDropdown(page, databaseName);
 	}
