@@ -1,3 +1,4 @@
+@Regression
 Feature: Playground Settings -Attachment Option
 
   Scenario: Verify file upload functionality for multiple file formats
