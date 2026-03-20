@@ -20,8 +20,8 @@ public class EditModelPageUtils {
 	private static final String DETAILS_TEXTBOX_XPATH = "//*[@class='view-lines monaco-mouse-cursor-text']//div";
 	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
 	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
-	private static final String DATA_CLASSIFICATION_TEXTBOX_XPATH = "//label[normalize-space()='Data classification']/following-sibling::div//span[normalize-space()='{option}']";
-	private static final String DATA_RESTRICTIONS_TEXTBOX_XPATH = "//label[text()='Data restrictions']/following-sibling::div//span[normalize-space()='{option}']";
+	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//label[@for='data classification-opt-{option}']//button";
+	private static final String DATA_RESTRICTIONS_CHECKBOX_XPATH = "//label[@for='data restrictions-opt-{option}']//button";
 	private static final String DESCRIPTION_TEXT_DATA_TESTID = "Description";
 	private static final String MODEL_TAGS_XPATH = "//div[contains(@class,'flex flex-1 flex-col')]//span";
 	private static final String DETAILS_UNDER_OVERVIEW_DATA_TESTID = "engine-overview-markdown";
@@ -30,7 +30,9 @@ public class EditModelPageUtils {
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data classification')]/parent::section//span";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data restrictions')]/parent::section//span";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
-	private static final String DOMAIN_TEXTBOX_XPATH = "editEngineDetails-Domain-autocomplete";
+	private static final String DOMAIN_TEXTBOX_DATATESTID = "editEngineDetails-Domain-autocomplete";
+	private static final String DATA_RESTRICTION_SELECT_XPATH = "//button[@id='data restrictions']";
+	private static final String DATA_CLASSIFICATION_SELECT_XAPTH = "//button[@id='data classification']";
 
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
@@ -74,16 +76,30 @@ public class EditModelPageUtils {
 	}
 
 	public static void enterDomainName(Page page, String domainName) {
-		page.getByTestId(DOMAIN_TEXTBOX_XPATH).fill(domainName);
-		page.getByTestId(DOMAIN_TEXTBOX_XPATH).press("Enter");
+		Locator enterDomain = page.getByTestId(DOMAIN_TEXTBOX_DATATESTID);
+		enterDomain.scrollIntoViewIfNeeded();
+		enterDomain.fill(domainName);
+		enterDomain.press("Enter");
 	}
 
 	public static void selectDataClassificationOption(Page page, String option) {
-		page.click(DATA_CLASSIFICATION_TEXTBOX_XPATH.replace("{option}", option));
+		Locator selectDataclassification = page.locator(DATA_CLASSIFICATION_SELECT_XAPTH);
+		selectDataclassification.scrollIntoViewIfNeeded();
+		selectDataclassification.click();
+		Locator selectCheckbox = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", option));
+		selectCheckbox.scrollIntoViewIfNeeded();
+		selectCheckbox.click();
+		selectDataclassification.click();
 	}
 
 	public static void selectDataRestrictionsOption(Page page, String option) {
-		page.click(DATA_RESTRICTIONS_TEXTBOX_XPATH.replace("{option}", option));
+		Locator selectRestriction = page.locator(DATA_RESTRICTION_SELECT_XPATH);
+		selectRestriction.scrollIntoViewIfNeeded();
+		selectRestriction.click();
+		Locator selectCheckbox = page.locator(DATA_RESTRICTIONS_CHECKBOX_XPATH.replace("{option}", option));
+		selectCheckbox.scrollIntoViewIfNeeded();
+		selectCheckbox.click();
+		selectRestriction.click();
 	}
 
 	public static void clickOnSubmit(Page page) {
