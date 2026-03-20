@@ -126,6 +126,10 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, functionName, timestamp);
 	}
 
+	public void clickOnFileTab() {
+		AddFunctionPageUtils.clickOnFileTab(page);
+	}
+
 	public void clickOnAccessControl() {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 	}
