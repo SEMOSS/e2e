@@ -14,7 +14,7 @@ Feature: Code App - Setting page
     And User fetch the app name
 
   @DeleteCreatedTestApp @ApplicationBugFailure
-  Scenario: Setting page - validate the Member option for code app
+  Scenario: Setting page - Access Control Tab - validate the Member option for code app
     Given User click on Settings
     And User clicks on Access Control Tab
     And User can see the 'Access Settings' section on setting page
@@ -28,8 +28,8 @@ Feature: Code App - Setting page
     And User Search 'Read' user from Access Control
     And User deletes the 'Read' user
 
-  @DeleteCreatedTestApp @ApplicationBugFailure
-  Scenario: Setting page - validate the Apps option for code app
+  @DeleteCreatedTestApp
+  Scenario: Settings page - Setting Tab - validate the Apps option for code app
     Given User click on Settings
     And User clicks on 'Settings' tab for Apps
     And User can see the 'Portals' section on setting page
@@ -38,14 +38,14 @@ Feature: Code App - Setting page
     And User sees success toast message 'Successfully published'
     And User can see the 'Reactors' section on setting page
     And User click on 'Compile Changes on This Instance' button on setting page
-    And User sees success toast message 'Successfully recompiled'
+    And User sees success toast message 'Successfully compiled'
     And User click on 'Deploy and Persist Changes' button on setting page
-    And User sees success toast message 'Successfully redeployed'
+    And User sees success toast message 'Successfully compiled and deployed'
     And User can see the 'Update Project' section on setting page
     And User uploads the file 'dummy-pdf.pdf'
     And User click on 'Update' button on setting page
 
-  Scenario: Setting page - validate the General option for code app
+  Scenario: Setting page - Access Control Tab - validate the General option for code app
     Given User click on Settings
     And User clicks on Access Control Tab
     And User turn OFF the Private option
@@ -58,3 +58,31 @@ Feature: Code App - Setting page
     And 'Admin' user can see toaster message is 'Successfully made .* undiscoverable'
     And User can see the 'Delete Project' section on General setting page
     And 'Admin' user 'can' Delete Catalog
+
+  Scenario: Setting page - MCP Usage - Verify the all section are display in MCP Tab along with their code and copy option for code app
+    When User clicks on 'MCP Usage' tab
+    Then User can see the 'Available Tools' section on setting page
+    And User can see the 'VS Code (MCP Integration)' section on setting page
+    And User clicks on copy button for 'VS Code (MCP Integration)' section
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User can see the 'Claude Desktop (MCP Server Connection)' section on setting page
+    And User clicks on copy button for 'Claude Desktop (MCP Server Connection)' section
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User can see the 'Claude with custom backend and MCP (Best for AI Tooling)' section on setting page
+    And User clicks on copy button for 'Claude with custom backend and MCP (Best for AI Tooling)' section
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User can see the 'OpenAI Codex / CLI Tools (MCP Connection)' section on setting page
+    And User clicks on copy button for 'OpenAI Codex / CLI Tools (MCP Connection)' section
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User can see the 'Terminal Command (npx mcp-remote)' section on setting page
+    And User clicks on copy button for 'Terminal Command (npx mcp-remote)' section
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User can see the 'cURL Command (Manual MCP JSON-RPC Request)' section on setting page
+    And User clicks on copy button for 'cURL Command (Manual MCP JSON-RPC Request)' section
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User can see the 'JavaScript (Node.js — fetch / axios)' section on setting page
+    And User clicks on copy button for 'JavaScript (Node.js — fetch / axios)' section
+    And User sees success toast message 'Successfully copied to clipboard'
+    And User can see the 'Python (requests)' section on setting page
+    And User clicks on copy button for 'Python (requests)' section
+    And User sees success toast message 'Successfully copied to clipboard'
