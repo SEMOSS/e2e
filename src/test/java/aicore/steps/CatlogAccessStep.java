@@ -1,9 +1,8 @@
 package aicore.steps;
 
+import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Page;
 
@@ -499,5 +498,10 @@ public class CatlogAccessStep {
 	@And("User clicks on {string} tab for Apps")
 	public void user_clicks_on_tab_for_apps(String tabName) {
 		catlogpermission.clickOnTab(tabName);
+	}
+
+	@And("User clicks on copy button for {string} section")
+	public void user_clicks_on_copy_button_for_section(String sectionName) {
+		catlogpermission.clickOnCopyButtonForSection(sectionName);
 	}
 }
