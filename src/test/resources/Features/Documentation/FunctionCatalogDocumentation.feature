@@ -201,3 +201,24 @@ Feature: Function documentation
     And User selects function 'Azure Document Intelligence'
     Then User captures a 'catalogformpage' and highlights the "function-form-box" with name "func-prop" 
     And User completes screenshot capture and triggers comparison for "FunctionEngines"
+
+@LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
+  Scenario: Function Engine add zip Document
+    Given User captures documentation screenshot for 'FunctionEngines'
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Add Function
+    And User clicks on file upload icon
+    And User uploads the file 'Function/weatherFunctionTest.zip'
+    Then User captures screenshot for "add_zip"
+    And User completes screenshot capture and triggers comparison for "EditInterface"
+
+ @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
+  Scenario: Function Engine - properties
+    Given User captures documentation screenshot for 'FunctionEngines'
+    When User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Add Function
+    And User selects function 'Azure Document Intelligence'
+    Then User captures a 'testidelement' and highlights the "function-form-submit" with name "create_func" 
+    And User completes screenshot capture and triggers comparison for "FunctionEngines"
