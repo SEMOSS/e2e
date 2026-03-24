@@ -177,4 +177,8 @@ public class CatlogPermissionsPage {
 	public void clickOnTab(String tabName) {
 		CatlogAccessPageUtility.clickOnTab(page, tabName);
 	}
+
+	public void clickOnCopyButtonForSection(String sectionName) {
+		CatlogAccessPageUtility.clickOnCopyButtonForSection(page, sectionName);
+	}
 }

@@ -17,7 +17,7 @@ Feature: Code app files
     Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
     And User select Action as 'Upload Files'
-    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    When User uploads the file 'Playground/mcp.zip'
     Then User clicks on 'Upload' button to create code app
     And User can see the 'mcp.zip' folder in the Files section
     And User clicks on the publish icon to publish the code app
@@ -71,7 +71,7 @@ Feature: Code app files
     Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
     And User select Action as 'Upload Files'
-    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    When User uploads the file 'Playground/mcp.zip'
     Then User clicks on 'Upload' button to create code app
     And User can see the 'mcp.zip' folder in the Files section
     And User clicks on the publish icon to publish the code app
@@ -89,7 +89,7 @@ Feature: Code app files
     Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
     And User select Action as 'Upload Files'
-    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    When User uploads the file 'Playground/mcp.zip'
     And User clicks on 'Upload' button to create code app
     And User can see the 'mcp.zip' folder in the Files section
     And User clicks on three dot icon of 'mcp.zip' file
@@ -114,7 +114,7 @@ Feature: Code app files
      Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
     And User select Action as 'Upload Files'
-    When User uploads the file 'PlaygroundMCP/mcp.zip'
+    When User uploads the file 'Playground/mcp.zip'
     And User clicks on 'Upload' button to create code app
     And User can see the 'mcp.zip' folder in the Files section
     And User clicks on three dot icon of 'mcp.zip' file

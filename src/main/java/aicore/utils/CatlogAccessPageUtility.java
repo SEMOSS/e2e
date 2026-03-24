@@ -46,13 +46,14 @@ public class CatlogAccessPageUtility {
 	private static final String PENDING_REQUEST_REJECT_DATA_TESTID = "deny-pending-member-btn";
 	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
 	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
-	private static final String SETTING_SECTION_XPATH = "//h3[normalize-space()='{section}'] | //h2[normalize-space()='{section}']";
+	private static final String SETTING_SECTION_XPATH = "//h3[normalize-space()='{section}'] | //h2[normalize-space()='{section}'] | //h4[normalize-space()='{section}']";
 	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div[h4[normalize-space()='Enable Publishing']]/following-sibling::button";
 	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button[normalize-space()='Publish']";
 	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//button[text()='{buttonName}']";
 	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
 	private static final String CLICK_ON_TAB_XPATH = "//button[text()='{tabName}']";
 	private static final String TOASTER_MESSAGE_DATATESTID = "notification-success-message";
+	private static final String MCP_USAGE_COPY_BUTTON_DATATESTID = "mcp-usage-copy-button-{sectionName}";
 
 	public static boolean canViewOverview(Page page) {
 		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
@@ -308,5 +309,11 @@ public class CatlogAccessPageUtility {
 
 	public static void clickOnTab(Page page, String tabName) {
 		page.locator(CLICK_ON_TAB_XPATH.replace("{tabName}", tabName)).click();
+	}
+
+	public static void clickOnCopyButtonForSection(Page page, String sectionName) {
+		Locator copyButton = page.getByTestId(MCP_USAGE_COPY_BUTTON_DATATESTID.replace("{sectionName}", sectionName));
+		copyButton.hover();
+		copyButton.click();
 	}
 }
