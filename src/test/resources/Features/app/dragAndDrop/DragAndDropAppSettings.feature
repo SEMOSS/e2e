@@ -64,13 +64,13 @@ Feature: Drag and Drop App setting Page
     Given User click on Settings
     When User clicks on 'MCP Usage' tab
     Then User can see the 'Available Tools' section on setting page
-    And User verifies section visibility, copy action, and toast message
-      | Section Name                                             | Toast Message                    |
-      | VS Code (MCP Integration)                                | Successfully copied to clipboard |
-      | Claude Desktop (MCP Server Connection)                   | Successfully copied to clipboard |
-      | Claude with custom backend and MCP (Best for AI Tooling) | Successfully copied to clipboard |
-      | OpenAI Codex / CLI Tools (MCP Connection)                | Successfully copied to clipboard |
-      | Terminal Command (npx mcp-remote)                        | Successfully copied to clipboard |
-      | cURL Command (Manual MCP JSON-RPC Request)               | Successfully copied to clipboard |
-      | JavaScript (Node.js — fetch / axios)                     | Successfully copied to clipboard |
-      | Python (requests)                                        | Successfully copied to clipboard |
+    And User sees the following sections and on clicking the copy button, "Successfully copied to clipboard" toast message appears:
+      | SECTION NAME                                             |
+      | VS Code (MCP Integration)                                |
+      | Claude Desktop (MCP Server Connection)                   |
+      | Claude with custom backend and MCP (Best for AI Tooling) |
+      | OpenAI Codex / CLI Tools (MCP Connection)                |
+      | Terminal Command (npx mcp-remote)                        |
+      | cURL Command (Manual MCP JSON-RPC Request)               |
+      | JavaScript (Node.js — fetch / axios)                     |
+      | Python (requests)                                        |

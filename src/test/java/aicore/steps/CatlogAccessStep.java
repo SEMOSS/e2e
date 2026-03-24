@@ -508,14 +508,13 @@ public class CatlogAccessStep {
 		catlogpermission.clickOnTab(tabName);
 	}
 
-	@Then("User verifies section visibility, copy action, and toast message")
-	public void user_verifies_section_and_copy(DataTable dataTable) {
+	@Then("User sees the following sections and on clicking the copy button, {string} toast message appears:")
+	public void user_verifies_sections_and_copy_toast(String expectedToast, DataTable dataTable) {
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
-			String section = row.get("Section Name");
-			String expectedToast = row.get("Toast Message");
-			boolean isSectionVisible = catlogpermission.userCanSeeSectionUnderSetting(section);
-			Assertions.assertTrue(isSectionVisible, section + " section is not visible");
+			String section = row.get("SECTION NAME");
+			boolean isVisible = catlogpermission.userCanSeeSectionUnderSetting(section);
+			Assertions.assertTrue(isVisible, section + " section is not visible");
 			catlogpermission.clickOnCopyButtonForSection(section);
 			String actualMessage = addFunctionToCatalogPage.verifySuccessToastMessage(expectedToast);
 			Assertions.assertEquals(expectedToast, actualMessage, "Toast message mismatch for section: " + section
