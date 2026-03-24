@@ -49,4 +49,8 @@ public class GuardrailPage {
 		return GuardrailPageUtils.verifySearchedGuardrailCatalogTitle(page, guardrailTitle);
 	}
 
+	public void selectTheGuardrailCatalog(String guardrailTitle) {
+		GuardrailPageUtils.selectTheGuardrailCatalog(page, guardrailTitle);
+	}
+
 }

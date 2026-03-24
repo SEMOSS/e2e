@@ -142,4 +142,8 @@ public class TeamPermissionsSettingsPage {
 	public boolean userSeeAddedAppInTheList(String catalogName, String access) {
 		return TeamPermissionsSettingsUtils.userSeeAddedAppInTheList(page, catalogName, access);
 	}
+
+	public boolean isEngineAndCatalogTimeMatching(String teamName) {
+		return TeamPermissionsSettingsUtils.isEngineAndCatalogTimeMatching(page, teamName);
+	}
 }
