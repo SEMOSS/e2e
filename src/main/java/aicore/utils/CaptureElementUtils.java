@@ -283,7 +283,7 @@ public abstract class CaptureElementUtils {
 		}
 		return locators;
 	}
-
+ 
 	public static List<Locator> captureCardElementScreenshot(Page page, String elementName) {
 		Locator locator = page.locator(CARD_SECTION_XPATH.replace("{elementName}", elementName));
 		List<Locator> locators = new ArrayList<>();

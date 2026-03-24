@@ -184,6 +184,11 @@ public class AddFunctionSteps {
 		addFunctionToCatalogPage.clickOnAccessControl();
 	}
 
+	@Then("User clicks on File Tab")
+	public void user_clicks_on_file_tab() {
+		addFunctionToCatalogPage.clickOnFileTab();
+	}
+
 	@Then("User clicks on Delete button")
 	public void user_clicks_on_delete_button() {
 		addFunctionToCatalogPage.clickOnDeleteButton();
