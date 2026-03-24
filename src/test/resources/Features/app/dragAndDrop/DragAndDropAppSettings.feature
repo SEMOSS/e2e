@@ -20,7 +20,7 @@ Feature: Drag and Drop App setting Page
     Then User can see the 'Access Settings' section on setting page
     And User can see the 'Pending Requests' section on setting page
     When User clicks on Add Member button
-    Then User adds one user and assigns them as 'Editor'
+    And User adds one user and assigns them as 'Editor'
     And User Search 'Editor' user from Access Control
     And User deletes the 'Editor' user
     When User clicks on Add Member button
