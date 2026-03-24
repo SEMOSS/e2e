@@ -142,4 +142,9 @@ public class TeamPermissionsSettingsPage {
 	public boolean userSeeAddedAppInTheList(String catalogName, String access) {
 		return TeamPermissionsSettingsUtils.userSeeAddedAppInTheList(page, catalogName, access);
 	}
+
+	public String fetchTeamName() {
+		return TeamPermissionsSettingsUtils.fetchTeamName(page);
+	}
+
 }

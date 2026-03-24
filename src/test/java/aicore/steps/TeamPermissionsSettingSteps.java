@@ -223,4 +223,10 @@ public class TeamPermissionsSettingSteps {
 		boolean isAppPresent = teamPermissionsSettings.userSeeAddedAppInTheList(catalogName, access);
 		Assertions.assertTrue(isAppPresent, "App with the specified access is not present in the list.");
 	}
+
+	@And("User fetch the team name")
+	public void user_fetch_the_team_name() {
+		String fetchName = teamPermissionsSettings.fetchTeamName();
+		Assertions.assertFalse(fetchName.isEmpty(), "Fetched Team Name is Empty");
+	}
 }

@@ -1,4 +1,4 @@
-@LoginWithAdmin @DeleteTestCatalog @Regression
+@LoginWithAdmin @DeleteTestCatalog @Regression @DeleteCreatedTestTeam
 Feature: Team Permissions
 
   Background: Team Permissions - Add team
@@ -11,6 +11,7 @@ Feature: Team Permissions
     And User fills "Test Team" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
+    And User fetch the team name
     Then User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode

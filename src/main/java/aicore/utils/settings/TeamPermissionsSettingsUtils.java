@@ -51,6 +51,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String USER_LIST_XPATH = "//div[contains(@class,'rounded-md p-3')]";
 	private static final String SELECT_USER_FROM_LIST_XPATH = "//div[contains(@class,'rounded-md p-3')][.//div[text()='{userName}']]";
 	private static final String CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_APPS_XPATH = "//div//h2[text()='Add Apps']/following::button[@role='checkbox']";
+	private static final String FETCH_TEAM_NAME_XPATH = "//a[contains(@href,'#/settings/team-permissions/<type>') and @variant='body1']";
 
 	final static int ROWS_PER_PAGE = 5;
 
@@ -415,5 +416,14 @@ public class TeamPermissionsSettingsUtils {
 		Locator addedApp = page.locator(
 				ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH.replace("catalogName", catalogName).replace("role", access));
 		return addedApp.isVisible();
+	}
+
+	public static String fetchTeamName(Page page) {
+		Locator teamName = page.locator(FETCH_TEAM_NAME_XPATH);
+		AICorePageUtils.waitFor(teamName);
+		String actualTeamName = teamName.textContent().trim();
+		TestResourceTrackerHelper.getInstance().setTeamName(actualTeamName);
+		return actualTeamName;
+
 	}
 }
