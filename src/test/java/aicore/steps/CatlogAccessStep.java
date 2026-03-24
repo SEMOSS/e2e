@@ -3,6 +3,9 @@ package aicore.steps;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Page;
@@ -11,10 +14,12 @@ import aicore.base.GenericSetupUtils;
 import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddDatabasePage;
+import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.AddModelPage;
 import aicore.pages.CatlogPermissionsPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -27,6 +32,7 @@ public class CatlogAccessStep {
 	private CatlogPermissionsPage catlogpermission;
 	private AddModelPage openModelPage;
 	private AddDatabasePage addDatabaseToCatalogPage;
+	private AddFunctionToCatalogPage addFunctionToCatalogPage;
 
 	public CatlogAccessStep() {
 		new LoginPage(SetupHooks.getPage());
@@ -35,6 +41,7 @@ public class CatlogAccessStep {
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		this.catlogpermission = new CatlogPermissionsPage(SetupHooks.getPage());
 		this.addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
+		this.addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@Then("{string} user can {string} Overview")
@@ -499,5 +506,20 @@ public class CatlogAccessStep {
 	@And("User clicks on {string} tab for Apps")
 	public void user_clicks_on_tab_for_apps(String tabName) {
 		catlogpermission.clickOnTab(tabName);
+	}
+
+	@Then("User sees the following sections and on clicking the copy button, {string} toast message appears:")
+	public void user_verifies_sections_and_copy_toast(String expectedToast, DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String section = row.get("SECTION NAME");
+			boolean isVisible = catlogpermission.userCanSeeSectionUnderSetting(section);
+			Assertions.assertTrue(isVisible, section + " section is not visible");
+			catlogpermission.clickOnCopyButtonForSection(section);
+			String actualMessage = addFunctionToCatalogPage.verifySuccessToastMessage(expectedToast);
+			Assertions.assertEquals(expectedToast, actualMessage, "Toast message mismatch for section: " + section
+					+ " | Expected: '" + expectedToast + "' but found: '" + actualMessage + "'");
+			addFunctionToCatalogPage.closeToastMessage();
+		}
 	}
 }
