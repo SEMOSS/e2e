@@ -210,9 +210,9 @@ public class CaptureScreenShotUtils {
 	public static void captureFormScreenshot(Page page, Path path) throws IOException {
 		page.waitForTimeout(1000);
 		Path screenshotPath = Paths.get(path.toString());
-		page.setViewportSize(1920, 1080);
+		page.setViewportSize(2560,1440);
 		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true)
-				.setClip(new Clip(0, 0, 1920, 1080)));
+				.setClip(new Clip(640, 360, 1280, 720)));
 		page.setViewportSize(1280, 780);
 	}
 

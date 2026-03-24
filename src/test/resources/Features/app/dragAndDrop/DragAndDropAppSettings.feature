@@ -1,26 +1,26 @@
-@Regression @LoginWithAdmin
-Feature: Code App - Setting page
+@LoginWithAdmin @Regression
+Feature: Drag and Drop App setting Page
 
-  Background: Create the code app
-    Given User is on Home page
-    And User opens Main Menu
-    When User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Develop in code"
-    And User enters app name as 'Code app'
-    And User enters description as 'Created by automation script'
-    And User enters tags 'MCP' and presses Enter
+  Background: Create Drag and Drop app and navigate to Setting Page
+    Given User opens Main Menu
+    And User is on Home page
+    And User clicks on Open App Library
+    When User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Test app'
     And User clicks on Create button
-    Then User fetch the app name
+    And User fetch the app name
+    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    And User clicks on Block Settings option
 
-  @DeleteCreatedTestApp @ApplicationBugFailure
-  Scenario: Setting page - Access Control Tab - validate the Member option for code app
+  @DeleteCreatedTestApp
+  Scenario: Setting page - Access Control Tab - validate the Member option for drag and drop app
     Given User click on Settings
     When User clicks on Access Control Tab
     Then User can see the 'Access Settings' section on setting page
     And User can see the 'Pending Requests' section on setting page
     When User clicks on Add Member button
-    Then User adds one user and assigns them as 'Editor'
+    And User adds one user and assigns them as 'Editor'
     And User Search 'Editor' user from Access Control
     And User deletes the 'Editor' user
     When User clicks on Add Member button
@@ -29,7 +29,7 @@ Feature: Code App - Setting page
     And User deletes the 'Read' user
 
   @DeleteCreatedTestApp
-  Scenario: Settings page - Setting Tab - validate the Apps option for code app
+  Scenario: Settings page - Setting Tab validate the Apps option for drag and drop app
     Given User click on Settings
     When User clicks on 'Settings' tab for Apps
     Then User can see the 'Portals' section on setting page
@@ -45,7 +45,7 @@ Feature: Code App - Setting page
     And User uploads the file 'dummy-pdf.pdf'
     And User click on 'Update' button on setting page
 
-  Scenario: Setting page - Access Control Tab - validate the General option for code app
+  Scenario: Setting page - Access Control Tab - validate the General option for drag and drop app
     Given User click on Settings
     When User clicks on Access Control Tab
     Then User turn OFF the Private option
