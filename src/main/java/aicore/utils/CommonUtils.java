@@ -54,7 +54,7 @@ public class CommonUtils {
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
 	private static final String APP_DELETE_BUTTON_XPATH = "//div[text()='Delete App']";
-	private static final String THREE_DOT_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[normalize-space()='Delete']";
+	private static final String DELETE_CONFIRMATION_POPUP_BUTTON_XPATH = "//button[normalize-space()='Delete']";
 	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
 
 	private static final String THREE_DOT_ICON_XPATH = "//button[@aria-label='More options']";
@@ -350,7 +350,7 @@ public class CommonUtils {
 			page.waitForTimeout(500);
 			page.locator(THREE_DOT_ICON_XPATH).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
-			page.locator(THREE_DOT_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {
 				page.locator(TOAST_CLOSE_XPATH).click();
@@ -378,7 +378,7 @@ public class CommonUtils {
 			page.waitForTimeout(500);
 			page.getByTestId(CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID).click();
 			page.locator(TEAM_DELETE_BUTTON_XPATH).click();
-			page.locator(THREE_DOT_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {
 				page.locator(TOAST_CLOSE_XPATH).click();
