@@ -1,5 +1,8 @@
 package aicore.utils.settings;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.microsoft.playwright.Locator;
@@ -52,6 +55,9 @@ public class TeamPermissionsSettingsUtils {
 	private static final String SELECT_USER_FROM_LIST_XPATH = "//div[contains(@class,'rounded-md p-3')][.//div[text()='{userName}']]";
 	private static final String CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_APPS_XPATH = "//div//h2[text()='Add Apps']/following::button[@role='checkbox']";
 	private static final String FETCH_TEAM_NAME_XPATH = "//a[contains(@href,'#/settings/team-permissions/<type>') and @variant='body1']";
+	private static String engineAddedDteTime;
+	private static final String ENGINE_DATE_TIME_XPATH = "//tr[.//div[normalize-space()='{catalogName}']]//td[last()-1]";
+	private static final String CATALOG_DATE_TIME_XPATH = "//td[text()='{teamName}']/following-sibling::td";
 
 	final static int ROWS_PER_PAGE = 5;
 
@@ -145,6 +151,7 @@ public class TeamPermissionsSettingsUtils {
 		if (!teamNameLocator.isVisible()) {
 			throw new AssertionError("Team name: " + teamName + " with timestamp: " + timestamp + " is not visible.");
 		}
+		teamNameLocator.scrollIntoViewIfNeeded();
 		teamNameLocator.click();
 	}
 
@@ -179,7 +186,12 @@ public class TeamPermissionsSettingsUtils {
 	public static boolean userSeeAddedEngineInTheList(Page page, String catalogName, String role) {
 		Locator addedEngine = page.locator(
 				ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH.replace("catalogName", catalogName).replace("role", role));
-		return addedEngine.isVisible();
+		if (addedEngine.isVisible()) {
+			engineAddedDteTime = page.locator(ENGINE_DATE_TIME_XPATH.replace("{catalogName}", catalogName))
+					.textContent().trim();
+			return true;
+		}
+		return false;
 	}
 
 	// delete team member
@@ -425,5 +437,20 @@ public class TeamPermissionsSettingsUtils {
 		TestResourceTrackerHelper.getInstance().setTeamName(actualTeamName);
 		return actualTeamName;
 
+	}
+
+	public static boolean isEngineAndCatalogTimeMatching(Page page, String teamName) {
+		String catalogDateTime = page.locator(CATALOG_DATE_TIME_XPATH.replace("{teamName}", teamName)).last()
+				.textContent().trim();
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime engineTime = LocalDateTime.parse(engineAddedDteTime, formatter);
+			LocalDateTime catalogTime = LocalDateTime.parse(catalogDateTime, formatter);
+			long diffInSeconds = Math.abs(Duration.between(engineTime, catalogTime).getSeconds());
+			return diffInSeconds <= 60;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

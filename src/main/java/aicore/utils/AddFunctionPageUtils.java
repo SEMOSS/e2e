@@ -30,6 +30,7 @@ public class AddFunctionPageUtils {
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards-FUNCTION')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	private static final String FILE_TAB_XPATH = "//button[text()='Files']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
@@ -208,6 +209,10 @@ public class AddFunctionPageUtils {
 		page.locator(CATALOG_FUNCTION_XPATH.replace("{FunctionName}", functionName)).click();
 	}
 
+	public static void clickOnFileTab(Page page) {
+		page.locator(FILE_TAB_XPATH).isVisible();
+		page.locator(FILE_TAB_XPATH).click();
+	}
 	public static void clickOnAccessControl(Page page) {
 		page.locator(ACCESS_CONTROL_XPATH).isVisible();
 		page.locator(ACCESS_CONTROL_XPATH).click();
@@ -236,7 +241,7 @@ public class AddFunctionPageUtils {
 	}
 
 	public static String verifySuccessToastMessage(Page page, String toastMessage) {
-		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage));
+		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage)).first();
 		alert.scrollIntoViewIfNeeded();
 		AICorePageUtils.waitFor(alert);
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);

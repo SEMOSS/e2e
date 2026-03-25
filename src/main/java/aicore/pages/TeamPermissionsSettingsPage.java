@@ -147,4 +147,8 @@ public class TeamPermissionsSettingsPage {
 		return TeamPermissionsSettingsUtils.fetchTeamName(page);
 	}
 
+	public boolean isEngineAndCatalogTimeMatching(String teamName) {
+		return TeamPermissionsSettingsUtils.isEngineAndCatalogTimeMatching(page, teamName);
+	}
+
 }
