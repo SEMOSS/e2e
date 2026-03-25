@@ -18,6 +18,7 @@ public class GuardrailPageUtils {
 	private static final String EXPORT_BUTTON_DATA_TESTID = "engineHeader-Guardrail-export-btn";
 	private static final String TOAST_MESSAGE_DATA_TESTID = "notification-success-message";
 	private static final String GUARDRAIL_TOAST_MESSAGE_XPATH = "//div[text()='{toastMessage}']";
+	private static final String SELECT_GUARDRAIL_CATALOG_XPATH = "//p[text()='{catalogName}']";
 
 	public static void clickOnAddGuardrailButton(Page page) {
 		page.getByTestId(ADD_GUARDRAIL_BUTTON_DATA_TESTID).click();
@@ -69,7 +70,12 @@ public class GuardrailPageUtils {
 
 	public static boolean verifySearchedGuardrailCatalogTitle(Page page, String guardrailTitle) {
 		Locator searchBox = page.getByTitle(guardrailTitle);
-		 return searchBox.isVisible();
+		return searchBox.isVisible();
 	}
-	
+
+	public static void selectTheGuardrailCatalog(Page page, String catalogName) {
+		Locator searchBox = page.locator(SELECT_GUARDRAIL_CATALOG_XPATH.replace("{catalogName}", catalogName));
+		searchBox.click();
+	}
+
 }
