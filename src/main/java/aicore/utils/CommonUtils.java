@@ -364,10 +364,6 @@ public class CommonUtils {
 		}
 	}
 
-	public static void closeToastMessage(Page page) {
-
-	}
-
 	public static String getCurrentUtcTime() {
 		return LocalDateTime.now(ZoneOffset.UTC).withNano(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	}
@@ -377,11 +373,9 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			HomePageUtils.clickOnOpenSettings(page);
-			page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible();
 			page.locator(TEAM_PERMISSION_CARD_XPATH).click();
 			page.getByPlaceholder(SEARCH_TEAM_PLACEHOLDER_TEXT).fill(teamName);
 			page.waitForTimeout(500);
-
 			page.getByTestId(CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID).click();
 			page.locator(TEAM_DELETE_BUTTON_XPATH).click();
 			page.locator(THREE_DOT_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();

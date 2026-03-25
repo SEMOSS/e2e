@@ -48,5 +48,5 @@ Feature: Team Permissions
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     And 'Admin' user clicks on Access Control
-    Then User sees the team 'Test Team' with 'Editor' in Team section on the the Access Settings page
+    Then User sees the team 'Test Team' with 'Editor' in Team section on the the Access Settings page 
     
