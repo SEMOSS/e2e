@@ -1,4 +1,4 @@
-@LoginWithAdmin @DeleteTestCatalog @Regression
+@LoginWithAdmin @DeleteTestCatalog @Regression @DeleteCreatedTestTeam
 Feature: Team Permissions
 
   Background: Team Permissions - Add team
@@ -11,7 +11,8 @@ Feature: Team Permissions
     And User fills "Test Team" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
-    And User opens Main Menu
+    And User fetch the team name
+    Then User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Team Permissions' Card
@@ -223,3 +224,4 @@ Feature: Team Permissions
     And 'Admin' user clicks on Access Control
     Then User sees the team 'Test Team' with 'Author' in Team section on the the Access Settings page
     And User verifies the engine added time matches catalog time for 'Test Team'
+
