@@ -1,9 +1,8 @@
-
-@LoginWithAdmin @Regression
+@LoginWithAdmin @Regression @DeleteCreatedTestTeam
 Feature: Team Permissions - add User
 
   Background: Team Permissions - Add team
-   Given User opens Main Menu
+    Given User opens Main Menu
     When User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Member Settings' Card
@@ -18,6 +17,7 @@ Feature: Team Permissions - add User
     And User fills "Test Team" in Name field of Add Team form
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
+    And User fetch the team name
 
   Scenario: User add different user to the team
     When User clicks on "Add Member" button in Add Team Page
@@ -55,7 +55,7 @@ Feature: Team Permissions - add User
     And User clicks on Delete Selected button 1 times
 
   Scenario: Delete multiple members from the Add team member
-   Given User opens Main Menu
+    Given User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Member Settings' Card
