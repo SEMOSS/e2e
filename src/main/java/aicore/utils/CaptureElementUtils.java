@@ -28,6 +28,7 @@ public abstract class CaptureElementUtils {
 	private static final String SECTION_XPATH = "//h6[normalize-space()='{sectionName}']/ancestor::div[contains(@class,'MuiGrid-item')]//ul[@role='tree']";
 	private static final String BLOCK_SECTION_XPATH = "//div[normalize-space()='{blockSection}']/ancestor::div[contains(@class,'MuiGrid-item')]";
 	private static final String CARD_SECTION_XPATH = "//h3[text()='{elementName}']/ancestor::div[@data-slot='card']";
+	private static final String TILE_XPATH = "//span[contains(normalize-space(),'{tileName}')]/../../.. | //h3[contains(normalize-space(),'{tileName}')]/../../..";
 	private static final String CLASS_ELEMENT_XPATH = "//*[contains(@class,'{className}')]/..";
 	private static final String ROLE_ELEMENT_XPATH = "//*[@role='{role}']/../../../..";
 
@@ -51,7 +52,7 @@ public abstract class CaptureElementUtils {
 	}
 
 	public static List<Locator> captureTileScreenshot(Page page, String tileName) {
-		Locator locator = page.locator("//span[contains(normalize-space(),'" + tileName + "')]/../../..");
+		Locator locator = page.locator(TILE_XPATH.replace("{tileName}", tileName));
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
