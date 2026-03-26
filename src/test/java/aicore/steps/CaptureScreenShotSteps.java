@@ -44,10 +44,12 @@ public class CaptureScreenShotSteps {
 		String[] names = elementNames.split(",");
 
 		// Trim for robustness
-		for (int i = 0; i < types.length; i++)
+		for (int i = 0; i < types.length; i++) {
 			types[i] = types[i].trim();
-		for (int i = 0; i < names.length; i++)
+		}
+		for (int i = 0; i < names.length; i++) {
 			names[i] = names[i].trim();
+		}
 
 		List<Locator> allLocators = new ArrayList<>();
 		for (int i = 0; i < types.length; i++) {
@@ -70,10 +72,12 @@ public class CaptureScreenShotSteps {
 		String[] names = elementNames.split(",");
 
 		// Trim for robustness
-		for (int i = 0; i < types.length; i++)
+		for (int i = 0; i < types.length; i++) {
 			types[i] = types[i].trim();
-		for (int i = 0; i < names.length; i++)
+		}
+		for (int i = 0; i < names.length; i++) {
 			names[i] = names[i].trim();
+		}
 
 		List<Locator> allLocators = new ArrayList<>();
 		for (int i = 0; i < types.length; i++) {
