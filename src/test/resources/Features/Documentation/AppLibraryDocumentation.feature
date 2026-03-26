@@ -242,7 +242,6 @@ Feature: App Library Documentation
     Given User captures documentation screenshot for 'Navigating/Create New App'
     When User is on Home page
     And User opens Main Menu
-    And User opens Main Menu
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'diabetes'
     And User clicks on Add Database
@@ -291,7 +290,6 @@ Feature: App Library Documentation
   Scenario: Documentation for App Library - Create new App - NB7 screenshot
     Given User captures documentation screenshot for 'Navigating/Create New App'
     When User is on Home page
-    And User opens Main Menu
     And User opens Main Menu
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'diabetes'
