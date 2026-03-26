@@ -26,6 +26,9 @@ public class NotebookPageUtils {
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
+	private static final String EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID = "EditIcon";
+	private static final String COLUMN_CHECKBOX_BY_NAME_XPATH = "//input[@id='checkbox-{columnName}-0']";
+	private static final String UPDATE_CELL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'MuiTable-root')]//tbody//tr[position()>1]//td[2]";
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
@@ -349,6 +352,28 @@ public class NotebookPageUtils {
 		importButtonLocator.scrollIntoViewIfNeeded();
 		AICorePageUtils.waitFor(importButtonLocator);
 		importButtonLocator.click();
+	}
+
+	public static void clickOnEditButtonForImportedDataCell(Page page) {
+		Locator editButton = page.getByTestId(EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID);
+		AICorePageUtils.waitFor(editButton);
+		if (!editButton.isVisible()) {
+			throw new AssertionError("Edit button for imported data cell is not visible");
+		}
+		editButton.click();
+	}
+
+	public static void uncheckColumnFromSelectedColumns(Page page, String columnName) {
+		page.locator("#checkbox-" + columnName + "-0").click();
+	}
+
+	public static void clickOnUpdateCellButton(Page page) {
+		Locator updateButton = page.locator(UPDATE_CELL_BUTTON_XPATH);
+		AICorePageUtils.waitFor(updateButton);
+		if (!updateButton.isVisible()) {
+			throw new AssertionError("Update cell button is not visible");
+		}
+		updateButton.click();
 	}
 
 	public static void deleteFirstCell(Page page) {

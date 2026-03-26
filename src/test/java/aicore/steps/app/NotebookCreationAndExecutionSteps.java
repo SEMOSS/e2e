@@ -186,6 +186,21 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.deleteFirstCell();
 	}
 
+	@And("User clicks on Edit button for the imported data cell")
+	public void user_clicks_on_edit_button_for_the_imported_data_cell() {
+		notebookPage.clickOnEditButtonForImportedDataCell();
+	}
+
+	@And("User unchecks {string} column from the selected columns")
+	public void user_unchecks_column_from_the_selected_columns(String columnName) {
+		notebookPage.uncheckColumnFromSelectedColumns(columnName);
+	}
+
+	@And("User clicks on update cell button")
+	public void user_clicks_on_update_cell_button() {
+		notebookPage.clickOnUpdateCellButton();
+	}
+
 	@And("User selects {string} database from the dropdown")
 	public void user_selects_database_from_the_dropdown(String Database) {
 		notebookPage.selectDatabaseType(Database);

@@ -81,3 +81,39 @@ Feature: Notebook Validate Database Operations
     And User can see name as frame id in JSON
     And User can see type as 'PY' for 'Python' in JSON
     When User clicks on the Save App icon
+
+ Scenario: Import Data - Edit button
+    Given User is on Home page
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User searches 'Test app' app in the app searchbox
+    And User clicks on 'Test app' app from the My Apps
+    And User clicks on app Edit button
+    And User clicks on Blocks if it is not selected by default
+    And User clicks on Notebook
+    And User clicks on Create new notebook
+    And User enters New Query name as 'Test'
+    And User clicks on query Submit button
+    And User mouse hover below the existing cell
+    And User selects 'Import Data' from the hidden options
+    And User selects 'From Data Catalog' from the data import options
+    And User selects 'TestDatabase' from the dropdown list
+    Then User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
+    When User selects all columns from database
+    And User clicks on data Import button
+    And User deletes the previous cell
+    And User selects type as 'Python'
+    And User enter the data limit as '20'
+    And User clicks on Run cell button
+    And User fetch the frame id
+    Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
+    And User can see total '20' rows
+    And User can see the 'DIABETES_UNIQUE_ROW_ID' column have unique values
+    And User can see name as frame id in JSON
+    And User can see type as 'PY' for 'Python' in JSON
+    When User clicks on the Save App icon
+    And User clicks on Edit button for the imported data cell
+    And User unchecks 'Age' column from the selected columns
+    And User clicks on update cell button
+    And User clicks on Run cell button
+    Then User can see header names as 'BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'

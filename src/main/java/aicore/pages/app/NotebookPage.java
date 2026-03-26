@@ -135,6 +135,18 @@ public class NotebookPage {
 		NotebookPageUtils.clickOnImportButton(page);
 	}
 
+	public void clickOnEditButtonForImportedDataCell() {
+		NotebookPageUtils.clickOnEditButtonForImportedDataCell(page);
+	}
+
+	public void uncheckColumnFromSelectedColumns(String columnName) {
+		NotebookPageUtils.uncheckColumnFromSelectedColumns(page, columnName);
+	}
+
+	public void clickOnUpdateCellButton() {
+		NotebookPageUtils.clickOnUpdateCellButton(page);
+	}
+
 	public void deleteFirstCell() {
 		NotebookPageUtils.deleteFirstCell(page);
 	}
