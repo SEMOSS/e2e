@@ -35,7 +35,7 @@ Feature: Vector Catalog documentation
     And User captures a 'tab' and highlights the 'Usage'
     When User clicks on 'Edit' button
     And User captures screenshot for form "Edit Options"
-    And User clicks on 'Close' button
+    And User clicks on 'Cancel' button
     And User clicks on Access Control Tab
     And User captures a 'button' and highlights the 'Access Control'
     And User captures a 'Heading' and highlights the 'Pending Requests'
