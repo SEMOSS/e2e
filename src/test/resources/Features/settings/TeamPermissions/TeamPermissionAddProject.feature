@@ -1,3 +1,4 @@
+@DeleteCreatedTestTeam
 Feature: Add Project for Team Permission
 
   Background: Team Permissions - Add team
@@ -10,6 +11,7 @@ Feature: Add Project for Team Permission
     And User fills 'Test Team' in Name field of Add Team form
     And User fills Description as 'Test Description' in Description field of Add Team form
     And User clicks on 'Add' button in Add Team form
+    And User fetch the team name
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario Outline: Add Project for different Users role

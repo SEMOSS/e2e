@@ -79,7 +79,10 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureFullSectionScreenshot(page, elementName);
 		case "buttontext":
 			return CaptureElementUtils.captureButtonScreenshotByText(page, elementName);
-
+		case "class":
+			return CaptureElementUtils.captureClassElementScreenshot(page, elementName);
+		case "role":
+			return CaptureElementUtils.captureRoleElementScreenshot(page, elementName);
 		default:
 			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}

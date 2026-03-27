@@ -33,7 +33,7 @@ Feature: BI System App Documentation
     Then User captures a 'text' and highlights the 'Create the first insight' with name 'CreateInsight'
     And User completes screenshot capture and triggers comparison for 'BI App'
 
-  Scenario: Capture screenshots of Create the first Insight button for documentation
+  Scenario: Capture screenshots of Import Data screen for documentation
     When User clicks on BI
     And User clicks on Welcome popup close option
     And User clicks on Add option
