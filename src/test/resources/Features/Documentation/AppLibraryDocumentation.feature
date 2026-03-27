@@ -242,7 +242,6 @@ Feature: App Library Documentation
     Given User captures documentation screenshot for 'Navigating/Create New App'
     When User is on Home page
     And User opens Main Menu
-    And User opens Main Menu
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'diabetes'
     And User clicks on Add Database
@@ -292,7 +291,6 @@ Feature: App Library Documentation
     Given User captures documentation screenshot for 'Navigating/Create New App'
     When User is on Home page
     And User opens Main Menu
-    And User opens Main Menu
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'diabetes'
     And User clicks on Add Database
@@ -336,3 +334,12 @@ Feature: App Library Documentation
     And User deletes the previous cell
     And User captures screenshot for "NB7"
     And User completes screenshot capture and triggers comparison for "CreateNewAppNB7"
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Documentation for App Use Case Images - App Building Options
+    Given User captures documentation screenshot for 'AppUseCaseImages'
+    And User opens Main Menu
+    When User clicks on Open App Library
+    And User clicks on Create New App button
+    Then User captures screenshot for "app_building_options"
+    And User completes screenshot capture and triggers comparison for 'App Building Options'
