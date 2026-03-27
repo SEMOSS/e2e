@@ -81,4 +81,8 @@ public class SettingsMyProfile {
 		return MyProfilePageUtils.getExpectedDescriptionName(page, description, timestamp);
 	}
 
+	public boolean isFieldEnabled(String fieldName) {
+		return MyProfilePageUtils.isFieldEnabled(page, fieldName);
+	}	
+
 }

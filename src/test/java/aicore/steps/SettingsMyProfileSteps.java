@@ -1,5 +1,7 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,10 +10,9 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.SettingsMyProfile;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SettingsMyProfileSteps {
 	private SettingsMyProfile settings;
@@ -136,6 +137,18 @@ public class SettingsMyProfileSteps {
 		String actualDescription = settings.validateDescriptionName(description);
 		String expDescription = settings.getExpectedDescriptionName(description);
 		Assertions.assertEquals(actualDescription, expDescription);
+	}
+
+	@Then("User can see the following field with their state:")
+	public void user_can_see_the_following_field_with_their_state(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("FIELD NAME");
+			String fieldValue = row.get("FIELD STATE");
+			boolean isFieldEnabled = settings.isFieldEnabled(fieldName);
+			Assertions.assertEquals(isFieldEnabled, Boolean.parseBoolean(fieldValue),
+					"Field state mismatch for field: '" + fieldName + "'");
+		}
 	}
 
 }

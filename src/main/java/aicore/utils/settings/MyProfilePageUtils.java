@@ -18,6 +18,7 @@ public class MyProfilePageUtils {
 	private static final String DELETE_KEY_TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
 	private static final String GENERATED_KEY_XPATH = "//td[contains(text(),'{keyName}')]";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//td[text()='{description}']";
+	private static final String EDIT_PROFILE_INFORMATION_STATE_XPATH = "//label[text()='{fieldName}']/following::input";
 
 	public static void clickOnMyProfileCard(Page page) {
 		page.getByText("My profile").click();
@@ -105,5 +106,10 @@ public class MyProfilePageUtils {
 	public static String getExpectedDescriptionName(Page page, String description, String timestamp) {
 		String expDescription = description + timestamp;
 		return expDescription;
+	}
+
+	public static boolean isFieldEnabled(Page page, String fieldName) {
+		Locator fieldState = page.locator(EDIT_PROFILE_INFORMATION_STATE_XPATH.replace("{fieldName}", fieldName)).first();
+		return fieldState.isEnabled();
 	}
 }
