@@ -224,9 +224,16 @@ public class TeamPermissionsSettingSteps {
 		Assertions.assertTrue(isAppPresent, "App with the specified access is not present in the list.");
 	}
 
+	@And("User fetch the team name")
+	public void user_fetch_the_team_name() {
+		String fetchName = teamPermissionsSettings.fetchTeamName();
+		Assertions.assertFalse(fetchName.isEmpty(), "Fetched Team Name is Empty");
+	}
+
 	@And("User verifies the engine added time matches catalog time for {string}")
 	public void verify_engine_and_catalog_time(String teamName) {
 		boolean isValid = teamPermissionsSettings.isEngineAndCatalogTimeMatching(teamName + " " + timestamp);
 		Assertions.assertTrue(isValid, "Engine added time and catalog time are not matching within acceptable range");
 	}
+
 }

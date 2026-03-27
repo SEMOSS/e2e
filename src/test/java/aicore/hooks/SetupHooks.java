@@ -34,43 +34,43 @@ public class SetupHooks {
 
 	private static final Logger logger = LogManager.getLogger(SetupHooks.class);
 
-
 	@BeforeAll
 	public static void beforeAll() throws IOException {
 		logger.info("BEFORE ALL");
 		GenericSetupUtils.initialize();
 		// not sure how this works with parallel?
-		// before all runs outside of parallelization but what about in between features?
-		//scenarioNumberOfFeatureFile = 0;
+		// before all runs outside of parallelization but what about in between
+		// features?
+		// scenarioNumberOfFeatureFile = 0;
 	}
 
 	@Before
 	public void before(Scenario scenario) throws IOException {
 		logger.info("Thread: {}", Thread.currentThread().getName());
-        logger.info("Scenario: {}", scenario.getName());
+		logger.info("Scenario: {}", scenario.getName());
 		String tempFeature = FilenameUtils.getBaseName(scenario.getUri().toString());
 		String feature = ResourcePool.get().getFeature();
-        String scenarioName = scenario.getName();
-        boolean failed = ResourcePool.get().isFailed();
+		String scenarioName = scenario.getName();
+		boolean failed = ResourcePool.get().isFailed();
 		// If new feature -> reset | if not -> continue
 		if (!tempFeature.equals(feature)) {
-            logger.info("resetting due to first scenario of feature");
+			logger.info("resetting due to first scenario of feature");
 			ResourcePool.get().resetTimestamp();
 			ResourcePool.get().resetScenarioNumberOfFeatureFile();
 			setupFirstScenarioOfFeature(scenario);
 			ResourcePool.get().incrementFeatureNumber();
 		} else if (failed) {
-            logger.info("resetting due to previous scenario failed");
-            setupFirstScenarioOfFeature(scenario);
-        }
+			logger.info("resetting due to previous scenario failed");
+			setupFirstScenarioOfFeature(scenario);
+		}
 
-        logger.info("update resource");
+		logger.info("update resource");
 		ResourcePool.get().setFeature(tempFeature);
-        ResourcePool.get().setScenarioName(scenarioName);
+		ResourcePool.get().setScenarioName(scenarioName);
 		ResourcePool.get().incrementScenarioNumberOfFeatureFile();
 		ResourcePool.get().resetStep();
-        ResourcePool.get().setFailed(false);
-        logger.info("start");
+		ResourcePool.get().setFailed(false);
+		logger.info("start");
 	}
 
 	private static void setupFirstScenarioOfFeature(Scenario scenario) throws IOException {
@@ -85,9 +85,8 @@ public class SetupHooks {
 			ResourcePool.get().getPlaywright().close();
 		}
 
-
 		Page page = GenericSetupUtils.setupPlaywright();
-		
+
 		logger.info("BEFORE - logging in and starting test: {}", scenario.getName());
 
 		String sourceTagName = scenario.getSourceTagNames().stream().findFirst().orElse("");
@@ -125,7 +124,7 @@ public class SetupHooks {
 			break;
 
 		case "@LoginWithSSO":
-			//do nothing and navigate to home page
+			// do nothing and navigate to home page
 			GenericSetupUtils.navigateToHomePage(page);
 			break;
 
@@ -140,19 +139,19 @@ public class SetupHooks {
 	@BeforeStep
 	public void beforeStep(Scenario scenario) {
 		int step = ResourcePool.get().getStep();
-		//logger.info("BEFORE STEP: {}, {}", scenario.getName(), step++);
+		// logger.info("BEFORE STEP: {}, {}", scenario.getName(), step++);
 		ResourcePool.get().setStep(step);
 	}
 
 	@AfterStep
 	public void afterStep(Scenario scenario) {
-		//logger.info("STEP {}", scenario.isFailed() ? "FAILED" : "PASSED");
+		// logger.info("STEP {}", scenario.isFailed() ? "FAILED" : "PASSED");
 	}
 
 	@After
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
-        ResourcePool.get().setFailed(scenario.isFailed());
+		ResourcePool.get().setFailed(scenario.isFailed());
 		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
 	}
 
@@ -162,11 +161,11 @@ public class SetupHooks {
 	}
 
 	private static void logoutAndSave() throws IOException {
-        logger.info("logging out and saving");
+		logger.info("logging out and saving");
 		Page page = ResourcePool.get().getPage();
 		BrowserContext context = ResourcePool.get().getContext();
 		String feature = ResourcePool.get().getFeature();
-        String scenarioName = ResourcePool.get().getScenarioName();
+		String scenarioName = ResourcePool.get().getScenarioName();
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
 			GenericSetupUtils.logout(page);
@@ -174,9 +173,9 @@ public class SetupHooks {
 			logger.error("Could not logout with throwable message: {}", t.getMessage());
 		}
 
-        boolean failed = ResourcePool.get().isFailed();
+		boolean failed = ResourcePool.get().isFailed();
 
-        logger.info("saving trace and videos");
+		logger.info("saving trace and videos");
 		if (GenericSetupUtils.useTrace() && failed) {
 			logger.info("Using trace. Saving trace video");
 			Tracing.StopOptions so = new Tracing.StopOptions();
@@ -201,33 +200,33 @@ public class SetupHooks {
 		page.close();
 
 		if (GenericSetupUtils.useVideo()) {
-            logger.info("saving video");
-            if (failed) {
-                String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
-                Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
-                Path newDir = Paths.get("videos", "features", feature);
-                if (!Files.exists(newDir)) {
-                    Files.createDirectories(newDir);
-                }
+			logger.info("saving video");
+			if (failed) {
+				String scenarioNameSafe = makeScenarioNameFileSafe(scenarioName);
+				Path newPath = Paths.get("videos", "features", feature, scenarioNameSafe + ".webm");
+				Path newDir = Paths.get("videos", "features", feature);
+				if (!Files.exists(newDir)) {
+					Files.createDirectories(newDir);
+				}
 
-                int i = 0;
-                while (Files.exists(newPath) && i < 30) {
-                    i++;
-                    newPath =  Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
-                    logger.info("File exists getting new path: {}", newPath);
-                    logger.info("loop: {}", i);
-                }
-                Files.move(og, newPath);
-            } else {
-                Files.deleteIfExists(og);
-            }
+				int i = 0;
+				while (Files.exists(newPath) && i < 30) {
+					i++;
+					newPath = Paths.get("videos", "features", feature, scenarioNameSafe + i + ".webm");
+					logger.info("File exists getting new path: {}", newPath);
+					logger.info("loop: {}", i);
+				}
+				Files.move(og, newPath);
+			} else {
+				Files.deleteIfExists(og);
+			}
 		}
 
 	}
 
-    public static String makeScenarioNameFileSafe(String scenarioName) {
-        return scenarioName.trim().replaceAll("[^a-zA-Z0-9._-]", "_");
-    }
+	public static String makeScenarioNameFileSafe(String scenarioName) {
+		return scenarioName.trim().replaceAll("[^a-zA-Z0-9._-]", "_");
+	}
 
 	public static Page getPage() {
 		return ResourcePool.get().getPage();
@@ -319,5 +318,24 @@ public class SetupHooks {
 		}
 	}
 
-
+	@After("@DeleteCreatedTestTeam")
+	public void deleteCreatedTeam(Scenario scenario) {
+		String scenarioName = scenario.getName();
+		try {
+			String teamName = TestResourceTrackerHelper.getInstance().getTeamName();
+			if (teamName != null && !teamName.isBlank()) {
+				Page page = ResourcePool.get().getPage();
+				boolean deleted = CommonUtils.navigateAndDeleteTeam(page, teamName);
+				if (deleted) {
+					logger.info("Scenario Name: " + scenarioName + " : Team deleted successfully. Name: " + teamName);
+				} else {
+					logger.warn("Scenario Name: " + scenarioName + " : Failed to delete Team: " + teamName);
+				}
+			} else {
+				logger.warn("Scenario Name: " + scenarioName + " : Team name not available for deletion.");
+			}
+		} finally {
+			TestResourceTrackerHelper.getInstance().setTeamName(null);
+		}
+	}
 }

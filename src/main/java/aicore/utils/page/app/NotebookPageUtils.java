@@ -82,7 +82,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnCreateNewNotebook(Page page) {
-		page.getByTestId(CREATE_NEW_NOTEBOOK_DATA_TESTID).click();
+		page.getByTitle("Create new notebook").click();
 	}
 
 	public static void enterQueryName(Page page, String queryName) {

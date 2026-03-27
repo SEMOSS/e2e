@@ -453,8 +453,9 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyButtonIsEnabled(String buttonName, Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName)).isVisible();
-		boolean isEnabled = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName))
+		page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
+.isVisible();
+		boolean isEnabled =page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
 				.isEnabled();
 		if (!isEnabled) {
 			throw new AssertionError(buttonName + " is not enabled");
