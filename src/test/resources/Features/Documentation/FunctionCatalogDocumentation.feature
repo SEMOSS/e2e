@@ -31,7 +31,7 @@ Feature: Function documentation
     And User captures a 'tab' and highlights the 'Usage'
     And User clicks on 'Edit' button
     And User captures screenshot for form "Edit Function Options"
-    And User clicks on 'Close' button
+    And User clicks on 'Cancel' button
     And User clicks on Access Control Tab
     And User clicks Make 'Function' Discoverable button
     And User logs out from the application
@@ -260,3 +260,4 @@ Feature: Function documentation
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     And User captures a 'testidelement' and highlights the "engineIndexPage-Functions-discoverable-switch" with name "discoverableFunction"
     And User completes screenshot capture and triggers comparison for "Discoverable Function page"
+   

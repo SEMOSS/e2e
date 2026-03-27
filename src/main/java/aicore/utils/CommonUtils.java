@@ -54,7 +54,7 @@ public class CommonUtils {
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
 	private static final String APP_DELETE_BUTTON_XPATH = "//div[text()='Delete App']";
-	private static final String APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialogActions-root')]//button[normalize-space()='Delete']";
+	private static final String DELETE_CONFIRMATION_POPUP_BUTTON_XPATH = "//button[normalize-space()='Delete']";
 	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
 
 	private static final String THREE_DOT_ICON_XPATH = "//button[@aria-label='More options']";
@@ -62,6 +62,12 @@ public class CommonUtils {
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
 	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
+
+	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
+	private static final String TEAM_PERMISSION_CARD_XPATH = "//span[normalize-space()='Team Permissions']";
+	private static final String SEARCH_TEAM_PLACEHOLDER_TEXT = "Search teams by name";
+	private static final String CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID = "MoreVertIcon";
+	private static final String TEAM_DELETE_BUTTON_XPATH = "//p[text()='Delete team']";
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
@@ -344,7 +350,7 @@ public class CommonUtils {
 			page.waitForTimeout(500);
 			page.locator(THREE_DOT_ICON_XPATH).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
-			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {
 				page.locator(TOAST_CLOSE_XPATH).click();
@@ -358,11 +364,31 @@ public class CommonUtils {
 		}
 	}
 
-	public static void closeToastMessage(Page page) {
-
-	}
-
 	public static String getCurrentUtcTime() {
 		return LocalDateTime.now(ZoneOffset.UTC).withNano(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	}
+
+	public static boolean navigateAndDeleteTeam(Page page, String teamName) {
+		try {
+			page.navigate(UrlUtils.getUrl("#/"));
+			HomePageUtils.openMainMenu(page);
+			HomePageUtils.clickOnOpenSettings(page);
+			page.locator(TEAM_PERMISSION_CARD_XPATH).click();
+			page.getByPlaceholder(SEARCH_TEAM_PLACEHOLDER_TEXT).fill(teamName);
+			page.waitForTimeout(500);
+			page.getByTestId(CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID).click();
+			page.locator(TEAM_DELETE_BUTTON_XPATH).click();
+			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
+			Locator toasterMessage = page.getByTestId("notification-success-alert");
+			if (toasterMessage.isVisible()) {
+				page.locator(TOAST_CLOSE_XPATH).click();
+				toasterMessage.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			logger.warn("Team deletion failed due to an exception", e);
+			return false;
+		}
 	}
 }
