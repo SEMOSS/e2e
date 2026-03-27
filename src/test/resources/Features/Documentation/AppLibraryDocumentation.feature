@@ -335,6 +335,42 @@ Feature: App Library Documentation
     And User captures screenshot for "NB7"
     And User completes screenshot capture and triggers comparison for "CreateNewAppNB7"
 
+@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  Scenario: Documentation for Ask CSV template
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User selects "Ask CSV" from Template List
+    And User enters app name as 'Test app'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on description block
+    And User clicks on the Block Settings option
+    And User adds description as "Give me list of people over the age of 50"
+    Then User captures a "promptcontext" and highlights the "Value" with name "AskCSV4"
+    And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
+
+@LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  Scenario: Documentation for Ask CSV template -onclick action
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User selects "Ask CSV" from Template List
+    And User enters app name as 'Test app'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on description block
+    And User clicks on the Block Settings option
+    And User adds description as "Give me list of people over the age of 50"
+    And User clicks on the Submit Block
+    And User clicks on "On Click" New action button 
+    And User selects "Query" from the action options
+    And User selects "ask-model" from the list of queries
+    And User clicks on Save query button
+    Then User captures a "blocksettingelement" and highlights the "Run Query" with name "AskCSV5"
+    And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for App Use Case Images - App Building Options
     Given User captures documentation screenshot for 'AppUseCaseImages'

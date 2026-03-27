@@ -899,4 +899,24 @@ public class CreateAppUsingDragAndDropSteps {
 			}
 		}
 	}
+
+	@And("User clicks on {string} New action button")
+	public void user_clicks_on_new_action_button(String blockName) {
+		blocksPage.clickOnNewActionButton(blockName);
+	}
+
+	@And("User selects {string} from the action options")
+	public void user_selects_from_the_action_options(String actionOption) {
+		blocksPage.selectActionOptionFromDropdown(actionOption);
+	}
+
+	@And("User selects {string} from the list of queries")
+	public void user_selects_from_the_list_of_queries(String queryName) {
+		blocksPage.selectOptionFromActionList(queryName);
+	}
+
+	@And("User clicks on Save query button")
+	public void user_clicks_on_save_query_button() {
+		blocksPage.clickOnSaveQueryButton();
+	}
 }

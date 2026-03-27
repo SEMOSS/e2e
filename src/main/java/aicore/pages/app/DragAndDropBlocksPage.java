@@ -64,6 +64,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
 	}
 
+	public void clickOnSaveQueryButton() {
+		DragAndDropBlocksPageUtils.clickOnSaveQueryButton(page);
+	}
+
 	public Locator textSectionDragAndDroppedBlockLocator(String blockName, String blockText) {
 		return DragAndDropBlocksPageUtils.textSectionDragAndDroppedBlockLocator(page, blockName, blockText);
 	}
@@ -311,6 +315,18 @@ public class DragAndDropBlocksPage {
 
 	public boolean isOptionVisibleUnderSection(String sectionName, String optionName) {
 		return DragAndDropBlocksPageUtils.isOptionVisibleUnderSection(page, sectionName, optionName);
+	}
+
+	public void clickOnNewActionButton(String blockName) {
+		DragAndDropBlocksPageUtils.clickOnNewActionButton(page, blockName);
+	}
+
+	public void selectActionOptionFromDropdown(String actionOption) {
+		DragAndDropBlocksPageUtils.selectActionOptionFromDropdown(page, actionOption);
+	}
+
+	public void selectOptionFromActionList(String optionName) {
+		DragAndDropBlocksPageUtils.selectOptionFromActionList(page, optionName);
 	}
 
 }

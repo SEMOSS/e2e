@@ -158,6 +158,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SECTION_ON_BLOCK_SETTINGS_XPATH = "//button[normalize-space()='{sectionName}']";
 	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
+	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -387,6 +388,15 @@ public class DragAndDropBlocksPageUtils {
 	public static void clickOnSaveAppButton(Page page) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true))
 				.click();
+	}
+
+	public static void clickOnSaveQueryButton(Page page) {
+		Locator saveQueryButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		AICorePageUtils.waitFor(saveQueryButton);
+		if (!saveQueryButton.isVisible()) {
+			throw new AssertionError("Save query button is not visible");
+		}
+		saveQueryButton.click();
 	}
 
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
@@ -1043,5 +1053,31 @@ public class DragAndDropBlocksPageUtils {
 				OPTION_UNDER_SECTION_XPATH.replace("{section}", sectionName).replace("{optionName}", optionName));
 		optionLocator.scrollIntoViewIfNeeded();
 		return optionLocator.isVisible();
+	}
+
+	public static void clickOnNewActionButton(Page page, String blockName) {
+		Locator newActionButton = page.locator(NEW_ACTION_XPATH.replace("{blockName}", blockName));
+		if (!newActionButton.isVisible()) {
+			throw new AssertionError("New Action button is not visible");
+		}
+		newActionButton.click();
+	}
+
+	public static void selectActionOptionFromDropdown(Page page, String actionOption) {
+		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName(actionOption).setExact(true));
+		AICorePageUtils.waitFor(queryCombobox);
+		if (!queryCombobox.isVisible()) {
+			throw new AssertionError("Action dropdown for '" + actionOption + "' is not visible");
+		}
+		queryCombobox.click();
+	}
+
+	public static void selectOptionFromActionList(Page page, String optionName) {
+		Locator optionLocator = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(optionName));
+		AICorePageUtils.waitFor(optionLocator);
+		if (!optionLocator.isVisible()) {
+			throw new AssertionError("Option '" + optionName + "' is not visible in the list");
+		}
+		optionLocator.click();
 	}
 }
