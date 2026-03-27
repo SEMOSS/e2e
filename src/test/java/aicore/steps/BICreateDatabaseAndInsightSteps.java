@@ -1,8 +1,9 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.BISystemAppPage;
@@ -11,8 +12,6 @@ import aicore.steps.app.CreateAppUsingDragAndDropSteps;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BICreateDatabaseAndInsightSteps {
 	private static final Logger logger = LogManager.getLogger(BICreateDatabaseAndInsightSteps.class);
@@ -126,6 +125,11 @@ public class BICreateDatabaseAndInsightSteps {
 	public void user_mouse_hover_on_database_frame_and_click_on_Visualize_this_data_option() {
 		biApp.mouseHoverOnDatabaseFrame();
 		biApp.clickOnVisualizeDataOption();
+	}
+
+	@And("User mouse hover on database frame")
+	public void user_mouse_hover_on_database_frame() {
+		biApp.mouseHoverOnDatabaseFrame();
 	}
 
 	@And("User clicks on Save button")
