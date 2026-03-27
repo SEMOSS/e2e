@@ -75,6 +75,10 @@ public class CaptureScreenShotPage {
 			return CaptureElementUtils.captureCatalogFormPage(page, elementName);
 		case "card":
 			return CaptureElementUtils.captureCardElementScreenshot(page, elementName);
+		case "fullsection":
+			return CaptureElementUtils.captureFullSectionScreenshot(page, elementName);
+		case "buttontext":
+			return CaptureElementUtils.captureButtonScreenshotByText(page, elementName);
 		case "class":
 			return CaptureElementUtils.captureClassElementScreenshot(page, elementName);
 		case "role":

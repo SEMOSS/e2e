@@ -46,6 +46,7 @@ public class BISystemAppPage {
 	private static final String FIELD_BUTTON_XPATH = "//div[@title='{fieldName} is a Number']";
 	private static final String TOOLS_OPTION_XPATH = "//span[text()='{optionName}']";
 	private static final String SELECT_STARTING_POINT_TEXT_XPATH = "//span[text()='Select a Starting Point']";
+	private static final String CHART_TABLE_XPATH = "//div[@role='grid']";
 
 	public BISystemAppPage(Page page, String timestamp) {
 		this.page = page;
@@ -145,6 +146,7 @@ public class BISystemAppPage {
 
 	public void clickOnVisualizeDataOption() {
 		page.click(VISUALIZE_THIS_DATA_OPTION_XPATH);
+		page.waitForTimeout(300);
 	}
 
 	public void clickOnWorkspaceSaveButton() {
@@ -193,6 +195,7 @@ public class BISystemAppPage {
 	public void hoverAddPanelAndSelectAddChart(String panelType) {
 		page.getByTitle("Add Panel").hover();
 		page.getByTitle(panelType).click();
+		page.locator(CHART_TABLE_XPATH).hover();
 	}
 
 	public void clickOnPresentationModeOption() {
