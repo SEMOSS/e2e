@@ -19,9 +19,9 @@ public class MyProfilePageUtils {
 	private static final String GENERATED_KEY_XPATH = "//td[contains(text(),'{keyName}')]";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//td[text()='{description}']";
 	private static final String EDIT_PROFILE_INFORMATION_STATE_XPATH = "//label[text()='{fieldName}']/following::input | //span[text()='{fieldName}']/parent::button";
-	private static final String UPDATED_NAME_XPATH = "//span[text()='{name}']";// "//span[contains(text(),'{name}')]";
+	private static final String UPDATED_NAME_XPATH = "//span[text()='{name}']";
 	private static final String CLICK_ON_CHANGE_PASSWORD_LINK_TEXT = "Change Password";
-	private static final String CHANGE_PASSWORD_POP_TITLE_XPATh = "//h6[text()='Change Password']";
+	private static final String CHANGE_PASSWORD_POP_TITLE_XPATH = "//h6[text()='Change Password']";
 	private static final String CLICK_ON_PROFILE_ICON_XPATH = "//ul[@aria-label='user navigation']";
 	private static final String ENTER_PASSWORD_XPATH = "//div//p[text()='{fieldName}']/following::div//div//input[@type='password']";
 	private static final String PASSWORDS_DO_NOT_MATCH_ERROR_XPATH = "//p[text()='The passwords do not match']";
@@ -31,7 +31,6 @@ public class MyProfilePageUtils {
 	}
 
 	public static boolean isSectionVisible(Page page, String sectionText) {
-
 		page.waitForSelector(MY_PROFILE_SECTION_TITLE_XPATH.replace("{sectionText}", sectionText));
 		return page.isVisible(MY_PROFILE_SECTION_TITLE_XPATH.replace("{sectionText}", sectionText));
 	}
@@ -142,7 +141,7 @@ public class MyProfilePageUtils {
 	}
 
 	public static boolean changePasswordTitle(Page page, String title) {
-		Locator titleLocator = page.locator(CHANGE_PASSWORD_POP_TITLE_XPATh);
+		Locator titleLocator = page.locator(CHANGE_PASSWORD_POP_TITLE_XPATH);
 		return titleLocator.isVisible();
 	}
 

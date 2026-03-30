@@ -67,10 +67,8 @@ public class SettingsMyProfileSteps {
 	@When("User copies the {string} using copy icon and validate its alphanumeric")
 	public void user_copies_the_using_copy_icon_and_validate_its_alphanumeric(String KeyName) {
 		String copiedKey = settings.copyAccessKey(KeyName);
-		// Validate key format
 		assertTrue(copiedKey.matches("^[a-zA-Z0-9-]+$"),
 				"Copied Key contains non-alphanumeric characters: " + copiedKey);
-		// Store the key in the appropriate variable
 		if (KeyName.equalsIgnoreCase("Access Key")) {
 			copiedAccessKey = copiedKey;
 		} else if (KeyName.equalsIgnoreCase("Secret Key")) {
@@ -86,23 +84,17 @@ public class SettingsMyProfileSteps {
 		final String SECTIONS_COLUMN = "SECTIONS";
 		final String EXPECTED_ACCESS_KEY_COUNT = "ACCESS KEY COUNT";
 		final String EXPECTED_SECRET_KEY_COUNT = "SECRET KEY COUNT";
-
 		Assertions.assertNotNull(copiedAccessKey, "Access Key is not set, check previous step");
 		Assertions.assertNotNull(copiedSecretKey, "Secret Key is not set, check previous step");
-
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String sectionName = row.get(SECTIONS_COLUMN);
 			int expectedAccessKeyCount = Integer.parseInt(row.get(EXPECTED_ACCESS_KEY_COUNT));
 			int expectedSecretKeyCount = Integer.parseInt(row.get(EXPECTED_SECRET_KEY_COUNT));
-			// Copy the section contents
 			String copiedSectionContents = settings.extractExampleSectionContent(sectionName);
-			// Count occurrences of Access Key and Secret Key
 			int actualAccessKeyCount = CommonUtils.countIdOccurances(copiedSectionContents, copiedAccessKey);
 			System.out.println(actualAccessKeyCount);
 			int actualSecretKeyCount = CommonUtils.countIdOccurances(copiedSectionContents, copiedSecretKey);
-//		System.out.println(actualSecretKeyCount);
-			// Validate the counts
 			Assertions.assertEquals(expectedAccessKeyCount, actualAccessKeyCount,
 					"Access Key count mismatch in section: '" + sectionName + "'");
 			Assertions.assertEquals(expectedSecretKeyCount, actualSecretKeyCount,
@@ -146,10 +138,8 @@ public class SettingsMyProfileSteps {
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("FIELD NAME");
 			String fieldState = row.get("FIELD STATE");
-
 			boolean expectedState = "Enable".equalsIgnoreCase(fieldState);
 			boolean actualState = settings.isFieldEnabled(fieldName);
-
 			Assertions.assertEquals(actualState, expectedState, "Field state mismatch for field: '" + fieldName + "'");
 		}
 	}
@@ -174,7 +164,6 @@ public class SettingsMyProfileSteps {
 	public void user_can_sees_the_title(String title) {
 		boolean titleVisible = settings.changePasswordTitle(title);
 		Assertions.assertTrue(titleVisible, "Change Password title is not visible");
-
 	}
 
 	@And("User clicks on Profile Icon")
