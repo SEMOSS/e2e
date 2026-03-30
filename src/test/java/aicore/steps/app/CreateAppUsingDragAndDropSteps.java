@@ -213,6 +213,11 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnDroppedBlock(blockName);
 	}
 
+	@And("User enters {string} in the Text field")
+	public void user_enters_in_the_text_field(String text) {
+		blocksPage.enterTextInTextField(text);
+	}
+
 	@Then("User can see {string} on the page")
 	public void user_can_see_on_the_page(String expectedHeadingBlockTextMessage) {
 		String actualHeadingBlockTextMessage = blocksPage.verifyHeadingBlockTextMessage();
@@ -651,6 +656,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@When("User clicks on Create Variable button")
 	public void user_clicks_on_create_variable_button() {
 		appVariablePage.clickOnCreateVariableButton();
+	}
+
+	@Then("User opens the {string} Variables tab")
+	public void user_opens_the_variables_tab(String tabName) {
+		appVariablePage.clickOnVariablesTab(tabName);
 	}
 
 	@Then("User sees Toast message of variable creation {string}")
