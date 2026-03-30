@@ -11,6 +11,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.SettingsMyProfile;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -144,11 +145,52 @@ public class SettingsMyProfileSteps {
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("FIELD NAME");
-			String fieldValue = row.get("FIELD STATE");
-			boolean isFieldEnabled = settings.isFieldEnabled(fieldName);
-			Assertions.assertEquals(isFieldEnabled, Boolean.parseBoolean(fieldValue),
-					"Field state mismatch for field: '" + fieldName + "'");
+			String fieldState = row.get("FIELD STATE");
+
+			boolean expectedState = "Enable".equalsIgnoreCase(fieldState);
+			boolean actualState = settings.isFieldEnabled(fieldName);
+
+			Assertions.assertEquals(actualState, expectedState, "Field state mismatch for field: '" + fieldName + "'");
 		}
+	}
+
+	@Then("User update {string} field with {string}")
+	public void user_update_field_with(String fieldName, String fieldValue) {
+		settings.updateField(fieldName, fieldValue + timestamp);
+	}
+
+	@Then("User can see the the updated name as {string}")
+	public void user_can_see_the_the_updated_name_as(String updatedName) {
+		boolean updatedNameVisible = settings.getUpdatedInfo(updatedName + timestamp);
+		Assertions.assertTrue(updatedNameVisible, "Updated name is not visible");
+	}
+
+	@And("User clicks on Change Password link")
+	public void user_clicks_on_change_password_link() {
+		settings.clickOnChangePasswordLink();
+	}
+
+	@And("User can sees the {string} title")
+	public void user_can_sees_the_title(String title) {
+		boolean titleVisible = settings.changePasswordTitle(title);
+		Assertions.assertTrue(titleVisible, "Change Password title is not visible");
+
+	}
+
+	@And("User clicks on Profile Icon")
+	public void user_clicks_on_profile_icon() {
+		settings.clickOnProfileIcon();
+	}
+
+	@When("User enter the {string} as {string}")
+	public void user_enter_the_password_as(String fieldName, String fieldValue) {
+		settings.enterThePassword(fieldName, fieldValue);
+	}
+
+	@And("User can see the error as {string}")
+	public void user_can_see_the_error_as(String errorMessage) {
+		String actualError = settings.getErrorMessage(errorMessage);
+		Assertions.assertEquals(actualError, errorMessage, "Error message mismatch");
 	}
 
 }

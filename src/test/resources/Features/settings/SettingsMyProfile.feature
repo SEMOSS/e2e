@@ -1,68 +1,110 @@
 @Regression
 Feature: Settings My Profile
 
-  # Scenario: Settings - My Profile Page
-  #   Given User opens Main Menu
-  #   And User clicks on Open Settings
-  #   When User clicks on My Profile
-  #   Then User can see 'Privacy Center' link in the top right
-  #   And User can see 'Edit profile information' section on profile page
-  #   And User can see 'Javascript SDK' section on profile page
-  #   And User can see 'Python SDK' section on profile page
-  #   And User can see 'Personal Access Tokens' section on profile page
-  # Scenario: Generate a new access key and verify the details
-  #   Given User opens Main Menu
-  #   When User clicks on Open Settings
-  #   And User clicks on My Profile
-  #   And User clicks on New Key button
-  #   Then User fills Name as 'New Key' in Name field
-  #   And User fills Description as 'New Description' in Description field
-  #   And User clicks on Generate button
-  #   When User copies the 'Access Key' using copy icon and validate its alphanumeric
-  #   And User copies the 'Secret Key' using copy icon and validate its alphanumeric
-  #   Then User copies contents using copy icon from example section and validate count of Access Key and Secret Key occurences in sections:
-  #     | SECTIONS           | ACCESS KEY COUNT | SECRET KEY COUNT |
-  #     | Javascript Example |                1 |                1 |
-  #     | Python Example     |                1 |                1 |
-  #   And User clicks on Close button
-  # Scenario: Generated key - Delete
-  #   Given User opens Main Menu
-  #   When User clicks on Open Settings
-  #   And User clicks on My Profile
-  #   And User clicks on New Key button
-  #   Then User fills Name as 'New Key' in Name field
-  #   And User fills Description as 'New Description' in Description field
-  #   And User clicks on Generate button
-  #   Then User clicks on Close button
-  #   And User clicks on delete icon of the generated 'New Key'
-  #   And User can sees the Toastmessage as "Successfully deleted key"
-  # Scenario: Settings - Personal Access Token
-  #   Given User opens Main Menu
-  #   When User clicks on Open Settings
-  #   And User clicks on My Profile
-  #   And User clicks on New Key button
-  #   Then User fills Name as 'New Key' in Name field
-  #   And User fills Description as 'New Description' in Description field
-  #   And User clicks on Generate button
-  #   Then User clicks on Close button
-  #   Then User can see 'Personal Access Tokens' section on profile page
-  #   And User can see generated key name as 'New Key'
-  #   And User can see generated key description as 'New Description'
+  Scenario: Settings - My Profile Page
+    Given User opens Main Menu
+    And User clicks on Open Settings
+    When User clicks on My Profile
+    Then User can see 'Privacy Center' link in the top right
+    And User can see 'Edit profile information' section on profile page
+    And User can see 'Javascript SDK' section on profile page
+    And User can see 'Python SDK' section on profile page
+    And User can see 'Personal Access Tokens' section on profile page
+
+  Scenario: Generate a new access key and verify the details
+    Given User opens Main Menu
+    When User clicks on Open Settings
+    And User clicks on My Profile
+    And User clicks on New Key button
+    Then User fills Name as 'New Key' in Name field
+    And User fills Description as 'New Description' in Description field
+    And User clicks on Generate button
+    When User copies the 'Access Key' using copy icon and validate its alphanumeric
+    And User copies the 'Secret Key' using copy icon and validate its alphanumeric
+    Then User copies contents using copy icon from example section and validate count of Access Key and Secret Key occurences in sections:
+      | SECTIONS           | ACCESS KEY COUNT | SECRET KEY COUNT |
+      | Javascript Example |                1 |                1 |
+      | Python Example     |                1 |                1 |
+    And User clicks on Close button
+
+  Scenario: Generated key - Delete
+    Given User opens Main Menu
+    When User clicks on Open Settings
+    And User clicks on My Profile
+    And User clicks on New Key button
+    Then User fills Name as 'New Key' in Name field
+    And User fills Description as 'New Description' in Description field
+    And User clicks on Generate button
+    Then User clicks on Close button
+    And User clicks on delete icon of the generated 'New Key'
+    And User can sees the Toastmessage as "Successfully deleted key"
+
+  Scenario: Settings - Personal Access Token
+    Given User opens Main Menu
+    When User clicks on Open Settings
+    And User clicks on My Profile
+    And User clicks on New Key button
+    Then User fills Name as 'New Key' in Name field
+    And User fills Description as 'New Description' in Description field
+    And User clicks on Generate button
+    Then User clicks on Close button
+    Then User can see 'Personal Access Tokens' section on profile page
+    And User can see generated key name as 'New Key'
+    And User can see generated key description as 'New Description'
+
   Scenario: Settings -My Profile - Edit profile information
     Given User opens Main Menu
     When User clicks on Open Settings
     And User clicks on My Profile
     Then User can see 'Edit profile information' section on profile page
     And User can see the following field with their state:
+      | FIELD NAME | FIELD STATE |
+      | Name       | Enable      |
+      | User Id    | disable     |
+      | Username   | disable     |
+      | Email      | Enable      |
+      | Save       | disable     |
+      | Reset      | disable     |
+    When User update 'Name' field with 'Update Test Name'
+    And User update 'Email' field with 'update@test.com'
+    And User can see the following field with their state:
+      | FIELD NAME | FIELD STATE |
+      | Save       | Enable      |
+      | Reset      | Enable      |
+    And User clicks on 'Save' button
+    Then User can see success toast message "Successfully edited profile information"
+    When User opens Main Menu
+    And User clicks on Open Settings
+    And User enable admin mode
+    And User clicks on 'Member Settings' Card
+    Then User can see the the updated name as 'Update Test Name'
+    When User opens Main Menu
+    And User clicks on Profile Icon
+    Then User can see the the updated name as 'Update Test Name'
+
+  Scenario: Settings -My Profile - Edit profile information - Veruify Change Password Option
+    Given User opens Main Menu
+    When User clicks on Open Settings
+    And User clicks on My Profile
+    And User clicks on Change Password link
+    Then User can sees the 'Change Password' title
+    When User enter the 'Current Password' as 'Abc@123'
+    And User enter the 'New Password' as 'Abcd@12345'
+    And User enter the 'Confirm New Password' as 'Abcd@12345'
+    And User can see the following field with their state:
       | FIELD NAME      | FIELD STATE |
-      | Name            | Enable      |
-      | UserId          | Disable     |
-      | Username        | Disable     |
-      | Email           | Enable      |
       | Change Password | Enable      |
-      | Save Button     | Disable     |
-      | Reset Button    | Disable     |
-    #When User update 'Name' field with 'Update Test Name'
-    #And User update 'Email' field with 'update@test.com'
-    #And User clicks on Save button
-    #Then User can see the Toast message as "Successfully edited profile information"
+      | Cancel          | Enable      |
+
+  Scenario: Settings -My Profile - Edit profile information - Verify entering mismatched passwords for Change Password
+    Given User opens Main Menu
+    When User clicks on Open Settings
+    And User clicks on My Profile
+    And User clicks on Change Password link
+    When User enter the 'New Password' as 'Abcd@12345'
+    And User enter the 'Confirm New Password' as 'Abcd@123456'
+    Then User can see the following field with their state:
+      | FIELD NAME      | FIELD STATE |
+      | Change Password | disable     |
+      | Cancel          | Enable      |
+    And User can see the error as 'The passwords do not match'

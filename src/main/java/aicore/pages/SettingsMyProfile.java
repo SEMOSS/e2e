@@ -83,6 +83,34 @@ public class SettingsMyProfile {
 
 	public boolean isFieldEnabled(String fieldName) {
 		return MyProfilePageUtils.isFieldEnabled(page, fieldName);
-	}	
+	}
+
+	public void updateField(String fieldName, String fieldValue) {
+		MyProfilePageUtils.updateField(page, fieldName, fieldValue);
+	}
+
+	public boolean getUpdatedInfo(String name) {
+		return MyProfilePageUtils.getUpdatedInfo(page, name);
+	}
+
+	public void clickOnChangePasswordLink() {
+		MyProfilePageUtils.clickOnChangePasswordLink(page);
+	}
+
+	public boolean changePasswordTitle(String title) {
+		return MyProfilePageUtils.changePasswordTitle(page, title);
+	}
+
+	public void clickOnProfileIcon() {
+		MyProfilePageUtils.clickOnProfileIcon(page);
+	}
+
+	public void enterThePassword(String fieldName, String fieldValue) {
+		MyProfilePageUtils.enterThePassword(page, fieldName, fieldValue);
+	}
+
+	public String getErrorMessage(String message) {
+		return MyProfilePageUtils.getErrorMessage(page, message);
+	}
 
 }
