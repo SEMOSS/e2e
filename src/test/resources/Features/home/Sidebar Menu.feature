@@ -3,7 +3,9 @@ Feature: Sidebar Menu
   @LoginWithAdmin
   Scenario: Test all buttons in sidebar menu
     Given User opens Main Menu
-    When User clicks on Open App Library
+    When User clicks on Home
+    And User opens Main Menu
+    And User clicks on Open App Library
     And  User opens Main Menu
     And User clicks on Open Model
     And  User opens Main Menu
