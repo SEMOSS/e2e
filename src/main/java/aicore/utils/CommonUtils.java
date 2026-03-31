@@ -295,9 +295,8 @@ public class CommonUtils {
 
 	public static boolean getVersion(Page page) {
 		HomePageUtils.openMainMenu(page);
-		page.locator("//div[@aria-label='Login']").click();
+		HomePageUtils.clickOnUserAccountButton(page);
 		String version = CaptureScreenShotUtils.versionCapture(page);
-
 		logger.info("Version obtained: {}", version);
 		logger.info("Current version: {}", ConfigUtils.getValue("current_version"));
 		if (version.equals(ConfigUtils.getValue("current_version"))) {

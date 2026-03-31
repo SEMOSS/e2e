@@ -29,7 +29,7 @@ public class HomePageUtils {
 	private static final String APP_MENU_XPATH = "//button[@aria-label='Open sidebar']";
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
 	private static final String APP_MENU_BUTTON_XPATH = "sidebar-Apps-btn";
-	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
+	private static final String DATABASE_MENU_BUTTON_DATA_TEST_ID = "sidebar-Database-btn";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
 	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
 	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
@@ -66,11 +66,9 @@ public class HomePageUtils {
 
 	public static void openMainMenu(Page page) {
 		// check if menu is open
-//		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		page.waitForTimeout(800);
 		if (isMenuOpen.isVisible()) {
-//			isMenuOpen.click();
 			isMenuOpen.dblclick();
 		}
 		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESID);
@@ -85,10 +83,8 @@ public class HomePageUtils {
 	}
 
 	public static void closeMainMenu(Page page) {
-//		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
-//			menuOpen.click();
 			menuOpen.dblclick();
 		}
 	}
@@ -234,7 +230,7 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenDatabase(Page page) {
-		Locator locator = page.locator(DATABASE_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(DATABASE_MENU_BUTTON_DATA_TEST_ID);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
@@ -291,5 +287,9 @@ public class HomePageUtils {
 		} else {
 			page.getByTestId(CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
 		}
+	}
+
+	public static void clickOnUserAccountButton(Page page) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
 	}
 }
