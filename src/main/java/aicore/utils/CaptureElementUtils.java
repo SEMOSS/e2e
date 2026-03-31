@@ -34,303 +34,114 @@ public abstract class CaptureElementUtils {
 	private static final String CLASS_ELEMENT_XPATH = "//*[contains(@class,'{className}')]/..";
 	private static final String ROLE_ELEMENT_XPATH = "//*[@role='{role}']/../../../..";
 
-	public static List<Locator> captureButtonScreenshot(Page page, String buttonName) {
-		Locator locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			Locator current = locator.nth(i);
-			locators.add(current);
+	public static List<Locator> getLocatorsForTypeAndName(Page page, String elementType, String elementName) {
+		Locator locator = null;
+		switch (elementType.toLowerCase()) {
+		case "button":
+			locator = page.locator(CTA_ELEMENT_XPATH.replace("{ButtonName}", elementName));
+			break;
+		case "tab":
+			locator = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(elementName).setExact(true));
+			locator.scrollIntoViewIfNeeded();
+			locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+			break;
+		case "list item":
+			locator = page.locator(LIST_ITEM_ELEMENT_XPATH.replace("{Element}", elementName));
+			break;
+		case "tile":
+			locator = page.locator(TILE_XPATH.replace("{tileName}", elementName));
+			break;
+		case "heading":
+			locator = page.locator("//h6[contains(normalize-space(),'" + elementName + "')]");
+			break;
+		case "searchbar":
+			locator = page.locator(SEARCH_ELEMENT_XPATH.replace("{ButtonName}", elementName));
+			break;
+		case "copycta":
+			locator = page.locator(COPY_ELEMENT_XPATH.replace("{ButtonName}", "Copy"));
+			break;
+		case "copyid":
+			locator = page.locator(COPY_ID_TEXT_XPATH.replace("{copyid}", elementName));
+			break;
+		case "block":
+			locator = page.locator(BLOCK_ELEMENT_XPATH.replace("{blockName}", elementName));
+			break;
+		case "buttontype":
+			locator = page.locator(BUTTON_TYPE_XPATH.replace("{buttonType}", elementName));
+			break;
+		case "apptypetile":
+			locator = page.locator(APP_TYPE_TAB_XPATH.replace("{appTypeName}", elementName));
+			break;
+		case "usetemplatebutton":
+			locator = page.locator(USE_TEMPLATE_TAB_XPATH.replace("{templateName}", elementName));
+			break;
+		case "testidelement":
+			locator = page.getByTestId(DATATESTID_NAME.replace("{dataTestIdName}", elementName));
+			break;
+		case "blocksettingelement":
+			locator = page.locator(BLOCK_SETTING_ELEMENT_XPATH.replace("{blockName}", elementName));
+			break;
+		case "section":
+			locator = page.locator(SECTION_XPATH.replace("{sectionName}", elementName));
+			break;
+		case "layerblock":
+			locator = page.locator(DATATESTID_LAYER_NAME.replace("{layerName}", elementName));
+			break;
+		case "blocktitle":
+			locator = page.locator(BLOCK_TITLE_NAME.replace("{blockTitle}", elementName));
+			break;
+		case "text":
+			locator = page.locator(ELEMENT_TEXT_NAME.replace("{elementText}", elementName));
+			break;
+		case "blocksection":
+			locator = page.locator(BLOCK_SECTION_XPATH.replace("{blockSection}", elementName));
+			break;
+		case "promptcontext":
+			locator = page.locator(PROMPT_CONTEXT_NAME.replace("{elementName}", elementName));
+			break;
+		case "label":
+			locator = page.getByLabel(elementName);
+			break;
+		case "catalogformpage":
+			locator = page.getByTestId(elementName).locator("div").first();
+			break;
+		case "card":
+			locator = page.locator(CARD_SECTION_XPATH.replace("{elementName}", elementName));
+			break;
+		case "fullsection":
+			locator = page.locator(FULL_SECTION_XPATH.replace("{sectionName}", elementName));
+			break;
+		case "buttontext":
+			locator = page.locator(BUTTON_TEXT_XPATH.replace("{elementName}", elementName));
+			break;
+		case "class":
+			locator = page.locator(CLASS_ELEMENT_XPATH.replace("{className}", elementName));
+			break;
+		case "role":
+			locator = page.locator(ROLE_ELEMENT_XPATH.replace("{role}", elementName));
+			break;
+		default:
+			throw new IllegalArgumentException("Unsupported element type: " + elementType);
 		}
-		// Fallback: aria-label
-		if (locators.isEmpty()) {
-			Locator alt = page.locator("//*[contains(@aria-label,'" + buttonName + "')]");
-			int altCount = alt.count();
-			for (int i = 0; i < altCount; i++) {
-				locators.add(alt.nth(i));
-			}
+
+		List<Locator> locators = collectAllLocators(locator);
+
+		// Fallback logic for special cases
+		if ("button".equals(elementType.toLowerCase()) && locators.isEmpty()) {
+			Locator alt = page.locator("//*[contains(@aria-label,'" + elementName + "')]");
+			locators.addAll(collectAllLocators(alt));
+		} else if ("tile".equals(elementType.toLowerCase()) && locators.isEmpty()) {
+			Locator alt = page.locator("//p[contains(normalize-space(),'" + elementName + "')]");
+			locators.addAll(collectAllLocators(alt));
+		} else if ("searchbar".equals(elementType.toLowerCase()) && locators.isEmpty()) {
+			Locator alt = page.locator("//input[contains(@placeholder,'" + elementName + "')]");
+			locators.addAll(collectAllLocators(alt));
 		}
+
 		return locators;
 	}
 
-	public static List<Locator> captureTileScreenshot(Page page, String tileName) {
-		Locator locator = page.locator(TILE_XPATH.replace("{tileName}", tileName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		// Fallback: paragraph match
-		if (locators.isEmpty()) {
-			Locator alt = page.locator("//p[contains(normalize-space(),'" + tileName + "')]");
-			int altCount = alt.count();
-			for (int i = 0; i < altCount; i++) {
-				locators.add(alt.nth(i));
-			}
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureListItemScreenshot(Page page, String buttonName) {
-		Locator locator = page.locator(LIST_ITEM_ELEMENT_XPATH.replace("{Element}", buttonName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureHeadingScreenshot(Page page, String headingName) {
-		Locator locator = page.locator("//h6[contains(normalize-space(),'" + headingName + "')]");
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureSearchElementScreenshot(Page page, String buttonName) {
-		Locator locator = page.locator(SEARCH_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		// Fallback: placeholder
-		if (locators.isEmpty()) {
-			Locator alt = page.locator("//input[contains(@placeholder,'" + buttonName + "')]");
-			int altCount = alt.count();
-			for (int i = 0; i < altCount; i++) {
-				locators.add(alt.nth(i));
-			}
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureCopyCTAScreenshot(Page page, String buttonName) {
-		Locator locator = page.locator(COPY_ELEMENT_XPATH.replace("{ButtonName}", buttonName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureCopyIDScreenshot(Page page, String copyId) {
-		Locator locator = page.locator(COPY_ID_TEXT_XPATH.replace("{copyid}", copyId));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureTabScreenshot(Page page, String elementName) {
-		Locator locator = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(elementName).setExact(true));
-		locator.scrollIntoViewIfNeeded();
-		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureBlockScreenshot(Page page, String blockName) {
-		Locator locator = page.locator(BLOCK_ELEMENT_XPATH.replace("{blockName}", blockName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureButtonTypeScreenshot(Page page, String buttonType) {
-		Locator locator = page.locator(BUTTON_TYPE_XPATH.replace("{buttonType}", buttonType));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureAppTypeTab(Page page, String appTypeName) {
-		Locator locator = page.locator(APP_TYPE_TAB_XPATH.replace("{appTypeName}", appTypeName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureUseTemplate(Page page, String templateName) {
-		Locator locator = page.locator(USE_TEMPLATE_TAB_XPATH.replace("{templateName}", templateName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureElementThroughtDataTestId(Page page, String dataTestId) {
-		Locator locator = page.getByTestId(DATATESTID_NAME.replace("{dataTestIdName}", dataTestId));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			if (locator.nth(i).isVisible()) {
-				locators.add(locator.nth(i));
-			}
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureElementThroughtDataId(Page page, String dataTestId) {
-		Locator locator = page.locator(DATATESTID_LAYER_NAME.replace("{layerName}", dataTestId));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			if (locator.nth(i).isVisible()) {
-				locators.add(locator.nth(i));
-			}
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureElementThroughTitle(Page page, String blockTitle) {
-		Locator locator = page.locator(BLOCK_TITLE_NAME.replace("{blockTitle}", blockTitle));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			if (locator.nth(i).isVisible()) {
-				locators.add(locator.nth(i));
-			}
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureElementTextScreenshot(Page page, String elementText) {
-		Locator locator = page.locator(ELEMENT_TEXT_NAME.replace("{elementText}", elementText));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			if (locator.nth(i).isVisible()) {
-				locators.add(locator.nth(i));
-			}
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureBlockSettingElementScreenshot(Page page, String blockName) {
-		Locator locator = page.locator(BLOCK_SETTING_ELEMENT_XPATH.replace("{blockName}", blockName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureSectionScreenshot(Page page, String layerName) {
-		Locator locator = page.locator(SECTION_XPATH.replace("{sectionName}", layerName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureBlockSectionScreenshot(Page page, String blockName) {
-		Locator locator = page.locator(BLOCK_SECTION_XPATH.replace("{blockSection}", blockName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> capturePromptContextScreenshot(Page page, String blockName) {
-		Locator locator = page.locator(PROMPT_CONTEXT_NAME.replace("{elementName}", blockName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureLabelElementScreenshot(Page page, String elementName) {
-		Locator locator = page.getByLabel(elementName);
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureCatalogFormPage(Page page, String testId) {
-		Locator locator = page.getByTestId(testId).locator("div").first();
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureCardElementScreenshot(Page page, String elementName) {
-		Locator locator = page.locator(CARD_SECTION_XPATH.replace("{elementName}", elementName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureFullSectionScreenshot(Page page, String sectionName) {
-		Locator locator = page.locator(FULL_SECTION_XPATH.replace("{sectionName}", sectionName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureClassElementScreenshot(Page page, String elementName) {
-		Locator locator = page.locator(CLASS_ELEMENT_XPATH.replace("{className}", elementName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureButtonScreenshotByText(Page page, String elementName) {
-		Locator locator = page.locator(BUTTON_TEXT_XPATH.replace("{elementName}", elementName));
-		List<Locator> locators = new ArrayList<>();
-		int count = locator.count();
-		for (int i = 0; i < count; i++) {
-			locators.add(locator.nth(i));
-		}
-		return locators;
-	}
-
-	public static List<Locator> captureRoleElementScreenshot(Page page, String elementName) {
-		Locator locator = page.locator(ROLE_ELEMENT_XPATH.replace("{role}", elementName));
+	private static List<Locator> collectAllLocators(Locator locator) {
 		List<Locator> locators = new ArrayList<>();
 		int count = locator.count();
 		for (int i = 0; i < count; i++) {
