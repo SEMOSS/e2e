@@ -27,8 +27,8 @@ public class EditModelPageUtils {
 	private static final String DETAILS_UNDER_OVERVIEW_DATA_TESTID = "engine-overview-markdown";
 	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Tag')]/parent::section/child::div";
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Domain')]/parent::section//span";
-	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data classification')]/parent::section//span";
-	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data restrictions')]/parent::section//span";
+	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data Classification')]/parent::section//div";
+	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data Restrictions')]/parent::section//div";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 	private static final String DOMAIN_TEXTBOX_DATATESTID = "editEngineDetails-Domain-autocomplete";
 	private static final String DATA_RESTRICTION_SELECT_XPATH = "//button[@id='data restrictions']";
