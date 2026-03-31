@@ -1,7 +1,6 @@
 Feature: Create App and validate Variables and take screenshot for documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
-  Scenario: Validate Block Variables in Drag and Drop App with screenshot for documentation
+  Background: User create the drag and drop app
     Given User captures documentation screenshot for 'Navigating/Create New App'
     And User opens Main Menu
     And User clicks on Open App Library
@@ -10,7 +9,10 @@ Feature: Create App and validate Variables and take screenshot for documentation
     And User enters app name as 'Test app'
     And User clicks on Create button
     And User fetch the app name
-    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Validate Block Variables in Drag and Drop App with screenshot for documentation
+    When User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User clicks on Blocks
     And User clicks on 'page-1' page
     And User drags the 'Input' block and drops it on the page
@@ -30,15 +32,7 @@ Feature: Create App and validate Variables and take screenshot for documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Validate  Variables in Drag and Drop App with screenshot for documentation
-    Given User captures documentation screenshot for 'Navigating/Create New App'
-    And User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test app'
-    And User clicks on Create button
-    And User fetch the app name
-    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    When User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User clicks on Blocks
     And User clicks on 'page-1' page
     And User drags the 'Input' block and drops it on the page
@@ -73,15 +67,7 @@ Feature: Create App and validate Variables and take screenshot for documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Validate  Variables in Drag and Drop App with screenshot for documentation
-    Given User captures documentation screenshot for 'Navigating/Create New App'
-    And User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test app'
-    And User clicks on Create button
-    And User fetch the app name
-    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    When User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User clicks on Blocks
     And User clicks on 'page-1' page
     And User drags the 'Text' block and drops it on the page
@@ -94,15 +80,7 @@ Feature: Create App and validate Variables and take screenshot for documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Validate Variables in Drag and Drop App with screenshot for documentation
-    Given User captures documentation screenshot for 'Navigating/Create New App'
-    And User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test app'
-    And User clicks on Create button
-    And User fetch the app name
-    And User clicks on Notebook
+    When User clicks on Notebook
     And User clicks on Create new notebook
     And User enters New Query name as "text generation"
     And User clicks on query Submit button
@@ -116,15 +94,7 @@ Feature: Create App and validate Variables and take screenshot for documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Validate Variables in Drag and Drop App with screenshot for documentation
-    Given User captures documentation screenshot for 'Navigating/Create New App'
-    And User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test app'
-    And User clicks on Create button
-    And User fetch the app name
-    And User clicks on Notebook
+    When User clicks on Notebook
     And User clicks on Create new notebook
     And User enters New Query name as "text generation"
     And User clicks on query Submit button
@@ -137,15 +107,7 @@ Feature: Create App and validate Variables and take screenshot for documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Validate Access Control in Drag and Drop App with screenshot for documentation
-    Given User captures documentation screenshot for 'Navigating/Create New App'
-    And User opens Main Menu
-    And User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters app name as 'Test app'
-    And User clicks on Create button
-    And User fetch the app name
-    Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
+    When User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User click on Settings
     And User clicks on Access Control Tab
     And User captures screenshot for app screens "VAR6"

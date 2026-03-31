@@ -138,7 +138,6 @@ public class AppVariablePageUtils {
 		page.locator(VariableTypeOptionInList.replace("{variableType}", tabName)).click();
 }
 
-
 	public static String getCatalogNameForVariable(Page page) {
 		String catalogVariableName = page.locator(CatalogVariable).textContent();
 		if (catalogVariableName == null) {
