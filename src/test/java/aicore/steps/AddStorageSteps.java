@@ -339,10 +339,10 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		storagePage.clickOnDiscoverableStoragesButton();
 	}
 
-	@When("User clicks on 'Discoverable Storages' tab")
-	public void user_clicks_on_discoverable_storages_tab() {
-		storagePage.clickOnDiscoverableStoragesButton();
-	}
+//	@When("User clicks on 'Discoverable Storages' tab")
+//	public void user_clicks_on_discoverable_storages_tab() {
+//		storagePage.clickOnDiscoverableStoragesButton();
+//	}
 
 	@When("User clicks on {string} button")
 	public void user_clicks_on_button(String buttonName) {
