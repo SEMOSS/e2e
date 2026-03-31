@@ -63,7 +63,7 @@ Feature: Create App and validate Variables and take screenshot for documentation
     And User opens the 'Block' Variables tab
     And User opens the 'Query' Variables tab
     And User captures screenshot for "VAR2"
-    And User completes screenshot capture and triggers comparison for 'App variable'
+    Then User completes screenshot capture and triggers comparison for 'App variable'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Validate  Variables in Drag and Drop App with screenshot for documentation
@@ -76,7 +76,7 @@ Feature: Create App and validate Variables and take screenshot for documentation
     And User clicks on the 'Text' block to select it
     And User enters '{{text-generation}}' in the Text field
     And User captures screenshot for "VAR3"
-    And User completes screenshot capture and triggers comparison for 'App variable'
+    Then User completes screenshot capture and triggers comparison for 'App variable'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Validate Variables in Drag and Drop App with screenshot for documentation
@@ -111,4 +111,4 @@ Feature: Create App and validate Variables and take screenshot for documentation
     And User click on Settings
     And User clicks on Access Control Tab
     And User captures screenshot for app screens "VAR6"
-    And User completes screenshot capture and triggers comparison for 'App variable'
+    Then User completes screenshot capture and triggers comparison for 'App variable'
