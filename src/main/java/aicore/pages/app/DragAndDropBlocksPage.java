@@ -52,6 +52,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
 	}
 
+	public void enterTextInTextField(String text) {
+		DragAndDropBlocksPageUtils.enterTextInTextField(page, text);
+	}
+
 	public void mouseHoverOnBlock(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
 	}
