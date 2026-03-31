@@ -34,6 +34,7 @@ import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
 import aicore.utils.AICorePageUtils;
+import aicore.utils.HomePageUtils;
 
 public class GenericSetupUtils {
 
@@ -267,17 +268,11 @@ public class GenericSetupUtils {
 	}
 
 	public static void logout(Page page) {
-		// going to logout
-//		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
-		if (isMenuOpen.isVisible()) {
-			// isMenuOpen.click();
-			isMenuOpen.dblclick();
-		}
-		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
-		AICorePageUtils.waitFor(locator);
-		locator.click();
-		page.locator(PROFILE_ICON_XPATH).click();
+		HomePageUtils.openMainMenu(page);
+		// click on user profile button
+		HomePageUtils.clickOnUserAccountButton(page);
+//		page.locator(PROFILE_ICON_XPATH).click();
+		// log out
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
