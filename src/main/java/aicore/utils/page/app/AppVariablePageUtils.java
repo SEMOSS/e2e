@@ -23,6 +23,7 @@ public class AppVariablePageUtils {
 	private static final String OpenMenuOption = "//p[text()='{variableName}']/parent::div/following-sibling::div//*[@data-testid='ChevronRightIcon']";
 	private static final String EditVariableOption = "//li[@value='Edit']";
 	private static final String MORE_VERTICAL_ICON_XPATH = "//span[text()='{variableName}']/ancestor::div/following-sibling::div//button[@data-testid='notebook-variable-more-btn']";
+	private static final String VariableTypeOptionInList = "//p[text()='{variableType}']";
 
 	public static void clickOnVariableOption(Page page) {
 		Locator variables = page.locator(VariableOption);
@@ -132,6 +133,10 @@ public class AppVariablePageUtils {
 			throw new RuntimeException("Create Variable button is not visible");
 		}
 	}
+
+	public static void clickOnVariablesTab(Page page, String tabName) {
+		page.locator(VariableTypeOptionInList.replace("{variableType}", tabName)).click();
+}
 
 	public static String getCatalogNameForVariable(Page page) {
 		String catalogVariableName = page.getByTestId(CATALOG_VARIABLE_DATATESTID).textContent();
