@@ -1,6 +1,6 @@
 Feature: View existing models in model Catalog
 
-  Background: Create a Model - GPT 4.1 Turbo
+  Background: Create a Model - GPT 4.1 
     Given User opens Main Menu
     When User clicks on Open Model
     And User clicks on Add Model

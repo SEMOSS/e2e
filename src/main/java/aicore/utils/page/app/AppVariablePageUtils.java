@@ -17,7 +17,7 @@ public class AppVariablePageUtils {
 	private static final String VariableValueInputDropdownList = "//ul[@role='listbox']//li//span[text()='{value}']";
 	private static final String CreateVariableButton = "//span[text()='Add']";
 	private static final String ToastMessage = "//*[contains(@class, 'MuiAlert-message')]";
-	private static final String CatalogVariable = "//div[@id='home__content']//h1";
+	private static final String CATALOG_VARIABLE_DATATESTID = "Title";
 	private static final String VariableListItem = "//button//div//p[text()='{variableName}']";
 	private static final String SAVEVARIABLE = "//span[text()='Save']";
 	private static final String OpenMenuOption = "//p[text()='{variableName}']/parent::div/following-sibling::div//*[@data-testid='ChevronRightIcon']";
@@ -134,7 +134,7 @@ public class AppVariablePageUtils {
 	}
 
 	public static String getCatalogNameForVariable(Page page) {
-		String catalogVariableName = page.locator(CatalogVariable).textContent();
+		String catalogVariableName = page.getByTestId(CATALOG_VARIABLE_DATATESTID).textContent();
 		if (catalogVariableName == null) {
 			throw new RuntimeException("Catalog Variable Name is not visible");
 		}
