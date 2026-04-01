@@ -107,7 +107,7 @@ public class AddDatabaseFileUploadUtils {
 		}
 	}
 
-	public static void verifyResetbtn(Page page) {
+	public static void verifyResetBtn(Page page) {
 		Locator resetButton = page.getByTestId(REFRESH_BUTTON_TESTID);
 		AICorePageUtils.waitFor(resetButton);
 		resetButton.isEnabled();

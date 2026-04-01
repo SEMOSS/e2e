@@ -30,10 +30,6 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnSettings(page);
 	}
 
-	public void clickOnMakeDiscoverableButton(String caltalogName) {
-		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page, caltalogName);
-	}
-
 	public void clickOnDiscoverableFunctionsbutton() {
 		AddFunctionPageUtils.clickOnDiscoverableFunctionsButton(page);
 	}
@@ -128,18 +124,6 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 
 	public void clickOnAccessControl() {
 		AddFunctionPageUtils.clickOnAccessControl(page);
-	}
-
-	public void clickOnDeleteButton() {
-		AddFunctionPageUtils.clickOnDeleteButton(page);
-	}
-
-	public void clickOnDeleteConfirmationButton() {
-		AddFunctionPageUtils.clickOnDeleteConfirmationButton(page);
-	}
-
-	public String verifyDeleteToastMessage(String toastMessage) {
-		return AddFunctionPageUtils.verifyDeleteToastMessage(page, toastMessage);
 	}
 
 	public String verifySuccessToastMessage(String toastMessage) {

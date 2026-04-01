@@ -4,7 +4,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
-import com.microsoft.playwright.options.WaitForSelectorState;
+
+import aicore.pages.function.FunctionAccessSettingsUtils;
 
 public class AddFunctionPageUtils {
 
@@ -15,11 +16,7 @@ public class AddFunctionPageUtils {
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String FILE_TAB_XPATH = "//button[text()='Files']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
-	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
-	private static final String CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
-	private static final String DELETE_TOAST_MESSAGE = "//div[text()='{toastMessage}']";
-	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{catalogName}-makeDiscoverable-switch";
+
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "search-bar";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
@@ -34,7 +31,6 @@ public class AddFunctionPageUtils {
 		page.getByLabel(ADD_FUNCTION_BUTTON).click();
 	}
 
-	
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
 		if (catalogName.contains("{Timestamp}")) {
 			catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
@@ -69,22 +65,6 @@ public class AddFunctionPageUtils {
 		settingsTab.click();
 	}
 
-	public static void clickOnDeleteButton(Page page) {
-		page.locator(DELETE_BUTTON_XPATH).isVisible();
-		page.locator(DELETE_BUTTON_XPATH).click();
-	}
-
-	public static void clickOnDeleteConfirmationButton(Page page) {
-		page.locator(CONFIRMATION_POPUP_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).isVisible();
-		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
-	}
-
-	public static String verifyDeleteToastMessage(Page page, String toastMessage) {
-		return page.locator(DELETE_TOAST_MESSAGE.replace("{toastMessage}", toastMessage)).first().textContent();
-	}
-
 	public static String verifySuccessToastMessage(Page page, String toastMessage) {
 		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toastMessage}", toastMessage)).first();
 		alert.scrollIntoViewIfNeeded();
@@ -107,13 +87,6 @@ public class AddFunctionPageUtils {
 				.replace("{filterValue}", filterValue));
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
-	}
-
-	public static void clickOnMakeDiscoverableButton(Page page, String catalogName) {
-		Locator makeDiscoverableButton = page
-				.getByTestId(MAKE_DISCOVERABLE_BUTTON_DATATESTID.replace("{catalogName}", catalogName));
-		makeDiscoverableButton.isVisible();
-		makeDiscoverableButton.click();
 	}
 
 	public static void clickOnDiscoverableFunctionsButton(Page page) {
@@ -142,8 +115,8 @@ public class AddFunctionPageUtils {
 			catalogLocator.first().waitFor();
 			catalogLocator.first().click();
 			clickOnAccessControl(page);
-			clickOnDeleteButton(page);
-			clickOnDeleteConfirmationButton(page);
+			FunctionAccessSettingsUtils.clickOnDeleteButton(page);
+			FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
 		}
 	}
 

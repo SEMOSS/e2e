@@ -3,7 +3,7 @@ package aicore.utils;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public class ChangeAccessPopUpPageUtils {
+public class RequestAccessPopupUtils {
 	private static final String AUTHOR_OPTION_XPATH = "//button[@value='OWNER' and @data-slot='radio-group-item']";
 	private static final String EDITOR_OPTION_XPATH = "//button[@value='EDIT' and @data-slot='radio-group-item']";
 	private static final String READONLY_OPTION_XPATH = "//button[@value='READ_ONLY' and @data-slot='radio-group-item']";

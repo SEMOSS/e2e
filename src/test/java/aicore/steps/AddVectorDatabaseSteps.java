@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
-import aicore.pages.ChangeAccessPopUpPage;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
@@ -18,6 +17,7 @@ import aicore.pages.vector.AddVectorFormUtils;
 import aicore.pages.vector.VectorQnAPageUtils;
 import aicore.pages.vector.VectorSMSSPageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.RequestAccessPopupUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -31,7 +31,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	protected static String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
 	private ViewUsagePage viewUsagePage;
-	private ChangeAccessPopUpPage chnageAccessPopUpPage;
 	private CatalogPage catalogPage;
 
 	public AddVectorDatabaseSteps() {
@@ -40,7 +39,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		vectorPage = new OpenVectorPage(SetupHooks.getPage());
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
-		chnageAccessPopUpPage = new ChangeAccessPopUpPage(SetupHooks.getPage());
 		catalogPage = new CatalogPage(SetupHooks.getPage());
 	}
 
@@ -254,32 +252,32 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@Then("User should see the {string} popup with following options:")
 	public void user_should_see_the_popup_with_following_options(String expectedTitle,
 			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
-		Assertions.assertTrue(chnageAccessPopUpPage.isPopupVisible(), expectedTitle + " popup is not visible");
+		Assertions.assertTrue(RequestAccessPopupUtils.isPopupVisible(SetupHooks.getPage()), expectedTitle + " popup is not visible");
 		for (String option : dataTable.asList()) {
-			Assertions.assertTrue(chnageAccessPopUpPage.isOptionVisible(option),
+			Assertions.assertTrue(RequestAccessPopupUtils.isOptionVisible(SetupHooks.getPage(), option),
 					option + " is not visible in Change Access popup");
 		}
 	}
 
 	@Then("User selects {string} access")
 	public void user_selects_access(String accessType) {
-		chnageAccessPopUpPage.selectAccessType(accessType);
+		RequestAccessPopupUtils.selectAccessType(SetupHooks.getPage(), accessType);
 	}
 
 	@Then("User types a comment as {string}")
 	public void user_types_a_comment_as(String comment) {
-		chnageAccessPopUpPage.enterComment(comment);
+		RequestAccessPopupUtils.enterComment(SetupHooks.getPage(), comment);
 	}
 
 	@Then("User clicks on Request button")
 	public void user_clicks_on_request_button() {
-		chnageAccessPopUpPage.clickOnRequestButton();
+		RequestAccessPopupUtils.clickOnRequestButton(SetupHooks.getPage());
 	}
 
 	@Then("User should successfully request access and a toast message as {string}")
 	public void user_should_successfully_request_access_given_the_vector_is_requestable_with_a_toast_message_as(
 			String expectedMessage) {
-		String toastText = chnageAccessPopUpPage.isRequestSuccessToastVisible();
+		String toastText = RequestAccessPopupUtils.isRequestSuccessToastVisible(SetupHooks.getPage());
 		Assertions.assertTrue(toastText != null && toastText.contains(expectedMessage),
 				"Expected toast message to contain: '" + expectedMessage + "' but got: '" + toastText + "'");
 	}
