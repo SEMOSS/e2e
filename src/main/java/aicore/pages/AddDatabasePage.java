@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.microsoft.playwright.Page;
 
+import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.utils.AddDatabasePageUtils;
 
 public class AddDatabasePage extends AbstractAddCatalogPageBase {
@@ -14,15 +15,11 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnAddDatabaseButton() {
-		AddDatabasePageUtils.clickAddDatabaseButton(page);
-	}
-
-	public void selectDatabaseType(String dbType) {
-		AddDatabasePageUtils.selectDatabaseType(page, dbType);
+		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 	}
 
 	public void selectDatabaseFromConnectionTypes(String dbType) {
-		AddDatabasePageUtils.selectDatabaseFromConnectionTypes(page, dbType);
+		AddDatabaseFormUtils.selectDatabaseFromConnectionTypes(page, dbType);
 	}
 
 	public boolean verifyFieldUnderSection(String sectionName, String fieldName) {
@@ -30,31 +27,31 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	}
 
 	public boolean isDBFieldMandatory(String fieldName) {
-		return AddDatabasePageUtils.isDBFieldMandatory(page, fieldName);
+		return AddDatabaseFormUtils.isDBFieldMandatory(page, fieldName);
 	}
 
 	public void enterCatalogName(String catalogName) {
-		AddDatabasePageUtils.enterCatalogName(page, catalogName);
+		AddDatabaseFormUtils.enterCatalogName(page, catalogName);
 	}
 
 	public void enterHostName(String hostName) {
-		AddDatabasePageUtils.enterHostName(page, hostName);
+		AddDatabaseFormUtils.enterHostName(page, hostName);
 	}
 
 	public void clearPortNumber() {
-		AddDatabasePageUtils.clearPortNumber(page);
+		AddDatabaseFormUtils.clearPortNumber(page);
 	}
 
 	public void enterSchemaName(String schemaName) {
-		AddDatabasePageUtils.enterSchemaName(page, schemaName);
+		AddDatabaseFormUtils.enterSchemaName(page, schemaName);
 	}
 
 	public void addUserName(String userName) {
-		AddDatabasePageUtils.enterUserName(page, userName);
+		AddDatabaseFormUtils.enterUserName(page, userName);
 	}
 
 	public void addJDBCUrl(String jdbcUrl, String dbType) {
-		AddDatabasePageUtils.enterJDBCUrl(page, jdbcUrl, dbType);
+		AddDatabaseFormUtils.enterJDBCUrl(page, jdbcUrl, dbType);
 	}
 
 	public void clickOnApplyButton() {
@@ -218,7 +215,7 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnConnectButton() {
-		AddDatabasePageUtils.clickOnConnectButton(page);
+		AddDatabaseFormUtils.clickOnConnectButton(page);
 	}
 
 	public void clickOnSaveButton() {

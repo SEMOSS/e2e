@@ -11,7 +11,7 @@ Feature: Database Catalog Documentation
     And User clicks on Add Database
     And User captures screenshot for "Database Options"
     And User captures a 'List Item' and highlights the 'Postgres'
-    Then User selects database 'Postgres'
+    Then User selects database 'Postgres' from connection types
     And User captures screenshot for "Postgres Database"
     Given User opens Main Menu
     When User clicks on Open Database
