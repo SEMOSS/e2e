@@ -19,8 +19,6 @@ public class AddModelPage {
 	private Page page;
 	private String timestamp;
 
-	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Model']";
 
 	public AddModelPage(Page page, String timestamp) {
@@ -255,42 +253,6 @@ public class AddModelPage {
 		SettingsModelPageUtils.clickOnSettingsTab(page);
 	}
 
-	public boolean verifyMakePublicSectionIsVisible(String title) {
-		return SettingsModelPageUtils.verifyMakePublicSectionIsVisible(page, title);
-	}
-
-	public String verifyMakePublicSectionTextMessage() {
-		return SettingsModelPageUtils.verifyMakePublicSectionTextMessage(page);
-	}
-
-	public boolean verifyMakePublicToggleButtonIsVisible() {
-		return SettingsModelPageUtils.verifyMakePublicToggleButtonIsVisible(page);
-	}
-
-	public boolean verifyMakeDiscoverableSectionIsVisible(String title) {
-		return SettingsModelPageUtils.verifyMakeDiscoverableSectionIsVisible(page, title);
-	}
-
-	public String verifyMakeDiscoverableSectionTextMessage() {
-		return SettingsModelPageUtils.verifyMakeDiscoverableSectionTextMessage(page);
-	}
-
-	public boolean verifyMakeDiscoverableToggleButtonIsVisible() {
-		return SettingsModelPageUtils.verifyMakeDiscoverableToggleButtonIsVisible(page);
-	}
-
-	public boolean verifyDeleteSectionIsVisible(String title) {
-		return SettingsModelPageUtils.verifyDeleteSectionIsVisible(page, title);
-	}
-
-	public String verifyDeleteSectionTextMessage() {
-		return SettingsModelPageUtils.verifyDeleteSectionTextMessage(page);
-	}
-
-	public boolean verifyDeleteButtonIsVisible() {
-		return SettingsModelPageUtils.verifyDeleteButtonIsVisible(page);
-	}
-
 	public boolean verifyPendingRequestsSectionIsVisible() {
 		return SettingsModelPageUtils.verifyPendingRequestsSectionIsVisible(page);
 	}
@@ -361,10 +323,6 @@ public class AddModelPage {
 
 	public void addMember(String role, boolean useDocker) throws InterruptedException {
 		SettingsModelPageUtils.addMember(page, role, useDocker);
-	}
-
-	public void clickOnDeleteButton() {
-		SettingsModelPageUtils.clickOnDeleteButton(page);
 	}
 
 	public boolean isDeleteSuccessful() {

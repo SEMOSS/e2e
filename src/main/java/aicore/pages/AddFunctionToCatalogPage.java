@@ -35,7 +35,7 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnDiscoverableFunctionsbutton() {
-		AddFunctionPageUtils.clickOnDiscoverableFunctionsbutton(page);
+		AddFunctionPageUtils.clickOnDiscoverableFunctionsButton(page);
 	}
 
 	public void clickOnAddFunctionButton() {

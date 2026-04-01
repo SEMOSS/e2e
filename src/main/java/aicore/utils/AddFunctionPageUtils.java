@@ -21,7 +21,6 @@ public class AddFunctionPageUtils {
 	private static final String DELETE_TOAST_MESSAGE = "//div[text()='{toastMessage}']";
 	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{catalogName}-makeDiscoverable-switch";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
-	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_XPATH = "//button[text()='Discoverable Functions']";
 	private static final String FUNCTION_CATALOG_SEARCH_TEXTBOX_DATA_TESTID = "search-bar";
 	private static final String SEARCHED_FUNCTION_XPATH = "//p[text()='{catalogName}']";
 	private static final String SEARCHED_CATALOG_DATATESTID = "genericEngineCards-{catalogType}-{catalogName}";
@@ -117,7 +116,7 @@ public class AddFunctionPageUtils {
 		makeDiscoverableButton.click();
 	}
 
-	public static void clickOnDiscoverableFunctionsbutton(Page page) {
+	public static void clickOnDiscoverableFunctionsButton(Page page) {
 		page.getByTestId(DISCOVERABLE_FUNCTIONS_BUTTON_TESTID).click();
 	}
 

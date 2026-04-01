@@ -5,11 +5,11 @@ import com.microsoft.playwright.Page;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 
-public class CatlogPermissionsPage {
+public class CatalogPermissionsPage {
 
 	private Page page;
 
-	public CatlogPermissionsPage(Page page) {
+	public CatalogPermissionsPage(Page page) {
 		this.page = page;
 	}
 

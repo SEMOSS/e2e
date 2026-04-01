@@ -37,7 +37,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp;
-		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
+		vectorPage = new OpenVectorPage(SetupHooks.getPage());
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 		chnageAccessPopUpPage = new ChangeAccessPopUpPage(SetupHooks.getPage());

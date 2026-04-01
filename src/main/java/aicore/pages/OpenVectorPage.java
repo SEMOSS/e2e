@@ -11,12 +11,7 @@ import aicore.utils.CommonUtils;
 
 public class OpenVectorPage extends AbstractAddCatalogPageBase {
 
-	private String timestamp;
 	private static final String ADD_VECTOR_BUTTON_XPATH = "//button[text()='Add ']";
-	private static final String CONNECTIONS_XPATH = "//div[@class='css-axw7ok']//p[text()='{Connections}']";
-	private static final String EMBEDDER_DROPDOWN_OPTIONS_LIST_XPATH = "//select//option[text()='{modelName}']";
-	private static final String CHUNKING_STRATEGY_DROPDOWN_OPTIONS_LIST_XPATH = "//option[text()='{strategyName}']";
-
 	private static final String VECTOR_CREATED_SUCCESS_TOAST_MESSAGE_XPATH = "//div[contains(@class,'MuiAlert-message css-')]";
 
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
@@ -41,9 +36,8 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 
 	private static final String SLIDER_BAR_XPATH = "//p[text()='{sliderName}']/following::span[@role='slider']";
 
-	public OpenVectorPage(Page page, String timestamp) {
+	public OpenVectorPage(Page page) {
 		this.page = page;
-		this.timestamp = timestamp;
 	}
 
 	public void clickOnAddVectorButton() {

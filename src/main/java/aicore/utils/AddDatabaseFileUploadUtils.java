@@ -24,7 +24,6 @@ public class AddDatabaseFileUploadUtils {
 	private static final String ADD_RELATIONSHIP_BUTTON_TESTID = "add-connection";
 	private static final String SAVE_RELATIONSHIP_BUTTON_TESTID = "save-connection";
 	private static final String FULL_SCREEN_CLOSE_BUTTON_XPATH = "//button[@aria-label='Close']";
-	private static final String CREATE_CONNECTION_DATATESTID = "add-connection";
 
 	public static void selectTab(Page page, String tabName) {
 		page.getByTestId(TAB_SELECTION_TESTID.replace("{tabName}", tabName)).click();

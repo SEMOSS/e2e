@@ -26,7 +26,6 @@ public class CatlogAccessPageUtility {
 	// create app variable declaration
 	private static final String CLICK_ON_SETTINGS_XPATH = "//img[@data-testid='workspace-Settings-image']/../..";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
-	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
 	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
 	private static final String CLICK_ON_DATA_APPS_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Apps')]";
@@ -35,11 +34,9 @@ public class CatlogAccessPageUtility {
 	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//button[contains(@title,'discoverable')]";
 	private static final String TOASTER_MEASSAGE_XAPTH = "//li[@data-type='success']";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
-	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//button[contains(@data-testid,'makeDiscoverable-switch')]";
 	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//p[text()='Private']/../../following-sibling::div//button[contains(@data-testid,'settingsTiles')]";
-	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
 	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
 	private static final String PENDING_REQUEST_ACCEPT_DATA_TESTID = "approve-pending-member-btn";
@@ -76,7 +73,6 @@ public class CatlogAccessPageUtility {
 		return accessControl.isVisible();
 	}
 
-	// new
 	public static boolean canViewMetadata(Page page) {
 		return page.getByText(VIEW_METADATA_TAB_Text).isVisible();
 	}
@@ -87,7 +83,6 @@ public class CatlogAccessPageUtility {
 			searchIcon.click();
 		}
 		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
-		// page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID).fill(role);
 		page.waitForTimeout(1000);
 	}
 

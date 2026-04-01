@@ -3,9 +3,6 @@ package aicore.steps.app;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
-
 import aicore.framework.UrlUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.app.AppTemplatePage;
@@ -14,11 +11,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class createAppUsingTemplateSteps {
+public class CreateAppUsingTemplateSteps {
 	private AppTemplatePage appTemplatePage;
 	private DragAndDropBlocksPage blocksPage;
 
-	public createAppUsingTemplateSteps() {
+	public CreateAppUsingTemplateSteps() {
 		appTemplatePage = new AppTemplatePage(SetupHooks.getPage());
 		blocksPage = new DragAndDropBlocksPage(SetupHooks.getPage());
 	}

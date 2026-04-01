@@ -47,10 +47,6 @@ public class StoragePageUtils {
 		page.click(ADD_STORAGE_BUTTON_XPATH);
 	}
 
-
-
-
-
 	public static boolean validateConnectButtonEnabled(Page page) {
 		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
 		connectButton.scrollIntoViewIfNeeded();
