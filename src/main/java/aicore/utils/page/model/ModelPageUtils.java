@@ -252,6 +252,7 @@ public class ModelPageUtils {
 		String fieldType = "";
 		switch (field) {
 		case "Catalog Name":
+		case "Model":
 		case "Init Script":
 		case "Tag":
 		case "Project":
@@ -300,10 +301,6 @@ public class ModelPageUtils {
 				fieldLocator = textField;
 			}
 			fieldType = "Url";
-			break;
-		case "Model":
-			fieldLocator = page.locator("//input[@value='chatgpt-image-latest']");
-			fieldLocator.isVisible();
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid field: " + field);
