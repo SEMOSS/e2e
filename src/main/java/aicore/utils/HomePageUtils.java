@@ -31,7 +31,7 @@ public class HomePageUtils {
 	private static final String APP_MENU_BUTTON_XPATH = "sidebar-Apps-btn";
 	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
 	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
-	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
+	private static final String MODEL_MENU_BUTTON_DATATESTID = "sidebar-Model-btn";
 	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
 	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
 	private static final String GUARDRAIL_MENU_BUTTON_DATA_TESTID = "sidebar-Guardrail-btn";
@@ -132,7 +132,7 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenModel(Page page) {
-		page.click(MODEL_MENU_BUTTON_XPATH);
+		page.getByTestId(MODEL_MENU_BUTTON_DATATESTID).click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
@@ -201,7 +201,7 @@ public class HomePageUtils {
 
 	public static void clickOnHome(Page page) {
 		page.locator(HOME_MENU_BUTTON_DATA_TESTID).click();
-		page.waitForTimeout(1000);//wait for home page to load and sync then close menu
+		page.waitForTimeout(1000);// wait for home page to load and sync then close menu
 		HomePageUtils.closeMainMenu(page);
 	}
 
