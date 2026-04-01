@@ -58,7 +58,7 @@ public class AppPage {
 	}
 
 	public void MakeAppPublic() {
-		AppPageUtils.MakeAppPublic(page);
+		AppPageUtils.makeAppPublic(page);
 	}
 
 	public boolean isAppDisplayedOnPage(String appName) {

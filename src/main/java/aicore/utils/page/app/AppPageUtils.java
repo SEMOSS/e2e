@@ -97,7 +97,7 @@ public class AppPageUtils {
 		AICorePageUtils.clickOnButton(page, buttonName);
 	}
 
-	public static void MakeAppPublic(Page page) {
+	public static void makeAppPublic(Page page) {
 		page.locator(MAKE_PUBLIC_BUTTON_XPATH).isVisible();
 		page.locator(MAKE_PUBLIC_BUTTON_XPATH).click();
 	}
