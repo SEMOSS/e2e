@@ -140,6 +140,7 @@ public class ModelPageUtils {
 		case "Model ID":
 		case "Region":
 		case "Model Name":
+		case "Provider":
 		case "API Version":
 			fieldLocator = page.locator(
 					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
@@ -156,7 +157,7 @@ public class ModelPageUtils {
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
-		case "AWS Access Key ID":
+		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.locator(
@@ -202,7 +203,9 @@ public class ModelPageUtils {
 		case "Service Account Credentials":
 		case "Model ID":
 		case "Region":
+		case "Aws Region":
 		case "Model Name":
+		case "Provider":
 		case "API Version":
 			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
@@ -217,7 +220,7 @@ public class ModelPageUtils {
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
-		case "AWS Access Key ID":
+		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
@@ -277,7 +280,7 @@ public class ModelPageUtils {
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
-		case "AWS Access Key ID":
+		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName));
