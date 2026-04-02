@@ -4,7 +4,6 @@ Feature: Notebook Validate Database Operations
   Background: Create Database, Drag and Drop App, and Notebook
     Given User is on Home page
     When User opens Main Menu
-    #### Add Database
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     And User clicks on Add Database
@@ -18,8 +17,8 @@ Feature: Notebook Validate Database Operations
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    ### Create Drag and Drop App
-    When User opens Main Menu
+    When User clicks on Save button of Metadata tab
+    And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"
@@ -67,7 +66,7 @@ Feature: Notebook Validate Database Operations
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    Then User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
+    Then User can see 'AGE, BLOODPRESSURE, BMI, DIABETESPEDIGREEFUNCTION, DIABETES_UNIQUE_ROW_IDFK, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns under the fields column
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
@@ -75,7 +74,7 @@ Feature: Notebook Validate Database Operations
     And User enter the data limit as '20'
     And User clicks on Run cell button
     And User fetch the frame id
-    Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
+    Then User can see header names as 'AGE, BLOODPRESSURE, BMI, DIABETES_UNIQUE_ROW_ID, DIABETESPEDIGREEFUNCTION, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP'
     And User can see total '20' rows
     And User can see the 'DIABETES_UNIQUE_ROW_ID' column have unique values
     And User can see name as frame id in JSON
@@ -98,7 +97,7 @@ Feature: Notebook Validate Database Operations
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    Then User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
+    Then User can see 'AGE, BLOODPRESSURE, BMI, DIABETESPEDIGREEFUNCTION, DIABETES_UNIQUE_ROW_IDFK, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns under the fields column
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
@@ -106,14 +105,14 @@ Feature: Notebook Validate Database Operations
     And User enter the data limit as '20'
     And User clicks on Run cell button
     And User fetch the frame id
-    Then User can see header names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
+    Then User can see header names as 'AGE, BLOODPRESSURE, BMI, DIABETES_UNIQUE_ROW_ID, DIABETESPEDIGREEFUNCTION, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP'
     And User can see total '20' rows
     And User can see the 'DIABETES_UNIQUE_ROW_ID' column have unique values
     And User can see name as frame id in JSON
     And User can see type as 'PY' for 'Python' in JSON
     When User clicks on the Save App icon
     And User clicks on Edit button for the imported data cell
-    And User unchecks 'Age' column from the selected columns
+    And User unchecks 'AGE' column from the selected columns
     And User clicks on update cell button
     And User clicks on Run cell button
-    Then User can see header names as 'BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
+    Then User can see header names as 'BLOODPRESSURE, BMI, DIABETES_UNIQUE_ROW_ID, DIABETESPEDIGREEFUNCTION, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP'

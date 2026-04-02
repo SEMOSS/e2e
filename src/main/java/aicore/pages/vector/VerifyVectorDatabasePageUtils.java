@@ -1,19 +1,14 @@
-package aicore.utils;
+package aicore.pages.vector;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import aicore.utils.AICorePageUtils;
+
 public class VerifyVectorDatabasePageUtils {
-
-	private Page page;
-
-	public VerifyVectorDatabasePageUtils(Page page) {
-		this.page = page;
-	}
 
 	private static final String VECTOR_CONNECTIONS_TESTID = "importPageContent-connect-to-{vectorDB}-img";
 	private static final String FORM_SECTION_XPATH = "//h6[text()='{sectionName}']";
-	private static final String ADVANCED_SECTION_XPATH = "//button[@data-testid='vector-form-advanced-toggle']";
 	private static final String SECTION_FIELD_XPATH = "//div[//h4[normalize-space()='{sectionName}']]/following-sibling::div//div//label[text()='{fieldName}']";
 	private static final String MANDATORY_FIELD_XPATH = "//label[text()='{fieldName}']//span[text()='*']";
 

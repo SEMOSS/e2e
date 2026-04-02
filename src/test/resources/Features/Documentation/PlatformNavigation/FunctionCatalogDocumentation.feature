@@ -167,7 +167,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engine Edit Interface Document
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
@@ -185,7 +185,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engine - Capture Azure Document Intelligence form
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -194,7 +194,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engine - properties
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -204,7 +204,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engine add zip Document
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -215,7 +215,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engine - properties
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     When User opens Main Menu
     And User clicks on Open Function
     And User clicks on Add Function
@@ -225,7 +225,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engines - Function Access Control Documentation
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     When User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
@@ -241,7 +241,7 @@ Feature: Function documentation
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteTestCatalog
   Scenario: Function Engines - Discoverable Function Documenatation
-    Given User captures documentation screenshot for 'FunctionEngines'
+    Given User captures documentation screenshot for 'PlatformNavigation/Function Catalog'
     And User opens Main Menu
     When User clicks on Open Function
     And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'

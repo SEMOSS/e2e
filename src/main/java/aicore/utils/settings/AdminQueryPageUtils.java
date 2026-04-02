@@ -9,7 +9,6 @@ import com.microsoft.playwright.options.AriaRole;
 public class AdminQueryPageUtils {
 
 	///// SETTING ADMIN QUERY PAGE
-	private static final String DATABASE_DROPDOWN_NAME = "Database";
 	private static final String QUERY_TEXTBOX_PLACEHOLDER_TEXT = "SELECT * FROM engine";
 	private static final String QUERY_EXECUTED_TOAST_MESSAGE = "Successfully submitted query";
 	private static final String TOAST_MESSAGE_ClOSE_DATA_XPATH = "//button[@aria-label='Close']";

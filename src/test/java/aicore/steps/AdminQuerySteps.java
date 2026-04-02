@@ -11,7 +11,6 @@ import aicore.pages.HomePage;
 import aicore.pages.JobManagementPage;
 import aicore.pages.SettingPage;
 import aicore.pages.SettingsAdminQueryPage;
-import aicore.utils.CommonUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

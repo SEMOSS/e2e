@@ -25,6 +25,10 @@ public class AppPage {
 		AppPageUtils.searchApp(page, appName, timestamp);
 	}
 
+	public void selectAppCardsView(String view) {
+		AppPageUtils.selectAppCardsView(page, view);
+	}
+
 	public void searchAppId(String appId) {
 		AppPageUtils.searchAppId(page, appId);
 	}
@@ -39,6 +43,10 @@ public class AppPage {
 
 	public String clickOnOption(String optionName) {
 		return AppPageUtils.clickOnOption(page, optionName);
+	}
+
+	public String getCopiedId(String icon) {
+		return AppPageUtils.getCopiedId(page, icon);
 	}
 
 	public String getAppIdCopiedToastMessage() {
@@ -58,7 +66,7 @@ public class AppPage {
 	}
 
 	public void MakeAppPublic() {
-		AppPageUtils.MakeAppPublic(page);
+		AppPageUtils.makeAppPublic(page);
 	}
 
 	public boolean isAppDisplayedOnPage(String appName) {
