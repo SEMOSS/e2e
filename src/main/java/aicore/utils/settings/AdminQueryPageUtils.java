@@ -9,6 +9,7 @@ import com.microsoft.playwright.options.AriaRole;
 public class AdminQueryPageUtils {
 
 	///// SETTING ADMIN QUERY PAGE
+	private static final String DATABASE_DROPDOWN_XPATH = "//label[text()='Database']/parent::div//button";
 	private static final String QUERY_TEXTBOX_PLACEHOLDER_TEXT = "SELECT * FROM engine";
 	private static final String QUERY_EXECUTED_TOAST_MESSAGE = "Successfully submitted query";
 	private static final String TOAST_MESSAGE_ClOSE_DATA_XPATH = "//button[@aria-label='Close']";
@@ -18,10 +19,7 @@ public class AdminQueryPageUtils {
 	private static final String MAX_ROW_COUNT_XPATH = "//input[@type='number']";
 
 	public static void clickOnSelectDatabase(Page page) {
-		// Locator databaseDropdown = page.locator("label:has-text('" +
-		// DATABASE_DROPDOWN_NAME + "')")
-		// .locator("xpath=following-sibling::div//div");
-		Locator databaseDropdown = page.locator("//div[@aria-haspopup='listbox']");
+		Locator databaseDropdown = page.locator(DATABASE_DROPDOWN_XPATH);
 		databaseDropdown.isVisible();
 		databaseDropdown.click();
 	}
