@@ -21,6 +21,10 @@ public class AppPage {
 		AppPageUtils.clickOnAccessControlButton(page);
 	}
 
+	public void clickOnDiscoverableAppsButton() {
+		AppPageUtils.clickOnDiscoverableAppsButton(page);
+	}
+
 	public void searchApp(String appName) {
 		AppPageUtils.searchApp(page, appName, timestamp);
 	}
@@ -91,5 +95,29 @@ public class AppPage {
 
 	public void clickOnInfoButton(String buttonName) {
 		AppPageUtils.clickOnInfoButton(page, buttonName);
+	}
+
+	public void clickOnMakeDiscoverableButtoninSettings(String appName) {
+		AppPageUtils.clickOnMakeDiscoverableButtoninSettings(page, appName);
+	}
+
+	public boolean verifyAppsSortedInAscendingOrder() {
+		return AppPageUtils.verifyAppsSortedInAscendingOrder(page);
+	}
+
+	public void clickOnFilterButton(String filterName) {
+		 AppPageUtils.clickOnFilterButton(page, filterName);
+	}
+
+	public boolean verifyAppsSortedInDescendingOrder() {
+		return AppPageUtils.verifyAppsSortedInDescendingOrder(page);
+	}
+
+	public boolean verifyAppsSortedByDateLastEdited() {
+		return AppPageUtils.verifyAppsSortedByDateLastEdited(page);
+	}	
+
+	public void selectSortByOption(String optionName) {
+		AppPageUtils.selectSortByOption(page, optionName);
 	}
 }
