@@ -1,4 +1,4 @@
-package aicore.utils.page.model;
+package aicore.pages.model;
 
 import java.util.ArrayList;
 import java.util.List;

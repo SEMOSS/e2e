@@ -494,11 +494,6 @@ public class AddModelSteps {
 		openModelPage.enterGCPRegion(gcpRegion);
 	}
 
-	@And("User select the Type as {string}")
-	public void user_select_the_type_for_model(String type) {
-		openModelPage.selectTypeForModel(type);
-	}
-
 	@And("User enter the Endpoint as {string}")
 	public void user_enter_the_endpoint_as(String endpoint) {
 		openModelPage.enterEndpoint(endpoint);
@@ -619,7 +614,7 @@ public class AddModelSteps {
 		openModelPage.enterAWSAccessKey(awsAccessKey);
 	}
 
-	@And("User enter AWS Secreate key as {string}")
+	@And("User enter AWS Secret key as {string}")
 	public void user_enter_aws_secreate_key_as(String awsSecreateKey) {
 		openModelPage.enterAWSSecretKey(awsSecreateKey);
 	}
