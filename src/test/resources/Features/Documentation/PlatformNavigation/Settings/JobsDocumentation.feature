@@ -1,0 +1,31 @@
+Feature: Job Settings documentation
+
+@LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Settings - Jobs Page
+   Given User captures documentation screenshot for 'PlatformNavigation/Settings/Jobs Management'
+    Given User opens Main Menu
+    And User captures a 'button' and highlights the 'Settings'
+    And User clicks on Open Settings
+    When User enables admin mode
+    And User captures screenshot for form "Settings Page"
+    And User captures a 'button' and highlights the 'Jobs'
+    And User clicks on 'Jobs' Card
+    And User captures screenshot for "Jobs Page"
+    And User clicks on Add Job button
+    And User captures screenshot for form "AddJobForm"
+    And User completes screenshot capture and triggers comparison for 'Jobs Management'
+    
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  Scenario: Settings Job page
+   Given User captures documentation screenshot for 'PlatformNavigation/Settings/Jobs Management'
+    And User opens Main Menu
+    When User clicks on Open Settings
+    Then User enables admin mode
+    When User clicks on Jobs
+    And User clicks on Add Job button
+    And User fills 'Test Job' in Name field
+    And User fills '2+2' in Pixel field
+    And User clicks Add button
+    Then User captures screenshot for "Settings11"
+    And User completes screenshot capture and triggers comparison for 'SettingsJobPage'
+    

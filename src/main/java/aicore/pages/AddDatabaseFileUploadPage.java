@@ -48,7 +48,7 @@ public class AddDatabaseFileUploadPage {
 	}
 
 	public void verifyResetbtn() {
-		AddDatabaseFileUploadUtils.verifyResetbtn(page);
+		AddDatabaseFileUploadUtils.verifyResetBtn(page);
 	}
 
 	public void verifyCreateRealtionshipBtn(String parentTable, String childTable) {

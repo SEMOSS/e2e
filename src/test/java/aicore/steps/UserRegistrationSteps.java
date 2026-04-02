@@ -5,12 +5,11 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
+import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
 import aicore.pages.UserRegistrationPage;
-import aicore.utils.CommonUtils;
-import aicore.framework.ConfigUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

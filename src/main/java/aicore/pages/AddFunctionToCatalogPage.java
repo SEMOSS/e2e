@@ -2,6 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
+import aicore.pages.function.AddFunctionFormUtils;
 import aicore.utils.AddFunctionPageUtils;
 
 public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
@@ -29,12 +30,8 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnSettings(page);
 	}
 
-	public void clickOnMakeDiscoverableButton(String caltalogName) {
-		AddFunctionPageUtils.clickOnMakeDiscoverableButton(page, caltalogName);
-	}
-
 	public void clickOnDiscoverableFunctionsbutton() {
-		AddFunctionPageUtils.clickOnDiscoverableFunctionsbutton(page);
+		AddFunctionPageUtils.clickOnDiscoverableFunctionsButton(page);
 	}
 
 	public void clickOnAddFunctionButton() {
@@ -42,80 +39,75 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void selectFunction(String functionType) {
-		AddFunctionPageUtils.selectFunction(page, functionType);
-
+		AddFunctionFormUtils.selectFunction(page, functionType);
 	}
 
 	public boolean fieldUnderSection(String section, String field) {
-		return AddFunctionPageUtils.fieldUnderSection(page, section, field);
+		return AddFunctionFormUtils.fieldUnderSection(page, section, field);
 	}
 
 	public boolean isFieldMandatory(String field) {
-		return AddFunctionPageUtils.isFieldMandatory(page, field);
+		return AddFunctionFormUtils.isFieldMandatory(page, field);
 	}
 
 	public void fillFunctionCreationForm(String fieldName, String fieldValue) {
-		AddFunctionPageUtils.fillFunctionCreationForm(page, fieldName, fieldValue, timestamp);
+		AddFunctionFormUtils.fillFunctionCreationForm(page, fieldName, fieldValue, timestamp);
 	}
 
 	public void enterCatalogName(String catalogName) {
-		AddFunctionPageUtils.enterCatalogName(page, catalogName, timestamp);
+		AddFunctionFormUtils.enterCatalogName(page, catalogName, timestamp);
 	}
 
 	public void enterUrl(String url) {
-		AddFunctionPageUtils.enterUrl(page, url);
+		AddFunctionFormUtils.enterUrl(page, url);
 	}
 
 	public void selectHttpMethod(String httpMethod) {
-		AddFunctionPageUtils.selectHttpMethod(page, httpMethod);
+		AddFunctionFormUtils.selectHttpMethod(page, httpMethod);
 	}
 
 	public void selectPostBodyMessage(String postBodyMessage) {
-		AddFunctionPageUtils.selectPostBodyMessage(page, postBodyMessage);
+		AddFunctionFormUtils.selectPostBodyMessage(page, postBodyMessage);
 	}
-//
-//	public void verifyAsteriskMarkOnFields(String fieldLabels) {
-//		AddFunctionPageUtils.verifyAsteriskMarkOnFields(page, fieldLabels);
-//	}
 
 	public void enterHeaders(String headers) {
-		AddFunctionPageUtils.enterHeaders(page, headers);
+		AddFunctionFormUtils.enterHeaders(page, headers);
 	}
 
 	public void enterFunctionParameters(String functionParameters) {
-		AddFunctionPageUtils.enterFunctionParameters(page, functionParameters);
+		AddFunctionFormUtils.enterFunctionParameters(page, functionParameters);
 	}
 
 	public void enterFunctionName(String functionName) {
-		AddFunctionPageUtils.enterFunctionName(page, functionName);
+		AddFunctionFormUtils.enterFunctionName(page, functionName);
 	}
 
 	public void enterFunctionDescription(String functionDescription) {
-		AddFunctionPageUtils.enterFunctionDescription(page, functionDescription);
+		AddFunctionFormUtils.enterFunctionDescription(page, functionDescription);
 	}
 
 	public boolean verifyCreateFunctionButtonDisabled() {
-		return AddFunctionPageUtils.verifyCreateFunctionButtonDisabled(page);
+		return AddFunctionFormUtils.verifyCreateFunctionButtonDisabled(page);
 	}
 
 	public void selectFunctionType(String functionType) {
-		AddFunctionPageUtils.selectFunctionType(page, functionType);
+		AddFunctionFormUtils.selectFunctionType(page, functionType);
 	}
 
 	public void enterFunctionRequiredParameters(String functionRequiredParameters) {
-		AddFunctionPageUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
+		AddFunctionFormUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
 	}
 
 	public void checkCreateFunctionButton() {
-		AddFunctionPageUtils.checkCreateFunctionButton(page);
+		AddFunctionFormUtils.checkCreateFunctionButton(page);
 	}
 
 	public boolean validateConnectButtonEnabled() {
-		return AddFunctionPageUtils.validateConnectButtonEnabled(page);
+		return AddFunctionFormUtils.validateConnectButtonEnabled(page);
 	}
 
 	public void clickOnConnectButton() {
-		AddFunctionPageUtils.clickOnConnectButton(page);
+		AddFunctionFormUtils.clickOnConnectButton(page);
 	}
 
 	public String verifyFunctionNameInCatalog(String catalogName) {
@@ -134,24 +126,12 @@ public class AddFunctionToCatalogPage extends AbstractAddCatalogPageBase {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 	}
 
-	public void clickOnDeleteButton() {
-		AddFunctionPageUtils.clickOnDeleteButton(page);
-	}
-
-	public void clickOnDeleteConfirmationButton() {
-		AddFunctionPageUtils.clickOnDeleteConfirmationButton(page);
-	}
-
-	public String verifyDeleteToastMessage(String toastMessage) {
-		return AddFunctionPageUtils.verifyDeleteToastMessage(page, toastMessage);
-	}
-
 	public String verifySuccessToastMessage(String toastMessage) {
 		return AddFunctionPageUtils.verifySuccessToastMessage(page, toastMessage);
 	}
 
 	public boolean verifyMissingInputField() {
-		return AddFunctionPageUtils.verifyMissingInputField(page);
+		return AddFunctionFormUtils.verifyMissingInputField(page);
 	}
 
 	public void searchFunctionCatalog(String catalogName) {
