@@ -64,7 +64,7 @@ public class CommonUtils {
 	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
 	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
-	private static final String TEAM_PERMISSION_CARD_XPATH = "//span[normalize-space()='Team Permissions']";
+	private static final String TEAM_PERMISSION_DATATESTID = "settingsIndexPage-Team-Permissions-card";
 	private static final String SEARCH_TEAM_PLACEHOLDER_TEXT = "Search teams by name";
 	private static final String CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID = "MoreVertIcon";
 	private static final String TEAM_DELETE_BUTTON_XPATH = "//p[text()='Delete team']";
@@ -372,7 +372,7 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			HomePageUtils.clickOnOpenSettings(page);
-			page.locator(TEAM_PERMISSION_CARD_XPATH).click();
+			page.getByTestId(TEAM_PERMISSION_DATATESTID).click();
 			page.getByPlaceholder(SEARCH_TEAM_PLACEHOLDER_TEXT).fill(teamName);
 			page.waitForTimeout(500);
 			page.getByTestId(CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID).click();
