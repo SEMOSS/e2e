@@ -143,11 +143,6 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		Assertions.assertTrue(databaseNameFlag, "Database name is not visible in the database catalog");
 	}
 
-	@Then("User selects database {string}")
-	public void user_selects_database(String dbType) {
-		addDatabaseToCatalogPage.selectDatabaseType(dbType);
-	}
-
 	@And("User clicks on Next button for Create Database")
 	public void user_clicks_on_next_button_for_create_database() {
 		addDatabaseToCatalogPage.clickOnNextButtonForCreateDatabase();

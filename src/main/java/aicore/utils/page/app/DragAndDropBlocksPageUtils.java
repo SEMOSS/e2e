@@ -80,6 +80,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
+	private static final String DROPPED_BUTTON_BLOCK_XPATH = "//button[span[text()='Submit']]";
 
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
@@ -154,6 +155,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
 	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
 	private static final String THEME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Theme-Block";
+	private static final String BUTTON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Button";
 	private static final String SETTINGS_PANEL_TITLE_XPATH = "//span[normalize-space()='{sectionName}']";
 	private static final String SECTION_ON_BLOCK_SETTINGS_XPATH = "//button[normalize-space()='{sectionName}']";
 	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
@@ -227,6 +229,11 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
+	public static void enterTextInTextField(Page page, String text) {
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").fill(text);
+	}
+
 	public static void clickOnDroppedBlock(Page page, String blockName) {
 		Locator DroppedBlockLocator = null;
 		switch (blockName) {
@@ -274,6 +281,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Accordion":
 			DroppedBlockLocator = page.locator(DROPPED_ACCORDION_BLOCK_XPATH);
+			break;
+		case "Button":
+			DroppedBlockLocator = page.locator(DROPPED_BUTTON_BLOCK_XPATH);
 			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
@@ -366,6 +376,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Theme Block":
 			blockLocator = page.getByTestId(THEME_BLOCK_DATA_TESTID);
+			break;
+		case "Button":
+			blockLocator = page.getByTestId(BUTTON_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;

@@ -25,19 +25,23 @@ public class HomePageUtils {
 	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//a[text()='Browse Templates']";
 	private static final String BUILD_PAGE_POPUP_XPATH = "//div[@role='presentation']//div[@role='presentation']";
 	private static final String BUILD_PAGE_POPUP_CLOSE_XPATH = "//button//span[text()='Cancel']";
-	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
+	private static final String SEMOSS_MENU_DATA_TESTID = "MenuRoundedIcon";
 	private static final String APP_MENU_XPATH = "//button[@aria-label='Open sidebar']";
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
-	private static final String APP_MENU_BUTTON_XPATH = "sidebar-Apps-btn";
-	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
-	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
-	private static final String MODEL_MENU_BUTTON_DATATESTID = "sidebar-Model-btn";
-	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
-	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
-	private static final String GUARDRAIL_MENU_BUTTON_DATA_TESTID = "sidebar-Guardrail-btn";
 	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
 			+ ConfigUtils.getValue("applicationName") + "']//button";
 	private static final String SETTINGS_MENU_BUTTON_XPATH = "//div[@aria-label='Settings']";
+
+	private static final String APP_MENU_BUTTON_DATA_TEST_ID = "sidebar-Apps-btn";
+	private static final String DATABASE_MENU_BUTTON_DATA_TEST_ID = "sidebar-Database-btn";
+	private static final String FUNCTION_MENU_BUTTON_DATA_TEST_ID = "sidebar-Function-btn";
+	private static final String MODEL_MENU_BUTTON_DATA_TEST_ID = "sidebar-Model-btn";
+	private static final String STORAGE_MENU_BUTTON_DATA_TEST_ID = "sidebar-Storage-btn";
+	private static final String VECTOR_MENU_BUTTON_DATA_TEST_ID = "sidebar-Vector-btn";
+	private static final String GUARDRAIL_MENU_BUTTON_DATA_TEST_ID = "sidebar-Guardrail-btn";
+	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
+	// TODO change to data_test_id
+
 	private static final String HOME_MENU_BUTTON_DATA_TESTID = "//span[text()='Home']";
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
@@ -66,14 +70,12 @@ public class HomePageUtils {
 
 	public static void openMainMenu(Page page) {
 		// check if menu is open
-//		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		page.waitForTimeout(800);
 		if (isMenuOpen.isVisible()) {
-//			isMenuOpen.click();
 			isMenuOpen.dblclick();
 		}
-		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESID);
+		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESTID);
 		Locator appMenu = page.locator(APP_MENU_XPATH);
 		if (appMenu.isVisible()) {
 			AICorePageUtils.waitFor(appMenu);
@@ -85,10 +87,8 @@ public class HomePageUtils {
 	}
 
 	public static void closeMainMenu(Page page) {
-//		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
-//			menuOpen.click();
 			menuOpen.dblclick();
 		}
 	}
@@ -112,9 +112,7 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenFunction(Page page) {
-		// TODO change back to id once fe is fixed
-//		Locator locator = page.getByTestId(OPEN_FUNCTION_DATA_TEST_ID_VALUE);
-		Locator locator = page.locator(FUNCTION_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(FUNCTION_MENU_BUTTON_DATA_TEST_ID);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
@@ -132,27 +130,31 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenModel(Page page) {
-		page.getByTestId(MODEL_MENU_BUTTON_DATATESTID).click();
+		Locator locator = page.getByTestId(MODEL_MENU_BUTTON_DATA_TEST_ID);
+		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenStorage(Page page) {
-		page.click(STORAGE_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(STORAGE_MENU_BUTTON_DATA_TEST_ID);
+		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenVector(Page page) {
-		page.click(VECTOR_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(VECTOR_MENU_BUTTON_DATA_TEST_ID);
+		locator.click();
+		;
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnGuardrail(Page page) {
-		page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TESTID).click();
+		page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TEST_ID).click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
-		Locator locator = page.getByTestId(APP_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(APP_MENU_BUTTON_DATA_TEST_ID);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
@@ -200,7 +202,8 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnHome(Page page) {
-		page.locator(HOME_MENU_BUTTON_DATA_TESTID).click();
+		Locator locator = page.locator(HOME_MENU_BUTTON_DATA_TESTID);
+		locator.click();
 		page.waitForTimeout(1000);// wait for home page to load and sync then close menu
 		HomePageUtils.closeMainMenu(page);
 	}
@@ -210,7 +213,7 @@ public class HomePageUtils {
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.dblclick();
 		}
-		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESID);
+		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESTID);
 		Locator appMenu = page.locator(APP_MENU_XPATH);
 		if (appMenu.isVisible()) {
 			AICorePageUtils.waitFor(appMenu);
@@ -225,22 +228,20 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnOpenSettings(Page page) {
-		page.locator(SETTINGS_MENU_BUTTON_XPATH).click();
+		Locator locator = page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TEST_ID);
+		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
-	public static void checkOnOpenSetting(Page page) {
-		page.locator(SETTINGS_MENU_BUTTON_XPATH).isVisible();
-	}
-
 	public static void clickOnOpenDatabase(Page page) {
-		Locator locator = page.locator(DATABASE_MENU_BUTTON_XPATH);
+		Locator locator = page.getByTestId(DATABASE_MENU_BUTTON_DATA_TEST_ID);
 		locator.click();
 		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void searchCatalog(Page page, String searchData) {
-		page.locator(APP_SEARCH_TEXTBOX_XPATH).click();
+		Locator locator = page.locator(APP_SEARCH_TEXTBOX_XPATH);
+		locator.click();
 		Locator search = page.locator(SEARCH_TEXTBOX_ON_POPUP_XPATH);
 		AICorePageUtils.waitFor(search);
 		search.fill(searchData);
@@ -291,5 +292,9 @@ public class HomePageUtils {
 		} else {
 			page.getByTestId(CATALOG_NAME_TEXTBOX_DATA_TESTID).fill(catalogName);
 		}
+	}
+
+	public static void clickOnUserAccountButton(Page page) {
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
 	}
 }

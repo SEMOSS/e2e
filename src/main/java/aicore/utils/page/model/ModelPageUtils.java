@@ -55,10 +55,10 @@ public class ModelPageUtils {
 	private static final String CHAT_MAX_TOKENS_XPATH = "//div//span[contains(text(),'Max Tokens')]/parent::div/parent::div//input";
 	private static final String CHAT_INPUT_XPATH = "//div//textarea[@name='prompt']";
 	private static final String CHAT_SEND_BUTTON_XPATH = "//button[@aria-label='Send message']";
-	private static final String EMPTY_CHAT_WINDOW_XPATH = "//div//span[contains(text(),'Start Conversation by typing a message')]";
+	private static final String EMPTY_CHAT_WINDOW_XPATH = "//div//span[contains(text(),'Ask a question to start a conversation')]";
 	private static final String CHAT_CLEAR_ALL_BUTTON_XPATH = "//button[text()='Clear Chat']";
-	private static final String CHAT_RESPONSE_XPATH = "//div//*[text()='Response']";
-	private static final String CHAT_OUTPUT_XPATH = "//div//*[text()='Response']/../div//p[1]";
+	private static final String CHAT_RESPONSE_XPATH = "//div[@class='flex items-end gap-2 px-4 py-2']";
+	private static final String CHAT_OUTPUT_XPATH = "//div[@class='prose prose-slate dark:prose-invert max-w-none']";
 	private static final String CHAT_MODEL_ID_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model ID')]/..";
 	private static final String CHAT_MODEL_NAME_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model Name')]/..";
 

@@ -1,5 +1,7 @@
 package aicore.steps;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,10 +10,10 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.SettingsMyProfile;
 import aicore.utils.CommonUtils;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SettingsMyProfileSteps {
 	private SettingsMyProfile settings;
@@ -65,10 +67,8 @@ public class SettingsMyProfileSteps {
 	@When("User copies the {string} using copy icon and validate its alphanumeric")
 	public void user_copies_the_using_copy_icon_and_validate_its_alphanumeric(String KeyName) {
 		String copiedKey = settings.copyAccessKey(KeyName);
-		// Validate key format
 		assertTrue(copiedKey.matches("^[a-zA-Z0-9-]+$"),
 				"Copied Key contains non-alphanumeric characters: " + copiedKey);
-		// Store the key in the appropriate variable
 		if (KeyName.equalsIgnoreCase("Access Key")) {
 			copiedAccessKey = copiedKey;
 		} else if (KeyName.equalsIgnoreCase("Secret Key")) {
@@ -84,23 +84,17 @@ public class SettingsMyProfileSteps {
 		final String SECTIONS_COLUMN = "SECTIONS";
 		final String EXPECTED_ACCESS_KEY_COUNT = "ACCESS KEY COUNT";
 		final String EXPECTED_SECRET_KEY_COUNT = "SECRET KEY COUNT";
-
 		Assertions.assertNotNull(copiedAccessKey, "Access Key is not set, check previous step");
 		Assertions.assertNotNull(copiedSecretKey, "Secret Key is not set, check previous step");
-
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String sectionName = row.get(SECTIONS_COLUMN);
 			int expectedAccessKeyCount = Integer.parseInt(row.get(EXPECTED_ACCESS_KEY_COUNT));
 			int expectedSecretKeyCount = Integer.parseInt(row.get(EXPECTED_SECRET_KEY_COUNT));
-			// Copy the section contents
 			String copiedSectionContents = settings.extractExampleSectionContent(sectionName);
-			// Count occurrences of Access Key and Secret Key
 			int actualAccessKeyCount = CommonUtils.countIdOccurances(copiedSectionContents, copiedAccessKey);
 			System.out.println(actualAccessKeyCount);
 			int actualSecretKeyCount = CommonUtils.countIdOccurances(copiedSectionContents, copiedSecretKey);
-//		System.out.println(actualSecretKeyCount);
-			// Validate the counts
 			Assertions.assertEquals(expectedAccessKeyCount, actualAccessKeyCount,
 					"Access Key count mismatch in section: '" + sectionName + "'");
 			Assertions.assertEquals(expectedSecretKeyCount, actualSecretKeyCount,
@@ -136,6 +130,56 @@ public class SettingsMyProfileSteps {
 		String actualDescription = settings.validateDescriptionName(description);
 		String expDescription = settings.getExpectedDescriptionName(description);
 		Assertions.assertEquals(actualDescription, expDescription);
+	}
+
+	@Then("User can see the following field with their state:")
+	public void user_can_see_the_following_field_with_their_state(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("FIELD NAME");
+			String fieldState = row.get("FIELD STATE");
+			boolean expectedState = "Enable".equalsIgnoreCase(fieldState);
+			boolean actualState = settings.isFieldEnabled(fieldName);
+			Assertions.assertEquals(actualState, expectedState, "Field state mismatch for field: '" + fieldName + "'");
+		}
+	}
+
+	@Then("User update {string} field with {string}")
+	public void user_update_field_with(String fieldName, String fieldValue) {
+		settings.updateField(fieldName, fieldValue + timestamp);
+	}
+
+	@Then("User can see the the updated name as {string}")
+	public void user_can_see_the_the_updated_name_as(String updatedName) {
+		boolean updatedNameVisible = settings.getUpdatedInfo(updatedName + timestamp);
+		Assertions.assertTrue(updatedNameVisible, "Updated name is not visible");
+	}
+
+	@And("User clicks on Change Password link")
+	public void user_clicks_on_change_password_link() {
+		settings.clickOnChangePasswordLink();
+	}
+
+	@And("User can sees the {string} title")
+	public void user_can_sees_the_title(String title) {
+		boolean titleVisible = settings.changePasswordTitle(title);
+		Assertions.assertTrue(titleVisible, "Change Password title is not visible");
+	}
+
+	@And("User clicks on Profile Icon")
+	public void user_clicks_on_profile_icon() {
+		settings.clickOnProfileIcon();
+	}
+
+	@When("User enter the {string} as {string}")
+	public void user_enter_the_password_as(String fieldName, String fieldValue) {
+		settings.enterThePassword(fieldName, fieldValue);
+	}
+
+	@And("User can see the error as {string}")
+	public void user_can_see_the_error_as(String errorMessage) {
+		String actualError = settings.getErrorMessage(errorMessage);
+		Assertions.assertEquals(actualError, errorMessage, "Error message mismatch");
 	}
 
 }

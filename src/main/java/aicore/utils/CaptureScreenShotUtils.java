@@ -26,7 +26,6 @@ import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
-import com.microsoft.playwright.options.Clip;
 import com.microsoft.playwright.options.LoadState;
 
 import aicore.framework.ConfigUtils;
@@ -204,16 +203,13 @@ public class CaptureScreenShotUtils {
 	public static void captureScreenshot(Page page, Path path) {
 		page.waitForTimeout(1000);
 		Path screenshotPath = Paths.get(path.toString());
-		page.setViewportSize(1920,1080);
-		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true)
-				.setClip(new Clip(0,0, 1280, 720)));
-		page.setViewportSize(1280, 780);
+		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true));
 	}
 
 	public static void captureFormScreenshot(Page page, Path path) throws IOException {
 		page.waitForTimeout(1000);
 		Path screenshotPath = Paths.get(path.toString());
-		page.setViewportSize(2560,1440);
+		page.setViewportSize(2560, 1440);
 		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true));
 		page.setViewportSize(1280, 780);
 	}
