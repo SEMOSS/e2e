@@ -63,7 +63,7 @@ public class ModelPageUtils {
 		String modelId = CommonUtils.readCopiedTextFromClipboard(page);
 		createdModelIds.add(modelId);
 	}
-	
+
 	public static String modelCreationToastMessage(Page page, String toastMessage) {
 		Locator alert = page.locator(MODEL_TOAST_MESSAGE_TESTID.replace("{toastMessage}", toastMessage));
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);

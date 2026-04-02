@@ -26,6 +26,10 @@ public class HomePageUtils {
 	private static final String SEMOSS_MENU_DATA_TESTID = "MenuRoundedIcon";
 	private static final String APP_MENU_XPATH = "//button[@aria-label='Open sidebar']";
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
+	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
+			+ ConfigUtils.getValue("applicationName") + "']//button";
+	private static final String SETTINGS_MENU_BUTTON_XPATH = "//div[@aria-label='Settings']";
+
 	private static final String APP_MENU_BUTTON_DATA_TEST_ID = "sidebar-Apps-btn";
 	private static final String DATABASE_MENU_BUTTON_DATA_TEST_ID = "sidebar-Database-btn";
 	private static final String FUNCTION_MENU_BUTTON_DATA_TEST_ID = "sidebar-Function-btn";
@@ -35,6 +39,7 @@ public class HomePageUtils {
 	private static final String GUARDRAIL_MENU_BUTTON_DATA_TEST_ID = "sidebar-Guardrail-btn";
 	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
 	// TODO change to data_test_id
+
 	private static final String HOME_MENU_BUTTON_DATA_TESTID = "//span[text()='Home']";
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";

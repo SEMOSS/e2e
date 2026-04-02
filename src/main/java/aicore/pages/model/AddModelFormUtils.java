@@ -7,10 +7,10 @@ import com.microsoft.playwright.options.AriaRole;
 import aicore.utils.AICorePageUtils;
 
 public class AddModelFormUtils {
-	
+
 	private static final String SELECT_OPENAI_XPATH = "//p[text()='{OpenAIModelName}']";
 	private static final String OPTIONS_TAB_DATA_TESTID = "connect-to-{tabName}-tab";
-	
+
 	private static final String SELECT_TYPE_FOR_MODEL_DATA_TESTID = "importForm-MODEL_TYPE-select";
 	private static final String MODEL_TYPE_DATATESTID = "//*[@data-testid=\"connect-to-{modelType}-tab\"]";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
@@ -20,31 +20,29 @@ public class AddModelFormUtils {
 
 	private static final String MAX_TOKENS_DATA_TESTID = "importForm-MAX_TOKENS-textField";
 	private static final String MAX_INPUT_TOKENS_DATA_TESTID = "importForm-MAX_INPUT_TOKENS-textField";
-	
 
 	private static final String ENTER_DEPLOYMENT_NAME_DATA_TESTID = "importForm-MODEL-textField";
 	private static final String ENTER_THE_VERSION_DATA_TESTID = "importForm-API_VERSION-textField";
-	
+
 	// aws options
 	private static final String AWS_REGION_DATA_TESTID = "importForm-AWS_REGION-textField";
 	private static final String AWS_ACCESS_KEY_DATA_TESTID = "importForm-AWS_ACCESS_KEY-textField";
 	private static final String AWS_SECRET_KEY_DATA_TESTID = "importForm-AWS_SECRET_KEY-textField";
 
-	
 	// settings
 	private static final String INIT_SCRIPT_DATA_TESTID = "importForm-INIT_MODEL_ENGINE-textField";
 	private static final String GCP_REGION_DATA_TESTID = "importForm-GCP_REGION-textField";
 	private static final String ENTER_ENDPOINT_DATA_TESTID = "importForm-ENDPOINT-textField";
-	
+
 	// chat info
 	private static final String SELECT_CHAT_TYPE_FOR_MODEL_DATA_TESTID = "importForm-CHAT_TYPE-select";
 	private static final String SELECT_KEEP_CONVERSATION_HISTORY_FOR_MODEL_DATA_TESTID = "importForm-KEEP_CONVERSATION_HISTORY-select";
 	private static final String SELECT_RECORD_QUESTIONS_AND_RESPONSES_FOR_MODEL_DATA_TESTID = "importForm-KEEP_INPUT_OUTPUT-select";
-	
+
 	// create buttons
 	private static final String CREATE_MODEL_BUTTON_DATA_TESTID = "importForm-submit-btn";
 	private static final String SELECT_ADD_MODEL_OPTION_DATA_TESTID = "{option}-upload-file-button";
-	
+
 	// fields
 	private static final String MANDATORY_FIELD_TEXT_DATA_TESTID = "importForm-{fieldName}-textField";
 	private static final String MANDATORY_FIELD_SELECT_DATA_TESTID = "importForm-{fieldName}-select";
@@ -65,7 +63,7 @@ public class AddModelFormUtils {
 	private static final String URL_FIELDS_DATA_TESTID = "model-importForm-{field}-url";
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//div[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
-	
+
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
 	}
@@ -76,7 +74,7 @@ public class AddModelFormUtils {
 		AICorePageUtils.waitFor(tabLocator);
 		tabLocator.click();
 	}
-	
+
 	public static void selectTypeForModel(Page page, String type) {
 		Locator typeField = page.getByTestId(SELECT_TYPE_FOR_MODEL_DATA_TESTID);
 		String currentValue = typeField.textContent().trim();
@@ -88,7 +86,7 @@ public class AddModelFormUtils {
 			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(type)).click();
 		}
 	}
-	
+
 	public static void selectTypeForModel(Page page) {
 		Locator typeField = page.getByTestId(SELECT_TYPE_FOR_MODEL_DATA_TESTID);
 		String currentValue = typeField.textContent().trim();
@@ -100,7 +98,7 @@ public class AddModelFormUtils {
 			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("Open AI")).click();
 		}
 	}
-	
+
 	public static void selectOption(Page page, String option) {
 		Locator typeField = page.getByTestId(SELECT_TYPE_FOR_MODEL_DATA_TESTID);
 		String currentValue = typeField.textContent().trim();
@@ -112,27 +110,27 @@ public class AddModelFormUtils {
 			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(option)).click();
 		}
 	}
-	
+
 	public static void selectModelType(Page page, String modelType) {
 		page.locator(MODEL_TYPE_DATATESTID.replace("{modelType}", modelType)).click();
 	}
-	
+
 	public static void selectModel(Page page, String modelName) {
 		Locator modelCard = page.locator(SELECT_MODEL_XPATH.replace("{ModelName}", modelName)).first();
 		AICorePageUtils.waitFor(modelCard);
 		modelCard.click();
 	}
-	
+
 	public static void enterCatalogName(Page page, String catalogName) {
 		Locator catalogNameField = page.getByTestId(CATALOG_NAME_DATA_TESTID);
 		catalogNameField.fill(catalogName);
 	}
-	
+
 	public static void enterOpenAIKey(Page page, String openAIKey) {
 		Locator openAIKeyField = page.getByTestId(OPEN_AI_KEY_DATA_TESTID);
 		openAIKeyField.fill(openAIKey);
 	}
-	
+
 	public static void enterMaxTokens(Page page, String maxTokens) {
 		Locator maxTokensField = page.getByTestId(MAX_TOKENS_DATA_TESTID);
 		String currentValue = maxTokensField.inputValue().trim();
@@ -205,7 +203,7 @@ public class AddModelFormUtils {
 		AICorePageUtils.waitFor(addModelOption);
 		addModelOption.click();
 	}
-	
+
 	public static boolean fieldUnderSection(Page page, String section, String field) {
 		Locator fieldLocator = null;
 		String fieldName = field.replace(" ", "-");
@@ -220,6 +218,7 @@ public class AddModelFormUtils {
 		case "Model ID":
 		case "Region":
 		case "Model Name":
+		case "Provider":
 		case "API Version":
 			fieldLocator = page.locator(
 					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
@@ -236,7 +235,7 @@ public class AddModelFormUtils {
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
-		case "AWS Access Key ID":
+		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.locator(
@@ -282,7 +281,9 @@ public class AddModelFormUtils {
 		case "Service Account Credentials":
 		case "Model ID":
 		case "Region":
+		case "Aws Region":
 		case "Model Name":
+		case "Provider":
 		case "API Version":
 			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
@@ -297,7 +298,7 @@ public class AddModelFormUtils {
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
-		case "AWS Access Key ID":
+		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
@@ -357,7 +358,7 @@ public class AddModelFormUtils {
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
-		case "AWS Access Key ID":
+		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName));
@@ -424,7 +425,7 @@ public class AddModelFormUtils {
 		createButtonLocator.scrollIntoViewIfNeeded();
 		createButtonLocator.click();
 	}
-	
+
 	public static void enterInitScript(Page page, String initScript) {
 		Locator initScriptField = page.getByTestId(INIT_SCRIPT_DATA_TESTID);
 		String currentValue = initScriptField.inputValue().trim();
@@ -449,7 +450,7 @@ public class AddModelFormUtils {
 			endpointField.fill(endpoint);
 		}
 	}
-	
+
 	public static void enterDeploymentName(Page page, String deploymentName) {
 		Locator deploymentNameField = page.getByTestId(ENTER_DEPLOYMENT_NAME_DATA_TESTID);
 		String currentValue = deploymentNameField.inputValue().trim();
@@ -465,7 +466,7 @@ public class AddModelFormUtils {
 			versionField.fill(version);
 		}
 	}
-	
+
 	public static void selectChatOption(Page page, String option) {
 		Locator typeField = page.getByTestId(SELECT_CHAT_TYPE_FOR_MODEL_DATA_TESTID);
 		String currentValue = typeField.textContent().trim();
