@@ -70,7 +70,7 @@ Feature: Add Model
 
     Examples: 
       | MODEL_NAME | DETAILS       | DESCRIPTION                      | TAGS              | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
-      | Model      | GPT-4.1 model | This is GPT 3.5 Turbo test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+      | Model      | GPT-4.1 model | This is GPT-4.1 test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
   Scenario: Validate Model Catalog ID in Usage commands
     Given User can see the Model title as 'Model'

@@ -5,7 +5,7 @@ Feature: Playground Home model to verify configuration tab
     When User opens Main Menu
     And User clicks on Open Model
     And User clicks on Add Model
-    And User add "2" models with details "OpenAI" "GPT 3.5 Turbo" "Model" "Test@1234" "text-generation"
+    And User add "2" models with details "OpenAI" "GPT-4.1" "Model" "Test@1234" "text-generation"
     And User clicks on Copy Catalog ID
     
   @LoginWithAdmin @Regression @DeleteTestCatalog
