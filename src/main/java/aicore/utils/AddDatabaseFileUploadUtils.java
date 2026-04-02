@@ -24,7 +24,6 @@ public class AddDatabaseFileUploadUtils {
 	private static final String ADD_RELATIONSHIP_BUTTON_TESTID = "add-connection";
 	private static final String SAVE_RELATIONSHIP_BUTTON_TESTID = "save-connection";
 	private static final String FULL_SCREEN_CLOSE_BUTTON_XPATH = "//button[@aria-label='Close']";
-	private static final String CREATE_CONNECTION_DATATESTID = "add-connection";
 
 	public static void selectTab(Page page, String tabName) {
 		page.getByTestId(TAB_SELECTION_TESTID.replace("{tabName}", tabName)).click();
@@ -108,7 +107,7 @@ public class AddDatabaseFileUploadUtils {
 		}
 	}
 
-	public static void verifyResetbtn(Page page) {
+	public static void verifyResetBtn(Page page) {
 		Locator resetButton = page.getByTestId(REFRESH_BUTTON_TESTID);
 		AICorePageUtils.waitFor(resetButton);
 		resetButton.isEnabled();

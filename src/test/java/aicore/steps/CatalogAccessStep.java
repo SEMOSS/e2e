@@ -16,30 +16,31 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.AddDatabasePage;
 import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.AddModelPage;
-import aicore.pages.CatlogPermissionsPage;
+import aicore.pages.CatalogPermissionsPage;
 import aicore.pages.HomePage;
 import aicore.pages.LoginPage;
+import aicore.pages.model.settings.ModelAccessSettingsUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class CatlogAccessStep {
+public class CatalogAccessStep {
 
 	private HomePage homePage;
 	protected static String timestamp;
-	private CatlogPermissionsPage catlogpermission;
+	private CatalogPermissionsPage catlogpermission;
 	private AddModelPage openModelPage;
 	private AddDatabasePage addDatabaseToCatalogPage;
 	private AddFunctionToCatalogPage addFunctionToCatalogPage;
 
-	public CatlogAccessStep() {
+	public CatalogAccessStep() {
 		new LoginPage(SetupHooks.getPage());
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
-		this.catlogpermission = new CatlogPermissionsPage(SetupHooks.getPage());
+		this.catlogpermission = new CatalogPermissionsPage(SetupHooks.getPage());
 		this.addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
 		this.addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
@@ -146,7 +147,7 @@ public class CatlogAccessStep {
 	@Then("{string} user {string} Delete Catalog")
 	public void user_Delete_Catalog(String userRole, String expectedOutcome) {
 		// Perform delete action
-		openModelPage.clickOnDeleteButton();
+		ModelAccessSettingsUtils.clickOnDeleteButton(SetupHooks.getPage());
 		if ("can".equalsIgnoreCase(expectedOutcome)) {
 			// Verify only success message appears
 			Assertions.assertTrue(openModelPage.isDeleteSuccessful(),
@@ -162,7 +163,7 @@ public class CatlogAccessStep {
 
 	@Then("{string} user clicks on delete button and see the permission error toast message")
 	public void userClicksDeleteAndVerifiesToast(String userRole) {
-		openModelPage.clickOnDeleteButton();
+		ModelAccessSettingsUtils.clickOnDeleteButton(SetupHooks.getPage());
 		String toastText = catlogpermission.editorUserSeeToastMessageText();
 		Assertions.assertTrue(toastText.contains(
 				"user does not have permissions to delete the engine. User must be the owner to perform this function."),
@@ -383,7 +384,7 @@ public class CatlogAccessStep {
 
 	@And("Editor user not able to Delete Catalog")
 	public void editorUserNotAbleToDeleteCatalog() {
-		openModelPage.clickOnDeleteButton();
+		ModelAccessSettingsUtils.clickOnDeleteButton(SetupHooks.getPage());
 		String toastMessage = catlogpermission.editorUserSeeToastMessageText();
 		String expectedPart = "does not exist or user does not have permissions to delete the project. "
 				+ "User must be the owner to perform this function.";

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.HomePage;
+import aicore.pages.function.FunctionAccessSettingsUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -191,13 +192,14 @@ public class AddFunctionSteps {
 
 	@Then("User clicks on Delete button")
 	public void user_clicks_on_delete_button() {
-		addFunctionToCatalogPage.clickOnDeleteButton();
-		addFunctionToCatalogPage.clickOnDeleteConfirmationButton();
+		FunctionAccessSettingsUtils.clickOnDeleteButton(SetupHooks.getPage());
+		FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(SetupHooks.getPage());
 	}
 
 	@Then("User sees deleted function success toast message {string}")
 	public void user_sees_deleted_function_success_toast_message(String toastMessage) {
-		String expectedMessage = addFunctionToCatalogPage.verifyDeleteToastMessage(toastMessage);
+		String expectedMessage = FunctionAccessSettingsUtils.verifyDeleteToastMessage(SetupHooks.getPage(),
+				toastMessage);
 		String actualMessage = toastMessage;
 		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
 	}
@@ -210,7 +212,7 @@ public class AddFunctionSteps {
 
 	@When("User clicks Make {string} Discoverable button")
 	public void user_clicks_make_discoverable_button(String catalogName) {
-		addFunctionToCatalogPage.clickOnMakeDiscoverableButton(catalogName);
+		FunctionAccessSettingsUtils.clickOnMakeDiscoverableButton(SetupHooks.getPage(), catalogName);
 	}
 
 	@And("User clicks on Discoverable Functions button")

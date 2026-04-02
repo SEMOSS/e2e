@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,13 +23,7 @@ public class AddDatabasePageUtils {
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
 	private static final String COPY_ID_OPTION_TEXT = "copy";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/..//following-sibling::div//span[text()='{filterValue}']";
-	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
-	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
-	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";
 	private static final String EDIT_BTN_XPATH = "//button[text()='Edit']";
-	private static final String TAGS_XPATH = "//span[text()='Tag']/ancestor::fieldset/parent::div//input";
-	private static final String SUBMIT_BTN_XPATH = "//span[text()='Submit']";
-	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EXPORT_BTN_DATATESTID = "engineHeader-Database-export-btn";
 	private static final String EDIT_POPUP_XPATH = "//div//h2[contains(text(),'Edit')]";
 	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID = "search-bar";
@@ -52,7 +45,6 @@ public class AddDatabasePageUtils {
 	private static final String QUERY_ENTER_TEXTAREA_XPATH = "//div[@class='view-line']/ancestor::div[contains(@class,'monaco-editor') and @role='code']";
 	private static final String OUTPUT_TABLE = "//table";
 	private static final String COLLAPSE_COLUMNS_XPATH = "//div[@class='bg-muted/5']";
-	private static final String COLLAPSE_COLUMNS_HEADER_XPATH = "//table//thead//tr[contains(@class,'closed')]";
 	private static final String DATA_COLUMNS_XPATH = "//div[@class='flex flex-1 items-center gap-2.5']";// "//table//tbody//tr";
 	private static final String DATA_COLUMNS_REFRESH_BUTTON_XPATH = "//button[@title='Refresh database structure']";
 	private static final String DATA_COLUMNS_REFRESHING_TILE_XPATH = "//p[contains(text(),'{text}')]";
