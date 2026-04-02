@@ -47,7 +47,7 @@ public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
-	private static final String SEARCH_CATALOG_LABEL = "Search";
+	private static final String SEARCH_APP_LABEL = "Search apps";
 	private static final String SEARCH_CATALOG_DATATESTID = "search-bar";
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
@@ -345,7 +345,7 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			HomePageUtils.clickOnOpenAppLibrary(page);
-			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
+			page.getByLabel(SEARCH_APP_LABEL).fill(appName);
 			page.waitForTimeout(500);
 			page.locator(THREE_DOT_ICON_XPATH).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
