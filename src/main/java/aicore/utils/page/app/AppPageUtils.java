@@ -27,7 +27,7 @@ public class AppPageUtils {
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
 	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
 	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
-	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
+	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button[text()='{name}']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/parent::button/following-sibling::div//span[text()='{filterValue}']";
 	private static final String INFO_BUTTON_XPATH = "//a[text()='{buttonName}']";
 	private static final String APP_BOOKMARK_ICON_XPATH = "//button[@aria-label='Add bookmark']";
@@ -35,20 +35,26 @@ public class AppPageUtils {
 	private static final String LAST_EDITED_DATE_XPATH = "//p[text()='{lastEditedDate}']";
 	private static final String MORE_VERTICAL_OPTIONS_XPATH = "//div[text()='{optionName}']";
 	private static final String FILTER_OPTION_XPATH = "//button[@data-slot='popover-trigger']";
+	private static final String CARDS_VIEW_OPTIONS_XPATH = "//button[@aria-label='{view}']";
+	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
 	}
 
 	public static void searchApp(Page page, String appName, String timestamp) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(appName + " " + timestamp);
+		page.getByLabel("Search apps").click();
+		page.getByLabel("Search apps").fill(appName + " " + timestamp);
 		page.waitForTimeout(500);
 	}
 
+	public static void selectAppCardsView(Page page, String view) {
+		page.locator(CARDS_VIEW_OPTIONS_XPATH.replace("{view}", view)).click();
+	}
+
 	public static void searchAppId(Page page, String appId) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(appId);
+		page.getByLabel("Search apps").click();
+		page.getByLabel("Search apps").fill(appId);
 	}
 
 	public static void clickOnAppCard(Page page, String appName, String timestamp) {
@@ -76,6 +82,11 @@ public class AppPageUtils {
 			return CommonUtils.readCopiedTextFromClipboard(page);
 		}
 		return null;
+	}
+
+	public static String getCopiedId(Page page, String icon) {
+		page.locator(COPY_ID_XPATH.replace("{icon}", icon)).click();
+		return CommonUtils.readCopiedTextFromClipboard(page);
 	}
 
 	public static String getAppIdCopiedToastMessage(Page page) {

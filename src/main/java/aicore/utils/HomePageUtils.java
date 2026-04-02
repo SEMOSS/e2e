@@ -16,7 +16,7 @@ public class HomePageUtils {
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
 	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue("applicationName") + "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
-	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search']";
+	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search apps, engines, and tools']";
 	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
 	// menu options
 	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
@@ -215,7 +215,7 @@ public class HomePageUtils {
 			AICorePageUtils.waitFor(mainMenu);
 			mainMenu.click();
 		}
-		page.locator(PROFILE_ICON_XPATH).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
 		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}

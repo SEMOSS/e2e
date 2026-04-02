@@ -39,7 +39,7 @@ Feature: Create drag and drop  for charts validation
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    And User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
+    And User can see 'AGE, BLOODPRESSURE, BMI, DIABETESPEDIGREEFUNCTION, DIABETES_UNIQUE_ROW_IDFK, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns under the fields column
     And User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
@@ -55,7 +55,7 @@ Feature: Create drag and drop  for charts validation
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the selected frame dropdown
-    And User drag and drop the 'Age, Glucose' columns to 'Select X Axis, Select Y Axis' fields
+    And User drag and drop the 'AGE, GLUCOSE' columns to 'Select X Axis, Select Y Axis' fields
     And User click on the Tools tab
     And User click on 'Conditional' tool option
     And User validates Conditional using '<CONDITIONAL>'
