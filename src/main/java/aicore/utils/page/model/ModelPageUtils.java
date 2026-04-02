@@ -138,6 +138,7 @@ public class ModelPageUtils {
 		case "GCP Region":
 		case "Service Account Credentials":
 		case "Model ID":
+		case "Model (Deployment Name)":
 		case "Region":
 		case "Model Name":
 		case "Provider":
@@ -203,6 +204,7 @@ public class ModelPageUtils {
 		case "GCP Region":
 		case "Service Account Credentials":
 		case "Model ID":
+		case "Model (Deployment Name)":
 		case "Region":
 		case "Aws Region":
 		case "Model Name":
