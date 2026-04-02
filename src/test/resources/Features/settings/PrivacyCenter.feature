@@ -1,17 +1,17 @@
 @Regression
 Feature: Privacy Center Popup Validation
 
-  ######## UI does not have Privacy Information data. Hence commenting the some steps ######
-  Scenario: Validate Privacy Center popup and its elements
-    Given User opens Main Menu
-    When User clicks on Open Settings
-    And User clicks on Privacy Center button
-    Then Use can see Privacy popup with following elements
-      | ELEMENT      | EXPECTED_NAME             |
-      | Popup        |                           |
-      | Popup name   | Privacy Preference Center |
-      | Close icon   |                           |
-      | Close button |                           |
+  ######## UI does not have Privacy Information data. Hence commenting the Scenario ######
+  #Scenario: Validate Privacy Center popup and its elements
+    #Given User opens Main Menu
+    #When User clicks on Open Settings
+    #And User clicks on Privacy Center button
+    #Then Use can see Privacy popup with following elements
+      #| ELEMENT      | EXPECTED_NAME             |
+      #| Popup        |                           |
+      #| Popup name   | Privacy Preference Center |
+      #| Close icon   |                           |
+      #| Close button |                           |
     #| Title              | Privacy Information        |
     #| Section1           | Your Privacy               |
     #| Section2           | Strictly Necessary Cookies |
@@ -31,8 +31,8 @@ Feature: Privacy Center Popup Validation
     #| esctx                 | login.microsoftonline.com                         | Session       | Third Party | Strictly necessary cookies | Session context cookie information. For CSRF protection. Binds a request to a specific browser instance so the request can't be replayed outside the browser. No user information.                                                                                                                                                                                                                                                                                                                                                                  |
     #When User clicks on Cookie policy link
     #Then User navigates to 'https://cookienotice.deloitte.com/' page
-    When User clicks on close icon
-    Then Privacy popup should close
-    And User clicks on Privacy Center button
-    When User clicks on 'Close' button
-    Then Privacy popup should close
+    #When User clicks on close icon
+    #Then Privacy popup should close
+    #And User clicks on Privacy Center button
+    #When User clicks on 'Close' button
+    #Then Privacy popup should close

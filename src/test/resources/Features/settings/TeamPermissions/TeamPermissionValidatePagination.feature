@@ -34,7 +34,7 @@ Feature: Validate Pagination in Team Permission Settings
 
   @LoginWithAdmin @Regression
   Scenario: Validate Pagination in Team Permission Settings page for add engines
-    Given User created '6' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
+    Given User created '6' models with the 'OpenAI' model 'GPT-5', catalog name 'Model 1', OpenAI key 'Test123'
     When User opens Main Menu
     And User clicks on Open Settings
     And User enable admin mode
@@ -45,7 +45,7 @@ Feature: Validate Pagination in Team Permission Settings
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
     And User fetch the team name
-    #And User clicks on the team name 'Test Team2' in the list
+    And User clicks on the team name 'Test Team2' in the list
     And User clicks on 'Add Engine' button in Team Permission page
     And User adds multiple engines to the team
     And User select the engine access as 'Editor'
@@ -66,7 +66,7 @@ Feature: Validate Pagination in Team Permission Settings
     And User fills Description as "Test Description" in Description field of Add Team form
     And User clicks on "Add" button in Add Team form
     And User fetch the team name
-    #And User clicks on the team name 'Test Team3' in the list
+    And User clicks on the team name 'Test Team3' in the list
     And User clicks on 'Add Apps' button in Team Permission page
     And User adds multiple projects to the team
     And User select the engine access as 'Editor'

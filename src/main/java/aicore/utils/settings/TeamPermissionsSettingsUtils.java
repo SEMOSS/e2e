@@ -25,9 +25,9 @@ public class TeamPermissionsSettingsUtils {
 	private static final String TEAM_BUTTON_XPATH = "//button[contains(text(), '{buttonName}')]";
 	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']";
 	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
-	private static final String LIST_DROPDOWN = "ArrowDropDownIcon";
+	private static final String LIST_DROPDOWN_XPATH = "//input[@placeholder='Search']/parent::div";
 	private static final String TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
-	private static final String MEMBER_XPATH = "//div//p[contains(text(),'NATIVE ID: {member}')]";
+	private static final String MEMBER_XPATH = "//div[contains(text(),'NATIVE ID: {member}')]";
 	private static final String NAME_XPATH = "//p[normalize-space()='{Name}']";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//p[normalize-space()='{description}']";
 	private static final String SELECT_ENGINE_ROLE_XPATH = "//button[@value='{role}']";
@@ -97,7 +97,7 @@ public class TeamPermissionsSettingsUtils {
 	public static void selectMemberFromList(Page page, String role) {
 		String username = LastCreatedUser.getName();
 		// ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
-		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+		Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
 		Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", username));
@@ -208,7 +208,7 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void selectMultipleMembersFromList(Page page, String member1, String member2) {
-		Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+		Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
 		Locator listMember1 = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member1));
@@ -358,7 +358,7 @@ public class TeamPermissionsSettingsUtils {
 
 	public static void addmultipleEngines(Page page) {
 		for (String engineId : ids) {
-			Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+			Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 			dropdownLocator.click();
 			page.keyboard().type(engineId.trim());
 			AICorePageUtils.waitFor(dropdownLocator);
@@ -371,7 +371,7 @@ public class TeamPermissionsSettingsUtils {
 
 	public static void addMultipleProjects(Page page) {
 		for (String projectId : projectName) {
-			Locator dropdownLocator = page.getByTestId(LIST_DROPDOWN);
+			Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 			dropdownLocator.click();
 			page.keyboard().type(projectId.trim());
 			AICorePageUtils.waitFor(dropdownLocator);
