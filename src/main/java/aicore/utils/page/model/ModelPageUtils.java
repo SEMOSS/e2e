@@ -156,6 +156,7 @@ public class ModelPageUtils {
 			break;
 		case "Open AI Key":
 		case "OPEN AI Key":
+		case "API Key":
 		case "OpenAI API Key":
 		case "AWS Access Key":
 		case "AWS Secret Access Key":
@@ -219,6 +220,7 @@ public class ModelPageUtils {
 			break;
 		case "Open AI Key":
 		case "OPEN AI Key":
+		case "API Key":
 		case "OpenAI API Key":
 		case "AWS Access Key":
 		case "AWS Secret Access Key":
@@ -280,6 +282,7 @@ public class ModelPageUtils {
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
+		case "API Key":
 		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
