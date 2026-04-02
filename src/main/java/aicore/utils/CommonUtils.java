@@ -47,7 +47,7 @@ public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
-	private static final String SEARCH_CATALOG_LABEL = "Search";
+	private static final String SEARCH_APP_LABEL = "Search apps";
 	private static final String SEARCH_CATALOG_DATATESTID = "search-bar";
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
@@ -64,7 +64,7 @@ public class CommonUtils {
 	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
 	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
-	private static final String TEAM_PERMISSION_CARD_XPATH = "//span[normalize-space()='Team Permissions']";
+	private static final String TEAM_PERMISSION_DATATESTID = "settingsIndexPage-Team-Permissions-card";
 	private static final String SEARCH_TEAM_PLACEHOLDER_TEXT = "Search teams by name";
 	private static final String CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID = "MoreVertIcon";
 	private static final String TEAM_DELETE_BUTTON_XPATH = "//p[text()='Delete team']";
@@ -345,7 +345,7 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			HomePageUtils.clickOnOpenAppLibrary(page);
-			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
+			page.getByLabel(SEARCH_APP_LABEL).fill(appName);
 			page.waitForTimeout(500);
 			page.locator(THREE_DOT_ICON_XPATH).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
@@ -372,7 +372,7 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			HomePageUtils.openMainMenu(page);
 			HomePageUtils.clickOnOpenSettings(page);
-			page.locator(TEAM_PERMISSION_CARD_XPATH).click();
+			page.getByTestId(TEAM_PERMISSION_DATATESTID).click();
 			page.getByPlaceholder(SEARCH_TEAM_PLACEHOLDER_TEXT).fill(teamName);
 			page.waitForTimeout(500);
 			page.getByTestId(CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID).click();

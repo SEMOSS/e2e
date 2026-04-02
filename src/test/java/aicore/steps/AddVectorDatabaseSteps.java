@@ -9,12 +9,15 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
-import aicore.pages.ChangeAccessPopUpPage;
 import aicore.pages.EmbedDocumentPage;
 import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.pages.ViewUsagePage;
+import aicore.pages.vector.AddVectorFormUtils;
+import aicore.pages.vector.VectorQnAPageUtils;
+import aicore.pages.vector.VectorSMSSPageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.RequestAccessPopupUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -28,16 +31,14 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	protected static String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
 	private ViewUsagePage viewUsagePage;
-	private ChangeAccessPopUpPage chnageAccessPopUpPage;
 	private CatalogPage catalogPage;
 
 	public AddVectorDatabaseSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp;
-		vectorPage = new OpenVectorPage(SetupHooks.getPage(), timestamp);
+		vectorPage = new OpenVectorPage(SetupHooks.getPage());
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
-		chnageAccessPopUpPage = new ChangeAccessPopUpPage(SetupHooks.getPage());
 		catalogPage = new CatalogPage(SetupHooks.getPage());
 	}
 
@@ -56,18 +57,19 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 			String modelName) {
 		int modelCount = Integer.parseInt(index);
 		for (int i = 0; i < modelCount; i++) {
-			vectorPage.selectConnections(connectionName);
-			vectorPage.enterVectorCatalogName(catalogName + i + 1);
-			vectorPage.enterVectorTag(tag);
+			AddVectorFormUtils.selectConnections(SetupHooks.getPage(), connectionName);
+			AddVectorFormUtils.enterVectorCatalogName(SetupHooks.getPage(), catalogName + i + 1);
+			AddVectorFormUtils.enterVectorTag(SetupHooks.getPage(), tag);
 			switch (modelName) {
 			case "TextEmbeddings BAAI-Large-En-V1.5":
 			case "Model":
-				vectorPage.selectModelfromEmbedderDropdown(modelName);
+				AddVectorFormUtils.selectModelfromEmbedderDropdown(SetupHooks.getPage(), modelName);
 				break;
 			default:
-				vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
+				AddVectorFormUtils.selectModelfromEmbedderDropdown(SetupHooks.getPage(),
+						modelName + AddModelSteps.timestamp);
 			}
-			vectorPage.clickOnCreateVectorButton();
+			AddVectorFormUtils.clickOnCreateVectorButton(SetupHooks.getPage());
 			if (i < modelCount - 1) {
 				homePage.openMainMenu();
 				homePage.clickOnOpenVector();
@@ -78,17 +80,17 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User selects {string} connection")
 	public void user_selects_connection(String connectionName) {
-		vectorPage.selectConnections(connectionName);
+		AddVectorFormUtils.selectConnections(SetupHooks.getPage(), connectionName);
 	}
 
 	@And("User enters vector database Catalog name as {string}")
 	public void user_enters_vector_database_catalog_name_as(String catalogName) {
-		vectorPage.enterVectorCatalogName(catalogName + timestamp);
+		AddVectorFormUtils.enterVectorCatalogName(SetupHooks.getPage(), catalogName + timestamp);
 	}
 
 	@And("User enters vector tag as {string}")
 	public void user_enters_vector_tag_as(String tag) {
-		vectorPage.enterVectorTag(tag);
+		AddVectorFormUtils.enterVectorTag(SetupHooks.getPage(), tag);
 	}
 
 	@And("User selects {string} from Embedder field")
@@ -97,49 +99,50 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 		case "TextEmbeddings BAAI-Large-En-V1.5":
 		case "Llama3-70B-Instruct":
 		case "Model":
-			vectorPage.selectModelfromEmbedderDropdown(modelName);
+			AddVectorFormUtils.selectModelfromEmbedderDropdown(SetupHooks.getPage(), modelName);
 			break;
 		default:
-			vectorPage.selectModelfromEmbedderDropdown(modelName + AddModelSteps.timestamp);
+			AddVectorFormUtils.selectModelfromEmbedderDropdown(SetupHooks.getPage(),
+					modelName + AddModelSteps.timestamp);
 		}
 	}
 
 	@And("User selects {string} from Chunking Strategy field")
 	public void user_selects_from_chunking_strategy_field(String strategyName) {
-		vectorPage.selectStrategyfromChunkingStrategyDropdown(strategyName);
+		AddVectorFormUtils.selectStrategyfromChunkingStrategyDropdown(SetupHooks.getPage(), strategyName);
 	}
 
 	@And("User enters value of Content Length as {string}")
 	public void user_enters_value_of_content_length_as(String contentLength) {
-		vectorPage.enterContentLength(contentLength);
+		AddVectorFormUtils.enterContentLength(SetupHooks.getPage(), contentLength);
 	}
 
 	@And("User enters value of Content Overlap as {string}")
 	public void user_enters_value_of_content_overlap_as(String contentOverlap) {
-		vectorPage.enterContentOverlap(contentOverlap);
+		AddVectorFormUtils.enterContentOverlap(SetupHooks.getPage(), contentOverlap);
 	}
 
 	@And("User enters value of Host Name")
 	public void User_enters_value_of_host_name() {
-		vectorPage.enterHostName();
+		AddVectorFormUtils.enterHostName(SetupHooks.getPage());
 
 	}
 
 	@And("User enters value of API Key")
 	public void sUer_enters_value_of_api_key() {
-		vectorPage.enterApiKey();
+		AddVectorFormUtils.enterApiKey(SetupHooks.getPage());
 
 	}
 
 	@And("User enters value of Namespace as {string}")
 	public void User_enters_value_of_namespace_as_(String nameSpace) {
-		vectorPage.enterNameSpace(nameSpace);
+		AddVectorFormUtils.enterNameSpace(SetupHooks.getPage(), nameSpace);
 
 	}
 
 	@And("User clicks on Create Vector button")
 	public void user_clicks_on_create_vector_button() {
-		vectorPage.clickOnCreateVectorButton();
+		AddVectorFormUtils.clickOnCreateVectorButton(SetupHooks.getPage());
 	}
 
 	@Then("User can see vector database created success toast message as {string}")
@@ -157,7 +160,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Then("User can see vector catalog name in {string} field as {string} in SMSS properties")
 	public void user_can_see_vector_catalog_name_in_field_as_in_smss_properties(String field, String name) {
-		String fullText = vectorPage.verifyNameFiledInSMSS();
+		String fullText = VectorSMSSPageUtils.verifyNameFiledInSMSS(SetupHooks.getPage());
 		String actualName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedName = name + timestamp;
 		assertEquals(actualName, expectedName, "Name is not matching");
@@ -166,7 +169,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User can see embedder engine name in {string} field as {string} in SMSS properties")
 	public void user_can_see_embedder_engine_name_in_field_as_in_smss_properties(String field,
 			String embedderEngineName) {
-		String fullText = vectorPage.verifyEmbedderEngineNameInSMSS();
+		String fullText = VectorSMSSPageUtils.verifyEmbedderEngineNameInSMSS(SetupHooks.getPage());
 		String actualEmbedderEngineName = CommonUtils.splitTrimValue(fullText, field);
 		String expectedEmbedderEngineName = embedderEngineName + AddModelSteps.timestamp;
 		assertEquals(actualEmbedderEngineName, expectedEmbedderEngineName, "Embedder Engine Name is not matching");
@@ -174,7 +177,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User can see content length in {string} field as {string} in SMSS properties")
 	public void user_can_see_content_length_in_field_as_in_smss_properties(String field, String expectedContentLength) {
-		String fullText = vectorPage.verifyContentLengthInSMSS();
+		String fullText = VectorSMSSPageUtils.verifyContentLengthInSMSS(SetupHooks.getPage());
 		String actualContentLength = CommonUtils.splitTrimValue(fullText, field);
 		assertEquals(actualContentLength, expectedContentLength, "Content length is not matching");
 	}
@@ -182,14 +185,14 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@And("User can see content overlap in {string} field as {string} in SMSS properties")
 	public void user_can_see_content_overlap_in_field_as_in_smss_properties(String field,
 			String expectedContentOverlapValue) {
-		String fullText = vectorPage.verifyContentOverlapInSMSS();
+		String fullText = VectorSMSSPageUtils.verifyContentOverlapInSMSS(SetupHooks.getPage());
 		String actualContentOverlapValue = CommonUtils.splitTrimValue(fullText, field);
 		assertEquals(actualContentOverlapValue, expectedContentOverlapValue, "Content overlap value is not matching");
 	}
 
 	@And("User can see chunking strategy in {string} field as {string} in SMSS properties")
 	public void user_can_see_chunking_strategy_in_field_as_in_smss_properties(String field, String chunkingStrategy) {
-		String fullText = vectorPage.verifyChunkingStrategyInSMSS();
+		String fullText = VectorSMSSPageUtils.verifyChunkingStrategyInSMSS(SetupHooks.getPage());
 		String actualChunkingStrategy = CommonUtils.splitTrimValue(fullText, field);
 
 		String expectedChunkingStrategy = null;
@@ -249,32 +252,32 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@Then("User should see the {string} popup with following options:")
 	public void user_should_see_the_popup_with_following_options(String expectedTitle,
 			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
-		Assertions.assertTrue(chnageAccessPopUpPage.isPopupVisible(), expectedTitle + " popup is not visible");
+		Assertions.assertTrue(RequestAccessPopupUtils.isPopupVisible(SetupHooks.getPage()), expectedTitle + " popup is not visible");
 		for (String option : dataTable.asList()) {
-			Assertions.assertTrue(chnageAccessPopUpPage.isOptionVisible(option),
+			Assertions.assertTrue(RequestAccessPopupUtils.isOptionVisible(SetupHooks.getPage(), option),
 					option + " is not visible in Change Access popup");
 		}
 	}
 
 	@Then("User selects {string} access")
 	public void user_selects_access(String accessType) {
-		chnageAccessPopUpPage.selectAccessType(accessType);
+		RequestAccessPopupUtils.selectAccessType(SetupHooks.getPage(), accessType);
 	}
 
 	@Then("User types a comment as {string}")
 	public void user_types_a_comment_as(String comment) {
-		chnageAccessPopUpPage.enterComment(comment);
+		RequestAccessPopupUtils.enterComment(SetupHooks.getPage(), comment);
 	}
 
 	@Then("User clicks on Request button")
 	public void user_clicks_on_request_button() {
-		chnageAccessPopUpPage.clickOnRequestButton();
+		RequestAccessPopupUtils.clickOnRequestButton(SetupHooks.getPage());
 	}
 
 	@Then("User should successfully request access and a toast message as {string}")
 	public void user_should_successfully_request_access_given_the_vector_is_requestable_with_a_toast_message_as(
 			String expectedMessage) {
-		String toastText = chnageAccessPopUpPage.isRequestSuccessToastVisible();
+		String toastText = RequestAccessPopupUtils.isRequestSuccessToastVisible(SetupHooks.getPage());
 		Assertions.assertTrue(toastText != null && toastText.contains(expectedMessage),
 				"Expected toast message to contain: '" + expectedMessage + "' but got: '" + toastText + "'");
 	}
@@ -354,39 +357,39 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User can see the {string} dropdown should be present")
 	public void user_can_see_the_dropdown_should_be_present(String dropdownName) {
-		boolean dropdownVisible = vectorPage.verifyDropdownIsPresent(dropdownName);
+		boolean dropdownVisible = VectorQnAPageUtils.verifyDropdownIsPresent(SetupHooks.getPage(), dropdownName);
 		Assertions.assertTrue(dropdownVisible,
 				"Dropdown '" + dropdownName + "' is not visible under Q&A Tab for vector.");
 	}
 
 	@And("User can see the {string} slider should be visible")
 	public void user_can_see_the_slider_should_be_visible(String sliderName) {
-		boolean sliderVisible = vectorPage.verifySliderIsVisible(sliderName);
+		boolean sliderVisible = VectorQnAPageUtils.verifySliderIsVisible(SetupHooks.getPage(), sliderName);
 		Assertions.assertTrue(sliderVisible, "Slider '" + sliderName + "' is not visible under Q&A Tab for vector.");
 	}
 
 	@And("User hover on {string} option and see the {string}")
 	public void user_hover_on_option_and_see_the_tooltip(String optionName, String expectedTooltip) {
-		boolean isTooltipVisible = vectorPage.verifyTooltipOnHover(optionName, expectedTooltip);
+		boolean isTooltipVisible = VectorQnAPageUtils.verifyTooltipOnHover(SetupHooks.getPage(), optionName, expectedTooltip);
 		Assertions.assertTrue(isTooltipVisible,
 				"Expected tooltip '" + expectedTooltip + "' is not visible for option '" + optionName + "'");
 	}
 
 	@And("User can see Q&A header should be displayed")
 	public void user_can_see_q_a_header_should_be_displayed() {
-		boolean headerVisible = vectorPage.verifyQandAHeaderIsDisplayed();
+		boolean headerVisible = VectorQnAPageUtils.verifyQandAHeaderIsDisplayed(SetupHooks.getPage());
 		Assertions.assertTrue(headerVisible, "Q&A header is not visible under Q&A Tab for vector.");
 	}
 
 	@And("User sees question input textbox should be visible")
 	public void user_sees_question_input_textbox_should_be_visible() {
-		boolean inputBoxVisible = vectorPage.verifyQuestionInputBoxIsVisible();
+		boolean inputBoxVisible = VectorQnAPageUtils.verifyQuestionInputBoxIsVisible(SetupHooks.getPage());
 		Assertions.assertTrue(inputBoxVisible, "Question input textbox is not visible under Q&A Tab for vector.");
 	}
 
 	@And("User should see the Generate Answer button in enable")
 	public void user_should_see_the_button_in_enable() {
-		boolean buttonEnabled = vectorPage.verifyButtonIsEnabled();
+		boolean buttonEnabled = VectorQnAPageUtils.verifyButtonIsEnabled(SetupHooks.getPage());
 		Assertions.assertTrue(buttonEnabled, "Generate Answer button is not enabled under Q&A Tab for vector.");
 	}
 
@@ -397,7 +400,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User clicks on Select Model dropdown")
 	public void user_clicks_on_select_model_dropdown() {
-		vectorPage.clickOnSelectModelDropdown();
+		VectorQnAPageUtils.clickOnSelectModelDropdown(SetupHooks.getPage());
 	}
 
 	@And("User selects a model {string}")
@@ -407,7 +410,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("Selected model should be shown in dropdown {string}")
 	public void selected_model_should_be_shown_in_dropdown(String modelName) {
-		boolean isModelSelected = vectorPage.verifySelectedModelInDropdown(modelName);
+		boolean isModelSelected = VectorQnAPageUtils.verifySelectedModelInDropdown(SetupHooks.getPage(), modelName);
 		Assertions.assertTrue(isModelSelected, "Selected model is not shown in Select Model dropdown.");
 	}
 
@@ -424,17 +427,17 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@And("User enters a question {string} in the question input textbox")
 	public void user_enters_a_question_in_the_question_input_textbox(String question) {
-		vectorPage.enterQuestionInInputBox(question);
+		VectorQnAPageUtils.enterQuestionInInputBox(SetupHooks.getPage(), question);
 	}
 
 	@And("User clicks on Generate Answer button")
 	public void user_clicks_on_generate_answer_button() {
-		vectorPage.clickOnGenerateAnswerButton();
+		VectorQnAPageUtils.clickOnGenerateAnswerButton(SetupHooks.getPage());
 	}
 
 	@And("User sees the answer generated for the question")
 	public void user_sees_the_answer_generated_for_the_question() {
-		boolean isAnswerDisplayed = vectorPage.verifyAnswerIsDisplayed();
+		boolean isAnswerDisplayed = VectorQnAPageUtils.verifyAnswerIsDisplayed(SetupHooks.getPage());
 		Assertions.assertTrue(isAnswerDisplayed, "Answer is not generated for the question.");
 	}
 }

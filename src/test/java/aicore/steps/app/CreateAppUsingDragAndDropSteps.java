@@ -190,6 +190,14 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on Discoverable Apps button")
 	public void user_clicks_on_discoverable_apps_button() {
 		appPage.clickOnDiscoverableAppsButton();
+	@When("User selects the {string} view")
+	public void user_selects_the_view(String view) {
+		appPage.selectAppCardsView(view);
+	}
+
+	@When("User clicks on {string} icon")
+	public void user_clicks_the_icon(String icon) {
+		copiedId = appPage.getCopiedId(icon);
 	}
 
 	@And("User searches {string} app in the app searchbox")
@@ -599,7 +607,7 @@ public class CreateAppUsingDragAndDropSteps {
 		for (Map<String, String> row : rows) {
 			String filterCategory = row.get(FILTER_CATEGORY_NAME);
 			String filterValues = row.get(FILTER_VALUE_NAME);
-			appPage.clickOnFilterOption();
+//			appPage.clickOnFilterOption();
 			String[] filterValuesArray = filterValues.split(", ");
 			for (String filterValue : filterValuesArray) {
 				appPage.searchFilterValueOnAppPage(filterValue);

@@ -3,7 +3,6 @@ package aicore.pages;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AgentBuilderAppsUtils;
-import aicore.utils.CommonUtils;
 import aicore.utils.page.app.AppPageUtils;
 
 public class CreateAppUsingAgentBuilder {

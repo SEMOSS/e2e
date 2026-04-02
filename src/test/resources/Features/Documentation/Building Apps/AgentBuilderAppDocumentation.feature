@@ -1,12 +1,12 @@
 @SkipIfVersionMatch @Documentation @DeleteTestCatalog
 Feature: Create Agent builder app documentation
 
-  Background: Create a Model - GPT 3.5 Turbo
+  Background: Create a Model - GPT-4.1
     Given User opens Main Menu
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'OpenAI' type
-    And User selects 'GPT 3.5 Turbo'
+    And User selects 'GPT-4.1'
     And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
@@ -65,7 +65,7 @@ Feature: Create Agent builder app documentation
     And User captures a "promptcontext" and highlights the "Prompt Context" with name "AB3"
     And User completes screenshot capture and triggers comparison for 'Prompt context'
 
- @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for agent builder app options new screenshot
     Given User captures documentation screenshot for 'BuildingApps/AgentBuilder'
     When User opens Main Menu

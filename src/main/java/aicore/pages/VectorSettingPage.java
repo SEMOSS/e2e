@@ -1,7 +1,5 @@
 package aicore.pages;
 
-import java.util.Vector;
-
 import com.microsoft.playwright.Page;
 
 import aicore.utils.VectorSettingPageUtils;

@@ -10,7 +10,7 @@ Feature: Model Documentation
     When User clicks on Add Model
     And User captures screenshot for "Model Options"
     And User selects 'OpenAI' type
-    And User selects 'GPT 3.5 Turbo'
+    And User selects 'GPT-4.1'
     And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
@@ -52,8 +52,8 @@ Feature: Model Documentation
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
     Given User captures documentation screenshot for 'PlatformNavigation/Model Catalog'
-    And User created '2' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
-    And User created '2' models with the 'OpenAI' model 'GPT 4', catalog name 'Model 2', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT-4.1', catalog name 'Model 1', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT-5', catalog name 'Model 2', OpenAI key 'Test123'
     When User opens Main Menu
     And User clicks on Open Model
     And User captures screenshot for "Model Catalog"
@@ -67,8 +67,8 @@ Feature: Model Documentation
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
     Given User captures documentation screenshot for 'SimpleModelInteraction'
-    And User created '2' models with the 'OpenAI' model 'GPT 3.5 Turbo', catalog name 'Model 1', OpenAI key 'Test123'
-    And User created '2' models with the 'OpenAI' model 'GPT 4', catalog name 'Model 2', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT-4.1', catalog name 'Model 1', OpenAI key 'Test123'
+    And User created '2' models with the 'OpenAI' model 'GPT-5', catalog name 'Model 2', OpenAI key 'Test123'
     When User opens Main Menu
     And User clicks on Open Model
     And User captures screenshot for "ModelCatalog"
@@ -81,7 +81,7 @@ Feature: Model Documentation
     And User opens Main Menu
     And User clicks on Open Model
     When User clicks on Add Model
-    And User selects 'GPT-4o'
+    And User selects 'GPT-4.1'
     And User enters Catalog Name as 'ModelGPT4o'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button

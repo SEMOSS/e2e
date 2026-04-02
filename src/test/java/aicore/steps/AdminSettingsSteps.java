@@ -8,7 +8,6 @@ import org.assertj.core.api.SoftAssertions;
 import aicore.hooks.SetupHooks;
 import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.AddModelPage;
-import aicore.utils.CommonUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 

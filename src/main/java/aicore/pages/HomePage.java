@@ -80,10 +80,6 @@ public class HomePage {
 		HomePageUtils.clickOnOpenSettings(page);
 	}
 
-	public void checkOnOpenSetting() {
-		HomePageUtils.checkOnOpenSetting(page);
-	}
-
 	public void navigateToHomePage() {
 		HomePageUtils.navigateToHomePage(page);
 	}

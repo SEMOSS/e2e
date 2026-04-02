@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,19 +18,12 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddDatabasePageUtils {
 	private static final Logger logger = LogManager.getLogger(AddDatabasePageUtils.class);
-	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
 	private static final String NEXT_BUTTON_FOR_CREATE_DATABASE_XPATH = "//button[@data-testid='database-form-submit']";
 	private static final String METADATA_TABLE_XPATH = "//div[contains(@class,'react-flow__node-metamodel')]";
 	private static final String VERTICAL_OPTIONS_XPATH = "//button[contains(@title, '{catalogName}')]/following-sibling::button/*[name()='svg']";
 	private static final String COPY_ID_OPTION_TEXT = "copy";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/..//following-sibling::div//span[text()='{filterValue}']";
-	private static final String BOOKMARK_ICON_XPATH = "//button[contains(@title, '{catalogName}')]/*[name()='svg']";
-	private static final String UNBOOKMARK_ICON_DATA_TEST_ID = "BookmarkIcon";
-	private static final String CATALOG_UNDER_BOOKMARKED_SECTION_XPATH = "//h6[text()='Bookmarked']/following-sibling::div[1]//p[text()='{catalogName}']";
 	private static final String EDIT_BTN_XPATH = "//button[text()='Edit']";
-	private static final String TAGS_XPATH = "//span[text()='Tag']/ancestor::fieldset/parent::div//input";
-	private static final String SUBMIT_BTN_XPATH = "//span[text()='Submit']";
-	private static final String EMBEDDED_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EXPORT_BTN_DATATESTID = "engineHeader-Database-export-btn";
 	private static final String EDIT_POPUP_XPATH = "//div//h2[contains(text(),'Edit')]";
 	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID = "search-bar";
@@ -39,20 +31,13 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
-	private static final String HOST_NAME_XPATH = "//input[@data-testid='database-form-input-hostname']";
-	private static final String CATALOG_NAME_XPATH = "//input[@data-testid='database-form-input-NAME']";
-	private static final String PORT_NUMBER_XPATH = "//input[@data-testid='database-form-input-port']";
-	private static final String SCHEMA_NAME_XPATH = "//input[@data-testid='database-form-input-schema']";
-	private static final String JDBC_URL_XPATH = "//input[@data-testid='database-form-input-CONNECTION_URL']";
-	private static final String USER_NAME_XPATH = "//input[@data-testid='database-form-input-USERNAME']";
+	
 	private static final String APPLY_BUTTON_XPATH = "model-upload-submit-button";
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//button[text()='Sync']";
 	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//button[text()='Import']";
 	private static final String DB_CATALOG_XPATH = "//p[text()='{dbName}']";
-	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
 	private static final String COPY_ID_XPATH = "//div[text()='{message}']";
 	private static final String SELECT_ALL_DATABASE_DATATESTID = "sync-changes-table-{dbName}";
-	private static final String MANDATORY_FIELD_XPATH = "//div//label[text()='{fieldName}']//span";
 	private static final String FORM_SECTION_XPATH = "//h4[text()='{sectionName}']";
 	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-advanced-settings-toggle'])[1]";
 	private static final String SECTION_FIELD_XPATH = "//h4[normalize-space()='{sectionName}']/ancestor::div//label[text()='{fieldName}']";
@@ -60,44 +45,16 @@ public class AddDatabasePageUtils {
 	private static final String QUERY_ENTER_TEXTAREA_XPATH = "//div[@class='view-line']/ancestor::div[contains(@class,'monaco-editor') and @role='code']";
 	private static final String OUTPUT_TABLE = "//table";
 	private static final String COLLAPSE_COLUMNS_XPATH = "//div[@class='bg-muted/5']";
-	private static final String COLLAPSE_COLUMNS_HEADER_XPATH = "//table//thead//tr[contains(@class,'closed')]";
 	private static final String DATA_COLUMNS_XPATH = "//div[@class='flex flex-1 items-center gap-2.5']";// "//table//tbody//tr";
 	private static final String DATA_COLUMNS_REFRESH_BUTTON_XPATH = "//button[@title='Refresh database structure']";
 	private static final String DATA_COLUMNS_REFRESHING_TILE_XPATH = "//p[contains(text(),'{text}')]";
 	private static final String EXPAND_TABLE_ARROW_XPATH = "//button[@title='{name}']";
 	private static final String BUTTON_XPATH = "//button[text()='{buttonName}']";
 	private static final String DATABASE_CATALOG_HEADER_XPATH = "//p[normalize-space() ='Database Catalog']";
-	private static final String CONNECT_BUTTON_DATA_TESTID = "database-form-connect-button";
 	private static final String DATABASE_SAVE_BUTTON_DATA_TESTID = "engineMetadata-save-btn";
 	private static final String RESET_BUTTON_XPATH = "//button[text()='Reset']";
 	private static final String RUN_QUER_BUTTON_XPATH = "//span[text()='Run Query']";
 
-	public static void clickAddDatabaseButton(Page page) {
-		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
-		page.getByLabel(ADD_DATABASE_BUTTON).click();
-	}
-
-	public static void selectDatabaseType(Page page, String dbType) {
-		page.getByText(dbType).isVisible();
-		page.getByText(dbType).click();
-	}
-
-	public static void selectDatabaseFromConnectionTypes(Page page, String dbType) {
-		Locator option = page.locator(DATABASE_CONNECTION_XPATH).filter(new Locator.FilterOptions().setHasText(dbType));
-		if (!option.isVisible()) {
-			throw new AssertionError("Database connection type '" + dbType + "' is not visible.");
-		}
-		option.click();
-	}
-
-	public static boolean isDBFieldMandatory(Page page, String fieldName) {
-		Locator mandatoryField = page.locator(MANDATORY_FIELD_XPATH.replace("{fieldName}", fieldName));
-		if (!mandatoryField.textContent().contains("*")) {
-			throw new AssertionError(
-					"Database connection type '" + fieldName + "' is not showing with * symbol of required field.");
-		}
-		return mandatoryField.isVisible();
-	}
 
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
 		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
@@ -149,65 +106,6 @@ public class AddDatabasePageUtils {
 			throw new AssertionError("Import database button is not visible or enabled.");
 		}
 		importDatabaseButton.click();
-	}
-
-	public static void enterHostName(Page page, String hostName) {
-		Locator hostNameInput = page.locator(HOST_NAME_XPATH);
-		hostNameInput.scrollIntoViewIfNeeded();
-		hostNameInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		if (!hostNameInput.isVisible() || !hostNameInput.isEnabled()) {
-			throw new AssertionError("Host name input field is not visible or enabled.");
-		}
-		hostNameInput.fill(hostName);
-	}
-
-	public static void clearPortNumber(Page page) {
-		Locator portNumberInput = page.locator(PORT_NUMBER_XPATH);
-		portNumberInput.scrollIntoViewIfNeeded();
-		portNumberInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		if (!portNumberInput.isVisible() || !portNumberInput.isEnabled()) {
-			throw new AssertionError("Port number input field is not visible or enabled.");
-		}
-		portNumberInput.fill("");
-	}
-
-	public static void enterSchemaName(Page page, String schemaName) {
-		Locator schemaNameInput = page.locator(SCHEMA_NAME_XPATH);
-		schemaNameInput.scrollIntoViewIfNeeded();
-		schemaNameInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		if (!schemaNameInput.isVisible() || !schemaNameInput.isEnabled()) {
-			throw new AssertionError("Schema name input field is not visible or enabled.");
-		}
-		schemaNameInput.fill(schemaName);
-	}
-
-	public static void enterJDBCUrl(Page page, String jdbcUrl, String dbType) {
-		Locator jdbcUrlInput = page.locator(JDBC_URL_XPATH);
-		String jdbcUrlPrefix = "jdbc:" + dbType + ":";
-		String workspaceRoot = System.getProperty("user.dir");
-		Path dbPath = Paths.get(workspaceRoot, "src", "test", "resources", "data", "Database", jdbcUrl);
-		String dbAbsolutePath = dbPath.toAbsolutePath().toString().replace("\\", "/");
-
-		if (!jdbcUrlInput.isVisible() || !jdbcUrlInput.isEnabled()) {
-			throw new AssertionError("JDBC URL input field is not visible or enabled.");
-		}
-		jdbcUrlInput.fill(jdbcUrlPrefix + dbAbsolutePath);
-	}
-
-	public static void enterUserName(Page page, String userName) {
-		Locator userNameInput = page.locator(USER_NAME_XPATH);
-		if (!userNameInput.isVisible() && !userNameInput.isEnabled()) {
-			throw new AssertionError("User name input field is not visible.");
-		}
-		userNameInput.fill(userName);
-	}
-
-	public static void enterCatalogName(Page page, String catalogName) {
-		Locator catalogNameInput = page.locator(CATALOG_NAME_XPATH);
-		if (!catalogNameInput.isVisible() && !catalogNameInput.isEnabled()) {
-			throw new AssertionError("Catalog name input field is not visible.");
-		}
-		catalogNameInput.fill(catalogName);
 	}
 
 	public static boolean verifyDatabaseTitle(Page page, String dbName) {
@@ -457,12 +355,6 @@ public class AddDatabasePageUtils {
 		Locator databaseCatalogHeader = page.locator(DATABASE_CATALOG_HEADER_XPATH);
 		AICorePageUtils.waitFor(databaseCatalogHeader);
 		return databaseCatalogHeader.isVisible();
-	}
-
-	public static void clickOnConnectButton(Page page) {
-		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);
-		AICorePageUtils.waitFor(connectButton);
-		connectButton.click();
 	}
 
 	public static void clickOnSaveButton(Page page) {
