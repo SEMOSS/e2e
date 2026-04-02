@@ -65,7 +65,7 @@ Feature: Create Agent builder app documentation
     And User captures a "promptcontext" and highlights the "Prompt Context" with name "AB3"
     And User completes screenshot capture and triggers comparison for 'Prompt context'
 
- @LoginWithAdmin @SkipIfVersionMatch @Documentation
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for agent builder app options new screenshot
     Given User captures documentation screenshot for 'BuildingApps/AgentBuilder'
     When User opens Main Menu
