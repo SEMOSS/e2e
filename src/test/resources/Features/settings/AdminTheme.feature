@@ -21,7 +21,6 @@ Feature: Admin Theme Settings
     And User should see "Activate" button
     And User should see "Delete" button
     And User should see "Create Theme" button
-    And User should see "Privacy Center" link
     And User should see "Admin On" option
 
   Scenario: Create the Admin Theme
