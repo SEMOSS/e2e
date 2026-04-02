@@ -6,23 +6,24 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
-import aicore.utils.page.model.EditModelPageUtils;
+import aicore.pages.model.AddModelFormUtils;
+import aicore.pages.model.EditModelPageUtils;
+import aicore.pages.model.ModelChatPageUtils;
+import aicore.pages.model.ModelSMSSPageUtils;
+import aicore.pages.model.SettingsModelPageUtils;
+import aicore.pages.model.UploadModelUtils;
 import aicore.utils.page.model.ModelPageUtils;
-import aicore.utils.page.model.SettingsModelPageUtils;
 
 public class AddModelPage {
 
 	private Page page;
 	private String timestamp;
 
-	private static final String ADD_FILE_XPATH = "//input[@type='file']";
-	private static final String ADD_FILE_NAME_XPATH = "//span[@title='{fileName}']";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Model']";
 
 	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
 		this.timestamp = timestamp;
-//		this.timestamp = SetupHooks.getTimestamp();
 	}
 
 	public void clickAddModelButton() {
@@ -30,51 +31,51 @@ public class AddModelPage {
 	}
 
 	public void selectModelType(String modelType) {
-		ModelPageUtils.selectModelType(page, modelType);
+		AddModelFormUtils.selectModelType(page, modelType);
 	}
 
 	public void selectModel(String modelName) {
-		ModelPageUtils.selectModel(page, modelName);
+		AddModelFormUtils.selectModel(page, modelName);
 	}
 
 	public void selectOpenAi(String aiModelName) {
-		ModelPageUtils.selectOpenAi(page, aiModelName);
+		AddModelFormUtils.selectOpenAi(page, aiModelName);
 	}
 
 	public void clickOnGroupTab(String tabName) {
-		ModelPageUtils.clickOnGroupTab(page, tabName);
+		AddModelFormUtils.clickOnGroupTab(page, tabName);
 	}
 
 	public boolean fieldUnderSection(String section, String field) {
-		return ModelPageUtils.fieldUnderSection(page, section, field);
+		return AddModelFormUtils.fieldUnderSection(page, section, field);
 	}
 
 	public boolean isFieldMandatory(String field) {
-		return ModelPageUtils.isFieldMandatory(page, field);
+		return AddModelFormUtils.isFieldMandatory(page, field);
 	}
 
 	public void fillModelCreationForm(String fieldName, String fieldValue) {
-		ModelPageUtils.fillCatalogCreationForm(page, fieldName, fieldValue, timestamp);
+		AddModelFormUtils.fillCatalogCreationForm(page, fieldName, fieldValue, timestamp);
 	}
 
 	public boolean validateConnectButtonEnabled() {
-		return ModelPageUtils.validateConnectButtonEnabled(page);
+		return AddModelFormUtils.validateConnectButtonEnabled(page);
 	}
 
 	public void clickOnCreateModelButton(String buttonName) {
-		ModelPageUtils.clickOnCreateModelButton(page, buttonName);
+		AddModelFormUtils.clickOnCreateModelButton(page, buttonName);
 	}
 
 	public void enterCatalogName(String catalogName) {
-		ModelPageUtils.enterCatalogName(page, catalogName + timestamp);
+		AddModelFormUtils.enterCatalogName(page, catalogName + timestamp);
 	}
 
 	public void enterOpenAIKey(String openAIKey) {
-		ModelPageUtils.enterOpenAIKey(page, openAIKey);
+		AddModelFormUtils.enterOpenAIKey(page, openAIKey);
 	}
 
 	public void clickOnCreateModelButton() {
-		ModelPageUtils.clickOnCreateModelButton(page);
+		AddModelFormUtils.clickOnCreateModelButton(page);
 	}
 
 	public String modelCreationToastMessage(String toastMessage) {
@@ -94,51 +95,51 @@ public class AddModelPage {
 	}
 
 	public void clickOnChatTab() {
-		ModelPageUtils.clickOnChatTab(page);
+		ModelChatPageUtils.clickOnChatTab(page);
 	}
 
 	public void verifyChatSectionDisplayed(String title) {
-		ModelPageUtils.verifyChatSectionDisplayed(page, title);
+		ModelChatPageUtils.verifyChatSectionDisplayed(page, title);
 	}
 
 	public void verifyModelIDAndNameDisplayed() {
-		ModelPageUtils.verifyModelIDAndNameDisplayed(page);
+		ModelChatPageUtils.verifyModelIDAndNameDisplayed(page);
 	}
 
 	public void verifyTemperatureValue(String expectedValue) {
-		ModelPageUtils.verifyTemperatureValue(page, expectedValue);
+		ModelChatPageUtils.verifyTemperatureValue(page, expectedValue);
 	}
 
 	public void verifyMaxTokensValue(String expectedValue) {
-		ModelPageUtils.verifyMaxTokensValue(page, expectedValue);
+		ModelChatPageUtils.verifyMaxTokensValue(page, expectedValue);
 	}
 
 	public void verifyInputTextboxPlaceholder(String expectedValue) {
-		ModelPageUtils.verifyInputTextboxPlaceholder(page, expectedValue);
+		ModelChatPageUtils.verifyInputTextboxPlaceholder(page, expectedValue);
 	}
 
 	public void verifyAndActivateSendButton(String inputText) {
-		ModelPageUtils.verifyAndActivateSendButton(page, inputText);
+		ModelChatPageUtils.verifyAndActivateSendButton(page, inputText);
 	}
 
 	public void clickOnSendButton() {
-		ModelPageUtils.clickOnSendButton(page);
+		ModelChatPageUtils.clickOnSendButton(page);
 	}
 
 	public void clickOnClearAllButton() {
-		ModelPageUtils.clickOnClearAllButton(page);
+		ModelChatPageUtils.clickOnClearAllButton(page);
 	}
 
 	public void verifyChatWindowCleared() {
-		ModelPageUtils.verifyChatWindowCleared(page);
+		ModelChatPageUtils.verifyChatWindowCleared(page);
 	}
 
 	public void verifyLoaderDisplayed() {
-		ModelPageUtils.verifyLoaderDisplayed(page);
+		ModelChatPageUtils.verifyLoaderDisplayed(page);
 	}
 
 	public void verifyResponseGeneratedInChatWindow() {
-		ModelPageUtils.verifyResponseGeneratedInChatWindow(page);
+		ModelChatPageUtils.verifyResponseGeneratedInChatWindow(page);
 	}
 
 	public void clickOnSMSSTab() {
@@ -146,15 +147,15 @@ public class AddModelPage {
 	}
 
 	public String verifyNameInSMSS() {
-		return ModelPageUtils.verifyNameInSMSS(page);
+		return ModelSMSSPageUtils.verifyNameInSMSS(page);
 	}
 
 	public String verifyVarNameInSMSS() {
-		return ModelPageUtils.verifyVarNameInSMSS(page);
+		return ModelSMSSPageUtils.verifyVarNameInSMSS(page);
 	}
 
 	public String verifyKeepConversationHistoryValueInSMSS(String fieldName) {
-		return ModelPageUtils.verifyKeepConversationHistoryValueInSMSS(page, fieldName);
+		return ModelSMSSPageUtils.verifyKeepConversationHistoryValueInSMSS(page, fieldName);
 	}
 
 	public void createModel(String modelType, String modelName, String catalogName, String openAIKey) {
@@ -252,42 +253,6 @@ public class AddModelPage {
 		SettingsModelPageUtils.clickOnSettingsTab(page);
 	}
 
-	public boolean verifyMakePublicSectionIsVisible(String title) {
-		return SettingsModelPageUtils.verifyMakePublicSectionIsVisible(page, title);
-	}
-
-	public String verifyMakePublicSectionTextMessage() {
-		return SettingsModelPageUtils.verifyMakePublicSectionTextMessage(page);
-	}
-
-	public boolean verifyMakePublicToggleButtonIsVisible() {
-		return SettingsModelPageUtils.verifyMakePublicToggleButtonIsVisible(page);
-	}
-
-	public boolean verifyMakeDiscoverableSectionIsVisible(String title) {
-		return SettingsModelPageUtils.verifyMakeDiscoverableSectionIsVisible(page, title);
-	}
-
-	public String verifyMakeDiscoverableSectionTextMessage() {
-		return SettingsModelPageUtils.verifyMakeDiscoverableSectionTextMessage(page);
-	}
-
-	public boolean verifyMakeDiscoverableToggleButtonIsVisible() {
-		return SettingsModelPageUtils.verifyMakeDiscoverableToggleButtonIsVisible(page);
-	}
-
-	public boolean verifyDeleteSectionIsVisible(String title) {
-		return SettingsModelPageUtils.verifyDeleteSectionIsVisible(page, title);
-	}
-
-	public String verifyDeleteSectionTextMessage() {
-		return SettingsModelPageUtils.verifyDeleteSectionTextMessage(page);
-	}
-
-	public boolean verifyDeleteButtonIsVisible() {
-		return SettingsModelPageUtils.verifyDeleteButtonIsVisible(page);
-	}
-
 	public boolean verifyPendingRequestsSectionIsVisible() {
 		return SettingsModelPageUtils.verifyPendingRequestsSectionIsVisible(page);
 	}
@@ -360,10 +325,6 @@ public class AddModelPage {
 		SettingsModelPageUtils.addMember(page, role, useDocker);
 	}
 
-	public void clickOnDeleteButton() {
-		SettingsModelPageUtils.clickOnDeleteButton(page);
-	}
-
 	public boolean isDeleteSuccessful() {
 		return SettingsModelPageUtils.isDeleteSuccessful(page);
 	}
@@ -415,31 +376,31 @@ public class AddModelPage {
 
 	// Create all Model Types
 	public void enterInitScript(String initScript) {
-		ModelPageUtils.enterInitScript(page, initScript);
+		AddModelFormUtils.enterInitScript(page, initScript);
 	}
 
 	public void enterGCPRegion(String gcpRegion) {
-		ModelPageUtils.enterGCPRegion(page, gcpRegion);
+		AddModelFormUtils.enterGCPRegion(page, gcpRegion);
 	}
 
 	public void selectTypeForModel(String type) {
-		ModelPageUtils.selectTypeForModel(page, type);
+		AddModelFormUtils.selectTypeForModel(page, type);
 	}
 
 	public void enterEndpoint(String endpoint) {
-		ModelPageUtils.enterEndpoint(page, endpoint);
+		AddModelFormUtils.enterEndpoint(page, endpoint);
 	}
 
 	public String getAllFieldsInSMSSProperties(String fieldName) {
-		return ModelPageUtils.getAllFieldsInSMSSProperties(page, fieldName);
+		return ModelSMSSPageUtils.getAllFieldsInSMSSProperties(page, fieldName);
 	}
 
 	public void enterDeploymentName(String deploymentName) {
-		ModelPageUtils.enterDeploymentName(page, deploymentName);
+		AddModelFormUtils.enterDeploymentName(page, deploymentName);
 	}
 
 	public void enterVersion(String version) {
-		ModelPageUtils.enterTheVersion(page, version);
+		AddModelFormUtils.enterTheVersion(page, version);
 	}
 
 	public boolean isSubmitButtonEnabled() {
@@ -447,58 +408,58 @@ public class AddModelPage {
 	}
 
 	public void selectChatOption(String option) {
-		ModelPageUtils.selectChatOption(page, option);
+		AddModelFormUtils.selectChatOption(page, option);
 	}
 
 	public void selectKeepConversationHistoryOption(String option) {
-		ModelPageUtils.selectKeepConversationHistoryOption(page, option);
+		AddModelFormUtils.selectKeepConversationHistoryOption(page, option);
 	}
 
 	public void selectRecordQuestionsAndResponsesOption(String option) {
-		ModelPageUtils.selectRecordQuestionsAndResponsesOption(page, option);
+		AddModelFormUtils.selectRecordQuestionsAndResponsesOption(page, option);
 	}
 
 	public void enterMaxTokens(String maxTokens) {
-		ModelPageUtils.enterMaxTokens(page, maxTokens);
+		AddModelFormUtils.enterMaxTokens(page, maxTokens);
 	}
 
 	public void enterMaxInputTokens(String maxInputTokens) {
-		ModelPageUtils.enterMaxInputTokens(page, maxInputTokens);
+		AddModelFormUtils.enterMaxInputTokens(page, maxInputTokens);
 	}
 
 	public void selectTypeForModel() {
-		ModelPageUtils.selectTypeForModel(page);
+		AddModelFormUtils.selectTypeForModel(page);
 	}
 
 	public void enterModelName(String modelName) {
-		ModelPageUtils.enterModelName(page, modelName);
+		AddModelFormUtils.enterModelName(page, modelName);
 	}
 
 	public void selectModelOption(String model) {
-		ModelPageUtils.selectModelOption(page, model);
+		AddModelFormUtils.selectModelOption(page, model);
 	}
 
 	public void enterAWSRegion(String awsRegion) {
-		ModelPageUtils.enterAWSRegion(page, awsRegion);
+		AddModelFormUtils.enterAWSRegion(page, awsRegion);
 	}
 
 	public void enterAWSAccessKey(String awsAccessKey) {
-		ModelPageUtils.enterAWSAccessKey(page, awsAccessKey);
+		AddModelFormUtils.enterAWSAccessKey(page, awsAccessKey);
 	}
 
 	public void enterAWSSecretKey(String awsSecretKey) {
-		ModelPageUtils.enterAWSSecretKey(page, awsSecretKey);
+		AddModelFormUtils.enterAWSSecretKey(page, awsSecretKey);
 	}
 
 	public void clickOnCreateButton(String buttonName) {
-		ModelPageUtils.clickOnCreateButton(page, buttonName);
+		AddModelFormUtils.clickOnCreateButton(page, buttonName);
 	}
 
 	public void selectAddModelOption(String option) {
-		ModelPageUtils.selectAddModelOption(page, option);
+		AddModelFormUtils.selectAddModelOption(page, option);
 	}
 
 	public void clickOnUploadButton(String buttonName) {
-		ModelPageUtils.clickOnUploadButton(page, buttonName);
+		UploadModelUtils.clickOnUploadButton(page, buttonName);
 	}
 }
