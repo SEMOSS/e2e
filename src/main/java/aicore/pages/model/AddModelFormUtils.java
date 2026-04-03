@@ -50,7 +50,7 @@ public class AddModelFormUtils {
 	private static final String DROPDOWN_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//button[@data-testid='model-importForm-{field}-select']";
 	private static final String CREDENTIAL_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}-password']";
 	private static final String NUMBER_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}']";
-	private static final String URL_FIELDS_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}-url']";
+	private static final String URL_FIELDS_UNDER_SECTION_XPATH = "//h4[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}-url']";
 	private static final String MANDATORY_TEXT_FIELDS_XPATH = "//input[@data-testid='importForm-{field}-textField']/../label//span[text()='*']";
 	private static final String MANDATORY_DROPDOWN_FIELDS_XPATH = "//button[@data-testid='model-importForm-{field}-select']/../label//span[text()='*']";
 	private static final String MANDATORY_CREDENTIAL_FIELDS_XPATH = "//input[@data-testid='model-importForm-{field}-password']/../label//span[text()='*']";
