@@ -74,4 +74,8 @@ public class BlockSettingsPage {
 	public void closeBlockSettings() {
 		BlockSettingsUtils.closeBlockSettings(page);
 	}
+
+	public void clickOnOption(String option) {
+		BlockSettingsUtils.clickOnOption(page, option);
+	}
 }

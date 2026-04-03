@@ -26,6 +26,7 @@ public class BlockSettingsUtils {
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
 	private static final String SELECT_FRAME_IN_NOTEBOOK_XPATH = "//*[@data-testid='AccountTreeIcon']//parent::div//following-sibling::div";
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
+	private static final String OPTION_XPATH = "//p[text()='{optionName}']/../following-sibling::div//button";
 
 	public static void clickOnBlockSettingsOption(Page page) {
 		Locator blockSettingsOption = page.locator(BLOCK_SETTINGS_XPATH);
@@ -183,5 +184,10 @@ public class BlockSettingsUtils {
 		if (blockSettingsOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			blockSettingsOption.click();
 		}
+	}
+
+	public static void clickOnOption(Page page, String option) {
+		Locator optionLocator = page.locator(OPTION_XPATH.replace("{optionName}", option));
+		optionLocator.click();
 	}
 }
