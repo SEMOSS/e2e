@@ -19,7 +19,7 @@ Feature: Add Model
     Given User can see the Model title as 'Model'
     When User clicks on SMSS
     And User can see name in 'NAME' field as 'Model' in SMSS properties
-    And User can see var name in 'VAR_NAME' field as 'openAIModel' in SMSS properties
+    And User can see var name in 'VAR_NAME' field as 'myModel' in SMSS properties
 
   Scenario: Edit SMSS properties of Model - GPT-4.1
     Given User can see the Model title as 'Model'
@@ -69,7 +69,7 @@ Feature: Add Model
     And User should see '<DATA_RESTRICTIONS>' in the overview Data restrictions section
 
     Examples: 
-      | MODEL_NAME | DETAILS       | DESCRIPTION                      | TAGS              | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
+      | MODEL_NAME | DETAILS       | DESCRIPTION                | TAGS              | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
       | Model      | GPT-4.1 model | This is GPT-4.1 test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
   Scenario: Validate Model Catalog ID in Usage commands
@@ -77,9 +77,9 @@ Feature: Add Model
     When User copies the model catalog ID below the title using copy icon
     And User clicks on Usage tab
     When User copies code contents and validate model catalog Id occurences in sections:
-      | SECTIONS                                                 | EXPECTED_MODEL_ID_COUNT |
-      | How to use in Javascript                                 |                       5 |
-      | How to use in Python                                     |                       1 |
-      | How to use with Langchain API                            |                       1 |
-      | How to use externally with OpenAI API and our Python SDK |                       3 |
-      | How to use in Java                                       |                       1 |
+      | SECTIONS                                                               | EXPECTED_MODEL_ID_COUNT |
+      | How to use in Pixel                                                    |                       5 |
+      | How to use in Python                                                   |                       1 |
+      | How to use with LangChain API                                          |                       1 |
+      | How to use externally with OpenAI API (with or without our Python SDK) |                       3 |
+      | How to use in Java                                                     |                       1 |
