@@ -20,9 +20,9 @@ Feature: Add Zip Database
     And User sees the database name 'TestDatabase' in the database catalog
     And User clicks on the database name 'TestDatabase' in the database catalog
     When User clicks on Usage tab for Database
-    Then User sees an example of "How to use in Javascript" with example code for Database
+    Then User sees an example of "How to use in Pixel" with example code for Database
     And User sees an example of "How to use in Python" with example code for Database
-    And User sees an example of "How to use with Langchain API" with example code for Database
+    And User sees an example of "How to use with LangChain API" with example code for Database
     And User sees an example of "How to use in Java" with example code for Database
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
@@ -42,7 +42,7 @@ Feature: Add Zip Database
     And User clicks on copy icon of Database ID
     When User can see toast message as 'ID copied to clipboard'
     ##And User can see 'Please use the Edit button to provide a description for this Database. A description will help others find the Database and understand how to use it. To include more details associated with the Database, edit the markdown located in the Overview section.' as database description
-    ## And User can see 'No Markdown available' as database description
+    ##And User can see 'No Markdown available' as database description
     And User clicks on Access Control Tab
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
@@ -50,7 +50,6 @@ Feature: Add Zip Database
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox
     And User selects the 'TestDatabase' from the database catalog
-    ##And User can see last updated info
     And User clicks on Export button that creates a Zip of DB when clicked
     And User sees an Edit button that opens a pop-up to edit
     And User clicks on Close button
