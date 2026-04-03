@@ -35,6 +35,10 @@ public class AppPageUtils {
 	private static final String LAST_EDITED_DATE_XPATH = "//p[text()='{lastEditedDate}']";
 	private static final String MORE_VERTICAL_OPTIONS_XPATH = "//div[text()='{optionName}']";
 	private static final String FILTER_OPTION_XPATH = "//button[@data-slot='popover-trigger']";
+	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{appName}-makeDiscoverable-switch";
+	private static final String APPS_NAME_XPATH = "//button//h3";
+	private static final String SORT_BY_DROPDOWN_XPATH = "[aria-label='Sort By']";
+	private static final String SORT_BY_OPTION_XPATH = "//div[@role='option']//span[text()='{optionName}']";
 	private static final String CARDS_VIEW_OPTIONS_XPATH = "//button[@aria-label='{view}']";
 	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
 
@@ -127,35 +131,36 @@ public class AppPageUtils {
 		String expectedDate = LocalDate.now().format(formatter);
 		Locator locator = null;
 		switch (contentName) {
-		case "App Name":
-			locator = page.locator(APP_CARD_XPATH.replace("{appName}", contentValue + " " + timestamp));
-			break;
-		case "App Description":
-			locator = page.locator(APP_DESCRIPTION_XPATH.replace("{description}", contentValue));
-			break;
-		case "Open App button":
-			locator = page.locator(OPEN_APP_LINK_XPATH.replace("{buttonName}", contentValue));
-			break;
-		case "Info button":
-			locator = page.locator(INFO_BUTTON_XPATH.replace("{buttonName}", contentValue));
-			break;
-		case "More Vert Icon":
-			locator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH);
-			break;
-		case "Bookmark Icon":
-			locator = page.locator(APP_BOOKMARK_ICON_XPATH);
-			break;
-		case "Published date":
-			locator = page.locator(
-					PUBLISHED_DATE_XPATH.replace("{publishedDate}", contentValue.replace("{date}", expectedDate)));
-			break;
-		case "Last Edited date":
-			locator = page.locator(
-					LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}", contentValue.replace("{date}", expectedDate)));
-			break;
-		default:
-			logger.error("Invalid option name: " + contentName);
-			throw new IllegalArgumentException("Invalid option name: " + contentName);
+			case "App Name":
+				locator = page.locator(APP_CARD_XPATH.replace("{appName}", contentValue + " " + timestamp));
+				break;
+			case "App Description":
+				locator = page.locator(APP_DESCRIPTION_XPATH.replace("{description}", contentValue));
+				break;
+			case "Open App button":
+				locator = page.locator(OPEN_APP_LINK_XPATH.replace("{buttonName}", contentValue));
+				break;
+			case "Info button":
+				locator = page.locator(INFO_BUTTON_XPATH.replace("{buttonName}", contentValue));
+				break;
+			case "More Vert Icon":
+				locator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH);
+				break;
+			case "Bookmark Icon":
+				locator = page.locator(APP_BOOKMARK_ICON_XPATH);
+				break;
+			case "Published date":
+				locator = page.locator(
+						PUBLISHED_DATE_XPATH.replace("{publishedDate}", contentValue.replace("{date}", expectedDate)));
+				break;
+			case "Last Edited date":
+				locator = page.locator(
+						LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}",
+								contentValue.replace("{date}", expectedDate)));
+				break;
+			default:
+				logger.error("Invalid option name: " + contentName);
+				throw new IllegalArgumentException("Invalid option name: " + contentName);
 		}
 		locator.scrollIntoViewIfNeeded();
 		return locator.isVisible();
@@ -195,4 +200,123 @@ public class AppPageUtils {
 	public static void clickOnAccessControlButton(Page page) {
 		AICorePageUtils.clickOnTabButton(page, "Access Control");
 	}
+
+	public static void clickOnDiscoverableAppsButton(Page page) {
+		page.getByTestId("appCatalogPage-discoverable-btn").click();
+	}
+
+	public static void clickOnMakeDiscoverableButtoninSettings(Page page, String appName) {
+		if (appName.contains(" ")) {
+			appName = appName.replace(" ", "-");
+		}
+		Locator makeDiscoverableButton = page
+				.getByTestId(MAKE_DISCOVERABLE_BUTTON_DATATESTID.replace("{appName}", appName));
+		makeDiscoverableButton.isVisible();
+		makeDiscoverableButton.click();
+	}
+
+	public static void clickOnFilterButton(Page page, String filterName) {
+		page.getByTitle(filterName + " Order").click();
+	}
+	
+	public static boolean verifyAppsSortedInAscendingOrder(Page page) {
+		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
+		int appCount = appNamesLocator.count();
+		String previousAppName = "";
+		for (int i = 0; i < appCount; i++) {
+			String currentAppName = appNamesLocator.nth(i).textContent().trim();
+			if (currentAppName.compareToIgnoreCase(previousAppName) < 0) {
+				return false;
+			}
+			previousAppName = currentAppName;
+		}
+		return true;
+}
+	public static boolean verifyAppsSortedInDescendingOrder(Page page) {
+		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
+		int appCount = appNamesLocator.count();
+		String previousAppName = null;
+		for (int i = 0; i < appCount; i++) {
+			String currentAppName = appNamesLocator.nth(i).textContent().trim();
+			if (previousAppName != null && currentAppName.compareToIgnoreCase(previousAppName) > 0) {
+				return false;
+			}
+			previousAppName = currentAppName;
+		}
+		return true;
+	}
+
+	public static boolean verifyAppsSortedByDateLastEdited(Page page) {
+		Locator lastEditedDatesLocator = page.locator(LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}", ""));
+		int appCount = lastEditedDatesLocator.count();
+		String previousDateStr = null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+		for (int i = 0; i < appCount; i++) {
+			String currentDateStr = lastEditedDatesLocator.nth(i).textContent().trim();
+			currentDateStr = currentDateStr.replace("Last Edited: ", "");
+			if (previousDateStr != null) {
+				LocalDate previousDate = LocalDate.parse(previousDateStr, formatter);
+				LocalDate currentDate = LocalDate.parse(currentDateStr, formatter);
+				if (currentDate.isAfter(previousDate)) {
+					return false;
+				}
+			}
+			previousDateStr = currentDateStr;
+		}
+		return true;
+}
+
+		public static boolean verifyAppsSortedByUpdatedAgo(Page page) {
+			return verifyAppsSortedByUpdatedAgo(page, false);
+		}
+	/**
+	 * Verifies that the apps are sorted by the 'Updated ... ago' format (descending: most recent first).
+	 * Handles 'Updated today', 'Updated X days ago', 'Updated X month(s) ago'
+	 */
+	public static boolean verifyAppsSortedByUpdatedAgo(Page page, boolean descending) {
+		Locator dateLocators = page.locator("//p[contains(text(),'Updated')]");
+		int appCount = dateLocators.count();
+		int previousDaysAgo = descending ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+		for (int i = 0; i < appCount; i++) {
+			String dateText = dateLocators.nth(i).textContent().trim().toLowerCase(Locale.ENGLISH);
+			int daysAgo = parseUpdatedAgoToDays(dateText);
+			if (descending) {
+				if (daysAgo < previousDaysAgo) {
+					return false;
+				}
+			} else {
+				if (daysAgo > previousDaysAgo) {
+					return false;
+				}
+			}
+			previousDaysAgo = daysAgo;
+		}
+		return true;
+	}
+
+	private static int parseUpdatedAgoToDays(String dateText) {
+		if (dateText.contains("today")) {
+			return 0;
+		} else if (dateText.contains("day")) {
+			return extractNumber(dateText);
+		} else if (dateText.contains("month")) {
+			return extractNumber(dateText) * 30; // Approximate a month as 30 days
+		}
+		return Integer.MAX_VALUE; // fallback for unknown format
+	}
+	private static int extractNumber(String text) {
+    java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(text);
+    if (matcher.find()) {
+        return Integer.parseInt(matcher.group());
+    }
+    return 0; // Default if no number found
+}
+
+public static void selectSortByOption(Page page, String optionName) {
+	Locator sortDropdown = page.locator(SORT_BY_DROPDOWN_XPATH);
+	sortDropdown.click();
+	Locator optionLocator = page.locator(SORT_BY_OPTION_XPATH.replace("{optionName}", optionName));
+	optionLocator.waitFor();
+	optionLocator.click();
+}
 }
