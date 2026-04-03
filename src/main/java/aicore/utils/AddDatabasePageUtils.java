@@ -31,7 +31,7 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
 	private static final String DATABASE_NAME_XPATH = "//p[text()='{DatabaseName}']";
-	
+
 	private static final String APPLY_BUTTON_XPATH = "model-upload-submit-button";
 	private static final String APPLY_DATABASE_BUTTON_XPATH = "//button[text()='Sync']";
 	private static final String IMPORT_DATABASE_BUTTON_XPATH = "//button[text()='Import']";
@@ -53,8 +53,8 @@ public class AddDatabasePageUtils {
 	private static final String DATABASE_CATALOG_HEADER_XPATH = "//p[normalize-space() ='Database Catalog']";
 	private static final String DATABASE_SAVE_BUTTON_DATA_TESTID = "engineMetadata-save-btn";
 	private static final String RESET_BUTTON_XPATH = "//button[text()='Reset']";
-	private static final String RUN_QUER_BUTTON_XPATH = "//span[text()='Run Query']";
-
+	private static final String RUN_QUER_BUTTON_DATATESTID = "query-run-btn";
+	private static final String CONFIRM_EXPORT_BUTTON_XPATH = "//button[text()='Yes']";
 
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
 		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
@@ -202,6 +202,7 @@ public class AddDatabasePageUtils {
 		page.getByTestId(EXPORT_BTN_DATATESTID).isVisible();
 		Download download = page.waitForDownload(() -> {
 			page.getByTestId(EXPORT_BTN_DATATESTID).click();
+			page.locator(CONFIRM_EXPORT_BUTTON_XPATH).click();
 		});
 		Path downloadPath = download.path();
 		if (isZipFile(downloadPath)) {
@@ -370,6 +371,6 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnRunQueryButton(Page page) {
-		page.locator(RUN_QUER_BUTTON_XPATH).click();
+		page.getByTestId(RUN_QUER_BUTTON_DATATESTID).click();
 	}
 }

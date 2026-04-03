@@ -11,7 +11,7 @@ public class AddFunctionPageUtils {
 
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
-	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards-FUNCTION')]//p[(text()='{FunctionName}')]";
+	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String FILE_TAB_XPATH = "//button[text()='Files']";
@@ -54,6 +54,7 @@ public class AddFunctionPageUtils {
 		page.locator(FILE_TAB_XPATH).isVisible();
 		page.locator(FILE_TAB_XPATH).click();
 	}
+
 	public static void clickOnAccessControl(Page page) {
 		page.locator(ACCESS_CONTROL_XPATH).isVisible();
 		page.locator(ACCESS_CONTROL_XPATH).click();

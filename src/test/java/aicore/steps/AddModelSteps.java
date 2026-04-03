@@ -129,8 +129,8 @@ public class AddModelSteps {
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("fieldName");
 			String fieldValue = row.get("fieldValue");
-				 openModelPage.fillModelCreationForm(fieldName, fieldValue);
-			}
+				openModelPage.fillModelCreationForm(fieldName, fieldValue);
+		}
 	}
 
 	@Then("User clicks on model {string} button")
@@ -335,8 +335,8 @@ public class AddModelSteps {
 	public void user_should_see_on_the_page(String expectedTags) {
 		String[] tagArray = expectedTags.split(", ");
 		List<String> actualTagList = openModelPage.verifyTagNames();
-		List<String> expectedTagList = Arrays.asList(tagArray).subList(0, Math.min(2, tagArray.length));
-		Assertions.assertEquals(actualTagList, expectedTagList);
+		List<String> expectedTagList = Arrays.asList(tagArray);
+		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
 	@And("User should see {string} in the overview Details section")
