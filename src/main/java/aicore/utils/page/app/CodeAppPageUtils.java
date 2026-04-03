@@ -31,7 +31,6 @@ public class CodeAppPageUtils {
 	private static final String FILE_SECTION_IS_DISABLE_XPATH = "//div[contains(@class,'unselected workspace_layout')]//div//img[@alt='Files']";
 	private static final String CREATE_AT_ICON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-file-plus')]";
 	private static final String CLICK_TO_SELECT_OPTION_XPATH = "//label[text()='Action']/parent::div//button";
-	private static final String SELECT_OPTION_XPATH = "//select//option[text()='{action}']";
 	private static final String FILE_UPLOAD_BUTTON_XPATH = "//button[text()='{buttonName}']";
 	private static final String CLICK_ON_CREATE_BUTTON_XPATH = "//button[text()='Create']";
 	private static final String FILE_NAME_INPUT_XPATH = "//label[text()='File Name']/parent::div//input";

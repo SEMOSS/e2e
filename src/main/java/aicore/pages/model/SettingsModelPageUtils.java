@@ -1,4 +1,4 @@
-package aicore.utils.page.model;
+package aicore.pages.model;
 
 import java.util.List;
 
@@ -17,13 +17,7 @@ public class SettingsModelPageUtils {
 	private static final String EDIT_SMSS_BUTTON_XPATH = "//button[@aria-label='Unlock Editor']";
 	private static final String UPDATE_SMSS_BUTTON_XPATH = "//button[@aria-label='Update SMSS Properties']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Access Control']";
-	private static final String TILE_SECTION_TITLE_XPATH = "//p[text()='{title}']";
-	private static final String MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Private']/following-sibling::p";
-	private static final String MAKE_PUBLIC_TOGGLE_BUTTON_DATA_TESTID = "settingsTiles-make-Model-public-private-switch";
-	private static final String MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Non Discoverable']/following-sibling::p";
-	private static final String MAKE_DISCOVERABLE_TOGGLE_BUTTON_DATA_TESTID = "settingsTiles-Model-makeDiscoverable-switch";
-	private static final String DELETE_SECTION_TEXT_MESSAGE_XPATH = "//p[text()='Delete Model']/following-sibling::p";
-	private static final String DELETE_BUTTON_DATA_TESTID = "settingsTiles-Model-delete-btn";
+
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h4[text()='Pending Requests']";
 	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h4[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
 	private static final String MEMBER_SECTION_TITLE_XPATH = "//h4[text()='Permissions']";
@@ -43,57 +37,15 @@ public class SettingsModelPageUtils {
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
 	private static final String USAGE_CODE_SECTION_XPATH = "//*[text()='{sectionName}']/../div/pre";
-	private static final String TILE_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[contains(text(),'{tileName}')]";
+	private static final String TILE_XPATH = "//div[text()='{tileName}']";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
-	private static final String SEARCH_BOX_XPATH = "//div[@data-testid='settingsIndexPage-searchBar']//input[@placeholder='Search']";
+	private static final String SEARCH_BOX_DATATESTID = "settingsIndexPage-searchBar";
 	private static final String DELETE_CATALOG_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
-	}
-
-	public static boolean verifyMakePublicSectionIsVisible(Page page, String title) {
-		boolean isMakePublicSectionVisible = page.isVisible(TILE_SECTION_TITLE_XPATH.replace("{title}", title));
-		return isMakePublicSectionVisible;
-	}
-
-	public static String verifyMakePublicSectionTextMessage(Page page) {
-		String actualTextMessage = page.textContent(MAKE_PUBLIC_SECTION_TEXT_MESSAGE_XPATH);
-		return actualTextMessage;
-	}
-
-	public static boolean verifyMakePublicToggleButtonIsVisible(Page page) {
-		return page.getByTestId(MAKE_PUBLIC_TOGGLE_BUTTON_DATA_TESTID).isVisible();
-	}
-
-	public static boolean verifyMakeDiscoverableSectionIsVisible(Page page, String title) {
-		boolean isMakeDiscoverableSectionVisible = page.isVisible(TILE_SECTION_TITLE_XPATH.replace("{title}", title));
-		return isMakeDiscoverableSectionVisible;
-	}
-
-	public static String verifyMakeDiscoverableSectionTextMessage(Page page) {
-		String actualTextMessage = page.textContent(MAKE_DISCOVERABLE_SECTION_TEXT_MESSAGE_XPATH);
-		return actualTextMessage;
-	}
-
-	public static boolean verifyMakeDiscoverableToggleButtonIsVisible(Page page) {
-		return page.getByTestId(MAKE_DISCOVERABLE_TOGGLE_BUTTON_DATA_TESTID).isVisible();
-	}
-
-	public static boolean verifyDeleteSectionIsVisible(Page page, String title) {
-		boolean isDeleteSectionVisible = page.isVisible(TILE_SECTION_TITLE_XPATH.replace("{title}", title));
-		return isDeleteSectionVisible;
-	}
-
-	public static String verifyDeleteSectionTextMessage(Page page) {
-		String actualTextMessage = page.textContent(DELETE_SECTION_TEXT_MESSAGE_XPATH).trim();
-		return actualTextMessage;
-	}
-
-	public static boolean verifyDeleteButtonIsVisible(Page page) {
-		return page.getByTestId(DELETE_BUTTON_DATA_TESTID).isVisible();
 	}
 
 	public static boolean verifyPendingRequestsSectionIsVisible(Page page) {
@@ -185,9 +137,9 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnSearchBox(Page page, String string) {
-		page.locator(SEARCH_BOX_XPATH).isVisible();
-		page.locator(SEARCH_BOX_XPATH).click();
-		page.locator(SEARCH_BOX_XPATH).fill(string);
+		page.getByTestId(SEARCH_BOX_DATATESTID).isVisible();
+		page.getByTestId(SEARCH_BOX_DATATESTID).click();
+		page.getByTestId(SEARCH_BOX_DATATESTID).fill(string);
 	}
 
 	public static void clickOnAccessControl(Page page) {
@@ -217,12 +169,6 @@ public class SettingsModelPageUtils {
 		}
 		page.getByTestId(RADIO_BUTTON_DATATESTID.replace("{role}", role.toLowerCase())).click();
 		page.getByTestId(SAVE_BUTTON_DATATESTID).click();
-	}
-
-	public static void clickOnDeleteButton(Page page) {
-		Locator deleteButton = page.locator(DELETE_CATALOG_BUTTON_XPATH);
-		deleteButton.click();
-		page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 	}
 
 	public static boolean isDeleteSuccessful(Page page) {

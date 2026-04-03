@@ -8,7 +8,7 @@ import org.assertj.core.api.SoftAssertions;
 import aicore.hooks.SetupHooks;
 import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.AddModelPage;
-import aicore.utils.CommonUtils;
+import aicore.pages.model.settings.ModelAccessSettingsUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -40,7 +40,7 @@ public class ModelSettingsSteps {
 			isSectionVisible = modelPage.verifyMembersSectionIsVisible();
 			break;
 		default:
-			isSectionVisible = modelPage.verifyMakePublicSectionIsVisible(sectionName);
+			isSectionVisible = ModelAccessSettingsUtils.verifyMakePublicSectionIsVisible(SetupHooks.getPage(), sectionName);
 		}
 		softAssert.assertThat(isSectionVisible).isTrue();
 	}
@@ -50,13 +50,13 @@ public class ModelSettingsSteps {
 		String actualTextMessage = null;
 		switch (sectionName) {
 		case "Private":
-			actualTextMessage = modelPage.verifyMakePublicSectionTextMessage();
+			actualTextMessage = ModelAccessSettingsUtils.verifyMakePublicSectionTextMessage(SetupHooks.getPage());
 			break;
 		case "Non Discoverable":
-			actualTextMessage = modelPage.verifyMakeDiscoverableSectionTextMessage();
+			actualTextMessage = ModelAccessSettingsUtils.verifyMakeDiscoverableSectionTextMessage(SetupHooks.getPage());
 			break;
 		case "Delete Model":
-			actualTextMessage = modelPage.verifyDeleteSectionTextMessage();
+			actualTextMessage = ModelAccessSettingsUtils.verifyDeleteSectionTextMessage(SetupHooks.getPage());
 			break;
 		default:
 			System.out.println("Invalid section name: " + sectionName);
@@ -69,10 +69,10 @@ public class ModelSettingsSteps {
 		boolean isToggleButtonVisible = false;
 		switch (sectionName) {
 		case "Private":
-			isToggleButtonVisible = modelPage.verifyMakePublicToggleButtonIsVisible();
+			isToggleButtonVisible = ModelAccessSettingsUtils.verifyMakePublicToggleButtonIsVisible(SetupHooks.getPage());
 			break;
 		case "Non Discoverable":
-			isToggleButtonVisible = modelPage.verifyMakeDiscoverableToggleButtonIsVisible();
+			isToggleButtonVisible = ModelAccessSettingsUtils.verifyMakeDiscoverableToggleButtonIsVisible(SetupHooks.getPage());
 			break;
 		default:
 			System.out.println("Invalid section name: " + sectionName);
@@ -85,7 +85,7 @@ public class ModelSettingsSteps {
 		boolean isDeleteButtonVisible = false;
 		switch (sectionName) {
 		case "Delete Model":
-			isDeleteButtonVisible = modelPage.verifyDeleteButtonIsVisible();
+			isDeleteButtonVisible = ModelAccessSettingsUtils.verifyDeleteButtonIsVisible(SetupHooks.getPage());
 			break;
 		default:
 			System.out.println("Invalid section name: " + sectionName);

@@ -10,7 +10,7 @@ import aicore.utils.HomePageUtils;
 
 public class JobPageUtils {
 
-	private static final String JOBS_TILE_XPATH = "//span[text()='Jobs']";
+	private static final String JOBS_TILE_DATATESTID = "settingsIndexPage-Jobs-card";
 	private static final String NAME_XPATH = "//label[text()='Name']/parent::div/div/input";
 	private static final String PIXEL_XPATH = "//label[text()='Pixel']/parent::div/div/textarea[@aria-invalid=\"false\"]";
 	private static final String JOB_LIST_XPATH = "//button[text()='{sectionName}' and @aria-selected='true']/ancestor::div/following-sibling::div//div[@title='{jobName}']";
@@ -39,8 +39,8 @@ public class JobPageUtils {
 	private static final String RUN_JOB_ICON_XPATH = "//div[@title='{jobName}']/ancestor::div[@role='row']//button[@data-testid='jobsTable-play-btn']";
 
 	public static void clickOnJobTile(Page page) {
-		page.locator(JOBS_TILE_XPATH).isVisible();
-		page.locator(JOBS_TILE_XPATH).click();
+		page.getByTestId(JOBS_TILE_DATATESTID).isVisible();
+		page.getByTestId(JOBS_TILE_DATATESTID).click();
 	}
 
 	public static void clickOnAddJobButton(Page page) {
@@ -162,7 +162,7 @@ public class JobPageUtils {
 		if (page.locator("//*[local-name()='svg'][contains(@class,'MuiSvgIcon-colorDisabled')]").isVisible()) {
 			page.getByTestId("AdminPanelSettingsOutlinedIcon").click();
 		}
-		page.locator(JOBS_TILE_XPATH).click();
+		page.getByTestId(JOBS_TILE_DATATESTID).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
 		page.locator(NAME_XPATH).fill(name);
 		page.locator(PIXEL_XPATH).fill(value);
