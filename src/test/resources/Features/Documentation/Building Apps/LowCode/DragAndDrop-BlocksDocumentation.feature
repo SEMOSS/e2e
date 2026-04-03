@@ -9,7 +9,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -27,7 +27,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -45,7 +45,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User searches 'Accordion' block in the block searchbox
     And User captures screenshot for "Accordion"
@@ -60,7 +60,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User searches 'Accordion' block in the block searchbox
     And User drags the 'Accordion' block and drops it on the page
@@ -77,7 +77,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User searches 'Accordion' block in the block searchbox
     And User drags the 'Accordion' block and drops it on the page
@@ -95,7 +95,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -113,7 +113,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Accordion Settings Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User drags the 'Accordion' block and drops it on the page
     And User clicks on the 'Accordion' block to select it
@@ -131,7 +131,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Divider Block Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User searches 'Divider' block in the block searchbox
     And User captures a 'blocksection' and highlights the "Divider" with name "DNDdivider"
@@ -146,7 +146,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Input Block Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User search the 'Input' block from blocks section
     And User drags the 'Input' block and drops it on the page
@@ -162,7 +162,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'DND Layout Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Blocks
     And User search the 'Container' block from blocks section
     And User drags the 'Container' block and drops it on the page
@@ -174,8 +174,8 @@ Feature: Documentation for Accordion Block Settings
     And User captures screenshot for "DNDlayout"
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Layout Overview'
 
-    @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
-    Scenario:Documentation - DND Theme screenshot
+  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+  Scenario: Documentation - DND Theme screenshot
     Given User captures documentation screenshot for 'Navigating/Create New App'
     When User opens Main Menu
     And User clicks on Open App Library
@@ -183,7 +183,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'DND Theme Test App'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Block Settings option
     And User clicks on Blocks
     And User search the 'Theme Block' block from blocks section
@@ -196,46 +196,114 @@ Feature: Documentation for Accordion Block Settings
     And User captures screenshot for "DNDtheme"
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Theme Overview'
 
-@LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Documentation - DND Layer screenshot
-  Given User captures documentation screenshot for 'Navigating/Create New App'
-  When User opens Main Menu
-  And User clicks on Open App Library
-  And User clicks on Create New App button
-  And User clicks on Get Started button in "Drag and Drop"
-  And User enters app name as 'DND Layer Test App'
-  And User clicks on Create button
-  And User fetch the app name 
-  And User clicks on Block Settings option
-  And User clicks on Blocks
-  And User search the 'Text' block from blocks section
-  And User drags the 'Text' block and drops it on the page
-  And User search the 'Container' block from blocks section
-  And User drags the 'Container' block and drops it on the page
-  And User search the 'Input' block from blocks section
-  And User drags the 'Input' block and drops it on the page
-  And User search the 'HTML' block from blocks section
-  And User drags the 'HTML' block and drops it on the page
-  And User highlight the 'page-1' page
-  And User captures screenshot for "DNDlayers"
-  And User completes screenshot capture and triggers comparison for 'Drag and Drop Layer Overview'
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'DND Layer Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Block Settings option
+    And User clicks on Blocks
+    And User search the 'Text' block from blocks section
+    And User drags the 'Text' block and drops it on the page
+    And User search the 'Container' block from blocks section
+    And User drags the 'Container' block and drops it on the page
+    And User search the 'Input' block from blocks section
+    And User drags the 'Input' block and drops it on the page
+    And User search the 'HTML' block from blocks section
+    And User drags the 'HTML' block and drops it on the page
+    And User highlight the 'page-1' page
+    And User captures screenshot for "DNDlayers"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Layer Overview'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Documentation - DND Text screenshot
-  Given User captures documentation screenshot for 'Navigating/Create New App'
-  When User opens Main Menu
-  And User clicks on Open App Library
-  And User clicks on Create New App button
-  And User clicks on Get Started button in "Drag and Drop"
-  And User enters app name as 'DND Text Test App'
-  And User clicks on Create button
-  And User fetch the app name
-  And User clicks on Blocks if it is not selected by default
-  And User closes the Block Settings button
-  And User drags the 'Markdown' block and drops it on the page
-  And User drags the 'Input' block and drops it on the page
-  And User drags the 'HTML' block and drops it on the page
-  And User clicks on the 'Markdown' block to select it
-  And User clicks on the Block Settings option
-  And User captures screenshot for "DNDtext"
-  And User completes screenshot capture and triggers comparison for 'Drag and Drop Text Overview'
+    Given User captures documentation screenshot for 'Navigating/Create New App'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'DND Text Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Blocks if it is not selected by default
+    And User closes the Block Settings button
+    And User drags the 'Markdown' block and drops it on the page
+    And User drags the 'Input' block and drops it on the page
+    And User drags the 'HTML' block and drops it on the page
+    And User clicks on the 'Markdown' block to select it
+    And User clicks on the Block Settings option
+    And User captures screenshot for "DNDtext"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Text Overview'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation - DND Chip block
+    Given User captures documentation screenshot for 'Systemcomponents'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'DND Text Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'HTML' block and drops it on the page
+    When User drags the 'Text (h1)' block and drops it on the page
+    And User drags the 'Chip' block and drops it on the page
+    And User clicks on the 'Chip' block to select it
+    And User Clicks 'Type' option in the Block Settings
+    And User captures screenshot for "Chip1"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Chip Block Overview'
+
+     @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation - DND Chip2 block
+    Given User captures documentation screenshot for 'Systemcomponents'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'DND Text Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'HTML' block and drops it on the page
+    When User drags the 'Text (h1)' block and drops it on the page
+    And User drags the 'Chip' block and drops it on the page
+    And User clicks on the 'Chip' block to select it
+    And User captures screenshot for "Chip2"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Chip Block Overview'
+
+    @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation - DND Chip3 block
+    Given User captures documentation screenshot for 'Systemcomponents'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'DND Text Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Notebook
+    And User clicks on Create new notebook
+    And User enters New Query name as "default"
+     And User clicks on query Submit button
+    And User clicks on Create new notebook
+    And User enters New Query name as "notebook 2"
+    And User clicks on query Submit button
+    And User clicks on Create new notebook
+    And User enters New Query name as "options"
+    And User clicks on query Submit button
+    And User clicks on Blocks if it is not selected by default
+    And User clicks on 'page-1' page
+    And User drags the 'HTML' block and drops it on the page
+    When User drags the 'Text (h1)' block and drops it on the page
+    And User drags the 'Chip' block and drops it on the page
+    And User clicks on the 'Chip' block to select it
+     And User clicks on "Pre Process" New action button 
+    And User selects "Query" from the action options
+    And User captures screenshot for "Chip3"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Chip Block Overview'
