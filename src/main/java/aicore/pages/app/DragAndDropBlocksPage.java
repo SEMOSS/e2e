@@ -5,7 +5,7 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-import aicore.utils.HomePageUtils;
+import aicore.pages.home.HomePageUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 
 public class DragAndDropBlocksPage {

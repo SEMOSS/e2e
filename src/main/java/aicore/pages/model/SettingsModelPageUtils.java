@@ -157,7 +157,7 @@ public class SettingsModelPageUtils {
 			username = username + " lastname";
 			// search is by user name first name and lastname
 			page.fill(ADD_MEMBER_XPATH, username);
-			page.getByTitle("Name: " + username).click();
+			page.getByTitle(username).click();
 		} else {
 			page.fill(ADD_MEMBER_XPATH, username);
 			page.waitForTimeout(2000);

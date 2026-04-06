@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.GuardrailPage;
-import aicore.pages.HomePage;
+import aicore.pages.home.MainMenuUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddGuardrailSteps {
-	private HomePage homePage;
 	private GuardrailPage guardrailPage;
 	protected static String timestamp;
 	private Path downloadedZip;
@@ -20,12 +19,11 @@ public class AddGuardrailSteps {
 	public AddGuardrailSteps() {
 		timestamp = SetupHooks.getTimestamp();
 		this.guardrailPage = new GuardrailPage(SetupHooks.getPage());
-		this.homePage = new HomePage(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Guardrail")
 	public void user_clicks_on_guardrail() {
-		homePage.clickOnGuardrail();
+		MainMenuUtils.clickOnGuardrail(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Guardrail button")

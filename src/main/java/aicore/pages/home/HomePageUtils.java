@@ -1,4 +1,4 @@
-package aicore.utils;
+package aicore.pages.home;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,43 +8,32 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.UrlUtils;
+import aicore.utils.AICorePageUtils;
+import aicore.utils.CommonUtils;
 
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
-	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue("applicationName") + "']";
+	private static final String PAGE_TITLE_XPATH = "//h6[text()='"
+			+ ConfigUtils.getValue(AICoreTestConstants.APP_NAME) + "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
 	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search apps, engines, and tools']";
 	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
-	// menu options
+
+	// build page options
 	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
 	private static final String BUILD_PAGE_BUTTON = "//div[text()='{cardName}']/parent::div/following-sibling::div//button//span[text()='{buttonName}']";
 	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//a[text()='Browse Templates']";
-	private static final String SEMOSS_MENU_DATA_TESTID = "MenuRoundedIcon";
-	private static final String APP_MENU_XPATH = "//button[@aria-label='Open sidebar']";
-	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
-	private static final String USER_PROFILE_ICON_XPATH = "//div[normalize-space()='"
-			+ ConfigUtils.getValue("applicationName") + "']//button";
-	private static final String SETTINGS_MENU_BUTTON_XPATH = "//div[@aria-label='Settings']";
 
-	private static final String APP_MENU_BUTTON_DATA_TEST_ID = "sidebar-Apps-btn";
-	private static final String DATABASE_MENU_BUTTON_DATA_TEST_ID = "sidebar-Database-btn";
-	private static final String FUNCTION_MENU_BUTTON_DATA_TEST_ID = "sidebar-Function-btn";
-	private static final String MODEL_MENU_BUTTON_DATA_TEST_ID = "sidebar-Model-btn";
-	private static final String STORAGE_MENU_BUTTON_DATA_TEST_ID = "sidebar-Storage-btn";
-	private static final String VECTOR_MENU_BUTTON_DATA_TEST_ID = "sidebar-Vector-btn";
-	private static final String GUARDRAIL_MENU_BUTTON_DATA_TEST_ID = "sidebar-Guardrail-btn";
-	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
-	// TODO change to data_test_id
-
-	private static final String HOME_MENU_BUTTON_DATA_TESTID = "//span[text()='Home']";
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String APP_TAB_XPATH = "//button[text()='{tab}']";
 	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
+
 	// Create app
 	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";
 	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
@@ -54,7 +43,6 @@ public class HomePageUtils {
 	// pop ups
 	private static final String ACCEPT_BUTTON_XPATH = "//span[text()='Accept']";
 	private static final String CLOSE_POPUP_BUTTON_XPATH = "//div[@class='css-1bvc4cc']//button";
-	private static final String PROFILE_ICON_XPATH = "//div[@aria-label='Login']";
 
 	public static void navigateToHomePage(Page page) {
 		String homePage = UrlUtils.getUrl("#");
@@ -63,31 +51,6 @@ public class HomePageUtils {
 			page.waitForURL(homePage);
 		} catch (Throwable t) {
 			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
-		}
-	}
-
-	public static void openMainMenu(Page page) {
-		// check if menu is open
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
-		page.waitForTimeout(800);
-		if (isMenuOpen.isVisible()) {
-			isMenuOpen.dblclick();
-		}
-		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESTID);
-		Locator appMenu = page.locator(APP_MENU_XPATH);
-		if (appMenu.isVisible()) {
-			AICorePageUtils.waitFor(appMenu);
-			appMenu.click();
-		} else {
-			AICorePageUtils.waitFor(mainMenu);
-			mainMenu.click();
-		}
-	}
-
-	public static void closeMainMenu(Page page) {
-		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
-		if (menuOpen.isVisible()) {
-			menuOpen.dblclick();
 		}
 	}
 
@@ -109,14 +72,8 @@ public class HomePageUtils {
 		page.click(APP_TAB_XPATH.replace("{tab}", tabName));
 	}
 
-	public static void clickOnOpenFunction(Page page) {
-		Locator locator = page.getByTestId(FUNCTION_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		HomePageUtils.closeMainMenu(page);
-	}
-
 	public static void clickOnBIApp(Page page) {
-		String useDocker = ConfigUtils.getValue("use_docker");
+		String useDocker = ConfigUtils.getValue(AICoreTestConstants.USE_DOCKER);
 		if (useDocker.equals("true")) {
 			page.click(BI_APP_XPATH);
 		} else {
@@ -125,36 +82,6 @@ public class HomePageUtils {
 			page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 			page.waitForLoadState(LoadState.NETWORKIDLE);
 		}
-	}
-
-	public static void clickOnOpenModel(Page page) {
-		Locator locator = page.getByTestId(MODEL_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		HomePageUtils.closeMainMenu(page);
-	}
-
-	public static void clickOnOpenStorage(Page page) {
-		Locator locator = page.getByTestId(STORAGE_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		HomePageUtils.closeMainMenu(page);
-	}
-
-	public static void clickOnOpenVector(Page page) {
-		Locator locator = page.getByTestId(VECTOR_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		;
-		HomePageUtils.closeMainMenu(page);
-	}
-
-	public static void clickOnGuardrail(Page page) {
-		page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TEST_ID).click();
-		HomePageUtils.closeMainMenu(page);
-	}
-
-	public static void clickOnOpenAppLibrary(Page page) {
-		Locator locator = page.getByTestId(APP_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnBuildButton(Page page) {
@@ -197,44 +124,6 @@ public class HomePageUtils {
 		if (!title.isVisible()) {
 			throw new RuntimeException(" the title with name " + titleName + " is not visible");
 		}
-	}
-
-	public static void clickOnHome(Page page) {
-		Locator locator = page.locator(HOME_MENU_BUTTON_DATA_TESTID);
-		locator.click();
-		page.waitForTimeout(1000);// wait for home page to load and sync then close menu
-		HomePageUtils.closeMainMenu(page);
-	}
-
-	public static void logout(Page page) {
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
-		if (isMenuOpen.isVisible()) {
-			isMenuOpen.dblclick();
-		}
-		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESTID);
-		Locator appMenu = page.locator(APP_MENU_XPATH);
-		if (appMenu.isVisible()) {
-			AICorePageUtils.waitFor(appMenu);
-			appMenu.click();
-		} else {
-			AICorePageUtils.waitFor(mainMenu);
-			mainMenu.click();
-		}
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
-	}
-
-	public static void clickOnOpenSettings(Page page) {
-		Locator locator = page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		HomePageUtils.closeMainMenu(page);
-	}
-
-	public static void clickOnOpenDatabase(Page page) {
-		Locator locator = page.getByTestId(DATABASE_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		HomePageUtils.closeMainMenu(page);
 	}
 
 	public static void searchCatalog(Page page, String searchData) {
@@ -292,7 +181,4 @@ public class HomePageUtils {
 		}
 	}
 
-	public static void clickOnUserAccountButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
-	}
 }

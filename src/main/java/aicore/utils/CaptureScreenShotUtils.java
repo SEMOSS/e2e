@@ -28,7 +28,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.LoadState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
+import aicore.pages.home.MainMenuUtils;
 
 public class CaptureScreenShotUtils {
 
@@ -41,7 +43,7 @@ public class CaptureScreenShotUtils {
 		System.out.println("Captured version: " + appVersion);
 		CaptureScreenShotUtils.version = appVersion;
 		page.keyboard().press("Escape");
-		HomePageUtils.closeMainMenu(page);
+		MainMenuUtils.closeMainMenu(page);
 		return appVersion;
 	}
 
@@ -79,7 +81,7 @@ public class CaptureScreenShotUtils {
 		File benchmark = new File("img/PlatformNavigation/" + "Version" + version, subFolder);
 		File results = new File("img/PlatformNavigation/Results", subFolder);
 		File previousBenchmark = new File(
-				"img/PlatformNavigation/" + "Version" + ConfigUtils.getValue("current_version"), subFolder);
+				"img/PlatformNavigation/" + "Version" + ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION), subFolder);
 
 		File dir1 = benchmark;
 		File dir2 = previousBenchmark;
@@ -120,7 +122,7 @@ public class CaptureScreenShotUtils {
 		writeResultFile(new File(diffDir, "changedfiles.txt"), changedfiles);
 		writeResultFile(new File(diffDir, "Unchangedfiles.txt"), Unchangedfiles);
 
-		cleanOldVersionDirectories("img/PlatformNavigation", "Version" + ConfigUtils.getValue("current_version"),
+		cleanOldVersionDirectories("img/PlatformNavigation", "Version" + ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION),
 				"Version" + version);
 	}
 

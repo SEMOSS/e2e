@@ -25,7 +25,7 @@ public class NotebookCreationAndExecutionSteps {
 
 	public NotebookCreationAndExecutionSteps() {
 		timestamp = SetupHooks.getTimestamp();
-		notebookPage = new NotebookPage(SetupHooks.getPage(), timestamp);
+		notebookPage = new NotebookPage(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Notebook")

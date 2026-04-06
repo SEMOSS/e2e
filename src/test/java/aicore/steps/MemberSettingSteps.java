@@ -5,19 +5,19 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.SettingPage;
+import aicore.pages.SettingsPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class MemberSettingSteps {
 
-	private SettingPage settingPage;
+	private SettingsPage settingPage;
 	private static final Logger logger = LogManager.getLogger(MemberSettingSteps.class);
 	int NumberOfUser = 0;
 
 	public MemberSettingSteps() {
-		this.settingPage = new SettingPage(SetupHooks.getPage());
+		this.settingPage = new SettingsPage(SetupHooks.getPage());
 	}
 
 	@When("User enable admin mode")
