@@ -23,7 +23,7 @@ public class EditModelPageUtils {
 	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//label[@for='data classification-opt-{option}']//button";
 	private static final String DATA_RESTRICTIONS_CHECKBOX_XPATH = "//label[@for='data restrictions-opt-{option}']//button";
 	private static final String DESCRIPTION_TEXT_DATA_TESTID = "Description";
-	private static final String MODEL_TAGS_XPATH = "//div[contains(@class,'flex flex-1 flex-col')]//span";
+	private static final String MODEL_TAGS_XPATH = "//h4[text()='Tag']/parent::section//div//span";
 	private static final String DETAILS_UNDER_OVERVIEW_DATA_TESTID = "engine-overview-markdown";
 	private static final String TAGS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Tag')]/parent::section/child::div";
 	private static final String DOMAIN_TEXTS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Domain')]/parent::section//span";

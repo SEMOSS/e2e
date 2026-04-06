@@ -29,7 +29,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String EDIT_TAG_XPATH = "editEngineDetails-Tag-autocomplete";
 
 	// View Database Type on Connect To database page
-	private static final String SEARCH_INPUT_XPATH = "//div[@id='home__content']//input[@placeholder='Search' and @type='text']";
+	private static final String SEARCH_INPUT_DATATESTID = "search-box";
 
 	public static void clickOnSection(Page page, String catalog, String sectionName) {
 		switch (catalog) {
@@ -175,8 +175,9 @@ public class AddCatalogPageBaseUtils {
 
 	// View Database Type on Connect To database page
 	public static void searchDatabaseType(Page page, String section, String databaseType) {
-		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(SEARCH_INPUT_XPATH).click();
-		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term
+		page.getByTestId(SEARCH_INPUT_DATATESTID)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.getByTestId(SEARCH_INPUT_DATATESTID).click();
+		page.getByTestId(SEARCH_INPUT_DATATESTID).fill(databaseType); // Enter search term
 	}
 }
