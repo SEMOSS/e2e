@@ -53,7 +53,7 @@ public class GuardrailPageUtils {
 	}
 
 	public static boolean verifySearchedGuardrailCatalogTitle(Page page, String guardrailTitle) {
-		Locator searchBox = page.getByTitle(guardrailTitle);
+		Locator searchBox = page.locator(SELECT_GUARDRAIL_CATALOG_XPATH.replace("{catalogName}", guardrailTitle));
 		return searchBox.isVisible();
 	}
 
