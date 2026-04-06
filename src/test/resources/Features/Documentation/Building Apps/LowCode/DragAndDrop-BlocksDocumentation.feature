@@ -259,7 +259,7 @@ Feature: Documentation for Accordion Block Settings
     And User captures screenshot for "Chip1"
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Chip Block Overview'
 
-     @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Documentation - DND Chip2 block
     Given User captures documentation screenshot for 'Systemcomponents'
     When User opens Main Menu
@@ -277,7 +277,7 @@ Feature: Documentation for Accordion Block Settings
     And User captures screenshot for "Chip2"
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Chip Block Overview'
 
-    @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Documentation - DND Chip3 block
     Given User captures documentation screenshot for 'Systemcomponents'
     When User opens Main Menu
@@ -290,7 +290,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on Notebook
     And User clicks on Create new notebook
     And User enters New Query name as "default"
-     And User clicks on query Submit button
+    And User clicks on query Submit button
     And User clicks on Create new notebook
     And User enters New Query name as "notebook 2"
     And User clicks on query Submit button
@@ -303,7 +303,7 @@ Feature: Documentation for Accordion Block Settings
     When User drags the 'Text (h1)' block and drops it on the page
     And User drags the 'Chip' block and drops it on the page
     And User clicks on the 'Chip' block to select it
-     And User clicks on "Pre Process" New action button 
+    And User clicks on "Pre Process" New action button
     And User selects "Query" from the action options
     And User captures screenshot for "Chip3"
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Chip Block Overview'
