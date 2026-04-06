@@ -190,6 +190,7 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on Discoverable Apps button")
 	public void user_clicks_on_discoverable_apps_button() {
 		appPage.clickOnDiscoverableAppsButton();
+	}
 	@When("User selects the {string} view")
 	public void user_selects_the_view(String view) {
 		appPage.selectAppCardsView(view);
