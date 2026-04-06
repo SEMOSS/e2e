@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.framework.RestCaller;
 import aicore.hooks.SetupHooks;
-import aicore.pages.HomePage;
-import aicore.pages.SettingPage;
+import aicore.pages.SettingsPage;
 import aicore.pages.UserManagementPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.LastCreatedUser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -17,19 +17,17 @@ import io.cucumber.java.en.When;
 
 public class UserManagementSteps {
 
-	private HomePage homePage;
 	private UserManagementPage userpage;
-	private SettingPage settingpage;
+	private SettingsPage settingpage;
 
 	public UserManagementSteps() {
-		this.homePage = new HomePage(SetupHooks.getPage());
 		this.userpage = new UserManagementPage(SetupHooks.getPage());
-		this.settingpage = new SettingPage(SetupHooks.getPage());
+		this.settingpage = new SettingsPage(SetupHooks.getPage());
 	}
 
 	@And("User clicks on Open Settings")
 	public void user_clicks_on_open_settings() {
-		homePage.clickOnOpenSettings();
+		MainMenuUtils.clickOnOpenSettings(SetupHooks.getPage());
 	}
 
 	@And("User enables admin mode")

@@ -8,11 +8,9 @@ import aicore.utils.page.app.NotebookPageUtils;
 
 public class NotebookPage {
 	private Page page;
-	private String timestamp;
 
-	public NotebookPage(Page page, String timestamp) {
+	public NotebookPage(Page page) {
 		this.page = page;
-		this.timestamp = timestamp;
 	}
 
 	public void clickOnNotebooksOption() {

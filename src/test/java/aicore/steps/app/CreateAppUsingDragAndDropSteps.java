@@ -17,6 +17,7 @@ import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -46,15 +47,15 @@ public class CreateAppUsingDragAndDropSteps {
 		appCreatePopup = new CreateAppPopupPage(SetupHooks.getPage(), timestamp);
 		blockSettings = new BlockSettingsPage(SetupHooks.getPage());
 	}
-	
+
 	@And("User clicks on Make {string} Discoverable button in settings page")
 	public void user_clicks_on_make_discoverable_button(String appName) {
-		appPage.clickOnMakeDiscoverableButtoninSettings(appName +' ' + timestamp);
+		appPage.clickOnMakeDiscoverableButtoninSettings(appName + ' ' + timestamp);
 	}
 
 	@Given("User clicks on Open App Library")
 	public void user_navigates_to_open_app_library() {
-		homePage.clickOnOpenAppLibrary();
+		MainMenuUtils.clickOnOpenAppLibrary(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Create New App button")
@@ -125,8 +126,8 @@ public class CreateAppUsingDragAndDropSteps {
 			appCreatePopup.enterTags(tag);
 			appCreatePopup.clickOnCreateButton();
 			if (i < appCount - 1) {
-				homePage.openMainMenu();
-				homePage.clickOnOpenAppLibrary();
+				MainMenuUtils.openMainMenu(SetupHooks.getPage());
+				MainMenuUtils.clickOnOpenAppLibrary(SetupHooks.getPage());
 				appPage.clickOnCreateNewAppButton();
 				appCreatePopup.clickOnGetStartedButton(appType);
 			}
@@ -954,7 +955,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_the_filter_button(String filterName) {
 		appPage.clickOnFilterButton(filterName);
 	}
-	
+
 	@Then("User can see the apps are sorted in ascending order")
 	public void user_can_see_the_apps_are_sorted_in_ascending_order() {
 		boolean isSortedInAscendingOrder = appPage.verifyAppsSortedInAscendingOrder();

@@ -5,8 +5,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
+import aicore.pages.home.HomePageUtils;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
-import aicore.utils.HomePageUtils;
 
 public class JobPageUtils {
 
@@ -157,8 +158,8 @@ public class JobPageUtils {
 	}
 
 	public static void createJob(Page page, String name, String value) {
-		HomePageUtils.openMainMenu(page);
-		HomePageUtils.clickOnOpenSettings(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenSettings(page);
 		if (page.locator("//*[local-name()='svg'][contains(@class,'MuiSvgIcon-colorDisabled')]").isVisible()) {
 			page.getByTestId("AdminPanelSettingsOutlinedIcon").click();
 		}

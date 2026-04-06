@@ -26,8 +26,6 @@ public class AppPageUtils {
 	public static final String MORE_VERTICAL_OPTIONS_ICON_XPATH = "//button[@aria-label='More options']";
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
 	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
-	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
-	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button[text()='{name}']";
 	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/parent::button/following-sibling::div//span[text()='{filterValue}']";
 	private static final String INFO_BUTTON_XPATH = "//a[text()='{buttonName}']";
 	private static final String APP_BOOKMARK_ICON_XPATH = "//button[@aria-label='Add bookmark']";
@@ -35,7 +33,6 @@ public class AppPageUtils {
 	private static final String LAST_EDITED_DATE_XPATH = "//p[text()='{lastEditedDate}']";
 	private static final String MORE_VERTICAL_OPTIONS_XPATH = "//div[text()='{optionName}']";
 	private static final String FILTER_OPTION_XPATH = "//button[@data-slot='popover-trigger']";
-	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{appName}-makeDiscoverable-switch";
 	private static final String APPS_NAME_XPATH = "//button//h3";
 	private static final String SORT_BY_DROPDOWN_XPATH = "[aria-label='Sort By']";
 	private static final String SORT_BY_OPTION_XPATH = "//div[@role='option']//span[text()='{optionName}']";
@@ -112,11 +109,6 @@ public class AppPageUtils {
 		AICorePageUtils.clickOnButton(page, buttonName);
 	}
 
-	public static void makeAppPublic(Page page) {
-		page.locator(MAKE_PUBLIC_BUTTON_XPATH).isVisible();
-		page.locator(MAKE_PUBLIC_BUTTON_XPATH).click();
-	}
-
 	public static boolean isAppDisplayedOnPage(Page page, String appName, String timestamp) {
 		String expectedAppName = appName + " " + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
@@ -166,11 +158,6 @@ public class AppPageUtils {
 		return locator.isVisible();
 	}
 
-	public static void clickOnDeleteButton(Page page, String buttonName) {
-		Locator deleteButton = page.locator(DELETE_APP_CONFIRMATION_BUTTON_XPATH.replace("{name}", buttonName));
-		deleteButton.isVisible();
-		deleteButton.click();
-	}
 
 	public static boolean isAppNotDisplayedOnPage(Page page, String appName, String timestamp) {
 		String expectedAppName = appName + " " + timestamp;
@@ -197,22 +184,8 @@ public class AppPageUtils {
 		page.locator(INFO_BUTTON_XPATH.replace("{buttonName}", buttonName)).click();
 	}
 
-	public static void clickOnAccessControlButton(Page page) {
-		AICorePageUtils.clickOnTabButton(page, "Access Control");
-	}
-
 	public static void clickOnDiscoverableAppsButton(Page page) {
 		page.getByTestId("appCatalogPage-discoverable-btn").click();
-	}
-
-	public static void clickOnMakeDiscoverableButtoninSettings(Page page, String appName) {
-		if (appName.contains(" ")) {
-			appName = appName.replace(" ", "-");
-		}
-		Locator makeDiscoverableButton = page
-				.getByTestId(MAKE_DISCOVERABLE_BUTTON_DATATESTID.replace("{appName}", appName));
-		makeDiscoverableButton.isVisible();
-		makeDiscoverableButton.click();
 	}
 
 	public static void clickOnFilterButton(Page page, String filterName) {
