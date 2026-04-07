@@ -35,7 +35,7 @@ public class AICoreTestConstants {
 	public static final String MS_PASSWORD = "ms_password";
 
 	public static final String NATIVE_USERNAME = "native_username";
-	public static final String NATIVE_PASSWORD = "native_username";
+	public static final String NATIVE_PASSWORD = "native_password";
 
 	public static final String ADMIN_USERNAME = "admin_username";
 	public static final String ADMIN_PASSWORD = "admin_password";
