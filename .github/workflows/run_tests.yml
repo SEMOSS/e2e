@@ -11,6 +11,13 @@ jobs:
     runs-on: CICD-GitHubRunner-e2e
     # container:
     #   image: quay.io/semoss/test-quay:ubuntu-dind
+
+    env:
+      NATIVE_PASSWORD: ${{ secrets.NATIVE_PASSWORD }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      AUTHOR_PASSWORD: ${{ secrets.AUTHOR_PASSWORD }}
+      EDITOR_PASSWORD: ${{ secrets.EDITOR_PASSWORD }}
+      READ_PASSWORD: ${{ secrets.READ_PASSWORD }}
     
     steps:
     
