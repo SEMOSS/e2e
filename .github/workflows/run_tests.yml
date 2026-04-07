@@ -39,6 +39,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y maven
 
+    - name: Install deps
+      run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+
     - name: Run Tests with mvn
       run: |
         mvn clean test
