@@ -34,19 +34,19 @@ public class AICoreTestConstants {
 	public static final String MS_USERNAME = "ms_username";
 	public static final String MS_PASSWORD = "ms_password";
 
-	public static final String NATIVE_USERNAME = "native_username";
-	public static final String NATIVE_PASSWORD = "native_username";
+	public static final String NATIVE_USERNAME = "NATIVE_USERNAME";
+	public static final String NATIVE_PASSWORD = "NATIVE_PASSWORD";
 
-	public static final String ADMIN_USERNAME = "admin_username";
-	public static final String ADMIN_PASSWORD = "admin_password";
+	public static final String ADMIN_USERNAME = "ADMIN_USERNAME";
+	public static final String ADMIN_PASSWORD = "ADMIN_PASSWORD";
 
-	public static final String AUTHOR_USERNAME = "author_username";
-	public static final String AUTHOR_PASSWORD = "admin_password";
+	public static final String AUTHOR_USERNAME = "AUTHOR_USERNAME";
+	public static final String AUTHOR_PASSWORD = "ADMIN_PASSWORD";
 
-	public static final String EDITOR_USERNAME = "editor_username";
-	public static final String EDITOR_PASSWORD = "admin_password";
+	public static final String EDITOR_USERNAME = "EDITOR_USERNAME";
+	public static final String EDITOR_PASSWORD = "ADMIN_PASSWORD";
 
-	public static final String READ_USERNAME = "read_username";
-	public static final String READ_PASSWORD = "admin_password";
+	public static final String READ_USERNAME = "READ_USERNAME";
+	public static final String READ_PASSWORD = "ADMIN_PASSWORD";
 
 }
