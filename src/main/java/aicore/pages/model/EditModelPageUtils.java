@@ -33,6 +33,8 @@ public class EditModelPageUtils {
 	private static final String DOMAIN_TEXTBOX_DATATESTID = "editEngineDetails-Domain-autocomplete";
 	private static final String DATA_RESTRICTION_SELECT_XPATH = "//button[@id='data restrictions']";
 	private static final String DATA_CLASSIFICATION_SELECT_XAPTH = "//button[@id='data classification']";
+	private static final String ENGINE_ACCESS_STATUS_ICON_XPATH = "//*[contains(@class,'lucide lucide-lock-keyhole')]";
+	private static final String ENGINE_ACCESS_STATUS_TOOLTIP_XPATH = "//div[normalize-space(text())='{status}']";
 
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
@@ -164,5 +166,16 @@ public class EditModelPageUtils {
 				.allInnerTexts();
 		CommonUtils.extractOverviewSectionValues(dataRestrictionOptions, dataRestrictionOptionsText);
 		return dataRestrictionOptions;
+	}
+
+	public static void mouseHoverOnEngineAccessStatusIcon(Page page) {
+		page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1).hover();
+	}
+
+	public static String getEngineAccessStatusTooltipText(Page page, String status) {
+//		String tooltipText = page.locator(ENGINE_ACCESS_STATUS_TOOLTIP_XPATH.replace("{status}", status)).textContent()
+//				.trim();
+//		return tooltipText;
+		return page.getByText(status).first().innerText();
 	}
 }
