@@ -95,7 +95,7 @@ public class CatlogAccessPageUtility {
 	public static void clickOnSettings(Page page) {
 		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH).first();
 		AICorePageUtils.waitFor(settingOption);
-		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+		if (!page.locator("//div[text()='AppSettings']").first().isVisible()) {
 			settingOption.click();
 		}
 	}

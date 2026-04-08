@@ -35,18 +35,17 @@ public class ModelPageUtils {
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String CLICK_ON_CREATED_MODEL_XPATH = "//div[contains(@data-testid,'genericEngineCards')]";
-	
-	
+
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
 		page.getByTestId("engineIndex-add-Model-btn").click();
 	}
-	
+
 	public static void clickOnSMSSTab(Page page) {
 		page.getByTestId(SMSS_TAB_XPATH).click();
 		page.waitForTimeout(2000);
 	}
-	
+
 	public static void createModel(Page page, String modelType, String modelName, String catalogName,
 			String openAIKey) {
 		MainMenuUtils.openMainMenu(page);
@@ -78,9 +77,6 @@ public class ModelPageUtils {
 		actualmodelTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return actualmodelTitle.textContent().trim();
 	}
-
-
-
 
 	public static String getExpectedCatalogTitle(String expTitle) {
 		return expTitle;

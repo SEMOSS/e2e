@@ -153,7 +153,7 @@ public class SettingsModelPageUtils {
 
 	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
 		page.getByTestId(CLICK_ON_SEARCH_USER_DATATESTID).click();
-		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME").split("@")[0];
 		if (useDocker) {
 			username = username + " lastname";
 			// search is by user name first name and lastname
