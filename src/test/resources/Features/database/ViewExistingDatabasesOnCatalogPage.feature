@@ -36,7 +36,7 @@ Feature: View existing databases on database catalog page
     When User clicks on bookmark button to unbookmark 'TestDatabase' catalog
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate access status of created function catalog
+  Scenario: Validate access status of created Database catalog
     Given User opens Main Menu
     When User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox

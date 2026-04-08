@@ -56,7 +56,7 @@ Feature: View existing Storages on storage Catalog Page
     And User login as 'Admin'
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate access status of created storage catalog
+  Scenario: Validate access status of created Storage catalog
     Given User opens Main Menu
     When User clicks on Open Storage
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox

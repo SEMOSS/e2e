@@ -36,7 +36,7 @@ Feature: View existing models in model Catalog
     When User clicks on bookmark button to unbookmark 'Model' catalog
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate access status of created model
+  Scenario: Validate access status of created Model catalog
     When User opens Main Menu
     And User clicks on Open Model
     And User searches the 'Model' in the model catalog searchbox

@@ -52,7 +52,7 @@ Feature: View existing functions on Function Catalog Page
     And User login as 'admin'
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate access status of created function catalog
+  Scenario: Validate access status of created Function catalog
     When User opens Main Menu
     And User clicks on Open Function
     And User searches the 'WeatherFunctionTest' in the function Catalog searchbox

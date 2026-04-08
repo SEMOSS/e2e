@@ -68,7 +68,7 @@ Feature: View existing Vectors on Vector Catalog Page
     And User login as 'Admin'
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate access status of created vector catalog
+  Scenario: Validate access status of created Vector catalog
     Given User opens Main Menu
     When User clicks on Open Vector
     And User searches the 'FAISS Vector' in the Vector Catalog searchbox
