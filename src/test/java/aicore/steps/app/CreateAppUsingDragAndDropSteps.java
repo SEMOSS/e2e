@@ -1,12 +1,11 @@
 package aicore.steps.app;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -223,6 +222,7 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnBlocksOption();
 	}
 
+
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
 		blocksPage.mouseHoverOnBlock(blockName);
@@ -232,6 +232,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on the {string} block to select it")
 	public void user_clicks_on_block_to_select_it(String blockName) {
 		blocksPage.clickOnDroppedBlock(blockName);
+	}
+
+	@And("User Clicks {string} option in the Block Settings")
+	public void user_clicks_option_in_the_block_settings(String option) {
+		blockSettings.clickOnOption(option);
 	}
 
 	@And("User enters {string} in the Text field")

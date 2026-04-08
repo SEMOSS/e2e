@@ -69,6 +69,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_ROWS_COUNT_XPATH = "//div[contains(@role,'rowgroup')]//div[contains(@role,'row')]";
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
+	private static final String CHIP_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Chip";
 
 	// drag and dropped blocks on page
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
@@ -82,6 +83,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
 	private static final String DROPPED_BUTTON_BLOCK_XPATH = "//button[span[text()='Submit']]";
+	private static final String DROPPED_CHIP_BLOCK_XPATH = "//div[@data-block='chip--1']";
 
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
@@ -286,6 +288,9 @@ public class DragAndDropBlocksPageUtils {
 		case "Button":
 			DroppedBlockLocator = page.locator(DROPPED_BUTTON_BLOCK_XPATH);
 			break;
+		case "Chip":	
+			DroppedBlockLocator = page.locator(DROPPED_CHIP_BLOCK_XPATH);
+			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
@@ -380,6 +385,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Button":
 			blockLocator = page.getByTestId(BUTTON_BLOCK_DATA_TESTID);
+			break;
+		case "Chip":
+			blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
