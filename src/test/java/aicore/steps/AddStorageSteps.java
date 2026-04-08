@@ -37,7 +37,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Given("User clicks on Open Storage")
 	public void user_clicks_on_open_storage() {
-		MainMenuUtils.clickOnOpenSettings(SetupHooks.getPage());
+		MainMenuUtils.clickOnOpenStorage(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Storage button")

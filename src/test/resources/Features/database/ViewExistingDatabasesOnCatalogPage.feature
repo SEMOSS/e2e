@@ -34,3 +34,21 @@ Feature: View existing databases on database catalog page
     When User clicks on bookmark button of 'TestDatabase' catalog
     Then User sees the catalog name 'TestDatabase' in the Bookmarked section
     When User clicks on bookmark button to unbookmark 'TestDatabase' catalog
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate access status of created Database catalog
+    Given User opens Main Menu
+    When User clicks on Open Database
+    And User searches the 'TestDatabase' in the database Catalog searchbox
+    And User sees the database name 'TestDatabase' in the database catalog
+    When User mouse hover on Lock icon displayed on catalog card
+    Then User can see engine access status as 'Private' on the tooltip
+    When User clicks on the database name 'TestDatabase' in the database catalog
+    And User clicks on Access Control Tab
+    And User clicks on make 'Database' public button
+    And User opens Main Menu
+    And User clicks on Open Database
+    And User searches the 'TestDatabase' in the database Catalog searchbox
+    And User sees the database name 'TestDatabase' in the database catalog
+    When User mouse hover on Lock icon displayed on catalog card
+    Then User can see engine access status as 'Global' on the tooltip

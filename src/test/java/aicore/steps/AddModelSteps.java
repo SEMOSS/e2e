@@ -126,7 +126,7 @@ public class AddModelSteps {
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("fieldName");
 			String fieldValue = row.get("fieldValue");
-				openModelPage.fillModelCreationForm(fieldName, fieldValue);
+			openModelPage.fillModelCreationForm(fieldName, fieldValue);
 		}
 	}
 
@@ -631,4 +631,19 @@ public class AddModelSteps {
 		openModelPage.clickOnUploadButton(buttonName);
 	}
 
+	@When("User mouse hover on Lock icon displayed on catalog card")
+	public void user_mouse_hover_on_lock_icon_displayed_on_catalog_card() {
+		openModelPage.mouseHoverOnEngineAccessStatusIcon();
+	}
+
+	@Then("User can see engine access status as {string} on the tooltip")
+	public void user_can_see_engine_access_status_as_on_the_tooltip(String expectedStatus) {
+		String actualStatus = openModelPage.getEngineAccessStatusTooltipText(expectedStatus);
+		Assertions.assertEquals(expectedStatus, actualStatus, "Incorrect status");
+	}
+
+	@When("User clicks on make {string} public button")
+	public void user_clicks_on_make_public_button(String catalogName) {
+		openModelPage.clickOnMakeCatalogPublicButton(catalogName);
+	}
 }

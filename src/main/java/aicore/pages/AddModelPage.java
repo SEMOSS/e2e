@@ -369,6 +369,10 @@ public class AddModelPage {
 		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
 	}
 
+	public void clickOnMakeCatalogPublicButton(String catalogName) {
+		SettingsModelPageUtils.clickOnMakeCatalogPublicButton(page, catalogName);
+	}
+
 	public void userClickOnCreatedModel() {
 		ModelPageUtils.userClickOnCreatedModel(page);
 
@@ -461,5 +465,13 @@ public class AddModelPage {
 
 	public void clickOnUploadButton(String buttonName) {
 		UploadModelUtils.clickOnUploadButton(page, buttonName);
+	}
+
+	public void mouseHoverOnEngineAccessStatusIcon() {
+		EditModelPageUtils.mouseHoverOnEngineAccessStatusIcon(page);
+	}
+
+	public String getEngineAccessStatusTooltipText(String status) {
+		return EditModelPageUtils.getEngineAccessStatusTooltipText(page, status);
 	}
 }

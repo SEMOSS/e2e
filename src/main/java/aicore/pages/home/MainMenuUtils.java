@@ -48,7 +48,7 @@ public class MainMenuUtils {
 	public static void closeMainMenu(Page page) {
 		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
-			menuOpen.dblclick();
+			menuOpen.click();
 		}
 	}
 
@@ -105,7 +105,7 @@ public class MainMenuUtils {
 		locator.click();
 		MainMenuUtils.closeMainMenu(page);
 	}
-	
+
 	public static void clickOnUserAccountButton(Page page) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
 	}

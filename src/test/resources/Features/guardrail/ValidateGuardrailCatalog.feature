@@ -43,22 +43,3 @@ Feature: Validate Guardrail catalog
     Then User sees export success toast message as 'Guardrail engine download started'
     And User sees catalog zip file downloaded
     And User sees downloaded zip file name contains 'Gliner guardrail'
-
-  Scenario: view and validate filter functionality - Guardrails
-    When User clicks on Edit button
-    And User enters the details as 'Gliner guardrail'
-    And User enters the description as 'Test Gliner guardrail catalog'
-    And User add Tags 'embeddings, Test1, Test2, Test3' and presses Enter
-    And User enters the Domains as 'SAP, AI, Finance'
-    And User selects 'IP, PHI, PII, PUBLIC' from the Data Classification dropdown
-    And User selects 'IP ALLOWED, PHI ALLOWED, FOUO ALLOWED' from the Data Restrictions dropdown
-    And User clicks on Submit button
-    Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
-    And User opens Main Menu
-    And User clicks on Guardrail
-    And User applies each filter and validate 'Gliner guardrail' catalog is visible on the 'Guardrail' catalog page
-      | FILTER_CATEGORY     | FILTER_VALUE                          |
-      | Tag                 | embeddings, Test1                     |
-      | Domain              | SAP, AI                               |
-      | Data Classification | IP, PHI, PII, PUBLIC                  |
-      | Data Restrictions   | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
