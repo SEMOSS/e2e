@@ -118,8 +118,8 @@ public class CatalogAccessStep {
 
 	@Given("User login as {string}")
 	public void user_login_as(String role) throws Exception {
-		String username = ConfigUtils.getValue(role.toLowerCase() + "_username");
-		String password = ConfigUtils.getValue(role.toLowerCase() + "_password");
+		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME");
+		String password = ConfigUtils.getValue(role.toUpperCase() + "_PASSWORD");
 
 		if (username == null || password == null) {
 			throw new Exception("Login credentials not found for role: " + role);

@@ -1,4 +1,5 @@
 Feature: App Templates
+
   @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
   Scenario: Documentation for Visualize CSV template
     Given User captures documentation screenshot for 'Building Apps/App Templates'
@@ -44,13 +45,12 @@ Feature: App Templates
     And User clicks on the Block Settings option
     And User adds description as "Give me list of people over the age of 50"
     And User clicks on the Submit Block
-    And User clicks on "On Click" New action button 
+    And User clicks on "On Click" New action button
     And User selects "Query" from the action options
     And User selects "ask-model" from the list of queries
     And User clicks on Save query button
     Then User captures a "blocksettingelement" and highlights the "Run Query" with name "AskCSV5"
     And User completes screenshot capture and triggers comparison for 'Visualize CSV Overview'
-  
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Documentation for ASK LLM Template - model screenshot
@@ -66,15 +66,15 @@ Feature: App Templates
     Then User captures a "testidelement , blocksettingelement" and highlights the "workspace-Variables , model" with name "modelchange"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
 
-
   @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation @DeleteTestCatalog
   Scenario: Documentation for Ask LLM template
     Given User captures documentation screenshot for 'Building Apps/App Templates'
     When User opens Main Menu
     And User clicks on Open Model
+    And User checks if 'Model' catalog created and Deletes the 'Llama3-70B-Instruct'
     When User clicks on Add Model
     And User clicks on file upload icon
-    And User uploads the file 'Model/Llama_model.zip'
+    And User uploads the file 'Model/Llama3-70B-Instruct.zip'
     And User clicks on 'Upload' button to create catalog
     And User get the CatalogName for variable
     And User clicks on Copy Catalog ID
@@ -107,7 +107,7 @@ Feature: App Templates
     And User clicks on the Response Block
     And User captures screenshot for "llmthree"
     And User completes screenshot capture and triggers comparison for 'Ask LLM'
-    
+
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
   Scenario: Documentation for Landing Page template
     Given User captures documentation screenshot for 'Building Apps/App Templates'
@@ -130,4 +130,3 @@ Feature: App Templates
     And User clicks on Create New App button
     Then User captures a "appTypeTile , useTemplateButton" and highlights the "Variables Guide , Variables Guide" with name "varGuideCreation"
     And User completes screenshot capture and triggers comparison for 'Variables Guide Template Creation'
-    
