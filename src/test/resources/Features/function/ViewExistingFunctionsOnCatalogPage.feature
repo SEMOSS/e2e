@@ -16,7 +16,7 @@ Feature: View existing functions on Function Catalog Page
     And User selects 'IP, PHI' from the Data Classification dropdown
     And User selects 'IP ALLOWED, PHI ALLOWED' from the Data Restrictions dropdown
     And User clicks on Submit button
-    #Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
+    Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: view and validate filter functionality - My Functions
@@ -30,7 +30,7 @@ Feature: View existing functions on Function Catalog Page
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
 
-  @DeleteTestCatalog @Regression 
+  @DeleteTestCatalog @Regression
   Scenario: view and validate filter functionality - Discoverable Functions
     Given User opens Main Menu
     When User clicks on Open Function
@@ -50,3 +50,21 @@ Feature: View existing functions on Function Catalog Page
       | Data Restrictions   | IP ALLOWED   |
     When User logs out from the application
     And User login as 'admin'
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate access status of created function catalog
+    When User opens Main Menu
+    And User clicks on Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    When User mouse hover on Lock icon displayed on catalog card
+    Then User can see engine access status as 'Private' on the tooltip
+    When User selects the 'WeatherFunctionTest' from the function catalog
+    And User clicks on Access Control Tab
+    And User clicks on make 'Function' public button
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    When User mouse hover on Lock icon displayed on catalog card
+    Then User can see engine access status as 'Global' on the tooltip
