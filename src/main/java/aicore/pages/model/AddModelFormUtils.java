@@ -347,6 +347,7 @@ public class AddModelFormUtils {
 		case "Region":
 		case "Model Name":
 		case "API Version":
+		case "Model (Deployment Name)":
 			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName));
 			fieldType = "Text";
 			break;
