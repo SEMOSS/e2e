@@ -17,8 +17,7 @@ import aicore.pages.AddDatabasePage;
 import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.AddModelPage;
 import aicore.pages.CatalogPermissionsPage;
-import aicore.pages.HomePage;
-import aicore.pages.LoginPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.settings.ModelAccessSettingsUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -28,7 +27,6 @@ import io.cucumber.java.en.When;
 
 public class CatalogAccessStep {
 
-	private HomePage homePage;
 	protected static String timestamp;
 	private CatalogPermissionsPage catlogpermission;
 	private AddModelPage openModelPage;
@@ -36,8 +34,6 @@ public class CatalogAccessStep {
 	private AddFunctionToCatalogPage addFunctionToCatalogPage;
 
 	public CatalogAccessStep() {
-		new LoginPage(SetupHooks.getPage());
-		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		this.catlogpermission = new CatalogPermissionsPage(SetupHooks.getPage());
@@ -117,7 +113,7 @@ public class CatalogAccessStep {
 
 	@Then("User logs out from the application")
 	public void user_logs_out_from_the_application() {
-		homePage.logout();
+		MainMenuUtils.logout(SetupHooks.getPage());
 	}
 
 	@Given("User login as {string}")

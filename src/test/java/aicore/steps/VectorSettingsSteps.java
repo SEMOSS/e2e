@@ -1,24 +1,22 @@
 package aicore.steps;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.HomePage;
 import aicore.pages.VectorSettingPage;
+import aicore.pages.home.MainMenuUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class VectorSettingsSteps {
-	private HomePage homePage;
 	private VectorSettingPage vectorSettingsPage;
 
 	public VectorSettingsSteps() {
-		homePage = new HomePage(SetupHooks.getPage());
 		vectorSettingsPage = new VectorSettingPage(SetupHooks.getPage());
 	}
 
 	@When("User navigates to Open Setting page")
 	public void user_navigates_to_open_setting_page() {
-		homePage.clickOnOpenSettings();
+		MainMenuUtils.clickOnOpenSettings(SetupHooks.getPage());
 	}
 
 	@Then("User sees title as {string}")

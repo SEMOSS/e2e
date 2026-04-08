@@ -7,6 +7,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.pages.home.MainMenuUtils;
+
 public class CatalogCreationFromZipUtil {
 	private static final String CATALOG_MENU_BUTTON_DATA_TESTID = "sidebar-{catalogName}-btn";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
@@ -17,7 +19,7 @@ public class CatalogCreationFromZipUtil {
 
 	public static void openCatalog(Page page, String catalogName) {
 		page.getByTestId(CATALOG_MENU_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
-		HomePageUtils.closeMainMenu(page);
+		MainMenuUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnAddCatalogButton(Page page, String catalogName) {

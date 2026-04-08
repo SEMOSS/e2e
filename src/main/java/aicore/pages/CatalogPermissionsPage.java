@@ -127,7 +127,6 @@ public class CatalogPermissionsPage {
 
 	public void clickOnPendingRequestTab() {
 		CatlogAccessPageUtility.clickOnPendingRequestTab(page);
-
 	}
 
 	public void acceptPendingRequest() {

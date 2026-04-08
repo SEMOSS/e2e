@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
-import aicore.pages.HomePage;
 import aicore.pages.JobManagementPage;
-import aicore.pages.SettingPage;
 import aicore.pages.SettingsAdminQueryPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -17,16 +15,12 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AdminQuerySteps {
-	private HomePage homePage;
-	private SettingPage settingPage;
 	private SettingsAdminQueryPage adminQuery;
 	private AddModelPage modelPage;
 	private JobManagementPage jobPage;
 	private String timestamp;
 
 	public AdminQuerySteps() {
-		homePage = new HomePage(SetupHooks.getPage());
-		settingPage = new SettingPage(SetupHooks.getPage());
 		adminQuery = new SettingsAdminQueryPage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		modelPage = new AddModelPage(SetupHooks.getPage(), timestamp);

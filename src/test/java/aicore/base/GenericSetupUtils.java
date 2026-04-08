@@ -28,13 +28,15 @@ import com.microsoft.playwright.Tracing.StartOptions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.HttpLogger;
 import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
+import aicore.pages.home.HomePageUtils;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
-import aicore.utils.HomePageUtils;
 
 public class GenericSetupUtils {
 
@@ -44,9 +46,7 @@ public class GenericSetupUtils {
 	private static boolean useTrace = false;
 	private static final String SEMOSS_MENU_DATA_TESID = "MenuRoundedIcon";
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
-//	private static final String SEMOSS_OPEN_MEN_DATA_TESTID = "MenuOpenRoundedIcon";
 	private static final String SETTINGS_XPATH = "//div[@aria-label='Settings']";
-	private static final String PROFILE_ICON_XPATH = "//div[@aria-label='Login']";
 
 	public static void initialize() throws IOException {
 		if (RunInfo.isFirstRun()) {
@@ -59,9 +59,9 @@ public class GenericSetupUtils {
 
 		loadUrls();
 
-		useDocker = Boolean.parseBoolean(ConfigUtils.getValue("use_docker"));
-		useVideo = Boolean.parseBoolean(ConfigUtils.getValue("use_video"));
-		useTrace = Boolean.parseBoolean(ConfigUtils.getValue("use_trace"));
+		useDocker = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_DOCKER));
+		useVideo = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO));
+		useTrace = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_TRACE));
 		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
 
 		// shouldn't matter if this is docker or not, should still just ping server
@@ -102,9 +102,9 @@ public class GenericSetupUtils {
 	}
 
 	private static void loadUrls() {
-		String environmentUrls = ConfigUtils.getValue("URLS");
+		String environmentUrls = ConfigUtils.getValue(AICoreTestConstants.URLS);
 		List<String> urls = new ArrayList<>();
-		int parallelCount = Integer.parseInt(ConfigUtils.getValue("PARALLEL_COUNT"));
+		int parallelCount = Integer.parseInt(ConfigUtils.getValue(AICoreTestConstants.PARALLEL_COUNT));
 		logger.info("URLS: {}, parallelCount: {}", environmentUrls, parallelCount);
 		String[] arr = environmentUrls.split(",");
 		for (int i = 0; i < parallelCount; i++) {
@@ -133,22 +133,22 @@ public class GenericSetupUtils {
 
 	public static LaunchOptions getLaunchOptions() {
 		LaunchOptions lp = new LaunchOptions();
-		lp.setChannel(ConfigUtils.getValue("browserType"));
-		lp.setHeadless(Boolean.parseBoolean(ConfigUtils.getValue("headless")));
-		lp.setSlowMo(Double.parseDouble(ConfigUtils.getValue("slowmo")));
-		lp.setTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
+		lp.setChannel(ConfigUtils.getValue(AICoreTestConstants.BROWSER_TYPE));
+		lp.setHeadless(Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.HEADLESS)));
+		lp.setSlowMo(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.SLOMO)));
+		lp.setTimeout(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT)));
 		return lp;
 	}
 
 	public static NewContextOptions getContextOptions() {
 		NewContextOptions co = new Browser.NewContextOptions();
-		if (Boolean.parseBoolean(ConfigUtils.getValue("use_video"))) {
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO))) {
 			co.setRecordVideoDir(Paths.get("videos"));
 			co.setRecordVideoSize(1920, 1080);
 			co.setViewportSize(1920, 1080);
 		}
 
-		if (Boolean.parseBoolean(ConfigUtils.getValue("use_state"))) {
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_STATE))) {
 			co.setStorageStatePath(Paths.get("state.json"));
 		}
 		return co;
@@ -188,7 +188,7 @@ public class GenericSetupUtils {
 		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 
 		// setup tracing
-		if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_TRACE))) {
 			Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
 			context.tracing().start(startOptions);
 		}
@@ -196,7 +196,7 @@ public class GenericSetupUtils {
 		// create page
 		Page page = context.newPage();
 		ResourcePool.get().setPage(page);
-		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
+		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT)));
 
 		GenericSetupUtils.setupLoggers(page);
 
@@ -210,15 +210,15 @@ public class GenericSetupUtils {
 	// create user and login and logout
 	public static void createUsers(Page page) {
 		// setup admin user
-		String adminUser = ConfigUtils.getValue("native_username");
-		String adminPassword = ConfigUtils.getValue("native_password");
+		String adminUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
+		String adminPassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		setupInitialAdmin(page, adminUser);
 
 		// test admin user login
 		registerUser(page, adminUser, adminPassword);
 
-		String adminUser2 = ConfigUtils.getValue("admin_username");
-		String adminPassword2 = ConfigUtils.getValue("admin_password");
+		String adminUser2 = ConfigUtils.getValue(AICoreTestConstants.ADMIN_USERNAME);
+		String adminPassword2 = ConfigUtils.getValue(AICoreTestConstants.ADMIN_PASSWORD);
 		registerUser(page, adminUser2, adminPassword2);
 
 		// login and make admin and admin and logout
@@ -226,25 +226,23 @@ public class GenericSetupUtils {
 		makeAdminUserAdmin(page);
 		logout(page);
 
-		String authorUser = ConfigUtils.getValue("author_username");
-		String authorPassword = ConfigUtils.getValue("author_password");
+		String authorUser = ConfigUtils.getValue(AICoreTestConstants.AUTHOR_USERNAME);
+		String authorPassword = ConfigUtils.getValue(AICoreTestConstants.AUTHOR_PASSWORD);
 		registerUser(page, authorUser, authorPassword);
 
-		String editorUser = ConfigUtils.getValue("editor_username");
-		String editorPassword = ConfigUtils.getValue("editor_password");
+		String editorUser = ConfigUtils.getValue(AICoreTestConstants.EDITOR_USERNAME);
+		String editorPassword = ConfigUtils.getValue(AICoreTestConstants.EDITOR_PASSWORD);
 		registerUser(page, editorUser, editorPassword);
 
-		String readUser = ConfigUtils.getValue("read_username");
-		String readPassword = ConfigUtils.getValue("read_password");
+		String readUser = ConfigUtils.getValue(AICoreTestConstants.READ_USERNAME);
+		String readPassword = ConfigUtils.getValue(AICoreTestConstants.READ_PASSWORD);
 		registerUser(page, readUser, readPassword);
 	}
 
 	private static void makeAdminUserAdmin(Page page) {
-//		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_DATA_XPATH);
 		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		page.waitForTimeout(300);
 		if (isMenuOpen.isVisible()) {
-//			isMenuOpen.click();
 			isMenuOpen.dblclick();
 		}
 		Locator locator = page.getByTestId(SEMOSS_MENU_DATA_TESID);
@@ -254,7 +252,6 @@ public class GenericSetupUtils {
 		// close menu
 		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
-//			menuOpen.click();
 			menuOpen.dblclick();
 		}
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Admin Off")).click();
@@ -268,14 +265,9 @@ public class GenericSetupUtils {
 	}
 
 	public static void logout(Page page) {
-		HomePageUtils.openMainMenu(page);
-		// click on user profile button
-		HomePageUtils.clickOnUserAccountButton(page);
-//		page.locator(PROFILE_ICON_XPATH).click();
-		// log out
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-
-		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnUserAccountButton(page);
+		MainMenuUtils.logout(page);
 
 		String loginPage = UrlUtils.getUrl("#/login");
 		page.waitForURL(loginPage);
@@ -322,19 +314,8 @@ public class GenericSetupUtils {
 				() -> page.getByTestId("loginPage-button-login").click());
 		assertEquals(200, response.status());
 		page.waitForLoadState(LoadState.NETWORKIDLE);
-		navigateToHomePage(page);
+		HomePageUtils.navigateToHomePage(page);
 		return "Login Successful";
-	}
-
-	public static void navigateToHomePage(Page page) {
-		String homePage = UrlUtils.getUrl("#/");
-		try {
-			logger.info("Navigating to : {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
-			page.navigate(homePage);
-			page.waitForURL(homePage);
-		} catch (Throwable t) {
-			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
-		}
 	}
 
 	public static void loginWithMSuser(Page page, String Username, String Password) {

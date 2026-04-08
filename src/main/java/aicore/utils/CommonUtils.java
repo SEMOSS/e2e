@@ -40,8 +40,10 @@ import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.UrlUtils;
+import aicore.pages.home.MainMenuUtils;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
@@ -294,16 +296,16 @@ public class CommonUtils {
 	}
 
 	public static boolean getVersion(Page page) {
-		HomePageUtils.openMainMenu(page);
-		HomePageUtils.clickOnUserAccountButton(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnUserAccountButton(page);
 		String version = CaptureScreenShotUtils.versionCapture(page);
 		logger.info("Version obtained: {}", version);
-		logger.info("Current version: {}", ConfigUtils.getValue("current_version"));
-		if (version.equals(ConfigUtils.getValue("current_version"))) {
+		logger.info("Current version: {}", ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION));
+		if (version.equals(ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION))) {
 			logger.info("Version match: {}", version);
 			return true;
 		} else {
-			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue("current_version"), version);
+			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION), version);
 			return false;
 		}
 	}
@@ -311,14 +313,14 @@ public class CommonUtils {
 	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
-			HomePageUtils.openMainMenu(page);
+			MainMenuUtils.openMainMenu(page);
 			switch (catalogType) {
-			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> MainMenuUtils.clickOnOpenDatabase(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> MainMenuUtils.clickOnOpenModel(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> MainMenuUtils.clickOnOpenVector(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> MainMenuUtils.clickOnOpenFunction(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> MainMenuUtils.clickOnOpenStorage(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> MainMenuUtils.clickOnGuardrail(page);
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
 			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
@@ -343,8 +345,8 @@ public class CommonUtils {
 	public static boolean navigateAndDeleteApp(Page page, String appName) {
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
-			HomePageUtils.openMainMenu(page);
-			HomePageUtils.clickOnOpenAppLibrary(page);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenAppLibrary(page);
 			page.getByLabel(SEARCH_APP_LABEL).fill(appName);
 			page.waitForTimeout(500);
 			page.locator(THREE_DOT_ICON_XPATH).first().click();
@@ -370,8 +372,8 @@ public class CommonUtils {
 	public static boolean navigateAndDeleteTeam(Page page, String teamName) {
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
-			HomePageUtils.openMainMenu(page);
-			HomePageUtils.clickOnOpenSettings(page);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenSettings(page);
 			page.getByTestId(TEAM_PERMISSION_DATATESTID).click();
 			page.getByPlaceholder(SEARCH_TEAM_PLACEHOLDER_TEXT).fill(teamName);
 			page.waitForTimeout(500);

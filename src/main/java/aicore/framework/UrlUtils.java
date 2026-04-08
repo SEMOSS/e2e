@@ -8,19 +8,19 @@ public class UrlUtils {
 
 	public static String getApi(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + ConfigUtils.getValue("API_ENDPOINT") + "/" + path;
+		String x = base + ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT) + "/" + path;
 		return x;
 	}
 
 	public static String getUrl(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + ConfigUtils.getValue("FRONTEND") +"/" + newWebRoute + path;
+		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + newWebRoute + path;
 		return x;
 	}
 
 	public static String getBaseFrontendUrl(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + ConfigUtils.getValue("FRONTEND") +"/" + path;
+		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + path;
 		return x;
 	}
 

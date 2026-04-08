@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
-import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -20,23 +20,20 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddModelSteps {
-	private HomePage homePage;
 	private AddModelPage openModelPage;
 	protected static String timestamp;
 	private String expectedCatalogId;
 	private ViewCatalogPage viewCatalogPage;
 
 	public AddModelSteps() {
-		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
-
 	}
 
 	@Given("User clicks on Open Model")
 	public void user_navigates_to_open_model() {
-		homePage.clickOnOpenModel();
+		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Model")
@@ -66,8 +63,8 @@ public class AddModelSteps {
 			}
 			viewCatalogPage.clickOnSubmit();
 			if (i < modelCount - 1) {
-				homePage.openMainMenu();
-				homePage.clickOnOpenModel();
+				MainMenuUtils.openMainMenu(SetupHooks.getPage());
+				MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
 				openModelPage.clickAddModelButton();
 			}
 		}
@@ -129,8 +126,8 @@ public class AddModelSteps {
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("fieldName");
 			String fieldValue = row.get("fieldValue");
-				 openModelPage.fillModelCreationForm(fieldName, fieldValue);
-			}
+				openModelPage.fillModelCreationForm(fieldName, fieldValue);
+		}
 	}
 
 	@Then("User clicks on model {string} button")
@@ -335,8 +332,8 @@ public class AddModelSteps {
 	public void user_should_see_on_the_page(String expectedTags) {
 		String[] tagArray = expectedTags.split(", ");
 		List<String> actualTagList = openModelPage.verifyTagNames();
-		List<String> expectedTagList = Arrays.asList(tagArray).subList(0, Math.min(2, tagArray.length));
-		Assertions.assertEquals(actualTagList, expectedTagList);
+		List<String> expectedTagList = Arrays.asList(tagArray);
+		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
 	@And("User should see {string} in the overview Details section")

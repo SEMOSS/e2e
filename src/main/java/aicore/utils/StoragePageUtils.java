@@ -31,7 +31,7 @@ public class StoragePageUtils {
 	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='Change Access']";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String CURRENT_DATE_XPATH = "//p[contains(text(),'{Time}')]";
-	private static final String CANCEL_BUTTON_XPATH = "//span[text()='Cancel']";
+	private static final String CANCEL_BUTTON_XPATH = "//button[text()='Cancel']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 	private static final String LOCAL_PATH_PREFIX_DATATESTID = "storage-form-input-PATH_PREFIX";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";

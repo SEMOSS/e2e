@@ -12,6 +12,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StopOptions;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import io.cucumber.java.Scenario;
 
@@ -20,8 +21,7 @@ public class GenericTeardownUtils {
 	private static final Logger logger = LogManager.getLogger(GenericTeardownUtils.class);
 
 	public static void saveVideo(Scenario scenario, Path p) throws IOException {
-		// TODO Auto-generated method stub
-		if (Boolean.parseBoolean(ConfigUtils.getValue("use_video"))) {
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO))) {
 			String name = scenario.getName();
 			String videoName = name + ".webm";
 			Path path = Paths.get("videos", videoName);
@@ -31,7 +31,7 @@ public class GenericTeardownUtils {
 	}
 
 	public static void saveTrace(Scenario scenario, BrowserContext context) {
-		if (Boolean.parseBoolean(ConfigUtils.getValue("use_trace"))) {
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_TRACE))) {
 			StopOptions so = new Tracing.StopOptions();
 			String name = scenario.getName();
 			String traceName = name + ".zip";
