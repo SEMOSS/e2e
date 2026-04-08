@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 
 public class AddVectorFormUtils {
@@ -40,13 +41,13 @@ public class AddVectorFormUtils {
 
 	///////////////////////// Credentials
 	public static void enterHostName(Page page) {
-		String hostName = ConfigUtils.getValue("pinecone_host_name");
+		String hostName = ConfigUtils.getValue(AICoreTestConstants.PINECONE_HOST_NAME);
 		page.locator(HOST_NAME_ID).isVisible();
 		page.locator(HOST_NAME_ID).fill(hostName);
 	}
 
 	public static void enterApiKey(Page page) {
-		String apiKey = ConfigUtils.getValue("pinecone_api_key");
+		String apiKey = ConfigUtils.getValue(AICoreTestConstants.PINECONE_API_KEY);
 		page.locator(API_KEY_ID).isVisible();
 		page.locator(API_KEY_ID).fill(apiKey);
 	}

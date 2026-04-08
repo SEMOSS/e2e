@@ -16,6 +16,7 @@ import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -46,9 +47,14 @@ public class CreateAppUsingDragAndDropSteps {
 		blockSettings = new BlockSettingsPage(SetupHooks.getPage());
 	}
 
+	@And("User clicks on Make {string} Discoverable button in settings page")
+	public void user_clicks_on_make_discoverable_button(String appName) {
+		appPage.clickOnMakeDiscoverableButtoninSettings(appName + ' ' + timestamp);
+	}
+
 	@Given("User clicks on Open App Library")
 	public void user_navigates_to_open_app_library() {
-		homePage.clickOnOpenAppLibrary();
+		MainMenuUtils.clickOnOpenAppLibrary(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Create New App button")
@@ -119,8 +125,8 @@ public class CreateAppUsingDragAndDropSteps {
 			appCreatePopup.enterTags(tag);
 			appCreatePopup.clickOnCreateButton();
 			if (i < appCount - 1) {
-				homePage.openMainMenu();
-				homePage.clickOnOpenAppLibrary();
+				MainMenuUtils.openMainMenu(SetupHooks.getPage());
+				MainMenuUtils.clickOnOpenAppLibrary(SetupHooks.getPage());
 				appPage.clickOnCreateNewAppButton();
 				appCreatePopup.clickOnGetStartedButton(appType);
 			}
@@ -179,6 +185,11 @@ public class CreateAppUsingDragAndDropSteps {
 		for (String titleName : titles) {
 			homePage.verifyTitleIsVisible(titleName);
 		}
+	}
+
+	@And("User clicks on Discoverable Apps button")
+	public void user_clicks_on_discoverable_apps_button() {
+		appPage.clickOnDiscoverableAppsButton();
 	}
 
 	@When("User selects the {string} view")
@@ -943,5 +954,33 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on Save query button")
 	public void user_clicks_on_save_query_button() {
 		blocksPage.clickOnSaveQueryButton();
+	}
+
+	@And("User clicks on the {string} Filter button")
+	public void user_clicks_on_the_filter_button(String filterName) {
+		appPage.clickOnFilterButton(filterName);
+	}
+
+	@Then("User can see the apps are sorted in ascending order")
+	public void user_can_see_the_apps_are_sorted_in_ascending_order() {
+		boolean isSortedInAscendingOrder = appPage.verifyAppsSortedInAscendingOrder();
+		Assertions.assertTrue(isSortedInAscendingOrder, "Apps are not sorted in ascending order");
+	}
+
+	@Then("User can see the apps are sorted in descending order")
+	public void user_can_see_the_apps_are_sorted_in_descending_order() {
+		boolean isSortedInDescendingOrder = appPage.verifyAppsSortedInDescendingOrder();
+		Assertions.assertTrue(isSortedInDescendingOrder, "Apps are not sorted in descending order");
+	}
+
+	@Then("User can see the apps are sorted by date last Edited")
+	public void then_user_can_see_the_apps_are_sorted_by_date_last_edited() {
+		boolean isSortedByDateLastEdited = appPage.verifyAppsSortedByDateLastEdited();
+		Assertions.assertTrue(isSortedByDateLastEdited, "Apps are not sorted by date last edited");
+	}
+
+	@Then("User selects {string} from the Sort By dropdown")
+	public void user_selects_from_the_sort_by_dropdown(String sortByOption) {
+		appPage.selectSortByOption(sortByOption);
 	}
 }

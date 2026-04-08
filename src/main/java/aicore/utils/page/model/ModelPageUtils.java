@@ -11,10 +11,10 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.HomePageUtils;
 
 public class ModelPageUtils {
 
@@ -49,8 +49,8 @@ public class ModelPageUtils {
 	
 	public static void createModel(Page page, String modelType, String modelName, String catalogName,
 			String openAIKey) {
-		HomePageUtils.openMainMenu(page);
-		HomePageUtils.clickOnOpenModel(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		page.getByTestId("engineIndex-add-Model-btn").click();
 		AddModelFormUtils.selectModelType(page, modelType);
 		AddModelFormUtils.selectModel(page, modelName);
@@ -96,8 +96,8 @@ public class ModelPageUtils {
 	public static void deleteCreatedModels(Page page) {
 		for (String modelId : createdModelIds) {
 			try {
-				HomePageUtils.openMainMenu(page);
-				HomePageUtils.clickOnOpenModel(page);
+				MainMenuUtils.openMainMenu(page);
+				MainMenuUtils.clickOnOpenModel(page);
 				page.getByTestId(SEARCH_CATALOG_DATA_TESTID).fill(modelId);
 				page.waitForTimeout(500);
 				page.locator(CLICK_ON_CATALOG_XPATH).click();

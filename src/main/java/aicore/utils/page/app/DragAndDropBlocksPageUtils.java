@@ -13,6 +13,7 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
@@ -181,7 +182,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void navigateToHomePageFromAppEditPage(Page page) {
-		String appNameWithLogo = ConfigUtils.getValue("applicationName");
+		String appNameWithLogo = ConfigUtils.getValue(AICoreTestConstants.APP_NAME);
 		if (page.locator(MENU_CLOSED_ICON_XPATH).isVisible()) {
 			page.locator(MENU_OPTION_XPATH).click();
 		}

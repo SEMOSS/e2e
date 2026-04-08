@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
 import aicore.pages.EmbedDocumentPage;
-import aicore.pages.HomePage;
 import aicore.pages.OpenVectorPage;
 import aicore.pages.ViewUsagePage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.pages.vector.AddVectorFormUtils;
 import aicore.pages.vector.VectorQnAPageUtils;
 import aicore.pages.vector.VectorSMSSPageUtils;
@@ -26,7 +26,6 @@ import io.cucumber.java.en.When;
 
 public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
-	private HomePage homePage;
 	private OpenVectorPage vectorPage;
 	protected static String timestamp;
 	private EmbedDocumentPage embedDocumentPage;
@@ -34,7 +33,6 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	private CatalogPage catalogPage;
 
 	public AddVectorDatabaseSteps() {
-		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = AddModelSteps.timestamp;
 		vectorPage = new OpenVectorPage(SetupHooks.getPage());
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
@@ -44,7 +42,7 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Given("User clicks on Open Vector")
 	public void user_clicks_on_open_vector() {
-		homePage.clickOnOpenVector();
+		MainMenuUtils.clickOnOpenVector(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Vector button")
@@ -71,8 +69,8 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 			}
 			AddVectorFormUtils.clickOnCreateVectorButton(SetupHooks.getPage());
 			if (i < modelCount - 1) {
-				homePage.openMainMenu();
-				homePage.clickOnOpenVector();
+				MainMenuUtils.openMainMenu(SetupHooks.getPage());
+				MainMenuUtils.clickOnOpenVector(SetupHooks.getPage());
 				vectorPage.clickOnAddVectorButton();
 			}
 		}

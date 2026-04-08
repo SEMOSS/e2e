@@ -3,6 +3,7 @@ package aicore.utils.settings;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 
 public class SettingsPermissionsPageUtils {
@@ -54,14 +55,14 @@ public class SettingsPermissionsPageUtils {
 		String userName = "";
 		switch (userType.toLowerCase()) {
 		case "author":
-			userName = ConfigUtils.getValue("author_username");
+			userName = ConfigUtils.getValue(AICoreTestConstants.AUTHOR_USERNAME);
 			break;
 		case "editor":
-			userName = ConfigUtils.getValue("editor_username");
+			userName = ConfigUtils.getValue(AICoreTestConstants.EDITOR_USERNAME);
 			break;
 		case "read":
 		case "read-only":
-			userName = ConfigUtils.getValue("read_username");
+			userName = ConfigUtils.getValue(AICoreTestConstants.READ_USERNAME);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown user type: " + userType);

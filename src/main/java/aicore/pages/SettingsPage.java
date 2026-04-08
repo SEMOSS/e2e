@@ -4,11 +4,11 @@ import com.microsoft.playwright.Page;
 
 import aicore.utils.settings.SettingsPageUtils;
 
-public class SettingPage {
+public class SettingsPage {
 
 	private Page page;
 
-	public SettingPage(Page page) {
+	public SettingsPage(Page page) {
 		this.page = page;
 	}
 
@@ -30,7 +30,6 @@ public class SettingPage {
 
 	public void checkAddUserButton() {
 		SettingsPageUtils.checkAddUserButton(page);
-
 	}
 
 	public void checkAdminOnButton() {
@@ -39,7 +38,6 @@ public class SettingPage {
 
 	public int checkCountOfUsers() {
 		return SettingsPageUtils.checkCountOfUsers(page);
-
 	}
 
 	public int countOfPages() {
