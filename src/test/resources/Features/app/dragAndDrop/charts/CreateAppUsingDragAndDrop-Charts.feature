@@ -10,7 +10,7 @@ Feature: Create drag and drop app
     And User enters description as 'Created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
 
   @DeleteTestCatalog @DeleteCreatedTestApp @Smoke @Regression @ApplicationBugFailure
   Scenario Outline: Drag and Drop '<BLOCK_NAME>' block
@@ -68,14 +68,14 @@ Feature: Create drag and drop app
 
     Examples: 
       | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                                                    | FIELD_NAMES                                                                                          |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | Age, BloodPressure, BMI, Glucose                                | Select Label, Select X Axis, Select Y Axis, Select Tooltip                                           |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | Age, BloodPressure, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | Age, BloodPressure                                              | Select X Axis, Select Y Axis                                                                         |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | Age, BMI, Glucose, Insulin                                      | Select X Axis, Select Y Axis, Select Category, Select Tooltip                                        |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Pie Chart           | Age, BloodPressure                                              | Select Label, Select Value                                                                           |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Gantt Chart         | Task_Name, Start_Date, End_Date, Task_Group, Milestone, Tooltip | Select Task, Select Start Date, Select End Date, Select Task Group, Select MileStone, Select Tooltip |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Dendrogram Chart    | Age, BloodPressure                                              | Select Dimensions, Select Facet                                                                      |
-      | Test          | Import Data   | From Data Catalog  | TestDatabase  | World Map Chart     | DIABETES_UNIQUE_ROW_ID, Age, BMI, SkinThickness, Tooltip        | Select Label, Select Latitude, Select Longitude, Select Size, Select Tooltip                         |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | AGE, BLOODPRESSURE, BMI, GLUCOSE                                | Select Label, Select X Axis, Select Y Axis, Select Tooltip                                           |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | AGE, BLOODPRESSURE, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart           | AGE, BLOODPRESSURE                                              | Select X Axis, Select Y Axis                                                                         |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Bar Chart - Stacked | AGE, BMI, GLUCOSE, INSULIN                                      | Select X Axis, Select Y Axis, Select Category, Select Tooltip                                        |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Pie Chart           | AGE, BLOODPRESSURE                                              | Select Label, Select Value                                                                           |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Gantt Chart         | TASK_NAME, START_DATE, END_DATE, TASK_GROUP, MILESTONE, TOOLTIP | Select Task, Select Start Date, Select End Date, Select Task Group, Select MileStone, Select Tooltip |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | Dendrogram Chart    | AGE, BLOODPRESSURE                                              | Select Dimensions, Select Facet                                                                      |
+      | Test          | Import Data   | From Data Catalog  | TestDatabase  | World Map Chart     | DIABETES_UNIQUE_ROW_ID, AGE, BMI, SKINTHICKNESS, TOOLTIP        | Select Label, Select Latitude, Select Longitude, Select Size, Select Tooltip                         |
 
   @DeleteCreatedTestApp @Regression
   Scenario: Drag and Drop Mermaid Chart block
