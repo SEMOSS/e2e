@@ -6,6 +6,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 
@@ -105,11 +106,13 @@ public class BISystemAppPage {
 	}
 
 	public void uploadCSVFile() {
-		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH, Paths.get(ConfigUtils.getValue("BIDataImportCSVFile")));
+		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH,
+				Paths.get(ConfigUtils.getValue(AICoreTestConstants.BI_IMPORT_CSV_FILE)));
 	}
 
 	public void uploadExcelFile() {
-		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH, Paths.get(ConfigUtils.getValue("BIDataImportExcelFile")));
+		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH,
+				Paths.get(ConfigUtils.getValue(AICoreTestConstants.BI_IMPORT_EXCEL_FILE)));
 	}
 
 	public void clickOnNextButton() {

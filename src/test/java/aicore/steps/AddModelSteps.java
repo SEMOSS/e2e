@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
-import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -20,23 +20,20 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddModelSteps {
-	private HomePage homePage;
 	private AddModelPage openModelPage;
 	protected static String timestamp;
 	private String expectedCatalogId;
 	private ViewCatalogPage viewCatalogPage;
 
 	public AddModelSteps() {
-		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
-
 	}
 
 	@Given("User clicks on Open Model")
 	public void user_navigates_to_open_model() {
-		homePage.clickOnOpenModel();
+		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Model")
@@ -66,8 +63,8 @@ public class AddModelSteps {
 			}
 			viewCatalogPage.clickOnSubmit();
 			if (i < modelCount - 1) {
-				homePage.openMainMenu();
-				homePage.clickOnOpenModel();
+				MainMenuUtils.openMainMenu(SetupHooks.getPage());
+				MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
 				openModelPage.clickAddModelButton();
 			}
 		}
@@ -129,7 +126,7 @@ public class AddModelSteps {
 		for (Map<String, String> row : rows) {
 			String fieldName = row.get("fieldName");
 			String fieldValue = row.get("fieldValue");
-				openModelPage.fillModelCreationForm(fieldName, fieldValue);
+			openModelPage.fillModelCreationForm(fieldName, fieldValue);
 		}
 	}
 
@@ -634,4 +631,19 @@ public class AddModelSteps {
 		openModelPage.clickOnUploadButton(buttonName);
 	}
 
+	@When("User mouse hover on Lock icon displayed on catalog card")
+	public void user_mouse_hover_on_lock_icon_displayed_on_catalog_card() {
+		openModelPage.mouseHoverOnEngineAccessStatusIcon();
+	}
+
+	@Then("User can see engine access status as {string} on the tooltip")
+	public void user_can_see_engine_access_status_as_on_the_tooltip(String expectedStatus) {
+		String actualStatus = openModelPage.getEngineAccessStatusTooltipText(expectedStatus);
+		Assertions.assertEquals(expectedStatus, actualStatus, "Incorrect status");
+	}
+
+	@When("User clicks on make {string} public button")
+	public void user_clicks_on_make_public_button(String catalogName) {
+		openModelPage.clickOnMakeCatalogPublicButton(catalogName);
+	}
 }

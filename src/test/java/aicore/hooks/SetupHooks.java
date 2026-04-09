@@ -16,9 +16,11 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
+import aicore.pages.home.HomePageUtils;
 import aicore.utils.CaptureScreenShotUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResourceTrackerHelper;
@@ -77,7 +79,7 @@ public class SetupHooks {
 		// Not First scenario, reset page
 		if (ResourcePool.get().getFeatureNumber() != 0) {
 			try {
-				GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+				HomePageUtils.navigateToHomePage(ResourcePool.get().getPage());
 				logoutAndSave();
 			} catch (Exception | Error e) {
 				logger.error("ATTEMPTING TO LOGOUT AND SAVE", e);
@@ -94,43 +96,43 @@ public class SetupHooks {
 		// Use switch to handle different sourceTagNames
 		switch (sourceTagName) {
 		case "@LoginWithMS":
-			String MsUsername = ConfigUtils.getValue("ms_username");
-			String MsPassword = ConfigUtils.getValue("ms_password");
+			String MsUsername = ConfigUtils.getValue(AICoreTestConstants.MS_USERNAME);
+			String MsPassword = ConfigUtils.getValue(AICoreTestConstants.MS_PASSWORD);
 			GenericSetupUtils.loginWithMSuser(page, MsUsername, MsPassword);
 			break;
 
 		case "@LoginWithAdmin":
-			String adminUser = ConfigUtils.getValue("admin_username");
-			String adminPassword = ConfigUtils.getValue("admin_password");
+			String adminUser = ConfigUtils.getValue(AICoreTestConstants.ADMIN_USERNAME);
+			String adminPassword = ConfigUtils.getValue(AICoreTestConstants.ADMIN_PASSWORD);
 			GenericSetupUtils.login(page, adminUser, adminPassword);
 			break;
 
 		case "@LoginWithAuthor":
-			String authorUser = ConfigUtils.getValue("author_username");
-			String authorPassword = ConfigUtils.getValue("author_password");
+			String authorUser = ConfigUtils.getValue(AICoreTestConstants.AUTHOR_USERNAME);
+			String authorPassword = ConfigUtils.getValue(AICoreTestConstants.ADMIN_PASSWORD);
 			GenericSetupUtils.login(page, authorUser, authorPassword);
 			break;
 
 		case "@LoginWithEditor":
-			String nativeEditorUser = ConfigUtils.getValue("editor_username");
-			String nativeEditorPassword = ConfigUtils.getValue("editor_password");
+			String nativeEditorUser = ConfigUtils.getValue(AICoreTestConstants.EDITOR_USERNAME);
+			String nativeEditorPassword = ConfigUtils.getValue(AICoreTestConstants.EDITOR_PASSWORD);
 			GenericSetupUtils.login(page, nativeEditorUser, nativeEditorPassword);
 			break;
 
 		case "@LoginWithReadOnly":
-			String nativeReadUser = ConfigUtils.getValue("read_username");
-			String nativeReadPassword = ConfigUtils.getValue("read_password");
+			String nativeReadUser = ConfigUtils.getValue(AICoreTestConstants.READ_USERNAME);
+			String nativeReadPassword = ConfigUtils.getValue(AICoreTestConstants.READ_PASSWORD);
 			GenericSetupUtils.login(page, nativeReadUser, nativeReadPassword);
 			break;
 
 		case "@LoginWithSSO":
 			// do nothing and navigate to home page
-			GenericSetupUtils.navigateToHomePage(page);
+			HomePageUtils.navigateToHomePage(page);
 			break;
 
 		default:
-			String nativeUser = ConfigUtils.getValue("native_username");
-			String nativePassword = ConfigUtils.getValue("native_password");
+			String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
+			String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 			GenericSetupUtils.login(page, nativeUser, nativePassword);
 			break;
 		}
@@ -152,7 +154,7 @@ public class SetupHooks {
 	public void after(Scenario scenario) throws IOException {
 		logger.info("AFTER: {}", scenario.getName());
 		ResourcePool.get().setFailed(scenario.isFailed());
-		GenericSetupUtils.navigateToHomePage(ResourcePool.get().getPage());
+		HomePageUtils.navigateToHomePage(ResourcePool.get().getPage());
 	}
 
 	@AfterAll

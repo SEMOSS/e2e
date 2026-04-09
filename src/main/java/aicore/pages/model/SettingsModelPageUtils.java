@@ -43,6 +43,7 @@ public class SettingsModelPageUtils {
 	private static final String DELETE_CATALOG_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
+	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -152,12 +153,12 @@ public class SettingsModelPageUtils {
 
 	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
 		page.getByTestId(CLICK_ON_SEARCH_USER_DATATESTID).click();
-		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME").split("@")[0];
 		if (useDocker) {
 			username = username + " lastname";
 			// search is by user name first name and lastname
 			page.fill(ADD_MEMBER_XPATH, username);
-			page.getByTitle("Name: " + username).click();
+			page.getByTitle(username).click();
 		} else {
 			page.fill(ADD_MEMBER_XPATH, username);
 			page.waitForTimeout(2000);
@@ -233,5 +234,9 @@ public class SettingsModelPageUtils {
 
 	public static void clickOnDiscoverableModelsButton(Page page) {
 		page.getByTestId(DISCOVERABLE_MODELS_BUTTON_DATA_TESTID).click();
+	}
+
+	public static void clickOnMakeCatalogPublicButton(Page page, String catalogName) {
+		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
 	}
 }

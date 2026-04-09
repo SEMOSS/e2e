@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
+import aicore.pages.home.MainMenuUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -17,7 +18,7 @@ public class HomePageSteps {
 
 	@When("User clicks on Home")
 	public void user_clicks_on_home() {
-		homePage.clickOnHome();
+		MainMenuUtils.clickOnHome(SetupHooks.getPage());
 	}
 
 	@When("User search the {string} in the home search box")

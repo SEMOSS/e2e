@@ -2,6 +2,7 @@ package aicore.utils;
 
 import java.io.IOException;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.UrlUtils;
 import com.microsoft.playwright.Page;
@@ -24,7 +25,7 @@ public class LoginPageUtils {
 	}
 
 	public static void closeCookiesPopup(Page page) throws InterruptedException {
-		if (Boolean.parseBoolean(ConfigUtils.getValue("accept_cookies_popup"))) {
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.ACCEPT_COOKIES_POPUP))) {
 			page.locator(INFO_POPUP_ACCEPT_BUTTON_XPATH).click();
 		}
 	}
@@ -34,11 +35,11 @@ public class LoginPageUtils {
 			page.locator(MICROSOFT_LOGIN_XPATH).click();
 		});
 		// optional test if the user adds in credentials
-		String userName = ConfigUtils.getValue("ms_username");
+		String userName = ConfigUtils.getValue(AICoreTestConstants.MS_USERNAME);
 		if (userName != null && !userName.isEmpty()) {
 			page1.fill(USERNAME_XPATH, userName);
 			page1.click(NEXT_BUTTON_XPATH);
-			page1.fill(PASSWORD_XPATH, ConfigUtils.getValue("ms_password"));
+			page1.fill(PASSWORD_XPATH, ConfigUtils.getValue(AICoreTestConstants.MS_PASSWORD));
 			page1.click(SIGNIN_BUTTON_XPATH);
 		}
 	}

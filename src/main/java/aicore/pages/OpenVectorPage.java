@@ -129,7 +129,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public void verifyUpdatedBy(String role) {
-		String username = ConfigUtils.getValue(role.toLowerCase() + "_username");
+		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME");
 		page.locator(UPDATED_BY_XPATH).isVisible();
 		String updatedByText = page.locator(UPDATED_BY_XPATH).textContent().trim();
 		if (!updatedByText.contains(username)) {

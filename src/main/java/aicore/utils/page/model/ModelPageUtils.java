@@ -11,10 +11,10 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.HomePageUtils;
 
 public class ModelPageUtils {
 
@@ -35,22 +35,21 @@ public class ModelPageUtils {
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String CLICK_ON_CREATED_MODEL_XPATH = "//div[contains(@data-testid,'genericEngineCards')]";
-	
-	
+
 	public static void clickAddModelButton(Page page) {
 		page.getByTestId("engineIndex-add-Model-btn").isVisible();
 		page.getByTestId("engineIndex-add-Model-btn").click();
 	}
-	
+
 	public static void clickOnSMSSTab(Page page) {
 		page.getByTestId(SMSS_TAB_XPATH).click();
 		page.waitForTimeout(2000);
 	}
-	
+
 	public static void createModel(Page page, String modelType, String modelName, String catalogName,
 			String openAIKey) {
-		HomePageUtils.openMainMenu(page);
-		HomePageUtils.clickOnOpenModel(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		page.getByTestId("engineIndex-add-Model-btn").click();
 		AddModelFormUtils.selectModelType(page, modelType);
 		AddModelFormUtils.selectModel(page, modelName);
@@ -79,9 +78,6 @@ public class ModelPageUtils {
 		return actualmodelTitle.textContent().trim();
 	}
 
-
-
-
 	public static String getExpectedCatalogTitle(String expTitle) {
 		return expTitle;
 	}
@@ -96,8 +92,8 @@ public class ModelPageUtils {
 	public static void deleteCreatedModels(Page page) {
 		for (String modelId : createdModelIds) {
 			try {
-				HomePageUtils.openMainMenu(page);
-				HomePageUtils.clickOnOpenModel(page);
+				MainMenuUtils.openMainMenu(page);
+				MainMenuUtils.clickOnOpenModel(page);
 				page.getByTestId(SEARCH_CATALOG_DATA_TESTID).fill(modelId);
 				page.waitForTimeout(500);
 				page.locator(CLICK_ON_CATALOG_XPATH).click();

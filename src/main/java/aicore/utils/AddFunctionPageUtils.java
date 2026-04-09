@@ -56,7 +56,10 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void clickOnAccessControl(Page page) {
-		page.locator(ACCESS_CONTROL_XPATH).isVisible();
+		Locator btn = page.locator(ACCESS_CONTROL_XPATH);
+		if (!btn.isVisible()) {
+			AICorePageUtils.waitFor(btn);
+		}
 		page.locator(ACCESS_CONTROL_XPATH).click();
 	}
 

@@ -2,7 +2,7 @@ package aicore.pages.app;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.AddCatalogPageBaseUtils;
+import aicore.pages.app.settings.AppAccessControlPageUtils;
 import aicore.utils.page.app.AppPageUtils;
 
 public class AppPage {
@@ -18,8 +18,8 @@ public class AppPage {
 		AppPageUtils.clickOnCreateNewAppButton(page);
 	}
 
-	public void clickOnAccessControlButton() {
-		AppPageUtils.clickOnAccessControlButton(page);
+	public void clickOnDiscoverableAppsButton() {
+		AppPageUtils.clickOnDiscoverableAppsButton(page);
 	}
 
 	public void searchApp(String appName) {
@@ -91,20 +91,12 @@ public class AppPage {
 		AppPageUtils.clickOnButton(page, buttonName);
 	}
 
-	public void MakeAppPublic() {
-		AppPageUtils.makeAppPublic(page);
-	}
-
 	public boolean isAppDisplayedOnPage(String appName) {
 		return AppPageUtils.isAppDisplayedOnPage(page, appName, timestamp);
 	}
 
 	public boolean isContentVisibleOnAppCard(String contentName, String contentValue) {
 		return AppPageUtils.isContentVisibleOnAppCard(page, contentName, contentValue, timestamp);
-	}
-
-	public void clickOnDeleteButton(String buttonName) {
-		AppPageUtils.clickOnDeleteButton(page, buttonName);
 	}
 
 	public boolean isAppNotDisplayedOnPage(String appName) {
@@ -126,4 +118,48 @@ public class AppPage {
 	public void clickOnInfoButton(String buttonName) {
 		AppPageUtils.clickOnInfoButton(page, buttonName);
 	}
+
+	public boolean verifyAppsSortedInAscendingOrder() {
+		return AppPageUtils.verifyAppsSortedInAscendingOrder(page);
+	}
+
+	public void clickOnFilterButton(String filterName) {
+		 AppPageUtils.clickOnFilterButton(page, filterName);
+	}
+
+	public boolean verifyAppsSortedInDescendingOrder() {
+		return AppPageUtils.verifyAppsSortedInDescendingOrder(page);
+	}
+
+	public boolean verifyAppsSortedByDateLastEdited() {
+		return AppPageUtils.verifyAppsSortedByDateLastEdited(page);
+	}	
+
+	public void selectSortByOption(String optionName) {
+		AppPageUtils.selectSortByOption(page, optionName);
+	}
+	
+	/////////////////////// 
+	/// Settings
+	/////////////////////////////////
+	public void clickOnAccessControlButton() {
+		AppSettingsPageUtils.clickOnAccessControlButton(page);
+	}
+	
+	//////////////////////////
+	///  Access Control
+	///////////////////////////// 
+
+	public void clickOnMakeDiscoverableButtoninSettings(String appName) {
+		AppAccessControlPageUtils.clickOnMakeDiscoverableButtoninSettings(page, appName);
+	}
+	
+	public void clickOnDeleteButton(String buttonName) {
+		AppAccessControlPageUtils.clickOnDeleteButton(page, buttonName);
+	}
+	
+	public void MakeAppPublic() {
+		AppAccessControlPageUtils.makeAppPublic(page);
+	}
+	
 }

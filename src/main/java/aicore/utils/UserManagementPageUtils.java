@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 
 public class UserManagementPageUtils {
@@ -148,7 +149,7 @@ public class UserManagementPageUtils {
 	public static void searchUser(Page page) {
 		String Base = ConfigUtils.getValue("URLS").split(",")[0].trim();
 		if (Base.contains("8080")) {
-			String endpoint = ConfigUtils.getValue("API_ENDPOINT");
+			String endpoint = ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT);
 			String responseURL = Base + endpoint
 					+ "/api/auth/admin/user/getAllUsers?filterWord=UserId&offset=0&limit=0";
 			page.waitForResponse(responseURL, () -> {
