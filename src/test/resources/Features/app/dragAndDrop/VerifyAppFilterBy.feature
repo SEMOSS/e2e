@@ -1,7 +1,7 @@
 @DeleteCreatedTestApp @LoginWithAdmin @Regression
 Feature: Filter By option in the app
     
-    Scenario: Create Drag and Drop app and verify the app is visible on applying filters in the app library
+    Background: Create Drag and Drop app and edit the app
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library
@@ -20,7 +20,9 @@ Feature: Filter By option in the app
     And User selects 'IP, PHI, PII, PUBLIC' from the Data Classification in the app settings
     And User selects 'IP ALLOWED, PHI ALLOWED, FOUO ALLOWED' from the Data Restrictions in the app settings
     And User clicks on Submit button in the app settings
-    And User opens Main Menu
+
+    Scenario: Verify the app is visible while applying filters in the app library
+    When User opens Main Menu
     And User clicks on Open App Library
     Then User applies each filter and validate 'Test app' app is visible on the page
       | FILTER_CATEGORY     | FILTER_VALUE                          |
@@ -29,3 +31,29 @@ Feature: Filter By option in the app
       | Data Classification | IP, PHI, PII, PUBLIC                  |
       | Data Restrictions   | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
+    Scenario: Verify the discoverable  app is visible while applying filters in the app library
+      When User clicks on Access Control Tab
+      And User clicks on Make 'Test app' Discoverable button in settings page
+      And User logs out from the application
+      And User login as 'editor'
+      And User opens Main Menu
+      And User clicks on Discoverable Apps button
+      Then User applies each filter and validate 'Test app' app is visible on the page
+      | FILTER_CATEGORY     | FILTER_VALUE                          |
+      | Tag                 | embeddings, Test1                     |
+      | Domain              | SAP, AI                               |
+      | Data Classification | IP, PHI, PII, PUBLIC                  |
+      | Data Restrictions   | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+
+    Scenario: Verify the Bookmarked app is visible while applying filters in the app library
+      When User opens Main Menu
+      And User clicks on Open App Library
+      When User searches 'Test app' app in the app searchbox
+      And User clicks on the Bookmark icon for 'Test app' App
+      And User clicks on the Bookmarked Apps tab
+      Then User applies each filter and validate 'Test app' app is visible on the page
+      | FILTER_CATEGORY     | FILTER_VALUE                          |
+      | Tag                 | embeddings, Test1                     |
+      | Domain              | SAP, AI                               |
+      | Data Classification | IP, PHI, PII, PUBLIC                  |
+      | Data Restrictions   | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
