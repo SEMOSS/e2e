@@ -48,7 +48,7 @@ public class MainMenuUtils {
 	public static void closeMainMenu(Page page) {
 		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
-			menuOpen.click();
+			menuOpen.dblclick();
 		}
 	}
 
