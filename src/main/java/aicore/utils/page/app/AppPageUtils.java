@@ -123,41 +123,39 @@ public class AppPageUtils {
 		String expectedDate = LocalDate.now().format(formatter);
 		Locator locator = null;
 		switch (contentName) {
-			case "App Name":
-				locator = page.locator(APP_CARD_XPATH.replace("{appName}", contentValue + " " + timestamp));
-				break;
-			case "App Description":
-				locator = page.locator(APP_DESCRIPTION_XPATH.replace("{description}", contentValue));
-				break;
-			case "Open App button":
-				locator = page.locator(OPEN_APP_LINK_XPATH.replace("{buttonName}", contentValue));
-				break;
-			case "Info button":
-				locator = page.locator(INFO_BUTTON_XPATH.replace("{buttonName}", contentValue));
-				break;
-			case "More Vert Icon":
-				locator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH);
-				break;
-			case "Bookmark Icon":
-				locator = page.locator(APP_BOOKMARK_ICON_XPATH);
-				break;
-			case "Published date":
-				locator = page.locator(
-						PUBLISHED_DATE_XPATH.replace("{publishedDate}", contentValue.replace("{date}", expectedDate)));
-				break;
-			case "Last Edited date":
-				locator = page.locator(
-						LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}",
-								contentValue.replace("{date}", expectedDate)));
-				break;
-			default:
-				logger.error("Invalid option name: " + contentName);
-				throw new IllegalArgumentException("Invalid option name: " + contentName);
+		case "App Name":
+			locator = page.locator(APP_CARD_XPATH.replace("{appName}", contentValue + " " + timestamp));
+			break;
+		case "App Description":
+			locator = page.locator(APP_DESCRIPTION_XPATH.replace("{description}", contentValue));
+			break;
+		case "Open App button":
+			locator = page.locator(OPEN_APP_LINK_XPATH.replace("{buttonName}", contentValue));
+			break;
+		case "Info button":
+			locator = page.locator(INFO_BUTTON_XPATH.replace("{buttonName}", contentValue));
+			break;
+		case "More Vert Icon":
+			locator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH);
+			break;
+		case "Bookmark Icon":
+			locator = page.locator(APP_BOOKMARK_ICON_XPATH);
+			break;
+		case "Published date":
+			locator = page.locator(
+					PUBLISHED_DATE_XPATH.replace("{publishedDate}", contentValue.replace("{date}", expectedDate)));
+			break;
+		case "Last Edited date":
+			locator = page.locator(
+					LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}", contentValue.replace("{date}", expectedDate)));
+			break;
+		default:
+			logger.error("Invalid option name: " + contentName);
+			throw new IllegalArgumentException("Invalid option name: " + contentName);
 		}
 		locator.scrollIntoViewIfNeeded();
 		return locator.isVisible();
 	}
-
 
 	public static boolean isAppNotDisplayedOnPage(Page page, String appName, String timestamp) {
 		String expectedAppName = appName + " " + timestamp;
@@ -191,7 +189,7 @@ public class AppPageUtils {
 	public static void clickOnFilterButton(Page page, String filterName) {
 		page.getByTitle(filterName + " Order").click();
 	}
-	
+
 	public static boolean verifyAppsSortedInAscendingOrder(Page page) {
 		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
 		int appCount = appNamesLocator.count();
@@ -204,7 +202,8 @@ public class AppPageUtils {
 			previousAppName = currentAppName;
 		}
 		return true;
-}
+	}
+
 	public static boolean verifyAppsSortedInDescendingOrder(Page page) {
 		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
 		int appCount = appNamesLocator.count();
@@ -237,14 +236,16 @@ public class AppPageUtils {
 			previousDateStr = currentDateStr;
 		}
 		return true;
-}
+	}
 
-		public static boolean verifyAppsSortedByUpdatedAgo(Page page) {
-			return verifyAppsSortedByUpdatedAgo(page, false);
-		}
+	public static boolean verifyAppsSortedByUpdatedAgo(Page page) {
+		return verifyAppsSortedByUpdatedAgo(page, false);
+	}
+
 	/**
-	 * Verifies that the apps are sorted by the 'Updated ... ago' format (descending: most recent first).
-	 * Handles 'Updated today', 'Updated X days ago', 'Updated X month(s) ago'
+	 * Verifies that the apps are sorted by the 'Updated ... ago' format
+	 * (descending: most recent first). Handles 'Updated today', 'Updated X days
+	 * ago', 'Updated X month(s) ago'
 	 */
 	public static boolean verifyAppsSortedByUpdatedAgo(Page page, boolean descending) {
 		Locator dateLocators = page.locator("//p[contains(text(),'Updated')]");
@@ -277,19 +278,20 @@ public class AppPageUtils {
 		}
 		return Integer.MAX_VALUE; // fallback for unknown format
 	}
-	private static int extractNumber(String text) {
-    java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(text);
-    if (matcher.find()) {
-        return Integer.parseInt(matcher.group());
-    }
-    return 0; // Default if no number found
-}
 
-public static void selectSortByOption(Page page, String optionName) {
-	Locator sortDropdown = page.locator(SORT_BY_DROPDOWN_XPATH);
-	sortDropdown.click();
-	Locator optionLocator = page.locator(SORT_BY_OPTION_XPATH.replace("{optionName}", optionName));
-	optionLocator.waitFor();
-	optionLocator.click();
-}
+	private static int extractNumber(String text) {
+		java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(text);
+		if (matcher.find()) {
+			return Integer.parseInt(matcher.group());
+		}
+		return 0; // Default if no number found
+	}
+
+	public static void selectSortByOption(Page page, String optionName) {
+		Locator sortDropdown = page.locator(SORT_BY_DROPDOWN_XPATH);
+		sortDropdown.click();
+		Locator optionLocator = page.locator(SORT_BY_OPTION_XPATH.replace("{optionName}", optionName));
+		optionLocator.waitFor();
+		optionLocator.click();
+	}
 }
