@@ -333,4 +333,8 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.selectOptionFromActionList(page, optionName);
 	}
 
+	public void selectChart() {
+		DragAndDropBlocksPageUtils.selectChart(page);
+	}
+
 }
