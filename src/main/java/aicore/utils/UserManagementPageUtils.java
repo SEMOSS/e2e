@@ -30,6 +30,7 @@ public class UserManagementPageUtils {
 	private static final String SELECT_ALL_BUTTON_XPATH = "//button[@aria-label='Select all members']";// "//th//label//span//input[@type='checkbox']";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//button[text()='Delete Selected']";
+	private static final String DELETE_POPUP_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String SEARCH_ICON_XPATH = "//input[@placeholder='Search Users']";
 	private static final String SEARCH_BAR_XPATH = "//div[@role=\"region\"]//input[@placeholder='Search']";
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
@@ -172,6 +173,9 @@ public class UserManagementPageUtils {
 	public static void clickDeleteSelectedButton(Page page) {
 		page.isVisible(DELETE_SELECTED_BUTTON_XPATH);
 		page.click(DELETE_SELECTED_BUTTON_XPATH);
+		page.waitForTimeout(1000); // Wait for the delete confirmation popup to appear
+		page.isVisible(DELETE_POPUP_BUTTON_XPATH);
+		page.click(DELETE_POPUP_BUTTON_XPATH);
 	}
 
 	public static String userDeletionToastMessage(Page page) {

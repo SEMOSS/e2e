@@ -91,6 +91,7 @@ public class CreateAppPopupUtils {
 			String appTags) {
 		HomePageUtils.openMainMenu(page);
 		HomePageUtils.clickOnOpenAppLibrary(page);
+		
 		Locator createNewAppBtn = page.getByTestId("appCatalogPage-create-new-app-btn");
 		createNewAppBtn.click();
 		clickOnGetStartedButton(page, appType);
@@ -98,6 +99,7 @@ public class CreateAppPopupUtils {
 		enterAppDescription(page, appDescription);
 		enterTags(page, appTags);
 		clickOnCreateButton(page);
+		page.waitForTimeout(1000); // Wait for the app to be created and appear in the list
 		createdAppNames.add(appName);
 	}
 
