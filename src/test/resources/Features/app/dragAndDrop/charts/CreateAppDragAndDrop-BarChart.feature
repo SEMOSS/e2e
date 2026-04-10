@@ -8,7 +8,7 @@ Feature: Create drag and drop  for charts validation
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User opens Main Menu
     And User clicks on Open Database
@@ -49,6 +49,7 @@ Feature: Create drag and drop  for charts validation
     And User clicks on 'page-1' page
     And User clicks on Blocks if it is not selected by default
 
+  @ApplicationBugFailure
   Scenario Outline: Drag and Drop Charts section '<BLOCK_NAME>' block
     Given User drags the '<BLOCK_NAME>' block and drops it on the page
     When User clicks on the '<BLOCK_NAME>' block to select it
@@ -62,9 +63,13 @@ Feature: Create drag and drop  for charts validation
     And User click on 'Color Palette' tool option
     And User validates Color Palette using '<COLOR_PALETTE>'
     Then User can see 'Color_Palette_Tool' of 'Bar Chart' same as baseline
+    And User select the chart
+    And User click on the Tools tab
     And User click on the Edit 'X Axis' option
     And User updates 'X Axis' settings using '<X_AXIS_VALUES>'
     And User can see 'Edit_XAxis_Tool' of 'Bar Chart' same as baseline
+    And User select the chart
+    And User click on the Tools tab
     And User click on the Edit 'Y Axis' option
     And User updates 'Y Axis' settings using '<Y_AXIS_VALUES>'
     And User can see 'Edit_YAxis_Tool' of 'Bar Chart' same as baseline

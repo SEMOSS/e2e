@@ -114,7 +114,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String COLOR_PALETTE_XPATH = "//span[text()='Color Palette']";
 	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//span[text()='+ Add Custom Color Palette']";
 	private static final String COLOR_PALETTE_ICON_XPATH = "//*[name()='svg'][@data-testid='FormatColorFillIcon']";
-	private static final String SELECT_RED_COLOR_XPATH = "//div[@title='#D0021B']";
+	private static final String SELECT_RED_COLOR_XPATH = "//input[@value='#d23323']";
 	private static final String SELECT_BLUE_COLOR_XPATH = "//div[@title='#4A90E2']";
 	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
@@ -233,8 +233,10 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void enterTextInTextField(Page page, String text) {
-		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").click();
-		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").fill(text);
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").fill(text);
 	}
 
 	public static void clickOnDroppedBlock(Page page, String blockName) {
@@ -288,7 +290,7 @@ public class DragAndDropBlocksPageUtils {
 		case "Button":
 			DroppedBlockLocator = page.locator(DROPPED_BUTTON_BLOCK_XPATH);
 			break;
-		case "Chip":	
+		case "Chip":
 			DroppedBlockLocator = page.locator(DROPPED_CHIP_BLOCK_XPATH);
 			break;
 		default:
@@ -821,9 +823,9 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(ADD_CUSTOME_COLOR_PALETTE_XPATH).click();
 		page.getByPlaceholder("Enter Palette Name").fill("MyPalette");
 		page.locator(COLOR_PALETTE_ICON_XPATH).click();
-		page.locator(SELECT_RED_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#d30d11");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
-		page.locator(SELECT_BLUE_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#0d14d3");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
 		page.locator(ADD_COLOR_XPATH).click();
 		return page.locator(ADDED_COLOR_PALETTE_XPATH).first().isVisible();
@@ -1086,7 +1088,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void selectActionOptionFromDropdown(Page page, String actionOption) {
-		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName(actionOption).setExact(true));
+		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX,
+				new Page.GetByRoleOptions().setName(actionOption).setExact(true));
 		AICorePageUtils.waitFor(queryCombobox);
 		if (!queryCombobox.isVisible()) {
 			throw new AssertionError("Action dropdown for '" + actionOption + "' is not visible");
@@ -1101,5 +1104,9 @@ public class DragAndDropBlocksPageUtils {
 			throw new AssertionError("Option '" + optionName + "' is not visible in the list");
 		}
 		optionLocator.click();
+	}
+
+	public static void selectChart(Page page) {
+		page.locator("//div[@data-block='e-chart--1']").click();
 	}
 }
