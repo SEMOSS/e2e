@@ -26,18 +26,16 @@ Feature: App setting for Editor permission
     When User clicks on app Edit button
     And User click on Settings
     And User clicks on Access Control Tab
-    And 'Editor' user can see private toggle button as 'Enable'
-    And 'Editor' user can see Non-Discoverable toggle button as 'Enable'
-    And 'Editor' user can 'view' Delete catalog option
+    And 'Editor' user can see private toggle button as 'Disable'
+    And 'Editor' user can see Non-Discoverable toggle button as 'Disable'
+    And 'Editor' user can 'not view' Delete catalog option
     And User logs out from the application
     And User login as 'Author'
 
-  @ApplicationBugFailure
   Scenario: Create APP - Editor user - View Member setting and add and delete the Editor and Read User
     Given User clicks on app Edit button
     When User click on Settings
     And User clicks on Access Control Tab
-    And User Click on Members setting option
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User Search 'Read' user from Access Control
@@ -51,9 +49,7 @@ Feature: App setting for Editor permission
     When User clicks on app Edit button
     And User click on Settings
     And User clicks on Access Control Tab
-    Then 'Editor' user can 'view' Delete catalog option
-    And Editor user not able to Delete Catalog
+    Then 'Editor' user can 'not view' Delete catalog option
     And User logs out from the application
     And User login as 'Author'
     And User opens Main Menu
-    And User clicks on Open App Library
