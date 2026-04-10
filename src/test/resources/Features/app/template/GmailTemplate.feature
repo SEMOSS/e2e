@@ -1,6 +1,6 @@
 Feature: Gmail Template
  
-@LoginWithAdmin @DeleteCreatedTestApp @Regression
+@LoginWithAdmin @DeleteCreatedTestApp @Regression @ApplicationBugFailure
 Scenario: Create app using Template -Gmail 
     Given User is on Home page
     When User opens Main Menu
