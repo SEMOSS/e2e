@@ -1106,7 +1106,4 @@ public class DragAndDropBlocksPageUtils {
 		optionLocator.click();
 	}
 
-	public static void selectChart(Page page) {
-		page.locator("//div[@data-block='e-chart--1']").click();
-	}
 }

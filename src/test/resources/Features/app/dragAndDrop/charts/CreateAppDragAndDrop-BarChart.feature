@@ -63,12 +63,12 @@ Feature: Create drag and drop  for charts validation
     And User click on 'Color Palette' tool option
     And User validates Color Palette using '<COLOR_PALETTE>'
     Then User can see 'Color_Palette_Tool' of 'Bar Chart' same as baseline
-    And User select the chart
+    And User clicks on the 'Bar Chart' block to select it
     And User click on the Tools tab
     And User click on the Edit 'X Axis' option
     And User updates 'X Axis' settings using '<X_AXIS_VALUES>'
     And User can see 'Edit_XAxis_Tool' of 'Bar Chart' same as baseline
-    And User select the chart
+    And User clicks on the 'Bar Chart' block to select it
     And User click on the Tools tab
     And User click on the Edit 'Y Axis' option
     And User updates 'Y Axis' settings using '<Y_AXIS_VALUES>'

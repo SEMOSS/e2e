@@ -981,8 +981,4 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.selectSortByOption(sortByOption);
 	}
 
-	@And("User select the chart")
-	public void user_select_the_chart() {
-		blocksPage.selectChart();
-	}
 }
