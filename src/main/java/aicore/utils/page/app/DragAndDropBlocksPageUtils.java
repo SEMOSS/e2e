@@ -72,6 +72,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHIP_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Chip";
 	private static final String ICON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Icon";
 
+	private static final String IFRAME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Iframe";
+	private static final String IMAGE_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Image";
+	private static final String PROGRESS_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Progress";
 	// drag and dropped blocks on page
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	private static final String DROPPED_TEXT_BLOCK_XPATH = "//p[text()='Hello world']";
@@ -87,6 +90,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_CHIP_BLOCK_XPATH = "//div[@data-block='chip--1']";
 	private static final String DROPPED_ICON_BLOCK_XPATH = "//div[@data-block='icon--1']";
 
+	private static final String DROPPED_IFRAME_BLOCK_XPATH = "//span[@data-block='iframe--1']";
+	private static final String DROPPED_IMAGE_BLOCK_XPATH = "//div[@data-block='image--1']";
+	private static final String DROPPED_PROGRESS_BLOCK_XPATH = "//div[@data-block='progress--1']";
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
@@ -116,7 +122,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String COLOR_PALETTE_XPATH = "//span[text()='Color Palette']";
 	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//span[text()='+ Add Custom Color Palette']";
 	private static final String COLOR_PALETTE_ICON_XPATH = "//*[name()='svg'][@data-testid='FormatColorFillIcon']";
-	private static final String SELECT_RED_COLOR_XPATH = "//div[@title='#D0021B']";
+	private static final String SELECT_RED_COLOR_XPATH = "//input[@value='#d23323']";
 	private static final String SELECT_BLUE_COLOR_XPATH = "//div[@title='#4A90E2']";
 	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
@@ -299,6 +305,14 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Icon":
 			DroppedBlockLocator = page.locator(DROPPED_ICON_BLOCK_XPATH);
+		case "Iframe":
+			DroppedBlockLocator = page.locator(DROPPED_IFRAME_BLOCK_XPATH);
+			break;
+		case "Image":
+			DroppedBlockLocator = page.locator(DROPPED_IMAGE_BLOCK_XPATH);
+			break;
+		case "Progress":
+			DroppedBlockLocator = page.locator(DROPPED_PROGRESS_BLOCK_XPATH);
 			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
@@ -400,6 +414,15 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Icon":
 			blockLocator = page.getByTestId(ICON_BLOCK_DATA_TESTID);
+			break;
+		case "Iframe":
+			blockLocator = page.getByTestId(IFRAME_BLOCK_DATA_TESTID);
+			break;
+		case "Image":
+			blockLocator = page.getByTestId(IMAGE_BLOCK_DATA_TESTID);
+			break;
+		case "Progress":
+			blockLocator = page.getByTestId(PROGRESS_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -833,9 +856,9 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(ADD_CUSTOME_COLOR_PALETTE_XPATH).click();
 		page.getByPlaceholder("Enter Palette Name").fill("MyPalette");
 		page.locator(COLOR_PALETTE_ICON_XPATH).click();
-		page.locator(SELECT_RED_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#d30d11");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
-		page.locator(SELECT_BLUE_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#0d14d3");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
 		page.locator(ADD_COLOR_XPATH).click();
 		return page.locator(ADDED_COLOR_PALETTE_XPATH).first().isVisible();
@@ -1136,4 +1159,5 @@ public class DragAndDropBlocksPageUtils {
 				.getByRole(AriaRole.COMBOBOX).click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
 	}
+
 }

@@ -30,6 +30,31 @@ public class AppPage {
 		AppPageUtils.selectAppCardsView(page, view);
 	}
 
+	public void clickOnEditButtoninSettings() {
+		AppPageUtils.clickOnEditButtoninSettings(page);
+	}
+
+	public void enterTagNameinAppSettings(String tagName) {
+		AppPageUtils.enterTagNameinAppSettings(page, tagName);
+	}
+
+	public void enterDomainNameinAppSettings(String domainName) {
+		AppPageUtils.enterDomainNameinAppSettings(page, domainName);
+	}
+
+	public void selectDataClassificationOptioninAppSettings(String domainName) {
+		AppPageUtils.selectDataClassificationOptioninAppSettings(page, domainName);
+	}
+	
+	public void selectDataRestrictionsOptioninAppSettings(String domainName) {
+		AppPageUtils.selectDataRestrictionsOptioninAppSettings(page, domainName);
+	}
+
+	public void clickOnSubmitButtoninAppSettings() {
+		AppPageUtils.clickOnSubmitButtoninAppSettings(page);
+	}
+
+
 	public void searchAppId(String appId) {
 		AppPageUtils.searchAppId(page, appId);
 	}

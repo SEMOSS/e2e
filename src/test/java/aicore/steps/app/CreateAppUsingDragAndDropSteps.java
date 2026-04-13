@@ -198,6 +198,48 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.selectAppCardsView(view);
 	}
 
+	@And("User clicks on Edit button in the setting page")
+	public void user_Clicks_OnEditButton() {
+		appPage.clickOnEditButtoninSettings();
+	}
+
+	@And("User add Tags {string} in app settings and presses Enter")
+	public void user_add_tags_in_app_settings_and_presses_enter(String tags) {
+		String[] tagsArray = tags.split(", ");
+		for (String tag : tagsArray) {
+			appPage.enterTagNameinAppSettings(tag);
+		}
+	}
+
+	@And("User enters the Domains as {string} in the app settings and presses Enter")
+	public void user_enters_the_domains_as_in_the_app_settings_and_presses_Enter(String domainNames) {
+		String[] domainNamesArray = domainNames.split(", ");
+		for (String domainName : domainNamesArray) {
+			appPage.enterDomainNameinAppSettings(domainName);
+		}
+	}
+
+	@And("User selects {string} from the Data Classification in the app settings")
+	public void user_selects_from_the_data_classification_in_the_app_settings(String dataClassificationOptions) {
+		String[] dataClassificationOptionsArray = dataClassificationOptions.split(", ");
+		for (String option : dataClassificationOptionsArray) {
+			appPage.selectDataClassificationOptioninAppSettings(option);
+		}
+	}
+
+	@And("User selects {string} from the Data Restrictions in the app settings")
+	public void user_selects_from_the_data_restrictions_in_the_app_settings(String dataRestrictionsOptions) {
+		String[] dataRestrictionsOptionsArray = dataRestrictionsOptions.split(", ");
+		for (String option : dataRestrictionsOptionsArray) {
+			appPage.selectDataRestrictionsOptioninAppSettings(option);
+		}
+	}
+
+	@And("User clicks on Submit button in the app settings")
+	public void user_clicks_on_submit_button_in_the_app_settings() {
+		appPage.clickOnSubmitButtoninAppSettings();
+	}
+
 	@When("User clicks on {string} icon")
 	public void user_clicks_the_icon(String icon) {
 		copiedId = appPage.getCopiedId(icon);
@@ -837,18 +879,13 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
 		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
 		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
-
 		String basePath = "screenshots/" + chartFolder + "/" + toolFolder + "/";
-
 		String actualImagePath = basePath + "actualChart.png";
 		String expectedImagePath = basePath + "expectedChart.png";
 		String diffImagePath = basePath + "diffChart.png";
-
 		blocksPage.closeBlocksOption();
 		blocksPage.takeChartScreenshot(actualImagePath, toolName);
-
 		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
-
 		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
 	}
 

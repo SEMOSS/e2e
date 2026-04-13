@@ -24,8 +24,8 @@ public class TeamPermissionsSettingsUtils {
 	private static final String ADD_BUTTON_XPATH = "//button[text()='{buttonName}'] | //span[text()='{buttonName}']";
 	private static final String TEAM_BUTTON_XPATH = "//button[contains(text(), '{buttonName}')]";
 	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']";
-	private static final String MEMBER_CARD_XPATH = "//span[contains(text(),'User ID:')]/div//span";
-	private static final String LIST_DROPDOWN_XPATH = "//input[@placeholder='Search']/parent::div";
+	private static final String MEMBER_CARD_XPATH = "//div[contains(text(),'NATIVE ID:')]";
+	private static final String LIST_DROPDOWN_XPATH = "//input[contains(@placeholder,'Search')]/parent::div";
 	private static final String TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
 	private static final String MEMBER_XPATH = "//div[contains(text(),'NATIVE ID: {member}')]";
 	private static final String NAME_XPATH = "//p[normalize-space()='{Name}']";
@@ -36,13 +36,13 @@ public class TeamPermissionsSettingsUtils {
 	private static final String CLICK_ON_ADD_CATALOG_TEXT = "{addCatalogName}";
 	private static final String ENGINE_ID_XPATH = "//p[contains(text(),'{EngineId}')]";
 	private static final String RADIO_XPATH = "//input[@type='radio' and @value='{radioIndex}']";
-	private static final String CLICK_ON_DELETE_ICON_DATATESTID = "DeleteRoundedIcon";
-	private static final String CLICK_ON_CONFIRM_BUTTON_XPATH = "//span[text()='{confirm}']";
-	private static final String CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH = "//th//input[@type='checkbox']";
+	private static final String CLICK_ON_DELETE_ICON_DATATESTID = "//div[contains(text(),'NATIVE ID: {member}')]/ancestor::td/following-sibling::td//button";
+	private static final String CLICK_ON_CONFIRM_BUTTON_XPATH = "//button[text()='{confirm}']";
+	private static final String CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH = "//th//button[@role='checkbox']";
 	private static final String DELETE_ICON_DATATESTID = "DeleteIcon";
-	private static final String PAGE_NUMBER_XPATH = "//button[@title='Go to previous page']/../..//p";
-	private static final String PREV_BUTTON_XPATH = "//button[@title='Go to previous page']";
-	private static final String NEXT_BUTTON_XPATH = "//button[@title='Go to next page']";
+	private static final String PAGE_NUMBER_XPATH = "//button[text()='<']//..//../div[contains(text(),'1')]";
+	private static final String PREV_BUTTON_XPATH = "//button[text()='<']";
+	private static final String NEXT_BUTTON_XPATH = "//button[text()='>']";
 	private static final String HEADINGS_XPATH = "//h2[text()='Add Members']";
 	private static final String CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_ENGINE_XPATH = "//div//h2[text()='Add Engines']/following::button[@role='checkbox']";
 	private static final String ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH = "//td//div[text()='catalogName']/ancestor::tr//button[@dir='ltr']//span[text()='role']";
@@ -100,9 +100,10 @@ public class TeamPermissionsSettingsUtils {
 		Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
-		Locator listMember = page.locator(LIST_MEMBER_XPATH.replace("{Member}", username));
-		AICorePageUtils.waitFor(listMember);
-		listMember.click();
+		page.keyboard().type(role);
+		page.waitForTimeout(2000);
+		page.keyboard().press("Tab");
+		page.keyboard().press("Space");
 	}
 
 	public static void validateToastMessage(Page page, String expectedMessage) {
@@ -120,7 +121,8 @@ public class TeamPermissionsSettingsUtils {
 		Locator memberCard = page.locator(MEMBER_CARD_XPATH);
 		AICorePageUtils.waitFor(memberCard);
 		String actualMember = memberCard.textContent().trim();
-		if (!actualMember.equals(username)) {
+		String getUserName = actualMember.split("NATIVE ID:")[1].trim();
+		if (!getUserName.equals(username)) {
 			throw new AssertionError("Expected member card: " + username + ", but got: " + actualMember);
 		}
 	}
@@ -199,7 +201,7 @@ public class TeamPermissionsSettingsUtils {
 		Locator searchmember = page.getByPlaceholder("Search Members");
 		searchmember.fill(member);
 		AICorePageUtils.waitFor(searchmember);
-		page.getByTestId(CLICK_ON_DELETE_ICON_DATATESTID).click();
+		page.locator(CLICK_ON_DELETE_ICON_DATATESTID.replace("{member}", member)).click();
 
 	}
 
@@ -211,13 +213,17 @@ public class TeamPermissionsSettingsUtils {
 		Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(dropdownLocator);
 		dropdownLocator.click();
-		Locator listMember1 = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member1));
-		AICorePageUtils.waitFor(listMember1);
-		listMember1.click();
+		page.keyboard().type(member1);
+		page.waitForTimeout(2000); // Wait for the dropdown options to load based on the typed member name
+		page.keyboard().press("Tab");
+		page.keyboard().press("Space");
 		dropdownLocator.click();
-		Locator listMember2 = page.locator(LIST_MEMBER_XPATH.replace("{Member}", member2));
-		AICorePageUtils.waitFor(listMember2);
-		listMember2.click();
+		page.keyboard().press("Control+KeyA"); // Select any existing text in the dropdown
+		page.keyboard().press("Backspace"); // Clear the existing text
+		page.keyboard().type(member2);
+		page.waitForTimeout(2000); // Wait for the dropdown options to load based on the typed member name
+		page.keyboard().press("Tab");
+		page.keyboard().press("Space");
 
 	}
 
@@ -360,10 +366,13 @@ public class TeamPermissionsSettingsUtils {
 		for (String engineId : ids) {
 			Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 			dropdownLocator.click();
+			page.keyboard().press("Control+KeyA"); // Select any existing text in the dropdown
+			page.keyboard().press("Backspace"); // Clear the existing text
 			page.keyboard().type(engineId.trim());
+			page.waitForTimeout(500); // Wait for the dropdown options to load based on the typed engine ID
 			AICorePageUtils.waitFor(dropdownLocator);
-			page.keyboard().press("ArrowDown");
-			page.keyboard().press("Enter");
+			page.keyboard().press("Tab");
+			page.keyboard().press("Space");
 		}
 	}
 
@@ -373,10 +382,13 @@ public class TeamPermissionsSettingsUtils {
 		for (String projectId : projectName) {
 			Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 			dropdownLocator.click();
+			page.keyboard().press("Control+KeyA"); // Select any existing text in the dropdown
+			page.keyboard().press("Backspace"); // Clear the existing text
 			page.keyboard().type(projectId.trim());
+			page.waitForTimeout(500); // Wait for the dropdown options to load based on the typed engine ID
 			AICorePageUtils.waitFor(dropdownLocator);
-			page.keyboard().press("ArrowDown");
-			page.keyboard().press("Enter");
+			page.keyboard().press("Tab");
+			page.keyboard().press("Space");
 		}
 	}
 
