@@ -71,3 +71,65 @@ Feature: Documentation for System components
     And User clicks on the 'Progress' block to select it
     Then User captures screenshot for 'Progress'
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Progress Block Overview'
+    
+    @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation -Drag And Drop Icon1 Screenshot
+    Given User captures documentation screenshot for 'Systemcomponents'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Icon Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Block Settings option
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'HTML' block and drops it on the page
+    And User delete 'Welcome to the UI Builder! Drag and drop blocks to use in your app.' on page
+    And User delete 'Add Content' on page
+    And User drag the 'Icon' block
+    Then User captures screenshot for "Icon1"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Icon'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation -Drag And Drop Icon2 Screenshot
+    Given User captures documentation screenshot for 'Systemcomponents'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Icon Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'HTML' block and drops it on the page
+    And User drags the 'Icon' block and drops it on the page
+    And User delete 'Welcome to the UI Builder! Drag and drop blocks to use in your app.' on page
+    And User delete 'Add Content' on page
+    And User clicks on the 'Icon' block to select it
+    And User clicks on 'Icon' option from General Setting
+    Then User captures screenshot for "Icon2"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Icon'
+
+  @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation -Drag And Drop Icon3 Screenshot
+    Given User captures documentation screenshot for 'Systemcomponents'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Icon Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'HTML' block and drops it on the page
+    And User drags the 'Icon' block and drops it on the page
+    And User delete 'Welcome to the UI Builder! Drag and drop blocks to use in your app.' on page
+    And User delete 'Add Content' on page
+    And User clicks on the 'Icon' block to select it
+    And User clicks on 'Icon' option from General Setting
+    And User select value as 'Face' for 'Icon' option from General Setting
+    And User selects the Appearance tab
+    And User selects '#7c2222' as the HEX color value
+    Then User captures screenshot for "Icon3"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Icon'

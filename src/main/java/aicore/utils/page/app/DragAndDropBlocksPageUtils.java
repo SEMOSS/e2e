@@ -70,6 +70,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 	private static final String CHIP_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Chip";
+	private static final String ICON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Icon";
+
 	private static final String IFRAME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Iframe";
 	private static final String IMAGE_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Image";
 	private static final String PROGRESS_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Progress";
@@ -86,6 +88,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
 	private static final String DROPPED_BUTTON_BLOCK_XPATH = "//button[span[text()='Submit']]";
 	private static final String DROPPED_CHIP_BLOCK_XPATH = "//div[@data-block='chip--1']";
+	private static final String DROPPED_ICON_BLOCK_XPATH = "//div[@data-block='icon--1']";
+
 	private static final String DROPPED_IFRAME_BLOCK_XPATH = "//span[@data-block='iframe--1']";
 	private static final String DROPPED_IMAGE_BLOCK_XPATH = "//div[@data-block='image--1']";
 	private static final String DROPPED_PROGRESS_BLOCK_XPATH = "//div[@data-block='progress--1']";
@@ -157,7 +161,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
-	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
+	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}'] | //div[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
 	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
 	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
@@ -168,6 +172,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
 	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
+	private static final String ICON_OPTION_FROM_GENERAL_SETTING_XPATH = "//p[text()='{optionName}']/following::input";
+	private static final String SETTING_OPTION_VALUE_INPUT_XPATH = "//p[text()='{optionName}']/following::input[@value='{valueName}']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -297,6 +303,8 @@ public class DragAndDropBlocksPageUtils {
 		case "Chip":
 			DroppedBlockLocator = page.locator(DROPPED_CHIP_BLOCK_XPATH);
 			break;
+		case "Icon":
+			DroppedBlockLocator = page.locator(DROPPED_ICON_BLOCK_XPATH);
 		case "Iframe":
 			DroppedBlockLocator = page.locator(DROPPED_IFRAME_BLOCK_XPATH);
 			break;
@@ -404,6 +412,9 @@ public class DragAndDropBlocksPageUtils {
 		case "Chip":
 			blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
 			break;
+		case "Icon":
+			blockLocator = page.getByTestId(ICON_BLOCK_DATA_TESTID);
+			break;
 		case "Iframe":
 			blockLocator = page.getByTestId(IFRAME_BLOCK_DATA_TESTID);
 			break;
@@ -413,7 +424,6 @@ public class DragAndDropBlocksPageUtils {
 		case "Progress":
 			blockLocator = page.getByTestId(PROGRESS_BLOCK_DATA_TESTID);
 			break;
-
 		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
@@ -1127,6 +1137,27 @@ public class DragAndDropBlocksPageUtils {
 			throw new AssertionError("Option '" + optionName + "' is not visible in the list");
 		}
 		optionLocator.click();
+	}
+
+	public static void dragBlock(Page page, String blockName) {
+		Locator block = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).first();
+		CommonUtils.moveMouseToCenterWithMargin(page, block, -1, 5);
+	}
+
+	public static void clickOnIconOptionFromGeneralSetting(Page page, String optionName) {
+		Locator selectOption = page.locator(ICON_OPTION_FROM_GENERAL_SETTING_XPATH.replace("{optionName}", optionName))
+				.first();
+		selectOption.click();
+		selectOption.clear();
+	}
+
+	public static void selectValueForsettingOption(Page page, String value, String optionName) {
+		Locator valueInput = page.locator(ICON_OPTION_FROM_GENERAL_SETTING_XPATH.replace("{optionName}", optionName))
+				.first();
+		valueInput.click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("IconShow Badge"))
+				.getByRole(AriaRole.COMBOBOX).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
 	}
 
 }

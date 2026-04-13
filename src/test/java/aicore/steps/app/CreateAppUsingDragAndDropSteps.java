@@ -12,7 +12,6 @@ import com.microsoft.playwright.Locator;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
-import aicore.pages.ViewCatalogPage;
 import aicore.pages.app.AppPage;
 import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
@@ -38,7 +37,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private String copiedId;
 	private AppVariablePage appVariablePage;
 	private String copiedCatalogName;
-	
+
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
@@ -880,9 +879,7 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
 		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
 		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
-
 		String basePath = "screenshots/" + chartFolder + "/" + toolFolder + "/";
-
 		String actualImagePath = basePath + "actualChart.png";
 		String expectedImagePath = basePath + "expectedChart.png";
 		String diffImagePath = basePath + "diffChart.png";
@@ -1022,6 +1019,22 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("User selects {string} from the Sort By dropdown")
 	public void user_selects_from_the_sort_by_dropdown(String sortByOption) {
 		appPage.selectSortByOption(sortByOption);
+	}
+
+	@And("User drag the {string} block")
+	public void and_user_drag_the_block(String blockName) {
+		blocksPage.mouseHoverOnBlock(blockName);
+		blocksPage.dragBlock(blockName);
+	}
+
+	@And("User clicks on {string} option from General Setting")
+	public void user_clicks_on_icon_option_from_general_setting(String optionName) {
+		blocksPage.clickOnIconOptionFromGeneralSetting(optionName);
+	}
+
+	@And("User select value as {string} for {string} option from General Setting")
+	public void user_select_value_as_for_option_from_general_setting(String value, String optionName) {
+		blocksPage.selectValueForsettingOption(value, optionName);
 	}
 
 }
