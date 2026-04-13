@@ -320,6 +320,26 @@ Feature: Documentation for Accordion Block Settings
     And User fetch the app name
     And User clicks on Block Settings option
     And User clicks on Blocks if it is not selected by default
+    And User drags the 'HTML' block and drops it on the page
     And User drag the 'Icon' block
-    And User captures screenshot for "Icon1"
+    Then User captures screenshot for "Icon1"
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Iframe'
+    
+   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
+  Scenario: Documentation -Drag And Drop Icon2 Screenshot
+    Given User captures documentation screenshot for 'Systemcomponents'
+    When User opens Main Menu
+    And User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop Icon"
+    And User enters app name as 'Text Test App'
+    And User clicks on Create button
+    And User fetch the app name
+    And User clicks on Block Settings option
+    And User clicks on Blocks if it is not selected by default
+    And User drags the 'Icon' block and drops it on the page
+    And User drags the 'HTML' block and drops it on the page
+    And User clicks on the 'Icon' block to select it
+    And User clicks on Block Settings option
+    Then User captures screenshot for "Icon2"
     And User completes screenshot capture and triggers comparison for 'Drag and Drop Iframe'
