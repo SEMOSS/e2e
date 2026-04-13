@@ -12,6 +12,7 @@ import com.microsoft.playwright.Locator;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
+import aicore.pages.ViewCatalogPage;
 import aicore.pages.app.AppPage;
 import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
@@ -37,7 +38,7 @@ public class CreateAppUsingDragAndDropSteps {
 	private String copiedId;
 	private AppVariablePage appVariablePage;
 	private String copiedCatalogName;
-
+	
 	public CreateAppUsingDragAndDropSteps() {
 		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
@@ -196,6 +197,48 @@ public class CreateAppUsingDragAndDropSteps {
 	@When("User selects the {string} view")
 	public void user_selects_the_view(String view) {
 		appPage.selectAppCardsView(view);
+	}
+
+	@And("User clicks on Edit button in the setting page")
+	public void user_Clicks_OnEditButton() {
+		appPage.clickOnEditButtoninSettings();
+	}
+
+	@And("User add Tags {string} in app settings and presses Enter")
+	public void user_add_tags_in_app_settings_and_presses_enter(String tags) {
+		String[] tagsArray = tags.split(", ");
+		for (String tag : tagsArray) {
+			appPage.enterTagNameinAppSettings(tag);
+		}
+	}
+
+	@And("User enters the Domains as {string} in the app settings and presses Enter")
+	public void user_enters_the_domains_as_in_the_app_settings_and_presses_Enter(String domainNames) {
+		String[] domainNamesArray = domainNames.split(", ");
+		for (String domainName : domainNamesArray) {
+			appPage.enterDomainNameinAppSettings(domainName);
+		}
+	}
+
+	@And("User selects {string} from the Data Classification in the app settings")
+	public void user_selects_from_the_data_classification_in_the_app_settings(String dataClassificationOptions) {
+		String[] dataClassificationOptionsArray = dataClassificationOptions.split(", ");
+		for (String option : dataClassificationOptionsArray) {
+			appPage.selectDataClassificationOptioninAppSettings(option);
+		}
+	}
+
+	@And("User selects {string} from the Data Restrictions in the app settings")
+	public void user_selects_from_the_data_restrictions_in_the_app_settings(String dataRestrictionsOptions) {
+		String[] dataRestrictionsOptionsArray = dataRestrictionsOptions.split(", ");
+		for (String option : dataRestrictionsOptionsArray) {
+			appPage.selectDataRestrictionsOptioninAppSettings(option);
+		}
+	}
+
+	@And("User clicks on Submit button in the app settings")
+	public void user_clicks_on_submit_button_in_the_app_settings() {
+		appPage.clickOnSubmitButtoninAppSettings();
 	}
 
 	@When("User clicks on {string} icon")

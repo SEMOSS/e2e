@@ -38,6 +38,8 @@ public class AppPageUtils {
 	private static final String SORT_BY_OPTION_XPATH = "//div[@role='option']//span[text()='{optionName}']";
 	private static final String CARDS_VIEW_OPTIONS_XPATH = "//button[@aria-label='{view}']";
 	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
+	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//span[text()='{option}']";
+	private static final String APP_SETTINGS_SUBMIT_TESTID = "save";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -51,6 +53,43 @@ public class AppPageUtils {
 
 	public static void selectAppCardsView(Page page, String view) {
 		page.locator(CARDS_VIEW_OPTIONS_XPATH.replace("{view}", view)).click();
+	}
+
+	public static void clickOnEditButtoninSettings(Page page) {
+		page.getByTestId("appDetail-edit-btn").click();			
+	}
+
+	public static void enterTagNameinAppSettings(Page page, String tagName) {
+		Locator enterTag = page.getByTestId("tags");
+		enterTag.scrollIntoViewIfNeeded();
+		enterTag.click();
+		enterTag.fill(tagName);
+		enterTag.press("Enter");
+	}
+
+	public static void enterDomainNameinAppSettings(Page page, String domainName) {
+		Locator enterDomain = page.getByPlaceholder("Press enter to add domain");
+		enterDomain.scrollIntoViewIfNeeded();
+		enterDomain.fill(domainName);
+		enterDomain.press("Enter");
+	}
+
+	public static void selectDataClassificationOptioninAppSettings(Page page, String option) {
+		Locator selectCheckbox = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", option));
+		selectCheckbox.scrollIntoViewIfNeeded();
+		selectCheckbox.click();
+	}
+
+	public static void selectDataRestrictionsOptioninAppSettings(Page page, String option) {
+		Locator selectCheckbox = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", option));
+		selectCheckbox.scrollIntoViewIfNeeded();
+		selectCheckbox.click();
+	}
+
+	public static void clickOnSubmitButtoninAppSettings(Page page) {
+		Locator submitButton = page.getByTestId(APP_SETTINGS_SUBMIT_TESTID);
+		submitButton.scrollIntoViewIfNeeded();
+		submitButton.click();
 	}
 
 	public static void searchAppId(Page page, String appId) {

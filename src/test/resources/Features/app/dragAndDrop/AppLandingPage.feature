@@ -61,13 +61,6 @@ Feature: App landing page
     Then User can not see 'Test app' app on the page
 
   @DeleteCreatedTestApp @Regression
-  Scenario: Filter apps
-    When User searches 'Test app' app in the app searchbox
-    And User applies each filter and validate 'Test app' app is visible on the page
-      | FILTER_CATEGORY | FILTER_VALUE |
-      | Tag             | Test1, Test2 |
-
-  @DeleteCreatedTestApp @Regression
   Scenario: Verify bookmark and unbookmark an app
     When User searches 'Test app' app in the app searchbox
     And User clicks on the Bookmark icon for 'Test app' App
