@@ -70,6 +70,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 	private static final String CHIP_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Chip";
+	private static final String ICON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Icon";
 
 	// drag and dropped blocks on page
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
@@ -233,8 +234,10 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void enterTextInTextField(Page page, String text) {
-		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").click();
-		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").fill(text);
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").fill(text);
 	}
 
 	public static void clickOnDroppedBlock(Page page, String blockName) {
@@ -288,7 +291,7 @@ public class DragAndDropBlocksPageUtils {
 		case "Button":
 			DroppedBlockLocator = page.locator(DROPPED_BUTTON_BLOCK_XPATH);
 			break;
-		case "Chip":	
+		case "Chip":
 			DroppedBlockLocator = page.locator(DROPPED_CHIP_BLOCK_XPATH);
 			break;
 		default:
@@ -388,6 +391,9 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Chip":
 			blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
+			break;
+		case "Icon":
+			blockLocator = page.getByTestId(ICON_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -1086,7 +1092,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void selectActionOptionFromDropdown(Page page, String actionOption) {
-		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName(actionOption).setExact(true));
+		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX,
+				new Page.GetByRoleOptions().setName(actionOption).setExact(true));
 		AICorePageUtils.waitFor(queryCombobox);
 		if (!queryCombobox.isVisible()) {
 			throw new AssertionError("Action dropdown for '" + actionOption + "' is not visible");
@@ -1101,5 +1108,11 @@ public class DragAndDropBlocksPageUtils {
 			throw new AssertionError("Option '" + optionName + "' is not visible in the list");
 		}
 		optionLocator.click();
+	}
+
+	public static void dragBlock(Page page, String blockName) {
+		Locator block = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).first();
+		CommonUtils.moveMouseToCenterWithMargin(page, block, -1, 5);
+		page.waitForTimeout(100);
 	}
 }
