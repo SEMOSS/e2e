@@ -314,8 +314,8 @@ Feature: Documentation for Accordion Block Settings
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop Icon"
-    And User enters app name as 'Text Test App'
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Icon Test App'
     And User clicks on Create button
     And User fetch the app name
     And User clicks on Block Settings option
@@ -333,8 +333,8 @@ Feature: Documentation for Accordion Block Settings
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop Icon"
-    And User enters app name as 'Text Test App'
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Icon Test App'
     And User clicks on Create button
     And User fetch the app name
     And User clicks on Blocks if it is not selected by default
@@ -353,8 +353,8 @@ Feature: Documentation for Accordion Block Settings
     When User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop Icon"
-    And User enters app name as 'Text Test App'
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Icon Test App'
     And User clicks on Create button
     And User fetch the app name
     And User clicks on Blocks if it is not selected by default
