@@ -990,4 +990,14 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.dragBlock(blockName);
 	}
 
+	@And("User clicks on {string} option from General Setting")
+	public void user_clicks_on_icon_option_from_general_setting(String optionName) {
+		blocksPage.clickOnIconOptionFromGeneralSetting(optionName);
+	}
+
+	@And("User select value as {string} for {string} option from General Setting")
+	public void user_select_value_as_for_option_from_general_setting(String value, String optionName) {
+		blocksPage.selectValueForsettingOption(value, optionName);
+	}
+
 }
