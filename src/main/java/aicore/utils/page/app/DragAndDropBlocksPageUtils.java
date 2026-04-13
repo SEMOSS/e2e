@@ -70,7 +70,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 	private static final String CHIP_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Chip";
-
+	private static final String IFRAME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Iframe";
+	private static final String IMAGE_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Image";
+	private static final String PROGRESS_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Progress";
 	// drag and dropped blocks on page
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	private static final String DROPPED_TEXT_BLOCK_XPATH = "//p[text()='Hello world']";
@@ -84,7 +86,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
 	private static final String DROPPED_BUTTON_BLOCK_XPATH = "//button[span[text()='Submit']]";
 	private static final String DROPPED_CHIP_BLOCK_XPATH = "//div[@data-block='chip--1']";
-
+	private static final String DROPPED_IFRAME_BLOCK_XPATH = "//span[@data-block='iframe--1']";
+	private static final String DROPPED_IMAGE_BLOCK_XPATH = "//div[@data-block='image--1']";
+	private static final String DROPPED_PROGRESS_BLOCK_XPATH = "//div[@data-block='progress--1']";
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
@@ -293,6 +297,15 @@ public class DragAndDropBlocksPageUtils {
 		case "Chip":
 			DroppedBlockLocator = page.locator(DROPPED_CHIP_BLOCK_XPATH);
 			break;
+		case "Iframe":
+			DroppedBlockLocator = page.locator(DROPPED_IFRAME_BLOCK_XPATH);
+			break;
+		case "Image":
+			DroppedBlockLocator = page.locator(DROPPED_IMAGE_BLOCK_XPATH);
+			break;
+		case "Progress":
+			DroppedBlockLocator = page.locator(DROPPED_PROGRESS_BLOCK_XPATH);
+			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
 			throw new IllegalArgumentException("Invalid block name: " + blockName);
@@ -391,6 +404,16 @@ public class DragAndDropBlocksPageUtils {
 		case "Chip":
 			blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
 			break;
+		case "Iframe":
+			blockLocator = page.getByTestId(IFRAME_BLOCK_DATA_TESTID);
+			break;
+		case "Image":
+			blockLocator = page.getByTestId(IMAGE_BLOCK_DATA_TESTID);
+			break;
+		case "Progress":
+			blockLocator = page.getByTestId(PROGRESS_BLOCK_DATA_TESTID);
+			break;
+
 		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
