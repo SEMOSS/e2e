@@ -1119,7 +1119,6 @@ public class DragAndDropBlocksPageUtils {
 	public static void dragBlock(Page page, String blockName) {
 		Locator block = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).first();
 		CommonUtils.moveMouseToCenterWithMargin(page, block, -1, 5);
-		page.waitForTimeout(100);
 	}
 
 	public static void clickOnIconOptionFromGeneralSetting(Page page, String optionName) {
@@ -1136,6 +1135,5 @@ public class DragAndDropBlocksPageUtils {
 		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("IconShow Badge"))
 				.getByRole(AriaRole.COMBOBOX).click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
-
 	}
 }
