@@ -325,7 +325,7 @@ Feature: Documentation for Accordion Block Settings
     And User delete 'Add Content' on page
     And User drag the 'Icon' block
     Then User captures screenshot for "Icon1"
-    And User completes screenshot capture and triggers comparison for 'Drag and Drop Iframe'
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Icon'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Documentation -Drag And Drop Icon2 Screenshot
@@ -345,7 +345,7 @@ Feature: Documentation for Accordion Block Settings
     And User clicks on the 'Icon' block to select it
     And User clicks on 'Icon' option from General Setting
     Then User captures screenshot for "Icon2"
-    And User completes screenshot capture and triggers comparison for 'Drag and Drop Iframe'
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Icon'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation @DeleteCreatedTestApp
   Scenario: Documentation -Drag And Drop Icon3 Screenshot
@@ -368,4 +368,4 @@ Feature: Documentation for Accordion Block Settings
     And User selects the Appearance tab
     And User selects '#7c2222' as the HEX color value
     Then User captures screenshot for "Icon3"
-    And User completes screenshot capture and triggers comparison for 'Drag and Drop Iframe'
+    And User completes screenshot capture and triggers comparison for 'Drag and Drop Icon'
