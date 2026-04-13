@@ -1,11 +1,12 @@
 package aicore.steps.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -221,7 +222,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_blocks_if_it_is_not_selected_by_default() {
 		blocksPage.clickOnBlocksOption();
 	}
-
 
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
@@ -843,12 +843,9 @@ public class CreateAppUsingDragAndDropSteps {
 		String actualImagePath = basePath + "actualChart.png";
 		String expectedImagePath = basePath + "expectedChart.png";
 		String diffImagePath = basePath + "diffChart.png";
-
 		blocksPage.closeBlocksOption();
 		blocksPage.takeChartScreenshot(actualImagePath, toolName);
-
 		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
-
 		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
 	}
 
@@ -983,4 +980,5 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_from_the_sort_by_dropdown(String sortByOption) {
 		appPage.selectSortByOption(sortByOption);
 	}
+
 }

@@ -6,7 +6,7 @@ Feature: Create app using Update diabetesTemplate
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
-     And User clicks on file upload icon
+    And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
