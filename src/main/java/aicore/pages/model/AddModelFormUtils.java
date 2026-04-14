@@ -240,6 +240,7 @@ public class AddModelFormUtils {
 		case "AWS Access Key":
 		case "AWS Secret Access Key":
 		case "Azure Open AI Key":
+		case "Perplexity API Key":
 			fieldLocator = page.locator(
 					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
@@ -304,6 +305,7 @@ public class AddModelFormUtils {
 		case "OpenAI API Key":
 		case "AWS Access Key":
 		case "AWS Secret Access Key":
+		case "Perplexity API Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
@@ -366,6 +368,7 @@ public class AddModelFormUtils {
 		case "API Key":
 		case "AWS Access Key":
 		case "AWS Secret Access Key":
+		case "Perplexity API Key":
 		case "Azure Open AI Key":
 			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName));
 			fieldType = "Credential";
