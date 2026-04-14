@@ -29,6 +29,19 @@ public abstract class AbstractAddCatalogPageBase {
 		return AddCatalogPageBaseUtils.isIconVisible(page, catalog, sectionName, optionName);
 	}
 
+	// Overloaded methods for catalogs without section/group names
+	public boolean verifyOptionIsVisible(String catalog, String optionName) {
+		return AddCatalogPageBaseUtils.verifyOptionIsVisible(page, catalog, optionName);
+	}
+
+	public Locator getIconByLabel(String catalog, String optionName) {
+		return AddCatalogPageBaseUtils.getIconByLabel(page, catalog, optionName);
+	}
+
+	public boolean isIconVisible(String catalog, String optionName) {
+		return AddCatalogPageBaseUtils.isIconVisible(page, catalog, optionName);
+	}
+
 	public boolean isSearchBarPresent() {
 		return AddCatalogPageBaseUtils.isSearchBarPresent(page);
 	}
