@@ -1,11 +1,12 @@
 package aicore.steps.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -197,6 +198,48 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.selectAppCardsView(view);
 	}
 
+	@And("User clicks on Edit button in the setting page")
+	public void user_Clicks_OnEditButton() {
+		appPage.clickOnEditButtoninSettings();
+	}
+
+	@And("User add Tags {string} in app settings and presses Enter")
+	public void user_add_tags_in_app_settings_and_presses_enter(String tags) {
+		String[] tagsArray = tags.split(", ");
+		for (String tag : tagsArray) {
+			appPage.enterTagNameinAppSettings(tag);
+		}
+	}
+
+	@And("User enters the Domains as {string} in the app settings and presses Enter")
+	public void user_enters_the_domains_as_in_the_app_settings_and_presses_Enter(String domainNames) {
+		String[] domainNamesArray = domainNames.split(", ");
+		for (String domainName : domainNamesArray) {
+			appPage.enterDomainNameinAppSettings(domainName);
+		}
+	}
+
+	@And("User selects {string} from the Data Classification in the app settings")
+	public void user_selects_from_the_data_classification_in_the_app_settings(String dataClassificationOptions) {
+		String[] dataClassificationOptionsArray = dataClassificationOptions.split(", ");
+		for (String option : dataClassificationOptionsArray) {
+			appPage.selectDataClassificationOptioninAppSettings(option);
+		}
+	}
+
+	@And("User selects {string} from the Data Restrictions in the app settings")
+	public void user_selects_from_the_data_restrictions_in_the_app_settings(String dataRestrictionsOptions) {
+		String[] dataRestrictionsOptionsArray = dataRestrictionsOptions.split(", ");
+		for (String option : dataRestrictionsOptionsArray) {
+			appPage.selectDataRestrictionsOptioninAppSettings(option);
+		}
+	}
+
+	@And("User clicks on Submit button in the app settings")
+	public void user_clicks_on_submit_button_in_the_app_settings() {
+		appPage.clickOnSubmitButtoninAppSettings();
+	}
+
 	@When("User clicks on {string} icon")
 	public void user_clicks_the_icon(String icon) {
 		copiedId = appPage.getCopiedId(icon);
@@ -221,7 +264,6 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_clicks_on_blocks_if_it_is_not_selected_by_default() {
 		blocksPage.clickOnBlocksOption();
 	}
-
 
 	@When("User drags the {string} block and drops it on the page")
 	public void user_drags_the_block_and_drops_it_on_the_page(String blockName) {
@@ -837,18 +879,13 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
 		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
 		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
-
 		String basePath = "screenshots/" + chartFolder + "/" + toolFolder + "/";
-
 		String actualImagePath = basePath + "actualChart.png";
 		String expectedImagePath = basePath + "expectedChart.png";
 		String diffImagePath = basePath + "diffChart.png";
-
 		blocksPage.closeBlocksOption();
 		blocksPage.takeChartScreenshot(actualImagePath, toolName);
-
 		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
-
 		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
 	}
 
@@ -983,4 +1020,21 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_selects_from_the_sort_by_dropdown(String sortByOption) {
 		appPage.selectSortByOption(sortByOption);
 	}
+
+	@And("User drag the {string} block")
+	public void and_user_drag_the_block(String blockName) {
+		blocksPage.mouseHoverOnBlock(blockName);
+		blocksPage.dragBlock(blockName);
+	}
+
+	@And("User clicks on {string} option from General Setting")
+	public void user_clicks_on_icon_option_from_general_setting(String optionName) {
+		blocksPage.clickOnIconOptionFromGeneralSetting(optionName);
+	}
+
+	@And("User select value as {string} for {string} option from General Setting")
+	public void user_select_value_as_for_option_from_general_setting(String value, String optionName) {
+		blocksPage.selectValueForsettingOption(value, optionName);
+	}
+
 }

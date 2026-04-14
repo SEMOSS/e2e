@@ -70,7 +70,11 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
 	private static final String CHIP_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Chip";
+	private static final String ICON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Icon";
 
+	private static final String IFRAME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Iframe";
+	private static final String IMAGE_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Image";
+	private static final String PROGRESS_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Progress";
 	// drag and dropped blocks on page
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	private static final String DROPPED_TEXT_BLOCK_XPATH = "//p[text()='Hello world']";
@@ -84,7 +88,11 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
 	private static final String DROPPED_BUTTON_BLOCK_XPATH = "//button[span[text()='Submit']]";
 	private static final String DROPPED_CHIP_BLOCK_XPATH = "//div[@data-block='chip--1']";
+	private static final String DROPPED_ICON_BLOCK_XPATH = "//div[@data-block='icon--1']";
 
+	private static final String DROPPED_IFRAME_BLOCK_XPATH = "//span[@data-block='iframe--1']";
+	private static final String DROPPED_IMAGE_BLOCK_XPATH = "//div[@data-block='image--1']";
+	private static final String DROPPED_PROGRESS_BLOCK_XPATH = "//div[@data-block='progress--1']";
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
@@ -114,7 +122,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String COLOR_PALETTE_XPATH = "//span[text()='Color Palette']";
 	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//span[text()='+ Add Custom Color Palette']";
 	private static final String COLOR_PALETTE_ICON_XPATH = "//*[name()='svg'][@data-testid='FormatColorFillIcon']";
-	private static final String SELECT_RED_COLOR_XPATH = "//div[@title='#D0021B']";
+	private static final String SELECT_RED_COLOR_XPATH = "//input[@value='#d23323']";
 	private static final String SELECT_BLUE_COLOR_XPATH = "//div[@title='#4A90E2']";
 	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
@@ -153,7 +161,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
-	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
+	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}'] | //div[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
 	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
 	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
@@ -164,6 +172,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
 	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
+	private static final String ICON_OPTION_FROM_GENERAL_SETTING_XPATH = "//p[text()='{optionName}']/following::input";
+	private static final String SETTING_OPTION_VALUE_INPUT_XPATH = "//p[text()='{optionName}']/following::input[@value='{valueName}']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -233,8 +243,10 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void enterTextInTextField(Page page, String text) {
-		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").click();
-		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting")).getByPlaceholder("Enter text or select query").fill(text);
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").fill(text);
 	}
 
 	public static void clickOnDroppedBlock(Page page, String blockName) {
@@ -288,8 +300,19 @@ public class DragAndDropBlocksPageUtils {
 		case "Button":
 			DroppedBlockLocator = page.locator(DROPPED_BUTTON_BLOCK_XPATH);
 			break;
-		case "Chip":	
+		case "Chip":
 			DroppedBlockLocator = page.locator(DROPPED_CHIP_BLOCK_XPATH);
+			break;
+		case "Icon":
+			DroppedBlockLocator = page.locator(DROPPED_ICON_BLOCK_XPATH);
+		case "Iframe":
+			DroppedBlockLocator = page.locator(DROPPED_IFRAME_BLOCK_XPATH);
+			break;
+		case "Image":
+			DroppedBlockLocator = page.locator(DROPPED_IMAGE_BLOCK_XPATH);
+			break;
+		case "Progress":
+			DroppedBlockLocator = page.locator(DROPPED_PROGRESS_BLOCK_XPATH);
 			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
@@ -388,6 +411,18 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Chip":
 			blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
+			break;
+		case "Icon":
+			blockLocator = page.getByTestId(ICON_BLOCK_DATA_TESTID);
+			break;
+		case "Iframe":
+			blockLocator = page.getByTestId(IFRAME_BLOCK_DATA_TESTID);
+			break;
+		case "Image":
+			blockLocator = page.getByTestId(IMAGE_BLOCK_DATA_TESTID);
+			break;
+		case "Progress":
+			blockLocator = page.getByTestId(PROGRESS_BLOCK_DATA_TESTID);
 			break;
 		default:
 			isValidBlock = false;
@@ -821,9 +856,9 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(ADD_CUSTOME_COLOR_PALETTE_XPATH).click();
 		page.getByPlaceholder("Enter Palette Name").fill("MyPalette");
 		page.locator(COLOR_PALETTE_ICON_XPATH).click();
-		page.locator(SELECT_RED_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#d30d11");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
-		page.locator(SELECT_BLUE_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#0d14d3");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
 		page.locator(ADD_COLOR_XPATH).click();
 		return page.locator(ADDED_COLOR_PALETTE_XPATH).first().isVisible();
@@ -1086,7 +1121,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void selectActionOptionFromDropdown(Page page, String actionOption) {
-		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName(actionOption).setExact(true));
+		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX,
+				new Page.GetByRoleOptions().setName(actionOption).setExact(true));
 		AICorePageUtils.waitFor(queryCombobox);
 		if (!queryCombobox.isVisible()) {
 			throw new AssertionError("Action dropdown for '" + actionOption + "' is not visible");
@@ -1102,4 +1138,26 @@ public class DragAndDropBlocksPageUtils {
 		}
 		optionLocator.click();
 	}
+
+	public static void dragBlock(Page page, String blockName) {
+		Locator block = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).first();
+		CommonUtils.moveMouseToCenterWithMargin(page, block, -1, 5);
+	}
+
+	public static void clickOnIconOptionFromGeneralSetting(Page page, String optionName) {
+		Locator selectOption = page.locator(ICON_OPTION_FROM_GENERAL_SETTING_XPATH.replace("{optionName}", optionName))
+				.first();
+		selectOption.click();
+		selectOption.clear();
+	}
+
+	public static void selectValueForsettingOption(Page page, String value, String optionName) {
+		Locator valueInput = page.locator(ICON_OPTION_FROM_GENERAL_SETTING_XPATH.replace("{optionName}", optionName))
+				.first();
+		valueInput.click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("IconShow Badge"))
+				.getByRole(AriaRole.COMBOBOX).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
+	}
+
 }

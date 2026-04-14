@@ -333,4 +333,16 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.selectOptionFromActionList(page, optionName);
 	}
 
+	public void dragBlock(String blockName) {
+		DragAndDropBlocksPageUtils.dragBlock(page, blockName);
+	}
+
+	public void clickOnIconOptionFromGeneralSetting(String optionName) {
+		DragAndDropBlocksPageUtils.clickOnIconOptionFromGeneralSetting(page, optionName);
+	}
+
+	public void selectValueForsettingOption(String value, String optionName) {
+		DragAndDropBlocksPageUtils.selectValueForsettingOption(page, value, optionName);
+	}
+
 }
