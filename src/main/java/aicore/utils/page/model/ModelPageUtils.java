@@ -22,8 +22,6 @@ public class ModelPageUtils {
 
 	private static final String MODEL_TOAST_MESSAGE_TESTID = "//div[text()='{toastMessage}']";
 
-	private static final String VARIABLE_NAME_DATA_TESTID = "importForm-VAR_NAME-textField";
-	private static final String MODEL_TOAST_MESSAGE = "Successfully added LLM to catalog";
 	private static final String SUBMIT_BUTTON_DATA_TESTID = "importForm-submit-btn";
 	private static final String SMSS_TAB_XPATH = "engineLayout-SMSS-tab";
 

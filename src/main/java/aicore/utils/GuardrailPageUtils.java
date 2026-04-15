@@ -13,7 +13,6 @@ import com.microsoft.playwright.options.AriaRole;
 public class GuardrailPageUtils {
 	private static final String ADD_GUARDRAIL_BUTTON_DATA_TESTID = "engineIndex-add-Guardrail-btn";
 	private static final String EXPORT_BUTTON_DATA_TESTID = "engineHeader-Guardrail-export-btn";
-	private static final String TOAST_MESSAGE_DATA_TESTID = "notification-success-message";
 	private static final String GUARDRAIL_TOAST_MESSAGE_XPATH = "//div[text()='{toastMessage}']";
 	private static final String SELECT_GUARDRAIL_CATALOG_XPATH = "//p[text()='{catalogName}']";
 

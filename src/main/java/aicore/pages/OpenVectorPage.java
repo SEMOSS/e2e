@@ -19,8 +19,6 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	private static final String CONFIRMATION_POPUP_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialog-paperWidthSm')]//div//button[contains(@class,'MuiButton-containedSizeMedium')]";
 	private static final String VECTOR_CARD_XPATH = "//p[text()='{catalogName}']";
-	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Vector']";
-	private static final String VECTOR_ID = "//*[@data-testid=\"ContentCopyOutlinedIcon\"]/../..";
 	private static final String COPY_VECTOR_ID = "engineHeader-copy-Vector-id-btn";
 	private static final String COPIED_TOAST_DATA_XPATH = "//div[text()='ID copied to clipboard']";
 	private static final String VECTOR_DESCRIPTION_XPATH = "//*[@id='home__content']//div//h6[contains(@class,'MuiTypography-subtitle1')]";
@@ -80,11 +78,10 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public boolean verifyToastMessage(String expectedToastMessage) {
-		Locator alert = page.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage));
+		page.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage));
 		String actualToastMessage = page
 				.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage)).textContent().trim();
 		return actualToastMessage.equals(expectedToastMessage);
-		// return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
 	public void copyVectorId() {

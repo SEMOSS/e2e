@@ -12,14 +12,12 @@ public class UserManagementPageUtils {
 
 	private static final String ADD_MEMBER_XPATH = "//button[text()='Add Members']";
 	private static final String ADD_MEMBER_TYPE_XPATH = "//label[text()='Type']/parent::div//button";// "//label[text()='Type']/parent::div";
-	private static final String ADD_MEMBER_TYPE_NATIVE_XPATH = "//option[text()='NATIVE']";
 	private static final String ADD_MEMBER_USERID_XPATH = "//label[normalize-space()='User Id *']/parent::div//input[@data-slot='input']";
 	private static final String ADD_MEMBER_NAME_XPATH = "//label[text()='Name *']/parent::div//input";
 	private static final String ADD_MEMBER_EMAIL_XPATH = "//label[text()='Email']/parent::div/input";
 	private static final String ADD_MEMBER_PHONE_NUMBER_XPATH = "//label[text()='Phone Number']/parent::div/input";
 	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/parent::div/input";
 	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//button[text()='Save']";
-	private static final String ADD_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully added user']";
 	private static final String EDIT_ICON_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td//*[name()='svg'][@data-testid='EditIcon']";
 	private static final String MODEL_DROPDOWN_XPATH = "//div[text()='None']";
 	private static final String TOKEN_VALUE_XPATH = "//li[text()='{dropdown_value}']";
@@ -33,7 +31,6 @@ public class UserManagementPageUtils {
 	private static final String DELETE_SELECTED_BUTTON_XPATH = "//button[text()='Delete Selected']";
 	private static final String DELETE_POPUP_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String SEARCH_ICON_XPATH = "//input[@placeholder='Search Users']";
-	private static final String SEARCH_BAR_XPATH = "//div[@role=\"region\"]//input[@placeholder='Search']";
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
