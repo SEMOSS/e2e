@@ -24,7 +24,7 @@ public class SettingsPageUtils {
 	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
 	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
 	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
-	private static final String TAB_XPATH = "//button[normalize-space()='{tabName}']";
+	private static final String TAB_XPATH = "//button[contains(normalize-space(),'{tabName}')]";
 	private static final String SECTION_DATA_TESTID = "engineLayout-{sectionName}-tab";
 
 	public static boolean checkAdminButton(Page page) {

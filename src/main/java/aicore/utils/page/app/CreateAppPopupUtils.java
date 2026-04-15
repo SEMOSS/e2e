@@ -18,7 +18,7 @@ public class CreateAppPopupUtils {
 	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
 	private static final String CREATE_BUTTON_XPATH = "//button[span[text()='Create']]";
 	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
-	private static final String SELECT_APP_XPATH = "//span[text()='{Select_App}']";
+	private static final String SELECT_APP_XPATH = "//*[text()='{Select_App}']";
 	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//div";
 	public static List<String> createdAppNames = new ArrayList<>();
 	private static final String BREADCRUMB_LINK_XPATH = "//a//div[text()='{appName}']";
