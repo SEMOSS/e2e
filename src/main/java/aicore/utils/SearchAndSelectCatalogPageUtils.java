@@ -14,5 +14,6 @@ public class SearchAndSelectCatalogPageUtils {
 	public static void searchCatalog(Page page, String catalogName) {
 		page.getByTestId("search-bar").click();
 		page.getByTestId("search-bar").fill(catalogName);
+		page.waitForTimeout(300);
 	}
 }
