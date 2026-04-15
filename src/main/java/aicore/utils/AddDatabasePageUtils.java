@@ -342,16 +342,6 @@ public class AddDatabasePageUtils {
 		return saveButton.isDisabled();
 	}
 
-	public static void clickOnSaveButtonOfMetadataTab(Page page) {
-		Locator saveBtn = page.getByTestId("engineMetadata-save-btn");
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForSelector("[data-testid='engineMetadata-save-btn']:not([disabled])");
-		saveBtn.scrollIntoViewIfNeeded();
-		saveBtn.focus();
-		saveBtn.click();
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-	}
-
 	public static boolean verifyDatabaseCatalogPage(Page page) {
 		Locator databaseCatalogHeader = page.locator(DATABASE_CATALOG_HEADER_XPATH);
 		AICorePageUtils.waitFor(databaseCatalogHeader);
