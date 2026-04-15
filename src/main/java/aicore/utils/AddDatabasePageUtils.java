@@ -373,4 +373,15 @@ public class AddDatabasePageUtils {
 	public static void clickOnRunQueryButton(Page page) {
 		page.getByTestId(RUN_QUER_BUTTON_DATATESTID).click();
 	}
+
+	/**
+	 * Button used to acknowledge a database with an empty metamodel
+	 * @param page
+	 */
+	public static void clickOnEmptyMetaModelButton(Page page) {
+		String dataTestId = "model-upload-empty-yes-button";
+		Locator btn = page.getByTestId(dataTestId);
+		AICorePageUtils.waitFor(btn);
+		btn.click();
+	}
 }

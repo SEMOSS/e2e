@@ -1,5 +1,8 @@
 package aicore.pages.home;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -7,6 +10,8 @@ import com.microsoft.playwright.options.AriaRole;
 import aicore.utils.AICorePageUtils;
 
 public class MainMenuUtils {
+	private static final Logger logger = LogManager.getLogger(MainMenuUtils.class);
+
 	// menu
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
 	private static final String SEMOSS_MENU_DATA_TESTID = "MenuRoundedIcon";
@@ -28,6 +33,7 @@ public class MainMenuUtils {
 	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
 
 	public static void openMainMenu(Page page) {
+		logger.info("OPEN MAIN MENU");
 		// check if menu is open
 		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		page.waitForTimeout(800);
@@ -101,6 +107,7 @@ public class MainMenuUtils {
 	}
 
 	public static void clickOnOpenDatabase(Page page) {
+		logger.info("CLICK ON OPEN DATABASE");
 		Locator locator = page.getByTestId(DATABASE_MENU_BUTTON_DATA_TEST_ID);
 		locator.click();
 		MainMenuUtils.closeMainMenu(page);
