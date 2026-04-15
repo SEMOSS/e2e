@@ -646,4 +646,40 @@ public class AddModelSteps {
 	public void user_clicks_on_make_public_button(String catalogName) {
 		openModelPage.clickOnMakeCatalogPublicButton(catalogName);
 	}
+
+	@Then("User should see the catalog ID on the catalog card")
+	public void User_should_see_the_catalog_ID_on_the_catalog_card() {
+		boolean isIdVisible = openModelPage.validateIDisDisplayedOnCatalogCard();
+		Assertions.assertTrue(isIdVisible, "Catalog ID is not visible on the catalog card");
+	}
+
+	@Then("User should see the tags {string} on the {string} catalog card")
+	public void User_should_see_the_tags_on_the_catalog_card(String expectedTags, String catalogName) {
+		String[] tagArray = expectedTags.split(", ");
+		List<String> actualTagList = openModelPage.verifyTagNamesDisplayedOnCard(catalogName);
+		List<String> expectedTagList = Arrays.asList(tagArray);
+		Assertions.assertEquals(expectedTagList, actualTagList);
+	}
+
+	@Then("User should see the catalog created date on the catalog card")
+	public void User_should_see_the_catalog_created_date_on_the_catalog_card() {
+		boolean isCreatedDateVisible = openModelPage.isCreatedDateVisibleOnCard();
+		Assertions.assertTrue(isCreatedDateVisible, "Catalog created date is not visible on the catalog card");
+	}
+
+	@Then("User should see the following icons on the catalog card")
+	public void User_should_see_the_following_icons_on_the_catalog_card(DataTable dataTable) {
+		List<String> icons = dataTable.asList(String.class);
+		for (String icon : icons) {
+			boolean isIconVisible = openModelPage.isIconVisibleOnCatalogCard(icon);
+			Assertions.assertTrue(isIconVisible, "Icon '" + icon + "' is not visible on the catalog card");
+		}
+	}
+
+	@When("User get the catalog ID")
+	public void User_get_the_catalog_ID() {
+		String id = openModelPage.getCatalogID();
+		Assertions.assertNotNull(id, "Catalog ID should not be null");
+	}
+
 }

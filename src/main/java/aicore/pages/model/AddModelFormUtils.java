@@ -14,8 +14,8 @@ public class AddModelFormUtils {
 	private static final String SELECT_TYPE_FOR_MODEL_DATA_TESTID = "importForm-MODEL_TYPE-select";
 	private static final String MODEL_TYPE_DATATESTID = "//*[@data-testid=\"connect-to-{modelType}-tab\"]";
 	private static final String SELECT_MODEL_XPATH = "//p[text()='{ModelName}']";
-	private static final String CATALOG_NAME_DATA_TESTID = "importForm-Catalog-Name-textField";
-	private static final String OPEN_AI_KEY_DATA_TESTID = "model-importForm-Open-AI-Key-password";
+	private static final String CATALOG_NAME_DATA_TESTID = "model-import-form-input-NAME";
+	private static final String OPEN_AI_KEY_DATA_TESTID = "model-import-form-input-OPEN_AI_KEY";
 	private static final String CREATE_MODEL_BUTTON_XPATH = "//button[@type='submit']";
 
 	private static final String MAX_TOKENS_DATA_TESTID = "importForm-MAX_TOKENS-textField";
