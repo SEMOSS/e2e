@@ -83,22 +83,23 @@ public class AddDatabaseFormUtils {
 		}
 		schemaNameInput.fill(schemaName);
 	}
-
-	public static void enterJDBCUrl(Page page, String jdbcUrl, String dbType) {
-		Locator jdbcUrlLocator = page.locator(JDBC_URL_XPATH);
+	
+	public static String getJDBCUrl(String dbType, String jdbcUrl) {
 		String jdbcUrlPrefix = "jdbc:" + dbType + ":";
 		String workspaceRoot = System.getProperty("user.dir");
 		Path dbPath = Paths.get(workspaceRoot, "src", "test", "resources", "data", "Database", jdbcUrl);
 		String dbAbsolutePath = dbPath.toAbsolutePath().toString().replace("\\", "/");
+		String jdbcUrlInput = jdbcUrlPrefix + dbAbsolutePath;
+		return jdbcUrlInput;
+	}
 
+	public static void enterJDBCUrl(Page page, String jdbcUrl) {
+		logger.info("ENTER JDBC URL: " + jdbcUrl);
+		Locator jdbcUrlLocator = page.locator(JDBC_URL_XPATH);
 		if (!jdbcUrlLocator.isVisible() || !jdbcUrlLocator.isEnabled()) {
 			throw new AssertionError("JDBC URL input field is not visible or enabled.");
 		}
-		
-		String jdbcUrlInput = jdbcUrlPrefix + dbAbsolutePath;
-		jdbcUrlLocator.fill(jdbcUrlInput);
-		logger.info("ENTER JDBC URL: " + jdbcUrlInput);
-
+		jdbcUrlLocator.fill(jdbcUrl);
 	}
 
 	public static void enterUserName(Page page, String userName) {

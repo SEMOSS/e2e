@@ -51,7 +51,8 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void addJDBCUrl(String jdbcUrl, String dbType) {
-		AddDatabaseFormUtils.enterJDBCUrl(page, jdbcUrl, dbType);
+		String url = AddDatabaseFormUtils.getJDBCUrl(jdbcUrl, dbType);
+		AddDatabaseFormUtils.enterJDBCUrl(page, url);
 	}
 
 	public void clickOnApplyButton() {
