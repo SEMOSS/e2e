@@ -374,4 +374,11 @@ public class AddDatabasePageUtils {
 		AICorePageUtils.waitFor(btn);
 		btn.click();
 	}
+
+	public static void clickOnOverview(Page page) {
+		String dataTestId = "engineLayout-Overview-tab";
+		Locator btn = page.getByTestId(dataTestId);
+		AICorePageUtils.waitFor(btn);
+		btn.click();
+	}
 }

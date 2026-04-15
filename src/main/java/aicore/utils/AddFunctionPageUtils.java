@@ -110,6 +110,7 @@ public class AddFunctionPageUtils {
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
+		//TODO duplicate code in CommonUtils.navigateAndDeleteCatalog!!!!!!
 		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
 		searchBar.fill(catalogName);

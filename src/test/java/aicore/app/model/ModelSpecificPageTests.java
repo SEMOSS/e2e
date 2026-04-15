@@ -10,7 +10,6 @@ import com.microsoft.playwright.Page;
 import aicore.base.GenericSetupUtils;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.CommonUtils;
