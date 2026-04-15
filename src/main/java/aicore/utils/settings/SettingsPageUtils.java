@@ -11,7 +11,6 @@ public class SettingsPageUtils {
 
 	///// SETTING PAGE
 	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "//button[text()='Admin Off']";
-	private static final String ADMIN_BUTTON_OFF_XPATH = "//*[local-name()='svg'][contains(@class,'MuiSvgIcon-colorDisabled')]";
 	private static final String CARD_XPATH = "//div[text()='{cardName}']/parent::div[@data-slot='card-header']";
 	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin on']";
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";

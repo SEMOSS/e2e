@@ -46,6 +46,7 @@ public final class ConfigUtils {
 		String value = config.get(key);
 		if (value == null) {
 			value = System.getenv(key);
+			logger.info(value);
 		}
 		if (value == null || value.trim().isEmpty()) {
 			logger.error("Value of key is empty: {}", key);

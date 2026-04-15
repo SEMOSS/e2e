@@ -5,9 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.Tracing.StopOptions;
@@ -18,8 +15,6 @@ import io.cucumber.java.Scenario;
 
 public class GenericTeardownUtils {
 
-	private static final Logger logger = LogManager.getLogger(GenericTeardownUtils.class);
-
 	public static void saveVideo(Scenario scenario, Path p) throws IOException {
 		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO))) {
 			String name = scenario.getName();
@@ -27,7 +22,6 @@ public class GenericTeardownUtils {
 			Path path = Paths.get("videos", videoName);
 			Files.move(p, path);
 		}
-
 	}
 
 	public static void saveTrace(Scenario scenario, BrowserContext context) {
@@ -39,5 +33,4 @@ public class GenericTeardownUtils {
 			context.tracing().stop(so);
 		}
 	}
-
 }

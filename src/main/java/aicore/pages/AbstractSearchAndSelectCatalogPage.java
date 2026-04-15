@@ -13,6 +13,5 @@ public abstract class AbstractSearchAndSelectCatalogPage {
 
 	public void searchCatalog(String catalogName) {
 		SearchAndSelectCatalogPageUtils.searchCatalog(page, catalogName);
-
 	}
 }

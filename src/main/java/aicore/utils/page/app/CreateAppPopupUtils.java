@@ -98,6 +98,7 @@ public class CreateAppPopupUtils {
 		enterAppDescription(page, appDescription);
 		enterTags(page, appTags);
 		clickOnCreateButton(page);
+		page.waitForTimeout(1000); // Wait for the app to be created and appear in the list
 		createdAppNames.add(appName);
 	}
 

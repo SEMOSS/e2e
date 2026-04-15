@@ -21,7 +21,6 @@ public class CaptureScreenShotSteps {
 
 	private CaptureScreenShotPage captureScreenShotPage;
 	private String currentFolder;
-	private String subFolder;
 	private final Page page;
 
 	public CaptureScreenShotSteps() {
@@ -31,7 +30,6 @@ public class CaptureScreenShotSteps {
 
 	@Given("User captures documentation screenshot for {string}")
 	public void initializeBaselineFolder(String subFolderName) {
-		this.subFolder = subFolderName;
 		this.currentFolder = FolderUtils.getCurrentBaselineFolder(subFolderName);
 	}
 

@@ -2,9 +2,6 @@ package aicore.steps;
 
 import java.io.IOException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
@@ -17,7 +14,6 @@ import io.cucumber.java.en.When;
 
 public class LoginSteps {
 
-	private static final Logger logger = LogManager.getLogger(LoginSteps.class);
 	private HomePage homePage;
 
 	public LoginSteps() {

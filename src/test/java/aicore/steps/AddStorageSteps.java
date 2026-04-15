@@ -282,6 +282,8 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@Then("User sees Change Access button")
 	public void user_sees_change_access_button() {
 		boolean flag = storagePage.verifyChangeAccessButton();
+		Assertions.assertTrue(flag, "User sees Change Access button");
+
 	}
 
 	@Then("User click on cancel button")
