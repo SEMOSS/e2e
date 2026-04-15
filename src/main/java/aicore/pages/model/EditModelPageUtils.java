@@ -177,11 +177,17 @@ public class EditModelPageUtils {
 	}
 
 	public static void mouseHoverOnEngineAccessStatusIcon(Page page) {
-		page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1).hover();
+		Locator lockIcon = page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1);
+		AICorePageUtils.waitFor(lockIcon);
+		lockIcon.hover();
 	}
 
 	public static String getEngineAccessStatusTooltipText(Page page, String status) {
-		return page.getByText(status).first().innerText();
+		Locator lockIcon = page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1);
+		lockIcon.hover(new Locator.HoverOptions().setForce(true));
+		Locator tooltip = page.getByRole(AriaRole.TOOLTIP).filter(new Locator.FilterOptions().setHasText(status));
+		AICorePageUtils.waitFor(tooltip);
+		return tooltip.innerText();
 	}
 
 	public static String getCatalogID(Page page) {
