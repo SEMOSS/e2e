@@ -104,7 +104,6 @@ public class SetupHooks {
 		case "@LoginWithAdmin":
 			String adminUser = ConfigUtils.getValue(AICoreTestConstants.ADMIN_USERNAME);
 			String adminPassword = ConfigUtils.getValue(AICoreTestConstants.ADMIN_PASSWORD);
-			logger.info(adminPassword);
 			GenericSetupUtils.login(page, adminUser, adminPassword);
 			break;
 
@@ -134,7 +133,6 @@ public class SetupHooks {
 		default:
 			String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 			String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-			logger.info(nativePassword);
 			GenericSetupUtils.login(page, nativeUser, nativePassword);
 			break;
 		}
