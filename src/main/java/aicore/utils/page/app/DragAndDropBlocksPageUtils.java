@@ -107,7 +107,6 @@ public class DragAndDropBlocksPageUtils {
 	private static final String MY_APPS_TAB_DATA_TESTID = "appCatalogPage-myApps-btn";
 	private static final String APP_BOOKMARK_XPATH = "//button[@aria-label='Add bookmark']";
 	private static final String APP_UNBOOKMARK_XPATH = "//button[@aria-label='Remove bookmark']";
-	private static final String APP_BOOKMARK_SECTION_TEXT = "Bookmarked";
 	private static final String BOOKMARKED_APP_XPATH = "//h3[text()='{appName}']";
 	// App section
 	private static final String APP_DISPALY_APP_SECTION = "//button[@data-testid='appCatalogPage-myApps-btn']/ancestor::div//h3[text()='{appName}']";
@@ -117,13 +116,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID = "appTileCard-{appName}-tile";
 
 	// Bar Chart tool
-	private static final String CONDITIONAL_XPATH = "//span[text()='Conditional']";
 	private static final String BARCHART_ISVISIBLE_XPATH = "//div[@class='echarts-for-react ']";
-	private static final String COLOR_PALETTE_XPATH = "//span[text()='Color Palette']";
 	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//span[text()='+ Add Custom Color Palette']";
 	private static final String COLOR_PALETTE_ICON_XPATH = "//*[name()='svg'][@data-testid='FormatColorFillIcon']";
-	private static final String SELECT_RED_COLOR_XPATH = "//input[@value='#d23323']";
-	private static final String SELECT_BLUE_COLOR_XPATH = "//div[@title='#4A90E2']";
 	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
 	private static final String ADDED_COLOR_PALETTE_XPATH = "//div[normalize-space()='MyPalette']";
@@ -173,7 +168,6 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
 	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
 	private static final String ICON_OPTION_FROM_GENERAL_SETTING_XPATH = "//p[text()='{optionName}']/following::input";
-	private static final String SETTING_OPTION_VALUE_INPUT_XPATH = "//p[text()='{optionName}']/following::input[@value='{valueName}']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);

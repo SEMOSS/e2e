@@ -22,7 +22,6 @@ public class EditModelPageUtils {
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
 	private static final String DETAILS_TEXTBOX_XPATH = "//*[@class='view-lines monaco-mouse-cursor-text']//div";
 	private static final String DESCRIPTION_TEXTBOX_LABEL = "Description";
-	private static final String DOMAIN_TEXTBOX_LABEL = "Domain";
 	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//label[@for='data classification-opt-{option}']//button";
 	private static final String DATA_RESTRICTIONS_CHECKBOX_XPATH = "//label[@for='data restrictions-opt-{option}']//button";
 	private static final String DESCRIPTION_TEXT_DATA_TESTID = "Description";

@@ -57,7 +57,7 @@ public class AddDatabasePageUtils {
 	private static final String CONFIRM_EXPORT_BUTTON_XPATH = "//button[text()='Yes']";
 
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
-		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
+		page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
 		if (sectionName.toLowerCase().equals("advanced settings")) {
 			if (fieldName.toLowerCase().equals("not available")) {
 				return true;
