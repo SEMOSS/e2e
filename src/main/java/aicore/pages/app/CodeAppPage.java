@@ -131,15 +131,35 @@ public class CodeAppPage {
 		CodeAppPageUtils.clickOnBookmarkAppIcon(page);
 	}
 
-	public void clickOnSettingsTab(){
-	 CodeAppPageUtils.clickOnSettingsTab(page);
+	public void clickOnSettingsTab() {
+		CodeAppPageUtils.clickOnSettingsTab(page);
 	}
-	
-	public void clickOnGeneralTab(){
+
+	public void clickOnGeneralTab() {
 		CodeAppPageUtils.clickOnGeneralTab(page);
 	}
-	
+
 	public void clickOnAppsTab() {
 		CodeAppPageUtils.clickOnAppsTab(page);
+	}
+
+	public void clickOnCreateAtIconOnFileSection() {
+		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
+	}
+
+	public void selectAction(String action) {
+		CodeAppPageUtils.selectAction(page, action);
+	}
+
+	public void clickOnUploadButtonToCreateCodeApp(String buttonName) {
+		CodeAppPageUtils.clickOnUploadButtonToCreateCodeApp(page, buttonName);
+	}
+
+	public void clickOnThreeDotIcon(String fileName) {
+		CodeAppPageUtils.clickOnThreeDotIcon(page, fileName);
+	}
+
+	public void userSelectTheOptionFromThreeDotIcon(String optionName) {
+		CodeAppPageUtils.userSelectTheOptionFromThreeDotIcon(page, optionName);
 	}
 }

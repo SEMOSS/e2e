@@ -3,16 +3,18 @@ package aicore.utils.settings;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
+import aicore.pages.home.HomePageUtils;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
-import aicore.utils.HomePageUtils;
 
 public class JobPageUtils {
 
-	private static final String JOBS_TILE_XPATH = "//span[text()='Jobs']";
+	private static final String JOBS_TILE_DATATESTID = "settingsIndexPage-Jobs-card";
 	private static final String NAME_XPATH = "//label[text()='Name']/parent::div/div/input";
 	private static final String PIXEL_XPATH = "//label[text()='Pixel']/parent::div/div/textarea[@aria-invalid=\"false\"]";
-	private static final String JOB_LIST_XPATH = "//div[@title='{jobName}']";
+	private static final String JOB_LIST_XPATH = "//button[text()='{sectionName}' and @aria-selected='true']/ancestor::div/following-sibling::div//div[@title='{jobName}']";
 	private static final String EDIT_ICON_XPATH = "//div[@role='row']//div[@title='{jobName}']/ancestor::div[@role='row']//button[@data-testid='jobsTable-edit-btn']";
 	private static final String EDIT_TAGS_XPATH = "//span[text()='Tags']/ancestor::fieldset/parent::div//input";
 	private static final String ADDED_TAG_XPATH = "//div[contains(text(),'{jobName}')]/following-sibling::div//div//span[text()='{textValue}']";
@@ -33,10 +35,13 @@ public class JobPageUtils {
 	private static final String NO_JOB_HISTORY_MESSAGE_XPATH = "//table//tbody//tr//td[text()='{message}']";
 	private static final String ADD_BUTTON_DATATESTID = "jobBuilder-add-save-btn";
 	private static final String DELETE_JOB_CONFIRMATION_BUTTON_DATATESTID = "deleteJobModal-delete-btn";
+	private static final String TAB_XPATH = "//button[text()='{tabName}']";
+	private static final String STATUS_TITLE_COUNT_XPATH = "//p[text()='{statusTile}']/parent::div//span";
+	private static final String RUN_JOB_ICON_XPATH = "//div[@title='{jobName}']/ancestor::div[@role='row']//button[@data-testid='jobsTable-play-btn']";
 
 	public static void clickOnJobTile(Page page) {
-		page.locator(JOBS_TILE_XPATH).isVisible();
-		page.locator(JOBS_TILE_XPATH).click();
+		page.getByTestId(JOBS_TILE_DATATESTID).isVisible();
+		page.getByTestId(JOBS_TILE_DATATESTID).click();
 	}
 
 	public static void clickOnAddJobButton(Page page) {
@@ -153,24 +158,23 @@ public class JobPageUtils {
 	}
 
 	public static void createJob(Page page, String name, String value) {
-		HomePageUtils.openMainMenu(page);
-		HomePageUtils.clickOnOpenSettings(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenSettings(page);
 		if (page.locator("//*[local-name()='svg'][contains(@class,'MuiSvgIcon-colorDisabled')]").isVisible()) {
 			page.getByTestId("AdminPanelSettingsOutlinedIcon").click();
 		}
-		page.locator(JOBS_TILE_XPATH).click();
+		page.getByTestId(JOBS_TILE_DATATESTID).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
 		page.locator(NAME_XPATH).fill(name);
 		page.locator(PIXEL_XPATH).fill(value);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
 	}
 
-	public static String verifyJobTitle(Page page, String jobTitle) {
+	public static boolean verifyJobTitle(Page page, String jobTitle, String sectionName) {
 		page.waitForTimeout(1000);
-		Locator actualJobTitle = page.locator(JOB_LIST_XPATH.replace("{jobName}", jobTitle));
-		AICorePageUtils.waitFor(actualJobTitle);
-		actualJobTitle.scrollIntoViewIfNeeded();
-		return actualJobTitle.textContent().trim();
+		Locator actualJobTitle = page
+				.locator(JOB_LIST_XPATH.replace("{sectionName}", sectionName).replace("{jobName}", jobTitle));
+		return actualJobTitle.isVisible();
 	}
 
 	public static void verifyAddedTag(Page page, String expectedText, String jobTitle) {
@@ -242,5 +246,27 @@ public class JobPageUtils {
 		AICorePageUtils.waitFor(historyTableLocator);
 		historyTableLocator.scrollIntoViewIfNeeded();
 		historyTableLocator.click();
+	}
+
+	public static void clickOnTab(Page page, String tabName) {
+		page.locator(TAB_XPATH.replace("{tabName}", tabName)).isVisible();
+		page.locator(TAB_XPATH.replace("{tabName}", tabName)).click();
+	}
+
+	public static String getStatusTileCount(Page page, String statusTile) {
+		// Added reload for Failed Jobs count bcz page needs to be refreshed to get
+		// updated count
+		if (statusTile.equalsIgnoreCase("Failed Jobs")) {
+			page.reload();
+			page.waitForLoadState(LoadState.NETWORKIDLE);
+		}
+		Locator tileCount = page.locator(STATUS_TITLE_COUNT_XPATH.replace("{statusTile}", statusTile));
+		AICorePageUtils.waitFor(tileCount);
+		return tileCount.textContent().trim();
+	}
+
+	public static void clickOnRunJobIcon(Page page, String jobName) {
+		page.locator(RUN_JOB_ICON_XPATH.replace("{jobName}", jobName)).isVisible();
+		page.locator(RUN_JOB_ICON_XPATH.replace("{jobName}", jobName)).click();
 	}
 }

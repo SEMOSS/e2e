@@ -26,54 +26,8 @@ public class CaptureScreenShotPage {
 		CaptureScreenShotUtils.captureScreenshot(page, locators, path);
 	}
 
-	// Generic method for fetching locator lists
 	public List<Locator> getLocatorsForTypeAndName(String elementType, String elementName) {
-		switch (elementType.toLowerCase()) {
-		case "button":
-			return CaptureElementUtils.captureButtonScreenshot(page, elementName);
-		case "tab":
-			return CaptureElementUtils.captureTabScreenshot(page, elementName);
-		case "list item":
-			return CaptureElementUtils.captureListItemScreenshot(page, elementName);
-		case "tile":
-			return CaptureElementUtils.captureTileScreenshot(page, elementName);
-		case "heading":
-			return CaptureElementUtils.captureHeadingScreenshot(page, elementName);
-		case "searchbar":
-			return CaptureElementUtils.captureSearchElementScreenshot(page, elementName);
-		case "copycta":
-			return CaptureElementUtils.captureCopyCTAScreenshot(page, "Copy");
-		case "copyid":
-			return CaptureElementUtils.captureCopyIDScreenshot(page, elementName);
-		case "block":
-			return CaptureElementUtils.captureBlockScreenshot(page, elementName);
-		case "buttontype":
-			return CaptureElementUtils.captureButtonTypeScreenshot(page, elementName);
-		case "apptypetile":
-			return CaptureElementUtils.captureAppTypeTab(page, elementName);
-		case "usetemplatebutton":
-			return CaptureElementUtils.captureUseTemplate(page, elementName);
-		case "testidelement":
-			return CaptureElementUtils.captureElementThroughtDataTestId(page, elementName);
-		case "blocksettingelement":
-			return CaptureElementUtils.captureBlockSettingElementScreenshot(page, elementName);
-		case "section":
-			return CaptureElementUtils.captureSectionScreenshot(page, elementName);
-		case "layerblock":
-			return CaptureElementUtils.captureElementThroughtDataId(page, elementName);
-		case "blocktitle":
-			return CaptureElementUtils.captureElementThroughTitle(page, elementName);
-		case "text":
-			return CaptureElementUtils.captureElementTextScreenshot(page, elementName);
-		case "blocksection":
-			return CaptureElementUtils.captureBlockSectionScreenshot(page, elementName);
-		case "promptcontext":
-			return CaptureElementUtils.capturePromptContextScreenshot(page, elementName);
-		case "label":
-			return CaptureElementUtils.captureLabelElementScreenshot(page, elementName);
-		default:
-			throw new IllegalArgumentException("Unsupported element type: " + elementType);
-		}
+		return CaptureElementUtils.getLocatorsForTypeAndName(page, elementType, elementName);
 	}
 
 	public void capturePageScreenshot(String pageName, String folderName) throws IOException {

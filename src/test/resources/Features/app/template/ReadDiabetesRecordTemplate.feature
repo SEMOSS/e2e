@@ -6,7 +6,7 @@ Feature: Create app using Read diabetes Template
     And User clicks on Open Database
     And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
     When User clicks on Add Database
-     And User clicks on file upload icon
+    And User clicks on file upload icon
     And User uploads the file 'Database/TestDatabase.zip'
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
@@ -22,10 +22,10 @@ Feature: Create app using Read diabetes Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Notebook
     And User clicks on Query name as 'on-page-load'
-     And User selects 'TestDatabase' database from the dropdown
+    And User selects 'TestDatabase' database from the dropdown
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
 
@@ -40,7 +40,7 @@ Feature: Create app using Read diabetes Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Preview app button
     And user selects "4" from "Select Unique ID" Read App dropdown
     Then user sees the record with Unique ID "4"

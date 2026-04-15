@@ -8,7 +8,7 @@ Feature: Create drag and drop  for charts validation
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
     And User opens Main Menu
     And User clicks on Open Database
@@ -24,6 +24,7 @@ Feature: Create drag and drop  for charts validation
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     And User sees the table in the metadata tab
+    And User clicks on Save button of Metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
@@ -38,7 +39,7 @@ Feature: Create drag and drop  for charts validation
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    And User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
+    And User can see 'AGE, BLOODPRESSURE, BMI, DIABETESPEDIGREEFUNCTION, DIABETES_UNIQUE_ROW_IDFK, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns under the fields column
     And User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
@@ -48,22 +49,27 @@ Feature: Create drag and drop  for charts validation
     And User clicks on 'page-1' page
     And User clicks on Blocks if it is not selected by default
 
+  @ApplicationBugFailure
   Scenario Outline: Drag and Drop Charts section '<BLOCK_NAME>' block
     Given User drags the '<BLOCK_NAME>' block and drops it on the page
     When User clicks on the '<BLOCK_NAME>' block to select it
     And User clicks on the Block Settings option
     And User clicks on Data tab
     And User selects the frame from the selected frame dropdown
-    And User drag and drop the 'Age, Glucose' columns to 'Select X Axis, Select Y Axis' fields
+    And User drag and drop the 'AGE, GLUCOSE' columns to 'Select X Axis, Select Y Axis' fields
     And User click on the Tools tab
     And User click on 'Conditional' tool option
     And User validates Conditional using '<CONDITIONAL>'
     And User click on 'Color Palette' tool option
     And User validates Color Palette using '<COLOR_PALETTE>'
     Then User can see 'Color_Palette_Tool' of 'Bar Chart' same as baseline
+    And User clicks on the 'Bar Chart' block to select it
+    And User click on the Tools tab
     And User click on the Edit 'X Axis' option
     And User updates 'X Axis' settings using '<X_AXIS_VALUES>'
     And User can see 'Edit_XAxis_Tool' of 'Bar Chart' same as baseline
+    And User clicks on the 'Bar Chart' block to select it
+    And User click on the Tools tab
     And User click on the Edit 'Y Axis' option
     And User updates 'Y Axis' settings using '<Y_AXIS_VALUES>'
     And User can see 'Edit_YAxis_Tool' of 'Bar Chart' same as baseline

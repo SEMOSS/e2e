@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
@@ -20,72 +19,103 @@ public class AppPageUtils {
 	private static final Logger logger = LogManager.getLogger(AppPageUtils.class);
 
 	public static final String CREATE_NEW_APP_DATA_TEST_ID = "appCatalogPage-create-new-app-btn";
-	public static final String APP_CARD_XPATH = "//div[text()='{appName}']";
-	public static final String APP_DESCRIPTION_XPATH = "//span[text()='{description}']";
-	public static final String OPEN_APP_LINK_XPATH = "//p[text()='{buttonName}']";
+	public static final String APP_CARD_XPATH = "//h3[text()='{appName}']";
+	public static final String APP_DESCRIPTION_XPATH = "//p[text()='{description}']";
+	public static final String OPEN_APP_LINK_XPATH = "//button[text()='{buttonName}']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input ') and @placeholder='Search']";
-	public static final String MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID = "MoreVertIcon";
+	public static final String MORE_VERTICAL_OPTIONS_ICON_XPATH = "//button[@aria-label='More options']";
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
-	public static final String ID_COPY_TOAST_MESSAGE_DATATESTID = "notification-success-message";
-	public static final String MAKE_PUBLIC_BUTTON_XPATH = "//span[contains(@class,'MuiSwitch-root MuiSwitch')]//input[@type='checkbox']";
-	public static final String DELETE_APP_CONFIRMATION_BUTTON_XPATH = "//button//span[text()='{name}']";
-	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/ancestor::li/following-sibling::div//p[text()='{filterValue}']";
-	private static final String VIEW_DETAILS_BUTTON_XPATH = "//p[text()='{buttonName}']";
-	private static final String APP_BOOKMARK_ICON_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkBorderIcon']";
+	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
+	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/parent::button/following-sibling::div//span[text()='{filterValue}']";
+	private static final String INFO_BUTTON_XPATH = "//a[text()='{buttonName}']";
+	private static final String APP_BOOKMARK_ICON_XPATH = "//button[@aria-label='Add bookmark']";
 	private static final String PUBLISHED_DATE_XPATH = "//p[text()='{publishedDate}']";
 	private static final String LAST_EDITED_DATE_XPATH = "//p[text()='{lastEditedDate}']";
+	private static final String MORE_VERTICAL_OPTIONS_XPATH = "//div[text()='{optionName}']";
+	private static final String FILTER_OPTION_XPATH = "//button[@data-slot='popover-trigger']";
+	private static final String APPS_NAME_XPATH = "//button//h3";
+	private static final String SORT_BY_DROPDOWN_XPATH = "[aria-label='Sort By']";
+	private static final String SORT_BY_OPTION_XPATH = "//div[@role='option']//span[text()='{optionName}']";
+	private static final String CARDS_VIEW_OPTIONS_XPATH = "//button[@aria-label='{view}']";
+	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
+	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//span[text()='{option}']";
+	private static final String APP_SETTINGS_SUBMIT_TESTID = "save";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
 	}
 
 	public static void searchApp(Page page, String appName, String timestamp) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(appName + " " + timestamp);
+		page.getByLabel("Search apps").click();
+		page.getByLabel("Search apps").fill(appName + " " + timestamp);
 		page.waitForTimeout(500);
 	}
 
+	public static void selectAppCardsView(Page page, String view) {
+		page.locator(CARDS_VIEW_OPTIONS_XPATH.replace("{view}", view)).click();
+	}
+
+	public static void clickOnEditButtoninSettings(Page page) {
+		page.getByTestId("appDetail-edit-btn").click();			
+	}
+
+	public static void enterTagNameinAppSettings(Page page, String tagName) {
+		Locator enterTag = page.getByTestId("tags");
+		enterTag.scrollIntoViewIfNeeded();
+		enterTag.click();
+		enterTag.fill(tagName);
+		enterTag.press("Enter");
+	}
+
+	public static void enterDomainNameinAppSettings(Page page, String domainName) {
+		Locator enterDomain = page.getByPlaceholder("Press enter to add domain");
+		enterDomain.scrollIntoViewIfNeeded();
+		enterDomain.fill(domainName);
+		enterDomain.press("Enter");
+	}
+
+	public static void selectDataClassificationOptioninAppSettings(Page page, String option) {
+		Locator selectCheckbox = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", option));
+		selectCheckbox.scrollIntoViewIfNeeded();
+		selectCheckbox.click();
+	}
+
+	public static void selectDataRestrictionsOptioninAppSettings(Page page, String option) {
+		Locator selectCheckbox = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", option));
+		selectCheckbox.scrollIntoViewIfNeeded();
+		selectCheckbox.click();
+	}
+
+	public static void clickOnSubmitButtoninAppSettings(Page page) {
+		Locator submitButton = page.getByTestId(APP_SETTINGS_SUBMIT_TESTID);
+		submitButton.scrollIntoViewIfNeeded();
+		submitButton.click();
+	}
+
 	public static void searchAppId(Page page, String appId) {
-		page.getByLabel("Search").click();
-		page.getByLabel("Search").fill(appId);
+		page.getByLabel("Search apps").click();
+		page.getByLabel("Search apps").fill(appId);
 	}
 
 	public static void clickOnAppCard(Page page, String appName, String timestamp) {
 		String expectedAppName = appName + " " + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
 		AICorePageUtils.waitFor(appCard);
-		// Locator anchor = page.locator(OPEN_APP_LINK_XPATH.replace("{appName}", expectedAppName));
-		// CommonUtils.removeTargetAttribute(anchor);
 		appCard.click();
 	}
 
-	public static void clickOnMoreVertIcon(Page page, String appName) {
+	public static void clickOnMoreVertIcon(Page page, String appName, String timestamp) {
 		page.waitForTimeout(200);
-		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", appName)));
+		Locator appCard = page.locator(APP_CARD_XPATH.replace("{appName}", appName));
 		AICorePageUtils.waitFor(appCard);
 		appCard.scrollIntoViewIfNeeded();
-		Locator iconLocator = page.getByTestId(MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID);
+		Locator iconLocator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH);
 		iconLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		iconLocator.click();
 	}
 
 	public static String clickOnOption(Page page, String optionName) {
-		String optionValue = null;
-		switch (optionName) {
-		case "Copy App ID":
-			optionValue = "copy";
-			break;
-		case "Clone This App":
-			optionValue = "clone";
-			break;
-		case "Delete App":
-			optionValue = "delete";
-			break;
-		default:
-			logger.error("Invalid option name: " + optionName);
-			throw new IllegalArgumentException("Invalid option name: " + optionName);
-		}
-		Locator optionLocator = page.getByRole(AriaRole.MENUITEM, new Page.GetByRoleOptions().setName(optionValue));
+		Locator optionLocator = page.locator(MORE_VERTICAL_OPTIONS_XPATH.replace("{optionName}", optionName));
 		optionLocator.isVisible();
 		optionLocator.click();
 		if (optionName.equals("Copy App ID")) {
@@ -94,11 +124,14 @@ public class AppPageUtils {
 		return null;
 	}
 
+	public static String getCopiedId(Page page, String icon) {
+		page.locator(COPY_ID_XPATH.replace("{icon}", icon)).click();
+		return CommonUtils.readCopiedTextFromClipboard(page);
+	}
+
 	public static String getAppIdCopiedToastMessage(Page page) {
-		// page.locator(ID_COPY_TOAST_MESSAGE_XPATH).isVisible();
-		// return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).textContent().trim();
-		page.getByTestId(ID_COPY_TOAST_MESSAGE_DATATESTID).isVisible();
-		return page.getByTestId(ID_COPY_TOAST_MESSAGE_DATATESTID).textContent().trim();
+		page.locator(ID_COPY_TOAST_MESSAGE_XPATH).isVisible();
+		return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).textContent().trim();
 	}
 
 	public static void enterCloneAppName(Page page, String appName, String timestamp) {
@@ -113,11 +146,6 @@ public class AppPageUtils {
 
 	public static void clickOnButton(Page page, String buttonName) {
 		AICorePageUtils.clickOnButton(page, buttonName);
-	}
-
-	public static void MakeAppPublic(Page page) {
-		page.locator(MAKE_PUBLIC_BUTTON_XPATH).isVisible();
-		page.locator(MAKE_PUBLIC_BUTTON_XPATH).click();
 	}
 
 	public static boolean isAppDisplayedOnPage(Page page, String appName, String timestamp) {
@@ -143,11 +171,11 @@ public class AppPageUtils {
 		case "Open App button":
 			locator = page.locator(OPEN_APP_LINK_XPATH.replace("{buttonName}", contentValue));
 			break;
-		case "View Details button":
-			locator = page.locator(VIEW_DETAILS_BUTTON_XPATH.replace("{buttonName}", contentValue));
+		case "Info button":
+			locator = page.locator(INFO_BUTTON_XPATH.replace("{buttonName}", contentValue));
 			break;
 		case "More Vert Icon":
-			locator = page.getByTestId(MORE_VERTICAL_OPTIONS_ICON_DATA_TESTID);
+			locator = page.locator(MORE_VERTICAL_OPTIONS_ICON_XPATH);
 			break;
 		case "Bookmark Icon":
 			locator = page.locator(APP_BOOKMARK_ICON_XPATH);
@@ -168,20 +196,14 @@ public class AppPageUtils {
 		return locator.isVisible();
 	}
 
-	public static void getAppDescription(Page page, String appName) {
-
-	}
-
-	public static void clickOnDeleteButton(Page page, String buttonName) {
-		Locator deleteButton = page.locator(DELETE_APP_CONFIRMATION_BUTTON_XPATH.replace("{name}", buttonName));
-		deleteButton.isVisible();
-		deleteButton.click();
-	}
-
 	public static boolean isAppNotDisplayedOnPage(Page page, String appName, String timestamp) {
 		String expectedAppName = appName + " " + timestamp;
-		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
+		Locator appCard = page.locator(APP_CARD_XPATH.replace("{appName}", expectedAppName));
 		return !appCard.isVisible();
+	}
+
+	public static void clickOnFilterOption(Page page) {
+		page.locator(FILTER_OPTION_XPATH).click();
 	}
 
 	public static void searchFilterValueOnAppPage(Page page, String filterValue) {
@@ -195,11 +217,120 @@ public class AppPageUtils {
 		filterValueLocator.click();
 	}
 
-	public static void clickOnViewDetails(Page page, String buttonName) {
-		page.locator(VIEW_DETAILS_BUTTON_XPATH.replace("{buttonName}", buttonName)).click();
+	public static void clickOnInfoButton(Page page, String buttonName) {
+		page.locator(INFO_BUTTON_XPATH.replace("{buttonName}", buttonName)).click();
 	}
 
-	public static void clickOnAccessControlButton(Page page) {
-		AICorePageUtils.clickOnTabButton(page, "Access Control");
+	public static void clickOnDiscoverableAppsButton(Page page) {
+		page.getByTestId("appCatalogPage-discoverable-btn").click();
+	}
+
+	public static void clickOnFilterButton(Page page, String filterName) {
+		page.getByTitle(filterName + " Order").click();
+	}
+
+	public static boolean verifyAppsSortedInAscendingOrder(Page page) {
+		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
+		int appCount = appNamesLocator.count();
+		String previousAppName = "";
+		for (int i = 0; i < appCount; i++) {
+			String currentAppName = appNamesLocator.nth(i).textContent().trim();
+			if (currentAppName.compareToIgnoreCase(previousAppName) < 0) {
+				return false;
+			}
+			previousAppName = currentAppName;
+		}
+		return true;
+	}
+
+	public static boolean verifyAppsSortedInDescendingOrder(Page page) {
+		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
+		int appCount = appNamesLocator.count();
+		String previousAppName = null;
+		for (int i = 0; i < appCount; i++) {
+			String currentAppName = appNamesLocator.nth(i).textContent().trim();
+			if (previousAppName != null && currentAppName.compareToIgnoreCase(previousAppName) > 0) {
+				return false;
+			}
+			previousAppName = currentAppName;
+		}
+		return true;
+	}
+
+	public static boolean verifyAppsSortedByDateLastEdited(Page page) {
+		Locator lastEditedDatesLocator = page.locator(LAST_EDITED_DATE_XPATH.replace("{lastEditedDate}", ""));
+		int appCount = lastEditedDatesLocator.count();
+		String previousDateStr = null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+		for (int i = 0; i < appCount; i++) {
+			String currentDateStr = lastEditedDatesLocator.nth(i).textContent().trim();
+			currentDateStr = currentDateStr.replace("Last Edited: ", "");
+			if (previousDateStr != null) {
+				LocalDate previousDate = LocalDate.parse(previousDateStr, formatter);
+				LocalDate currentDate = LocalDate.parse(currentDateStr, formatter);
+				if (currentDate.isAfter(previousDate)) {
+					return false;
+				}
+			}
+			previousDateStr = currentDateStr;
+		}
+		return true;
+	}
+
+	public static boolean verifyAppsSortedByUpdatedAgo(Page page) {
+		return verifyAppsSortedByUpdatedAgo(page, false);
+	}
+
+	/**
+	 * Verifies that the apps are sorted by the 'Updated ... ago' format
+	 * (descending: most recent first). Handles 'Updated today', 'Updated X days
+	 * ago', 'Updated X month(s) ago'
+	 */
+	public static boolean verifyAppsSortedByUpdatedAgo(Page page, boolean descending) {
+		Locator dateLocators = page.locator("//p[contains(text(),'Updated')]");
+		int appCount = dateLocators.count();
+		int previousDaysAgo = descending ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+		for (int i = 0; i < appCount; i++) {
+			String dateText = dateLocators.nth(i).textContent().trim().toLowerCase(Locale.ENGLISH);
+			int daysAgo = parseUpdatedAgoToDays(dateText);
+			if (descending) {
+				if (daysAgo < previousDaysAgo) {
+					return false;
+				}
+			} else {
+				if (daysAgo > previousDaysAgo) {
+					return false;
+				}
+			}
+			previousDaysAgo = daysAgo;
+		}
+		return true;
+	}
+
+	private static int parseUpdatedAgoToDays(String dateText) {
+		if (dateText.contains("today")) {
+			return 0;
+		} else if (dateText.contains("day")) {
+			return extractNumber(dateText);
+		} else if (dateText.contains("month")) {
+			return extractNumber(dateText) * 30; // Approximate a month as 30 days
+		}
+		return Integer.MAX_VALUE; // fallback for unknown format
+	}
+
+	private static int extractNumber(String text) {
+		java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(text);
+		if (matcher.find()) {
+			return Integer.parseInt(matcher.group());
+		}
+		return 0; // Default if no number found
+	}
+
+	public static void selectSortByOption(Page page, String optionName) {
+		Locator sortDropdown = page.locator(SORT_BY_DROPDOWN_XPATH);
+		sortDropdown.click();
+		Locator optionLocator = page.locator(SORT_BY_OPTION_XPATH.replace("{optionName}", optionName));
+		optionLocator.waitFor();
+		optionLocator.click();
 	}
 }

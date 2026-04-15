@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import com.microsoft.playwright.Page;
 
+import aicore.pages.guardrail.AddGuardrailFormUtils;
 import aicore.utils.GuardrailPageUtils;
 
 public class GuardrailPage {
@@ -18,15 +19,15 @@ public class GuardrailPage {
 	}
 
 	public void enterCatalogName(String catalogName) {
-		GuardrailPageUtils.enterCatalogName(page, catalogName);
+		AddGuardrailFormUtils.enterCatalogName(page, catalogName);
 	}
 
 	public void enterNerLabels(String label) {
-		GuardrailPageUtils.enterNerLabels(page, label);
+		AddGuardrailFormUtils.enterNerLabels(page, label);
 	}
 
 	public void enterDefaultThreshold(String threshold) {
-		GuardrailPageUtils.enterDefaultThreshold(page, threshold);
+		AddGuardrailFormUtils.enterDefaultThreshold(page, threshold);
 	}
 
 	public String verifyGuardrailTitle(String guardrailTitle) {
@@ -39,6 +40,18 @@ public class GuardrailPage {
 
 	public Path downloadCatalog() {
 		return GuardrailPageUtils.downloadCatalog(page);
+	}
+
+	public void searchGuardrailCatalog(String searchText) {
+		GuardrailPageUtils.searchGuardrailCatalog(page, searchText);
+	}
+
+	public boolean verifySearchedGuardrailCatalogTitle(String guardrailTitle) {
+		return GuardrailPageUtils.verifySearchedGuardrailCatalogTitle(page, guardrailTitle);
+	}
+
+	public void selectTheGuardrailCatalog(String guardrailTitle) {
+		GuardrailPageUtils.selectTheGuardrailCatalog(page, guardrailTitle);
 	}
 
 }

@@ -8,11 +8,9 @@ import aicore.utils.page.app.NotebookPageUtils;
 
 public class NotebookPage {
 	private Page page;
-	private String timestamp;
 
-	public NotebookPage(Page page, String timestamp) {
+	public NotebookPage(Page page) {
 		this.page = page;
-		this.timestamp = timestamp;
 	}
 
 	public void clickOnNotebooksOption() {
@@ -115,6 +113,10 @@ public class NotebookPage {
 		NotebookPageUtils.selectHiddenOptionDropdown(page, optionName);
 	}
 
+	public void selectTransformationValueFromDropdown(String value, String dropdownName) {
+		NotebookPageUtils.selectTransformationValueFromDropdown(page, value, dropdownName);
+	}
+
 	public void selectDatabaseFromDropdown(String databaseName) {
 		NotebookPageUtils.selectDatabaseFromDropdown(page, databaseName);
 	}
@@ -129,6 +131,18 @@ public class NotebookPage {
 
 	public void clickOnImportButton() {
 		NotebookPageUtils.clickOnImportButton(page);
+	}
+
+	public void clickOnEditButtonForImportedDataCell() {
+		NotebookPageUtils.clickOnEditButtonForImportedDataCell(page);
+	}
+
+	public void uncheckColumnFromSelectedColumns(String columnName) {
+		NotebookPageUtils.uncheckColumnFromSelectedColumns(page, columnName);
+	}
+
+	public void clickOnUpdateCellButton() {
+		NotebookPageUtils.clickOnUpdateCellButton(page);
 	}
 
 	public void deleteFirstCell() {

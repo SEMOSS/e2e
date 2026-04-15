@@ -11,9 +11,9 @@ import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddDatabasePage;
-import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -24,13 +24,11 @@ import io.cucumber.java.en.When;
 public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
 	private AddDatabasePage addDatabaseToCatalogPage;
-	private HomePage homePage;
 	private ViewUsagePage viewUsagePage;
 	private ViewCatalogPage viewCatalogPage;
 	private static String timestamp;
 
 	public AddDatabaseSteps() {
-		homePage = new HomePage(SetupHooks.getPage());
 		addDatabaseToCatalogPage = new AddDatabasePage(SetupHooks.getPage());
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
@@ -39,17 +37,17 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 
 	@Given("User opens Main Menu")
 	public void user_opens_main_menu() {
-		homePage.openMainMenu();
+		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 	}
 
 	@Given("User closes Main Menu")
 	public void user_closes_main_menu() {
-		homePage.closeMainMenu();
+		MainMenuUtils.closeMainMenu(SetupHooks.getPage());
 	}
 
 	@Given("User clicks on Open Database")
 	public void user_clicks_to_open_database() {
-		homePage.clickOnOpenDatabase();
+		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Database")
@@ -141,11 +139,6 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		String databaseNameInCatalog = addDatabaseToCatalogPage.verifyDatabaseNameInCatalog(dbName + timestamp);
 		boolean databaseNameFlag = databaseNameInCatalog.contains(dbName + timestamp);
 		Assertions.assertTrue(databaseNameFlag, "Database name is not visible in the database catalog");
-	}
-
-	@Then("User selects database {string}")
-	public void user_selects_database(String dbType) {
-		addDatabaseToCatalogPage.selectDatabaseType(dbType);
 	}
 
 	@And("User clicks on Next button for Create Database")

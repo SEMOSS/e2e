@@ -16,6 +16,7 @@ public final class TestResourceTrackerHelper {
 	private final Map<String, String> testCatalogResources = new HashMap<>();
 
 	private String appName;
+	private String teamName;
 
 	public static final String CATALOG_TYPE_DATABASE = "Database";
 	public static final String CATALOG_TYPE_MODEL = "Model";
@@ -49,6 +50,14 @@ public final class TestResourceTrackerHelper {
 
 	public String getAppName() {
 		return appName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
+	public String getTeamName() {
+		return teamName;
 	}
 
 }

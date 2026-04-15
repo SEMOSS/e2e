@@ -25,7 +25,7 @@ public class NotebookCreationAndExecutionSteps {
 
 	public NotebookCreationAndExecutionSteps() {
 		timestamp = SetupHooks.getTimestamp();
-		notebookPage = new NotebookPage(SetupHooks.getPage(), timestamp);
+		notebookPage = new NotebookPage(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Notebook")
@@ -156,6 +156,11 @@ public class NotebookCreationAndExecutionSteps {
 		notebookPage.selectHiddenOptionDropdown(optionName);
 	}
 
+	@And("User selects {string} in the {string} dropdown")
+	public void user_selects_dropdown(String unit, String dropdownName) {
+		notebookPage.selectTransformationValueFromDropdown(unit, dropdownName);
+	}
+
 	@And("User click on Import data menu")
 	public void user_clicks_on_Import_data_menu() {
 		notebookPage.clickOnImportDropdown();
@@ -179,6 +184,21 @@ public class NotebookCreationAndExecutionSteps {
 	@And("User deletes the previous cell")
 	public void user_deletes_the_previous_cell() {
 		notebookPage.deleteFirstCell();
+	}
+
+	@And("User clicks on Edit button for the imported data cell")
+	public void user_clicks_on_edit_button_for_the_imported_data_cell() {
+		notebookPage.clickOnEditButtonForImportedDataCell();
+	}
+
+	@And("User unchecks {string} column from the selected columns")
+	public void user_unchecks_column_from_the_selected_columns(String columnName) {
+		notebookPage.uncheckColumnFromSelectedColumns(columnName);
+	}
+
+	@And("User clicks on update cell button")
+	public void user_clicks_on_update_cell_button() {
+		notebookPage.clickOnUpdateCellButton();
 	}
 
 	@And("User selects {string} database from the dropdown")
@@ -208,6 +228,24 @@ public class NotebookCreationAndExecutionSteps {
 		List<String> expectedHeaderNames = Arrays.asList(headerNames.split(", "));
 		List<String> actualHeaderNames = notebookPage.getNotebookOutputTableHeader();
 		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
+	}
+
+	@Then("User can see {string} values greater than or equal to {string}")
+	public void user_can_see_values_greater_than_or_equal_to(String columnName, String minValue) {
+		List<String> columnValues = notebookPage.getColumnValues(columnName);
+		double min = Double.parseDouble(minValue);
+		for (String val : columnValues) {
+			String cleaned = val.trim();
+			double numericValue;
+			try {
+				numericValue = Double.parseDouble(cleaned);
+			} catch (NumberFormatException e) {
+				Assertions.fail("Column value for " + columnName + " is not numeric: " + cleaned);
+				return;
+			}
+			Assertions.assertTrue(numericValue >= min,
+					"Expected " + columnName + " value to be greater than or equal to " + minValue + " but found " + numericValue);
+		}
 	}
 
 	@Then("User verifies the transformed data for {string} column is in uppercase format")
@@ -377,7 +415,7 @@ public class NotebookCreationAndExecutionSteps {
 
 	@And("User can see {string} column values as todays date along with current time")
 	public void user_can_see_column_values_as_todays_date_along_with_current_time(String columnName) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDate today = LocalDate.now();
 		List<String> columnValues = notebookPage.getColumnValues(columnName);
 		for (String columnValue : columnValues) {

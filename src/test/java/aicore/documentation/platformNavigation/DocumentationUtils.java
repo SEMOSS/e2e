@@ -1,48 +1,15 @@
 package aicore.documentation.platformNavigation;
 
 import java.nio.file.Path;
-import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Tracing;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.ConfigUtils;
 
 public class DocumentationUtils {
 	private static final Logger logger = LogManager.getLogger(DocumentationUtils.class);
-
-	public static Page setupPlaywright(boolean initialSetup) {
-		Playwright playwright = Playwright.create();
-		Browser browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
-
-		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions();
-		BrowserContext context = browser.newContext(newContextOptions);
-
-		context.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
-
-		Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
-		context.tracing().start(startOptions);
-
-		Page page = context.newPage();
-		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue("timeout")));
-
-		GenericSetupUtils.setupLoggers(page);
-
-		if (initialSetup) {
-			logger.info("Creating users");
-			GenericSetupUtils.createUsers(page);
-		}
-
-		return page;
-	}
 
 	public static Locator focusOnElement(Page page, String elementePath) {
 		Locator element = page.locator(elementePath);

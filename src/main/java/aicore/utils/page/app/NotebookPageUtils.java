@@ -21,11 +21,14 @@ public class NotebookPageUtils {
 
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
-	private static final String CODE_ENTER_TEXTAREA = ".view-line";
+	private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
+	private static final String EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID = "EditIcon";
+	private static final String COLUMN_CHECKBOX_BY_NAME_XPATH = "//input[@id='checkbox-{columnName}-0']";
+	private static final String UPDATE_CELL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'MuiTable-root')]//tbody//tr[position()>1]//td[2]";
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
@@ -37,7 +40,7 @@ public class NotebookPageUtils {
 	private static final String TOTAL_COUNT_OF_ROWS_XPATH = "(//span[contains(text(),'This is a preview of ingested data')])[1]";
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
-	private static final String PYTHON_OUTPUT_XPATH = "//div[contains(@class,'data-type-label')]/..";
+	private static final String PYTHON_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='Notebook']/..//following::div//p[text()='{notebookName}']";
 	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
 	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
@@ -72,13 +75,14 @@ public class NotebookPageUtils {
 	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
 	private static final String NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH = "//div[contains(@class,'MuiPaper-elevation MuiPaper-rounded')]//div[@title='Database Not Editable']";
+	private static final String DROPDOWN_BUTTON_XPATH = "//label[text()='{dropdownName}']/..//button";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
 	}
 
 	public static void clickOnCreateNewNotebook(Page page) {
-		page.getByTestId(CREATE_NEW_NOTEBOOK_DATA_TESTID).click();
+		page.getByTitle("Create new notebook").click();
 	}
 
 	public static void enterQueryName(Page page, String queryName) {
@@ -350,6 +354,28 @@ public class NotebookPageUtils {
 		importButtonLocator.click();
 	}
 
+	public static void clickOnEditButtonForImportedDataCell(Page page) {
+		Locator editButton = page.getByTestId(EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID);
+		AICorePageUtils.waitFor(editButton);
+		if (!editButton.isVisible()) {
+			throw new AssertionError("Edit button for imported data cell is not visible");
+		}
+		editButton.click();
+	}
+
+	public static void uncheckColumnFromSelectedColumns(Page page, String columnName) {
+		page.locator("#checkbox-" + columnName + "-0").click();
+	}
+
+	public static void clickOnUpdateCellButton(Page page) {
+		Locator updateButton = page.locator(UPDATE_CELL_BUTTON_XPATH);
+		AICorePageUtils.waitFor(updateButton);
+		if (!updateButton.isVisible()) {
+			throw new AssertionError("Update cell button is not visible");
+		}
+		updateButton.click();
+	}
+
 	public static void deleteFirstCell(Page page) {
 		Locator deleteIcon = page.getByTestId(DELETE_CELL_DATA_TESTID).first();
 		AICorePageUtils.waitFor(deleteIcon);
@@ -358,7 +384,8 @@ public class NotebookPageUtils {
 
 	public static void selectDatabaseType(Page page, String databaseName) {
 		page.getByTitle("Select Database").isVisible();
-		page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]").click(new Locator.ClickOptions().setForce(true));
+		page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]")
+				.click(new Locator.ClickOptions().setForce(true));
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
 	}
 
@@ -387,7 +414,7 @@ public class NotebookPageUtils {
 
 	public static List<String> getNotebookOutputTableHeader(Page page) {
 		Locator tableHeader = page.locator(OUTPUT_TABLE).last().locator("th");
-		Locator table = page.locator(OUTPUT_TABLE);
+		Locator table = page.locator(OUTPUT_TABLE).first();
 		AICorePageUtils.waitFor(table);
 		return tableHeader.allTextContents();
 	}
@@ -467,7 +494,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void getPythonOutput(Page page, String output) {
-		String pythonOutput = page.locator(PYTHON_OUTPUT_XPATH).textContent();
+		String pythonOutput = page.locator(PYTHON_OUTPUT_XPATH.replace("{codeOutput}", output)).textContent();
 		if (pythonOutput == null || !pythonOutput.contains(output)) {
 			throw new AssertionError("Expected Python output: " + output + ", but got: " + pythonOutput);
 		}
@@ -721,6 +748,12 @@ public class NotebookPageUtils {
 		Locator columnTextbox = page.getByLabel("Column Name");
 		AICorePageUtils.waitFor(columnTextbox);
 		columnTextbox.fill(columnName);
+	}
+
+	public static void selectTransformationValueFromDropdown(Page page, String value, String dropdownName) {
+		page.locator (DROPDOWN_BUTTON_XPATH.replace("{dropdownName}", dropdownName)).click( new Locator.ClickOptions().setForce(true));
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).isVisible();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
 	}
 
 	public static List<String> getColumnValues(Page page, String columnName) {

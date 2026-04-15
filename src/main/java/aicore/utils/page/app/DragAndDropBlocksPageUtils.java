@@ -13,6 +13,7 @@ import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
@@ -68,7 +69,12 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DATA_GRID_ROWS_COUNT_XPATH = "//div[contains(@role,'rowgroup')]//div[contains(@role,'row')]";
 	private static final String DATA_GRID_INFO_XPATH = ".MuiTablePagination-displayedRows";
 	private static final String PAGINATION_DROP_DOWN_XPATH = "//*[text()='Rows per page:']/parent::div//following-sibling::div//div[@aria-haspopup='listbox']";
+	private static final String CHIP_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Chip";
+	private static final String ICON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Icon";
 
+	private static final String IFRAME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Iframe";
+	private static final String IMAGE_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Image";
+	private static final String PROGRESS_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Progress";
 	// drag and dropped blocks on page
 	private static final String CHART_XPATH = "//div[@class='echarts-for-react ']";
 	private static final String DROPPED_TEXT_BLOCK_XPATH = "//p[text()='Hello world']";
@@ -80,7 +86,13 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
+	private static final String DROPPED_BUTTON_BLOCK_XPATH = "//button[span[text()='Submit']]";
+	private static final String DROPPED_CHIP_BLOCK_XPATH = "//div[@data-block='chip--1']";
+	private static final String DROPPED_ICON_BLOCK_XPATH = "//div[@data-block='icon--1']";
 
+	private static final String DROPPED_IFRAME_BLOCK_XPATH = "//span[@data-block='iframe--1']";
+	private static final String DROPPED_IMAGE_BLOCK_XPATH = "//div[@data-block='image--1']";
+	private static final String DROPPED_PROGRESS_BLOCK_XPATH = "//div[@data-block='progress--1']";
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
@@ -91,12 +103,14 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_COUNT_ON_PAGE_XPATH = "//canvas[@class='marks']";
 
 	// Bookmark app
-	private static final String APP_BOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkBorderIcon']";
-	private static final String APP_UNBOOKMARK_XPATH = "//button[@type='button']//*[name()='svg'][@data-testid='BookmarkIcon']";
+	private static final String BOOKMARKED_APP_TAB_DATA_TESTID = "appCatalogPage-bookmarked-btn";
+	private static final String MY_APPS_TAB_DATA_TESTID = "appCatalogPage-myApps-btn";
+	private static final String APP_BOOKMARK_XPATH = "//button[@aria-label='Add bookmark']";
+	private static final String APP_UNBOOKMARK_XPATH = "//button[@aria-label='Remove bookmark']";
 	private static final String APP_BOOKMARK_SECTION_TEXT = "Bookmarked";
-	private static final String CATALOG_SEE_ON_BOOKMARKSECTIONXPATH = "//h6[normalize-space(text())='Bookmarked']/following-sibling::div[@class='css-uncsel']";
+	private static final String BOOKMARKED_APP_XPATH = "//h3[text()='{appName}']";
 	// App section
-	private static final String APP_DISPALY_APP_SECTION = "//div[contains(@data-testid,'appTileCard')]//a[@rel='noopener noreferrer']";
+	private static final String APP_DISPALY_APP_SECTION = "//button[@data-testid='appCatalogPage-myApps-btn']/ancestor::div//h3[text()='{appName}']";
 	private static final String APP_DISCOVRABLE_SECTION_DATATESTID = "appCatalogPage-discoverable-btn";
 	private static final String CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH = "//div[contains(@data-testid,'appTileCard')]";
 	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
@@ -108,7 +122,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String COLOR_PALETTE_XPATH = "//span[text()='Color Palette']";
 	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//span[text()='+ Add Custom Color Palette']";
 	private static final String COLOR_PALETTE_ICON_XPATH = "//*[name()='svg'][@data-testid='FormatColorFillIcon']";
-	private static final String SELECT_RED_COLOR_XPATH = "//div[@title='#D0021B']";
+	private static final String SELECT_RED_COLOR_XPATH = "//input[@value='#d23323']";
 	private static final String SELECT_BLUE_COLOR_XPATH = "//div[@title='#4A90E2']";
 	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
 	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
@@ -147,15 +161,19 @@ public class DragAndDropBlocksPageUtils {
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
-	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}']";
+	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}'] | //div[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
 	private static final String SEARCH_BLOCKS_SECTION_XPATH = "//div[text()='{blockName}']";
 	private static final String HTML_BLOCK_DATA_TESTID = "blockMenuCardContent-card-HTML";
 	private static final String THEME_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Theme-Block";
+	private static final String BUTTON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Button";
 	private static final String SETTINGS_PANEL_TITLE_XPATH = "//span[normalize-space()='{sectionName}']";
 	private static final String SECTION_ON_BLOCK_SETTINGS_XPATH = "//button[normalize-space()='{sectionName}']";
 	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
+	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
+	private static final String ICON_OPTION_FROM_GENERAL_SETTING_XPATH = "//p[text()='{optionName}']/following::input";
+	private static final String SETTING_OPTION_VALUE_INPUT_XPATH = "//p[text()='{optionName}']/following::input[@value='{valueName}']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -174,7 +192,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void navigateToHomePageFromAppEditPage(Page page) {
-		String appNameWithLogo = ConfigUtils.getValue("applicationName");
+		String appNameWithLogo = ConfigUtils.getValue(AICoreTestConstants.APP_NAME);
 		if (page.locator(MENU_CLOSED_ICON_XPATH).isVisible()) {
 			page.locator(MENU_OPTION_XPATH).click();
 		}
@@ -224,6 +242,13 @@ public class DragAndDropBlocksPageUtils {
 		}
 	}
 
+	public static void enterTextInTextField(Page page, String text) {
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
+				.getByPlaceholder("Enter text or select query").fill(text);
+	}
+
 	public static void clickOnDroppedBlock(Page page, String blockName) {
 		Locator DroppedBlockLocator = null;
 		switch (blockName) {
@@ -271,6 +296,23 @@ public class DragAndDropBlocksPageUtils {
 			break;
 		case "Accordion":
 			DroppedBlockLocator = page.locator(DROPPED_ACCORDION_BLOCK_XPATH);
+			break;
+		case "Button":
+			DroppedBlockLocator = page.locator(DROPPED_BUTTON_BLOCK_XPATH);
+			break;
+		case "Chip":
+			DroppedBlockLocator = page.locator(DROPPED_CHIP_BLOCK_XPATH);
+			break;
+		case "Icon":
+			DroppedBlockLocator = page.locator(DROPPED_ICON_BLOCK_XPATH);
+		case "Iframe":
+			DroppedBlockLocator = page.locator(DROPPED_IFRAME_BLOCK_XPATH);
+			break;
+		case "Image":
+			DroppedBlockLocator = page.locator(DROPPED_IMAGE_BLOCK_XPATH);
+			break;
+		case "Progress":
+			DroppedBlockLocator = page.locator(DROPPED_PROGRESS_BLOCK_XPATH);
 			break;
 		default:
 			logger.error("Invalid block name: " + blockName);
@@ -364,6 +406,24 @@ public class DragAndDropBlocksPageUtils {
 		case "Theme Block":
 			blockLocator = page.getByTestId(THEME_BLOCK_DATA_TESTID);
 			break;
+		case "Button":
+			blockLocator = page.getByTestId(BUTTON_BLOCK_DATA_TESTID);
+			break;
+		case "Chip":
+			blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
+			break;
+		case "Icon":
+			blockLocator = page.getByTestId(ICON_BLOCK_DATA_TESTID);
+			break;
+		case "Iframe":
+			blockLocator = page.getByTestId(IFRAME_BLOCK_DATA_TESTID);
+			break;
+		case "Image":
+			blockLocator = page.getByTestId(IMAGE_BLOCK_DATA_TESTID);
+			break;
+		case "Progress":
+			blockLocator = page.getByTestId(PROGRESS_BLOCK_DATA_TESTID);
+			break;
 		default:
 			isValidBlock = false;
 			logger.error("Invalid block name: " + blockName);
@@ -385,6 +445,15 @@ public class DragAndDropBlocksPageUtils {
 	public static void clickOnSaveAppButton(Page page) {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true))
 				.click();
+	}
+
+	public static void clickOnSaveQueryButton(Page page) {
+		Locator saveQueryButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save"));
+		AICorePageUtils.waitFor(saveQueryButton);
+		if (!saveQueryButton.isVisible()) {
+			throw new AssertionError("Save query button is not visible");
+		}
+		saveQueryButton.click();
 	}
 
 	public static Locator textSectionDragAndDroppedBlockLocator(Page page, String blockName, String blockText) {
@@ -718,16 +787,20 @@ public class DragAndDropBlocksPageUtils {
 		bookmarkIcon.click();
 	}
 
-	public static boolean isBookmarkedSectionVisible(Page page) {
-		Locator bookmarkSection = page.getByRole(AriaRole.HEADING,
-				new Page.GetByRoleOptions().setName(APP_BOOKMARK_SECTION_TEXT));
-		AICorePageUtils.waitFor(bookmarkSection);
-		return bookmarkSection.isVisible();
+	public static void clickOnBookmarkedAppTab(Page page) {
+		Locator bookmarkedTab = page.getByTestId(BOOKMARKED_APP_TAB_DATA_TESTID);
+		AICorePageUtils.waitFor(bookmarkedTab);
+		bookmarkedTab.click();
 	}
 
-	public static boolean bookmarkAppSeeOnTheBookmarkSection(Page page) {
-		Locator bookmarkedSection = page.locator(CATALOG_SEE_ON_BOOKMARKSECTIONXPATH).first();
-		AICorePageUtils.waitFor(bookmarkedSection);
+	public static void clickOnMyAppsTab(Page page) {
+		Locator myAppsTab = page.getByTestId(MY_APPS_TAB_DATA_TESTID);
+		AICorePageUtils.waitFor(myAppsTab);
+		myAppsTab.click();
+	}
+
+	public static boolean isBookmarkAppDisplayedInBookmarkSection(Page page, String appName) {
+		Locator bookmarkedSection = page.locator(BOOKMARKED_APP_XPATH.replace("{appName}", appName)).first();
 		return bookmarkedSection.isVisible();
 	}
 
@@ -738,19 +811,9 @@ public class DragAndDropBlocksPageUtils {
 		unbookmarkIcon.click();
 	}
 
-	public static boolean isAppRemovedFromBookmarkSection(Page page, String appName) {
-		Locator bookmarkedApp = page.locator(CATALOG_SEE_ON_BOOKMARKSECTIONXPATH).first();
-		return bookmarkedApp.isHidden();
-	}
-
-	public static boolean isBookmarkedSectionNotVisible(Page page) {
-		Locator bookmarkSection = page.getByText(APP_BOOKMARK_SECTION_TEXT);
-		return bookmarkSection.isHidden();
-	}
-
 	// created app display in all apps section
 	public static boolean isAppDisplayedInAllAppsSection(Page page, String appName) {
-		Locator appInAllAppsSection = page.locator(APP_DISPALY_APP_SECTION);
+		Locator appInAllAppsSection = page.locator(APP_DISPALY_APP_SECTION.replace("{appName}", appName));
 		AICorePageUtils.waitFor(appInAllAppsSection);
 		return appInAllAppsSection.isVisible();
 	}
@@ -793,9 +856,9 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(ADD_CUSTOME_COLOR_PALETTE_XPATH).click();
 		page.getByPlaceholder("Enter Palette Name").fill("MyPalette");
 		page.locator(COLOR_PALETTE_ICON_XPATH).click();
-		page.locator(SELECT_RED_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#d30d11");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
-		page.locator(SELECT_BLUE_COLOR_XPATH).click();
+		page.locator("//input[@type='color']").fill("#0d14d3");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
 		page.locator(ADD_COLOR_XPATH).click();
 		return page.locator(ADDED_COLOR_PALETTE_XPATH).first().isVisible();
@@ -1048,4 +1111,53 @@ public class DragAndDropBlocksPageUtils {
 		optionLocator.scrollIntoViewIfNeeded();
 		return optionLocator.isVisible();
 	}
+
+	public static void clickOnNewActionButton(Page page, String blockName) {
+		Locator newActionButton = page.locator(NEW_ACTION_XPATH.replace("{blockName}", blockName));
+		if (!newActionButton.isVisible()) {
+			throw new AssertionError("New Action button is not visible");
+		}
+		newActionButton.click();
+	}
+
+	public static void selectActionOptionFromDropdown(Page page, String actionOption) {
+		Locator queryCombobox = page.getByRole(AriaRole.COMBOBOX,
+				new Page.GetByRoleOptions().setName(actionOption).setExact(true));
+		AICorePageUtils.waitFor(queryCombobox);
+		if (!queryCombobox.isVisible()) {
+			throw new AssertionError("Action dropdown for '" + actionOption + "' is not visible");
+		}
+		queryCombobox.click();
+	}
+
+	public static void selectOptionFromActionList(Page page, String optionName) {
+		Locator optionLocator = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(optionName));
+		AICorePageUtils.waitFor(optionLocator);
+		if (!optionLocator.isVisible()) {
+			throw new AssertionError("Option '" + optionName + "' is not visible in the list");
+		}
+		optionLocator.click();
+	}
+
+	public static void dragBlock(Page page, String blockName) {
+		Locator block = page.locator(SEARCH_BLOCKS_SECTION_XPATH.replace("{blockName}", blockName)).first();
+		CommonUtils.moveMouseToCenterWithMargin(page, block, -1, 5);
+	}
+
+	public static void clickOnIconOptionFromGeneralSetting(Page page, String optionName) {
+		Locator selectOption = page.locator(ICON_OPTION_FROM_GENERAL_SETTING_XPATH.replace("{optionName}", optionName))
+				.first();
+		selectOption.click();
+		selectOption.clear();
+	}
+
+	public static void selectValueForsettingOption(Page page, String value, String optionName) {
+		Locator valueInput = page.locator(ICON_OPTION_FROM_GENERAL_SETTING_XPATH.replace("{optionName}", optionName))
+				.first();
+		valueInput.click();
+		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("IconShow Badge"))
+				.getByRole(AriaRole.COMBOBOX).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
+	}
+
 }

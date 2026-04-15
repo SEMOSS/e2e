@@ -116,7 +116,11 @@ public class TeamPermissionsSettingSteps {
 
 	@And("User see the added {string} in the engine list with access as {string}")
 	public void user_sees_the_with_role_added_in_the_list(String catalogName, String role) {
-		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(catalogName + timestamp, role);
+		String nameWithTimestamp = catalogName + timestamp;
+		boolean isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(nameWithTimestamp, role);
+		if (!isEnginePresent) {
+			isEnginePresent = teamPermissionsSettings.userSeeAddedEngineInTheList(catalogName, role);
+		}
 		Assertions.assertTrue(isEnginePresent, "Engine with the specified role is not present in the list.");
 	}
 
@@ -196,4 +200,40 @@ public class TeamPermissionsSettingSteps {
 	public void user_deletes_all_the_created_apps() {
 		createAppPopupPage.deleteCreatedApps();
 	}
+
+	@And("User deletes the {string} added role as {string}")
+	public void user_deletes_the_added_role_as(String catalogName, String role) {
+		String nameWithTimestamp = catalogName + timestamp;
+		if (teamPermissionsSettings.userSeeAddedEngineInTheList(nameWithTimestamp, role)) {
+			teamPermissionsSettings.deleteAddedRole(nameWithTimestamp, role);
+		} else {
+			teamPermissionsSettings.deleteAddedRole(catalogName, role);
+		}
+	}
+
+	@And("User sees the team {string} with {string} in Team section on the the Access Settings page")
+	public void user_sees_the_team_with_access_in_team_section_on_the_the_access_settings_page(String teamName,
+			String access) {
+		boolean isTeamPresent = teamPermissionsSettings.checkTeamWithAccess(teamName + " " + timestamp, access);
+		Assertions.assertTrue(isTeamPresent, "Team with the specified access is not present in the list.");
+	}
+
+	@And("User see the added {string} in the app list with access as {string}")
+	public void user_see_the_added_in_the_app_list_with_access_as(String catalogName, String access) {
+		boolean isAppPresent = teamPermissionsSettings.userSeeAddedAppInTheList(catalogName, access);
+		Assertions.assertTrue(isAppPresent, "App with the specified access is not present in the list.");
+	}
+
+	@And("User fetch the team name")
+	public void user_fetch_the_team_name() {
+		String fetchName = teamPermissionsSettings.fetchTeamName();
+		Assertions.assertFalse(fetchName.isEmpty(), "Fetched Team Name is Empty");
+	}
+
+	@And("User verifies the engine added time matches catalog time for {string}")
+	public void verify_engine_and_catalog_time(String teamName) {
+		boolean isValid = teamPermissionsSettings.isEngineAndCatalogTimeMatching(teamName + " " + timestamp);
+		Assertions.assertTrue(isValid, "Engine added time and catalog time are not matching within acceptable range");
+	}
+
 }

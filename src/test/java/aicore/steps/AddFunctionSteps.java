@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddFunctionToCatalogPage;
-import aicore.pages.HomePage;
+import aicore.pages.function.FunctionAccessSettingsUtils;
+import aicore.pages.home.MainMenuUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -15,19 +16,17 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddFunctionSteps {
-	private HomePage homePage;
 	private String timestamp;
 	private AddFunctionToCatalogPage addFunctionToCatalogPage;
 
 	public AddFunctionSteps() {
-		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		addFunctionToCatalogPage = new AddFunctionToCatalogPage(SetupHooks.getPage(), timestamp);
 	}
 
 	@Given("User clicks on Open Function")
 	public void user_navigates_to_open_function() {
-		homePage.clickOnOpenFunction();
+		MainMenuUtils.clickOnOpenFunction(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Function")
@@ -163,7 +162,7 @@ public class AddFunctionSteps {
 	public void user_sees_success_toast_message(String toastMessage) {
 		String actualMessage = addFunctionToCatalogPage.verifySuccessToastMessage(toastMessage);
 		Assertions.assertEquals(toastMessage, actualMessage, "Toaster is not matching with expected");
-		// addFunctionToCatalogPage.closeToastMessage();
+		addFunctionToCatalogPage.closeToastMessage();
 	}
 
 	@Then("User sees the function name {string} in the function catalog")
@@ -184,15 +183,21 @@ public class AddFunctionSteps {
 		addFunctionToCatalogPage.clickOnAccessControl();
 	}
 
+	@Then("User clicks on File Tab")
+	public void user_clicks_on_file_tab() {
+		addFunctionToCatalogPage.clickOnFileTab();
+	}
+
 	@Then("User clicks on Delete button")
 	public void user_clicks_on_delete_button() {
-		addFunctionToCatalogPage.clickOnDeleteButton();
-		addFunctionToCatalogPage.clickOnDeleteConfirmationButton();
+		FunctionAccessSettingsUtils.clickOnDeleteButton(SetupHooks.getPage());
+		FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(SetupHooks.getPage());
 	}
 
 	@Then("User sees deleted function success toast message {string}")
 	public void user_sees_deleted_function_success_toast_message(String toastMessage) {
-		String expectedMessage = addFunctionToCatalogPage.verifyDeleteToastMessage(toastMessage);
+		String expectedMessage = FunctionAccessSettingsUtils.verifyDeleteToastMessage(SetupHooks.getPage(),
+				toastMessage);
 		String actualMessage = toastMessage;
 		Assertions.assertEquals(actualMessage, expectedMessage, "Delete Message is not matching with expected");
 	}
@@ -205,7 +210,7 @@ public class AddFunctionSteps {
 
 	@When("User clicks Make {string} Discoverable button")
 	public void user_clicks_make_discoverable_button(String catalogName) {
-		addFunctionToCatalogPage.clickOnMakeDiscoverableButton(catalogName);
+		FunctionAccessSettingsUtils.clickOnMakeDiscoverableButton(SetupHooks.getPage(), catalogName);
 	}
 
 	@And("User clicks on Discoverable Functions button")

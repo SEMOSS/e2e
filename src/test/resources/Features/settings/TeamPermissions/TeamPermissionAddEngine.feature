@@ -1,3 +1,4 @@
+@DeleteCreatedTestTeam
 Feature: Add Engine for Team Permission
 
   Background: Team Permissions - Add team
@@ -10,6 +11,7 @@ Feature: Add Engine for Team Permission
     And User fills 'Test Team' in Name field of Add Team form
     And User fills Description as 'Test Description' in Description field of Add Team form
     And User clicks on 'Add' button in Add Team form
+    And User fetch the team name
 
   @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario Outline: Add Engine for Database Users role
@@ -34,7 +36,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'TestDatabase' in the engine list with access as '<Role>'
-    And User deletes the added role
+    And User deletes the 'TestDatabase' added role as '<Role>'
 
     Examples: 
       | Role      |
@@ -64,7 +66,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'WeatherFunctionTest' in the engine list with access as '<Role>'
-    And User deletes the added role
+    And User deletes the 'WeatherFunctionTest' added role as '<Role>'
 
     Examples: 
       | Role      |
@@ -99,7 +101,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'Amazon S3 Storage' in the engine list with access as '<Role>'
-    And User deletes the added role
+    And User deletes the 'Amazon S3 Storage' added role as '<Role>'
 
     Examples: 
       | Role      |
@@ -114,7 +116,7 @@ Feature: Add Engine for Team Permission
     And User clicks on Open Model
     And User clicks on Add Model
     And User selects 'OpenAI' type
-    And User selects 'GPT 3.5 Turbo'
+    And User selects 'GPT-4.1'
     And User enters Catalog Name as 'Catalog'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
@@ -148,7 +150,7 @@ Feature: Add Engine for Team Permission
     And User clicks on save button
     Then User sees the message 'Successfully added engine permission' is displayed
     And User see the added 'FAISS Vector DB01' in the engine list with access as '<Role>'
-    And User deletes the added role
+    And User deletes the 'FAISS Vector DB01' added role as '<Role>'
 
     Examples: 
       | Role      |

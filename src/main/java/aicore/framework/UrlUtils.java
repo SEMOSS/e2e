@@ -4,50 +4,26 @@ import java.net.URI;
 
 public class UrlUtils {
 
-	private static String api = ConfigUtils.getValue("baseUrl") + "Monolith/";
-	private static String baseUrl = ConfigUtils.getValue("baseUrl") + "SemossWeb/";
 	private static String newWebRoute = "packages/client/dist/";
 
 	public static String getApi(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + "Monolith/" + path;
+		String x = base + ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT) + "/" + path;
 		return x;
 	}
 
 	public static String getUrl(String path) {
 		String base = ResourcePool.get().getUrl();
-		String x = base + "SemossWeb/" + newWebRoute + path;
+		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + newWebRoute + path;
 		return x;
 	}
 
-//	public static String extractRelativePath(String fullUrl) {
-//		if (fullUrl == null || fullUrl.isEmpty()) {
-//			return "";
-//		}
-//		try {
-//			URI uri = new URI(fullUrl);
-//			StringBuilder relativePath = new StringBuilder();
-//			// Extract path
-//			String path = uri.getPath(); // e.g. "/SemossWeb/packages/client/dist/"
-//			if (path != null && !path.isEmpty()) {
-//				if (path.startsWith("/")) {
-//					path = path.substring(1); // remove leading slash
-//				}
-//				relativePath.append(path);
-//			}
-//			// Extract fragment (handles hash routes like #/app/...)
-//			String fragment = uri.getFragment();
-//			if (fragment != null && !fragment.isEmpty()) {
-//				if (!fragment.startsWith("/")) {
-//					relativePath.append("/");
-//				}
-//				relativePath.append(fragment);
-//			}
-//			return relativePath.toString();
-//		} catch (Exception e) {
-//			return "";
-//		}
-//	}
+	public static String getBaseFrontendUrl(String path) {
+		String base = ResourcePool.get().getUrl();
+		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + path;
+		return x;
+	}
+
 	public static String extractRelativePath(String fullUrl) {
 		// Extract relative path + fragment (if any)
 		String actualRelativeUrl = "";

@@ -21,36 +21,36 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
 	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
-	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//div[contains(text(),'does not exist or user does not have permissions to delete the engine. User must be the owner to perform this function.')]";
+	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//li[@data-type='error']";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_DATATESTID = "workspace-Settings-image";
+	private static final String CLICK_ON_SETTINGS_XPATH = "//img[@data-testid='workspace-Settings-image']/../..";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
-	private static final String CLICK_ON_CONFIRMATION_FOR_DELETEMODEL_XPATH = "//div[contains(@class, 'MuiDialogActions-root')]//button[.//span[text()='Delete']]";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
 	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
 	private static final String CLICK_ON_DATA_APPS_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Apps')]";
 	private static final String CLICK_ON_EXPORT_ICON_XAPTH = "//button[@aria-label='Export']//*[name()='svg']";
 	private static final String MAKE_PRIAVTE_TOOGLE_ENABLE_XPATH = "//button[contains(@title,'public')]";
 	private static final String MAKE_DISCOVRABLE_ENABLE_XAPTH = "//button[contains(@title,'discoverable')]";
-	private static final String TOASTER_MEASSAGE_XAPTH = "//div[contains(@class,'MuiSnackbar-root')]//div[contains(@class,'MuiAlert-message')]";
+	private static final String TOASTER_MEASSAGE_XAPTH = "//li[@data-type='success']";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
-	private static final String CLICK_ON_COPYICON_DATATESTID = "ContentCopyOutlinedIcon";
 	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
 	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//button[contains(@data-testid,'makeDiscoverable-switch')]";
-	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//span[contains(@data-testid,'settingsTiles') and contains(@data-testid,'private-switch')]//input[@type='checkbox']";
-	private static final String ADD_MEMBER_XPATH = "//input[@placeholder='Search users' and @type='text' and @role='combobox']";
+	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//p[text()='Private']/../../following-sibling::div//button[contains(@data-testid,'settingsTiles')]";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
 	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
 	private static final String PENDING_REQUEST_ACCEPT_DATA_TESTID = "approve-pending-member-btn";
 	private static final String PENDING_REQUEST_REJECT_DATA_TESTID = "deny-pending-member-btn";
 	private static final String SEETING_OPTION_XPATH = "//div[@aria-label='{option}']";
 	private static final String RIGHT_SIDE_OPEN_PAGE_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')][.//div[normalize-space()='{pageName}']]";
-	private static final String SETTING_SECTION_XPATH = "//h4[normalize-space()='{section}']";
-	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div//p[normalize-space()='Enable the publishing of the portal.']/following::span[contains(@class,'Mui-checked')]//input[@type='checkbox']";
-	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button//span[normalize-space()='Publish']";
-	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//span[normalize-space()='{buttonName}']";
+	private static final String SETTING_SECTION_XPATH = "//h3[normalize-space()='{section}'] | //h2[normalize-space()='{section}'] | //h4[normalize-space()='{section}']";
+	private static final String PUBLISH_ENABLE_TOGGLE_XPATH = "//div[h4[normalize-space()='Enable Publishing']]/following-sibling::button";
+	private static final String CLICK_ON_PUBLISH_PORTAL_BUTTON_XPATH = "//button[normalize-space()='Publish']";
+	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//button[text()='{buttonName}']";
 	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
+	private static final String CLICK_ON_TAB_XPATH = "//button[text()='{tabName}']";
+	private static final String TOASTER_MESSAGE_DATATESTID = "notification-success-message";
+	private static final String MCP_USAGE_COPY_BUTTON_DATATESTID = "mcp-usage-copy-button-{sectionName}";
 
 	public static boolean canViewOverview(Page page) {
 		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
@@ -73,7 +73,6 @@ public class CatlogAccessPageUtility {
 		return accessControl.isVisible();
 	}
 
-	// new
 	public static boolean canViewMetadata(Page page) {
 		return page.getByText(VIEW_METADATA_TAB_Text).isVisible();
 	}
@@ -84,7 +83,6 @@ public class CatlogAccessPageUtility {
 			searchIcon.click();
 		}
 		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
-		// page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID).fill(role);
 		page.waitForTimeout(1000);
 	}
 
@@ -95,9 +93,9 @@ public class CatlogAccessPageUtility {
 
 	// create app class
 	public static void clickOnSettings(Page page) {
-		Locator settingOption = page.getByTestId(CLICK_ON_SETTINGS_DATATESTID);
+		Locator settingOption = page.locator(CLICK_ON_SETTINGS_XPATH).first();
 		AICorePageUtils.waitFor(settingOption);
-		if (!settingOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
+		if (!page.locator("//div[text()='AppSettings']").first().isVisible()) {
 			settingOption.click();
 		}
 	}
@@ -134,8 +132,7 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String getToasterMessage(Page page) {
-		// Wait for toaster to appear and return text
-		Locator toasterMessage = page.locator(TOASTER_MEASSAGE_XAPTH);
+		Locator toasterMessage = page.locator(TOASTER_MEASSAGE_XAPTH).first();
 		AICorePageUtils.waitFor(toasterMessage);
 		return toasterMessage.textContent();
 	}
@@ -254,6 +251,7 @@ public class CatlogAccessPageUtility {
 
 	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
 		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));
+		sectionLocator.scrollIntoViewIfNeeded();
 		if (!sectionLocator.isVisible()) {
 			sectionLocator = page.locator("//h6[normalize-space()='" + section + "']");
 		}
@@ -283,11 +281,34 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void clickOnAppSettingsOption(Page page, String buttonName) {
-		page.locator(SETTING_PAGE_APP_OPTION_XPATH.replace("{buttonName}", buttonName)).click();
+		Locator selectOption = page.locator(SETTING_PAGE_APP_OPTION_XPATH.replace("{buttonName}", buttonName));
+		selectOption.scrollIntoViewIfNeeded();
+		selectOption.hover();
+		selectOption.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static boolean userCanSeeSectionUnderGeneralSetting(Page page, String sectionName) {
 		Locator sectionLocator = page.locator(GENERAL_SETTING_SECTION_XPATH.replace("{section}", sectionName));
 		return sectionLocator.isVisible();
+	}
+
+	public static void changeBrowserWindowSize(Page page, int width, int height) {
+		page.setViewportSize(width, height);
+	}
+
+	public static String getToastMessage(Page page, String toastMessage) {
+		Locator toast = page.getByTestId(TOASTER_MESSAGE_DATATESTID);
+		String actualToastMessage = toast.innerText().trim();
+		return actualToastMessage;
+	}
+
+	public static void clickOnTab(Page page, String tabName) {
+		page.locator(CLICK_ON_TAB_XPATH.replace("{tabName}", tabName)).click();
+	}
+
+	public static void clickOnCopyButtonForSection(Page page, String sectionName) {
+		Locator copyButton = page.getByTestId(MCP_USAGE_COPY_BUTTON_DATATESTID.replace("{sectionName}", sectionName));
+		copyButton.hover();
+		copyButton.click();
 	}
 }

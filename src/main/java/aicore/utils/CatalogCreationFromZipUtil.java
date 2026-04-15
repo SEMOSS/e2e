@@ -7,42 +7,19 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.pages.home.MainMenuUtils;
+
 public class CatalogCreationFromZipUtil {
-	private static final String DATABASE_MENU_BUTTON_XPATH = "//div[@aria-label='Database']";
-	private static final String FUNCTION_MENU_BUTTON_XPATH = "//div[@aria-label='Function']";
-	private static final String MODEL_MENU_BUTTON_XPATH = "//div[@aria-label='Model']";
-	private static final String STORAGE_MENU_BUTTON_XPATH = "//div[@aria-label='Storage']";
-	private static final String VECTOR_MENU_BUTTON_XPATH = "//div[@aria-label='Vector']";
+	private static final String CATALOG_MENU_BUTTON_DATA_TESTID = "sidebar-{catalogName}-btn";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//*[normalize-space()='{fileName}']";
-	private static final String CREATE_CATALOG_BUTTON_DATA_TESTID = "importForm-submit-btn";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
 	private static final String ZIP_UPLOAD_ICON_XPATH = "//button[contains(@data-testid,'-upload-file-button')]";
 
 	public static void openCatalog(Page page, String catalogName) {
-		Locator locator = null;
-		switch (catalogName) {
-		case "Model":
-			locator = page.locator(MODEL_MENU_BUTTON_XPATH);
-			break;
-		case "Database":
-			locator = page.locator(DATABASE_MENU_BUTTON_XPATH);
-			break;
-		case "Function":
-			locator = page.locator(FUNCTION_MENU_BUTTON_XPATH);
-			break;
-		case "Storage":
-			locator = page.locator(STORAGE_MENU_BUTTON_XPATH);
-			break;
-		case "Vector":
-			locator = page.locator(VECTOR_MENU_BUTTON_XPATH);
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid block name: " + catalogName);
-		}
-		locator.click();
-		HomePageUtils.closeMainMenu(page);
+		page.getByTestId(CATALOG_MENU_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
+		MainMenuUtils.closeMainMenu(page);
 	}
 
 	public static void clickOnAddCatalogButton(Page page, String catalogName) {

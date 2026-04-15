@@ -1,4 +1,4 @@
-@regression @DeleteCreatedTestApp
+@Regression @DeleteCreatedTestApp
 Feature: Block page content
 
   Background: Create Drag and Drop app and navigate to Blocks option

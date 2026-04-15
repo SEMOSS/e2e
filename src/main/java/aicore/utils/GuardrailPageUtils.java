@@ -12,28 +12,13 @@ import com.microsoft.playwright.options.AriaRole;
 
 public class GuardrailPageUtils {
 	private static final String ADD_GUARDRAIL_BUTTON_DATA_TESTID = "engineIndex-add-Guardrail-btn";
-	private static final String CATALOG_NAME_FIELD_DATATESTID = "guardrail-form-input-MODEL_NAME";
-	private static final String NER_LABELS_FIELD_DATATESTID = "guardrail-form-input-NER_LABELS";
-	private static final String DEFAULT_THRESHOLD_FIELD_DATATESTID = "guardrail-form-input-DEFAULT_THRESHOLD";
 	private static final String EXPORT_BUTTON_DATA_TESTID = "engineHeader-Guardrail-export-btn";
 	private static final String TOAST_MESSAGE_DATA_TESTID = "notification-success-message";
 	private static final String GUARDRAIL_TOAST_MESSAGE_XPATH = "//div[text()='{toastMessage}']";
+	private static final String SELECT_GUARDRAIL_CATALOG_XPATH = "//p[text()='{catalogName}']";
 
 	public static void clickOnAddGuardrailButton(Page page) {
 		page.getByTestId(ADD_GUARDRAIL_BUTTON_DATA_TESTID).click();
-	}
-
-	public static void enterCatalogName(Page page, String catalogName) {
-		page.getByTestId(CATALOG_NAME_FIELD_DATATESTID).fill(catalogName);
-	}
-
-	public static void enterNerLabels(Page page, String label) {
-		page.getByTestId(NER_LABELS_FIELD_DATATESTID).fill(label);
-		page.getByTestId(NER_LABELS_FIELD_DATATESTID).press("Enter");
-	}
-
-	public static void enterDefaultThreshold(Page page, String threshold) {
-		page.getByTestId(DEFAULT_THRESHOLD_FIELD_DATATESTID).fill(threshold);
 	}
 
 	public static String verifyGuardrailTitle(Page page, String guardrailTitle) {
@@ -60,6 +45,21 @@ public class GuardrailPageUtils {
 			throw new RuntimeException("Failed to save downloaded file", e);
 		}
 		return downloadPath;
+	}
+
+	public static void searchGuardrailCatalog(Page page, String searchText) {
+		Locator searchBox = page.getByTestId("search-bar");
+		searchBox.fill(searchText);
+	}
+
+	public static boolean verifySearchedGuardrailCatalogTitle(Page page, String guardrailTitle) {
+		Locator searchBox = page.locator(SELECT_GUARDRAIL_CATALOG_XPATH.replace("{catalogName}", guardrailTitle));
+		return searchBox.isVisible();
+	}
+
+	public static void selectTheGuardrailCatalog(Page page, String catalogName) {
+		Locator searchBox = page.locator(SELECT_GUARDRAIL_CATALOG_XPATH.replace("{catalogName}", catalogName));
+		searchBox.click();
 	}
 
 }

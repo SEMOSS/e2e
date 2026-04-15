@@ -17,12 +17,13 @@ public class AppVariablePageUtils {
 	private static final String VariableValueInputDropdownList = "//ul[@role='listbox']//li//span[text()='{value}']";
 	private static final String CreateVariableButton = "//span[text()='Add']";
 	private static final String ToastMessage = "//*[contains(@class, 'MuiAlert-message')]";
-	private static final String CatalogVariable = "//div[@id='home__content']//h1";
+	private static final String CATALOG_VARIABLE_DATATESTID = "Title";
 	private static final String VariableListItem = "//button//div//p[text()='{variableName}']";
 	private static final String SAVEVARIABLE = "//span[text()='Save']";
 	private static final String OpenMenuOption = "//p[text()='{variableName}']/parent::div/following-sibling::div//*[@data-testid='ChevronRightIcon']";
 	private static final String EditVariableOption = "//li[@value='Edit']";
 	private static final String MORE_VERTICAL_ICON_XPATH = "//span[text()='{variableName}']/ancestor::div/following-sibling::div//button[@data-testid='notebook-variable-more-btn']";
+	private static final String VariableTypeOptionInList = "//p[text()='{variableType}']";
 
 	public static void clickOnVariableOption(Page page) {
 		Locator variables = page.locator(VariableOption);
@@ -133,8 +134,12 @@ public class AppVariablePageUtils {
 		}
 	}
 
+	public static void clickOnVariablesTab(Page page, String tabName) {
+		page.locator(VariableTypeOptionInList.replace("{variableType}", tabName)).click();
+}
+
 	public static String getCatalogNameForVariable(Page page) {
-		String catalogVariableName = page.locator(CatalogVariable).textContent();
+		String catalogVariableName = page.getByTestId(CATALOG_VARIABLE_DATATESTID).textContent();
 		if (catalogVariableName == null) {
 			throw new RuntimeException("Catalog Variable Name is not visible");
 		}

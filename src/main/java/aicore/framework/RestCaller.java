@@ -16,25 +16,20 @@ import com.google.gson.reflect.TypeToken;
 
 public class RestCaller {
 
-    public static void createNewUser(String userId) throws IOException {
-        String endpoint = UrlUtils.getApi("api/auth/createUser");
-        Request rq = Request.post(endpoint)
-                .bodyForm(Form.form()
-                        .add("name", userId)
-                        .add("username", userId)
-                        .add("email", userId + "@deloitte.com")
-                        .add("password", "Test123!")
-                        .build());
+	public static void createNewUser(String userId) throws IOException {
+		String endpoint = UrlUtils.getApi("api/auth/createUser");
+		Request rq = Request.post(endpoint).bodyForm(Form.form().add("name", userId).add("username", userId)
+				.add("email", userId + "@test.com").add("password", "Test123!").build());
 
-        HttpResponse response = rq.execute().returnResponse();
-        int code = response.getCode();
-        System.out.println(code);
-        assert code == 200;
-    }
-    
-    public static List<Map<String, Object>> getModelEngines(String cookie) throws IOException {
-    	List<Map<String, Object>> engines = new ArrayList<>();
-    	String endpoint = UrlUtils.getApi("api/auth/admin/engine/getEngines?engineTypes=MODEL");
+		HttpResponse response = rq.execute().returnResponse();
+		int code = response.getCode();
+		System.out.println(code);
+		assert code == 200;
+	}
+
+	public static List<Map<String, Object>> getModelEngines(String cookie) throws IOException {
+		List<Map<String, Object>> engines = new ArrayList<>();
+		String endpoint = UrlUtils.getApi("api/auth/admin/engine/getEngines?engineTypes=MODEL");
 		Request rq = Request.get(endpoint);
 //                .bodyForm(Form.form()
 //                        .add("engineTypes", "MODEL")
@@ -55,10 +50,10 @@ public class RestCaller {
 		engines = gson.fromJson(s, type);
 
 		return engines;
-       
-    }
 
-    public static void main(String[] args) throws IOException {
-        RestCaller.createNewUser("test4");
-    }
+	}
+
+	public static void main(String[] args) throws IOException {
+		RestCaller.createNewUser("test4");
+	}
 }

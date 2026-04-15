@@ -17,6 +17,7 @@ import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -47,9 +48,14 @@ public class CreateAppUsingDragAndDropSteps {
 		blockSettings = new BlockSettingsPage(SetupHooks.getPage());
 	}
 
+	@And("User clicks on Make {string} Discoverable button in settings page")
+	public void user_clicks_on_make_discoverable_button(String appName) {
+		appPage.clickOnMakeDiscoverableButtoninSettings(appName + ' ' + timestamp);
+	}
+
 	@Given("User clicks on Open App Library")
 	public void user_navigates_to_open_app_library() {
-		homePage.clickOnOpenAppLibrary();
+		MainMenuUtils.clickOnOpenAppLibrary(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Create New App button")
@@ -120,8 +126,8 @@ public class CreateAppUsingDragAndDropSteps {
 			appCreatePopup.enterTags(tag);
 			appCreatePopup.clickOnCreateButton();
 			if (i < appCount - 1) {
-				homePage.openMainMenu();
-				homePage.clickOnOpenAppLibrary();
+				MainMenuUtils.openMainMenu(SetupHooks.getPage());
+				MainMenuUtils.clickOnOpenAppLibrary(SetupHooks.getPage());
 				appPage.clickOnCreateNewAppButton();
 				appCreatePopup.clickOnGetStartedButton(appType);
 			}
@@ -182,6 +188,63 @@ public class CreateAppUsingDragAndDropSteps {
 		}
 	}
 
+	@And("User clicks on Discoverable Apps button")
+	public void user_clicks_on_discoverable_apps_button() {
+		appPage.clickOnDiscoverableAppsButton();
+	}
+
+	@When("User selects the {string} view")
+	public void user_selects_the_view(String view) {
+		appPage.selectAppCardsView(view);
+	}
+
+	@And("User clicks on Edit button in the setting page")
+	public void user_Clicks_OnEditButton() {
+		appPage.clickOnEditButtoninSettings();
+	}
+
+	@And("User add Tags {string} in app settings and presses Enter")
+	public void user_add_tags_in_app_settings_and_presses_enter(String tags) {
+		String[] tagsArray = tags.split(", ");
+		for (String tag : tagsArray) {
+			appPage.enterTagNameinAppSettings(tag);
+		}
+	}
+
+	@And("User enters the Domains as {string} in the app settings and presses Enter")
+	public void user_enters_the_domains_as_in_the_app_settings_and_presses_Enter(String domainNames) {
+		String[] domainNamesArray = domainNames.split(", ");
+		for (String domainName : domainNamesArray) {
+			appPage.enterDomainNameinAppSettings(domainName);
+		}
+	}
+
+	@And("User selects {string} from the Data Classification in the app settings")
+	public void user_selects_from_the_data_classification_in_the_app_settings(String dataClassificationOptions) {
+		String[] dataClassificationOptionsArray = dataClassificationOptions.split(", ");
+		for (String option : dataClassificationOptionsArray) {
+			appPage.selectDataClassificationOptioninAppSettings(option);
+		}
+	}
+
+	@And("User selects {string} from the Data Restrictions in the app settings")
+	public void user_selects_from_the_data_restrictions_in_the_app_settings(String dataRestrictionsOptions) {
+		String[] dataRestrictionsOptionsArray = dataRestrictionsOptions.split(", ");
+		for (String option : dataRestrictionsOptionsArray) {
+			appPage.selectDataRestrictionsOptioninAppSettings(option);
+		}
+	}
+
+	@And("User clicks on Submit button in the app settings")
+	public void user_clicks_on_submit_button_in_the_app_settings() {
+		appPage.clickOnSubmitButtoninAppSettings();
+	}
+
+	@When("User clicks on {string} icon")
+	public void user_clicks_the_icon(String icon) {
+		copiedId = appPage.getCopiedId(icon);
+	}
+
 	@And("User searches {string} app in the app searchbox")
 	public void user_searches_app_in_the_app_searchbox(String appName) {
 		appPage.searchApp(appName);
@@ -211,6 +274,16 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User clicks on the {string} block to select it")
 	public void user_clicks_on_block_to_select_it(String blockName) {
 		blocksPage.clickOnDroppedBlock(blockName);
+	}
+
+	@And("User Clicks {string} option in the Block Settings")
+	public void user_clicks_option_in_the_block_settings(String option) {
+		blockSettings.clickOnOption(option);
+	}
+
+	@And("User enters {string} in the Text field")
+	public void user_enters_in_the_text_field(String text) {
+		blocksPage.enterTextInTextField(text);
 	}
 
 	@Then("User can see {string} on the page")
@@ -584,7 +657,7 @@ public class CreateAppUsingDragAndDropSteps {
 		for (Map<String, String> row : rows) {
 			String filterCategory = row.get(FILTER_CATEGORY_NAME);
 			String filterValues = row.get(FILTER_VALUE_NAME);
-
+//			appPage.clickOnFilterOption();
 			String[] filterValuesArray = filterValues.split(", ");
 			for (String filterValue : filterValuesArray) {
 				appPage.searchFilterValueOnAppPage(filterValue);
@@ -600,7 +673,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Then("User clicks on app {string} button")
 	public void User_clicks_on_button(String buttonName) {
-		appPage.clickOnViewDetails(buttonName);
+		appPage.clickOnInfoButton(buttonName);
 	}
 
 	@And("User get the CatalogName for variable")
@@ -653,6 +726,11 @@ public class CreateAppUsingDragAndDropSteps {
 		appVariablePage.clickOnCreateVariableButton();
 	}
 
+	@Then("User opens the {string} Variables tab")
+	public void user_opens_the_variables_tab(String tabName) {
+		appVariablePage.clickOnVariablesTab(tabName);
+	}
+
 	@Then("User sees Toast message of variable creation {string}")
 	public void user_sees_toast_message_of_variable_creation(String variableName) {
 		appVariablePage.validateSuccessToastMessage(variableName);
@@ -674,36 +752,35 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnUnbookmarkforApp(appName);
 	}
 
-	@Then("User see the Bookmarked section")
+	@Then("User clicks on the Bookmarked Apps tab")
 	public void user_see_bookmark_section() {
-		boolean isVisible = blocksPage.userSeeBookMarkSection();
-		Assertions.assertTrue(isVisible, "The user is unable to see the Bookmark section after Bookmark the App");
+		blocksPage.clickOnBookmarkedAppTab();
 	}
 
-	@And("The app should appear in the bookmarked section")
-	public void bookmark_app_see_on_bookmarksection() {
-		boolean isappDisplayedUnderBookmarkedSection = blocksPage.bookmarkAppSeeOnTheBookmarkSection();
+	@Then("User clicks on the My Apps tab")
+	public void user_see_my_apps_section() {
+		blocksPage.clickOnMyAppsTab();
+	}
+
+	@And("User can see {string} in the Bookmarked Apps section")
+	public void user_can_see_in_the_bookmarked_apps_section(String appName) {
+		boolean isappDisplayedUnderBookmarkedSection = blocksPage
+				.isBookmarkAppDisplayedInBookmarkSection(appName + " " + timestamp);
 		Assertions.assertTrue(isappDisplayedUnderBookmarkedSection,
 				"Bookmarked section does not contain the expected app");
 	}
 
-	@Then("The {string} should be removed from the bookmarked section")
-	public void app_should_be_removed_from_bookmarked_section(String appName) {
-		boolean isRemoved = blocksPage.isAppRemovedFromBookmarkSection(appName);
-		Assertions.assertTrue(isRemoved, "App is still visible under the bookmarked section after removal.");
-	}
-
-	@And("If no apps remain bookmarked the {string} section should not be visible")
-	public void bookmarked_section_should_not_be_visible(String sectionName) {
-		boolean isNotVisible = blocksPage.isBookmarkedSectionNotVisible();
-		Assertions.assertTrue(isNotVisible,
-				sectionName + " Section is still visible even though no apps are bookmarked.");
+	@And("User cannot see {string} in the Bookmarked Apps section")
+	public void user_cannot_see_in_the_bookmarked_apps_section(String appName) {
+		boolean isappDisplayedUnderBookmarkedSection = blocksPage
+				.isBookmarkAppDisplayedInBookmarkSection(appName + " " + timestamp);
+		Assertions.assertFalse(isappDisplayedUnderBookmarkedSection, "Bookmarked section contains the expected app");
 	}
 
 	// created app display in all apps section
-	@Then("User can see {string} app in the All Apps section")
-	public void user_see_the_created_app_in_all_apps_section(String appName) {
-		boolean isAppDisplayed = blocksPage.isAppDisplayedInAllAppsSection(appName);
+	@Then("User can see {string} app in the My Apps section")
+	public void user_see_the_created_app_in_my_apps_section(String appName) {
+		boolean isAppDisplayed = blocksPage.isAppDisplayedInAllAppsSection(appName + " " + timestamp);
 		Assertions.assertTrue(isAppDisplayed, "Created Application is not displayed in All Apps section");
 	}
 
@@ -802,18 +879,13 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_tool_same_as_baseline(String toolName, String chartName) throws Exception {
 		String chartFolder = chartName.replaceAll("\\s+", "").toLowerCase();
 		String toolFolder = toolName.replaceAll("\\s+", "").toLowerCase();
-
 		String basePath = "screenshots/" + chartFolder + "/" + toolFolder + "/";
-
 		String actualImagePath = basePath + "actualChart.png";
 		String expectedImagePath = basePath + "expectedChart.png";
 		String diffImagePath = basePath + "diffChart.png";
-
 		blocksPage.closeBlocksOption();
 		blocksPage.takeChartScreenshot(actualImagePath, toolName);
-
 		boolean imagesMatch = CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath);
-
 		Assertions.assertTrue(imagesMatch, "Images do not match for Tool: " + toolName + " under Chart: " + chartName);
 	}
 
@@ -900,4 +972,69 @@ public class CreateAppUsingDragAndDropSteps {
 			}
 		}
 	}
+
+	@And("User clicks on {string} New action button")
+	public void user_clicks_on_new_action_button(String blockName) {
+		blocksPage.clickOnNewActionButton(blockName);
+	}
+
+	@And("User selects {string} from the action options")
+	public void user_selects_from_the_action_options(String actionOption) {
+		blocksPage.selectActionOptionFromDropdown(actionOption);
+	}
+
+	@And("User selects {string} from the list of queries")
+	public void user_selects_from_the_list_of_queries(String queryName) {
+		blocksPage.selectOptionFromActionList(queryName);
+	}
+
+	@And("User clicks on Save query button")
+	public void user_clicks_on_save_query_button() {
+		blocksPage.clickOnSaveQueryButton();
+	}
+
+	@And("User clicks on the {string} Filter button")
+	public void user_clicks_on_the_filter_button(String filterName) {
+		appPage.clickOnFilterButton(filterName);
+	}
+
+	@Then("User can see the apps are sorted in ascending order")
+	public void user_can_see_the_apps_are_sorted_in_ascending_order() {
+		boolean isSortedInAscendingOrder = appPage.verifyAppsSortedInAscendingOrder();
+		Assertions.assertTrue(isSortedInAscendingOrder, "Apps are not sorted in ascending order");
+	}
+
+	@Then("User can see the apps are sorted in descending order")
+	public void user_can_see_the_apps_are_sorted_in_descending_order() {
+		boolean isSortedInDescendingOrder = appPage.verifyAppsSortedInDescendingOrder();
+		Assertions.assertTrue(isSortedInDescendingOrder, "Apps are not sorted in descending order");
+	}
+
+	@Then("User can see the apps are sorted by date last Edited")
+	public void then_user_can_see_the_apps_are_sorted_by_date_last_edited() {
+		boolean isSortedByDateLastEdited = appPage.verifyAppsSortedByDateLastEdited();
+		Assertions.assertTrue(isSortedByDateLastEdited, "Apps are not sorted by date last edited");
+	}
+
+	@Then("User selects {string} from the Sort By dropdown")
+	public void user_selects_from_the_sort_by_dropdown(String sortByOption) {
+		appPage.selectSortByOption(sortByOption);
+	}
+
+	@And("User drag the {string} block")
+	public void and_user_drag_the_block(String blockName) {
+		blocksPage.mouseHoverOnBlock(blockName);
+		blocksPage.dragBlock(blockName);
+	}
+
+	@And("User clicks on {string} option from General Setting")
+	public void user_clicks_on_icon_option_from_general_setting(String optionName) {
+		blocksPage.clickOnIconOptionFromGeneralSetting(optionName);
+	}
+
+	@And("User select value as {string} for {string} option from General Setting")
+	public void user_select_value_as_for_option_from_general_setting(String value, String optionName) {
+		blocksPage.selectValueForsettingOption(value, optionName);
+	}
+
 }

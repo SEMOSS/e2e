@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.GuardrailPage;
-import aicore.pages.HomePage;
+import aicore.pages.home.MainMenuUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddGuardrailSteps {
-	private HomePage homePage;
 	private GuardrailPage guardrailPage;
 	protected static String timestamp;
 	private Path downloadedZip;
@@ -20,12 +19,11 @@ public class AddGuardrailSteps {
 	public AddGuardrailSteps() {
 		timestamp = SetupHooks.getTimestamp();
 		this.guardrailPage = new GuardrailPage(SetupHooks.getPage());
-		this.homePage = new HomePage(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Guardrail")
 	public void user_clicks_on_guardrail() {
-		homePage.clickOnGuardrail();
+		MainMenuUtils.clickOnGuardrail(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Guardrail button")
@@ -79,6 +77,27 @@ public class AddGuardrailSteps {
 		String actualToastMessage = guardrailPage.verifyToastMessage(expectedToastMessage);
 		Assertions.assertEquals(actualToastMessage, expectedToastMessage,
 				"toast message is not matching with expected");
+	}
+
+	@Then("User enters {string} in the search box")
+	public void user_enters_in_the_search_box(String searchText) {
+		guardrailPage.searchGuardrailCatalog(searchText + timestamp);
+	}
+
+	@Then("User should see the Guardrail Catalog title as {string} in search results")
+	public void user_should_see_the_guardrail_catalog_title_as_in_search_results(String guardrailTitle) {
+		boolean isGuardrailVisible = guardrailPage.verifySearchedGuardrailCatalogTitle(guardrailTitle + timestamp);
+		Assertions.assertTrue(isGuardrailVisible, "Guardrail title is not visible in search results");
+	}
+
+	@Then("User searches the {string} in the guardrail Catalog searchbox")
+	public void user_searches_the_in_the_guardrail_Catalog_searchbox(String catalogName) {
+		guardrailPage.searchGuardrailCatalog(catalogName + timestamp);
+	}
+
+	@Then("User selects the {string} from the guardrail catalog")
+	public void user_selects_the_from_the_guardrail_catalog(String guardrailTitle) {
+		guardrailPage.selectTheGuardrailCatalog(guardrailTitle + timestamp);
 	}
 
 }

@@ -26,7 +26,6 @@ public class AppTemplatePageUtils {
 	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
 	private static final String PREVIEW_APP_INPUT_BOX_XPATH = "//div[@role='dialog']//div[@data-block='question']";
 	private static final String PREVIEW_APP_INPUT_BOX_LABEL_XPATH = "//div[@role='dialog']//div[@data-block='question']//label";
-	private static final String PREVIEW_APP_TITLE_XPATH = "//div[@role='dialog']//p[@data-block='title']";
 	private static final String PREVIEW_APP_SUBMIT_BUTTON_XPATH = "//div[@role='dialog']//div[@data-block='submit']";
 	private static final String LANDING_PAGE_TITLE_TEXT_XPATH = "//p[text()='{titleText}']";
 	private static final String DESCRIPTION_BELOW_TITLE_XPATH = "//p[text()='{descriptionText}']";
@@ -52,7 +51,6 @@ public class AppTemplatePageUtils {
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
-	private static final String SELECT_DATABASE_FOR_NLP_QUERY_XPATH = "//h6[text()='{queryName}']/ancestor::div[contains(@class,'MuiStack-root')]//div[contains(@data-testid,'user-databaseid-1')]";
 	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
 	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
 
@@ -396,9 +394,9 @@ public class AppTemplatePageUtils {
 		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
 
 		return switch (condition.toLowerCase()) {
-		case "above" -> ages.stream().allMatch(age -> age > number);
-		case "below" -> ages.stream().allMatch(age -> age < number);
-		default -> false;
+			case "above" -> ages.stream().allMatch(age -> age > number);
+			case "below" -> ages.stream().allMatch(age -> age < number);
+			default -> false;
 		};
 	}
 
@@ -440,4 +438,34 @@ public class AppTemplatePageUtils {
 
 		return foundCount == ids.size();
 	}
+
+	public static void verifyAppTemplateTitle(String title, Page page) {
+		boolean appTitle = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(title)).isVisible();
+		if (!appTitle) {
+			throw new AssertionError("App template title does not match");
+		}
+	}
+
+	public static void verifyDialogText(String expectedText, Page page) {
+		page.getByRole(AriaRole.DIALOG).getByText(expectedText).isVisible();
+	}
+
+	public static void verifyButtonIsEnabled(String buttonName, Page page) {
+		page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
+.isVisible();
+		boolean isEnabled =page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
+				.isEnabled();
+		if (!isEnabled) {
+			throw new AssertionError(buttonName + " is not enabled");
+		}
+	}
+
+	public static void verifyTabIsVisible(String tabName, Page page) {
+		boolean isVisible = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).isVisible();
+		if (!isVisible) {
+			throw new AssertionError("Tab is not visible: " + tabName);
+		}
+		page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).click();
+	}
+
 }

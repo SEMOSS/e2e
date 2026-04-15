@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogPage;
-import aicore.pages.HomePage;
 import aicore.pages.OpenStoragePage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.ViewUsagePage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -21,7 +21,6 @@ import io.cucumber.java.en.When;
 
 public class AddStorageSteps extends AbstractAddCatalogBase {
 
-	private HomePage homePage;
 	private OpenStoragePage storagePage;
 	protected static String timestamp;
 	private ViewUsagePage viewUsagePage;
@@ -29,7 +28,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	private CatalogPage catalogPage;
 
 	public AddStorageSteps() {
-		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		storagePage = new OpenStoragePage(SetupHooks.getPage(), timestamp);
 		viewUsagePage = new ViewUsagePage(SetupHooks.getPage());
@@ -39,7 +37,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Given("User clicks on Open Storage")
 	public void user_clicks_on_open_storage() {
-		homePage.clickOnOpenStorage();
+		MainMenuUtils.clickOnOpenStorage(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Storage button")
@@ -240,7 +238,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@Then("User can see the Storage title as {string}")
 	public void user_can_see_the_storage_title_as(String storageTitle) {
-		boolean flag = viewCatalogPage.verifyCatalogName(storageTitle + timestamp);
+		viewCatalogPage.verifyCatalogName(storageTitle + timestamp);
 	}
 
 	@Then("User can see {string} Storage ID along with copy icon")
@@ -336,11 +334,6 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 
 	@And("User clicks on Discoverable Storages button")
 	public void user_clicks_on_discoverable_vector_button() {
-		storagePage.clickOnDiscoverableStoragesButton();
-	}
-
-	@When("User clicks on 'Discoverable Storages' tab")
-	public void user_clicks_on_discoverable_storages_tab() {
 		storagePage.clickOnDiscoverableStoragesButton();
 	}
 

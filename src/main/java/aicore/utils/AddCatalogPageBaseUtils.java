@@ -22,14 +22,14 @@ public class AddCatalogPageBaseUtils {
 	private static final String COPY_ID_ICON_XPATH = "//button[contains(@data-testid,'engineHeader-copy')]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
-	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_DATATESTID = "editEngineDetails-submit-btn";
-	private static final String CLOSE_BUTTON_XPATH = "//span[text()='Close']";
+	private static final String CLOSE_BUTTON_XPATH = "//button[text()='Cancel']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "//div[text()='Successfully set the new metadata values for the engine']";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
+	private static final String EDIT_TAG_XPATH = "editEngineDetails-Tag-autocomplete";
 
 	// View Database Type on Connect To database page
-	private static final String SEARCH_INPUT_XPATH = "//div[@id='home__content']//input[@placeholder='Search' and @type='text']";
+	private static final String SEARCH_INPUT_DATATESTID = "search-box";
 
 	public static void clickOnSection(Page page, String catalog, String sectionName) {
 		switch (catalog) {
@@ -136,17 +136,23 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void enterTagName(Page page, String tagName) {
-		page.getByTestId("editEngineDetails-Tag-autocomplete").click();
-		page.getByPlaceholder("Press enter to add tag").fill(tagName);
-		page.getByTestId("editEngineDetails-Tag-autocomplete").press("Enter");
+		Locator enterTag = page.getByTestId(EDIT_TAG_XPATH);
+		enterTag.scrollIntoViewIfNeeded();
+		enterTag.click();
+		enterTag.fill(tagName);
+		enterTag.press("Enter");
 	}
 
 	public static void clickOnSubmit(Page page) {
-		page.getByTestId(SUBMIT_BUTTON_DATATESTID).click();
+		Locator submitButton = page.getByTestId(SUBMIT_BUTTON_DATATESTID);
+		submitButton.scrollIntoViewIfNeeded();
+		submitButton.click();
 	}
 
 	public static void clickOnClose(Page page) {
-		page.click(CLOSE_BUTTON_XPATH);
+		Locator closeButton = page.locator(CLOSE_BUTTON_XPATH);
+		closeButton.scrollIntoViewIfNeeded();
+		closeButton.click();
 	}
 
 	public static void waitForEditSuccessToastMessageToDisappear(Page page) {
@@ -169,8 +175,9 @@ public class AddCatalogPageBaseUtils {
 
 	// View Database Type on Connect To database page
 	public static void searchDatabaseType(Page page, String section, String databaseType) {
-		page.locator(SEARCH_INPUT_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(SEARCH_INPUT_XPATH).click();
-		page.locator(SEARCH_INPUT_XPATH).fill(databaseType); // Enter search term
+		page.getByTestId(SEARCH_INPUT_DATATESTID)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.getByTestId(SEARCH_INPUT_DATATESTID).click();
+		page.getByTestId(SEARCH_INPUT_DATATESTID).fill(databaseType); // Enter search term
 	}
 }

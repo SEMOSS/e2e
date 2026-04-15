@@ -1,29 +1,27 @@
-@Regression
+@Regression @DeleteTestCatalog
 Feature: Add Model
   Adding LLM to the catalog
 
-  Background: Create a Model - GPT 3.5 Turbo
+  Background: Create a Model - GPT-4.1
     Given User opens Main Menu
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'OpenAI' type
-    And User selects 'GPT 3.5 Turbo'
+    And User selects 'GPT-4.1'
     And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
-    #And User can see a toast message as 'Successfully added LLM to catalog'
+    ##And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Model'
 
-  @DeleteTestCatalog
-  Scenario: Validate SMSS properties of a Model to catalog - GPT 3.5 Turbo
+  Scenario: Validate SMSS properties of a Model to catalog - GPT GPT-4.1
     Given User can see the Model title as 'Model'
     When User clicks on SMSS
     And User can see name in 'NAME' field as 'Model' in SMSS properties
-    And User can see var name in 'VAR_NAME' field as 'openAIModel' in SMSS properties
+    And User can see var name in 'VAR_NAME' field as 'myModel' in SMSS properties
 
-  @DeleteTestCatalog
-  Scenario: Edit SMSS properties of Model - GPT 3.5 Turbo
+  Scenario: Edit SMSS properties of Model - GPT-4.1
     Given User can see the Model title as 'Model'
     When User clicks on SMSS
     And User clicks on Edit SMSS button
@@ -34,8 +32,7 @@ Feature: Add Model
     And User can see updated value in 'KEEP_CONVERSATION_HISTORY' field as 'True'
     Then User can see updated value in 'VAR_NAME' field as 'New_Name'
 
-  @DeleteTestCatalog
-  Scenario: Adding tag to Model to catalog - GPT 3.5 Turbo - embeddings
+  Scenario: Adding tag to Model to catalog - GPT-4.1 - embeddings
     Given User can see the Model title as 'Model'
     When User clicks on Edit button
     And User add Tags 'embeddings' and presses Enter
@@ -43,14 +40,12 @@ Feature: Add Model
     #Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
-  @DeleteTestCatalog
   Scenario: View Existing Models in Model Catalog Page
     Given User opens Main Menu
     When User clicks on Open Model
     And User searches the 'Model' in the model catalog searchbox
     Then User should see the 'Model' on the model catalog page
 
-  @DeleteTestCatalog
   Scenario Outline: Edit Model Details
     Given User opens Main Menu
     When User clicks on Open Model
@@ -74,18 +69,17 @@ Feature: Add Model
     And User should see '<DATA_RESTRICTIONS>' in the overview Data restrictions section
 
     Examples: 
-      | MODEL_NAME | DETAILS             | DESCRIPTION                      | TAGS              | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
-      | Model      | GPT 3.5 Turbo model | This is GPT 3.5 Turbo test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+      | MODEL_NAME | DETAILS       | DESCRIPTION                | TAGS              | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
+      | Model      | GPT-4.1 model | This is GPT-4.1 test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
-  @DeleteTestCatalog
   Scenario: Validate Model Catalog ID in Usage commands
     Given User can see the Model title as 'Model'
     When User copies the model catalog ID below the title using copy icon
     And User clicks on Usage tab
     When User copies code contents and validate model catalog Id occurences in sections:
-      | SECTIONS                                                 | EXPECTED_MODEL_ID_COUNT |
-      | How to use in Javascript                                 |                       5 |
-      | How to use in Python                                     |                       1 |
-      | How to use with Langchain API                            |                       1 |
-      | How to use externally with OpenAI API and our Python SDK |                       3 |
-      | How to use in Java                                       |                       1 |
+      | SECTIONS                                                               | EXPECTED_MODEL_ID_COUNT |
+      | How to use in Pixel                                                    |                       5 |
+      | How to use in Python                                                   |                       1 |
+      | How to use with LangChain API                                          |                       1 |
+      | How to use externally with OpenAI API (with or without our Python SDK) |                       3 |
+      | How to use in Java                                                     |                       1 |

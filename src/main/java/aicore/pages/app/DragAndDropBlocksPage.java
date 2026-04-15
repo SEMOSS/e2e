@@ -5,7 +5,7 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-import aicore.utils.HomePageUtils;
+import aicore.pages.home.HomePageUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 
 public class DragAndDropBlocksPage {
@@ -52,6 +52,10 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
 	}
 
+	public void enterTextInTextField(String text) {
+		DragAndDropBlocksPageUtils.enterTextInTextField(page, text);
+	}
+
 	public void mouseHoverOnBlock(String blockName) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, blockName);
 	}
@@ -62,6 +66,10 @@ public class DragAndDropBlocksPage {
 
 	public void clickOnSaveAppButton() {
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
+	}
+
+	public void clickOnSaveQueryButton() {
+		DragAndDropBlocksPageUtils.clickOnSaveQueryButton(page);
 	}
 
 	public Locator textSectionDragAndDroppedBlockLocator(String blockName, String blockText) {
@@ -199,20 +207,16 @@ public class DragAndDropBlocksPage {
 
 	}
 
-	public boolean userSeeBookMarkSection() {
-		return DragAndDropBlocksPageUtils.isBookmarkedSectionVisible(page);
+	public void clickOnBookmarkedAppTab() {
+		DragAndDropBlocksPageUtils.clickOnBookmarkedAppTab(page);
 	}
 
-	public boolean bookmarkAppSeeOnTheBookmarkSection() {
-		return DragAndDropBlocksPageUtils.bookmarkAppSeeOnTheBookmarkSection(page);
+	public void clickOnMyAppsTab() {
+		DragAndDropBlocksPageUtils.clickOnMyAppsTab(page);
 	}
 
-	public boolean isAppRemovedFromBookmarkSection(String appName) {
-		return DragAndDropBlocksPageUtils.isAppRemovedFromBookmarkSection(page, appName);
-	}
-
-	public boolean isBookmarkedSectionNotVisible() {
-		return DragAndDropBlocksPageUtils.isBookmarkedSectionNotVisible(page);
+	public boolean isBookmarkAppDisplayedInBookmarkSection(String appName) {
+		return DragAndDropBlocksPageUtils.isBookmarkAppDisplayedInBookmarkSection(page, appName);
 	}
 
 	// created app display in all apps section
@@ -305,16 +309,40 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.highlightThePage(page, pageName);
 	}
 
-	public String getBlockSettingsPanelTitle(String expectedTitle,String option) {
-		return DragAndDropBlocksPageUtils.getBlockSettingsPanelTitle(page, expectedTitle,option);
+	public String getBlockSettingsPanelTitle(String expectedTitle, String option) {
+		return DragAndDropBlocksPageUtils.getBlockSettingsPanelTitle(page, expectedTitle, option);
 	}
-	
+
 	public boolean userSeesTheSection(String sectionsName) {
 		return DragAndDropBlocksPageUtils.userSeesTheSection(page, sectionsName);
 	}
 
 	public boolean isOptionVisibleUnderSection(String sectionName, String optionName) {
 		return DragAndDropBlocksPageUtils.isOptionVisibleUnderSection(page, sectionName, optionName);
+	}
+
+	public void clickOnNewActionButton(String blockName) {
+		DragAndDropBlocksPageUtils.clickOnNewActionButton(page, blockName);
+	}
+
+	public void selectActionOptionFromDropdown(String actionOption) {
+		DragAndDropBlocksPageUtils.selectActionOptionFromDropdown(page, actionOption);
+	}
+
+	public void selectOptionFromActionList(String optionName) {
+		DragAndDropBlocksPageUtils.selectOptionFromActionList(page, optionName);
+	}
+
+	public void dragBlock(String blockName) {
+		DragAndDropBlocksPageUtils.dragBlock(page, blockName);
+	}
+
+	public void clickOnIconOptionFromGeneralSetting(String optionName) {
+		DragAndDropBlocksPageUtils.clickOnIconOptionFromGeneralSetting(page, optionName);
+	}
+
+	public void selectValueForsettingOption(String value, String optionName) {
+		DragAndDropBlocksPageUtils.selectValueForsettingOption(page, value, optionName);
 	}
 
 }

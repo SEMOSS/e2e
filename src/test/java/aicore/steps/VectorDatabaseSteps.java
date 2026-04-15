@@ -16,7 +16,7 @@ public class VectorDatabaseSteps {
 
 	public VectorDatabaseSteps() {
 		embedDocumentPage = new EmbedDocumentPage(SetupHooks.getPage());
-		vectorPage = new OpenVectorPage(SetupHooks.getPage(), AddModelSteps.timestamp);
+		vectorPage = new OpenVectorPage(SetupHooks.getPage());
 	}
 
 	@When("User clicks on files")

@@ -11,6 +11,13 @@ jobs:
     runs-on: CICD-GitHubRunner-e2e
     # container:
     #   image: quay.io/semoss/test-quay:ubuntu-dind
+
+    env:
+      NATIVE_PASSWORD: ${{ secrets.NATIVE_PASSWORD }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      AUTHOR_PASSWORD: ${{ secrets.AUTHOR_PASSWORD }}
+      EDITOR_PASSWORD: ${{ secrets.EDITOR_PASSWORD }}
+      READ_PASSWORD: ${{ secrets.READ_PASSWORD }}
     
     steps:
     
@@ -20,18 +27,24 @@ jobs:
     - name: Set environment variables
       run: echo "UID=$(id -u)" >> $GITHUB_ENV && echo "GID=$(id -g)" >> $GITHUB_ENV
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
-
-    - name: Build and run Docker Compose
+    - name: Install Maven
       run: |
-        docker compose -f docker.yaml up --remove-orphans --build --exit-code-from semoss
-      env:
-        COMPOSE_DOCKER_CLI_BUILD: 1
-        DOCKER_BUILDKIT: 1
+        sudo apt-get update
+        sudo apt-get install -y maven
+
+    - name: Install deps
+      run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+
+    - name: Run Tests with mvn
+      run: |
+        mvn clean test
 
     - name: Upload Test Results
       if: always()

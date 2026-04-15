@@ -47,6 +47,10 @@ public class AppVariablePage {
 	public void clickOnCreateVariableButton() {
 		AppVariablePageUtils.clickOnCreateVariableButton(page);
 	}
+	
+	public void clickOnVariablesTab(String tabName) {
+		AppVariablePageUtils.clickOnVariablesTab(page, tabName);
+	}
 
 	public String getCatalogNameForVariable() {
 		return AppVariablePageUtils.getCatalogNameForVariable(page);

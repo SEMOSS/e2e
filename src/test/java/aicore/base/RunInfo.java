@@ -1,5 +1,6 @@
 package aicore.base;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,8 +23,8 @@ public class RunInfo {
     private static boolean needToCreateUser = true;
     private static Boolean accept_cookies_popup = null;
 
-    private static Map<String, String> ENV_VARIABLES = new HashMap<>();
     private static List<String> URLS = new ArrayList<>();
+    private static Map<String, String> ENV_VARIABLES = new HashMap<>();
     
     static {
         loadEnvironmentVariables();
@@ -94,17 +95,13 @@ public class RunInfo {
 
     public static boolean isAcceptCookiesPopup() {
         if (accept_cookies_popup == null) {
-            accept_cookies_popup = Boolean.parseBoolean(ConfigUtils.getValue("accept_cookies_popup"));
+            accept_cookies_popup = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.ACCEPT_COOKIES_POPUP));
         }
         return accept_cookies_popup;
     }
 
-    public static void setEnvVariables(Map<String, String> envVariables) {
-        ENV_VARIABLES = envVariables;
-    }
-
-    public static Map<String, String> getEnvVariables() {
-        return ENV_VARIABLES;
+    public static String getApiEndpoint() {
+        return ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT);
     }
 
     /**

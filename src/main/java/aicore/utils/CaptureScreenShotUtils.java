@@ -26,15 +26,16 @@ import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
-import com.microsoft.playwright.options.Clip;
 import com.microsoft.playwright.options.LoadState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
+import aicore.pages.home.MainMenuUtils;
 
 public class CaptureScreenShotUtils {
 
 	public static String version;
-	private static final String VERSION_XPATH = "//*[@data-testid='LogoutIcon']/../../../../following-sibling::li//div//span[1]";
+	private static final String VERSION_XPATH = "//button[text()='Logout']/parent::div/following-sibling::div//span[1]";
 
 	public static String versionCapture(Page page) {
 		String appVersion = page.locator(VERSION_XPATH).textContent();
@@ -42,7 +43,7 @@ public class CaptureScreenShotUtils {
 		System.out.println("Captured version: " + appVersion);
 		CaptureScreenShotUtils.version = appVersion;
 		page.keyboard().press("Escape");
-		HomePageUtils.closeMainMenu(page);
+		MainMenuUtils.closeMainMenu(page);
 		return appVersion;
 	}
 
@@ -80,7 +81,7 @@ public class CaptureScreenShotUtils {
 		File benchmark = new File("img/PlatformNavigation/" + "Version" + version, subFolder);
 		File results = new File("img/PlatformNavigation/Results", subFolder);
 		File previousBenchmark = new File(
-				"img/PlatformNavigation/" + "Version" + ConfigUtils.getValue("current_version"), subFolder);
+				"img/PlatformNavigation/" + "Version" + ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION), subFolder);
 
 		File dir1 = benchmark;
 		File dir2 = previousBenchmark;
@@ -121,7 +122,7 @@ public class CaptureScreenShotUtils {
 		writeResultFile(new File(diffDir, "changedfiles.txt"), changedfiles);
 		writeResultFile(new File(diffDir, "Unchangedfiles.txt"), Unchangedfiles);
 
-		cleanOldVersionDirectories("img/PlatformNavigation", "Version" + ConfigUtils.getValue("current_version"),
+		cleanOldVersionDirectories("img/PlatformNavigation", "Version" + ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION),
 				"Version" + version);
 	}
 
@@ -210,9 +211,8 @@ public class CaptureScreenShotUtils {
 	public static void captureFormScreenshot(Page page, Path path) throws IOException {
 		page.waitForTimeout(1000);
 		Path screenshotPath = Paths.get(path.toString());
-		page.setViewportSize(1920, 1080);
-		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true)
-				.setClip(new Clip(0, 0, 1920, 1080)));
+		page.setViewportSize(2560, 1440);
+		page.screenshot(new Page.ScreenshotOptions().setPath(screenshotPath).setFullPage(true));
 		page.setViewportSize(1280, 780);
 	}
 

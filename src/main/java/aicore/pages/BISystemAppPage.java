@@ -3,12 +3,12 @@ package aicore.pages;
 import java.nio.file.Paths;
 
 import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Locator.WaitForOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
-import aicore.utils.AICorePageUtils;
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
+import aicore.utils.AICorePageUtils;
 
 public class BISystemAppPage {
 
@@ -46,6 +46,8 @@ public class BISystemAppPage {
 	private static final String X_AXIS_DROPPABLE_AREA_XPATH = "//span[text()='{axis}']//../../..//ul";
 	private static final String FIELD_BUTTON_XPATH = "//div[@title='{fieldName} is a Number']";
 	private static final String TOOLS_OPTION_XPATH = "//span[text()='{optionName}']";
+	private static final String SELECT_STARTING_POINT_TEXT_XPATH = "//span[text()='Select a Starting Point']";
+	private static final String CHART_TABLE_XPATH = "//div[@role='grid']";
 
 	public BISystemAppPage(Page page, String timestamp) {
 		this.page = page;
@@ -76,6 +78,9 @@ public class BISystemAppPage {
 
 	public void clickOnAppOption() {
 		page.click(APP_OPTION_ID);
+		Locator startingPointText = page.locator(SELECT_STARTING_POINT_TEXT_XPATH);
+		AICorePageUtils.waitFor(startingPointText);
+		startingPointText.hover();
 	}
 
 	public void clickOnInsightsOption() {
@@ -101,11 +106,13 @@ public class BISystemAppPage {
 	}
 
 	public void uploadCSVFile() {
-		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH, Paths.get(ConfigUtils.getValue("BIDataImportCSVFile")));
+		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH,
+				Paths.get(ConfigUtils.getValue(AICoreTestConstants.BI_IMPORT_CSV_FILE)));
 	}
 
 	public void uploadExcelFile() {
-		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH, Paths.get(ConfigUtils.getValue("BIDataImportExcelFile")));
+		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH,
+				Paths.get(ConfigUtils.getValue(AICoreTestConstants.BI_IMPORT_EXCEL_FILE)));
 	}
 
 	public void clickOnNextButton() {
@@ -119,8 +126,8 @@ public class BISystemAppPage {
 	public String verifyDBCreatedToastMessage() {
 		Locator toast = page.locator(DATABASE_CREATED_TOAST_MESSAGE_XPATH).first();
 		toast.isVisible();
-	    return toast.textContent().trim();
-		
+		return toast.textContent().trim();
+
 	}
 
 	public void searchDatabaseName(String createdDatabaseName) {
@@ -142,6 +149,7 @@ public class BISystemAppPage {
 
 	public void clickOnVisualizeDataOption() {
 		page.click(VISUALIZE_THIS_DATA_OPTION_XPATH);
+		page.waitForTimeout(300);
 	}
 
 	public void clickOnWorkspaceSaveButton() {
@@ -174,7 +182,8 @@ public class BISystemAppPage {
 	}
 
 	public void dragFieldToXAxis(String fieldName, String axis) {
-		page.dragAndDrop(FIELD_BUTTON_XPATH.replace("{fieldName}", fieldName), X_AXIS_DROPPABLE_AREA_XPATH.replace("{axis}", axis));
+		page.dragAndDrop(FIELD_BUTTON_XPATH.replace("{fieldName}", fieldName.toUpperCase()),
+				X_AXIS_DROPPABLE_AREA_XPATH.replace("{axis}", axis));
 	}
 
 	public void clickOnToolsOption() {
@@ -189,6 +198,7 @@ public class BISystemAppPage {
 	public void hoverAddPanelAndSelectAddChart(String panelType) {
 		page.getByTitle("Add Panel").hover();
 		page.getByTitle(panelType).click();
+		page.locator(CHART_TABLE_XPATH).hover();
 	}
 
 	public void clickOnPresentationModeOption() {

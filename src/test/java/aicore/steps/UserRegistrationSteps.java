@@ -5,25 +5,23 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
+import aicore.framework.AICoreTestConstants;
+import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
-import aicore.pages.LoginPage;
 import aicore.pages.UserRegistrationPage;
-import aicore.utils.CommonUtils;
-import aicore.framework.ConfigUtils;
+import aicore.utils.LoginPageUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class UserRegistrationSteps {
 	private HomePage homePage;
-	private LoginPage loginPage;
 	private UserRegistrationPage userRegistration;
 	protected String timestamp;
 
 	public UserRegistrationSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
-		loginPage = new LoginPage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		this.userRegistration = new UserRegistrationPage(SetupHooks.getPage());
 	}
@@ -60,13 +58,13 @@ public class UserRegistrationSteps {
 	public void user_enters_username_as_and_password(String username, String password) {
 		String uniqueUsername = username.replace("<RANDOM_ID>", timestamp);
 		String uniquePassword = password.replace("<RANDOM_ID>", timestamp);
-		loginPage.enterUsernameAndPassword(uniqueUsername, uniquePassword);
+		LoginPageUtils.enterUsernameAndPassword(SetupHooks.getPage(), uniqueUsername, uniquePassword);
 	}
 
 	@Then("User should navigate to home page")
 	public void user_should_navigate_to_home_page() {
 		String actualPageTitle = homePage.getPageTitle();
-		String expectedPageTitle = ConfigUtils.getValue("applicationName");
+		String expectedPageTitle = ConfigUtils.getValue(AICoreTestConstants.APP_NAME);
 		Assertions.assertEquals(expectedPageTitle, actualPageTitle, "Page title is incorrect");
 	}
 }

@@ -9,7 +9,8 @@ public class ResourcePool {
 
     private static final ThreadLocal<Resource> CURRENT = new ThreadLocal<>();
 
-    private ResourcePool() {}
+	private ResourcePool() {
+	}
 
     public static void init(List<Resource> resources) {
         if (resources == null || resources.isEmpty()) {

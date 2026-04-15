@@ -7,8 +7,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import aicore.framework.UrlUtils;
-
 public class DockerUtils {
 	private static final Logger logger = LogManager.getLogger(DockerUtils.class);
 
@@ -16,10 +14,10 @@ public class DockerUtils {
 		pingAllServers();
 	}
 	
-	private static void pingServer(String baseUrl, int retryCount, int timeoutInMilliseconds)  {
+	private static void pingServer(String baseUrl, String endpoint, int retryCount, int timeoutInMilliseconds)  {
 		int i = 0;
 		boolean successful = false;
-		String apiStringEndpoint = baseUrl + "Monolith/api/config";
+		String apiStringEndpoint = baseUrl + endpoint + "/api/config";
 		logger.warn("attempting to ping: {}", apiStringEndpoint);
 		while (i < retryCount) {
 			try {
@@ -55,13 +53,14 @@ public class DockerUtils {
 	public static void pingAllServers() {
 		List<String> urls = RunInfo.getUrls();
 		String first = urls.getFirst();
-		pingServer(first, 120, 5000);
+		String endpoint = RunInfo.getApiEndpoint();
+		pingServer(first, endpoint, 120, 5000);
 		if (urls.size() > 1) {
 			// skip the first server, ping the rest of the servers.
 			for (int i = 1; i < urls.size(); i++) {
 				// set a more aggressive timeout since the other containers should be built
 				// at the same time
-				pingServer(urls.get(i), 100, 1);
+				pingServer(urls.get(i), endpoint, 100, 1);
 			}
 		}
 	}

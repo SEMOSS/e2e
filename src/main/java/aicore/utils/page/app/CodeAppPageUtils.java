@@ -8,18 +8,18 @@ import com.microsoft.playwright.options.LoadState;
 
 public class CodeAppPageUtils {
 
-	private static final String FILE_UPLOAD_TESTID = "FileUploadIcon";
+	private static final String FILE_UPLOAD_TESTID = "workspace-Files-image";
 	private static final String UNZIP_CHECKBOX_TESTID = "CheckBoxOutlineBlankIcon";
-	private static final String PUBLISH_BUTTON_TESTID = "PublishedWithChangesOutlinedIcon";
-	private static final String FOLDER_NAME_XPATH = "//p[normalize-space()='{folderName}']";
+	private static final String PUBLISH_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-cloud-up')]";
+	private static final String FOLDER_NAME_XPATH = "//span[normalize-space()='{folderName}']";
 	private static final String CREATE_NEW_FOLDER_ICON_XPATH = "//*[name()='svg'][@data-testid='CreateNewFolderOutlinedIcon']";
-	private static final String FOLDER_NAME_INPUT_XPATH = "//label[normalize-space()='Name']/following::input[@type='text'][2]";
+	private static final String FOLDER_NAME_INPUT_XPATH = "//label[text()='Directory Name']/parent::div//input";
 	private static final String CREATE_NEW_FILE_ICON_XPATH = "//*[name()='svg'][@data-testid='NoteAddOutlinedIcon']";
-	private static final String SUBFOLDERORFILE_XPATH = "//li[@title='{parentFolder}']//ul//p[normalize-space()='{subFolder}']";
+	private static final String SUBFOLDERORFILE_XPATH = "//li[@id='/{parentfolder}/{subfolder}/']";
 	private static final String EDIT_FILE_XPATH = "//div[@class='view-lines monaco-mouse-cursor-text']";
 	private static final String SEE_THE_FILES_IN_FILES_TAB_XPATH = "//div[normalize-space()='Files']";
 	private static final String CLICK_ON_THE_FILES_TAB_XPATH = "//img[@alt='Files']";
-	private static final String FILES_REFRESH_OPTION_XPATH = "//button[@aria-label='Refresh files']";
+	private static final String FILES_REFRESH_OPTION_XPATH = "//button//*[name()='svg'][contains(@class,'refresh-cw')]";
 	private static final String FILES_RECOMPILE_REACTOR_XPATH = "//button[@aria-label='Recompile reactors']";
 	private static Page newTab;
 	private static final String SHARE_APP_LINK_XPATH = "//button[@aria-label='Share App']";
@@ -28,9 +28,20 @@ public class CodeAppPageUtils {
 	private static final String EDIT_TITLE_OF_TITLE_FIRST_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Get')]";
 	private static final String CODEAPPBOOKMARK_ICON_DATATESTID = "viewAppPage-bookmark-btn";
 	private static final String CODE_APP_SETTINGS_TAB = "workspace-Settings-image";
+	private static final String FILE_SECTION_IS_DISABLE_XPATH = "//div[contains(@class,'unselected workspace_layout')]//div//img[@alt='Files']";
+	private static final String CREATE_AT_ICON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-file-plus')]";
+	private static final String CLICK_TO_SELECT_OPTION_XPATH = "//label[text()='Action']/parent::div//button";
+	private static final String FILE_UPLOAD_BUTTON_XPATH = "//button[text()='{buttonName}']";
+	private static final String CLICK_ON_CREATE_BUTTON_XPATH = "//button[text()='Create']";
+	private static final String FILE_NAME_INPUT_XPATH = "//label[text()='File Name']/parent::div//input";
+	private static final String CLICK_ON_THREE_DOT_ICON_OF_FILE_XPATH = "//div//span[text()='{fileName}']/parent::div//*[name()='svg'][contains(@class,'lucide-ellipsis')]";
+	private static final String SELECT_THE_OPTION_FROM_THREE_DOT_ICON = "//div[text()='{optionName}']";
 
 	public static void clickOnFileUploadButton(Page page) {
-		page.getByTestId(FILE_UPLOAD_TESTID).click();
+		Locator unselectedFile = page.locator(FILE_SECTION_IS_DISABLE_XPATH);
+		if (unselectedFile.isVisible()) {
+			page.getByTestId(FILE_UPLOAD_TESTID).click();
+		}
 	}
 
 	public static void clickOnUnzipCheckbox(Page page) {
@@ -39,7 +50,7 @@ public class CodeAppPageUtils {
 	}
 
 	public static void clickOnPublishButton(Page page) {
-		page.getByTestId(PUBLISH_BUTTON_TESTID).first().click();
+		page.locator(PUBLISH_BUTTON_XPATH).click();
 	}
 
 	public static boolean userCanSeeFolder(Page page, String folderName) {
@@ -57,7 +68,7 @@ public class CodeAppPageUtils {
 	}
 
 	public static void clickOnCreateButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create").setExact(true)).last().click();
+		page.locator(CLICK_ON_CREATE_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnCreateNewFileIcon(Page page) {
@@ -65,7 +76,7 @@ public class CodeAppPageUtils {
 	}
 
 	public static void enterFileName(Page page, String fileName) {
-		page.locator(FOLDER_NAME_INPUT_XPATH).first().fill(fileName);
+		page.locator(FILE_NAME_INPUT_XPATH).first().fill(fileName);
 	}
 
 	public static boolean userCanSeeFile(Page page, String fileName) {
@@ -84,7 +95,6 @@ public class CodeAppPageUtils {
 	}
 
 	public static void userCanSeeFileUnderParentFolder(Page page, String fileName, String parentFolderName) {
-		page.locator(FOLDER_NAME_XPATH.replace("{folderName}", parentFolderName)).click();
 		Locator fileLocator = page.locator(
 				SUBFOLDERORFILE_XPATH.replace("{parentFolder}", parentFolderName).replace("{subFolder}", fileName));
 		fileLocator.isVisible();
@@ -95,7 +105,7 @@ public class CodeAppPageUtils {
 	}
 
 	public static void userEditFileWithSomeContentAs(Page page, String content) {
-		Locator editFile = page.locator(EDIT_FILE_XPATH);
+		Locator editFile = page.locator(EDIT_FILE_XPATH).first();
 		editFile.click();
 		editFile.pressSequentially(content);
 	}
@@ -200,5 +210,26 @@ public class CodeAppPageUtils {
 
 	public static void clickOnAppsTab(Page page) {
 		page.getByLabel("Apps").click();
+	}
+
+	public static void clickOnCreateAtIconOnFileSection(Page page) {
+		page.locator(CREATE_AT_ICON_XPATH).click();
+	}
+
+	public static void selectAction(Page page, String action) {
+		page.locator(CLICK_TO_SELECT_OPTION_XPATH).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(action)).click();
+	}
+
+	public static void clickOnUploadButtonToCreateCodeApp(Page page, String buttonName) {
+		page.locator(FILE_UPLOAD_BUTTON_XPATH.replace("{buttonName}", buttonName)).click();
+	}
+
+	public static void clickOnThreeDotIcon(Page page, String fileName) {
+		page.locator(CLICK_ON_THREE_DOT_ICON_OF_FILE_XPATH.replace("{fileName}", fileName)).click();
+	}
+
+	public static void userSelectTheOptionFromThreeDotIcon(Page page, String optionName) {
+		page.locator(SELECT_THE_OPTION_FROM_THREE_DOT_ICON.replace("{optionName}", optionName)).click();
 	}
 }

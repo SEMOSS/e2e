@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
-import aicore.pages.HomePage;
 import aicore.pages.ViewCatalogPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -20,23 +20,20 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddModelSteps {
-	private HomePage homePage;
 	private AddModelPage openModelPage;
 	protected static String timestamp;
 	private String expectedCatalogId;
 	private ViewCatalogPage viewCatalogPage;
 
 	public AddModelSteps() {
-		this.homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
 		this.openModelPage = new AddModelPage(SetupHooks.getPage(), timestamp);
 		viewCatalogPage = new ViewCatalogPage(SetupHooks.getPage());
-
 	}
 
 	@Given("User clicks on Open Model")
 	public void user_navigates_to_open_model() {
-		homePage.clickOnOpenModel();
+		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Add Model")
@@ -66,8 +63,8 @@ public class AddModelSteps {
 			}
 			viewCatalogPage.clickOnSubmit();
 			if (i < modelCount - 1) {
-				homePage.openMainMenu();
-				homePage.clickOnOpenModel();
+				MainMenuUtils.openMainMenu(SetupHooks.getPage());
+				MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
 				openModelPage.clickAddModelButton();
 			}
 		}
@@ -121,6 +118,16 @@ public class AddModelSteps {
 	public void user_can_see_button_becomes_enabled(String buttonName) {
 		boolean isButtonEnabled = openModelPage.validateConnectButtonEnabled();
 		Assertions.assertTrue(isButtonEnabled, "'Connect' button is not enabled");
+	}
+
+	@And("User enters the following details in the model configuration")
+	public void user_enters_value_as_field_name(DataTable dataTable) {
+		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> row : rows) {
+			String fieldName = row.get("fieldName");
+			String fieldValue = row.get("fieldValue");
+			openModelPage.fillModelCreationForm(fieldName, fieldValue);
+		}
 	}
 
 	@Then("User clicks on model {string} button")
@@ -325,8 +332,8 @@ public class AddModelSteps {
 	public void user_should_see_on_the_page(String expectedTags) {
 		String[] tagArray = expectedTags.split(", ");
 		List<String> actualTagList = openModelPage.verifyTagNames();
-		List<String> expectedTagList = Arrays.asList(tagArray).subList(0, Math.min(2, tagArray.length));
-		Assertions.assertEquals(actualTagList, expectedTagList);
+		List<String> expectedTagList = Arrays.asList(tagArray);
+		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
 	@And("User should see {string} in the overview Details section")
@@ -484,11 +491,6 @@ public class AddModelSteps {
 		openModelPage.enterGCPRegion(gcpRegion);
 	}
 
-	@And("User select the Type as {string}")
-	public void user_select_the_type_for_model(String type) {
-		openModelPage.selectTypeForModel(type);
-	}
-
 	@And("User enter the Endpoint as {string}")
 	public void user_enter_the_endpoint_as(String endpoint) {
 		openModelPage.enterEndpoint(endpoint);
@@ -609,7 +611,7 @@ public class AddModelSteps {
 		openModelPage.enterAWSAccessKey(awsAccessKey);
 	}
 
-	@And("User enter AWS Secreate key as {string}")
+	@And("User enter AWS Secret key as {string}")
 	public void user_enter_aws_secreate_key_as(String awsSecreateKey) {
 		openModelPage.enterAWSSecretKey(awsSecreateKey);
 	}
@@ -629,4 +631,19 @@ public class AddModelSteps {
 		openModelPage.clickOnUploadButton(buttonName);
 	}
 
+	@When("User mouse hover on Lock icon displayed on catalog card")
+	public void user_mouse_hover_on_lock_icon_displayed_on_catalog_card() {
+		openModelPage.mouseHoverOnEngineAccessStatusIcon();
+	}
+
+	@Then("User can see engine access status as {string} on the tooltip")
+	public void user_can_see_engine_access_status_as_on_the_tooltip(String expectedStatus) {
+		String actualStatus = openModelPage.getEngineAccessStatusTooltipText(expectedStatus);
+		Assertions.assertEquals(expectedStatus, actualStatus, "Incorrect status");
+	}
+
+	@When("User clicks on make {string} public button")
+	public void user_clicks_on_make_public_button(String catalogName) {
+		openModelPage.clickOnMakeCatalogPublicButton(catalogName);
+	}
 }

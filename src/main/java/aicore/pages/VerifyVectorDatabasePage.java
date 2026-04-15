@@ -1,7 +1,8 @@
 package aicore.pages;
 
 import com.microsoft.playwright.Page;
-import aicore.utils.VerifyVectorDatabasePageUtils;
+
+import aicore.pages.vector.VerifyVectorDatabasePageUtils;
 
 public class VerifyVectorDatabasePage {
     private Page page;

@@ -10,9 +10,9 @@ import aicore.utils.CommonUtils;
 public class SettingsPageUtils {
 
 	///// SETTING PAGE
-	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
+	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "//button[text()='Admin Off']";
 	private static final String ADMIN_BUTTON_OFF_XPATH = "//*[local-name()='svg'][contains(@class,'MuiSvgIcon-colorDisabled')]";
-	private static final String CARD_XPATH = "//div[contains(@class,'MuiCardHeader-content')]/span[text()='{cardName}']";
+	private static final String CARD_XPATH = "//div[text()='{cardName}']/parent::div[@data-slot='card-header']";
 	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin on']";
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
 	private static final String MEMBER_COUNT_XPATH = "//div[@class='css-1lxwves']//span";
@@ -32,7 +32,7 @@ public class SettingsPageUtils {
 	}
 
 	public static void clickOnAdminButton(Page page) {
-		if (page.locator(ADMIN_BUTTON_OFF_XPATH).isVisible()) {
+		if (page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible()) {
 			page.locator(ADMIN_ON_OFF_BUTTON_XPATH).click();
 		}
 	}

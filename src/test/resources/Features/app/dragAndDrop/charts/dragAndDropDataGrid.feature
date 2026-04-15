@@ -17,7 +17,8 @@ Feature: Drag and Drop Data Grid
     And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
-    When User opens Main Menu
+    When User clicks on Save button of Metadata tab
+    And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"
@@ -36,7 +37,7 @@ Feature: Drag and Drop Data Grid
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    Then User can see 'Age, BMI, BloodPressure, DIABETES_UNIQUE_ROW_IDFK, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
+    Then User can see 'AGE, BLOODPRESSURE, BMI, DIABETESPEDIGREEFUNCTION, DIABETES_UNIQUE_ROW_IDFK, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns under the fields column
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell
@@ -53,10 +54,10 @@ Feature: Drag and Drop Data Grid
     And User clicks on Data tab
     And User selects the frame from the selected frame dropdown
     And User clicks on the Sync icon
-    And User can see the Data Grid column names as 'Age, BloodPressure, BMI, DIABETES_UNIQUE_ROW_ID, DiabetesPedigreeFunction, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip'
-    And User remove the 'Age' column from the Data Grid
+    And User can see the Data Grid column names as 'AGE, BLOODPRESSURE, BMI, DIABETES_UNIQUE_ROW_ID, DIABETESPEDIGREEFUNCTION, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP'
+    And User remove the 'AGE' column from the Data Grid
     And User clicks on the Sync icon
-    And User should not see the 'Age' column in the Data Grid
+    And User should not see the 'AGE' column in the Data Grid
 
   @LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
   Scenario: validate the pagination on the Data Grid

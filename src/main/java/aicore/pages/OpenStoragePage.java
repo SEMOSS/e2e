@@ -2,6 +2,7 @@ package aicore.pages;
 
 import com.microsoft.playwright.Page;
 
+import aicore.pages.storage.AddStorageFormUtils;
 import aicore.utils.StoragePageUtils;
 
 public class OpenStoragePage extends AbstractAddCatalogPageBase {
@@ -19,39 +20,39 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void selectStorage(String storageName) {
-		StoragePageUtils.selectStorage(page, storageName);
+		AddStorageFormUtils.selectStorage(page, storageName);
 	}
 
 	public boolean fieldUnderSection(String storageType, String section, String field) {
-		return StoragePageUtils.fieldUnderSection(page, storageType, section, field);
+		return AddStorageFormUtils.fieldUnderSection(page, storageType, section, field);
 	}
 
 	public boolean isFieldMandatory(String storageType, String field) {
-		return StoragePageUtils.isFieldMandatory(page, storageType, field);
+		return AddStorageFormUtils.isFieldMandatory(page, storageType, field);
 	}
 
 	public void fillCatalogCreationForm(String storageType, String fieldName, String fieldValue) {
-		StoragePageUtils.fillCatalogCreationForm(page, storageType, fieldName, fieldValue, timestamp);
+		AddStorageFormUtils.fillCatalogCreationForm(page, storageType, fieldName, fieldValue, timestamp);
 	}
 
 	public void enterCatalogName(String catalogName) {
-		StoragePageUtils.enterCatalogName(page, catalogName);
+		AddStorageFormUtils.enterCatalogName(page, catalogName);
 	}
 
 	public void enterRegionName(String regionName) {
-		StoragePageUtils.enterRegionName(page, regionName);
+		AddStorageFormUtils.enterRegionName(page, regionName);
 	}
 
 	public void enterBucket(String bucket) {
-		StoragePageUtils.enterBucket(page, bucket);
+		AddStorageFormUtils.enterBucket(page, bucket);
 	}
 
 	public void enterAccessKey(String accessKey) {
-		StoragePageUtils.enterAccessKey(page, accessKey);
+		AddStorageFormUtils.enterAccessKey(page, accessKey);
 	}
 
 	public void enterSecretKey(String secretKey) {
-		StoragePageUtils.enterSecretKey(page, secretKey);
+		AddStorageFormUtils.enterSecretKey(page, secretKey);
 	}
 
 	public void searchStorage(String storageName) {
@@ -103,11 +104,11 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 	}
 
 	public boolean verifyFieldIsVisible(String fieldname) {
-		return StoragePageUtils.verifyFieldIsVisible(page, fieldname);
+		return AddStorageFormUtils.verifyFieldIsVisible(page, fieldname);
 	}
 
 	public void enterValuesInField(String fieldname, String fieldValue) {
-		StoragePageUtils.enterValuesInField(page, fieldname, fieldValue, timestamp);
+		AddStorageFormUtils.enterValuesInField(page, fieldname, fieldValue, timestamp);
 	}
 
 	public void viewStorageIDalongwithCopyIcon() {

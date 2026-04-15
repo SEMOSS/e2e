@@ -1,3 +1,4 @@
+@DeleteCreatedTestTeam
 Feature: Add Project for Team Permission
 
   Background: Team Permissions - Add team
@@ -10,6 +11,7 @@ Feature: Add Project for Team Permission
     And User fills 'Test Team' in Name field of Add Team form
     And User fills Description as 'Test Description' in Description field of Add Team form
     And User clicks on 'Add' button in Add Team form
+    And User fetch the team name
 
   @LoginWithAdmin @DeleteCreatedTestApp @Regression
   Scenario Outline: Add Project for different Users role
@@ -32,8 +34,8 @@ Feature: Add Project for Team Permission
     And User select the 'Test for add project' in the 'Select App' field of Add App form
     And User select the engine access as '<Role>'
     And User clicks on save button
-    Then User sees the message 'Successfully added app permission' is displayed
-    And User see the added 'Test for add project' in the engine list with access as '<Role>'
+    Then User sees the message 'Successfully added app permissions' is displayed
+    And User see the added 'Test for add project' in the app list with access as '<Role>'
 
     Examples: 
       | Role      |

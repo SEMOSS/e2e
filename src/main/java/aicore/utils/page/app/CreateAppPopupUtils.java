@@ -6,9 +6,9 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.HomePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
@@ -89,8 +89,8 @@ public class CreateAppPopupUtils {
 
 	public static void createMultipleApps(Page page, String appType, String appName, String appDescription,
 			String appTags) {
-		HomePageUtils.openMainMenu(page);
-		HomePageUtils.clickOnOpenAppLibrary(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenAppLibrary(page);
 		Locator createNewAppBtn = page.getByTestId("appCatalogPage-create-new-app-btn");
 		createNewAppBtn.click();
 		clickOnGetStartedButton(page, appType);
@@ -98,6 +98,7 @@ public class CreateAppPopupUtils {
 		enterAppDescription(page, appDescription);
 		enterTags(page, appTags);
 		clickOnCreateButton(page);
+		page.waitForTimeout(1000); // Wait for the app to be created and appear in the list
 		createdAppNames.add(appName);
 	}
 

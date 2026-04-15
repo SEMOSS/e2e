@@ -40,28 +40,36 @@ import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.UrlUtils;
+import aicore.pages.home.MainMenuUtils;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
 
-	private static final String SEARCH_CATALOG_LABEL = "Search";
+	private static final String SEARCH_APP_LABEL = "Search apps";
 	private static final String SEARCH_CATALOG_DATATESTID = "search-bar";
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
-	private static final String APP_DELETE_BUTTON_XPATH = "//li[@value='delete']";
-	private static final String APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//div[contains(@class,'MuiDialogActions-root')]//button[normalize-space()='Delete']";
+	private static final String APP_DELETE_BUTTON_XPATH = "//div[text()='Delete App']";
+	private static final String DELETE_CONFIRMATION_POPUP_BUTTON_XPATH = "//button[normalize-space()='Delete']";
 	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
 
-	private static final String THREE_DOT_ICON_DATATESTID = "MoreVertIcon";
+	private static final String THREE_DOT_ICON_XPATH = "//button[@aria-label='More options']";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
 	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
+
+	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
+	private static final String TEAM_PERMISSION_DATATESTID = "settingsIndexPage-Team-Permissions-card";
+	private static final String SEARCH_TEAM_PLACEHOLDER_TEXT = "Search teams by name";
+	private static final String CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID = "MoreVertIcon";
+	private static final String TEAM_DELETE_BUTTON_XPATH = "//p[text()='Delete team']";
 
 	public static String getTimeStampName() {
 		return new SimpleDateFormat(NAME_TIMESTAMP_FORMAT).format(new Date());
@@ -288,17 +296,16 @@ public class CommonUtils {
 	}
 
 	public static boolean getVersion(Page page) {
-		HomePageUtils.openMainMenu(page);
-		page.getByTestId("AccountCircleRoundedIcon").click();
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnUserAccountButton(page);
 		String version = CaptureScreenShotUtils.versionCapture(page);
-
 		logger.info("Version obtained: {}", version);
-		logger.info("Current version: {}", ConfigUtils.getValue("current_version"));
-		if (version.equals(ConfigUtils.getValue("current_version"))) {
+		logger.info("Current version: {}", ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION));
+		if (version.equals(ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION))) {
 			logger.info("Version match: {}", version);
 			return true;
 		} else {
-			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue("current_version"), version);
+			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION), version);
 			return false;
 		}
 	}
@@ -306,14 +313,14 @@ public class CommonUtils {
 	public static boolean navigateAndDeleteCatalog(Page page, String catalogType, String catalogId) {
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
-			HomePageUtils.openMainMenu(page);
+			MainMenuUtils.openMainMenu(page);
 			switch (catalogType) {
-			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> HomePageUtils.clickOnOpenDatabase(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> HomePageUtils.clickOnOpenModel(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> HomePageUtils.clickOnOpenVector(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> HomePageUtils.clickOnOpenFunction(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> HomePageUtils.clickOnOpenStorage(page);
-			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> HomePageUtils.clickOnGuardrail(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_DATABASE -> MainMenuUtils.clickOnOpenDatabase(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_MODEL -> MainMenuUtils.clickOnOpenModel(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_VECTOR -> MainMenuUtils.clickOnOpenVector(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION -> MainMenuUtils.clickOnOpenFunction(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_STORAGE -> MainMenuUtils.clickOnOpenStorage(page);
+			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> MainMenuUtils.clickOnGuardrail(page);
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
 			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
@@ -338,13 +345,13 @@ public class CommonUtils {
 	public static boolean navigateAndDeleteApp(Page page, String appName) {
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
-			HomePageUtils.openMainMenu(page);
-			HomePageUtils.clickOnOpenAppLibrary(page);
-			page.getByLabel(SEARCH_CATALOG_LABEL).fill(appName);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenAppLibrary(page);
+			page.getByLabel(SEARCH_APP_LABEL).fill(appName);
 			page.waitForTimeout(500);
-			page.getByTestId(THREE_DOT_ICON_DATATESTID).first().click();
+			page.locator(THREE_DOT_ICON_XPATH).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
-			page.locator(APP_CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
+			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {
 				page.locator(TOAST_CLOSE_XPATH).click();
@@ -358,11 +365,31 @@ public class CommonUtils {
 		}
 	}
 
-	public static void closeToastMessage(Page page) {
-
-	}
-
 	public static String getCurrentUtcTime() {
 		return LocalDateTime.now(ZoneOffset.UTC).withNano(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	}
+
+	public static boolean navigateAndDeleteTeam(Page page, String teamName) {
+		try {
+			page.navigate(UrlUtils.getUrl("#/"));
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenSettings(page);
+			page.getByTestId(TEAM_PERMISSION_DATATESTID).click();
+			page.getByPlaceholder(SEARCH_TEAM_PLACEHOLDER_TEXT).fill(teamName);
+			page.waitForTimeout(500);
+			page.getByTestId(CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID).click();
+			page.locator(TEAM_DELETE_BUTTON_XPATH).click();
+			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
+			Locator toasterMessage = page.getByTestId("notification-success-alert");
+			if (toasterMessage.isVisible()) {
+				page.locator(TOAST_CLOSE_XPATH).click();
+				toasterMessage.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			logger.warn("Team deletion failed due to an exception", e);
+			return false;
+		}
 	}
 }

@@ -26,14 +26,14 @@ Feature: Validate Guardrail catalog
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see description as '<DESCRIPTION>' on the page
-    #And User should see '<TAGS>' on the page
+    And User should see '<TAGS>' on the page
     And User should see '<DETAILS>' in the overview Details section
     And User should see '<TAGS>' in the overview Tag section
     And User should see '<DOMAINS>' in the overview Domain section
     And User should see '<DATA_CLASSIFICATION>' in the overview Data classification section
     And User should see '<DATA_RESTRICTIONS>' in the overview Data restrictions section
 
-    Examples: 
+    Examples:
       | DETAILS          | DESCRIPTION                   | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
       | Gliner guardrail | Test Gliner guardrail catalog | embeddings, Test1, Test2, Test3 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
 
