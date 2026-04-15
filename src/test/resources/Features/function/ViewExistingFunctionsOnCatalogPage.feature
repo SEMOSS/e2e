@@ -68,3 +68,19 @@ Feature: View existing functions on Function Catalog Page
     Then User sees the function name 'WeatherFunctionTest' in the function catalog
     When User mouse hover on Lock icon displayed on catalog card
     Then User can see engine access status as 'Global' on the tooltip
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate content of created Function catalog card
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    And User should see the catalog ID on the catalog card
+    And User should see the tags 'embeddings, Test1' on the 'Function' catalog card
+    And User should see the catalog created date on the catalog card
+    And User should see the following icons on the catalog card
+      | lock                |
+      | bookmark            |
+      | view logs dashboard |
+      | delete              |

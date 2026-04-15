@@ -263,7 +263,7 @@ public class AddModelSteps {
 
 	@Then("User should see the {string} on the model catalog page")
 	public void user_should_see_the_on_the_model_catalog_page(String modelName) throws InterruptedException {
-		openModelPage.searchModelCatalog(modelName + timestamp);
+//		openModelPage.searchModelCatalog(modelName + timestamp);
 		boolean isModelDisplayed = openModelPage.verifyModelIsDisplayedOnCatalogPage(modelName + timestamp);
 		Assertions.assertTrue(isModelDisplayed);
 	}

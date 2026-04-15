@@ -54,7 +54,7 @@ Feature: View existing databases on database catalog page
     Then User can see engine access status as 'Global' on the tooltip
 
   @LoginWithAdmin @Regression @DeleteTestCatalog
-  Scenario: Validate contents of created Model catalog card
+  Scenario: Validate contents of created Database catalog card
     When User get the catalog ID
     And User opens Main Menu
     And User clicks on Open Database

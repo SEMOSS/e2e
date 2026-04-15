@@ -47,6 +47,7 @@ public class EditModelPageUtils {
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
 		page.getByTestId("search-bar").fill(modelName);
+		page.waitForTimeout(300);
 	}
 
 	public static void selectModelFromSearchOptions(Page page, String modelName) {
@@ -60,10 +61,9 @@ public class EditModelPageUtils {
 	}
 
 	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName) {
-		String modelNameWithTimestamp = SEARCHED_MODEL_XPATH.replace("{modelName}", modelName);
-		page.waitForSelector(modelNameWithTimestamp, new Page.WaitForSelectorOptions().setTimeout(10000));
-		boolean isModelVisible = page.isVisible(modelNameWithTimestamp);
-		return isModelVisible;
+		Locator modelCard = page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName));
+		AICorePageUtils.waitFor(modelCard);
+		return modelCard.isVisible();
 	}
 
 	public static void clickOnEditButton(Page page) {
@@ -179,15 +179,14 @@ public class EditModelPageUtils {
 	public static void mouseHoverOnEngineAccessStatusIcon(Page page) {
 		Locator lockIcon = page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1);
 		AICorePageUtils.waitFor(lockIcon);
-		lockIcon.hover();
+		lockIcon.hover(new Locator.HoverOptions().setForce(true));
 	}
 
 	public static String getEngineAccessStatusTooltipText(Page page, String status) {
-		Locator lockIcon = page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1);
-		lockIcon.hover(new Locator.HoverOptions().setForce(true));
-		Locator tooltip = page.getByRole(AriaRole.TOOLTIP).filter(new Locator.FilterOptions().setHasText(status));
+		Locator tooltip = page.locator("[data-slot='tooltip-content']")
+				.filter(new Locator.FilterOptions().setHasText(status));
 		AICorePageUtils.waitFor(tooltip);
-		return tooltip.innerText();
+		return tooltip.textContent();
 	}
 
 	public static String getCatalogID(Page page) {
@@ -204,9 +203,9 @@ public class EditModelPageUtils {
 
 	public static List<String> verifyTagNamesDisplayedOnCard(Page page, String catalog) {
 		List<String> tags = new ArrayList<String>();
-		List<String> tagsText = page
-				.locator(TAGS_DISPLAYED_ON_CARD_XPATH.replace("{catalogName}", catalog.toUpperCase())).allInnerTexts();
-		CommonUtils.extractOverviewSectionValues(tags, tagsText);
+		Locator tagsText = page.locator(TAGS_DISPLAYED_ON_CARD_XPATH.replace("{catalogName}", catalog.toUpperCase()));
+		List<String> tagList = tagsText.allInnerTexts();
+		CommonUtils.extractOverviewSectionValues(tags, tagList);
 		return tags;
 	}
 
