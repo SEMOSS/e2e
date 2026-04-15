@@ -50,6 +50,7 @@ public class GuardrailPageUtils {
 	public static void searchGuardrailCatalog(Page page, String searchText) {
 		Locator searchBox = page.getByTestId("search-bar");
 		searchBox.fill(searchText);
+		page.waitForTimeout(300);
 	}
 
 	public static boolean verifySearchedGuardrailCatalogTitle(Page page, String guardrailTitle) {
