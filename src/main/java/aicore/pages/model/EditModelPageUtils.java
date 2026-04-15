@@ -183,10 +183,9 @@ public class EditModelPageUtils {
 	}
 
 	public static String getEngineAccessStatusTooltipText(Page page, String status) {
-		Locator tooltip = page.locator("[data-slot='tooltip-content']")
-				.filter(new Locator.FilterOptions().setHasText(status));
-		AICorePageUtils.waitFor(tooltip);
-		return tooltip.textContent();
+		// Added evaluate method because getting tooltip text twice(due to hidden span)
+		return page.locator("[data-slot='tooltip-content']").evaluate("el => el.childNodes[0].textContent.trim()")
+				.toString();
 	}
 
 	public static String getCatalogID(Page page) {

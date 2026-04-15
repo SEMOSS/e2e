@@ -232,8 +232,8 @@ public class AddDatabasePageUtils {
 	public static void searchDatabaseCatalog(Page page, String catalogName) {
 		Locator searchcatalog = page.getByTestId(DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID);
 		AICorePageUtils.waitFor(searchcatalog);
-		searchcatalog.click();
 		searchcatalog.fill(catalogName);
+		page.waitForTimeout(300);
 	}
 
 	public static void selectDatabaseFromSearchOptions(Page page, String catalogName) {
