@@ -1,5 +1,7 @@
 package aicore.pages.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
 
 public class EditModelPageUtils {
@@ -34,11 +37,17 @@ public class EditModelPageUtils {
 	private static final String DATA_RESTRICTION_SELECT_XPATH = "//button[@id='data restrictions']";
 	private static final String DATA_CLASSIFICATION_SELECT_XAPTH = "//button[@id='data classification']";
 	private static final String ENGINE_ACCESS_STATUS_ICON_XPATH = "//*[contains(@class,'lucide lucide-lock-keyhole')]";
-	private static final String ENGINE_ACCESS_STATUS_TOOLTIP_XPATH = "//div[normalize-space(text())='{status}']";
+	private static final String CATALOG_ID_ON_CARD_XPATH = "//p[contains(text(),'{modelId}')]";
+	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
+	private static final String TAGS_DISPLAYED_ON_CARD_XPATH = "//div[contains(@data-testid,'genericEngineCards-{catalogName}')]//div[@class='flex items-center justify-center']/div/span";
+	private static final String DATE_DISPLAYED_ON_CARD_XPATH = "//span[text()='{date}']";
+	private static final String ICONS_DISPLAYED_ON_CARD_XPATH = "//button[contains(@title,'{iconName}')]";
+	private static String catalogID;
 
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
 		page.getByTestId("search-bar").fill(modelName);
+		page.waitForTimeout(300);
 	}
 
 	public static void selectModelFromSearchOptions(Page page, String modelName) {
@@ -52,10 +61,9 @@ public class EditModelPageUtils {
 	}
 
 	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName) {
-		String modelNameWithTimestamp = SEARCHED_MODEL_XPATH.replace("{modelName}", modelName);
-		page.waitForSelector(modelNameWithTimestamp, new Page.WaitForSelectorOptions().setTimeout(10000));
-		boolean isModelVisible = page.isVisible(modelNameWithTimestamp);
-		return isModelVisible;
+		Locator modelCard = page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName));
+		AICorePageUtils.waitFor(modelCard);
+		return modelCard.isVisible();
 	}
 
 	public static void clickOnEditButton(Page page) {
@@ -169,13 +177,68 @@ public class EditModelPageUtils {
 	}
 
 	public static void mouseHoverOnEngineAccessStatusIcon(Page page) {
-		page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1).hover();
+		Locator lockIcon = page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1);
+		AICorePageUtils.waitFor(lockIcon);
+		lockIcon.hover(new Locator.HoverOptions().setForce(true));
 	}
 
 	public static String getEngineAccessStatusTooltipText(Page page, String status) {
-//		String tooltipText = page.locator(ENGINE_ACCESS_STATUS_TOOLTIP_XPATH.replace("{status}", status)).textContent()
-//				.trim();
-//		return tooltipText;
-		return page.getByText(status).first().innerText();
+		// Added evaluate method because getting tooltip text twice(due to hidden span)
+		return page.locator("[data-slot='tooltip-content']").evaluate("el => el.childNodes[0].textContent.trim()")
+				.toString();
+	}
+
+	public static String getCatalogID(Page page) {
+		Locator id = page.locator(CATALOG_ID_XPATH);
+		id.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(60000));
+		catalogID = id.innerText();
+		return catalogID;
+	}
+
+	public static boolean validateIDisDisplayedOnCatalogCard(Page page) {
+		Locator modelID = page.locator(CATALOG_ID_ON_CARD_XPATH.replace("{modelId}", catalogID));
+		return modelID.isVisible();
+	}
+
+	public static List<String> verifyTagNamesDisplayedOnCard(Page page, String catalog) {
+		List<String> tags = new ArrayList<String>();
+		Locator tagsText = page.locator(TAGS_DISPLAYED_ON_CARD_XPATH.replace("{catalogName}", catalog.toUpperCase()));
+		List<String> tagList = tagsText.allInnerTexts();
+		CommonUtils.extractOverviewSectionValues(tags, tagList);
+		return tags;
+	}
+
+	public static boolean isCreatedDateVisibleOnCard(Page page) {
+		// Get today's date in 'Apr 14 2026' format
+		LocalDate today = java.time.LocalDate.now();
+		DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("MMM dd yyyy");
+		String formattedDate = today.format(formatter);
+		formattedDate = formattedDate.replace(" 0", " ");
+		Locator date = page.locator(DATE_DISPLAYED_ON_CARD_XPATH.replace("{date}", formattedDate)).nth(1);
+		AICorePageUtils.waitFor(date);
+		return date.isVisible();
+	}
+
+	public static boolean isIconVisibleOnCatalogCard(Page page, String iconName) {
+		Locator iconLocator;
+		switch (iconName.toLowerCase()) {
+		case "lock":
+			iconLocator = page.locator(ICONS_DISPLAYED_ON_CARD_XPATH.replace("{iconName}", "Private engine")).nth(1);
+			break;
+		case "bookmark":
+			iconLocator = page.locator(ICONS_DISPLAYED_ON_CARD_XPATH.replace("{iconName}", "Bookmark")).nth(1);
+			break;
+		case "view logs dashboard":
+			iconLocator = page.locator(ICONS_DISPLAYED_ON_CARD_XPATH.replace("{iconName}", "View Logs Dashboard"))
+					.nth(1);
+			break;
+		case "delete":
+			iconLocator = page.locator(ICONS_DISPLAYED_ON_CARD_XPATH.replace("{iconName}", "Delete Engine")).nth(1);
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid icon name: " + iconName);
+		}
+		AICorePageUtils.waitFor(iconLocator);
+		return iconLocator.isVisible();
 	}
 }

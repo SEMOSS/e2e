@@ -70,3 +70,18 @@ Feature: View existing Storages on storage Catalog Page
     And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
     When User mouse hover on Lock icon displayed on catalog card
     Then User can see engine access status as 'Global' on the tooltip
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate content of created Storage catalog card
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Open Storage
+    And User searches the 'Amazon S3 Storage' in the storage Catalog searchbox
+    And User should see the catalog ID on the catalog card
+    And User should see the tags 'embeddings, Test1' on the 'Storage' catalog card
+    And User should see the catalog created date on the catalog card
+    And User should see the following icons on the catalog card
+      | lock                |
+      | bookmark            |
+      | view logs dashboard |
+      | delete              |
