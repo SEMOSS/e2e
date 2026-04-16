@@ -303,10 +303,9 @@ public class AddVectorDatabaseSteps extends AbstractAddCatalogBase {
 	@Then("User should see the following {string} options with icons on the Connect to Vector page")
 	public void user_should_see_the_following_options_with_icons_on_the_connect_to_vector_page(String catalog,
 			DataTable dataTable) {
-		final String GROUP_NAME = "GROUP";
 		final String VECTOR_OPTION_NAMES = "VECTOR_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(catalog, GROUP_NAME, VECTOR_OPTION_NAMES, rows, vectorPage);
+		validateOptionsWithIcon(catalog, VECTOR_OPTION_NAMES, rows, vectorPage);
 	}
 
 	@Then("User sees and copies the vector id")
