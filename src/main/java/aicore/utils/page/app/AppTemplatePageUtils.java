@@ -17,7 +17,7 @@ public class AppTemplatePageUtils {
 	private static final String DESCRIPTION_XPATH = "//p[@data-block='description']";
 	private static final String SUBMIT_BUTTON_XPATH = "//div[@data-block='submit']";
 	private static final String TITLE_XPATH = "//p[@data-block='title']";
-	private static final String INPUT_BOX_XPATH = "//div[@data-block='question']";
+	private static final String INPUT_BOX_XPATH = "//*[@data-block='{blockName}']";
 	private static final String RESPONSE_BOX_XPATH = "//p[@data-block='response']";
 	private static final String ASK_LOADER_XPATH = "//div[@data-block=\"submit\"]//span[@role=\"progressbar\"]";
 	private static final String DESCRIPTION_BOX_XPATH = "//p[text()='Value']/../..//div//div//input";
@@ -35,7 +35,7 @@ public class AppTemplatePageUtils {
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
 	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String APP_TITLE_XPATH = "//*[@id='page-1']//h1";
-	private static final String APP_BLOCK_TITLE_XPATH = "input[value='{text}']";
+	private static final String APP_BLOCK_TITLE_XPATH = "//input[@value='{text}']";
 	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
 
 	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content workspace_layout' and normalize-space(text())='page-1']";
@@ -70,10 +70,10 @@ public class AppTemplatePageUtils {
 		}
 	}
 
-	public static void clickOnQuestionBlock(Page page) {
-		page.locator(INPUT_BOX_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(INPUT_BOX_XPATH).isVisible();
-		page.locator(INPUT_BOX_XPATH).click();
+	public static void clickOnQuestionBlock(Page page, String blockName) {
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).isVisible();
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).click();
 	}
 
 	public static void addDescription(String description, Page page) {
@@ -234,6 +234,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyAppPageTitle(String title, Page page) {
+		page.pause();
 		Locator pageTitle = page.locator(APP_TITLE_XPATH);
 		AICorePageUtils.waitFor(pageTitle);
 		String titleText = pageTitle.textContent();

@@ -1,10 +1,14 @@
 package aicore.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 public class AddDatabaseFileUploadUtils {
+	private static final Logger logger = LogManager.getLogger(AddDatabaseFileUploadUtils.class);
 
 	private static final String TAB_SELECTION_TESTID = "tab-{tabName}";
 	private static final String DATABASE_TYPE_SELECTION_TESTID = "database-form-option-DATABASE_TYPE-{dbType}";
@@ -26,28 +30,34 @@ public class AddDatabaseFileUploadUtils {
 	private static final String FULL_SCREEN_CLOSE_BUTTON_XPATH = "//button[@aria-label='Close']";
 
 	public static void selectTab(Page page, String tabName) {
+		logger.info("CLICK ON TAB: " + tabName);
 		page.getByTestId(TAB_SELECTION_TESTID.replace("{tabName}", tabName)).click();
 	}
 
 	public static void selectFileType(Page page, String fileType) {
+		logger.info("SELECT FILE TYPE: " + fileType);
 		page.getByText(fileType).click();
 	}
 
 	public static void selectDatabaseType(Page page, String dbType) {
+		logger.info("SELECT DB TYPE: " + dbType);
 		page.locator(DATABASE_TYPE_DROPDOWN_XPATH).click();
 		page.getByTestId(DATABASE_TYPE_SELECTION_TESTID.replace("{dbType}", dbType)).click();
 	}
 
 	public static void selectMetamodelType(Page page, String metaModelType) {
+		logger.info("SELECT METAMODEL TYPE: " + metaModelType);
 		page.locator(METAMODEL_TYPE_DROPDOWN_XPATH).click();
 		page.getByTestId(METAMODEL_TYPE_SELECTION_TESTID.replace("{metaModelType}", metaModelType)).click();
 	}
 
 	public static void enterDatabaseName(Page page, String dbName) {
+		logger.info("ENTER DATABASE NAME: " + dbName);
 		page.locator(DATABASE_NAME_INPUT_XPATH).fill(dbName);
 	}
 
 	public static void checkColumnsAreEditable(Page page) {
+		logger.info("CHECK IF COLUMNS ARE EDITABLE");
 		int index = 0;
 		while (true) {
 			String xpath = COLUMNS_XPATH.replace("{columnIndex}", String.valueOf(index));
@@ -77,11 +87,19 @@ public class AddDatabaseFileUploadUtils {
 	}
 
 	public static boolean verifyTableName(Page page, String tableName) {
-		String[] table = tableName.split("\\.");
-		String fileName = table[0];
-		String fileType = table[1];
-		String tableIsVisiable = page.locator("//button[@role='combobox']//span").textContent();
-		return tableIsVisiable.contains(fileName) && tableIsVisiable.contains(fileType);
+		if (tableName.contains("\\.")) {
+			String[] table = tableName.split("\\.");
+			String fileName = table[0];
+			String fileType = table[1];
+			String tableIsVisiable = page.locator("//button[@role='combobox']//span").textContent();
+			return tableIsVisiable.contains(fileName) && tableIsVisiable.contains(fileType);
+		}
+		else {
+			Locator locator = page.getByTestId("table-name-input")
+					.and(page.locator("[value='"+tableName+"']"));
+			return locator.isVisible();
+		}
+
 	}
 
 	public static void verifyFullScreenBtn(Page page) {

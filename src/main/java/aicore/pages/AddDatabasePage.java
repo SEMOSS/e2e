@@ -51,7 +51,8 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void addJDBCUrl(String jdbcUrl, String dbType) {
-		AddDatabaseFormUtils.enterJDBCUrl(page, jdbcUrl, dbType);
+		String url = AddDatabaseFormUtils.getJDBCUrl(jdbcUrl, dbType);
+		AddDatabaseFormUtils.enterJDBCUrl(page, url);
 	}
 
 	public void clickOnApplyButton() {
@@ -207,7 +208,7 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnSaveButtonOfMetadataTab() {
-		AddDatabasePageUtils.clickOnSaveButtonOfMetadataTab(page);
+		AddDatabasePageUtils.clickOnSaveButton(page);
 	}
 
 	public boolean verifyDatabaseCatalogPage() {
@@ -219,7 +220,7 @@ public class AddDatabasePage extends AbstractAddCatalogPageBase {
 	}
 
 	public void clickOnSaveButton() {
-		AddDatabasePageUtils.clickOnSaveButtonOfMetadataTab(page);
+		AddDatabasePageUtils.clickOnSaveButton(page);
 	}
 
 	public void clickOnResetButton() {

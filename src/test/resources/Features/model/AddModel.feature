@@ -1,4 +1,4 @@
-@Regression @DeleteTestCatalog
+@Regression @DeleteTestCatalog @LoginWithAdmin
 Feature: Add Model
   Adding LLM to the catalog
 
