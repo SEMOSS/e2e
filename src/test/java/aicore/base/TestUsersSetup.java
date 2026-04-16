@@ -20,5 +20,4 @@ public class TestUsersSetup {
 		logger.info("Creating users");
 		GenericSetupUtils.createUsers(page);
 	}
-
 }

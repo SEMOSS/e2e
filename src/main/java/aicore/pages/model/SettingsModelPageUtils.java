@@ -40,8 +40,6 @@ public class SettingsModelPageUtils {
 	private static final String TILE_XPATH = "//div[text()='{tileName}']";
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String SEARCH_BOX_DATATESTID = "settingsIndexPage-searchBar";
-	private static final String DELETE_CATALOG_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
-	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
 	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
 

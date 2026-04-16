@@ -57,7 +57,6 @@ public class CommonUtils {
 
 	private static final String APP_DELETE_BUTTON_XPATH = "//div[text()='Delete App']";
 	private static final String DELETE_CONFIRMATION_POPUP_BUTTON_XPATH = "//button[normalize-space()='Delete']";
-	private static final String APP_DELETE_TOAST_MESSAGE_XPATH = "//div[@role='alert' and //*[name()='svg'][@data-testid='SuccessOutlinedIcon']]//div[contains(@class,'MuiAlert-message') and normalize-space()='Successfully deleted']";
 
 	private static final String THREE_DOT_ICON_XPATH = "//button[@aria-label='More options']";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
@@ -65,7 +64,6 @@ public class CommonUtils {
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
 	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
-	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "[data-testid='AdminPanelSettingsOutlinedIcon']";
 	private static final String TEAM_PERMISSION_DATATESTID = "settingsIndexPage-Team-Permissions-card";
 	private static final String SEARCH_TEAM_PLACEHOLDER_TEXT = "Search teams by name";
 	private static final String CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID = "MoreVertIcon";

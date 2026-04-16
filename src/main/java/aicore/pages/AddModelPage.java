@@ -474,4 +474,24 @@ public class AddModelPage {
 	public String getEngineAccessStatusTooltipText(String status) {
 		return EditModelPageUtils.getEngineAccessStatusTooltipText(page, status);
 	}
+
+	public boolean validateIDisDisplayedOnCatalogCard() {
+		return EditModelPageUtils.validateIDisDisplayedOnCatalogCard(page);
+	}
+
+	public String getCatalogID() {
+		return EditModelPageUtils.getCatalogID(page);
+	}
+
+	public List<String> verifyTagNamesDisplayedOnCard(String catalog) {
+		return EditModelPageUtils.verifyTagNamesDisplayedOnCard(page, catalog);
+	}
+
+	public boolean isCreatedDateVisibleOnCard() {
+		return EditModelPageUtils.isCreatedDateVisibleOnCard(page);
+	}
+
+	public boolean isIconVisibleOnCatalogCard(String iconName) {
+		return EditModelPageUtils.isIconVisibleOnCatalogCard(page, iconName);
+	}
 }

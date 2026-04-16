@@ -57,7 +57,7 @@ public class AddDatabasePageUtils {
 	private static final String CONFIRM_EXPORT_BUTTON_XPATH = "//button[text()='Yes']";
 
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
-		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
+		page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
 		if (sectionName.toLowerCase().equals("advanced settings")) {
 			if (fieldName.toLowerCase().equals("not available")) {
 				return true;
@@ -232,8 +232,8 @@ public class AddDatabasePageUtils {
 	public static void searchDatabaseCatalog(Page page, String catalogName) {
 		Locator searchcatalog = page.getByTestId(DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID);
 		AICorePageUtils.waitFor(searchcatalog);
-		searchcatalog.click();
 		searchcatalog.fill(catalogName);
+		page.waitForTimeout(300);
 	}
 
 	public static void selectDatabaseFromSearchOptions(Page page, String catalogName) {
