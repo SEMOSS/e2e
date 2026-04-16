@@ -57,7 +57,7 @@ public class AddDatabaseSearchTests extends AbstractE2ETest {
 		map.put(DATABASE_OPTION_NAMES, databaseOptions);
 		mapList.add(map);
 
-		AbstractAddCatalogBase.searchOptionsWithIcon("database", GROUP_NAME, DATABASE_OPTION_NAMES, mapList, page);
+		AbstractAddCatalogBase.validateSearchOptions("database", GROUP_NAME, DATABASE_OPTION_NAMES, mapList, page);
 	}
 
 	private static Stream<Arguments> databaseSelectionData() {

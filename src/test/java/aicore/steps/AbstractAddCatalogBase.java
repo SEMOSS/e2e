@@ -68,7 +68,7 @@ public abstract class AbstractAddCatalogBase {
 		}
 	}
 	
-	public static void searchOptionsWithIcon(String catalog, String SECTION_NAME, String OPTION_NAME,
+	public static void validateSearchOptions(String catalog, String SECTION_NAME, String OPTION_NAME,
 			List<Map<String, String>> rows, Page page) {
 		for (Map<String, String> row : rows) {
 			String section = row.get(SECTION_NAME);

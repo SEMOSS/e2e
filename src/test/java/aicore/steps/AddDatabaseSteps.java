@@ -272,7 +272,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		final String SECTION_NAME = "EXPECTED_SECTION";
 		final String OPTION_NAME = "DATABASE_TYPE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		searchOptionsWithIcon(catalog, SECTION_NAME, OPTION_NAME, rows, SetupHooks.getPage());
+		validateSearchOptions(catalog, SECTION_NAME, OPTION_NAME, rows, SetupHooks.getPage());
 	}
 
 	@And("User clicks on Refresh button")
