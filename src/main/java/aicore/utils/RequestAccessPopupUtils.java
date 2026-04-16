@@ -11,7 +11,7 @@ public class RequestAccessPopupUtils {
 	private static final String CANCEL_BUTTON_XPATH = "//button[text()= 'Cancel']";
 	private static final String REQUEST_BUTTON_XPATH = "//button[text()= 'Request']";
 	private static final String CHANGE_ACCESS_POPUP_XPATH = "//h2[text()='Change Access']";
-	private static final String REQUEST_SUCCESS_TOAST_XPATH = "//div[contains(text(),'Successfully requested access to engine')]";
+	private static final String REQUEST_SUCCESS_TOAST_XPATH = "//*[contains(text(),'Successfully requested access to engine')]";
 
 	public static String isChangeAccessPopupVisible(Page page) {
 		return page.locator(CHANGE_ACCESS_POPUP_XPATH).textContent();
@@ -65,7 +65,16 @@ public class RequestAccessPopupUtils {
 
 	public static String isRequestSuccessToastVisible(Page page) {
 		Locator toastMessage = page.locator(REQUEST_SUCCESS_TOAST_XPATH);
+		toastMessage.scrollIntoViewIfNeeded();
 		AICorePageUtils.waitFor(toastMessage);
 		return toastMessage.innerText().trim();
+	}
+	
+
+	public static String verifyRequestSuccessToastVisible(Page page, String toastMessage) {
+		Locator alert = page.locator(REQUEST_SUCCESS_TOAST_XPATH.replace("{toastMessage}", toastMessage)).first();
+		alert.scrollIntoViewIfNeeded();
+		AICorePageUtils.waitFor(alert);
+		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 }

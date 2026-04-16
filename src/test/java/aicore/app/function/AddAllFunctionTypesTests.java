@@ -1,36 +1,23 @@
 package aicore.app.function;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
-import aicore.framework.ResourcePool;
-import aicore.hooks.SetupHooks;
-import aicore.pages.AddFunctionToCatalogPage;
-import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.function.AddFunctionFormUtils;
-import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 
-public class AddAllFunctionTypesTests extends AbstractE2ETest{
+public class AddAllFunctionTypesTests extends AbstractE2ETest {
 	
 	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
 	    return Stream.of(
@@ -59,14 +46,13 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest{
 //		String adminPassword = ConfigUtils.getValue(AICoreTestConstants.ADMIN_PASSWORD);
 //		GenericSetupUtils.login(page, adminUser, adminPassword);
 		/// Only need to login for the first 
-		login(this.page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
+		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);
-		String FUNCTION = "AWS Image Text Extraction";
-		AddFunctionFormUtils.selectFunction(page, FUNCTION);
+		AddFunctionFormUtils.selectFunction(page, functionName);
 
 		FunctionTestUtils.verifyFunctionCreationFormWithSelectFields(page, fields);
 		FunctionTestUtils.verifyFunctionCreationFormWithMandatoryFields(page, mandatoryFields);
@@ -108,8 +94,7 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest{
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);
-		String FUNCTION = "AWS Image Text Extraction";
-		AddFunctionFormUtils.selectFunction(page, FUNCTION);
+		AddFunctionFormUtils.selectFunction(page, functionName);
 
 		FunctionTestUtils.verifyFunctionCreationFormWithSelectFields(page, fields);
 		FunctionTestUtils.verifyFunctionCreationFormWithMandatoryFields(page, mandatoryFields);

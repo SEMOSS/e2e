@@ -117,11 +117,7 @@ public class AddFunctionPageUtils {
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
 		//TODO duplicate code in CommonUtils.navigateAndDeleteCatalog!!!!!!
-		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
-		searchBar.click();
-		searchBar.fill(catalogName);
-		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID
-				.replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
+		Locator catalogLocator = searchForAndLocateCatalog(page, catalog, catalogName);
 		if (catalogLocator.isVisible()) {
 			catalogLocator.first().waitFor();
 			catalogLocator.first().click();
@@ -129,6 +125,15 @@ public class AddFunctionPageUtils {
 			FunctionAccessSettingsUtils.clickOnDeleteButton(page);
 			FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
 		}
+	}
+	
+	public static Locator searchForAndLocateCatalog(Page page, String catalog, String catalogName) {
+		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
+		searchBar.click();
+		searchBar.fill(catalogName);
+		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID
+				.replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
+		return catalogLocator;
 	}
 
 	public static void closeToastMessage(Page page) {
