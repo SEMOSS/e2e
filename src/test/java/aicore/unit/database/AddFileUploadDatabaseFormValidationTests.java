@@ -83,6 +83,8 @@ public class AddFileUploadDatabaseFormValidationTests {
 										"Enter Database Tag"),
 								section("Database", "Enter Database Type", "Enter Metamodel Type")),
 						new String[] { "Enter Database Name", "Enter Database Type", "Enter Metamodel Type" }));
+		
+		// TODO SQLite, H2, Neo4j, Tinker
 	}
 
 	private static Map<String, String[]> sections(Map.Entry<String, String[]>... entries) {
