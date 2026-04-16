@@ -33,11 +33,10 @@ import aicore.utils.ViewUsagePageUtils;
 
 @Tag("SMOKE")
 public class DatabaseSpecificPageTests {
-	
+
 	private static String dbName = null;
 	private static String dbID = null;
 	private static Page page = null;
-
 
 	@BeforeAll
 	public static void setup() throws IOException {
@@ -46,12 +45,12 @@ public class DatabaseSpecificPageTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -70,7 +69,7 @@ public class DatabaseSpecificPageTests {
 		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
-		
+
 		// validate the db created
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
@@ -79,7 +78,7 @@ public class DatabaseSpecificPageTests {
 		dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 	}
-	
+
 	@Test
 	public void testViewDatabaseTags() throws IOException {
 		AddCatalogPageBaseUtils.clickEditIcon(page);
@@ -90,16 +89,16 @@ public class DatabaseSpecificPageTests {
 		List<String> tags = EditModelPageUtils.verifyTagNames(page);
 		assertTrue(tags.contains(tagName));
 	}
-	
+
 	@Test
 	public void testUsage() throws IOException {
-        ViewUsagePageUtils.clickOnUsageTab(page);
-        assertTrue(ViewUsagePageUtils.verifyExample(page, "How to use in Pixel"));
-        assertTrue( ViewUsagePageUtils.verifyExample(page, "How to use in Python"));
-        assertTrue( ViewUsagePageUtils.verifyExample(page, "How to use with LangChain API"));
-        assertTrue(ViewUsagePageUtils.verifyExample(page, "How to use in Java"));
+		ViewUsagePageUtils.clickOnUsageTab(page);
+		assertTrue(ViewUsagePageUtils.verifyExample(page, "How to use in Pixel"));
+		assertTrue(ViewUsagePageUtils.verifyExample(page, "How to use in Python"));
+		assertTrue(ViewUsagePageUtils.verifyExample(page, "How to use with LangChain API"));
+		assertTrue(ViewUsagePageUtils.verifyExample(page, "How to use in Java"));
 	}
-	
+
 	@Test
 	public void testMetadata() throws IOException {
 		AddDatabasePageUtils.clickOnMetadataTab(page);
@@ -111,14 +110,14 @@ public class DatabaseSpecificPageTests {
 		AddDatabasePageUtils.verifyMetaData(page);
 		AddDatabasePageUtils.clickOnSaveButton(page);
 	}
-	
+
 	@Test
 	public void testOverview() throws IOException {
 		AddDatabasePageUtils.clickOnOverview(page);
 		String catalogDescription = "No Markdown available";
 		assertTrue(AddCatalogPageBaseUtils.verifyCatalogDescription(page, catalogDescription));
 	}
-	
+
 	@Test
 	public void testAccessControl() throws IOException, InterruptedException {
 		AddFunctionPageUtils.clickOnAccessControl(page);
@@ -127,23 +126,22 @@ public class DatabaseSpecificPageTests {
 		boolean useDocker = false;
 		SettingsModelPageUtils.addMember(page, role, useDocker);
 	}
-	
+
 	@Test
 	public void testExport() throws IOException, InterruptedException {
 		Path path = AddDatabasePageUtils.clickOnExportButton(page);
 		assertTrue(path.toFile().exists());
 	}
-	
+
 	@Test
 	public void testEdit() throws IOException, InterruptedException {
 		AddCatalogPageBaseUtils.clickEditIcon(page);
 		AddCatalogPageBaseUtils.clickOnClose(page);
 	}
-	
+
 	@AfterAll
 	public static void tearDown() {
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
 
 }

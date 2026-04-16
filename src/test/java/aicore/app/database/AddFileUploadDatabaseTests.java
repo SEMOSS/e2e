@@ -21,9 +21,9 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 
 public class AddFileUploadDatabaseTests {
-	
+
 	////////////////// UPLOAD as flat table
-	
+
 	@Test
 	public void testAddExcelFlatTable() throws IOException {
 		GenericSetupUtils.initialize();
@@ -31,12 +31,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -55,7 +55,7 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
-		
+
 		// validate the db created
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
@@ -66,7 +66,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	@Test
 	public void testAddCSVFlatTable() throws IOException {
 		GenericSetupUtils.initialize();
@@ -74,12 +74,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -98,7 +98,7 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
-		
+
 		// validate the db created
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
@@ -109,7 +109,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	@Test
 	public void testAddTSVFlatTable() throws IOException {
 		GenericSetupUtils.initialize();
@@ -117,12 +117,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -141,7 +141,7 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
-		
+
 		// validate the db created
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
@@ -152,9 +152,9 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	//////////////// METAMODEL FROM SCRATCH
-	
+
 	@Test
 	public void testAddCSVFromScratch() throws IOException {
 		GenericSetupUtils.initialize();
@@ -162,12 +162,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -186,7 +186,7 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
-		
+
 		// validate the db created
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
@@ -197,7 +197,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	@Test
 	public void testAddTSVFromScratch() throws IOException {
 		GenericSetupUtils.initialize();
@@ -205,12 +205,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -229,7 +229,7 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
-		
+
 		// validate the db created
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
@@ -240,7 +240,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	//////////////// SUGGESTED METAMODEL
 	@Test
 	public void testAddTSVSuggestedMetamodel() throws IOException {
@@ -249,12 +249,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -277,7 +277,6 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AddDatabasePageUtils.clickOnSaveButton(page);
 
-		
 		// validate the db created
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
@@ -286,7 +285,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	@Test
 	public void testAddCSVSuggestedMetamodel() throws IOException {
 		GenericSetupUtils.initialize();
@@ -294,12 +293,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -319,10 +318,11 @@ public class AddFileUploadDatabaseTests {
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
 		// additional suggested metamodel steps
-		// TODO need to have better validation on the column types and names in this step
+		// TODO need to have better validation on the column types and names in this
+		// step
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AddDatabasePageUtils.clickOnSaveButton(page);
-		
+
 		// validate the db created
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
@@ -331,7 +331,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	@Test
 	public void testAddTSVSuggestedMetamodelEditRelationship() throws IOException {
 		GenericSetupUtils.initialize();
@@ -339,12 +339,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -363,7 +363,7 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		AddDatabaseFormUtils.clickOnConnectButton(page);
-		
+
 		String tableName = "Employee";
 		// additional suggested metamodel steps
 		AddDatabaseFileUploadUtils.verifyTableName(page, tableName);
@@ -378,7 +378,7 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFileUploadUtils.verifyCancelBtn(page);
 		AddDatabaseFileUploadUtils.verifySaveBtn(page);
 		AddDatabasePageUtils.clickOnSaveButton(page);
-		
+
 		// validate the db created
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
@@ -387,8 +387,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
-	
+
 	/////////////////// Upload multiple files
 	@Test
 	public void testAddMultiCSVFromScratch() throws IOException {
@@ -397,12 +396,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -425,13 +424,16 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFormUtils.clickOnConnectButton(page);
 
 		// metamodel steps
-		// TODO need to have better validation on the column types and names in this step
+		// TODO need to have better validation on the column types and names in this
+		// step
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
-		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes"), "diabates table was not added");
-		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes2"), "diabates2 table was not added");
+		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes"),
+				"diabates table was not added");
+		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes2"),
+				"diabates2 table was not added");
 
 		AICorePageUtils.clickOnButton(page, "Import");
-		
+
 		// validate the db created
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
@@ -440,7 +442,7 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 	@Test
 	public void testAddMultiTSVFromScratch() throws IOException {
 		GenericSetupUtils.initialize();
@@ -448,12 +450,12 @@ public class AddFileUploadDatabaseTests {
 		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		GenericSetupUtils.login(page, nativeUser, nativePassword);
-		
+
 		String timestamp = CommonUtils.getTimeStampName();
 
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+
 		// add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
@@ -476,10 +478,11 @@ public class AddFileUploadDatabaseTests {
 		AddDatabaseFormUtils.clickOnConnectButton(page);
 
 		// metamodel steps
-		// TODO need to have better validation on the column types and names in this step
+		// TODO need to have better validation on the column types and names in this
+		// step
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
-		
+
 		// validate the db created
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
@@ -488,5 +491,5 @@ public class AddFileUploadDatabaseTests {
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
 	}
-	
+
 }
