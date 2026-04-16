@@ -106,6 +106,15 @@ public class AbstractE2ETest {
 		}
 	}
 	
+	public static void logout(Page page) {
+		if (alreadLoggedIn) {
+			GenericSetupUtils.logout(page);
+			alreadLoggedIn = false;
+		} else {
+			logger.warn("Tried to logout while not logged in. Unsuccessful attempt");
+		}
+	}
+	
 	@AfterEach
 	public void afterEach() {
 		logger.info("Navigating home");

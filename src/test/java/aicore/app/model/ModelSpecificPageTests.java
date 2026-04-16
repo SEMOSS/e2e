@@ -3,13 +3,17 @@ package aicore.app.model;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import com.microsoft.playwright.Page;
 
@@ -27,6 +31,7 @@ import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.page.model.ModelPageUtils;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ModelSpecificPageTests {
 	
 	private static String modelCatalogName = null;
@@ -59,6 +64,33 @@ public class ModelSpecificPageTests {
 		AddModelFormUtils.clickOnCreateModelButton(page);
 	}
 	
+	@BeforeEach
+	public void navigateToModelPage() {
+		// Ensure we're on the model details page before each test
+		// This prevents tests from failing due to previous test navigation
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
+		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
+		
+		// Wait for page to stabilize
+		page.waitForLoadState();
+		page.waitForTimeout(500); // Small buffer for any animations
+	}
+	
+	@AfterAll
+	public static void teardown() {
+		// Clean up: delete the test model catalog
+		if (modelCatalogName != null && page != null) {
+			try {
+				CommonUtils.navigateAndDeleteCatalog(page, "Model", modelCatalogName);
+			} catch (Exception e) {
+				System.err.println("Failed to delete model catalog: " + e.getMessage());
+			}
+		}
+	}
+	
+	@Order(1)  // Run FIRST - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("Verify SMSS properties are displayed correctly for a model")
@@ -75,6 +107,7 @@ public class ModelSpecificPageTests {
 	}
 	
 	@Test
+	@Order(5)  // Run FIFTH - modifies SMSS properties
 	@Tag("model")
 	@DisplayName("Edit SMSS properties and verify changes are persisted")
 	public void testEditSMSS() {
@@ -93,6 +126,7 @@ public class ModelSpecificPageTests {
 		Assertions.assertEquals(actualVarName, "True", "Conversation history setting is not matching");
 	}
 	
+	@Order(2)  // Run SECOND - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("Add tag to model and verify it appears on the page")
@@ -106,6 +140,7 @@ public class ModelSpecificPageTests {
 		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
+	@Order(3)  // Run THIRD - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("View existing models in Model Catalog")
@@ -117,6 +152,7 @@ public class ModelSpecificPageTests {
 		Assertions.assertTrue(isModelDisplayed);
 	}
 
+	@Order(4)  // Run FOURTH - modifies model details and tags
 	@Test
 	@Tag("model")
 	@DisplayName("Edit model details")
@@ -185,6 +221,7 @@ public class ModelSpecificPageTests {
 	}
 
 	@Test
+	@Order(6)  // Run SIXTH - read-only test, validates model ID
 	@Tag("model")
 	@DisplayName("Validate model catalog id occurences in usage sections")
 	public void testViewModelCatalogId() {
