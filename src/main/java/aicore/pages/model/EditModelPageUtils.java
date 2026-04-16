@@ -245,7 +245,7 @@ public class EditModelPageUtils {
 	}
 
 	public static void clickOnCatalogCardOption(Page page, String option) {
-		Locator optionLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(option));
+		Locator optionLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(option)).first();
 		optionLocator.click();
 	}
 

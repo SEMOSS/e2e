@@ -699,6 +699,7 @@ public class AddModelSteps {
 		boolean needsTimestamp;
 		switch (catalogType.toLowerCase()) {
 		case "database":
+		case "function":
 			needsTimestamp = false;
 			break;
 		default:
@@ -730,6 +731,7 @@ public class AddModelSteps {
 		boolean needsTimestamp;
 		switch (catalogType.toLowerCase()) {
 		case "database":
+		case "function":
 			needsTimestamp = false;
 			break;
 		default:
