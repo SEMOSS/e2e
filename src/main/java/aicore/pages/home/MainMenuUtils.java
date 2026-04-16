@@ -66,6 +66,7 @@ public class MainMenuUtils {
 	}
 
 	public static void clickOnOpenFunction(Page page) {
+		logger.info("Opening Function Page");
 		Locator locator = page.getByTestId(FUNCTION_MENU_BUTTON_DATA_TEST_ID);
 		locator.click();
 		MainMenuUtils.closeMainMenu(page);

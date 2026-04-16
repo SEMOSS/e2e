@@ -1,14 +1,19 @@
 package aicore.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
 
+import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 
 public class AddFunctionPageUtils {
-
+	private static final Logger logger = LogManager.getLogger(AddFunctionPageUtils.class);
+	
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards')]//p[(text()='{FunctionName}')]";
@@ -29,6 +34,7 @@ public class AddFunctionPageUtils {
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
 		page.getByLabel(ADD_FUNCTION_BUTTON).click();
+		logger.info("Clicked on Add Function Button");
 	}
 
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
@@ -136,5 +142,17 @@ public class AddFunctionPageUtils {
 		page.mouse().down();
 		page.mouse().move(startX + box.width + 300, startY, new Mouse.MoveOptions().setSteps(25));
 		page.mouse().up();
+	}
+
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		return AddFunctionFormUtils.fieldUnderSection(page, section, field);
+	}
+
+	public static boolean isFieldMandatory(Page page, String field) {
+		return AddFunctionFormUtils.isFieldMandatory(page, field);
+	}
+	
+	public static void fillFunctionCreationForm(Page page, String fieldName, String fieldValue, String timestamp) {
+		AddFunctionFormUtils.fillFunctionCreationForm(page, fieldName, fieldValue, timestamp);
 	}
 }
