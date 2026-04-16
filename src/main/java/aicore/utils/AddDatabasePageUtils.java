@@ -13,7 +13,6 @@ import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class AddDatabasePageUtils {
@@ -42,7 +41,7 @@ public class AddDatabasePageUtils {
 	private static final String ADVANCED_SECTION_XPATH = "(//button[@data-testid='database-advanced-settings-toggle'])[1]";
 	private static final String SECTION_FIELD_XPATH = "//h4[normalize-space()='{sectionName}']/ancestor::div//label[text()='{fieldName}']";
 	private static final String QUERY_TAB_DATA_TESTID = "engineLayout-Query-tab";
-	private static final String QUERY_ENTER_TEXTAREA_XPATH = "//div[@class='view-line']/ancestor::div[contains(@class,'monaco-editor') and @role='code']";
+//	private static final String QUERY_ENTER_TEXTAREA_XPATH = "//div[@class='view-line']/ancestor::div[contains(@class,'monaco-editor') and @role='code']";
 	private static final String OUTPUT_TABLE = "//table";
 	private static final String COLLAPSE_COLUMNS_XPATH = "//div[@class='bg-muted/5']";
 	private static final String DATA_COLUMNS_XPATH = "//div[@class='flex flex-1 items-center gap-2.5']";// "//table//tbody//tr";
@@ -52,10 +51,52 @@ public class AddDatabasePageUtils {
 	private static final String BUTTON_XPATH = "//button[text()='{buttonName}']";
 	private static final String DATABASE_CATALOG_HEADER_XPATH = "//p[normalize-space() ='Database Catalog']";
 	private static final String DATABASE_SAVE_BUTTON_DATA_TESTID = "engineMetadata-save-btn";
-	private static final String RESET_BUTTON_XPATH = "//button[text()='Reset']";
 	private static final String RUN_QUER_BUTTON_DATATESTID = "query-run-btn";
 	private static final String CONFIRM_EXPORT_BUTTON_XPATH = "//button[text()='Yes']";
 
+	private static final String QUERY_EDITOR_LINES_XPATH =
+	        "//div[contains(@class,'monaco-editor')]//div[contains(@class,'view-line')]";
+
+	public static void clickOnResetButton(Page page) {
+	    Locator resetBtn = page.getByTestId("query-reset-btn");
+	    AICorePageUtils.waitFor(resetBtn);
+	    resetBtn.click();
+
+	    page.waitForCondition(() -> getMonacoEditorText(page).isEmpty());
+	}
+
+	public static void verifyQueryFieldIsEmpty(Page page) {
+	    String queryText = getMonacoEditorText(page);
+
+	    if (!queryText.isEmpty()) {
+	        throw new AssertionError("Query field is not empty. Actual value: " + queryText);
+	    }
+	}
+
+	private static String getMonacoEditorText(Page page) {
+	    Locator lines = page.locator(QUERY_EDITOR_LINES_XPATH);
+	    int count = lines.count();
+
+	    StringBuilder text = new StringBuilder();
+	    for (int i = 0; i < count; i++) {
+	        String line = lines.nth(i).textContent();
+	        if (line != null) {
+	            line = line
+	                    .replace("\u00A0", "")
+	                    .replace("\u200B", "")
+	                    .trim();
+
+	            if (!line.isEmpty()) {
+	                if (text.length() > 0) {
+	                    text.append("\n");
+	                }
+	                text.append(line);
+	            }
+	        }
+	    }
+	    return text.toString().trim();
+	}
+	
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
 		page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
 		if (sectionName.toLowerCase().equals("advanced settings")) {
@@ -263,7 +304,7 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void enterQuery(Page page, String query) {
-		Locator cell = page.locator(QUERY_ENTER_TEXTAREA_XPATH).first();
+		Locator cell = page.locator(QUERY_EDITOR_LINES_XPATH).first();
 		cell.scrollIntoViewIfNeeded();
 		cell.click(new Locator.ClickOptions().setForce(true));
 		cell.pressSequentially(query);
@@ -271,14 +312,6 @@ public class AddDatabasePageUtils {
 
 	public static List<String> getQueryResponseTableHeader(Page page) {
 		return page.locator(OUTPUT_TABLE).last().locator("th").allTextContents();
-	}
-
-	public static void verifyQueryFieldIsEmpty(Page page) {
-		Locator cell = page.locator(QUERY_ENTER_TEXTAREA_XPATH).first();
-		String queryText = cell.innerText();
-		if (queryText != null && !queryText.trim().isEmpty()) {
-			throw new AssertionError("Query field is not empty.");
-		}
 	}
 
 	public static boolean verifyAllColumnsAreCollapsed(Page page) {
@@ -300,7 +333,14 @@ public class AddDatabasePageUtils {
 	}
 
 	public static List<String> getDataColumns(Page page) {
-		return page.locator(DATA_COLUMNS_XPATH).allTextContents();
+	    Locator columns = page.locator(DATA_COLUMNS_XPATH);
+	    columns.first().waitFor();
+
+	    return columns.allTextContents()
+	            .stream()
+	            .map(String::trim)
+	            .filter(text -> !text.isEmpty())
+	            .toList();
 	}
 
 	public static void searchDataColumn(Page page, String columnName) {
@@ -342,16 +382,6 @@ public class AddDatabasePageUtils {
 		return saveButton.isDisabled();
 	}
 
-	public static void clickOnSaveButtonOfMetadataTab(Page page) {
-		Locator saveBtn = page.getByTestId("engineMetadata-save-btn");
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-		page.waitForSelector("[data-testid='engineMetadata-save-btn']:not([disabled])");
-		saveBtn.scrollIntoViewIfNeeded();
-		saveBtn.focus();
-		saveBtn.click();
-		page.waitForLoadState(LoadState.NETWORKIDLE);
-	}
-
 	public static boolean verifyDatabaseCatalogPage(Page page) {
 		Locator databaseCatalogHeader = page.locator(DATABASE_CATALOG_HEADER_XPATH);
 		AICorePageUtils.waitFor(databaseCatalogHeader);
@@ -364,13 +394,25 @@ public class AddDatabasePageUtils {
 		saveButton.click();
 	}
 
-	public static void clickOnResetButton(Page page) {
-		Locator resetBtn = page.locator(RESET_BUTTON_XPATH);
-		resetBtn.click();
-		page.waitForTimeout(200);
-	}
-
 	public static void clickOnRunQueryButton(Page page) {
 		page.getByTestId(RUN_QUER_BUTTON_DATATESTID).click();
+	}
+
+	/**
+	 * Button used to acknowledge a database with an empty metamodel
+	 * @param page
+	 */
+	public static void clickOnEmptyMetaModelButton(Page page) {
+		String dataTestId = "model-upload-empty-yes-button";
+		Locator btn = page.getByTestId(dataTestId);
+		AICorePageUtils.waitFor(btn);
+		btn.click();
+	}
+
+	public static void clickOnOverview(Page page) {
+		String dataTestId = "engineLayout-Overview-tab";
+		Locator btn = page.getByTestId(dataTestId);
+		AICorePageUtils.waitFor(btn);
+		btn.click();
 	}
 }
