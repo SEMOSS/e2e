@@ -692,10 +692,23 @@ public class AddModelSteps {
 		Assertions.assertEquals(expectedMessage, actualMessage, "Incorrect confirmation message");
 	}
 
-	@And("User should see the Engine name as {string} on the delete confirmation pop-up")
-	public void user_should_see_the_engine_name_as_on_the_delete_confirmation_pop_up(String expectedEngineName) {
+	@And("User should see the Engine name as {string} on the delete confirmation pop-up for {string} catalog")
+	public void user_should_see_the_engine_name_as_on_the_delete_confirmation_pop_up(String expectedEngineName,
+			String catalogType) {
 		String actualEngineName = openModelPage.getDeleteConfirmationEngineName();
-		Assertions.assertEquals(expectedEngineName + timestamp, actualEngineName, "Incorrect engine name");
+		boolean needsTimestamp;
+		switch (catalogType.toLowerCase()) {
+		case "database":
+			needsTimestamp = false;
+			break;
+		default:
+			needsTimestamp = true;
+		}
+		if (needsTimestamp) {
+			Assertions.assertEquals(expectedEngineName + timestamp, actualEngineName, "Incorrect engine name");
+		} else {
+			Assertions.assertEquals(expectedEngineName, actualEngineName, "Incorrect engine name");
+		}
 	}
 
 	@And("User should see the Engine ID on the delete confirmation pop-up")
