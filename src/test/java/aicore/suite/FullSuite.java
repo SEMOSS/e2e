@@ -9,7 +9,7 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @IncludeEngines("cucumber")
 @ExcludeTags("ApplicationBugFailure")
-@SelectClasspathResource("Features/database/ViewAddDatabaseOptions.feature")
+@SelectClasspathResource("Features")
 @ConfigurationParameter(key = "cucumber.glue", value = "aicore.steps,aicore.hooks")
 @ConfigurationParameter(key = "cucumber.filter.tags", value = "(@Regression or @Documentation) and not @LoginWithSSO")
 //@ConfigurationParameter(key = "cucumber.filter.tags", value = "@Documentation")
