@@ -1,4 +1,4 @@
-package aicore.app.database;
+package aicore.unit.database;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

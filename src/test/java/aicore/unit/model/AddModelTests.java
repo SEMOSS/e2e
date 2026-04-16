@@ -1,4 +1,4 @@
-package aicore.app.model;
+package aicore.unit.model;
 
 import java.io.IOException;
 
