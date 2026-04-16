@@ -40,7 +40,7 @@ Feature: Storage Catalog Documentation
     When User opens Main Menu
     And User clicks on Open Storage
     And User captures a 'button' and highlights the 'Discoverable Storages'
-    And User clicks on 'Discoverable Storages' tab
+    And User clicks on 'Discoverable' tab
     And User select the 'Test Storage' from the storage catalog
     And User captures a 'button' and highlights the 'Request Access'
     And User click on the Request Access button

@@ -1,6 +1,6 @@
 Feature: App Library Documentation
 
-  @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
+ @LoginWithAdmin @SkipIfVersionMatch @DeleteCreatedTestApp @Documentation
   Scenario: Creating a new app
     Given User captures documentation screenshot for 'PlatformNavigation/App Library'
     When User opens Main Menu
@@ -114,11 +114,7 @@ Feature: App Library Documentation
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'diabetes'
     And User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User selects the 'DIABETES' from the dropdown
-    And User clicks on apply database button
     Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -161,11 +157,7 @@ Feature: App Library Documentation
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'diabetes'
     And User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User selects the 'DIABETES' from the dropdown
-    And User clicks on apply database button
     Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -211,11 +203,7 @@ Feature: App Library Documentation
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'diabetes'
     And User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User selects the 'DIABETES' from the dropdown
-    And User clicks on apply database button
     Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
