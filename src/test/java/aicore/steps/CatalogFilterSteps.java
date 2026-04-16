@@ -60,7 +60,7 @@ public class CatalogFilterSteps {
 	private void validateCatalogFilters(final String catalogName, final String filterCategoryName,
 			final String filterValueName, List<Map<String, String>> rows, CatalogFilterPage catalogFilterPage) {
 		for (Map<String, String> row : rows) {
-			String filterCategory = row.get(filterCategoryName);
+			row.get(filterCategoryName);
 			String filterValues = row.get(filterValueName);
 
 			String[] filterValuesArray = filterValues.split(", ");

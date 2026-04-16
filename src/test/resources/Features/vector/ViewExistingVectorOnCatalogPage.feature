@@ -66,3 +66,34 @@ Feature: View existing Vectors on Vector Catalog Page
       | Data Restrictions   | IP ALLOWED   |
     And User logs out from the application
     And User login as 'Admin'
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate access status of created Vector catalog
+    Given User opens Main Menu
+    When User clicks on Open Vector
+    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
+    When User mouse hover on Lock icon displayed on catalog card
+    Then User can see engine access status as 'Private' on the tooltip
+    When User selects the 'FAISS Vector' from the Vector catalog
+    And User clicks on Access Control Tab
+    And User clicks on make 'Vector' public button
+    And User opens Main Menu
+    And User clicks on Open Vector
+    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
+    When User mouse hover on Lock icon displayed on catalog card
+    Then User can see engine access status as 'Global' on the tooltip
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate content of created Vector catalog card
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Open Vector
+    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
+    And User should see the catalog ID on the catalog card
+    And User should see the tags 'embeddings, Test1' on the 'Vector' catalog card
+    And User should see the catalog created date on the catalog card
+    And User should see the following icons on the catalog card
+      | lock                |
+      | bookmark            |
+      | view logs dashboard |
+      | delete              |

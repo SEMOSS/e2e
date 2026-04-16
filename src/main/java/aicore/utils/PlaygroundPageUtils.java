@@ -13,8 +13,6 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class PlaygroundPageUtils {
 
 	private static final String PLAYGROUND_APP_BUTTON_TEXT = "Launch Playground";
-	private static final String PROMPT_THE_MODEL_BUTTON_LABEL = "Prompt the Model";
-	private static final String PROMPT_INPUT_XPATH = "//input[@type='file']";
 	private static final String PLACEHOLDER_PROMPT_XPATH = "//div//div[contains(text(),'{prompt}')]";
 	private static final String CONFIGURATION_MENU_XPATH = "//form";
 	private static final String ADD_MCP_TOOL_XPATH = "//div[text()='Toolbox']/following-sibling::button";
@@ -61,7 +59,6 @@ public class PlaygroundPageUtils {
 	private static final String MODEL_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
 	private static final String KNOWLEDGE_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
 	private static final String MODEL_ITEM_BY_NAME = "//div[@data-slot='command-group']//div//div//div//span[contains(text(),'{modelName}')]";
-	private static final String MODEL_CHECKBOX_BY_NAME = ".//div[contains(@class,'model-item') and normalize-space(text())='{MODEL}']//input[@type='checkbox']";
 	private static final String UPLOADED_FILE_CARD_XPATH = "//div[contains(@class,'overflow-hidden border')]";
 	private static final String FILE_TOOLTIP_XPATH = "//div[@data-slot='tooltip-content']";
 	private static final String OPEN_SETTING_ICON_XPATH = "//button[@aria-label='Open settings']";

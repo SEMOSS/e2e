@@ -22,7 +22,7 @@ public class VerifyVectorDatabasePageUtils {
 	}
 
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
-		Locator sectionLocator = page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
+		page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
 		if (sectionName.equalsIgnoreCase("advanced settings")) {
 			if (fieldName.equalsIgnoreCase("not available")) {
 				return true;

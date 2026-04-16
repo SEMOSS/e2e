@@ -26,7 +26,7 @@ public class AddCatalogPageBaseUtils {
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
 	private static final String SUBMIT_BUTTON_DATATESTID = "editEngineDetails-submit-btn";
-	private static final String CLOSE_BUTTON_XPATH = "//button[text()='Cancel']";
+	private static final String CLOSE_BUTTON_XPATH = "//*[text()='Close']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "//div[text()='Successfully set the new metadata values for the engine']";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
 	private static final String EDIT_TAG_XPATH = "editEngineDetails-Tag-autocomplete";

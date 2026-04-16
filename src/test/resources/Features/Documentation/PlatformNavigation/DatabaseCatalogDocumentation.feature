@@ -31,7 +31,7 @@ Feature: Database Catalog Documentation
     And User captures a 'tab' and highlights the 'Usage'
     And User clicks on 'Edit' button
     And User captures screenshot for form "Database Edit Options"
-    And User clicks on 'Close' button
+    And User clicks on 'Cancel' button
     And User clicks on Access Control Tab
     And User clicks Make 'Database' Discoverable button
     And User logs out from the application
@@ -39,7 +39,7 @@ Feature: Database Catalog Documentation
     And User opens Main Menu
     And User clicks on Open Database
     And User captures a 'button' and highlights the 'Discoverable Databases'
-    And User click on 'Discoverable Databases' tab
+    And User click on 'Discoverable' tab
     And User clicks on the database name 'TestDatabase' in the database catalog
     And User captures screenshot for "Database Resource"
     And User captures screenshot for "Request Access"
