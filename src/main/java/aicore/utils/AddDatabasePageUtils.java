@@ -314,24 +314,6 @@ public class AddDatabasePageUtils {
 		return page.locator(OUTPUT_TABLE).last().locator("th").allTextContents();
 	}
 
-//	public static void verifyQueryFieldIsEmpty(Page page) {
-//		Locator cell = page.locator(QUERY_ENTER_TEXTAREA_XPATH).first();
-//		String queryText = cell.innerText();
-//		if (queryText != null && !queryText.trim().isEmpty()) {
-//			throw new AssertionError("Query field is not empty.");
-//		}
-//	}
-	
-//	public static void clickOnResetButton(Page page) {
-//	    Locator resetBtn = page.getByTestId("query-reset-btn");
-//	    Locator field = page.locator(QUERY_ENTER_TEXTAREA_XPATH).first();
-//
-//	    AICorePageUtils.waitFor(resetBtn);
-//	    resetBtn.click();
-//	    field.waitFor();
-//	    page.waitForCondition(() -> field.inputValue().trim().isEmpty());
-//	}
-
 	public static boolean verifyAllColumnsAreCollapsed(Page page) {
 		Locator collapseColumns = page.locator(COLLAPSE_COLUMNS_XPATH);
 		if (!collapseColumns.isVisible()) {
@@ -350,12 +332,6 @@ public class AddDatabasePageUtils {
 		}
 	}
 
-//	public static List<String> getDataColumns(Page page) {
-//		Locator locator = page.locator(DATA_COLUMNS_XPATH);
-//		AICorePageUtils.waitFor(locator);
-//		return locator.allTextContents();
-//	}
-	
 	public static List<String> getDataColumns(Page page) {
 	    Locator columns = page.locator(DATA_COLUMNS_XPATH);
 	    columns.first().waitFor();
@@ -417,13 +393,6 @@ public class AddDatabasePageUtils {
 		AICorePageUtils.waitFor(saveButton);
 		saveButton.click();
 	}
-
-//	public static void clickOnResetButton(Page page) {
-//		Locator resetBtn = page.getByTestId("query-reset-btn");
-//		AICorePageUtils.waitFor(resetBtn);
-//		resetBtn.click();
-//		page.waitForTimeout(5000);
-//	}
 
 	public static void clickOnRunQueryButton(Page page) {
 		page.getByTestId(RUN_QUER_BUTTON_DATATESTID).click();
