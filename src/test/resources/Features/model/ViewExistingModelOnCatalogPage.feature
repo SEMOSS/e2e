@@ -52,3 +52,24 @@ Feature: View existing models in model Catalog
     Then User should see the 'Model' on the model catalog page
     When User mouse hover on Lock icon displayed on catalog card
     Then User can see engine access status as 'Global' on the tooltip
+
+    @LoginWithAdmin @Regression @DeleteTestCatalog
+    Scenario: Delete model catalog from dashboard and validate delete confirmation pop-up
+    When User opens Main Menu
+    And User clicks on Open Model
+    And User searches the 'Model' in the model catalog searchbox
+    Then User should see the 'Model' on the model catalog page
+    When User clicks on 'Delete Engine' option from catalog card options
+    Then User should see a delete confirmation pop-up with message 'Are you sure you want to delete this engine?'
+    And User should see the Engine name as 'Model' on the delete confirmation pop-up
+    And User should see the Engine ID on the delete confirmation pop-up
+    And User should see the 'This action cannot be undone.' message
+    When User sees the 'Cancel' button on the delete confirmation pop-up
+    And User sees the 'Delete' button on the delete confirmation pop-up
+    When User clicks on 'Delete' button
+    Then User can see a toast message as 'Successfully Deleted' Catalog
+    
+
+
+
+
