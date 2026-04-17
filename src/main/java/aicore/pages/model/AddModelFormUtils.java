@@ -46,21 +46,6 @@ public class AddModelFormUtils {
 	// fields
 	private static final String MANDATORY_FIELD_TEXT_DATA_TESTID = "importForm-{fieldName}-textField";
 	private static final String MANDATORY_FIELD_SELECT_DATA_TESTID = "importForm-{fieldName}-select";
-	private static final String TEXT_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='importForm-{field}-textField']";
-	private static final String DROPDOWN_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//button[@data-testid='model-importForm-{field}-select']";
-	private static final String CREDENTIAL_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}-password']";
-	private static final String NUMBER_FIELDS_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}']";
-	private static final String URL_FIELDS_UNDER_SECTION_XPATH = "//h4[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-importForm-{field}-url']";
-	private static final String MANDATORY_TEXT_FIELDS_XPATH = "//input[@data-testid='importForm-{field}-textField']/../label//span[text()='*']";
-	private static final String MANDATORY_DROPDOWN_FIELDS_XPATH = "//button[@data-testid='model-importForm-{field}-select']/../label//span[text()='*']";
-	private static final String MANDATORY_CREDENTIAL_FIELDS_XPATH = "//input[@data-testid='model-importForm-{field}-password']/../label//span[text()='*']";
-	private static final String MANDATORY_NUMBER_FIELDS_XPATH = "//input[@data-testid='model-importForm-{field}']/../label//span[text()='*']";
-	private static final String MANDATORY_URL_FIELDS_XPATH = "//input[@data-testid='model-importForm-{field}-url']/../label//span[text()='*']";
-	private static final String TEXT_FIELDS_DATA_TESTID = "importForm-{field}-textField";
-	private static final String DROPDOWN_FIELDS_DATA_TESTID = "model-importForm-{field}-select";
-	private static final String CREDENTIAL_FIELDS_DATA_TESTID = "model-importForm-{field}-password";
-	private static final String NUMBER_FIELDS_DATA_TESTID = "model-importForm-{field}";
-	private static final String URL_FIELDS_DATA_TESTID = "model-importForm-{field}-url";
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//div[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
 	private static final String BUTTON_FIELD_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//button[@data-testid='model-import-form-input-{field}']";
