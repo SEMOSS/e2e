@@ -67,6 +67,7 @@ public class AddModelFormUtils {
 	private static final String INPUT_FIELD_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-import-form-input-{field}']";
 	private static final String MANDATORY_INPUT_FIELDS_XPATH = "//input[@data-testid='model-import-form-input-{field}']/../label//span[text()='*']";
 	private static final String MANDATORY_BUTTON_FIELDS_XPATH = "//button[@data-testid='model-import-form-input-{field}']/../label//span[text()='*']";
+	private static final String FORM_FIELDS_XPATH = "model-import-form-input-{field}";
 
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
@@ -208,52 +209,50 @@ public class AddModelFormUtils {
 		addModelOption.click();
 	}
 
-	public static boolean fieldUnderSection(Page page, String section, String field) {
-		String actualField = "";
+	private static String[] getFieldInfo(String field) {
+		String fieldNameForDataTestId;
 		switch (field) {
 		case "Catalog Name":
-			actualField = "Name";
+			fieldNameForDataTestId = "Name";
 			break;
 		case "Max Tokens (Max Completion Tokens)":
-			actualField = "Max Tokens";
+			fieldNameForDataTestId = "Max Tokens";
 			break;
 		case "Record Questions and Responses":
-			actualField = "Keep Input Output";
+			fieldNameForDataTestId = "Keep Input Output";
 			break;
 		case "Init Script":
-			actualField = "Init model engine";
+			fieldNameForDataTestId = "Init model engine";
 			break;
 		case "OpenAI API Key":
 		case "Azure Open AI Key":
-		case "API Key":
 		case "Perplexity API Key":
-			actualField = "Open AI Key";
+			fieldNameForDataTestId = "Open AI Key";
 			break;
 		case "Model ID":
 		case "Model Name":
 		case "Model (Deployment Name)":
-			actualField = "Model";
+			fieldNameForDataTestId = "Model";
 			break;
 		case "Region":
-			actualField = "Aws Region";
+			fieldNameForDataTestId = "Aws Region";
 			break;
 		case "AWS Secret Access Key":
-			actualField = "AWS Secret Key";
+			fieldNameForDataTestId = "AWS Secret Key";
 			break;
 		case "Max Completion Tokens":
-			actualField = "MAX Tokens";
+			fieldNameForDataTestId = "MAX Tokens";
 			break;
 		case "Completion Type":
-			actualField = "Chat Type";
+			fieldNameForDataTestId = "Chat Type";
 			break;
 		case "Azure Endpoint":
-			actualField = "Endpoint";
+			fieldNameForDataTestId = "Endpoint";
 			break;
 		default:
-			actualField = field;
+			fieldNameForDataTestId = field;
 		}
-		String fieldName = actualField.replace(" ", "_").toUpperCase();
-		Locator fieldLocator = null;
+		String fieldType;
 		switch (field) {
 		case "Catalog Name":
 		case "Model":
@@ -283,194 +282,6 @@ public class AddModelFormUtils {
 		case "Endpoint":
 		case "Azure Endpoint":
 		case "Provider":
-			fieldLocator = page.locator(
-					INPUT_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Chat Type":
-		case "Record Questions and Responses":
-		case "Keep Conversation History":
-		case "Deployment Type":
-		case "Completion Type":
-		case "Type":
-			fieldLocator = page.locator(
-					BUTTON_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid field: " + field);
-		}
-		fieldLocator.scrollIntoViewIfNeeded();
-		return fieldLocator.isVisible();
-	}
-
-	public static boolean isFieldMandatory(Page page, String field) {
-		String actualField = "";
-		switch (field) {
-		case "Catalog Name":
-			actualField = "Name";
-			break;
-		case "Max Tokens (Max Completion Tokens)":
-			actualField = "Max Tokens";
-			break;
-		case "Record Questions and Responses":
-			actualField = "Keep Input Output";
-			break;
-		case "Init Script":
-			actualField = "Init model engine";
-			break;
-		case "OpenAI API Key":
-		case "Azure Open AI Key":
-		case "API Key":
-		case "Perplexity API Key":
-			actualField = "Open AI Key";
-			break;
-		case "Model ID":
-		case "Model Name":
-		case "Model (Deployment Name)":
-			actualField = "Model";
-			break;
-		case "Region":
-			actualField = "Aws Region";
-			break;
-		case "AWS Secret Access Key":
-			actualField = "AWS Secret Key";
-			break;
-		case "Max Completion Tokens":
-			actualField = "MAX Tokens";
-			break;
-		case "Completion Type":
-			actualField = "Chat Type";
-			break;
-		case "Azure Endpoint":
-			actualField = "Endpoint";
-			break;
-		default:
-			actualField = field;
-		}
-		String fieldName = actualField.replace(" ", "_").toUpperCase();
-		Locator fieldLocator = null;
-		switch (field) {
-		case "Catalog Name":
-		case "Model":
-		case "Init Script":
-		case "Tag":
-		case "Project":
-		case "GCP Region":
-		case "Service Account Credentials":
-		case "Model ID":
-		case "Region":
-		case "Model Name":
-		case "API Version":
-		case "Model (Deployment Name)":
-		case "Open AI Key":
-		case "OPEN AI Key":
-		case "OpenAI API Key":
-		case "API Key":
-		case "AWS Access Key":
-		case "AWS Secret Access Key":
-		case "Perplexity API Key":
-		case "Azure Open AI Key":
-		case "Max Input Tokens":
-		case "Max Tokens":
-		case "Max Completion Tokens":
-		case "Context Window":
-		case "Max Tokens (Max Completion Tokens)":
-		case "Endpoint":
-		case "Azure Endpoint":
-		case "Provider":
-			fieldLocator = page.locator(MANDATORY_INPUT_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Chat Type":
-		case "Record Questions and Responses":
-		case "Keep Conversation History":
-		case "Deployment Type":
-		case "Completion Type":
-		case "Type":
-			fieldLocator = page.locator(MANDATORY_BUTTON_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid field: " + field);
-		}
-		fieldLocator.first().scrollIntoViewIfNeeded();
-		return fieldLocator.first().isVisible();
-	}
-
-	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
-		String actualField = "";
-		switch (field) {
-		case "Catalog Name":
-			actualField = "Name";
-			break;
-		case "Max Tokens (Max Completion Tokens)":
-			actualField = "Max Tokens";
-			break;
-		case "Record Questions and Responses":
-			actualField = "Keep Input Output";
-			break;
-		case "Init Script":
-			actualField = "Init model engine";
-			break;
-		case "OpenAI API Key":
-		case "Azure Open AI Key":
-		case "API Key":
-		case "Perplexity API Key":
-			actualField = "Open AI Key";
-			break;
-		case "Model ID":
-		case "Model Name":
-		case "Model (Deployment Name)":
-			actualField = "Model";
-			break;
-		case "Region":
-			actualField = "Aws Region";
-			break;
-		case "AWS Secret Access Key":
-			actualField = "AWS Secret Key";
-			break;
-		case "Max Completion Tokens":
-			actualField = "MAX Tokens";
-			break;
-		case "Completion Type":
-			actualField = "Chat Type";
-			break;
-		case "Azure Endpoint":
-			actualField = "Endpoint";
-			break;
-		default:
-			actualField = field;
-		}
-		String fieldName = actualField.replace(" ", "_").toUpperCase();
-		String fieldType = "";
-		Locator fieldLocator = null;
-		switch (field) {
-		case "Catalog Name":
-		case "Model":
-		case "Init Script":
-		case "Tag":
-		case "Project":
-		case "GCP Region":
-		case "Service Account Credentials":
-		case "Model ID":
-		case "Region":
-		case "Model Name":
-		case "API Version":
-		case "Model (Deployment Name)":
-		case "Open AI Key":
-		case "OPEN AI Key":
-		case "OpenAI API Key":
-		case "API Key":
-		case "AWS Access Key":
-		case "AWS Secret Access Key":
-		case "Perplexity API Key":
-		case "Azure Open AI Key":
-		case "Max Input Tokens":
-		case "Max Tokens":
-		case "Max Completion Tokens":
-		case "Context Window":
-		case "Max Tokens (Max Completion Tokens)":
-		case "Endpoint":
-		case "Azure Endpoint":
-		case "Provider":
-			fieldLocator = page.locator(MANDATORY_INPUT_FIELDS_XPATH.replace("{field}", fieldName));
 			fieldType = "Input";
 			break;
 		case "Chat Type":
@@ -479,12 +290,56 @@ public class AddModelFormUtils {
 		case "Deployment Type":
 		case "Completion Type":
 		case "Type":
-			fieldLocator = page.locator(MANDATORY_BUTTON_FIELDS_XPATH.replace("{field}", fieldName));
 			fieldType = "Dropdown";
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid field: " + field);
 		}
+		return new String[] { fieldNameForDataTestId, fieldType };
+	}
+
+	public static boolean fieldUnderSection(Page page, String section, String field) {
+		String[] info = getFieldInfo(field);
+		String actualField = info[0];
+		String fieldType = info[1];
+		String fieldName = actualField.replace(" ", "_").toUpperCase();
+		Locator fieldLocator;
+		if ("Input".equals(fieldType)) {
+			fieldLocator = page.locator(
+					INPUT_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+		} else if ("Dropdown".equals(fieldType)) {
+			fieldLocator = page.locator(
+					BUTTON_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+		} else {
+			throw new IllegalArgumentException("Invalid field type: " + fieldType);
+		}
+		fieldLocator.scrollIntoViewIfNeeded();
+		return fieldLocator.isVisible();
+	}
+
+	public static boolean isFieldMandatory(Page page, String field) {
+		String[] info = getFieldInfo(field);
+		String actualField = info[0];
+		String fieldType = info[1];
+		String fieldName = actualField.replace(" ", "_").toUpperCase();
+		Locator fieldLocator;
+		if ("Input".equals(fieldType)) {
+			fieldLocator = page.locator(MANDATORY_INPUT_FIELDS_XPATH.replace("{field}", fieldName));
+		} else if ("Dropdown".equals(fieldType)) {
+			fieldLocator = page.locator(MANDATORY_BUTTON_FIELDS_XPATH.replace("{field}", fieldName));
+		} else {
+			throw new IllegalArgumentException("Invalid field type: " + fieldType);
+		}
+		fieldLocator.first().scrollIntoViewIfNeeded();
+		return fieldLocator.first().isVisible();
+	}
+
+	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
+		String[] info = getFieldInfo(field);
+		String actualField = info[0];
+		String fieldType = info[1];
+		String fieldName = actualField.replace(" ", "_").toUpperCase();
+		Locator fieldLocator = page.getByTestId(FORM_FIELDS_XPATH.replace("{field}", fieldName));
 		fieldLocator.scrollIntoViewIfNeeded();
 		switch (fieldType) {
 		case "Input":
