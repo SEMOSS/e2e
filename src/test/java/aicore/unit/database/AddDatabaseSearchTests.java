@@ -69,5 +69,5 @@ public class AddDatabaseSearchTests extends AbstractE2ETest {
 								+ "Oracle, Phoenix, Postgres, Redshift, SAP Hana, "
 								+ "SEMOSS, Snowflake, SQL Server, SQLITE, Teradata, Tibco, Trino"));
 	}
-
+	
 }

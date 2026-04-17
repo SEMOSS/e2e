@@ -5,8 +5,11 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
+import com.microsoft.playwright.Page;
+
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogFilterPage;
+import aicore.utils.CatalogFilterPageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -36,7 +39,7 @@ public class CatalogFilterSteps {
 		final String FILTER_CATEGORY_NAME = "FILTER_CATEGORY";
 		final String FILTER_VALUE_NAME = "FILTER_VALUE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateCatalogFilters(catalogName, FILTER_CATEGORY_NAME, FILTER_VALUE_NAME, rows, filterPage);
+		validateCatalogFilters(catalogName, FILTER_CATEGORY_NAME, FILTER_VALUE_NAME, rows, SetupHooks.getPage());
 	}
 
 	@When("User clicks on bookmark button of {string} catalog")
@@ -57,21 +60,22 @@ public class CatalogFilterSteps {
 		filterPage.clickOnUnbookmark(catalogName);
 	}
 
-	private void validateCatalogFilters(final String catalogName, final String filterCategoryName,
-			final String filterValueName, List<Map<String, String>> rows, CatalogFilterPage catalogFilterPage) {
+	public static void validateCatalogFilters(final String catalogName, final String filterCategoryName,
+			final String filterValueName, List<Map<String, String>> rows, Page page) {
 		for (Map<String, String> row : rows) {
 			row.get(filterCategoryName);
 			String filterValues = row.get(filterValueName);
 
 			String[] filterValuesArray = filterValues.split(", ");
 			for (String filterValue : filterValuesArray) {
-				catalogFilterPage.searchFilterValue(filterValue);
-				catalogFilterPage.selectFilterValue(filterValue);
-				boolean isCatalogVisible = catalogFilterPage.verifyCatalogIsVisibleOnCatalogPage(catalogName);
+				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
+				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
+				boolean isCatalogVisible = CatalogFilterPageUtils.verifyCatalogIsVisibleOnCatalogPage(page, catalogName);
 				Assertions.assertTrue(isCatalogVisible,
 						"Catalog is not present for " + "'" + filterValue + "'" + " filter value");
 				// To de-select selected filter we again call this method
-				catalogFilterPage.selectFilterValue(filterValue);
+				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
+
 			}
 		}
 	}

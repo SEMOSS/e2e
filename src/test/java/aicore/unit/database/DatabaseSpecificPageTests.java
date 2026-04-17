@@ -79,16 +79,7 @@ public class DatabaseSpecificPageTests {
 
 	}
 
-	@Test
-	public void testViewDatabaseTags() throws IOException {
-		AddCatalogPageBaseUtils.clickEditIcon(page);
-		String tagName = "embeddings";
-		AddCatalogPageBaseUtils.enterTagName(page, tagName);
-		AddCatalogPageBaseUtils.clickOnSubmit(page);
-		AddCatalogPageBaseUtils.verifyEditSuccessfullToastMessage(page);
-		List<String> tags = EditModelPageUtils.verifyTagNames(page);
-		assertTrue(tags.contains(tagName));
-	}
+
 
 	@Test
 	public void testUsage() throws IOException {
@@ -132,11 +123,24 @@ public class DatabaseSpecificPageTests {
 		Path path = AddDatabasePageUtils.clickOnExportButton(page);
 		assertTrue(path.toFile().exists());
 	}
+	
+	/////////////////////// EDIT
 
 	@Test
 	public void testEdit() throws IOException, InterruptedException {
 		AddCatalogPageBaseUtils.clickEditIcon(page);
 		AddCatalogPageBaseUtils.clickOnClose(page);
+	}
+	
+	@Test
+	public void testViewDatabaseTags() throws IOException {
+		AddCatalogPageBaseUtils.clickEditIcon(page);
+		String tagName = "embeddings";
+		AddCatalogPageBaseUtils.enterTagName(page, tagName);
+		AddCatalogPageBaseUtils.clickOnSubmit(page);
+		AddCatalogPageBaseUtils.verifyEditSuccessfullToastMessage(page);
+		List<String> tags = EditModelPageUtils.verifyTagNames(page);
+		assertTrue(tags.contains(tagName));
 	}
 
 	@AfterAll
