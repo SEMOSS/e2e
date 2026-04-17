@@ -15,11 +15,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
@@ -27,24 +22,20 @@ import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.ModelSMSSPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AICorePageUtils;
+import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.page.model.ModelPageUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ModelSpecificPageTests {
+public class ModelSpecificPageTests extends AbstractE2ETest {
 	
 	private static String modelCatalogName = null;
-	private static Page page = null;
-
 
 	@BeforeAll
 	public static void setup() throws IOException {
-		GenericSetupUtils.initialize();
-		page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
+		// login with native user before tests
+		login(page, UserType.NATIVE);
 
 		String timestamp = CommonUtils.getTimeStampName();
 		modelCatalogName = "Model" + timestamp;
