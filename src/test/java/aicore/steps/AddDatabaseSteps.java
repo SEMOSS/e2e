@@ -179,7 +179,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		final String GROUP_NAME = "GROUP";
 		final String DATABASE_OPTION_NAMES = "DATABASE_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(catalog, GROUP_NAME, DATABASE_OPTION_NAMES, rows, addDatabaseToCatalogPage);
+		validateOptionsWithIcon(catalog, GROUP_NAME, DATABASE_OPTION_NAMES, rows, SetupHooks.getPage());
 	}
 
 	@When("User clicks on Copy ID option of {string} database")
@@ -272,17 +272,7 @@ public class AddDatabaseSteps extends AbstractAddCatalogBase {
 		final String SECTION_NAME = "EXPECTED_SECTION";
 		final String OPTION_NAME = "DATABASE_TYPE";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		for (Map<String, String> row : rows) {
-			String section = row.get(SECTION_NAME);
-			String[] dbTypes = row.get(OPTION_NAME).split(",\\s*");
-			addDatabaseToCatalogPage.clickOnSection(catalog, section);
-			for (String dbType : dbTypes) {
-				addDatabaseToCatalogPage.searchDatabaseType(section, dbType);
-				boolean isVisible = addDatabaseToCatalogPage.verifyOptionIsVisible(catalog, section, dbType);
-				Assertions.assertTrue(isVisible,
-						"Database type '" + dbType + "' was not found under section '" + section + "'");
-			}
-		}
+		validateSearchOptions(catalog, SECTION_NAME, OPTION_NAME, rows, SetupHooks.getPage());
 	}
 
 	@And("User clicks on Refresh button")

@@ -11,7 +11,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.CatalogCreationFromZipPage;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 

@@ -30,7 +30,7 @@ public class ViewAddFunctionOptionsSteps extends AbstractAddCatalogBase {
 		final String FUNCTION_OPTION_NAMES = "FUNCTION_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 
-		validateOptionsWithIcon(catalog, GROUP_NAME, FUNCTION_OPTION_NAMES, rows, functionPage);
+		validateOptionsWithIcon(catalog, GROUP_NAME, FUNCTION_OPTION_NAMES, rows, SetupHooks.getPage());
 	}
 
 	@Then("User should see Search bar to filter function options")

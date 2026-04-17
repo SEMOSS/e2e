@@ -40,9 +40,9 @@ public class CreateAppUsingTemplateSteps {
 		appTemplatePage.verifyInputFieldWithLabel(label);
 	}
 
-	@And("User clicks on description block")
-	public void user_clicks_on_description_block() {
-		appTemplatePage.clickOnQuestionBlock();
+	@And("User clicks on {string} block")
+	public void user_clicks_on_description_block(String blockName) {
+		appTemplatePage.clickOnQuestionBlock(blockName);
 	}
 
 	@And("User adds description as {string}")

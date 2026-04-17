@@ -71,3 +71,19 @@ Feature: View existing models in model Catalog
       | bookmark            |
       | view logs dashboard |
       | delete              |
+
+  @LoginWithAdmin @Regression
+  Scenario: Delete model catalog from dashboard and validate delete confirmation pop-up
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Open Model
+    And User searches the 'GPT Model' in the model catalog searchbox
+    Then User should see the 'GPT Model' on the model catalog page
+    When User clicks on 'Delete Engine' option from catalog card options
+    Then User should see a delete confirmation pop-up with message 'Are you sure you want to delete this engine?'
+    And User should see the Engine name as 'GPT Model' on the delete confirmation pop-up for 'Model' catalog
+    And User should see the Engine ID on the delete confirmation pop-up
+    And User sees the 'Cancel' button on the delete confirmation pop-up
+    And User sees the 'Delete' button on the delete confirmation pop-up
+    When User clicks on 'Delete' button
+    Then User can see a toast message as 'Successfully deleted GPT Model' engine for 'Model' catalog

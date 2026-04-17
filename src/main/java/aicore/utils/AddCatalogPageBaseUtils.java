@@ -16,6 +16,9 @@ public class AddCatalogPageBaseUtils {
 	private static final String DATABASE_OPTIONS_ICONS_XPATH = "//button[text()='{sectionName}']/following::div//p[text()='{optionName}']/parent::div//img";
 	private static final String CATALOG_NAME_XPATH = "//h1[contains(text(),'{CatalogName}')]";
 	private static final String SEARCH_BAR_DATA_PLACEHOLDERTEXT = "Search";
+	// XPath for catalogs without section grouping (e.g., Vector)
+	private static final String OPTIONS_WITHOUT_SECTION_XPATH = "//p[text()='{optionName}']";
+	private static final String ICONS_WITHOUT_SECTION_XPATH = "//p[text()='{optionName}']/parent::div/preceding-sibling::div//img";
 	// TODO need data-testid for catalog description
 	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div//span";
@@ -171,6 +174,38 @@ public class AddCatalogPageBaseUtils {
 	public static String verifyEditSuccessfullToastMessage(Page page) {
 		Locator alert = page.locator(EDIT_SUCCESS_TOAST_MESSAGE);
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
+	}
+
+	// Overloaded methods for catalogs without section/group names
+	public static boolean verifyOptionIsVisible(Page page, String catalog, String optionName) {
+		switch (catalog.toLowerCase()) {
+		case "database":
+			throw new UnsupportedOperationException(
+					"Use verifyOptionIsVisible(page, catalog, sectionName, optionName) for grouped catalogs like database");
+		default:
+			return page.isVisible(OPTIONS_WITHOUT_SECTION_XPATH.replace("{optionName}", optionName));
+		}
+	}
+
+	public static Locator getIconByLabel(Page page, String catalog, String optionName) {
+		switch (catalog.toLowerCase()) {
+		case "database":
+			throw new UnsupportedOperationException(
+					"Use getIconByLabel(page, catalog, sectionName, optionName) for grouped catalogs like database");
+		default:
+			return page.locator(ICONS_WITHOUT_SECTION_XPATH.replace("{optionName}", optionName));
+		}
+	}
+
+	public static boolean isIconVisible(Page page, String catalog, String optionName) {
+		switch (catalog.toLowerCase()) {
+		case "database":
+			throw new UnsupportedOperationException(
+					"Use isIconVisible(page, catalog, sectionName, optionName) for grouped catalogs like database");
+		default:
+			return page.locator(ICONS_WITHOUT_SECTION_XPATH.replace("{optionName}", optionName))
+					.isVisible();
+		}
 	}
 
 	// View Database Type on Connect To database page
