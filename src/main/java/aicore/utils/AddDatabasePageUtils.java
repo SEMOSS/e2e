@@ -352,6 +352,7 @@ public class AddDatabasePageUtils {
 	public static boolean verifySearchedDataColumn(Page page, String columnName) {
 		Locator dataColumn = page.locator(DATA_COLUMNS_XPATH)
 				.filter(new Locator.FilterOptions().setHasText(columnName));
+		AICorePageUtils.waitFor(dataColumn);
 		if (page.locator(DATA_COLUMNS_XPATH).count() == 1 && dataColumn.isVisible()) {
 			return true;
 		}

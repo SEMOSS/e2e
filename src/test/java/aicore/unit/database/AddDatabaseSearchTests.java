@@ -30,7 +30,6 @@ public class AddDatabaseSearchTests extends AbstractE2ETest {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-
 		assertTrue(AddCatalogPageBaseUtils.isSearchBarPresent(page));
 	}
 
@@ -46,7 +45,7 @@ public class AddDatabaseSearchTests extends AbstractE2ETest {
 
 		AbstractAddCatalogBase.validateOptionsWithIcon("database", GROUP_NAME, DATABASE_OPTION_NAMES, mapList, page);
 	}
-	
+
 	@ParameterizedTest(name = "{index} => group={0}")
 	@MethodSource("databaseSelectionData")
 	void testSearchDatabaseOption(String group, String databaseOptions) {
@@ -69,5 +68,5 @@ public class AddDatabaseSearchTests extends AbstractE2ETest {
 								+ "Oracle, Phoenix, Postgres, Redshift, SAP Hana, "
 								+ "SEMOSS, Snowflake, SQL Server, SQLITE, Teradata, Tibco, Trino"));
 	}
-	
+
 }

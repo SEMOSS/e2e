@@ -83,7 +83,6 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 		EditModelPageUtils.selectDataRestrictionsOption(page, "PII ALLOWED");
 
 		AddCatalogPageBaseUtils.clickOnSubmit(page);
-
 	}
 
 	@Test
@@ -118,7 +117,6 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 	}
 
 	//////////////// test filters
-
 	@ParameterizedTest(name = "{index} => {0} = {1}")
 	@MethodSource("filterData")
 	void testFilters(String filterCategory, String filterValue) {
