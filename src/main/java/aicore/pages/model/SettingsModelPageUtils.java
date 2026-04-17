@@ -223,7 +223,7 @@ public class SettingsModelPageUtils {
 			}
 			break;
 		default:
-			String codeContent = page.locator(USAGE_CODE_SECTION_XPATH.replace("{sectionName}", headingText))
+			String codeContent = page.locator(USAGE_CODE_SECTION_XPATH.replace("{sectionName}", headingText)).first()
 					.textContent().trim();
 			sectionCodeContents.append(codeContent).append("\n");
 		}

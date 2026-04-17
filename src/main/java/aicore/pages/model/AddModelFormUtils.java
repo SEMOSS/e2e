@@ -63,6 +63,10 @@ public class AddModelFormUtils {
 	private static final String URL_FIELDS_DATA_TESTID = "model-importForm-{field}-url";
 	private static final String SELECT_DROPDOWN_VALUE_XPATH = "//div[normalize-space()='{fieldValue}']";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "model-importForm-connect-button";
+	private static final String BUTTON_FIELD_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//button[@data-testid='model-import-form-input-{field}']";
+	private static final String INPUT_FIELD_UNDER_SECTION_XPATH = "//*[text()='{section}']/parent::div/following-sibling::div//div//input[@data-testid='model-import-form-input-{field}']";
+	private static final String MANDATORY_INPUT_FIELDS_XPATH = "//input[@data-testid='model-import-form-input-{field}']/../label//span[text()='*']";
+	private static final String MANDATORY_BUTTON_FIELDS_XPATH = "//button[@data-testid='model-import-form-input-{field}']/../label//span[text()='*']";
 
 	public static void selectOpenAi(Page page, String aiModelName) {
 		page.click(SELECT_OPENAI_XPATH.replace("{OpenAIModelName}", aiModelName));
@@ -205,8 +209,51 @@ public class AddModelFormUtils {
 	}
 
 	public static boolean fieldUnderSection(Page page, String section, String field) {
+		String actualField = "";
+		switch (field) {
+		case "Catalog Name":
+			actualField = "Name";
+			break;
+		case "Max Tokens (Max Completion Tokens)":
+			actualField = "Max Tokens";
+			break;
+		case "Record Questions and Responses":
+			actualField = "Keep Input Output";
+			break;
+		case "Init Script":
+			actualField = "Init model engine";
+			break;
+		case "OpenAI API Key":
+		case "Azure Open AI Key":
+		case "API Key":
+		case "Perplexity API Key":
+			actualField = "Open AI Key";
+			break;
+		case "Model ID":
+		case "Model Name":
+		case "Model (Deployment Name)":
+			actualField = "Model";
+			break;
+		case "Region":
+			actualField = "Aws Region";
+			break;
+		case "AWS Secret Access Key":
+			actualField = "AWS Secret Key";
+			break;
+		case "Max Completion Tokens":
+			actualField = "MAX Tokens";
+			break;
+		case "Completion Type":
+			actualField = "Chat Type";
+			break;
+		case "Azure Endpoint":
+			actualField = "Endpoint";
+			break;
+		default:
+			actualField = field;
+		}
+		String fieldName = actualField.replace(" ", "_").toUpperCase();
 		Locator fieldLocator = null;
-		String fieldName = field.replace(" ", "-");
 		switch (field) {
 		case "Catalog Name":
 		case "Model":
@@ -216,13 +263,28 @@ public class AddModelFormUtils {
 		case "GCP Region":
 		case "Service Account Credentials":
 		case "Model ID":
-		case "Model (Deployment Name)":
 		case "Region":
 		case "Model Name":
-		case "Provider":
 		case "API Version":
+		case "Model (Deployment Name)":
+		case "Open AI Key":
+		case "OPEN AI Key":
+		case "OpenAI API Key":
+		case "API Key":
+		case "AWS Access Key":
+		case "AWS Secret Access Key":
+		case "Perplexity API Key":
+		case "Azure Open AI Key":
+		case "Max Input Tokens":
+		case "Max Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+		case "Max Tokens (Max Completion Tokens)":
+		case "Endpoint":
+		case "Azure Endpoint":
+		case "Provider":
 			fieldLocator = page.locator(
-					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
+					INPUT_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		case "Chat Type":
 		case "Record Questions and Responses":
@@ -231,49 +293,61 @@ public class AddModelFormUtils {
 		case "Completion Type":
 		case "Type":
 			fieldLocator = page.locator(
-					DROPDOWN_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Open AI Key":
-		case "OPEN AI Key":
-		case "API Key":
-		case "OpenAI API Key":
-		case "AWS Access Key":
-		case "AWS Secret Access Key":
-		case "Azure Open AI Key":
-		case "Perplexity API Key":
-			fieldLocator = page.locator(
-					CREDENTIAL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Max Input Tokens":
-		case "Max Tokens":
-		case "Max Completion Tokens":
-		case "Context Window":
-		case "Max Tokens (Max Completion Tokens)":
-			fieldLocator = page.locator(
-					NUMBER_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			break;
-		case "Endpoint":
-		case "Azure Endpoint":
-			Locator urlField = page.locator(
-					URL_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			Locator textField = page.locator(
-					TEXT_FIELDS_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
-			if (urlField.count() > 0) {
-				fieldLocator = urlField;
-			} else {
-				fieldLocator = textField;
-			}
+					BUTTON_FIELD_UNDER_SECTION_XPATH.replace("{section}", section).replace("{field}", fieldName));
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid field provided for section fields: " + field);
+			throw new IllegalArgumentException("Invalid field: " + field);
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		return fieldLocator.isVisible();
 	}
 
 	public static boolean isFieldMandatory(Page page, String field) {
+		String actualField = "";
+		switch (field) {
+		case "Catalog Name":
+			actualField = "Name";
+			break;
+		case "Max Tokens (Max Completion Tokens)":
+			actualField = "Max Tokens";
+			break;
+		case "Record Questions and Responses":
+			actualField = "Keep Input Output";
+			break;
+		case "Init Script":
+			actualField = "Init model engine";
+			break;
+		case "OpenAI API Key":
+		case "Azure Open AI Key":
+		case "API Key":
+		case "Perplexity API Key":
+			actualField = "Open AI Key";
+			break;
+		case "Model ID":
+		case "Model Name":
+		case "Model (Deployment Name)":
+			actualField = "Model";
+			break;
+		case "Region":
+			actualField = "Aws Region";
+			break;
+		case "AWS Secret Access Key":
+			actualField = "AWS Secret Key";
+			break;
+		case "Max Completion Tokens":
+			actualField = "MAX Tokens";
+			break;
+		case "Completion Type":
+			actualField = "Chat Type";
+			break;
+		case "Azure Endpoint":
+			actualField = "Endpoint";
+			break;
+		default:
+			actualField = field;
+		}
+		String fieldName = actualField.replace(" ", "_").toUpperCase();
 		Locator fieldLocator = null;
-		String fieldName = field.replace(" ", "-");
 		switch (field) {
 		case "Catalog Name":
 		case "Model":
@@ -283,13 +357,27 @@ public class AddModelFormUtils {
 		case "GCP Region":
 		case "Service Account Credentials":
 		case "Model ID":
-		case "Model (Deployment Name)":
 		case "Region":
-		case "Aws Region":
 		case "Model Name":
-		case "Provider":
 		case "API Version":
-			fieldLocator = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
+		case "Model (Deployment Name)":
+		case "Open AI Key":
+		case "OPEN AI Key":
+		case "OpenAI API Key":
+		case "API Key":
+		case "AWS Access Key":
+		case "AWS Secret Access Key":
+		case "Perplexity API Key":
+		case "Azure Open AI Key":
+		case "Max Input Tokens":
+		case "Max Tokens":
+		case "Max Completion Tokens":
+		case "Context Window":
+		case "Max Tokens (Max Completion Tokens)":
+		case "Endpoint":
+		case "Azure Endpoint":
+		case "Provider":
+			fieldLocator = page.locator(MANDATORY_INPUT_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		case "Chat Type":
 		case "Record Questions and Responses":
@@ -297,46 +385,62 @@ public class AddModelFormUtils {
 		case "Deployment Type":
 		case "Completion Type":
 		case "Type":
-			fieldLocator = page.locator(MANDATORY_DROPDOWN_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Open AI Key":
-		case "OPEN AI Key":
-		case "API Key":
-		case "OpenAI API Key":
-		case "AWS Access Key":
-		case "AWS Secret Access Key":
-		case "Perplexity API Key":
-		case "Azure Open AI Key":
-			fieldLocator = page.locator(MANDATORY_CREDENTIAL_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Max Input Tokens":
-		case "Max Tokens":
-		case "Max Completion Tokens":
-		case "Context Window":
-		case "Max Tokens (Max Completion Tokens)":
-			fieldLocator = page.locator(MANDATORY_NUMBER_FIELDS_XPATH.replace("{field}", fieldName));
-			break;
-		case "Endpoint":
-		case "Azure Endpoint":
-			Locator urlField = page.locator(MANDATORY_URL_FIELDS_XPATH.replace("{field}", fieldName));
-			Locator textField = page.locator(MANDATORY_TEXT_FIELDS_XPATH.replace("{field}", fieldName));
-			if (urlField.count() > 0) {
-				fieldLocator = urlField;
-			} else {
-				fieldLocator = textField;
-			}
+			fieldLocator = page.locator(MANDATORY_BUTTON_FIELDS_XPATH.replace("{field}", fieldName));
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid mandatory field provided: " + field);
+			throw new IllegalArgumentException("Invalid field: " + field);
 		}
 		fieldLocator.first().scrollIntoViewIfNeeded();
 		return fieldLocator.first().isVisible();
 	}
 
 	public static void fillCatalogCreationForm(Page page, String field, String fieldValue, String timestamp) {
-		Locator fieldLocator = null;
-		String fieldName = field.replace(" ", "-");
+		String actualField = "";
+		switch (field) {
+		case "Catalog Name":
+			actualField = "Name";
+			break;
+		case "Max Tokens (Max Completion Tokens)":
+			actualField = "Max Tokens";
+			break;
+		case "Record Questions and Responses":
+			actualField = "Keep Input Output";
+			break;
+		case "Init Script":
+			actualField = "Init model engine";
+			break;
+		case "OpenAI API Key":
+		case "Azure Open AI Key":
+		case "API Key":
+		case "Perplexity API Key":
+			actualField = "Open AI Key";
+			break;
+		case "Model ID":
+		case "Model Name":
+		case "Model (Deployment Name)":
+			actualField = "Model";
+			break;
+		case "Region":
+			actualField = "Aws Region";
+			break;
+		case "AWS Secret Access Key":
+			actualField = "AWS Secret Key";
+			break;
+		case "Max Completion Tokens":
+			actualField = "MAX Tokens";
+			break;
+		case "Completion Type":
+			actualField = "Chat Type";
+			break;
+		case "Azure Endpoint":
+			actualField = "Endpoint";
+			break;
+		default:
+			actualField = field;
+		}
+		String fieldName = actualField.replace(" ", "_").toUpperCase();
 		String fieldType = "";
+		Locator fieldLocator = null;
 		switch (field) {
 		case "Catalog Name":
 		case "Model":
@@ -350,18 +454,6 @@ public class AddModelFormUtils {
 		case "Model Name":
 		case "API Version":
 		case "Model (Deployment Name)":
-			fieldLocator = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName));
-			fieldType = "Text";
-			break;
-		case "Chat Type":
-		case "Record Questions and Responses":
-		case "Keep Conversation History":
-		case "Deployment Type":
-		case "Completion Type":
-		case "Type":
-			fieldLocator = page.getByTestId(DROPDOWN_FIELDS_DATA_TESTID.replace("{field}", fieldName));
-			fieldType = "Dropdown";
-			break;
 		case "Open AI Key":
 		case "OPEN AI Key":
 		case "OpenAI API Key":
@@ -370,37 +462,32 @@ public class AddModelFormUtils {
 		case "AWS Secret Access Key":
 		case "Perplexity API Key":
 		case "Azure Open AI Key":
-			fieldLocator = page.getByTestId(CREDENTIAL_FIELDS_DATA_TESTID.replace("{field}", fieldName));
-			fieldType = "Credential";
-			break;
 		case "Max Input Tokens":
 		case "Max Tokens":
 		case "Max Completion Tokens":
 		case "Context Window":
 		case "Max Tokens (Max Completion Tokens)":
-			fieldLocator = page.getByTestId(NUMBER_FIELDS_DATA_TESTID.replace("{field}", fieldName));
-			fieldType = "Number";
-			break;
 		case "Endpoint":
 		case "Azure Endpoint":
-			Locator urlField = page.getByTestId(URL_FIELDS_DATA_TESTID.replace("{field}", fieldName));
-			Locator textField = page.getByTestId(TEXT_FIELDS_DATA_TESTID.replace("{field}", fieldName));
-			if (urlField.count() > 0) {
-				fieldLocator = urlField;
-			} else {
-				fieldLocator = textField;
-			}
-			fieldType = "Url";
+		case "Provider":
+			fieldLocator = page.locator(MANDATORY_INPUT_FIELDS_XPATH.replace("{field}", fieldName));
+			fieldType = "Input";
+			break;
+		case "Chat Type":
+		case "Record Questions and Responses":
+		case "Keep Conversation History":
+		case "Deployment Type":
+		case "Completion Type":
+		case "Type":
+			fieldLocator = page.locator(MANDATORY_BUTTON_FIELDS_XPATH.replace("{field}", fieldName));
+			fieldType = "Dropdown";
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid field: " + field);
 		}
 		fieldLocator.scrollIntoViewIfNeeded();
 		switch (fieldType) {
-		case "Text":
-		case "Credential":
-		case "Number":
-		case "Url":
+		case "Input":
 			if (field.equalsIgnoreCase("Catalog Name")) {
 				fieldLocator.fill(fieldValue + timestamp);
 			} else {
