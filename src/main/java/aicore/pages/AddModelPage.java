@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.EditModelPageUtils;
@@ -19,7 +18,7 @@ public class AddModelPage {
 	private Page page;
 	private String timestamp;
 
-	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted Model']";
+	private static final String DELETE_TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
 
 	public AddModelPage(Page page, String timestamp) {
 		this.page = page;
@@ -346,10 +345,8 @@ public class AddModelPage {
 	}
 
 	public String verifyDeleteToastMessage() {
-		// TODO use AICorePageUtils.verifyToastMessage
-		page.locator(DELETE_TOAST_MESSAGE_XPATH)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).textContent();
+		Locator toasterMessage = page.locator(DELETE_TOAST_MESSAGE_XPATH).first();
+		String toastMessage = toasterMessage.textContent().trim();
 		return toastMessage;
 	}
 
@@ -493,5 +490,25 @@ public class AddModelPage {
 
 	public boolean isIconVisibleOnCatalogCard(String iconName) {
 		return EditModelPageUtils.isIconVisibleOnCatalogCard(page, iconName);
+	}
+
+	public void clickOnCatalogCardOption(String option) {
+		EditModelPageUtils.clickOnCatalogCardOption(page, option);
+	}
+
+	public String getDeleteConfirmationMessage() {
+		return EditModelPageUtils.getDeleteConfirmationMessage(page);
+	}
+
+	public String getDeleteConfirmationEngineName() {
+		return EditModelPageUtils.getDeleteConfirmationEngineName(page);
+	}
+
+	public boolean isEngineIdVisibleOnDeleteConfirmation() {
+		return EditModelPageUtils.isEngineIdVisibleOnDeleteConfirmation(page);
+	}
+
+	public boolean isButtonVisibleOnDeleteConfirmation(String buttonName) {
+		return EditModelPageUtils.isButtonVisibleOnDeleteConfirmation(page, buttonName);
 	}
 }

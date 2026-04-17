@@ -1,6 +1,5 @@
 @LoginWithAdmin @Regression @DeleteTestCatalog
-Feature: Add all model types
-
+ Feature: Add all model types
   Scenario Outline: Create '<MODEL>' model and validate its SMSS properties
     Given User opens Main Menu
     When User clicks on Open Model
@@ -121,3 +120,4 @@ Feature: Add all model types
      
       #| Embedded | Orca  | General | Catalog Name, Model Name, Type, Completion Type | Credentials | Endpoint  | Settings | Max Completion Tokens, Record Questions and Responses, Keep Conversation History, Init Script | Catalog Name, Model Name, Type, Completion Type, Endpoint, Max Completion Tokens, Record Questions and Responses, Keep Conversation History | Catalog Name=Orca Model, Model Name=orca, Endpoint=https://www.google.com/, Max Completion Tokens=10, Record Questions and Responses=false, Keep Conversation History=false | Orca Model   | NAME=Orca Model, MODEL=orca, Type=Embedded, Completion Type=chat-completion, INIT_MODEL_ENGINE=import genai_client;${VAR_NAME}, KEEP_CONVERSATION_HISTORY=false, KEEP_INPUT_OUTPUT=false, CONTEXT_WINDOW=5000, MAX_TOKENS=10 |   
       #| Embedded      | Other Embedded Model               | General | Catalog Name, Model Name, Type, Completion Type      | Credentials | Endpoint                                         | Settings | Max Completion Tokens, Record Questions and Responses, Keep Conversation History, Init Script                              | Catalog Name, Model Name, Type, Completion Type, Endpoint, Max Completion Tokens, Record Questions and Responses, Keep Conversation History                                                                     | Catalog Name=Other Embedded Model, Model Name=otherembedded, Endpoint=https://www.google.com/, Max Completion Tokens=10, Record Questions and Responses=false, Keep Conversation History=false                                                                                                                         | Other Embedded Model              | NAME=Other Embedded Model, MODEL=otherembedded, TYPE=Embedded, CHAT_TYPE=chat-completion, INIT_MODEL_ENGINE=import genai_client;${VAR_NAME}, KEEP_CONVERSATION_HISTORY=false, KEEP_INPUT_OUTPUT=false, MAX_TOKENS=10                                                         |
+

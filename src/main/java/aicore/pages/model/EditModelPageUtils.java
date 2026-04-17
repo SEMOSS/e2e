@@ -42,6 +42,9 @@ public class EditModelPageUtils {
 	private static final String DATE_DISPLAYED_ON_CARD_XPATH = "//span[text()='{date}']";
 	private static final String ICONS_DISPLAYED_ON_CARD_XPATH = "//button[contains(@title,'{iconName}')]";
 	private static String catalogID;
+	private static final String DELETE_CONFIRMATION_MESSAGE_XPATH = "//div[@role='dialog']//p[text()='Are you sure you want to delete this engine?']";
+	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_NAME_XAPTH = "//span[text()='Engine Name:']/following-sibling::span";
+	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_ID_XAPTH = "//span[text()='Engine ID:']/following-sibling::span";
 
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
@@ -239,5 +242,34 @@ public class EditModelPageUtils {
 		}
 		AICorePageUtils.waitFor(iconLocator);
 		return iconLocator.isVisible();
+	}
+
+	public static void clickOnCatalogCardOption(Page page, String option) {
+		Locator optionLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(option)).first();
+		optionLocator.click();
+	}
+
+	public static String getDeleteConfirmationMessage(Page page) {
+		Locator deleteConfirmationMessage = page.locator(DELETE_CONFIRMATION_MESSAGE_XPATH);
+		return deleteConfirmationMessage.textContent().trim();
+	}
+
+	public static String getDeleteConfirmationEngineName(Page page) {
+		Locator deleteConfirmationEngineName = page.locator(DELETE_CONFIRMATION_POPUP_ENAGINE_NAME_XAPTH).first();
+		return deleteConfirmationEngineName.textContent().trim();
+	}
+
+	public static boolean isEngineIdVisibleOnDeleteConfirmation(Page page) {
+		Locator engineId = page.locator(DELETE_CONFIRMATION_POPUP_ENAGINE_ID_XAPTH);
+		if (!engineId.isVisible()) {
+			return false;
+		}
+		String actualEngineId = engineId.textContent().trim();
+		return actualEngineId.equals(catalogID);
+	}
+
+	public static boolean isButtonVisibleOnDeleteConfirmation(Page page, String buttonName) {
+		Locator buttonLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName));
+		return buttonLocator.isVisible();
 	}
 }

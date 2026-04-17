@@ -66,3 +66,18 @@ Feature: View existing Guardrail on Guardrail Catalog Page
       | bookmark            |
       | view logs dashboard |
       | delete              |
+
+  @LoginWithAdmin @Regression
+  Scenario: Delete guardrail catalog from dashboard and validate delete confirmation pop-up
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Guardrail
+    And User searches the 'Gliner guardrail' in the guardrail Catalog searchbox
+    When User clicks on 'Delete Engine' option from catalog card options
+    Then User should see a delete confirmation pop-up with message 'Are you sure you want to delete this engine?'
+    And User should see the Engine name as 'Gliner guardrail' on the delete confirmation pop-up for 'Guardrail' catalog
+    And User should see the Engine ID on the delete confirmation pop-up
+    And User sees the 'Cancel' button on the delete confirmation pop-up
+    And User sees the 'Delete' button on the delete confirmation pop-up
+    When User clicks on 'Delete' button
+    Then User can see a toast message as 'Successfully deleted Gliner guardrail' engine for 'Guardrail' catalog

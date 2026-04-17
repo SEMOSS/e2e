@@ -32,8 +32,8 @@ public class AppTemplatePage {
 		AppTemplatePageUtils.clickPreviewButton(page);
 	}
 
-	public void clickOnQuestionBlock() {
-		AppTemplatePageUtils.clickOnQuestionBlock(page);
+	public void clickOnQuestionBlock(String blockName) {
+		AppTemplatePageUtils.clickOnQuestionBlock(page, blockName);
 	}
 
 	public void addDescription(String description) {
