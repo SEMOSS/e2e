@@ -9,13 +9,13 @@ import com.microsoft.playwright.options.AriaRole;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
+import aicore.utils.page.app.BISystemAppUtils;
 
 public class BISystemAppPage {
 
 	private Page page;
 	private String timestamp;
 
-	private static final String WELCOME_POPUP_CLOSE_XPATH = "//div[@class='smss-overlay__wrapper__header__times']";
 
 	// App option
 	private static final String APP_OPTION_ID = "#home-nav__item--new-insight";
@@ -59,21 +59,7 @@ public class BISystemAppPage {
 	 * to handle errors
 	 */
 	public void closeWelcomePopup() {
-		// accepting browser cookies
-		try {
-			page.getByText("Accept").click();
-		} catch (Exception e) {
-		}
-
-		// welcome popup
-		try {
-			boolean popUp = page.locator(WELCOME_POPUP_CLOSE_XPATH).isVisible();
-			if (popUp) {
-				page.click(WELCOME_POPUP_CLOSE_XPATH);
-			}
-		} catch (Exception e) {
-			// no popup
-		}
+		BISystemAppUtils.closeWelcomePopup(page);
 	}
 
 	public void clickOnAppOption() {
@@ -88,7 +74,7 @@ public class BISystemAppPage {
 	}
 
 	public void clickOnCatalogOption() {
-		page.click(CATALOG_OPTION_ID);
+		BISystemAppUtils.clickOnCatalogOption(page);
 	}
 
 	public void clickOnAddDatabaseButton() {

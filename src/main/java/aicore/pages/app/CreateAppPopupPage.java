@@ -29,8 +29,8 @@ public class CreateAppPopupPage {
 		CreateAppPopupUtils.enterAppDescription(page, appDescription);
 	}
 
-	public void enterTags(String tagName) {
-		CreateAppPopupUtils.enterTags(page, tagName);
+	public void enterTags(String tags) {
+		CreateAppPopupUtils.enterTags(page, tags);
 	}
 
 	public void clickOnCreateButton() {
