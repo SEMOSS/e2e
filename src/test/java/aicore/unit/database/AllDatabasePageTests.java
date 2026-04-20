@@ -115,7 +115,7 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 			Assertions.assertTrue(isIconVisible, "Icon '" + icon + "' is not visible on the catalog card");
 		}
 	}
-
+	
 	//////////////// test filters
 	@ParameterizedTest(name = "{index} => {0} = {1}")
 	@MethodSource("filterData")
