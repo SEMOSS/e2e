@@ -1,0 +1,72 @@
+Feature: Add Function From Zip
+
+  Background: Create Function using ZIP file
+    Given User opens Main Menu
+    When User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
+    And User clicks on Add Function
+    And User clicks on file upload icon
+    And User uploads the file 'Function/weatherFunctionTest.zip'
+    And User clicks on 'Upload' button to create catalog
+    And User clicks on Copy Catalog ID
+    And User sees success toast message 'Successfully Created Function Database'
+    And User can see the Catalog title as 'WeatherFunctionTest'
+
+### TODO: THIS SCENARIO FAILS AND NEEDS TO BE FIXED IN JUNIT AS WELL
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate Change access popup
+    Given User can see the Catalog title as 'WeatherFunctionTest'
+    When 'Admin' user clicks on Settings
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    And User login as "Editor"
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    And User selects the 'WeatherFunctionTest' from the function catalog
+    And User click on the Change Access button
+    And User should see the "Change Access" popup with following options:
+      | Author         |
+      | Editor         |
+      | Read-Only      |
+      | Comment Box    |
+      | Cancel Button  |
+      | Request Button |
+    And User click on cancel button
+    And User logs out from the application
+    Then User login as "Admin"
+
+
+### TODO: THIS SCENARIO FAILS AND NEEDS TO BE FIXED IN JUNIT AS WELL
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate change access request
+    Given User can see the Catalog title as 'WeatherFunctionTest'
+    When 'Admin' user clicks on Settings
+    And User clicks on Add Member button
+    And User adds one user and assigns them as 'Editor'
+    And User logs out from the application
+    Then User login as "Editor"
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User searches the 'WeatherFunctionTest' in the function Catalog searchbox
+    And User selects the 'WeatherFunctionTest' from the function catalog
+    And User click on the Change Access button
+    And User selects 'author' access
+    And User types a comment as 'Access Request'
+    And User clicks on Request button
+    Then User should successfully request access and a toast message as 'Successfully requested access to engine'
+    And User logs out from the application
+    And User login as "Admin"
+
+### THIS SCENARIO HAS BEEN REDONE IN JUNIT
+#  @LoginWithAdmin
+#  Scenario Outline: Delete Function
+#    Given User can see the Catalog title as 'WeatherFunctionTest'
+#    And User clicks on Access Control Tab
+#    And User clicks on Delete button
+#    And User sees deleted function success toast message '<Toast_message>'
+#
+#    Examples: 
+#      | function_name       | Toast_message                 |
+#      | WeatherFunctionTest | Successfully deleted Function |
