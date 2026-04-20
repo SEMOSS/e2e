@@ -1,0 +1,85 @@
+package aicore.unit.function;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import aicore.hooks.SetupHooks;
+import aicore.pages.ViewFunctionPage;
+import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AbstractE2ETest;
+import aicore.utils.AddFunctionPageUtils;
+import aicore.utils.CatalogCreationFromZipUtil;
+import aicore.utils.CatlogAccessPageUtility;
+import aicore.utils.CommonUtils;
+import aicore.utils.FunctionTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
+
+public class ViewFunctionDetailsTests extends AbstractE2ETest {
+	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);
+	
+	@BeforeEach
+	void createFunctionUsingZip() {
+		logger.info("BEFORE ALL: creating function");
+		login(page, UserType.NATIVE);
+
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenFunction(page); 
+		// this checks & removes existing function that may collide with name
+		AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
+		AddFunctionPageUtils.clickOnAddFunctionButton(page);
+		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+		FunctionTestUtils.userUploadsFile(page, "Function/weatherFunctionTest.zip");
+		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
+		CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
+		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
+	}
+	
+	/*
+	 * Below scenario commented because the bug - https://github.com/SEMOSS/community/issues/587 
+	  
+	 
+    #Scenario: View overview details in "Overview" tab for selected Function
+    #Given User can see the Catalog title as 'WeatherFunctionTest'
+    #Then User can see 'WeatherFunctionTest' as function name
+    #And User can see function ID
+    #And User can see 'Please use the Edit button to provide a description for this Function. A description will help others find the Function and understand how to use it. To include more details associated with the Function, edit the markdown located in the Overview section.' as function description
+    #And User can see 'N/A' as Date last updated
+    #And User can see ' No Markdown available' Markup with Function overview in Overview tab at the bottom of the page.
+    #And User clicks on Access Control Tab
+    #And User clicks on Add Member button
+    #And User adds one user and assigns them as 'read'
+    #And User logs out from the application
+    #Then User login as "read"
+    #And User opens Main Menu
+    #And User clicks on Open Function
+    #And User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    #Then User sees 'Change Access' button
+    #And User logs out from the application
+    #Then User login as "native"
+    #And User opens Main Menu
+    #And User clicks on Open Function
+    #Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    #Then User clicks on the function name 'WeatherFunctionTest' in the function catalog
+	  
+	 
+	 * TODO: This test needs to be created as JUnit once the issue has been resolved
+	 */
+	
+	@Test
+	void testViewUsageDetailsInUsageTabForSelectedFunction() {
+		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
+		ViewFunctionPage viewFunction = new ViewFunctionPage(page);
+		viewFunction.clickUsageTab("Usage");
+		///TODO Failure needs to be investigated. Not clear why these instructions not found
+		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Javascript"));
+		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Python"));
+		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Java"));
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
+	}
+	
+}

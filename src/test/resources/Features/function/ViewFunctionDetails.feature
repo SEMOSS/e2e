@@ -36,6 +36,8 @@ Feature: View Function Details
     #Then User sees the function name 'WeatherFunctionTest' in the function catalog
     #Then User clicks on the function name 'WeatherFunctionTest' in the function catalog
 
+### TODO: this scenario passes but it does not actually verify that each instruction 
+### is visible. Need to fix that and adjust JUnit test accordingly before removing
   Scenario: View usage details in "Usage" tab for selected Function
     When User can see the Catalog title as 'WeatherFunctionTest'
     When User selects 'Usage' tab
