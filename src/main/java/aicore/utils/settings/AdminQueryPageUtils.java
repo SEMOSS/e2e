@@ -43,11 +43,15 @@ public class AdminQueryPageUtils {
 	}
 
 	public static int getTableHeaderCount(Page page) {
-		return page.locator(DATABASE_TABLE_HEADER_XPATH).count();
+		//TODO page is missing data-testid
+		Locator headers = page.locator("thead th");
+		return headers.count();
 	}
 
 	public static List<String> getTableHeaderNames(Page page) {
-		return page.locator(DATABASE_TABLE_HEADER_XPATH).allInnerTexts();
+		//TODO page is missing data-testid
+		Locator headers = page.locator("thead th");
+		return headers.allInnerTexts();
 	}
 
 	public static String verifyQueryExecutedToastMessage(Page page) {
