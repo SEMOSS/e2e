@@ -1,4 +1,4 @@
-@Regression @DeleteTestCatalog
+@Regression @DeleteTestCatalog @LoginWithAdmin
 Feature: Add Model
   Adding LLM to the catalog
 
@@ -37,7 +37,7 @@ Feature: Add Model
     When User clicks on Edit button
     And User add Tags 'embeddings' and presses Enter
     And User clicks on Submit button
-    #Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
+    Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see 'embeddings' on the page
 
   Scenario: View Existing Models in Model Catalog Page
@@ -59,7 +59,7 @@ Feature: Add Model
     And User selects '<DATA_CLASSIFICATION>' from the Data Classification dropdown
     And User selects '<DATA_RESTRICTIONS>' from the Data Restrictions dropdown
     And User clicks on Submit button
-    #Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
+    Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
     And User should see description as '<DESCRIPTION>' on the page
     And User should see '<TAGS>' on the page
     And User should see '<DETAILS>' in the overview Details section

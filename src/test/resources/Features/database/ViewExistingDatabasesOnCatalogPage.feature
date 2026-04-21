@@ -52,3 +52,35 @@ Feature: View existing databases on database catalog page
     And User sees the database name 'TestDatabase' in the database catalog
     When User mouse hover on Lock icon displayed on catalog card
     Then User can see engine access status as 'Global' on the tooltip
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate contents of created Database catalog card
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Open Database
+    And User searches the 'TestDatabase' in the database Catalog searchbox
+    And User sees the database name 'TestDatabase' in the database catalog
+    And User should see the catalog ID on the catalog card
+    And User should see the tags 'embeddings, Test1' on the 'Database' catalog card
+    And User should see the catalog created date on the catalog card
+    And User should see the following icons on the catalog card
+      | lock                |
+      | bookmark            |
+      | view logs dashboard |
+      | delete              |
+
+  @LoginWithAdmin @Regression
+  Scenario: Delete database catalog from dashboard and validate delete confirmation pop-up
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Open Database
+    And User searches the 'TestDatabase' in the database Catalog searchbox
+    And User sees the database name 'TestDatabase' in the database catalog
+    When User clicks on 'Delete Engine' option from catalog card options
+    Then User should see a delete confirmation pop-up with message 'Are you sure you want to delete this engine?'
+    And User should see the Engine name as 'TestDatabase' on the delete confirmation pop-up for 'Database' catalog
+    And User should see the Engine ID on the delete confirmation pop-up
+    And User sees the 'Cancel' button on the delete confirmation pop-up
+    And User sees the 'Delete' button on the delete confirmation pop-up
+    When User clicks on 'Delete' button
+    Then User can see a toast message as 'Successfully deleted TestDatabase' engine for 'Database' catalog

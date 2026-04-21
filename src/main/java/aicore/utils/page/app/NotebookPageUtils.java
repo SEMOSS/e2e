@@ -20,14 +20,12 @@ import aicore.utils.CommonUtils;
 public class NotebookPageUtils {
 
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
-	private static final String CREATE_NEW_NOTEBOOK_DATA_TESTID = "AddIcon";
 	private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
 	private static final String EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID = "EditIcon";
-	private static final String COLUMN_CHECKBOX_BY_NAME_XPATH = "//input[@id='checkbox-{columnName}-0']";
 	private static final String UPDATE_CELL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'MuiTable-root')]//tbody//tr[position()>1]//td[2]";
 	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
@@ -59,11 +57,9 @@ public class NotebookPageUtils {
 	private static final String FILTER_SELECT_DATABASE_BLOCK_XPATH = "//div[@title ='Select Database']";
 	private static final String QUERY_XPATH = "(//div[contains(@class,'view-line')]//div[contains(@class,'view-line')]//span//span)[1]";
 	private static final String ADD_VALUE_IN_FIELD_XPATH = "(//div[contains(@role,'dialog')]//div//div[contains(@data-block,'input--')]//label[contains(text(),'{fieldName}')]//..//div//input)[2]";
-	private static final String PROGRESS_BAR_IN_FIELD_XPATH = "(//label[contains(text(),'UNIQUE_ROW_ID')]/../div//div//span)[1]";
 	private static final String LOADING_ICON_XPATH = "(//span[@role=\"progressbar\"]/../p[contains(text(), \"Loading\")])[2]";
 	private static final String PROGRESS_BAR_READ_IN_FIELD_XPATH = "(//label[contains(text(),'Select Unique ID')]/../div//div//span)[1]";
 	private static final String READ_RECORD_XPATH = "//p[contains(text(),'[DIABETES_UNIQUE_ROW_ID] : {uniqueId}')]";
-//	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//button[@title='Open']//*[@data-testid='ArrowDropDownIcon']";
 	private static final String NOTEBOOK_SEARCH_XPATH = "//p[contains(text(),'Notebook')]//..//..//div//div//input[@placeholder='Search']";
 	private static final String DELETE_DIALOG_BOX_XPATH = "(//div[@role='dialog']//div//p)[1]";
 	private static final String DELETE_DIALOG_BOX_DELETE_BUTTON_XPATH = "(//div[@role='dialog']//div//button//span[text()='Delete'])[2]";

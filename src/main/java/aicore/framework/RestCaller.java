@@ -23,7 +23,6 @@ public class RestCaller {
 
 		HttpResponse response = rq.execute().returnResponse();
 		int code = response.getCode();
-		System.out.println(code);
 		assert code == 200;
 	}
 

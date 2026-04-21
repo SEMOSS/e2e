@@ -7,11 +7,11 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class VectorSettingPageUtils {
 
 	private static final String CATALOG_SEARCHBOX_PLACEHOLDER = "Search";
-	private static final String VECTOR_CARDS_XPATH = "//div[contains(@class,'MuiGrid-root MuiGrid-container')]";
+	private static final String VECTOR_CARDS_XPATH = "//div[@data-slot='card']";
 	private static final String VECTOR_NAME_XPATH = "//p[contains(text(),'{vectorName}')]";
 
 	public static void verifyVectorSettingTitle(Page page, String title) {
-		Locator titleLocator = page.locator("h4:has-text('" + title + "')");
+		Locator titleLocator = page.locator("h1:has-text('" + title + "')");
 		titleLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		if (!titleLocator.isVisible()) {
 			throw new AssertionError("Vector settings title '" + title + "' is not visible on the page.");

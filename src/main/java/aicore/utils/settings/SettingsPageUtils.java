@@ -11,7 +11,6 @@ public class SettingsPageUtils {
 
 	///// SETTING PAGE
 	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "//button[text()='Admin Off']";
-	private static final String ADMIN_BUTTON_OFF_XPATH = "//*[local-name()='svg'][contains(@class,'MuiSvgIcon-colorDisabled')]";
 	private static final String CARD_XPATH = "//div[text()='{cardName}']/parent::div[@data-slot='card-header']";
 	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin on']";
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
@@ -24,7 +23,7 @@ public class SettingsPageUtils {
 	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
 	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
 	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
-	private static final String TAB_XPATH = "//button[normalize-space()='{tabName}']";
+	private static final String TAB_XPATH = "//button[contains(normalize-space(),'{tabName}')]";
 	private static final String SECTION_DATA_TESTID = "engineLayout-{sectionName}-tab";
 
 	public static boolean checkAdminButton(Page page) {

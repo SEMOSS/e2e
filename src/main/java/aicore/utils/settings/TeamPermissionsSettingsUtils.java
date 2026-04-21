@@ -23,7 +23,6 @@ public class TeamPermissionsSettingsUtils {
 	private static final String DESCRIPTION_XPATH = "//label[text()='Description']/parent::div//textarea";
 	private static final String ADD_BUTTON_XPATH = "//button[text()='{buttonName}'] | //span[text()='{buttonName}']";
 	private static final String TEAM_BUTTON_XPATH = "//button[contains(text(), '{buttonName}')]";
-	private static final String LIST_MEMBER_XPATH = "//*[text()='{Member}']";
 	private static final String MEMBER_CARD_XPATH = "//div[contains(text(),'NATIVE ID:')]";
 	private static final String LIST_DROPDOWN_XPATH = "//input[contains(@placeholder,'Search')]/parent::div";
 	private static final String TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
@@ -34,8 +33,6 @@ public class TeamPermissionsSettingsUtils {
 	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//input[@placeholder='Search engines']";
 	private static final String SELECT_THE_APPS_DROPDOWN_XPATH = "//input[@placeholder='Search apps']";
 	private static final String CLICK_ON_ADD_CATALOG_TEXT = "{addCatalogName}";
-	private static final String ENGINE_ID_XPATH = "//p[contains(text(),'{EngineId}')]";
-	private static final String RADIO_XPATH = "//input[@type='radio' and @value='{radioIndex}']";
 	private static final String CLICK_ON_DELETE_ICON_DATATESTID = "//div[contains(text(),'NATIVE ID: {member}')]/ancestor::td/following-sibling::td//button";
 	private static final String CLICK_ON_CONFIRM_BUTTON_XPATH = "//button[text()='{confirm}']";
 	private static final String CHECK_THE_CHECKBOX_TO_SELECT_ALL_MEMBER_XPATH = "//th//button[@role='checkbox']";
@@ -43,7 +40,6 @@ public class TeamPermissionsSettingsUtils {
 	private static final String PAGE_NUMBER_XPATH = "//button[text()='<']//..//../div[contains(text(),'1')]";
 	private static final String PREV_BUTTON_XPATH = "//button[text()='<']";
 	private static final String NEXT_BUTTON_XPATH = "//button[text()='>']";
-	private static final String HEADINGS_XPATH = "//h2[text()='Add Members']";
 	private static final String CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_ENGINE_XPATH = "//div//h2[text()='Add Engines']/following::button[@role='checkbox']";
 	private static final String ADDED_CATALOG_WITH_ROLE_IS_ADDED_XPATH = "//td//div[text()='catalogName']/ancestor::tr//button[@dir='ltr']//span[text()='role']";
 	private static final String DELETE_ADDED_CATALOG_XPATH = "//tr[.//*[text()='{catalogName}'] and .//*[text()='{role}']]//td//button[@data-slot='button']";
@@ -95,7 +91,6 @@ public class TeamPermissionsSettingsUtils {
 	}
 
 	public static void selectMemberFromList(Page page, String role) {
-		String username = LastCreatedUser.getName();
 		// ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		Locator dropdownLocator = page.locator(LIST_DROPDOWN_XPATH);
 		AICorePageUtils.waitFor(dropdownLocator);

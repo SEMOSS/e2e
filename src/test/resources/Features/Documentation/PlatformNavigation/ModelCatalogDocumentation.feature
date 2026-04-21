@@ -65,7 +65,7 @@ Feature: Model Documentation
     And User completes screenshot capture and triggers comparison for 'Model Catalog'
 
   @LoginWithAdmin @SkipIfVersionMatch @Documentation
-  Scenario: Create Simple One or More Model and capture the screenshot for the AI CORE platform
+  Scenario: Create Simple One or More Model and capture the scr+eenshot for the AI CORE platform
     Given User captures documentation screenshot for 'SimpleModelInteraction'
     And User created '2' models with the 'OpenAI' model 'GPT-4.1', catalog name 'Model 1', OpenAI key 'Test123'
     And User created '2' models with the 'OpenAI' model 'GPT-5', catalog name 'Model 2', OpenAI key 'Test123'
@@ -95,7 +95,7 @@ Feature: Model Documentation
     Then User login as "editor"
     And User opens Main Menu
     And User clicks on Open Model
-    And User click on 'Discoverable Models' tab
+    And User click on 'Discoverable' tab
     And User searches the 'ModelGPT4o' in the model catalog searchbox
     And User selects the 'ModelGPT4o' from the model catalog
     Given User can see the Model title as 'ModelGPT4o'

@@ -263,9 +263,8 @@ public class AddModelSteps {
 
 	@Then("User should see the {string} on the model catalog page")
 	public void user_should_see_the_on_the_model_catalog_page(String modelName) throws InterruptedException {
-		openModelPage.searchModelCatalog(modelName + timestamp);
 		boolean isModelDisplayed = openModelPage.verifyModelIsDisplayedOnCatalogPage(modelName + timestamp);
-		Assertions.assertTrue(isModelDisplayed);
+		Assertions.assertTrue(isModelDisplayed, "Model is not displayed");
 	}
 
 	@And("User selects the {string} from the model catalog")
@@ -646,4 +645,103 @@ public class AddModelSteps {
 	public void user_clicks_on_make_public_button(String catalogName) {
 		openModelPage.clickOnMakeCatalogPublicButton(catalogName);
 	}
+
+	@Then("User should see the catalog ID on the catalog card")
+	public void User_should_see_the_catalog_ID_on_the_catalog_card() {
+		boolean isIdVisible = openModelPage.validateIDisDisplayedOnCatalogCard();
+		Assertions.assertTrue(isIdVisible, "Catalog ID is not visible on the catalog card");
+	}
+
+	@Then("User should see the tags {string} on the {string} catalog card")
+	public void User_should_see_the_tags_on_the_catalog_card(String expectedTags, String catalogName) {
+		String[] tagArray = expectedTags.split(", ");
+		List<String> actualTagList = openModelPage.verifyTagNamesDisplayedOnCard(catalogName);
+		List<String> expectedTagList = Arrays.asList(tagArray);
+		Assertions.assertEquals(expectedTagList, actualTagList);
+	}
+
+	@Then("User should see the catalog created date on the catalog card")
+	public void User_should_see_the_catalog_created_date_on_the_catalog_card() {
+		boolean isCreatedDateVisible = openModelPage.isCreatedDateVisibleOnCard();
+		Assertions.assertTrue(isCreatedDateVisible, "Catalog created date is not visible on the catalog card");
+	}
+
+	@Then("User should see the following icons on the catalog card")
+	public void User_should_see_the_following_icons_on_the_catalog_card(DataTable dataTable) {
+		List<String> icons = dataTable.asList(String.class);
+		for (String icon : icons) {
+			boolean isIconVisible = openModelPage.isIconVisibleOnCatalogCard(icon);
+			Assertions.assertTrue(isIconVisible, "Icon '" + icon + "' is not visible on the catalog card");
+		}
+	}
+
+	@When("User get the catalog ID")
+	public void User_get_the_catalog_ID() {
+		String id = openModelPage.getCatalogID();
+		Assertions.assertNotNull(id, "Catalog ID should not be null");
+	}
+
+	@And("User clicks on {string} option from catalog card options")
+	public void user_clicks_on_option_from_catalog_card_options(String option) {
+		openModelPage.clickOnCatalogCardOption(option);
+	}
+
+	@And("User should see a delete confirmation pop-up with message {string}")
+	public void user_should_see_a_delete_confirmation_pop_up_with_message(String expectedMessage) {
+		String actualMessage = openModelPage.getDeleteConfirmationMessage();
+		Assertions.assertEquals(expectedMessage, actualMessage, "Incorrect confirmation message");
+	}
+
+	@And("User should see the Engine name as {string} on the delete confirmation pop-up for {string} catalog")
+	public void user_should_see_the_engine_name_as_on_the_delete_confirmation_pop_up(String expectedEngineName,
+			String catalogType) {
+		String actualEngineName = openModelPage.getDeleteConfirmationEngineName();
+		boolean needsTimestamp;
+		switch (catalogType.toLowerCase()) {
+		case "database":
+		case "function":
+			needsTimestamp = false;
+			break;
+		default:
+			needsTimestamp = true;
+		}
+		if (needsTimestamp) {
+			Assertions.assertEquals(expectedEngineName + timestamp, actualEngineName, "Incorrect engine name");
+		} else {
+			Assertions.assertEquals(expectedEngineName, actualEngineName, "Incorrect engine name");
+		}
+	}
+
+	@And("User should see the Engine ID on the delete confirmation pop-up")
+	public void user_should_see_the_engine_id_on_the_delete_confirmation_pop_up() {
+		Boolean isEngineIdVisible = openModelPage.isEngineIdVisibleOnDeleteConfirmation();
+		Assertions.assertTrue(isEngineIdVisible, "Engine ID is not visible on the delete confirmation pop-up");
+	}
+
+	@And("User sees the {string} button on the delete confirmation pop-up")
+	public void user_sees_the_button_on_the_delete_confirmation_pop_up(String expectedButton) {
+		boolean isButtonVisible = openModelPage.isButtonVisibleOnDeleteConfirmation(expectedButton);
+		Assertions.assertTrue(isButtonVisible,
+				"Button '" + expectedButton + "' is not visible on the delete confirmation pop-up");
+	}
+
+	@And("User can see a toast message as {string} engine for {string} catalog")
+	public void then_user_can_see_a_toast_message_as_catalog(String expectedToastMessage, String catalogType) {
+		String actualMessage = openModelPage.verifyDeleteToastMessage();
+		boolean needsTimestamp;
+		switch (catalogType.toLowerCase()) {
+		case "database":
+		case "function":
+			needsTimestamp = false;
+			break;
+		default:
+			needsTimestamp = true;
+		}
+		if (needsTimestamp) {
+			Assertions.assertEquals(expectedToastMessage + timestamp, actualMessage, "Delete message doesn't match");
+		} else {
+			Assertions.assertEquals(expectedToastMessage, actualMessage, "Delete message doesn't match");
+		}
+	}
+
 }

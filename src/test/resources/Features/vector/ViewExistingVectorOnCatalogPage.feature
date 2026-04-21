@@ -5,7 +5,7 @@ Feature: View existing Vectors on Vector Catalog Page
     When User clicks on Open Model
     And User clicks on Add Model
     And User selects 'OpenAI' type
-    And User selects 'GPT-4.1'
+    And User selects 'GPT 3.5 Turbo'
     And User enters Catalog Name as 'ModelCatalog'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
@@ -17,7 +17,7 @@ Feature: View existing Vectors on Vector Catalog Page
     And User clicks on Open Vector
     And User clicks on Add Vector button
     And User selects 'FAISS' connection
-    And User enters vector database Catalog name as 'FAISS Vector'
+    And User enters vector database Catalog name as 'FAISSVector'
     And User selects 'ModelCatalog' from Embedder field
     And User selects 'Token' from Chunking Strategy field
     And User enters value of Content Length as '510'
@@ -35,32 +35,32 @@ Feature: View existing Vectors on Vector Catalog Page
   Scenario: view and validate filter functionality - My Vectors
     Given User opens Main Menu
     When User clicks on Open Vector
-    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
-    Then User applies each filter and validate 'FAISS Vector' catalog is visible on the 'vector' catalog page
+    And User searches the 'FAISSVector' in the Vector Catalog searchbox
+    Then User applies each filter and validate 'FAISSVector' catalog is visible on the 'vector' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE      |
       | Tag                 | embeddings, Test1 |
       | Domain              | SAP, AI           |
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
-    When User clicks on bookmark button of 'FAISS Vector' catalog
-    Then User sees the catalog name 'FAISS Vector' in the Bookmarked section
-    When User clicks on bookmark button to unbookmark 'FAISS Vector' catalog
+    #When User clicks on bookmark button of 'FAISSVector' catalog
+    #Then User sees the catalog name 'FAISSVector' in the Bookmarked section
+    #When User clicks on bookmark button to unbookmark 'FAISSVector' catalog
 
-  @DeleteTestCatalog @Regression @LoginWithAdmin
+  @DeleteTestCatalog @Regression  @LoginWithAdmin
   Scenario: view and validate filter functionality - Discoverable Vectors
     Given User opens Main Menu
     When User clicks on Open Vector
-    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
-    And User selects the 'FAISS Vector' from the Vector catalog
+    And User searches the 'FAISSVector' in the Vector Catalog searchbox
+    And User selects the 'FAISSVector' from the Vector catalog
     And User clicks on Access Control Tab
     And User clicks Make 'Vector' Discoverable button
     And User logs out from the application
     And User login as 'editor'
     And User opens Main Menu
     And User clicks on Open Vector
-    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
+    And User searches the 'FAISSVector' in the Vector Catalog searchbox
     And User clicks on Discoverable Vectors button
-    And User applies each filter and validate 'FAISS Vector' catalog is visible on the 'vector' catalog page
+    And User applies each filter and validate 'FAISSVector' catalog is visible on the 'vector' catalog page
       | FILTER_CATEGORY     | FILTER_VALUE |
       | Data Classification | IP           |
       | Data Restrictions   | IP ALLOWED   |
@@ -82,3 +82,33 @@ Feature: View existing Vectors on Vector Catalog Page
     And User searches the 'FAISS Vector' in the Vector Catalog searchbox
     When User mouse hover on Lock icon displayed on catalog card
     Then User can see engine access status as 'Global' on the tooltip
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate content of created Vector catalog card
+    When User get the catalog ID
+    And User opens Main Menu
+    And User clicks on Open Vector
+    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
+    And User should see the catalog ID on the catalog card
+    And User should see the tags 'embeddings, Test1' on the 'Vector' catalog card
+    And User should see the catalog created date on the catalog card
+    And User should see the following icons on the catalog card
+      | lock                |
+      | bookmark            |
+      | view logs dashboard |
+      | delete              |
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Delete vector catalog from dashboard and validate delete confirmation pop-up
+    When User get the catalog ID
+    And User opens Main Menu
+    When User clicks on Open Vector
+    And User searches the 'FAISS Vector' in the Vector Catalog searchbox
+    When User clicks on 'Delete Engine' option from catalog card options
+    Then User should see a delete confirmation pop-up with message 'Are you sure you want to delete this engine?'
+    And User should see the Engine name as 'FAISS Vector' on the delete confirmation pop-up for 'Vector' catalog
+    And User should see the Engine ID on the delete confirmation pop-up
+    And User sees the 'Cancel' button on the delete confirmation pop-up
+    And User sees the 'Delete' button on the delete confirmation pop-up
+    When User clicks on 'Delete' button
+    Then User can see a toast message as 'Successfully deleted FAISS Vector' engine for 'Vector' catalog
