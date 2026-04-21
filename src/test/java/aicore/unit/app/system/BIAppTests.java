@@ -1,13 +1,22 @@
 package aicore.unit.app.system;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.steps.BICreateDatabaseAndInsightSteps;
+import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
 import aicore.utils.page.app.AppPageUtils;
@@ -16,7 +25,14 @@ import aicore.utils.page.app.CreateAppPopupUtils;
 
 public class BIAppTests extends AbstractE2ETest {
 	private static String appName = "Test app";
+	private static String databaseName = "DB created from CSV";
+	private static String insightName = "Test Automation";
 	private static String timestamp = CommonUtils.getTimeStampName();
+	
+	private static String expectedDBToastMessage = "Success";
+	private static String expectedInsightToastMessage = "Successfully saved insight(s)";
+
+	private static final Logger logger = LogManager.getLogger(BIAppTests.class);
 
 
 	@Test
@@ -43,13 +59,36 @@ public class BIAppTests extends AbstractE2ETest {
 		HomePageUtils.clickOnBIApp(page);
 		BISystemAppUtils.closeWelcomePopup(page);
 		BISystemAppUtils.clickOnCatalogOption(page);
-
-
+		BISystemAppUtils.clickOnAddDatabaseButton(page);
+		BISystemAppUtils.enterDatabaseName(page, databaseName, timestamp);
+		BISystemAppUtils.uploadCSVFile(page);
+		AICorePageUtils.clickOnButton(page, "Next");
+		AICorePageUtils.clickOnButton(page, "Import");
+		
+		// TODO toast disappears quickly need a better way to validate
+		String actualDBToastMessage = BISystemAppUtils.verifyDBCreatedToastMessage(page);
+		assertEquals(expectedDBToastMessage, actualDBToastMessage, "Database creation failed");
+		logger.info("the success toast is quick skipping for now");
+		
+		// create an insight from the newly created database
+		BISystemAppUtils.clickOnAppOption(page);
+		BISystemAppUtils.searchDatabaseName(page, databaseName, timestamp);
+		BISystemAppUtils.clickOnAddAllOption(page);
+		BISystemAppUtils.clickOnImportButtonOfSelectedColumns(page);
+		BISystemAppUtils.mouseHoverOnDatabaseFrame(page);
+		BISystemAppUtils.clickOnVisualizeDataOption(page);
+		BISystemAppUtils.clickOnWorkspaceSaveButton(page);
+		BISystemAppUtils.enterInsightName(page, insightName, timestamp);
+		BISystemAppUtils.selectProjectName(page, appName, timestamp);
+		
+		String actualInsightToastMessage = BISystemAppUtils.verifySavedInsightSuccessMsg(page);
+		assertEquals(actualInsightToastMessage, expectedInsightToastMessage, "Insights creation failed");
+		
 	}
 	
 	@AfterAll
 	public static void cleanUp() {
-		CommonUtils.navigateAndDeleteApp(page, appName + " "+timestamp);
+		CommonUtils.navigateAndDeleteApp(page, appName + " " + timestamp);
 	}
 
 }
