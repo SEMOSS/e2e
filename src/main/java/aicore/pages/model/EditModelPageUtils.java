@@ -202,7 +202,11 @@ public class EditModelPageUtils {
 	}
 
 	public static boolean validateIDisDisplayedOnCatalogCard(Page page) {
-		Locator modelID = page.locator(CATALOG_ID_ON_CARD_XPATH.replace("{modelId}", catalogID));
+		return validateIDisDisplayedOnCatalogCard(page, catalogID);
+	}
+
+	public static boolean validateIDisDisplayedOnCatalogCard(Page page, String catalogId) {
+		Locator modelID = page.locator(CATALOG_ID_ON_CARD_XPATH.replace("{modelId}", catalogId));
 		return modelID.isVisible();
 	}
 

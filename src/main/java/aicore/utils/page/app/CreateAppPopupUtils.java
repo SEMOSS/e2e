@@ -52,10 +52,18 @@ public class CreateAppPopupUtils {
 		page.locator(DESCRIPTION_TEXTBOX_XPATH).fill(appDescription);
 	}
 
-	public static void enterTags(Page page, String tagName) {
-		page.locator(TAG_TEXTBOX_XPATH).fill(tagName);
+	public static void enterTags(Page page, String tags) {
+		String[] tagsArray = tags.split(", ");
+		for (String tag : tagsArray) {
+			enterTag(page, tag);
+		}
+	}
+	
+	public static void enterTag(Page page, String tag) {
+		page.locator(TAG_TEXTBOX_XPATH).fill(tag);
 		page.keyboard().press("Enter");
 	}
+
 
 	public static void clickOnCreateButton(Page page) {
 		page.locator(CREATE_BUTTON_XPATH).click();

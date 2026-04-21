@@ -304,9 +304,6 @@ public class AddModelPage {
 		return SettingsModelPageUtils.verifyModelOptionIsVisible(page, modelOption);
 	}
 
-	public boolean verifyTileIsVisible(String tileName) {
-		return SettingsModelPageUtils.verifyTileIsVisible(page, tileName);
-	}
 
 	public void clickOnSearchBox(String string) {
 		SettingsModelPageUtils.clickOnSearchBox(page, string);

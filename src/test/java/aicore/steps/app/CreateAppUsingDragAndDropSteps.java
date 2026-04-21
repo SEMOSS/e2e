@@ -19,6 +19,7 @@ import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.page.app.CreateAppPopupUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -110,10 +111,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User enters tags {string} and presses Enter")
 	public void user_enters_tags_and_presses_enter(String tags) {
-		String[] tagsArray = tags.split(", ");
-		for (String tag : tagsArray) {
-			appCreatePopup.enterTags(tag);
-		}
+			appCreatePopup.enterTags(tags);
 	}
 
 	@And("User add {string} app with details {string} {string} {string} {string}")

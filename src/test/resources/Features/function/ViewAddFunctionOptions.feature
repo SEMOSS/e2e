@@ -1,6 +1,7 @@
 @Regression
 Feature: View add function page
 
+### TODO: THIS FEATURE FILE FAILS. STILL NEEDS TO BE TRANSFERRED TO JUNIT FILE ONCE FIXED
   Scenario: Verify the available options on add function page
     Given User opens Main Menu
     When User clicks on Open Function

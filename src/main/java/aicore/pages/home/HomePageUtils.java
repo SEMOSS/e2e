@@ -24,7 +24,7 @@ public class HomePageUtils {
 	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
 
 	// build page options
-	private static final String BUILD_BUTTON_XPATH = "//button[@value='build']";
+	private static final String BUILD_BUTTON_XPATH = "//button[@value='Build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
 	private static final String BUILD_PAGE_BUTTON = "//div[text()='{cardName}']/parent::div/following-sibling::div//button//span[text()='{buttonName}']";
 	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//a[text()='Browse Templates']";
@@ -85,12 +85,12 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnBuildButton(Page page) {
-		Locator BuildButton = page.locator(BUILD_BUTTON_XPATH);
-		AICorePageUtils.waitFor(BuildButton);
-		if (!BuildButton.isVisible()) {
+		Locator btn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Build"));
+		AICorePageUtils.waitFor(btn);
+		if (!btn.isVisible()) {
 			throw new RuntimeException("Build button is not visible");
 		} else {
-			BuildButton.click();
+			btn.click();
 		}
 	}
 

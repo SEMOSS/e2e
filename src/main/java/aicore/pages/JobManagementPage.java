@@ -14,24 +14,12 @@ public class JobManagementPage {
 		this.timestamp = timestamp;
 	}
 
-	public void clickOnJobTile() {
-		JobPageUtils.clickOnJobTile(page);
-	}
-
 	public void clickOnAddJobButton() {
 		JobPageUtils.clickOnAddJobButton(page);
 	}
 
-	public void clickAddButton() {
-		JobPageUtils.clickAddButton(page);
-	}
-
 	public void clickEditIcon(String jobTitle) {
 		JobPageUtils.clickEditIcon(page, jobTitle + " " + timestamp);
-	}
-
-	public void clickSaveButton() {
-		JobPageUtils.clickSaveButton(page);
 	}
 
 	public void clickDeleteIcon(String jobTitle) throws InterruptedException {
@@ -50,10 +38,6 @@ public class JobManagementPage {
 		JobPageUtils.clickCheckBox(page, jobTitle + " " + timestamp);
 	}
 
-	public void clickResumeButton() {
-		JobPageUtils.clickResumeButton(page);
-	}
-
 	public void fillName(String value) {
 		JobPageUtils.fillName(page, value);
 	}
@@ -70,20 +54,12 @@ public class JobManagementPage {
 		JobPageUtils.editPixel(page, value);
 	}
 
-	public String jobDeletionToastMessage() {
-		return JobPageUtils.jobDeletionToastMessage(page);
-	}
-
 	public boolean isJobStopped(String jobName) {
 		return JobPageUtils.isJobStopped(page, jobName + " " + timestamp);
 	}
 
 	public boolean isCheckboxSelected(String jobName) {
 		return JobPageUtils.isCheckboxSelected(page, jobName + " " + timestamp);
-	}
-
-	public boolean isPauseButtonReverted() {
-		return JobPageUtils.isPauseButtonReverted(page);
 	}
 
 	public boolean isResumeButtonReverted() {

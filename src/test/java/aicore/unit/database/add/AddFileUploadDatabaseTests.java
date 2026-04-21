@@ -1,47 +1,40 @@
-package aicore.unit.database;
+package aicore.unit.database.add;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
+import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 
-public class AddFileUploadDatabaseTests {
+public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 
+	@BeforeEach
+	public void setup() throws IOException {
+		login(page, UserType.NATIVE);
+		MainMenuUtils.openMainMenu(SetupHooks.getPage());
+		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+
+		// testing add file upload db
+		AddDatabaseFormUtils.clickAddDatabaseButton(page);
+		String tabName = "file uploads";
+		AddDatabaseFileUploadUtils.selectTab(page, tabName);
+	}
 	////////////////// UPLOAD as flat table
 
 	@Test
 	public void testAddExcelFlatTable() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "Excel";
 		String dbName = "Excel db" + timestamp;
 		String dbType = "h2";
@@ -69,22 +62,7 @@ public class AddFileUploadDatabaseTests {
 
 	@Test
 	public void testAddCSVFlatTable() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
 		String dbType = "h2";
@@ -112,22 +90,7 @@ public class AddFileUploadDatabaseTests {
 
 	@Test
 	public void testAddTSVFlatTable() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
 		String dbType = "h2";
@@ -157,22 +120,7 @@ public class AddFileUploadDatabaseTests {
 
 	@Test
 	public void testAddCSVFromScratch() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
 		String dbType = "h2";
@@ -200,22 +148,7 @@ public class AddFileUploadDatabaseTests {
 
 	@Test
 	public void testAddTSVFromScratch() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
 		String dbType = "h2";
@@ -244,22 +177,7 @@ public class AddFileUploadDatabaseTests {
 	//////////////// SUGGESTED METAMODEL
 	@Test
 	public void testAddTSVSuggestedMetamodel() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
 		String dbType = "h2";
@@ -288,22 +206,7 @@ public class AddFileUploadDatabaseTests {
 
 	@Test
 	public void testAddCSVSuggestedMetamodel() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
 		String dbType = "h2";
@@ -334,22 +237,7 @@ public class AddFileUploadDatabaseTests {
 
 	@Test
 	public void testAddTSVSuggestedMetamodelEditRelationship() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
 		String dbType = "h2";
@@ -391,22 +279,7 @@ public class AddFileUploadDatabaseTests {
 	/////////////////// Upload multiple files
 	@Test
 	public void testAddMultiCSVFromScratch() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
 		String dbType = "h2";
@@ -445,22 +318,7 @@ public class AddFileUploadDatabaseTests {
 
 	@Test
 	public void testAddMultiTSVFromScratch() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
-
 		String timestamp = CommonUtils.getTimeStampName();
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
 		String dbType = "h2";

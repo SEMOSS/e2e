@@ -2,6 +2,7 @@ package aicore.utils;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,12 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.CatalogCreationFromZipPage;
+import aicore.pages.AbstractAddCatalogPageBase;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
+import aicore.pages.model.EditModelPageUtils;
+import aicore.utils.page.app.CodeAppPageUtils;
+import io.cucumber.datatable.DataTable;
 
 public class FunctionTestUtils {
 	public static void verifyFunctionCreationFormWithSelectFields(Page page, List<Map<String, String>> formFields){
@@ -104,9 +108,15 @@ public class FunctionTestUtils {
 		}
 	}
 	
-	public static void userCanSeeCatalogTitle(Page page, String dbName) {
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
+	public static void userCanSeeCatalogTitle(Page page, String functionName) {
+		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, functionName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+	}
+	
+	public static void verifyUserSeesFunctionInCatalog(Page page, String functionName, String timestamp) {
+		String expectedFunctionName = AddFunctionPageUtils.verifyFunctionNameInCatalog(page, functionName, timestamp);
+		functionName = functionName.replace("{Timestamp}", " " + timestamp);
+		Assertions.assertEquals(functionName, expectedFunctionName, "Function is not present in the function catalog");
 	}
 	
 	public static void userSearchesForAndLocatesFunction(Page page, String catalogName) {
@@ -122,5 +132,120 @@ public class FunctionTestUtils {
 			Assertions.assertTrue(RequestAccessPopupUtils.isOptionVisible(SetupHooks.getPage(), option),
 					option + " is not visible in Change Access popup");
 		}
+	}
+	
+	public static void verifyUserCanSeeFolder(Page page, String folderName) {
+		CodeAppPageUtils.userCanSeeFolder(page, folderName);
+		boolean isFolderVisible = CodeAppPageUtils.userCanSeeFolder(page, folderName);
+		Assertions.assertTrue(isFolderVisible, "Default folder is not visible");
+	}
+	
+	public static void verifyUserCanSeeFile(Page page, String fileName) {
+		CodeAppPageUtils.userCanSeeFile(page, fileName);
+		boolean isFileVisible = CodeAppPageUtils.userCanSeeFile(page, fileName);
+		Assertions.assertTrue(isFileVisible, "Default file is not visible");
+	}
+	
+	public static void validateSearchBar(Page page) {
+		boolean isSearchBarVisible = AddCatalogPageBaseUtils.isSearchBarPresent(page);
+		Assertions.assertTrue(isSearchBarVisible, "Search bar not visible");
+	}
+
+	public static void verifyOptionsWithIconsOnConnectToFunctionPage(Page page, String optionsStr) {
+		List<String> optionsList = List.of(optionsStr.split(", "));
+		final String sectionName = "Functions";
+
+		boolean isSectionVisible = AddCatalogPageBaseUtils.verifySectionIsVisible(page, "function", sectionName);
+		Assertions.assertTrue(isSectionVisible, sectionName + " section not visible");
+		for (String option : optionsList) {
+			// Verify option is visible
+			boolean isOptionVisible = AddCatalogPageBaseUtils.verifyOptionIsVisible(page, "function", sectionName, option);
+			Assertions.assertTrue(isOptionVisible, option + " option not visible");
+			// Verify icon is visible
+			Locator icon = AddCatalogPageBaseUtils.getIconByLabel(page, "function", sectionName, option);
+			icon.waitFor();
+			boolean isIconVisible = AddCatalogPageBaseUtils.isIconVisible(page, "function", sectionName, option);
+			Assertions.assertTrue(isIconVisible, option + " icon is not visible");
+			// verify icon is not broken
+			String iconUrl = icon.getAttribute("src");
+			// for 'Local File System' storage & 'FAISS' vector options getting broken image
+			if (isIconVisible && !option.matches(".*(Local File System||FAISS).*")) {
+				boolean isIconValid = CommonUtils.isIconValid(iconUrl);
+				Assertions.assertTrue(isIconValid, option + " icon src is broken: " + iconUrl);
+			}
+		}
+	}
+	
+	public static void validateFunctionFilters(Page page, String catalogName, String filterCategoryName, String filterValues) {
+//		for (Map<String, String> row : rows) {
+//			row.get(filterCategoryName);
+//			String filterValues = row.get(filterValueName);
+
+			String[] filterValuesArray = filterValues.split(", ");
+			for (String filterValue : filterValuesArray) {
+				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
+				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
+				boolean isCatalogVisible = CatalogFilterPageUtils.verifyCatalogIsVisibleOnCatalogPage(page, catalogName);
+				Assertions.assertTrue(isCatalogVisible, "Catalog is not present for " + "'" + filterValue + "'" + " filter value");
+				// To de-select selected filter we again call this method
+				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
+
+			}
+//		}
+	}
+	
+	public static void userSeesFunctionStatusOnTooltip(Page page, String expectedStatus) {
+		String actualStatus = EditModelPageUtils.getEngineAccessStatusTooltipText(page, expectedStatus);
+		Assertions.assertEquals(expectedStatus, actualStatus, "Incorrect status");
+	}
+	
+	public static void userGetsCatalogID(Page page) {
+		String id = EditModelPageUtils.getCatalogID(page);
+		Assertions.assertNotNull(id, "Catalog ID should not be null");
+	}
+	
+	public static void userShouldSeeCatalogID(Page page) {
+		boolean isIdVisible = EditModelPageUtils.validateIDisDisplayedOnCatalogCard(page);
+		Assertions.assertTrue(isIdVisible, "Catalog ID is not visible on the catalog card");
+	}
+	
+	public static void verifyUserSeesTagsOnCard(Page page, String expectedTags, String catalogName) {
+		String[] tagArray = expectedTags.split(", ");
+		List<String> actualTagList = EditModelPageUtils.verifyTagNamesDisplayedOnCard(page, catalogName);//openModelPage.verifyTagNamesDisplayedOnCard(catalogName);
+		List<String> expectedTagList = Arrays.asList(tagArray);
+		Assertions.assertEquals(expectedTagList, actualTagList);
+	}
+	
+	public static void verifyUserSeesCreatedDateOnCatalogCard(Page page) {
+		boolean isCreatedDateVisible = EditModelPageUtils.isCreatedDateVisibleOnCard(page);
+		Assertions.assertTrue(isCreatedDateVisible, "Catalog created date is not visible on the catalog card");
+	}
+	
+	public static void verifyUsersSeesIconsOnContentCard(Page page, String iconsStr) {
+		String[] icons = iconsStr.split(",");
+		for (String icon : icons) {
+			boolean isIconVisible = EditModelPageUtils.isIconVisibleOnCatalogCard(page, icon.trim());//openModelPage.isIconVisibleOnCatalogCard(icon.trim());
+			Assertions.assertTrue(isIconVisible, "Icon '" + icon + "' is not visible on the catalog card");
+		}
+	}
+	
+	public static void verifyUserSeesDeleteConfirmationPopupWithMessage(Page page, String expectedMessage) {
+		String actualMessage = EditModelPageUtils.getDeleteConfirmationMessage(page);
+		Assertions.assertEquals(expectedMessage, actualMessage, "Incorrect confirmation message");
+	}
+	
+	public static void verifyFunctionNameIsOnDeletionConfirmationPopup(Page page, String expectedEngineName) {
+		String actualEngineName = EditModelPageUtils.getDeleteConfirmationEngineName(page);
+		Assertions.assertEquals(expectedEngineName, actualEngineName, "Incorrect engine name");
+	}
+	
+	public static void verifyUsersSeesEngineIdOnDeleteConfirmationPopup(Page page) {
+		Boolean isEngineIdVisible = EditModelPageUtils.isEngineIdVisibleOnDeleteConfirmation(page);
+		Assertions.assertTrue(isEngineIdVisible, "Engine ID is not visible on the delete confirmation pop-up");
+	}
+	
+	public static void verifUserSeesButtonOnDeleteConfirmationPopup(Page page, String expectedButton) {
+		boolean isButtonVisible = EditModelPageUtils.isButtonVisibleOnDeleteConfirmation(page, expectedButton);
+		Assertions.assertTrue(isButtonVisible, "Button '" + expectedButton + "' is not visible on the delete confirmation pop-up");
 	}
 }

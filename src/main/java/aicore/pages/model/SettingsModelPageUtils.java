@@ -41,7 +41,7 @@ public class SettingsModelPageUtils {
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String SEARCH_BOX_DATATESTID = "settingsIndexPage-searchBar";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
-	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
+	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-Database-public-private-switch";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -152,6 +152,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnAddMembersButton(Page page) {
+		//TODO datatest id is missing
 		page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).first().click();
 	}
 
@@ -241,6 +242,6 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnMakeCatalogPublicButton(Page page, String catalogName) {
-		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
+		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID).click();
 	}
 }
