@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.JobManagementPage;
+import aicore.utils.settings.JobPageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -25,7 +26,7 @@ public class JobManagementSteps {
 
 	@And("User clicks on Jobs")
 	public void user_clicks_on_jobs() {
-		jobManagementPage.clickOnJobTile();
+		JobPageUtils.clickOnJobTile(SetupHooks.getPage());
 	}
 
 	@And("User clicks on Add Job button")
@@ -45,7 +46,7 @@ public class JobManagementSteps {
 
 	@And("User clicks Add button")
 	public void user_clicks_add_button() {
-		jobManagementPage.clickAddButton();
+		JobPageUtils.clickAddButton(SetupHooks.getPage());
 	}
 
 	@Then("User can see {string} in the {string} section list")
@@ -68,12 +69,11 @@ public class JobManagementSteps {
 	@And("User edit Pixels as {string}")
 	public void user_edit_pixels_as(String string) {
 		jobManagementPage.editPixel(string);
-
 	}
 
 	@And("User clicks Save button")
 	public void user_clicks_save_button() {
-		jobManagementPage.clickSaveButton();
+		JobPageUtils.clickSaveButton(SetupHooks.getPage());
 	}
 
 	@Then("User can see {string} value as Tag for edited {string}")
@@ -89,7 +89,7 @@ public class JobManagementSteps {
 
 	@Then("User sees delete job toast message as {string}")
 	public void user_sees_delete_job_toast_message_as(String toastMessage) {
-		String actualMessage = jobManagementPage.jobDeletionToastMessage();
+		String actualMessage = JobPageUtils.jobDeletionToastMessage(SetupHooks.getPage());
 		Assertions.assertEquals(actualMessage, toastMessage, "Job deletion failed");
 	}
 
@@ -127,13 +127,13 @@ public class JobManagementSteps {
 
 	@Then("the green Pause button should revert to its default state")
 	public void green_pause_revert_default() {
-		boolean isReverted = jobManagementPage.isPauseButtonReverted();
+		boolean isReverted = JobPageUtils.isPauseButtonReverted(SetupHooks.getPage());
 		assertTrue(isReverted, "The button is not reverted: " + isReverted);
 	}
 
 	@When("User clicks the Resume button")
 	public void user_clicks_the_resume_button() {
-		jobManagementPage.clickResumeButton();
+		JobPageUtils.clickResumeButton(SetupHooks.getPage());
 	}
 
 	@Then("the Resume button should revert to its default state")

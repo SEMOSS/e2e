@@ -11,7 +11,6 @@ import aicore.utils.AICorePageUtils;
 public class JobPageUtils {
 
 	private static final String JOBS_TILE_DATATESTID = "settingsIndexPage-Jobs-card";
-	private static final String NAME_XPATH = "//label[text()='Name']/parent::div/div/input";
 	private static final String PIXEL_XPATH = "//label[text()='Pixel']/parent::div/div/textarea[@aria-invalid=\"false\"]";
 	private static final String JOB_LIST_XPATH = "//button[text()='{sectionName}' and @aria-selected='true']/ancestor::div/following-sibling::div//div[@title='{jobName}']";
 	private static final String EDIT_ICON_XPATH = "//div[@role='row']//div[@title='{jobName}']/ancestor::div[@role='row']//button[@data-testid='jobsTable-edit-btn']";
@@ -63,7 +62,7 @@ public class JobPageUtils {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
 	}
 
-	public static void clickDeleteIcon(Page page, String jobTitle) throws InterruptedException {
+	public static void clickDeleteIcon(Page page, String jobTitle) {
 		page.locator(DELETE_ICON_XPATH.replace("{jobName}", jobTitle)).isVisible();
 		page.locator(DELETE_ICON_XPATH.replace("{jobName}", jobTitle)).click();
 		page.getByTestId(DELETE_JOB_CONFIRMATION_BUTTON_DATATESTID).click();
@@ -97,13 +96,15 @@ public class JobPageUtils {
 	}
 
 	public static void fillName(Page page, String name) {
-		page.locator(NAME_XPATH).isVisible();
-		page.locator(NAME_XPATH).fill(name);
+		Locator locator = page.locator("label:has-text('Name') + input");
+		locator.isVisible();
+		locator.fill(name);
 	}
 
 	public static void fillPixel(Page page, String value) {
-		page.locator(PIXEL_XPATH).isVisible();
-		page.locator(PIXEL_XPATH).fill(value);
+		Locator txtArea = page.locator("label:has-text('Pixel') + textarea");
+		txtArea.isVisible();
+		txtArea.fill(value);
 	}
 
 	public static void editTags(Page page, int value) {
@@ -164,8 +165,8 @@ public class JobPageUtils {
 		}
 		page.getByTestId(JOBS_TILE_DATATESTID).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
-		page.locator(NAME_XPATH).fill(name);
-		page.locator(PIXEL_XPATH).fill(value);
+		fillName(page, name);
+		fillPixel(page, value);
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
 	}
 
