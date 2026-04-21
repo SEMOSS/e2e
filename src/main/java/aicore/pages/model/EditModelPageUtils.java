@@ -45,6 +45,10 @@ public class EditModelPageUtils {
 	private static final String DELETE_CONFIRMATION_MESSAGE_XPATH = "//div[@role='dialog']//p[text()='Are you sure you want to delete this engine?']";
 	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_NAME_XAPTH = "//span[text()='Engine Name:']/following-sibling::span";
 	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_ID_XAPTH = "//span[text()='Engine ID:']/following-sibling::span";
+	private static final String VIEW_INPUT_PARAMETERS_XPATH = "//code[text()='{parameters}']";
+	private static final String VIEW_INPUT_PARAMETER_XPATH = "//summary[contains(text(),'View input parameters')]";
+	private static final String GENRATE_MCP_CONFIRAMTION_BUTTON_XPATH = "//button[text()='Yes']";
+	private static final String VIEW_AVAILABLE_TOOL_XPATH = "//div//h4[text()='Available Tools']/following::div//h4[text()='{toolName}']";
 
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
@@ -271,5 +275,34 @@ public class EditModelPageUtils {
 	public static boolean isButtonVisibleOnDeleteConfirmation(Page page, String buttonName) {
 		Locator buttonLocator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(buttonName));
 		return buttonLocator.isVisible();
+	}
+
+	public static void clickOnGenerateMCPButtonFromMCPUsageTab(Page page) {
+		Locator generateMCPButton = page.getByRole(AriaRole.BUTTON,
+				new Page.GetByRoleOptions().setName("Generate MCP"));
+		generateMCPButton.click();
+		page.locator(GENRATE_MCP_CONFIRAMTION_BUTTON_XPATH).click();
+	}
+
+	public static boolean verifyToolsInGeneratedMCP(Page page, String toolName) {
+		Locator toolLocator = page.locator(VIEW_AVAILABLE_TOOL_XPATH.replace("{toolName}", toolName));
+		AICorePageUtils.waitFor(toolLocator);
+		if (!toolLocator.isVisible()) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean verifyInputParameters(Page page, List<String> viewInputParameters) {
+		Locator viewInputParameterLocator = page.locator(VIEW_INPUT_PARAMETER_XPATH);
+		viewInputParameterLocator.isVisible();
+		viewInputParameterLocator.click();
+		for (String inputParameter : viewInputParameters) {
+			Locator parameterLocator = page.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter));
+			if (!parameterLocator.isVisible()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
