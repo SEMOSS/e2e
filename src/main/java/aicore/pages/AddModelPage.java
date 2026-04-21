@@ -511,4 +511,16 @@ public class AddModelPage {
 	public boolean isButtonVisibleOnDeleteConfirmation(String buttonName) {
 		return EditModelPageUtils.isButtonVisibleOnDeleteConfirmation(page, buttonName);
 	}
+
+	public void clickOnGenerateMCPButtonFromMCPUsageTab() {
+		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
+	}
+
+	public boolean verifyToolsInGeneratedMCP(String toolName) {
+		return EditModelPageUtils.verifyToolsInGeneratedMCP(page, toolName);
+	}
+
+	public boolean verifyInputParameters(List<String> expectedParameters) {
+		return EditModelPageUtils.verifyInputParameters(page, expectedParameters);
+	}
 }

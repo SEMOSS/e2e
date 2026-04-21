@@ -293,15 +293,12 @@ public class EditModelPageUtils {
 		return true;
 	}
 
-	public static boolean verifyInputParameters(Page page, String[] viewInputParameters) {
+	public static boolean verifyInputParameters(Page page, List<String> viewInputParameters) {
 		Locator viewInputParameterLocator = page.locator(VIEW_INPUT_PARAMETER_XPATH);
 		viewInputParameterLocator.isVisible();
 		viewInputParameterLocator.click();
 		for (String inputParameter : viewInputParameters) {
-			Locator parameterLocator = page
-					.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter));
-			parameterLocator.waitFor();
-			parameterLocator.scrollIntoViewIfNeeded();
+			Locator parameterLocator = page.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter));
 			if (!parameterLocator.isVisible()) {
 				return false;
 			}

@@ -29,7 +29,6 @@ import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.FunctionTestUtils;
 import aicore.utils.page.model.ModelPageUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -251,26 +250,4 @@ public class ModelSpecificPageTests {
 					"Model id count does not match for section '" + sectionName + "'");
 		}
 	}
-
-	@Test
-	@Order(7) // Run SEVENTH - read-only test, validates model catalog id in code snippets
-	@Tag("model")
-	@DisplayName("Validate the available tool and their input parameter after MCP Generation")
-	public void testValidateToolsAfterMCPGeneration() {
-		String toolName = "LLM";
-		String[] viewInputParameters = { "useHistory", "paramValues", "image", "engine", "context", "command", "roomId",
-				"url" };
-		String toasterMessage = "MCP generated";
-		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
-		AICorePageUtils.clickOnTabButton(page, " MCP Usage");
-		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
-		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, toasterMessage);
-		boolean isToolPresent = EditModelPageUtils.verifyToolsInGeneratedMCP(page, toolName);
-		Assertions.assertTrue(isToolPresent, "Tool are not displayed as expected in generated MCP");
-		boolean isInputParameterPresent = EditModelPageUtils.verifyInputParameters(page, viewInputParameters);
-		Assertions.assertTrue(isInputParameterPresent,
-				"Input parameters are not displayed as expected in generated MCP "
-						+ Arrays.toString(viewInputParameters));
-	}
-
 }
