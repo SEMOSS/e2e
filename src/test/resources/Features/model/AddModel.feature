@@ -11,7 +11,7 @@ Feature: Add Model
     And User enters Catalog Name as 'Model'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
-    ##And User can see a toast message as 'Successfully added LLM to catalog'
+    And User can see a toast message as 'Successfully added LLM to catalog'
     And User clicks on Copy Catalog ID
     Then User can see the Model title as 'Model'
 
@@ -68,9 +68,9 @@ Feature: Add Model
     And User should see '<DATA_CLASSIFICATION>' in the overview Data classification section
     And User should see '<DATA_RESTRICTIONS>' in the overview Data restrictions section
 
-    Examples: 
+    Examples:
       | MODEL_NAME | DETAILS       | DESCRIPTION                | TAGS              | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
-      | Model      | GPT-4.1 model | This is GPT-4.1 test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+      | Model      | GPT-4.1 model | This is GPT-4.1 test model | embeddings, Test1 | SAP, AI, Finance | IP, PHI, PII, Public | IP Allowed, PHI Allowed, FOUO Allowed |
 
   Scenario: Validate Model Catalog ID in Usage commands
     Given User can see the Model title as 'Model'
@@ -78,8 +78,17 @@ Feature: Add Model
     And User clicks on Usage tab
     When User copies code contents and validate model catalog Id occurences in sections:
       | SECTIONS                                                               | EXPECTED_MODEL_ID_COUNT |
-      | How to use in Pixel                                                    |                       5 |
-      | How to use in Python                                                   |                       1 |
-      | How to use with LangChain API                                          |                       1 |
-      | How to use externally with OpenAI API (with or without our Python SDK) |                       3 |
-      | How to use in Java                                                     |                       1 |
+      | How to use in Pixel                                                    | 5                       |
+      | How to use in Python                                                   | 1                       |
+      | How to use with LangChain API                                          | 1                       |
+      | How to use externally with OpenAI API (with or without our Python SDK) | 4                       |
+      | How to use in Java                                                     | 1                       |
+
+  Scenario: Validate the available tool and their input parameter after MCP Generation
+    Given User can see the Model title as 'Model'
+    When User clicks on 'MCP Usage' tab
+    And User clicks on Generate MCP button
+    Then User can see a toast message as 'MCP generated'
+    And User can see the Avialble Tools as 'LLM'
+    And User can see the below Input parameters under the View parameter
+      | useHistory, paramValues, image, engine, context, command, roomId, url |
