@@ -34,8 +34,8 @@ import aicore.framework.HttpLogger;
 import aicore.framework.Resource;
 import aicore.framework.ResourcePool;
 import aicore.framework.UrlUtils;
-import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.pages.home.HomePageUtils;
 import aicore.utils.AICorePageUtils;
 
 public class GenericSetupUtils {
