@@ -12,6 +12,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -380,7 +381,7 @@ public class AddModelSteps {
 
 	@When("User clicks on Close button")
 	public void user_clicks_on_close_button() {
-		viewCatalogPage.clickOnClose();
+		AddCatalogPageBaseUtils.clickOnClose(SetupHooks.getPage());
 	}
 
 	// Edit SMSS
