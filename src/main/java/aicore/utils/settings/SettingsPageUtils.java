@@ -5,6 +5,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
 
 public class SettingsPageUtils {
@@ -31,8 +32,10 @@ public class SettingsPageUtils {
 	}
 
 	public static void clickOnAdminButton(Page page) {
-		if (page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible()) {
-			page.locator(ADMIN_ON_OFF_BUTTON_XPATH).click();
+		Locator btn = page.locator(ADMIN_ON_OFF_BUTTON_XPATH);
+		AICorePageUtils.waitFor(btn);
+		if (btn.isVisible()) {
+			btn.click();
 		}
 	}
 
