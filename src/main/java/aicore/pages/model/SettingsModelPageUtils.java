@@ -20,6 +20,7 @@ public class SettingsModelPageUtils {
 
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h4[text()='Pending Requests']";
 	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h4[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
+	private static final String PENDING_REQUESTS_COUNT_DATA_DATATESTID = "pending-requests-count";
 	private static final String MEMBER_SECTION_TITLE_XPATH = "//h4[text()='Permissions']";
 	private static final String MEMBER_SEARCH_ICON_DATA_TESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
@@ -42,6 +43,11 @@ public class SettingsModelPageUtils {
 	private static final String SEARCH_BOX_DATATESTID = "settingsIndexPage-searchBar";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
 	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
+	private static final String PENDING_REQUESTS_EXPAND_BUTTON_DATATESTID = "pending-members-expand-collapse-btn";
+	private static final String PENDING_REQUESTS_ACTION_BUTTON_DATATESTID = "{action}-pending-member-btn";
+	private static final String SEARCH_MEMBER_XPATH = "//input[@data-slot='input-group-control']";
+	private static final String USER_NAME_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]";
+	private static final String USER_ROLE_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]//td//button//span[text()='{role}']";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -109,7 +115,8 @@ public class SettingsModelPageUtils {
 		if (fieldValue != null) {
 			page.click(locator);
 			page.press(locator, "End");
-			// Platform-specific: Use Alt (Option on macOS) instead of Control for word selection
+			// Platform-specific: Use Alt (Option on macOS) instead of Control for word
+			// selection
 			String os = System.getProperty("os.name").toLowerCase();
 			if (os.contains("mac")) {
 				page.locator(locator).press("Shift+Alt+ArrowLeft");
@@ -243,4 +250,59 @@ public class SettingsModelPageUtils {
 	public static void clickOnMakeCatalogPublicButton(Page page, String catalogName) {
 		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
 	}
+
+	public static String getPendingRequestCountText(Page page) {
+		Locator pendingRequestText = page.getByTestId(PENDING_REQUESTS_COUNT_DATA_DATATESTID);
+		return pendingRequestText.textContent().trim();
+	}
+
+	public static void clickOnPendingRequestsExpandButton(Page page) {
+		page.getByTestId(PENDING_REQUESTS_EXPAND_BUTTON_DATATESTID).click();
+	}
+
+	public static void performActionOnPendingRequest(Page page, String action) {
+		String actionNameForTestID = "";
+		switch (action.toLowerCase()) {
+		case "approve":
+			actionNameForTestID = "approve";
+			break;
+		case "reject":
+			actionNameForTestID = "deny";
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid action: " + action + ". Expected 'approve' or 'reject'.");
+		}
+		page.getByTestId(PENDING_REQUESTS_ACTION_BUTTON_DATATESTID.replace("{action}", actionNameForTestID)).click();
+	}
+
+	public static boolean verifyRequestAcceptedUserDisplayedInList(Page page, String role, String permissionGranted,
+			boolean useDocker) {
+		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME").split("@")[0];
+		if (useDocker) {
+			username = username + " lastname";
+			page.fill(SEARCH_MEMBER_XPATH, username);
+		} else {
+			page.fill(SEARCH_MEMBER_XPATH, username);
+		}
+		page.waitForTimeout(2000);
+		page.isVisible(USER_NAME_IN_MEMBER_LIST_XPATH.replace("{username}", username));
+		if (role.equalsIgnoreCase("Read")) {
+			role = "readonly";
+		}
+		switch (permissionGranted.toLowerCase()) {
+		case "author":
+			permissionGranted = "Owner";
+			break;
+		case "editor":
+			permissionGranted = "Editor";
+			break;
+		case "read":
+			permissionGranted = "Viewer";
+			break;
+		}
+		return page.locator(
+				USER_ROLE_IN_MEMBER_LIST_XPATH.replace("{username}", username).replace("{role}", permissionGranted))
+				.isVisible();
+	}
+
 }

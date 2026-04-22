@@ -511,4 +511,21 @@ public class AddModelPage {
 	public boolean isButtonVisibleOnDeleteConfirmation(String buttonName) {
 		return EditModelPageUtils.isButtonVisibleOnDeleteConfirmation(page, buttonName);
 	}
+
+	public String getpendingRequestCountText() {
+		return SettingsModelPageUtils.getPendingRequestCountText(page);
+	}
+
+	public void clickOnPendingRequestsExpandButton() {
+		SettingsModelPageUtils.clickOnPendingRequestsExpandButton(page);
+	}
+
+	public void performActionOnPendingRequest(String action) {
+		SettingsModelPageUtils.performActionOnPendingRequest(page, action);
+	}
+
+	public boolean verifyRequestAcceptedUserDisplayedInList(String role, String permissionGranted, boolean useDocker) {
+		return SettingsModelPageUtils.verifyRequestAcceptedUserDisplayedInList(page, role, permissionGranted,
+				useDocker);
+	}
 }
