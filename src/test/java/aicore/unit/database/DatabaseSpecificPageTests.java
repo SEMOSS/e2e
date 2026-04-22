@@ -16,19 +16,18 @@ import org.junit.jupiter.api.Test;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
-import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
-import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
+import aicore.utils.TestTags;
 import aicore.utils.ViewUsagePageUtils;
 
-@Tag("SMOKE")
+@Tag(TestTags.SMOKE)
 public class DatabaseSpecificPageTests extends AbstractE2ETest {
 
 	private static String dbName = null;

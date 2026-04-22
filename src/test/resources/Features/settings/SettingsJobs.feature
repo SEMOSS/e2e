@@ -1,6 +1,6 @@
 Feature: Settings- Jobs
 
-	# broken scenario need to move this validation code to JobPageTests 
+ # broken scenario need to move this validation code to JobPageTests 
   Scenario: Validate elements present on jobs page
     Given User opens Main Menu
     When User clicks on Open Settings
