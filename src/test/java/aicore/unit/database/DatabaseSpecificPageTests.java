@@ -101,7 +101,7 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 	@Test
 	public void testOverview() throws IOException {
 		AddDatabasePageUtils.clickOnOverview(page);
-		String catalogDescription = "No Markdown available";
+		String catalogDescription = "No description available";
 		assertTrue(AddCatalogPageBaseUtils.verifyCatalogDescription(page, catalogDescription));
 	}
 

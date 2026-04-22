@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import aicore.hooks.SetupHooks;
@@ -21,6 +22,7 @@ import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
+import aicore.utils.TestTags;
 
 public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 
@@ -71,6 +73,7 @@ public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 	}
 	
 	@Test
+	@Tag(TestTags.FE_BUG)
 	public void testAccessControl() throws IOException, InterruptedException {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);

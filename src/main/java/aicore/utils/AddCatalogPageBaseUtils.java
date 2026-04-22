@@ -107,7 +107,11 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static boolean verifyCatalogDescription(Page page, String catalogDescription) {
-		return page.locator(CATALOG_DESCRIPTION_XPATH.replace("{CatalogDescription}", catalogDescription)).isVisible();
+		// TODO add data-testid
+		Locator locator = page.locator("div.text-muted-foreground")
+		           .filter(new Locator.FilterOptions().setHasText(catalogDescription));
+		AICorePageUtils.waitFor(locator);
+		return locator.isVisible();
 	}
 
 	public static boolean verifyCatalogID(Page page, String catalogID) {
