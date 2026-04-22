@@ -136,11 +136,6 @@ public class SettingsModelPageUtils {
 		return isModelVisible;
 	}
 
-	public static boolean verifyTileIsVisible(Page page, String tileName) {
-		boolean isTileVisible = page.isVisible(TILE_XPATH.replace("{tileName}", tileName));
-		return isTileVisible;
-	}
-
 	public static void clickOnSearchBox(Page page, String string) {
 		page.getByTestId(SEARCH_BOX_DATATESTID).isVisible();
 		page.getByTestId(SEARCH_BOX_DATATESTID).click();

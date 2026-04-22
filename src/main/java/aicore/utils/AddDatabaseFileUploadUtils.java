@@ -91,12 +91,15 @@ public class AddDatabaseFileUploadUtils {
 			String[] table = tableName.split("\\.");
 			String fileName = table[0];
 			String fileType = table[1];
-			String tableIsVisiable = page.locator("//button[@role='combobox']//span").textContent();
-			return tableIsVisiable.contains(fileName) && tableIsVisiable.contains(fileType);
+			Locator locator = page.locator("//button[@role='combobox']//span");
+			AICorePageUtils.waitFor(locator);
+			String tableIsVisable = locator.textContent();
+			return tableIsVisable.contains(fileName) && tableIsVisable.contains(fileType);
 		}
 		else {
 			Locator locator = page.getByTestId("table-name-input")
 					.and(page.locator("[value='"+tableName+"']"));
+			AICorePageUtils.waitFor(locator);
 			return locator.isVisible();
 		}
 

@@ -1,9 +1,11 @@
 package aicore.utils.settings;
 
+import java.util.regex.Pattern;
+
 import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitForSelectorState;
+import com.microsoft.playwright.options.AriaRole;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
@@ -32,16 +34,17 @@ public class SettingsPageUtils {
 	}
 
 	public static void clickOnAdminButton(Page page) {
-		Locator btn = page.locator(ADMIN_ON_OFF_BUTTON_XPATH);
-		AICorePageUtils.waitFor(btn);
-		if (btn.isVisible()) {
-			btn.click();
+		Locator adminButton = page.getByRole(AriaRole.BUTTON,
+				new Page.GetByRoleOptions().setName(Pattern.compile("Admin (On|Off)")));
+		if (adminButton.innerText().contains("Admin Off")) {
+			adminButton.click();
 		}
 	}
 
-	public static void checkCardVisible(Page page, String cardName) {
-		page.locator(CARD_XPATH.replace("{cardName}", cardName))
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+	public static boolean checkCardVisible(Page page, String cardName) {
+		Locator locator = page.locator(CARD_XPATH.replace("{cardName}", cardName));
+		AICorePageUtils.waitFor(locator);
+		return locator.isVisible();
 	}
 
 	public static void clickOnCard(Page page, String cardName) {
@@ -50,7 +53,6 @@ public class SettingsPageUtils {
 
 	public static void checkAddUserButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
-
 	}
 
 	public static void checkAdminOnButton(Page page) {
