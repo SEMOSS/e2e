@@ -22,19 +22,19 @@ public class NotebookPageUtils {
 	private static final String NOTEBOOK_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Notebooks']";
 	private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
 	private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
-	private static final String IMPORT_DATA_OPTIONS_XPATH = "//li[@value='{optionName}']";
-	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//label[text()='Select Database']/following-sibling::div//div[@role='combobox']";
-	private static final String SELECT_ALL_COLUMNS_XPATH = "(//tbody//tr)[1]//input[@type='checkbox']";
+	private static final String IMPORT_DATA_OPTIONS_XPATH = "//div[text()='{optionName}']";
+	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//button//span[text()='Select Database']";
+	private static final String SELECT_ALL_COLUMNS_XPATH = "//span[text()='Fields']/ancestor::tr//button";
 	private static final String EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID = "EditIcon";
 	private static final String UPDATE_CELL_BUTTON_XPATH = "//button[@type='submit']";
-	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'MuiTable-root')]//tbody//tr[position()>1]//td[2]";
-	private static final String IMPORT_BUTTON_XPATH = "//span[text()='Import']";
+	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'caption-bottom')]//tbody//tr[position()>1]//td[2]";
+	private static final String IMPORT_BUTTON_XPATH = "//button[text()='Import']";
 	private static final String FRAME_CSS = "input[value*='FRAME_']";
-	private static final String DELETE_CELL_DATA_TESTID = "DeleteIcon";
+	private static final String DELETE_CELL_DATA_XAPTH = "//button[@title='Delete cell']";
 	private static final String OUTPUT_TABLE = "//table";
 	private static final String JSON_BODY_FIELD_VALUE_XPATH = "//div[contains(@class,'string-value MuiBox-root')]//span[text()='{fieldValue}']";
-	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//div[div[text()='Python']]";
-	private static final String SELECT_TYPE_LISTBOX_XPATH = "//li[text()='{type}']";
+	private static final String SELECT_TYPE_DROPDOWN_XPATH = "//button[span[text()='{type}']]";
+	private static final String SELECT_TYPE_LISTBOX_XPATH = "//div[@role='option']//span[text()='{type}']";
 	private static final String TOTAL_COUNT_OF_ROWS_XPATH = "(//span[contains(text(),'This is a preview of ingested data')])[1]";
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
@@ -53,7 +53,7 @@ public class NotebookPageUtils {
 	private static final String DATA_LIST_ITEM_SELECTOR_XPATH = "(//li[text()='{value}'])";
 	private static final String DATA_SPAN_SELECTOR_XPATH = "(//label[text()='Select Data']/..//div//div[@role='button']//span)";
 	private static final String RULE_BUTTON_XPATH = "//span[contains(normalize-space(),'{buttonName}')]";
-	private static final String FILTER_SELECT_FRAME_BLOCK_XPATH = "//input[@placeholder='Select Frame']";
+	private static final String FILTER_SELECT_FRAME_BLOCK_XPATH = "//input[@title='Set Frame Variable Name']";
 	private static final String FILTER_SELECT_DATABASE_BLOCK_XPATH = "//div[@title ='Select Database']";
 	private static final String QUERY_XPATH = "(//div[contains(@class,'view-line')]//div[contains(@class,'view-line')]//span//span)[1]";
 	private static final String ADD_VALUE_IN_FIELD_XPATH = "(//div[contains(@role,'dialog')]//div//div[contains(@data-block,'input--')]//label[contains(text(),'{fieldName}')]//..//div//input)[2]";
@@ -72,6 +72,8 @@ public class NotebookPageUtils {
 	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
 	private static final String NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH = "//div[contains(@class,'MuiPaper-elevation MuiPaper-rounded')]//div[@title='Database Not Editable']";
 	private static final String DROPDOWN_BUTTON_XPATH = "//label[text()='{dropdownName}']/..//button";
+	private static final String RUN_CELL_OPTION_XPATH = "//button[@title='Run cell']";
+	private static final String RUN_CELL_LOADING_ICON_XPATH = "//button[@title='Run cell']//*[name()='svg'][@aria-label='Loading']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -82,7 +84,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterQueryName(Page page, String queryName) {
-		Locator queryTextbox = page.getByRole(AriaRole.TEXTBOX);
+		Locator queryTextbox = page.locator("//label[text()='Id']/following::input").first();
 		AICorePageUtils.waitFor(queryTextbox);
 		queryTextbox.fill(queryName);
 	}
@@ -271,7 +273,9 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnQuerySubmitButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
+		Locator submitbutton = page.locator("//button[text()='Submit']").first();
+		AICorePageUtils.waitFor(submitbutton);
+		submitbutton.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static void enterCodeInQuery(Page page, String code) {
@@ -329,7 +333,7 @@ public class NotebookPageUtils {
 		AICorePageUtils.waitFor(selectDatabaseDropdown);
 		selectDatabaseDropdown.click();
 		page.waitForTimeout(300);
-		page.getByText(databaseName).click();
+		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
 	}
 
 	public static void clickOnImportDropdown(Page page) {
@@ -373,7 +377,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void deleteFirstCell(Page page) {
-		Locator deleteIcon = page.getByTestId(DELETE_CELL_DATA_TESTID).first();
+		Locator deleteIcon = page.locator(DELETE_CELL_DATA_XAPTH);
 		AICorePageUtils.waitFor(deleteIcon);
 		deleteIcon.click();
 	}
@@ -390,10 +394,10 @@ public class NotebookPageUtils {
 		if (block.isVisible()) {
 			block.hover();
 		}
-		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell")).last();
+		Locator runCellButton = page.locator(RUN_CELL_OPTION_XPATH);
 		AICorePageUtils.waitFor(runCellButton);
 		runCellButton.click();
-		Locator checkCircle = page.getByTestId("CheckCircleIcon");
+		Locator checkCircle = page.locator(RUN_CELL_LOADING_ICON_XPATH);
 		AICorePageUtils.waitFor(checkCircle);
 		checkCircle.isVisible();
 	}
@@ -701,7 +705,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterDataLimit(Page page, String dataLimit) {
-		Locator dataLimitField = page.getByLabel("Data Limit");
+		Locator dataLimitField = page.getByPlaceholder("Data Limit");
 		AICorePageUtils.waitFor(dataLimitField);
 		dataLimitField.fill(dataLimit);
 	}
@@ -747,7 +751,8 @@ public class NotebookPageUtils {
 	}
 
 	public static void selectTransformationValueFromDropdown(Page page, String value, String dropdownName) {
-		page.locator (DROPDOWN_BUTTON_XPATH.replace("{dropdownName}", dropdownName)).click( new Locator.ClickOptions().setForce(true));
+		page.locator(DROPDOWN_BUTTON_XPATH.replace("{dropdownName}", dropdownName))
+				.click(new Locator.ClickOptions().setForce(true));
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).isVisible();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
 	}

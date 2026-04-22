@@ -26,7 +26,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='{pageName}']";
 	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
-	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
+	private static final String EDIT_BUTTON_DATATESTID = "viewAppPage-edit-btn";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
 	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
 	public static final String SAVE_APP_BUTTON_DATA_TEST_ID = "SaveOutlinedIcon";
@@ -194,8 +194,9 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnEditButton(Page page) {
-		page.locator(EDIT_BUTTON_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(EDIT_BUTTON_XPATH).click();
+		page.getByTestId(EDIT_BUTTON_DATATESTID)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.getByTestId(EDIT_BUTTON_DATATESTID).click();
 	}
 
 	public static void clickOnBlocksOption(Page page) {
