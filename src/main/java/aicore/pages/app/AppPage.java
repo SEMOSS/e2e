@@ -120,7 +120,7 @@ public class AppPage {
 	}
 
 	public boolean verifyAppsSortedInAscendingOrder() {
-		return AppPageUtils.verifyAppsSortedInAscendingOrder(page);
+		return AppPageUtils.verifySortedInAscendingOrder(page);
 	}
 
 	public void clickOnFilterButton(String filterName) {
@@ -128,12 +128,16 @@ public class AppPage {
 	}
 
 	public boolean verifyAppsSortedInDescendingOrder() {
-		return AppPageUtils.verifyAppsSortedInDescendingOrder(page);
+		return AppPageUtils.verifySortedInDescendingOrder(page);
 	}
 
 	public boolean verifyAppsSortedByDateLastEdited() {
 		return AppPageUtils.verifyAppsSortedByDateLastEdited(page);
-	}	
+	}
+	
+	public boolean verifySortedByDateCreated(boolean ascending) {
+		return AppPageUtils.verifySortedByDateCreated(page, ascending);
+	}
 
 	public void selectSortByOption(String optionName) {
 		AppPageUtils.selectSortByOption(page, optionName);

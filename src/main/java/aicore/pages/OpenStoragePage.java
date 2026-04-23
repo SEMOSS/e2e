@@ -182,4 +182,8 @@ public class OpenStoragePage extends AbstractAddCatalogPageBase {
 	public void clickOnButton(String buttonName) {
 		StoragePageUtils.clickOnButton(page, buttonName);
 	}
+
+	public void createStorage(String storageType, String catalogName, String region, String bucket) {
+		AddStorageFormUtils.createStorage(page, storageType, catalogName, region, bucket);
+	}
 }
