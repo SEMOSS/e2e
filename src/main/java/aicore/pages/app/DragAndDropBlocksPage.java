@@ -345,4 +345,27 @@ public class DragAndDropBlocksPage {
 		DragAndDropBlocksPageUtils.selectValueForsettingOption(page, value, optionName);
 	}
 
+	public void clickOnExportOption() {
+		DragAndDropBlocksPageUtils.clickOnExportOption(page);
+	}
+
+	public boolean isExportDataSectionVisible() {
+		return DragAndDropBlocksPageUtils.isExportDataSectionVisible(page);
+	}
+
+	public boolean isExportedFileVisibleInNotebookSection(String frameId, String fileType) {
+		return DragAndDropBlocksPageUtils.isExportedFileVisibleInNotebookSection(page, frameId, fileType);
+	}
+
+	public void selectFileTypeAs(String fileType) {
+		DragAndDropBlocksPageUtils.selectFileTypeAs(page, fileType);
+	}
+
+	public void selectFrameForExportData(String frameId) {
+		DragAndDropBlocksPageUtils.selectFrameForExportData(page, frameId);
+	}
+
+	public void clickOnExportOption(String exportOption) {
+		DragAndDropBlocksPageUtils.clickOnExportOption(page, exportOption);
+	}
 }

@@ -27,13 +27,8 @@ Feature: Export Function for Drag And Drop App
     And User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
 
   Scenario: Validate Export Data functionality
-    Given User is on Home page
-    And User opens Main Menu
-    When User clicks on Open App Library
-    And User searches 'Test app' app in the app searchbox
-    And User clicks on 'Test app' app from the My Apps
-    And User clicks on app Edit button
-    And User clicks on Blocks if it is not selected by default
+    Given User clicks on Block Settings option
+    When  User clicks on Blocks if it is not selected by default
     And User clicks on Notebook
     And User clicks on Create new notebook
     And User enters New Query name as 'Test'
@@ -49,6 +44,11 @@ Feature: Export Function for Drag And Drop App
     And User selects type as 'Python'
     And User enter the data limit as '20'
     And User clicks on Run cell button
+    And User fetch the frame id
     Then User can see header names as 'AGE, BLOODPRESSURE, BMI, DIABETES_UNIQUE_ROW_ID, DIABETESPEDIGREEFUNCTION, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP'
-    #And User clicks on Export option
-    #Then User can sees the Export Data section
+    And User clicks on Export option
+    Then User can sees the Export Data section
+    And User select the frame for export data
+    And User Select the file type as 'csv'
+    When User clicks on 'Create Export Button' for Export Data
+    Then User can sees the exported file in Notebook section with expected frame and file type as 'csv'
