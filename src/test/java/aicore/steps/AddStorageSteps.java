@@ -56,7 +56,7 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 		final String GROUP_NAME = "GROUP";
 		final String STORAGE_OPTION_NAMES = "STORAGE_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(catalog, GROUP_NAME, STORAGE_OPTION_NAMES, rows, storagePage);
+		validateOptionsWithIcon(catalog, GROUP_NAME, STORAGE_OPTION_NAMES, rows, SetupHooks.getPage());
 	}
 
 	@And("User selects {string} storage")

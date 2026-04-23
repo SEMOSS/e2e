@@ -1,4 +1,4 @@
-package aicore.unit.database;
+package aicore.unit.database.add;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -11,27 +11,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
 
-public class AddFileUploadDatabaseFormValidationTests {
-	private static Page page = null;
+public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
 
 	@BeforeAll
 	public static void setup() throws IOException {
-		GenericSetupUtils.initialize();
-		page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
+		login(page, UserType.NATIVE);
 	}
 
 	@ParameterizedTest(name = "Validate file upload database form for {0}")
@@ -83,6 +74,8 @@ public class AddFileUploadDatabaseFormValidationTests {
 										"Enter Database Tag"),
 								section("Database", "Enter Database Type", "Enter Metamodel Type")),
 						new String[] { "Enter Database Name", "Enter Database Type", "Enter Metamodel Type" }));
+		
+		// TODO SQLite, H2, Neo4j, Tinker
 	}
 
 	private static Map<String, String[]> sections(Map.Entry<String, String[]>... entries) {

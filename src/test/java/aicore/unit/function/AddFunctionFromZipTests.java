@@ -25,6 +25,7 @@ import aicore.utils.TestResourceTrackerHelper;
 
 public class AddFunctionFromZipTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(AddFunctionFromZipTests.class);
+	private static boolean useDocker = false;
 	
 	@BeforeEach
 	void createFunctionUsingZip() {
@@ -44,6 +45,8 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
 	}
 	
+	/// TODO: THIS TEST IS FAILING N BOTH JUNIT AND CUCUMBER - NEEDS TO BE FIXED BEFORE
+	/// FEATURE FILE CAN BE DELETED
 	@Test
 	void testValidateChangeAccessPopup() throws InterruptedException {
 		logger.info("TESTING: testValidateChangeAccessPopup");
@@ -57,7 +60,7 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
 		SettingsModelPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		SettingsModelPageUtils.addMember(page, "Editor", GenericSetupUtils.useDocker());
+		SettingsModelPageUtils.addMember(page, "Editor", useDocker);
 		logout(page);
 		login(page, UserType.EDITOR);
 		MainMenuUtils.openMainMenu(page);
@@ -72,6 +75,8 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		logout(page);
 	}
 	
+	/// TODO: THIS TEST IS FAILING N BOTH JUNIT AND CUCUMBER - NEEDS TO BE FIXED BEFORE
+	/// FEATURE FILE CAN BE DELETED
 	@Test
 	void testChangeAccessRequest() throws InterruptedException {
 		logger.info("TESTING: testChangeAccessRequest");
@@ -85,7 +90,11 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
 		SettingsModelPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		SettingsModelPageUtils.addMember(page, "Editor", GenericSetupUtils.useDocker());
+		///TODO this boolean was dictated by GenericSetupUtils.useDocker() but that needs to be set to 'true'
+		/// to correctly run. But leaving it 'true' incorrectly sets up the member name for the search, 
+		/// causing this step to fail. Need to figure out if we need to modify this step logic to do the same 
+		/// thing for all members regardless of useDocker()
+		SettingsModelPageUtils.addMember(page, "Editor", useDocker);
 		logout(page);
 		login(page, UserType.EDITOR);
 		MainMenuUtils.openMainMenu(page);

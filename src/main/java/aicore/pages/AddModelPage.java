@@ -304,10 +304,6 @@ public class AddModelPage {
 		return SettingsModelPageUtils.verifyModelOptionIsVisible(page, modelOption);
 	}
 
-	public boolean verifyTileIsVisible(String tileName) {
-		return SettingsModelPageUtils.verifyTileIsVisible(page, tileName);
-	}
-
 	public void clickOnSearchBox(String string) {
 		SettingsModelPageUtils.clickOnSearchBox(page, string);
 	}
@@ -530,5 +526,17 @@ public class AddModelPage {
 
 	public void changeRequestedAccessRole(String newRole) {
 		SettingsModelPageUtils.changeRequestedAccessRole(page, newRole);
+	}
+
+	public void clickOnGenerateMCPButtonFromMCPUsageTab() {
+		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
+	}
+
+	public boolean verifyToolsInGeneratedMCP(String toolName) {
+		return EditModelPageUtils.verifyToolsInGeneratedMCP(page, toolName);
+	}
+
+	public boolean verifyInputParameters(List<String> expectedParameters) {
+		return EditModelPageUtils.verifyInputParameters(page, expectedParameters);
 	}
 }

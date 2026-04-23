@@ -1,7 +1,5 @@
 package aicore.unit.function;
 
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -10,7 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import aicore.pages.function.AddFunctionFormUtils;
-import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddFunctionPageUtils;
@@ -18,7 +15,6 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.AbstractE2ETest.UserType;
 
 public class AddFunctionTests extends AbstractE2ETest {
 	

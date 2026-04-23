@@ -48,8 +48,8 @@ public class ViewFunctionPage {
 		page.locator(USAGE_TAB_XPATH.replace("{UsageTab}", usageTab)).click();
 	}
 
-	public void verifyUsageInstructionsSection(String usageInstructionsSection) {
-		page.getByText(USAGE_INSTRUCTIONS_SECTION_XPATH.replace("{UsageInstructionsSection}", usageInstructionsSection))
+	public boolean verifyUsageInstructionsSection(String usageInstructionsSection) {
+		return page.getByText(USAGE_INSTRUCTIONS_SECTION_XPATH.replace("{UsageInstructionsSection}", usageInstructionsSection))
 				.isVisible();
 	}
 

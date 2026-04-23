@@ -42,13 +42,14 @@ public class SettingsModelPageUtils {
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String SEARCH_BOX_DATATESTID = "settingsIndexPage-searchBar";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
-	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
+//	private static final String MAKE_CATALOG_PUBLIC_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
 	private static final String PENDING_REQUESTS_EXPAND_BUTTON_DATATESTID = "pending-members-expand-collapse-btn";
 	private static final String PENDING_REQUESTS_ACTION_BUTTON_DATATESTID = "{action}-pending-member-btn";
 	private static final String SEARCH_MEMBER_XPATH = "//input[@data-slot='input-group-control']";
 	private static final String USER_NAME_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]";
 	private static final String USER_ROLE_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]//td//button//span[text()='{role}']";
 	private static final String REQUESTED_ACCESS_ROLE_RADIO_BUTTON_DATATESTID = "{role}-radio";
+	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-Database-public-private-switch";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -249,7 +250,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnMakeCatalogPublicButton(Page page, String catalogName) {
-		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
+		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID).click();
 	}
 
 	public static String getPendingRequestCountText(Page page) {
