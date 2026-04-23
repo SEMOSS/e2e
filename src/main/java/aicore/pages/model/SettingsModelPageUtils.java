@@ -42,7 +42,6 @@ public class SettingsModelPageUtils {
 	private static final String SMSS_PROPERTIES_FIELDS_COMMON_XPATH = "//div[@class='view-line']//span[@class='mtk1'][starts-with(text(), '{fieldName}')]";
 	private static final String SEARCH_BOX_DATATESTID = "settingsIndexPage-searchBar";
 	private static final String DISCOVERABLE_MODELS_BUTTON_DATA_TESTID = "engineIndexPage-Models-discoverable-switch";
-//	private static final String MAKE_CATALOG_PUBLIC_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
 	private static final String PENDING_REQUESTS_EXPAND_BUTTON_DATATESTID = "pending-members-expand-collapse-btn";
 	private static final String PENDING_REQUESTS_ACTION_BUTTON_DATATESTID = "{action}-pending-member-btn";
 	private static final String SEARCH_MEMBER_XPATH = "//input[@data-slot='input-group-control']";
