@@ -1,7 +1,7 @@
 @Regression @DeleteTestCatalog @LoginWithAdmin
 Feature: Validate change access permissions
 
-  Background: Create a model, make it discoverable, login with another user, request for access, and login back with author user
+  Background: Set up a discoverable model, request access from another user, and return as the author.
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Model
