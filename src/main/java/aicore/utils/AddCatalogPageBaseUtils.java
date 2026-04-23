@@ -157,7 +157,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void clickOnClose(Page page) {
-		Locator closeButton = page.locator(CLOSE_BUTTON_XPATH);
+		Locator closeButton =page.getByTestId("editEngineDetails-close-btn");
 		closeButton.scrollIntoViewIfNeeded();
 		closeButton.click();
 	}

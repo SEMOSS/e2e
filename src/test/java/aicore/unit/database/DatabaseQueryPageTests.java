@@ -13,15 +13,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabasePageUtils;
-import aicore.utils.AddFunctionPageUtils;
-import aicore.utils.CatalogCreationFromZipUtil;
-import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
 import aicore.utils.StoragePageUtils;
+import aicore.utils.TestResources;
 
 public class DatabaseQueryPageTests extends AbstractE2ETest {
 	private static String dbName = null;
@@ -31,31 +29,14 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 	public static void setupBeforeAll() throws IOException {
 		login(page, UserType.NATIVE);
 
-		// delete zip db before upload
-		dbName = "TestDatabase";
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		AddFunctionPageUtils.deleteCatalog(page, "Database", dbName);
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-
-		// add zip db
-		String fileName = "Database/TestDatabase.zip";
-
-		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
-		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		String timestamp = CommonUtils.getTimeStampName();
+		dbName = "CSV db" + timestamp;
+		String fileName = TestResources.DIABETES_CSV;
+		String dbType = "h2";
+		String metaModelType = "asFlatTable";
+		dbID = DatabaseTestUtils.addFlatCsv(page, dbName, fileName, dbType, metaModelType);
 	}
+	
 
 	@BeforeEach
 	public void setup() throws IOException {
@@ -65,7 +46,6 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 	}
 
 	@Test
@@ -87,8 +67,7 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 		AddDatabasePageUtils.clickOnOverview(page);
 		AddDatabasePageUtils.clickOnQueryTab(page);
 
-		String columnNames = "Age, BloodPressure, BMI, DiabetesPedigreeFunction, DIABETES_UNIQUE_ROW_ID, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip";
-
+		String columnNames = "Age, BloodPressure, BMI, DiabetesPedigreeFunction, DIABETES_UNIQUE_ROW_ID, Glucose, Insulin, Outcome, Pregnancies, SkinThickness";
 		// validate headers
 		List<String> expectedColumnNames = Arrays.asList(columnNames.split(", "));
 		List<String> actualColumnNames = AddDatabasePageUtils.getDataColumns(page);
@@ -103,7 +82,6 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 
 		// validate
 		boolean isColumnVisible = AddDatabasePageUtils.verifySearchedDataColumn(page, columnName);
-		;
 		Assertions.assertTrue(isColumnVisible, "Searched " + columnName + " column is not visible in the list");
 	}
 

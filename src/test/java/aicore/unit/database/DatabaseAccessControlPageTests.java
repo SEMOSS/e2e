@@ -10,18 +10,15 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
-import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
-import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.AddFunctionPageUtils;
-import aicore.utils.CatalogCreationFromZipUtil;
-import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 
 public class DatabaseAccessControlPageTests extends AbstractE2ETest {
@@ -32,36 +29,11 @@ public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 	@BeforeAll
 	public static void setupBeforeAll() throws IOException {
 		login(page, UserType.NATIVE);
-		String timestamp = CommonUtils.getTimeStampName();
 
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenDatabase(page);
-
-		// add file upload db
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		String tabName = "file uploads";
-		AddDatabaseFileUploadUtils.selectTab(page, tabName);
-
-		String fileType = "Excel";
-		dbName = "Excel db" + timestamp;
-		String dbType = "h2";
-		String metaModelType = "asFlatTable";
-		String fileName = "Database/Database.xlsx";
-
-		// db options
-		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
-		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
-		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
-		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		AddDatabaseFormUtils.clickOnConnectButton(page);
-
-		// validate the db created
-		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
-		AICorePageUtils.clickOnButton(page, "Import");
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		// add db
+		String fileName = TestResources.TEST_DATABASE_ZIP;
+		dbName = "TestDatabase";
+		dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
 	}
 	
 	@BeforeEach
