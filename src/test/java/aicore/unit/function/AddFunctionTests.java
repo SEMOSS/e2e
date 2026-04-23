@@ -3,6 +3,7 @@ package aicore.unit.function;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,8 +16,14 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.AbstractE2ETest.UserType;
 
 public class AddFunctionTests extends AbstractE2ETest {
+	
+	@BeforeAll
+	static void setup() {
+		login(page, UserType.NATIVE);
+	}
 	
 	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
 	    return Stream.of(
@@ -26,9 +33,7 @@ public class AddFunctionTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideFormInputsForTestValidateFunctions")
-	void testCreateFunctionWithAllRequiredFields(String functionType, String catalogName, String url, String httpMethod, String postBodyMessage, String headers, String functionParameters, String functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields) {
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
-		
+	void testCreateFunctionWithAllRequiredFields(String functionType, String catalogName, String url, String httpMethod, String postBodyMessage, String headers, String functionParameters, String functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields) {		
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
@@ -61,9 +66,7 @@ public class AddFunctionTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideIncompleteInputsForTestValidateFunctions")
-	void testCreateFunctionWithMissingFields(String functionType, String catalogName, String httpMethod, String postBodyMessage, String headers, String functionParameters, String functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields) {
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
-		
+	void testCreateFunctionWithMissingFields(String functionType, String catalogName, String httpMethod, String postBodyMessage, String headers, String functionParameters, String functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields) {		
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 

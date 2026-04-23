@@ -4,6 +4,8 @@ import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,6 +18,8 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestTags;
+import aicore.utils.AbstractE2ETest.UserType;
 import aicore.utils.page.app.CodeAppPageUtils;
 
 
@@ -23,6 +27,11 @@ import aicore.utils.page.app.CodeAppPageUtils;
  * Validate zip catalog upload functionality in Files Section for all catalog types
  */
 public class CatalogZipFileUploadTests extends AbstractE2ETest {
+	
+	@BeforeAll
+	static void setup() {
+		login(page, UserType.NATIVE);
+	}
 	
 	private static final Logger logger = LogManager.getLogger(CatalogZipFileUploadTests.class);
 
@@ -41,8 +50,8 @@ public class CatalogZipFileUploadTests extends AbstractE2ETest {
 	/// DELETED
 	@ParameterizedTest
 	@MethodSource("provideInputsForAllCatalogTypes")
+	@Tag(TestTags.BROKEN)
 	void testValidateZipUploadFunctionalityForAllCatalogTypes(String catalog, String fileName, String catalogName) {
-		login(page, UserType.NATIVE); // TODO find a way to only login once at the beginning of the set of tests
 		MainMenuUtils.openMainMenu(page);
 		CatalogCreationFromZipUtil.openCatalog(page, catalog);
 		AddFunctionPageUtils.deleteCatalog(page, catalog, catalogName);

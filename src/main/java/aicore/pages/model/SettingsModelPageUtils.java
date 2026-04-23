@@ -155,7 +155,9 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnAddMembersButton(Page page) {
-		page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).first().click();
+		Locator locator = page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID);
+		locator.scrollIntoViewIfNeeded();
+		locator.first().click();
 	}
 
 	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {

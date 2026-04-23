@@ -3,6 +3,9 @@ package aicore.utils;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +18,7 @@ import com.microsoft.playwright.Page;
 import aicore.base.GenericSetupUtils;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
+import aicore.framework.ResourcePool;
 import aicore.pages.home.HomePageUtils;
 
 /**
@@ -57,6 +61,7 @@ public class AbstractE2ETest {
 		} catch (IOException e) {
 			fail(e.getMessage());
 		}
+		/// sets up a Resource with a Playwright instance, Browser, and Browser context
 		page = GenericSetupUtils.setupPlaywright();
 		adminUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		adminPassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
@@ -120,10 +125,17 @@ public class AbstractE2ETest {
 	}
 	
 	@AfterAll
-	public static void afterAll() {
+	public static void afterAll() throws IOException {
 		logger.info("Cleaning up after ALL tests");
 		GenericSetupUtils.logout(page);
 		alreadLoggedIn = false;
+		ResourcePool.get().getContext().close();
+		
+		// TODO modify this to use the 'fail' logic in SetupHooks.java
+		if (GenericSetupUtils.useVideo()) {
+			Path og = page.video().path();
+			Files.deleteIfExists(og);
+		}
 		page.close();
 	}
 }
