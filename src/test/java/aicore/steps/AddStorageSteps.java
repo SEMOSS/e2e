@@ -343,4 +343,14 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	public void user_clicks_on_button(String buttonName) {
 		storagePage.clickOnButton(buttonName);
 	}
+
+	@When("User created {string} storage with the {string} storage, catalog name {string}, Region {string}, Bucket {string}")
+	public void user_created_storage_with_the_storage_catalog_name_region_bucket(String storageCount,
+			String storageType, String catalogName, String region, String bucket) {
+		for (int i = 1; i <= Integer.parseInt(storageCount); i++) {
+			String catalogNameWithTimestamp = catalogName + System.currentTimeMillis();
+		storagePage.createStorage(storageType, catalogNameWithTimestamp, region, bucket);
+	}
+}
+
 }

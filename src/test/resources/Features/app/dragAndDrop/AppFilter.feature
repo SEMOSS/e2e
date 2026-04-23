@@ -33,9 +33,9 @@ Feature: validate the filter and discoverable option for Drag and Drop app
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on the 'Ascending' Filter button
-    Then User can see the apps are sorted in ascending order
+    Then User can see the 'apps' are sorted in ascending order
     When User clicks on the 'Descending' Filter button
-    Then User can see the apps are sorted in descending order
+    Then User can see the 'apps' are sorted in descending order
 
   Scenario: Validate the date modified filter on app page
     Given User creates '1' 'drag and drop' apps with app name 'Date Filter Test App', description 'Date Filter Test Description', and tags 'Date Filter, Test'

@@ -30,6 +30,10 @@ public class GuardrailPage {
 		AddGuardrailFormUtils.enterDefaultThreshold(page, threshold);
 	}
 
+	public void createGuardrail(String guardrailType, String catalogName, String nerLabels, String defaultThreshold) {
+		AddGuardrailFormUtils.createGuardrail(page, guardrailType, catalogName, nerLabels, defaultThreshold);
+	}
+
 	public String verifyGuardrailTitle(String guardrailTitle) {
 		return GuardrailPageUtils.verifyGuardrailTitle(page, guardrailTitle);
 	}

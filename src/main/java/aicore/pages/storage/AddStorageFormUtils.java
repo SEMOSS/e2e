@@ -3,6 +3,12 @@ package aicore.pages.storage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import aicore.pages.home.MainMenuUtils;
+import aicore.pages.model.AddModelFormUtils;
+import aicore.utils.CatlogAccessPageUtility;
+import aicore.utils.GuardrailPageUtils;
+import aicore.utils.StoragePageUtils;
+
 public class AddStorageFormUtils {
 	
 	private static final String CATALOG_NAME_DATA_TESTID = "storage-form-input-NAME";
@@ -203,4 +209,16 @@ public class AddStorageFormUtils {
 		};
 		return fieldNamesForDataTestid.replace(" ", "_").toUpperCase();
 	}
+
+	public static void createStorage(Page page, String storageType, String catalogName, String region, String bucket) {
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenStorage(page);
+		StoragePageUtils.clickOnAddStorageButton(page);
+		selectStorage(page, storageType);
+		enterCatalogName(page, catalogName);
+		enterRegionName(page, region);
+		enterBucket(page, bucket);
+		StoragePageUtils.clickOnConnectButton(page);
+		CatlogAccessPageUtility.getCatalogAndCopyId(page);
+}
 }
