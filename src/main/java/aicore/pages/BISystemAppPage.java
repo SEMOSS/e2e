@@ -29,7 +29,6 @@ public class BISystemAppPage {
 	private static final String DATABASE_FRAME_XPATH = "#pipeline__component__box";
 	private static final String VISUALIZE_THIS_DATA_OPTION_XPATH = "//button[@title='Visualize this data']";
 	private static final String SAVE_WORKSPACE_BUTTON_XPATH = "//button[@title='Save Workspace']";
-	private static final String INSIGHT_NAME_TEXTBOX_ID = "#smss-typeahead__input";
 	private static final String PROJECT_NAME_DROPDOWN_XPATH = "//div[@class='smss-dropdown__toggle__text']//div[@class='app-list-dropdown__item__text']";
 	private static final String PROJECT_SEARCH_TEXTBOX_XPATH = "//input[@id='smss-search__input' and @placeholder='Search']";
 	private static final String PROJECT_SEARCH_LIST_XPATH = "//div[@class='smss-dropdown__list__option__label']";
@@ -37,7 +36,6 @@ public class BISystemAppPage {
 	private static final String INSIGHT_SAVE_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 
 	// catalog option
-	private static final String CATALOG_OPTION_ID = "#home-nav__item--catalog";
 	private static final String EXCEL_OPTION_XPATH = "//div[@class='smss-block__text']//span[text()='Excel']";
 	private static final String ENTER_DATABASE_NAME_TEXTBOX_XPATH = "//input[@placeholder='Database Name']";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "(//input[@type='file'])[2]";
@@ -62,7 +60,7 @@ public class BISystemAppPage {
 		BISystemAppUtils.closeWelcomePopup(page);
 	}
 
-	public void clickOnAppOption() {
+	public void clickOnAddOption() {
 		page.click(APP_OPTION_ID);
 		Locator startingPointText = page.locator(SELECT_STARTING_POINT_TEXT_XPATH);
 		AICorePageUtils.waitFor(startingPointText);
@@ -143,7 +141,7 @@ public class BISystemAppPage {
 	}
 
 	public void enterInsightName(String insightName) {
-		page.fill(INSIGHT_NAME_TEXTBOX_ID, insightName + timestamp);
+		BISystemAppUtils.enterInsightName(page,  insightName + timestamp);
 	}
 
 	public void selectProjectName(String projectName) {

@@ -97,7 +97,7 @@ public class BICreateDatabaseAndInsightSteps {
 
 	@And("User clicks on Add option")
 	public void user_clicks_on_add_option() {
-		biApp.clickOnAppOption();
+		biApp.clickOnAddOption();
 	}
 
 	@And("User search {string} database and select")

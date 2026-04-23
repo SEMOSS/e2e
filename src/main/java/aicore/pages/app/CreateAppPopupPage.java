@@ -18,7 +18,8 @@ public class CreateAppPopupPage {
 	}
 
 	public void enterAppName(String appName) {
-		CreateAppPopupUtils.enterAppName(page, appName, timestamp);
+		appName = appName + " " +timestamp;
+		CreateAppPopupUtils.enterAppName(page, appName);
 	}
 
 	public void selectApp(String appName) {

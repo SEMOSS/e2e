@@ -35,10 +35,9 @@ public class CreateAppPopupUtils {
 		}
 	}
 
-	public static String enterAppName(Page page, String appName, String timestamp) {
-		String appNameTesting = appName + " " + timestamp;
-		page.locator(NAME_TEXTBOX_XPATH).fill(appNameTesting);
-		return appNameTesting;
+	public static String enterAppName(Page page, String appName) {
+		page.locator(NAME_TEXTBOX_XPATH).fill(appName);
+		return appName;
 	}
 
 	public static void selectApp(Page page, String appName, String timestamp) {

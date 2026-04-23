@@ -69,11 +69,10 @@ public class BISystemAppUtils {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add Database")).click();
 	}
 	
-	public static void enterDatabaseName(Page page, String databaseName, String timestamp) {
-		String createdDatabaseName = databaseName + ' ' + timestamp;
+	public static void enterDatabaseName(Page page, String databaseName) {
 		Locator databaseNameTextbox = page.locator(ENTER_DATABASE_NAME_TEXTBOX_XPATH);
 		AICorePageUtils.waitFor(databaseNameTextbox);
-		databaseNameTextbox.fill(createdDatabaseName);
+		databaseNameTextbox.fill(databaseName);
 	}
 	
 	public static void uploadCSVFile(Page page) {
@@ -94,10 +93,9 @@ public class BISystemAppUtils {
 		startingPointText.hover();
 	}
 	
-	public static void searchDatabaseName(Page page, String databaseName, String timestamp) {
-		String createdDatabaseName = databaseName + ' ' + timestamp;
-		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, createdDatabaseName);
-		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", createdDatabaseName));
+	public static void searchDatabaseName(Page page, String databaseName) {
+		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, databaseName);
+		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", databaseName));
 	}
 	
 	public static void clickOnAddAllOption(Page page) {
@@ -123,9 +121,8 @@ public class BISystemAppUtils {
 	
 	// createdInsightName does not have " " whitespace separator between the name and timestamp,
 	// unlike appNameTesting (in CreateAppPopupUtils.java) and createdDatabaseName (in this file)
-	public static void enterInsightName(Page page, String insightName, String timestamp) {
-		String createdInsightName = insightName + timestamp;
-		page.fill(INSIGHT_NAME_TEXTBOX_ID, createdInsightName);
+	public static void enterInsightName(Page page, String insightName) {
+		page.fill(INSIGHT_NAME_TEXTBOX_ID, insightName);
 	}
 	
 	public static void selectProjectName(Page page, String projectName, String timestamp) {
