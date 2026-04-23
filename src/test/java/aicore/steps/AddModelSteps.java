@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
+import aicore.base.GenericSetupUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
 import aicore.pages.ViewCatalogPage;
@@ -742,6 +743,43 @@ public class AddModelSteps {
 		} else {
 			Assertions.assertEquals(expectedToastMessage, actualMessage, "Delete message doesn't match");
 		}
+	}
+
+	@Then("User should see {string} on Pending Requests section")
+	public void User_should_see_on_Pending_Requests_section(String expectedText) {
+		String actualCountWithText = openModelPage.getpendingRequestCountText();
+		Assertions.assertEquals(expectedText, actualCountWithText, "Pending request text not correct");
+	}
+
+	@When("User clicks on the pending request expand button")
+	public void User_clicks_on_the_pending_request_expand_button() {
+		openModelPage.clickOnPendingRequestsExpandButton();
+	}
+
+	@When("User clicks on {string} option in the Actions column")
+	public void User_clicks_on_option_in_the_Actions_column(String action) {
+		openModelPage.performActionOnPendingRequest(action);
+	}
+
+	@Then("User should see the {string} user in the Members list with {string} permission")
+	public void User_should_see_the_user_in_the_Members_list_with_permission(String role, String permissionGranted) {
+		boolean isUserDisplayed = openModelPage.isUserDisplayedInListAfterRequestAction(role, permissionGranted,
+				GenericSetupUtils.useDocker());
+		Assertions.assertTrue(isUserDisplayed,
+				"User is not displayed in the members list with the provided permission");
+	}
+
+	@Then("User should not see the {string} user in the Members list with {string} permission")
+	public void User_should_not_see_the_user_in_the_Members_list_with_permission(String role,
+			String permissionGranted) {
+		boolean isUserDisplayed = openModelPage.isUserDisplayedInListAfterRequestAction(role, permissionGranted,
+				GenericSetupUtils.useDocker());
+		Assertions.assertFalse(isUserDisplayed, "User is displayed in the members list with the requested permission");
+	}
+
+	@When("User change the requested access role to {string} role")
+	public void User_change_the_requested_access_role_to_role(String newRole) {
+		openModelPage.changeRequestedAccessRole(newRole);
 	}
 
 	@And("User clicks on Generate MCP button")

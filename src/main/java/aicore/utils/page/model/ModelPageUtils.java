@@ -62,7 +62,7 @@ public class ModelPageUtils {
 	}
 
 	public static String modelCreationToastMessage(Page page, String toastMessage) {
-		Locator alert = page.locator(MODEL_TOAST_MESSAGE_TESTID.replace("{toastMessage}", toastMessage));
+		Locator alert = page.locator(MODEL_TOAST_MESSAGE_TESTID.replace("{toastMessage}", toastMessage)).first();
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
