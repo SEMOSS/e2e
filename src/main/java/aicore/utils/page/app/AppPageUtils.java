@@ -33,13 +33,14 @@ public class AppPageUtils {
 	private static final String LAST_EDITED_DATE_XPATH = "//p[text()='{lastEditedDate}']";
 	private static final String MORE_VERTICAL_OPTIONS_XPATH = "//div[text()='{optionName}']";
 	private static final String FILTER_OPTION_XPATH = "//button[@data-slot='popover-trigger']";
-	private static final String APPS_NAME_XPATH = "//button//h3";
+	private static final String APPS_NAME_XPATH = "//button//h3 | //img/../..//div[1]//p";
 	private static final String SORT_BY_DROPDOWN_XPATH = "[aria-label='Sort By']";
 	private static final String SORT_BY_OPTION_XPATH = "//div[@role='option']//span[text()='{optionName}']";
 	private static final String CARDS_VIEW_OPTIONS_XPATH = "//button[@aria-label='{view}']";
 	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
 	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//span[text()='{option}']";
 	private static final String APP_SETTINGS_SUBMIT_TESTID = "save";
+	private static final String DATE_CREATED_XPATH = "//button[@title='Private engine']/../../../div[1]//div[2]//span[contains(text(),'2026')]";
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
@@ -335,7 +336,7 @@ public class AppPageUtils {
 	}
 
 	public static boolean verifySortedByDateCreated(Page page, boolean ascending) {
-        Locator dateCreatedLocator = page.locator("//p[contains(text(),'Date Created')]");
+        Locator dateCreatedLocator = page.locator(DATE_CREATED_XPATH);
         int appCount = dateCreatedLocator.count();
         String previousDateStr = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH);

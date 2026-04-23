@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.GuardrailPage;
 import aicore.pages.home.MainMenuUtils;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -34,6 +35,15 @@ public class AddGuardrailSteps {
 	@When("User enters guardrail Catalog Name as {string}")
 	public void user_enters_guardrail_catalog_name_as(String catalogName) {
 		guardrailPage.enterCatalogName(catalogName + timestamp);
+	}
+
+	@Given("User created {string} guardrail with the {string} guardrail, catalog name {string}, NER Labels {string}, Default Threshold {string}")
+	public void user_created_models_with_the_catalog_name_open_ai_key_and_variable_name(String guardrailCount, String guardrailType,
+			 String catalogName, String nerLabels, String defaultThreshold) {
+		for (int i = 1; i <= Integer.parseInt(guardrailCount); i++) {
+			String catalogNameWithTimestamp = catalogName + System.currentTimeMillis();
+			guardrailPage.createGuardrail(guardrailType, catalogNameWithTimestamp, nerLabels, defaultThreshold);
+		}
 	}
 
 	@When("User enters NER Labels as {string} and presses Enter")
