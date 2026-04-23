@@ -23,6 +23,7 @@ public class BISystemAppUtils {
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "(//input[@type='file'])[2]";
 	private static final String DATABASE_CREATED_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 	private static final String SELECT_STARTING_POINT_TEXT_XPATH = "//span[text()='Select a Starting Point']";
+	private static final String EXCEL_OPTION_XPATH = "//div[@class='smss-block__text']//span[text()='Excel']";
 
 
 	// insight options
@@ -138,6 +139,15 @@ public class BISystemAppUtils {
 	public static String verifySavedInsightSuccessMsg(Page page) {
 		Locator toast = page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).last();
 		return toast.textContent().trim();
+	}
+	
+	public static void selectExcelOption(Page page) {
+		page.click(EXCEL_OPTION_XPATH);
+	}
+	
+	public static void uploadExcelFile(Page page) {
+		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH,
+				Paths.get(ConfigUtils.getValue(AICoreTestConstants.BI_IMPORT_EXCEL_FILE)));
 	}
 	
 	
