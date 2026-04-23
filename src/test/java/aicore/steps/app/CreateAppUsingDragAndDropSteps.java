@@ -1,12 +1,11 @@
 package aicore.steps.app;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -19,7 +18,6 @@ import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -996,22 +994,36 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.clickOnFilterButton(filterName);
 	}
 
-	@Then("User can see the apps are sorted in ascending order")
-	public void user_can_see_the_apps_are_sorted_in_ascending_order() {
+	@Then("User can see the {string} are sorted in ascending order")
+	public void user_can_see_the_apps_are_sorted_in_ascending_order(String catalogName) {
 		boolean isSortedInAscendingOrder = appPage.verifyAppsSortedInAscendingOrder();
-		Assertions.assertTrue(isSortedInAscendingOrder, "Apps are not sorted in ascending order");
+		Assertions.assertTrue(isSortedInAscendingOrder, catalogName + " are not sorted in ascending order");
 	}
 
-	@Then("User can see the apps are sorted in descending order")
-	public void user_can_see_the_apps_are_sorted_in_descending_order() {
+	@Then("User can see the {string} are sorted in descending order")
+	public void user_can_see_the_apps_are_sorted_in_descending_order(String catalogName) {
 		boolean isSortedInDescendingOrder = appPage.verifyAppsSortedInDescendingOrder();
-		Assertions.assertTrue(isSortedInDescendingOrder, "Apps are not sorted in descending order");
+		Assertions.assertTrue(isSortedInDescendingOrder, catalogName + " are not sorted in descending order");
 	}
 
 	@Then("User can see the apps are sorted by date last Edited")
 	public void then_user_can_see_the_apps_are_sorted_by_date_last_edited() {
 		boolean isSortedByDateLastEdited = appPage.verifyAppsSortedByDateLastEdited();
 		Assertions.assertTrue(isSortedByDateLastEdited, "Apps are not sorted by date last edited");
+	}
+
+	@Then("User can see the {string} are sorted by date created in {string} order")
+	public void user_can_see_the_apps_are_sorted_by_date_created(String catalogName, String order) {
+		if (order.equalsIgnoreCase("ascending")) {
+			boolean isSortedByDateCreatedAsc = appPage.verifySortedByDateCreated(true);
+			Assertions.assertTrue(isSortedByDateCreatedAsc, catalogName + " are not sorted by date created in ascending order");
+		} else if (order.equalsIgnoreCase("descending")) {
+			boolean isSortedByDateCreatedDesc = appPage.verifySortedByDateCreated(false);
+			Assertions.assertTrue(isSortedByDateCreatedDesc, catalogName + " are not sorted by date created in descending order");
+		} else {
+			Assertions.fail("Invalid sort order: " + order);
+		}
+		
 	}
 
 	@Then("User selects {string} from the Sort By dropdown")

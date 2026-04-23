@@ -229,7 +229,7 @@ public class AppPageUtils {
 		page.getByTitle(filterName + " Order").click();
 	}
 
-	public static boolean verifyAppsSortedInAscendingOrder(Page page) {
+	public static boolean verifySortedInAscendingOrder(Page page) {
 		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
 		int appCount = appNamesLocator.count();
 		String previousAppName = "";
@@ -243,7 +243,7 @@ public class AppPageUtils {
 		return true;
 	}
 
-	public static boolean verifyAppsSortedInDescendingOrder(Page page) {
+	public static boolean verifySortedInDescendingOrder(Page page) {
 		Locator appNamesLocator = page.locator(APPS_NAME_XPATH);
 		int appCount = appNamesLocator.count();
 		String previousAppName = null;
@@ -333,4 +333,30 @@ public class AppPageUtils {
 		optionLocator.waitFor();
 		optionLocator.click();
 	}
+
+	public static boolean verifySortedByDateCreated(Page page, boolean ascending) {
+        Locator dateCreatedLocator = page.locator("//p[contains(text(),'Date Created')]");
+        int appCount = dateCreatedLocator.count();
+        String previousDateStr = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH);
+
+        for (int i = 0; i < appCount; i++) {
+            String currentDateStr = dateCreatedLocator.nth(i).textContent().trim();
+            if (previousDateStr != null) {
+                LocalDate previousDate = LocalDate.parse(previousDateStr, formatter);
+                LocalDate currentDate = LocalDate.parse(currentDateStr, formatter);
+                if (ascending) {
+                    if (currentDate.isBefore(previousDate)) {
+                        return false;
+                    }
+                } else {
+                    if (currentDate.isAfter(previousDate)) {
+                        return false;
+                    }
+                }
+            }
+            previousDateStr = currentDateStr;
+        }
+        return true;
+    }
 }
