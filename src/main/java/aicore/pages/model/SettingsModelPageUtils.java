@@ -48,6 +48,7 @@ public class SettingsModelPageUtils {
 	private static final String SEARCH_MEMBER_XPATH = "//input[@data-slot='input-group-control']";
 	private static final String USER_NAME_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]";
 	private static final String USER_ROLE_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]//td//button//span[text()='{role}']";
+	private static final String REQUESTED_ACCESS_ROLE_RADIO_BUTTON_DATATESTID = "{role}-radio";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -272,10 +273,13 @@ public class SettingsModelPageUtils {
 		default:
 			throw new IllegalArgumentException("Invalid action: " + action + ". Expected 'approve' or 'reject'.");
 		}
-		page.getByTestId(PENDING_REQUESTS_ACTION_BUTTON_DATATESTID.replace("{action}", actionNameForTestID)).click();
+		Locator actionButton = page
+				.getByTestId(PENDING_REQUESTS_ACTION_BUTTON_DATATESTID.replace("{action}", actionNameForTestID));
+		actionButton.scrollIntoViewIfNeeded();
+		actionButton.click();
 	}
 
-	public static boolean verifyRequestAcceptedUserDisplayedInList(Page page, String role, String permissionGranted,
+	public static boolean isUserDisplayedInListAfterRequestAction(Page page, String role, String permissionGranted,
 			boolean useDocker) {
 		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME").split("@")[0];
 		if (useDocker) {
@@ -285,24 +289,36 @@ public class SettingsModelPageUtils {
 			page.fill(SEARCH_MEMBER_XPATH, username);
 		}
 		page.waitForTimeout(2000);
-		page.isVisible(USER_NAME_IN_MEMBER_LIST_XPATH.replace("{username}", username));
-		if (role.equalsIgnoreCase("Read")) {
-			role = "readonly";
+		Locator userRow = page.locator(USER_NAME_IN_MEMBER_LIST_XPATH.replace("{username}", username));
+		if (userRow.isVisible()) {
+			switch (permissionGranted.toLowerCase()) {
+			case "author":
+				permissionGranted = "Owner";
+				break;
+			case "editor":
+				permissionGranted = "Editor";
+				break;
+			case "read":
+				permissionGranted = "Viewer";
+				break;
+			}
+			return page.locator(
+					USER_ROLE_IN_MEMBER_LIST_XPATH.replace("{username}", username).replace("{role}", permissionGranted))
+					.isVisible();
+		} else {
+			return false;
 		}
-		switch (permissionGranted.toLowerCase()) {
-		case "author":
-			permissionGranted = "Owner";
-			break;
-		case "editor":
-			permissionGranted = "Editor";
-			break;
-		case "read":
-			permissionGranted = "Viewer";
-			break;
+	}
+
+	public static void changeRequestedAccessRole(Page page, String newRole) {
+		if (newRole.equalsIgnoreCase("read")) {
+			newRole = "read-only";
 		}
-		return page.locator(
-				USER_ROLE_IN_MEMBER_LIST_XPATH.replace("{username}", username).replace("{role}", permissionGranted))
-				.isVisible();
+		Locator roleRadioButton = page
+				.getByTestId(REQUESTED_ACCESS_ROLE_RADIO_BUTTON_DATATESTID.replace("{role}", newRole));
+		AICorePageUtils.waitFor(roleRadioButton);
+		roleRadioButton.scrollIntoViewIfNeeded();
+		roleRadioButton.click();
 	}
 
 }

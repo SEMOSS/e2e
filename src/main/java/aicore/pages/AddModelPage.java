@@ -524,8 +524,11 @@ public class AddModelPage {
 		SettingsModelPageUtils.performActionOnPendingRequest(page, action);
 	}
 
-	public boolean verifyRequestAcceptedUserDisplayedInList(String role, String permissionGranted, boolean useDocker) {
-		return SettingsModelPageUtils.verifyRequestAcceptedUserDisplayedInList(page, role, permissionGranted,
-				useDocker);
+	public boolean isUserDisplayedInListAfterRequestAction(String role, String permissionGranted, boolean useDocker) {
+		return SettingsModelPageUtils.isUserDisplayedInListAfterRequestAction(page, role, permissionGranted, useDocker);
+	}
+
+	public void changeRequestedAccessRole(String newRole) {
+		SettingsModelPageUtils.changeRequestedAccessRole(page, newRole);
 	}
 }

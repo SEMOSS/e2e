@@ -763,10 +763,23 @@ public class AddModelSteps {
 
 	@Then("User should see the {string} user in the Members list with {string} permission")
 	public void User_should_see_the_user_in_the_Members_list_with_permission(String role, String permissionGranted) {
-		boolean isUserDisplayed = openModelPage.verifyRequestAcceptedUserDisplayedInList(role, permissionGranted,
+		boolean isUserDisplayed = openModelPage.isUserDisplayedInListAfterRequestAction(role, permissionGranted,
 				GenericSetupUtils.useDocker());
 		Assertions.assertTrue(isUserDisplayed,
 				"User is not displayed in the members list with the provided permission");
+	}
+
+	@Then("User should not see the {string} user in the Members list with {string} permission")
+	public void User_should_not_see_the_user_in_the_Members_list_with_permission(String role,
+			String permissionGranted) {
+		boolean isUserDisplayed = openModelPage.isUserDisplayedInListAfterRequestAction(role, permissionGranted,
+				GenericSetupUtils.useDocker());
+		Assertions.assertFalse(isUserDisplayed, "User is displayed in the members list with the requested permission");
+	}
+
+	@When("User change the requested access role to {string} role")
+	public void User_change_the_requested_access_role_to_role(String newRole) {
+		openModelPage.changeRequestedAccessRole(newRole);
 	}
 
 }
