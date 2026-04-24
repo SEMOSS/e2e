@@ -9,6 +9,7 @@ import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
+import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 
 public class DatabaseTestUtils {
@@ -29,14 +30,7 @@ public class DatabaseTestUtils {
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
-		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		return dbID;
+		return getDatabaseID(page, dbName);
 	}
 	
 	public static String addFlatCsv(Page page, String dbName, String fileName, String dbType, String metaModelType) {
@@ -57,6 +51,18 @@ public class DatabaseTestUtils {
 		// validate the db created
 		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
 		AICorePageUtils.clickOnButton(page, "Import");
+		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
+		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		return dbID;
+	}
+	
+	public static String getDatabaseID(Page page, String dbName) {
+		HomePageUtils.navigateToHomePage(page);
+		MainMenuUtils.openMainMenu(SetupHooks.getPage());
+		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
+		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
 		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);

@@ -13,10 +13,10 @@ import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
 	private static final String CODE_APP_GET_STARTED_BUTTON_XPATH = "//div[@data-slot='card' and .//div[@data-slot='card-title' and normalize-space(.)='Develop in code']]//button[normalize-space(.)='Get Started']";
-	public static final String NAME_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiFormControl-fullWidth')]//label[text()='Name']";
-	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
-	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
-	private static final String CREATE_BUTTON_XPATH = "//button[span[text()='Create']]";
+	public static final String NAME_TEXTBOX_XPATH = "newAppModal-textField-name";
+	private static final String DESCRIPTION_TEXTBOX_XPATH = "newAppModal-description-txt";
+	private static final String TAG_TEXTBOX_XPATH = "newAppModal-tag-txt";
+	private static final String CREATE_BUTTON_XPATH = "newAppModal-create-btn";
 	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
 	private static final String SELECT_APP_XPATH = "//*[text()='{Select_App}']";
 	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//div";
@@ -35,9 +35,9 @@ public class CreateAppPopupUtils {
 		}
 	}
 
-	public static String enterAppName(Page page, String appName) {
-		page.locator(NAME_TEXTBOX_XPATH).fill(appName);
-		return appName;
+	public static void enterAppName(Page page, String appName) {
+		Locator locator = page.getByTestId(NAME_TEXTBOX_XPATH);
+		locator.fill(appName);
 	}
 
 	public static void selectApp(Page page, String appName, String timestamp) {
@@ -48,7 +48,8 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterAppDescription(Page page, String appDescription) {
-		page.locator(DESCRIPTION_TEXTBOX_XPATH).fill(appDescription);
+		Locator locator = page.getByTestId(DESCRIPTION_TEXTBOX_XPATH);
+		locator.fill(appDescription);
 	}
 
 	public static void enterTags(Page page, String tags) {
@@ -59,13 +60,15 @@ public class CreateAppPopupUtils {
 	}
 	
 	public static void enterTag(Page page, String tag) {
-		page.locator(TAG_TEXTBOX_XPATH).fill(tag);
+		Locator locator = page.getByTestId(TAG_TEXTBOX_XPATH);
+		locator.fill(tag);
 		page.keyboard().press("Enter");
 	}
 
 
 	public static void clickOnCreateButton(Page page) {
-		page.locator(CREATE_BUTTON_XPATH).click();
+		Locator locator = page.getByTestId(CREATE_BUTTON_XPATH);
+		locator.click();
 	}
 
 	public static String userFetchAppName(Page page) {

@@ -5,9 +5,12 @@ import java.nio.file.Paths;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
+import aicore.pages.home.HomePageUtils;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
 
 public class BISystemAppUtils {
@@ -41,7 +44,14 @@ public class BISystemAppUtils {
 	private static final String INSIGHT_SAVE_BUTTON_XPATH = "//div[@class='smss-action workspace-save__action']//span[normalize-space(text())='Save']";
 	private static final String INSIGHT_SAVE_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 
-
+	public static void navigateToBIApp(Page page) {
+		HomePageUtils.navigateToHomePage(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenAppLibrary(page);
+		HomePageUtils.clickOnSystemApp(page);
+		HomePageUtils.clickOnBIApp(page);
+		BISystemAppUtils.closeWelcomePopup(page);
+	}
 	
 	public static void closeWelcomePopup(Page page) {
 		// accepting browser cookies
@@ -52,10 +62,9 @@ public class BISystemAppUtils {
 
 		// welcome popup
 		try {
-			boolean popUp = page.locator(WELCOME_POPUP_CLOSE_XPATH).isVisible();
-			if (popUp) {
-				page.click(WELCOME_POPUP_CLOSE_XPATH);
-			}
+			Locator closeBtn = page.locator(WELCOME_POPUP_CLOSE_XPATH);
+			AICorePageUtils.waitFor(closeBtn);
+			closeBtn.click();
 		} catch (Exception e) {
 			// no popup
 		}

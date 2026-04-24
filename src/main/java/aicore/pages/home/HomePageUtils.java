@@ -73,15 +73,11 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnBIApp(Page page) {
-		String useDocker = ConfigUtils.getValue(AICoreTestConstants.USE_DOCKER);
-		if (useDocker.equals("true")) {
-			page.click(BI_APP_XPATH);
-		} else {
-			String bi = UrlUtils.getBaseFrontendUrl("packages/legacy/dist/#!/");
-			page.navigate(bi);
-			page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-			page.waitForLoadState(LoadState.NETWORKIDLE);
-		}
+		// TODO switch to clicking on app
+		String bi = UrlUtils.getBaseFrontendUrl("packages/legacy/dist/#!/");
+		page.navigate(bi);
+		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.NETWORKIDLE);
 	}
 
 	public static void clickOnBuildButton(Page page) {
