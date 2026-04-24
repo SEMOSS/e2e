@@ -180,4 +180,24 @@ public class CatalogPermissionsPage {
 	public void clickOnCopyButtonForSection(String sectionName) {
 		CatlogAccessPageUtility.clickOnCopyButtonForSection(page, sectionName);
 	}
+
+	public boolean canSeeCommitsTab() {
+		return CatlogAccessPageUtility.canSeeCommitsTab(page);
+	}
+
+	public void clickOnCommitsTab() {
+		CatlogAccessPageUtility.clickOnCommitsTab(page);
+	}
+
+	public boolean getCommitMessage(String expectedMessage) {
+		return CatlogAccessPageUtility.getCommitMessage(page, expectedMessage);
+	}
+
+	public boolean isCommitHistoryTitleVisible(String expectedTitle) {
+		return CatlogAccessPageUtility.isCommitHistoryTitleVisible(page, expectedTitle);
+	}
+
+	public void clickOnThePageForApp(String pageName) {
+		CatlogAccessPageUtility.clickOnThePageForApp(page, pageName);
+	}
 }

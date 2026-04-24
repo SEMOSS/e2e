@@ -519,4 +519,33 @@ public class CatalogAccessStep {
 			addFunctionToCatalogPage.closeToastMessage();
 		}
 	}
+
+	@And("User can sees the Commits tab")
+	public void user_can_see_the_Commits_tab() {
+		boolean canSeeCommitsTab = catlogpermission.canSeeCommitsTab();
+		Assertions.assertTrue(canSeeCommitsTab, "Commits tab is not visible");
+	}
+
+	@And("User clicks on the Commits tab")
+	public void user_clicks_on_Commits_tab() {
+		catlogpermission.clickOnCommitsTab();
+	}
+
+	@And("User can sees the Commits section with message {string}")
+	public void user_can_see_the_Commits_section_with_message(String expectedMessage) {
+		boolean actualMessage = catlogpermission.getCommitMessage(expectedMessage);
+		Assertions.assertTrue(actualMessage,
+				"Expected commit message '" + expectedMessage + "' is not visible in Commits section");
+	}
+
+	@And("User can sees the {string} as title")
+	public void user_can_see_the_title(String expectedTitle) {
+		boolean isTitleVisible = catlogpermission.isCommitHistoryTitleVisible(expectedTitle);
+		Assertions.assertTrue(isTitleVisible, "Expected title '" + expectedTitle + "' is not visible");
+	}
+
+	@And("User clicks on the {string} for app")
+	public void user_clicks_on_the_page_for_app(String pageName) {
+		catlogpermission.clickOnThePageForApp(pageName);
+	}
 }

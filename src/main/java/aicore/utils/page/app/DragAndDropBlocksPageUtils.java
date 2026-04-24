@@ -33,7 +33,7 @@ public class DragAndDropBlocksPageUtils {
 	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
 	private static final String TERMINAL_XPATH = "//div[contains(text(),'Terminal')]";
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
-	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
+	private static final String SAVE_APP_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
@@ -154,7 +154,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_SHOW_TITLE_XPATH = "//span[@title='Show Title']//input";
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[contains(@class,'button--selected')]//div[text()='Block Settings']";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}'] | //div[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
@@ -437,8 +437,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnSaveAppButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true))
-				.click();
+		page.locator(SAVE_APP_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnSaveQueryButton(Page page) {
