@@ -14,7 +14,6 @@ Feature: Notebook Validate Database Operations
     And User can see the Catalog title as 'TestDatabase'
     When User clicks on MetaData tab
     And User clicks on Refresh button
-    And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
     When User clicks on Save button of Metadata tab
@@ -24,7 +23,7 @@ Feature: Notebook Validate Database Operations
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     Then User can see 'page-1' with the text 'Welcome to the UI Builder! Drag and drop blocks to use in your app.'
 
   Scenario: Validate import db query functionality
@@ -48,8 +47,7 @@ Feature: Notebook Validate Database Operations
     And User clicks on Run cell button
     Then User sees the output of the executed query where 'AGE' is '50'
     And User sees the output of the executed query where 'BLOODPRESSURE' is '90'
-    
-    
+
   Scenario: Import Data
     Given User is on Home page
     When User opens Main Menu
@@ -81,7 +79,7 @@ Feature: Notebook Validate Database Operations
     And User can see type as 'PY' for 'Python' in JSON
     When User clicks on the Save App icon
 
- Scenario: Import Data - Edit button
+  Scenario: Import Data - Edit button
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library

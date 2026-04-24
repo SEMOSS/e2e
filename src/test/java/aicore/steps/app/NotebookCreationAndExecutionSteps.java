@@ -243,8 +243,8 @@ public class NotebookCreationAndExecutionSteps {
 				Assertions.fail("Column value for " + columnName + " is not numeric: " + cleaned);
 				return;
 			}
-			Assertions.assertTrue(numericValue >= min,
-					"Expected " + columnName + " value to be greater than or equal to " + minValue + " but found " + numericValue);
+			Assertions.assertTrue(numericValue >= min, "Expected " + columnName
+					+ " value to be greater than or equal to " + minValue + " but found " + numericValue);
 		}
 	}
 

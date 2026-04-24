@@ -11,6 +11,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.SelectOption;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.AICoreTestConstants;
@@ -26,7 +27,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='{pageName}']";
 	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
-	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";
+	private static final String EDIT_BUTTON_DATATESTID = "viewAppPage-edit-btn";
 	public static final String PREVIEW_APP_BUTTON_DATA_TEST_ID = "PlayArrowIcon";
 	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
 	public static final String SAVE_APP_BUTTON_DATA_TEST_ID = "SaveOutlinedIcon";
@@ -154,7 +155,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_SHOW_TITLE_XPATH = "//span[@title='Show Title']//input";
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[contains(@class,'button--selected')]//div[text()='Block Settings']";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}'] | //div[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
@@ -168,6 +169,12 @@ public class DragAndDropBlocksPageUtils {
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
 	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
 	private static final String ICON_OPTION_FROM_GENERAL_SETTING_XPATH = "//p[text()='{optionName}']/following::input";
+	private static final String EXPORT_BUTTON_XPATH = "//div[contains(@class,'button--unselected')]//div[text()='Export']";
+	private static final String EXPORT_DATA_SECTION_XPATH = "//h6[text()='Export Data']/ancestor::div[@class='flexlayout__tab_moveable']";
+	private static final String EXPORTED_FILE_IN_NOTEBOOK_SECTION_XPATH = "//span[text()='export_{frameId}_{fileType}']";
+	private static final String SELECT_FILE_OPTION_XPATH = "//select[contains(@class,'w-full rounded border')]";
+	private static final String SELECT_FRAME_OPTION_XPATH = "//select[contains(@id,'export-frame-select')]";
+	private static final String CLICK_ON_EXPORT_BUTTON_XPATH = "//button[text()='{buttonName}']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -194,8 +201,9 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnEditButton(Page page) {
-		page.locator(EDIT_BUTTON_XPATH).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(EDIT_BUTTON_XPATH).click();
+		page.getByTestId(EDIT_BUTTON_DATATESTID)
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.getByTestId(EDIT_BUTTON_DATATESTID).click();
 	}
 
 	public static void clickOnBlocksOption(Page page) {
@@ -1063,7 +1071,10 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnBlockSettingsOption(Page page) {
-		page.locator(BLOCK_SETTINGS_XPATH).click();
+		Locator blockSetting = page.locator(BLOCK_SETTINGS_XPATH);
+		if (blockSetting.isVisible()) {
+			blockSetting.click();
+		}
 	}
 
 	public static void deleteBlockOnPage(Page page, String blockName) {
@@ -1152,6 +1163,40 @@ public class DragAndDropBlocksPageUtils {
 		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("IconShow Badge"))
 				.getByRole(AriaRole.COMBOBOX).click();
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(value)).click();
+	}
+
+	public static void clickOnExportOption(Page page) {
+		Locator exportOptionLocator = page.locator(EXPORT_BUTTON_XPATH);
+		if (exportOptionLocator.isVisible()) {
+			exportOptionLocator.click();
+		}
+	}
+
+	public static boolean isExportDataSectionVisible(Page page) {
+		Locator exportDataSection = page.locator(EXPORT_DATA_SECTION_XPATH);
+		return exportDataSection.isVisible();
+	}
+
+	public static boolean isExportedFileVisibleInNotebookSection(Page page, String frameId, String fileType) {
+		Locator exportedFile = page.locator(EXPORTED_FILE_IN_NOTEBOOK_SECTION_XPATH.replace("{frameId}", frameId).replace("{fileType}", fileType));
+		return exportedFile.isVisible();
+	}
+
+	public static void selectFileTypeAs(Page page, String fileType) {
+		Locator fileTypeDropdown = page.locator(SELECT_FILE_OPTION_XPATH);
+		fileTypeDropdown.click();
+		fileTypeDropdown.selectOption(new SelectOption().setValue(fileType));
+	}
+
+	public static void selectFrameForExportData(Page page, String frameId) {
+		Locator frameOption = page.locator(SELECT_FRAME_OPTION_XPATH);
+		frameOption.click();
+		frameOption.selectOption(new SelectOption().setValue(frameId));
+	}
+
+	public static void clickOnExportOption(Page page, String exportOption) {
+		Locator exportOptionLocator = page.locator(CLICK_ON_EXPORT_BUTTON_XPATH.replace("{buttonName}", exportOption));
+		exportOptionLocator.click();
 	}
 
 }

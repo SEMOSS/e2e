@@ -109,7 +109,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@And("User enters tags {string} and presses Enter")
 	public void user_enters_tags_and_presses_enter(String tags) {
-			appCreatePopup.enterTags(tags);
+		appCreatePopup.enterTags(tags);
 	}
 
 	@And("User add {string} app with details {string} {string} {string} {string}")
@@ -1045,6 +1045,39 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User select value as {string} for {string} option from General Setting")
 	public void user_select_value_as_for_option_from_general_setting(String value, String optionName) {
 		blocksPage.selectValueForsettingOption(value, optionName);
+	}
+
+	@And("User clicks on Export option")
+	public void user_clicks_on_export_option() {
+		blocksPage.clickOnExportOption();
+	}
+
+	@And("User can sees the Export Data section")
+	public void user_can_sees_the_export_data_section() {
+		boolean isExportDataSectionVisible = blocksPage.isExportDataSectionVisible();
+		Assertions.assertTrue(isExportDataSectionVisible, "Export Data section is not visible");
+	}
+
+	@And("User can sees the exported file in Notebook section with expected frame and file type as {string}")
+	public void user_can_sees_the_exported_file_in_notebook_section(String filetype) {
+		boolean isExportedFileVisible = blocksPage
+				.isExportedFileVisibleInNotebookSection(NotebookCreationAndExecutionSteps.frameID, filetype);
+		Assertions.assertTrue(isExportedFileVisible, "Exported file is not visible in Notebook section");
+	}
+
+	@And("User Select the file type as {string}")
+	public void user_select_the_file_type_as(String fileType) {
+		blocksPage.selectFileTypeAs(fileType);
+	}
+
+	@And("User select the frame for export data")
+	public void user_select_the_frame_for_export_data() {
+		blocksPage.selectFrameForExportData(NotebookCreationAndExecutionSteps.frameID);
+	}
+
+	@And("User clicks on {string} for Export Data")
+	public void user_clicks_on_for_export_data(String exportOption) {
+		blocksPage.clickOnExportOption(exportOption);
 	}
 
 }
