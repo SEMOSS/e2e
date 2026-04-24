@@ -24,7 +24,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final Logger logger = LogManager.getLogger(DragAndDropBlocksPageUtils.class);
 
 	private static final String PAGE_1_ID = "#page-1";
-	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='{pageName}']";
+	private static final String PAGE_SELECTION_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')]//div[text()='{pageName}']";
 	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_DATATESTID = "viewAppPage-edit-btn";
@@ -34,7 +34,7 @@ public class DragAndDropBlocksPageUtils {
 	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
 	private static final String TERMINAL_XPATH = "//div[contains(text(),'Terminal')]";
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
-	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
+	private static final String SAVE_APP_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
 
 	// Blocks section
 	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
@@ -445,8 +445,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnSaveAppButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(SAVE_APP_BUTTON_NAME).setExact(true))
-				.click();
+		page.locator(SAVE_APP_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnSaveQueryButton(Page page) {
