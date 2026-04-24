@@ -134,9 +134,9 @@ public class BISystemAppUtils {
 		page.fill(INSIGHT_NAME_TEXTBOX_ID, insightName);
 	}
 	
-	public static void selectProjectName(Page page, String projectName, String timestamp) {
+	public static void selectProjectName(Page page, String projectName) {
 		page.click(PROJECT_NAME_DROPDOWN_XPATH);
-		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, projectName + " " + timestamp);
+		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, projectName);
 		page.waitForSelector(PROJECT_SEARCH_LIST_XPATH);
 		page.click(PROJECT_SEARCH_LIST_XPATH);
 		page.click(INSIGHT_SAVE_BUTTON_XPATH);
