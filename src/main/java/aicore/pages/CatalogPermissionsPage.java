@@ -197,7 +197,4 @@ public class CatalogPermissionsPage {
 		return CatlogAccessPageUtility.isCommitHistoryTitleVisible(page, expectedTitle);
 	}
 
-	public void clickOnThePageForApp(String pageName) {
-		CatlogAccessPageUtility.clickOnThePageForApp(page, pageName);
-	}
 }

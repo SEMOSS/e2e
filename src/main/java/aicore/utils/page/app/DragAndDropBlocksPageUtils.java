@@ -23,7 +23,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final Logger logger = LogManager.getLogger(DragAndDropBlocksPageUtils.class);
 
 	private static final String PAGE_1_ID = "#page-1";
-	private static final String PAGE_SELECTION_XPATH = "//div[@class='flexlayout__tab_button_content workspace_layout' and text()='{pageName}']";
+	private static final String PAGE_SELECTION_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')]//div[text()='{pageName}']";
 	private static final String BLOCK_SEARCH_BOX_XPATH = "//*[@data-testid='TuneIcon']/../../../..//input[@placeholder='Search']";
 	private static final String WELCOME_TEXT_BLOCK_TEXT = "Welcome to the UI Builder! Drag and drop blocks to use in your app.";
 	private static final String EDIT_BUTTON_XPATH = "//a[span[text()='Edit']]";

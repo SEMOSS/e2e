@@ -54,7 +54,6 @@ public class CatlogAccessPageUtility {
 	private static final String COMMITS_TAB_XPATH = "//button[normalize-space()='Commits']";
 	private static final String COMMIT_TAB_TITLE_XPATH = "//h4[normalize-space()='{title}']";
 	private static final String COMMIT_MESSAGE_XPATH = "//h4[text()='Commit History']/ancestor::div//span[contains(text(),'{message}')]";
-	private static final String CLICK_ON_PAGE_UNDER_APP_XPATH = "//div[contains(@class,'flexlayout__tab_button_top')]//div[text()='{pageName}']";
 
 	public static boolean canViewOverview(Page page) {
 		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
@@ -337,7 +336,4 @@ public class CatlogAccessPageUtility {
 		return titleLocator.isVisible();
 	}
 
-	public static void clickOnThePageForApp(Page page, String pageName) {
-		page.locator(CLICK_ON_PAGE_UNDER_APP_XPATH.replace("{pageName}", pageName)).click();
-	}
 }

@@ -544,8 +544,4 @@ public class CatalogAccessStep {
 		Assertions.assertTrue(isTitleVisible, "Expected title '" + expectedTitle + "' is not visible");
 	}
 
-	@And("User clicks on the {string} for app")
-	public void user_clicks_on_the_page_for_app(String pageName) {
-		catlogpermission.clickOnThePageForApp(pageName);
-	}
 }

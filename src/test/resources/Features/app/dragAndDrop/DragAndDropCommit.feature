@@ -20,10 +20,10 @@ Feature: Drag and Drop App Setting - Commit tab
     And User can sees the 'Commit History' as title
     And User can sees the Commits section with message 'Initial creation of project'
     When User clicks on Blocks if it is not selected by default
-    And User clicks on the 'page-1' for app
+    And User clicks on 'page-1' page
     And User drags the 'Area Chart' block and drops it on the page
     And User clicks on the Save App icon
     And User refresh the page
-    And User clicks on the 'AppSettings' for app
+    And User clicks on 'AppSettings' page
     And User clicks on the Commits tab
     Then User can sees the Commits section with message 'Commited on'
