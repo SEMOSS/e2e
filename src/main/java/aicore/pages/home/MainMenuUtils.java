@@ -99,7 +99,7 @@ public class MainMenuUtils extends AbstractBasePage{
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 	
-	private static void clickOnLocatorAndCLoseMainMenu(Page page, Locator locator) {
+	public static void clickOnLocatorAndCLoseMainMenu(Page page, Locator locator) {
 		waitAndClick(locator);
 		clickAnywhereOnPage(page); // closes side-menu on main page
 	}

@@ -1,4 +1,4 @@
-package aicore.utils.page.app;
+package aicore.utils;
 
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
@@ -6,7 +6,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
 
-public class CodeAppPageUtils {
+public class UploadCatalogUtils {
 
 	private static final String FILE_UPLOAD_TESTID = "workspace-Files-image";
 	private static final String UNZIP_CHECKBOX_TESTID = "CheckBoxOutlineBlankIcon";

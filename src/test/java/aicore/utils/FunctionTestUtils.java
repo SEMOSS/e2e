@@ -13,10 +13,10 @@ import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.AbstractAddCatalogPageBase;
+import aicore.pages.CatalogCreationFromZipPage;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.model.EditModelPageUtils;
-import aicore.utils.page.app.CodeAppPageUtils;
 import io.cucumber.datatable.DataTable;
 
 public class FunctionTestUtils {
@@ -135,16 +135,15 @@ public class FunctionTestUtils {
 	}
 	
 	public static void verifyUserCanSeeFolder(Page page, String folderName) {
-		CodeAppPageUtils.userCanSeeFolder(page, folderName);
-		boolean isFolderVisible = CodeAppPageUtils.userCanSeeFolder(page, folderName);
-		Assertions.assertTrue(isFolderVisible, "Default folder is not visible");
+		boolean canSee = CatalogCreationFromZipUtil.userSeesItemInFilesList(page, folderName);
+		assertTrue(canSee, "The folder " + folderName + " was expected to be visible but was not");
 	}
 	
-	public static void verifyUserCanSeeFile(Page page, String fileName) {
-		CodeAppPageUtils.userCanSeeFile(page, fileName);
-		boolean isFileVisible = CodeAppPageUtils.userCanSeeFile(page, fileName);
-		Assertions.assertTrue(isFileVisible, "Default file is not visible");
-	}
+//	public static void verifyUserCanSeeFile(Page page, String fileName) {
+//		CodeAppPageUtils.userCanSeeFile(page, fileName);
+//		boolean isFileVisible = CodeAppPageUtils.userCanSeeFile(page, fileName);
+//		Assertions.assertTrue(isFileVisible, "Default file is not visible");
+//	}
 	
 	public static void validateSearchBar(Page page) {
 		boolean isSearchBarVisible = AddCatalogPageBaseUtils.isSearchBarPresent(page);

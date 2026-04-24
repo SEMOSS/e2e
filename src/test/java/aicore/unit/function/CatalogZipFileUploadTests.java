@@ -18,9 +18,10 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
 import aicore.utils.TestTags;
+import aicore.utils.UploadCatalogUtils;
 import aicore.utils.AbstractE2ETest.UserType;
-import aicore.utils.page.app.CodeAppPageUtils;
 
 
 /**
@@ -37,12 +38,12 @@ public class CatalogZipFileUploadTests extends AbstractE2ETest {
 
 	private static Stream<Arguments> provideInputsForAllCatalogTypes() {
 	    return Stream.of(
-	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_MODEL, "Model/Llama3-70B-Instruct.zip", "Llama3-70B-Instruct"),
-	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, "Database/TestDatabase.zip", "TestDatabase"),
-	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "Function/weatherFunctionTest.zip", "WeatherFunctionTest"),
-	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_STORAGE, "Storage/Localminio.zip", "localminio"),
-	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_VECTOR, "VectorDatabase/TestVector.zip", "TestVector"),
-	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL, "Guardrail/Gliner.zip", "Gliner")
+	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_MODEL, TestResources.LLAMA3_70B_INSTRUCT_ZIP, TestResources.LLAMA3_70B_INSTRUCT_NAME),
+	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TestResources.TEST_DATABASE_ZIP, TestResources.TEST_DATABASE_NAME),
+	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_ZIP, TestResources.WEATHER_FUNC_NAME),
+	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_STORAGE, TestResources.LOCAL_MINIO_ZIP, TestResources.LOCAL_MINIO_NAME),
+	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_VECTOR, TestResources.TEST_VECTOR_ZIP, TestResources.TEST_VECTOR_NAME),
+	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL, TestResources.GLINER_ZIP, TestResources.GLINER_NAME)
 	    		);
 	}
 	
@@ -61,34 +62,34 @@ public class CatalogZipFileUploadTests extends AbstractE2ETest {
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
 		AddFunctionPageUtils.clickOnFileTab(page);
-		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
-		CodeAppPageUtils.selectAction(page, "Upload Files");
+		UploadCatalogUtils.clickOnCreateAtIconOnFileSection(page);
+		UploadCatalogUtils.selectAction(page, "Upload Files");
 		FunctionTestUtils.userUploadsFile(page, "ModelZIP.zip");
-		CodeAppPageUtils.clickOnUploadButtonToCreateCodeApp(page, "Upload");
+		UploadCatalogUtils.clickOnUploadButtonToCreateCodeApp(page, "Upload");
 		FunctionTestUtils.verifyUserCanSeeFolder(page, "ModelZIP.zip");
-		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
-		CodeAppPageUtils.selectAction(page, "New Directory");
-		CodeAppPageUtils.enterFolderName(page, "TestFolder");
-		CodeAppPageUtils.clickOnCreateButton(page);
+		UploadCatalogUtils.clickOnCreateAtIconOnFileSection(page);
+		UploadCatalogUtils.selectAction(page, "New Directory");
+		UploadCatalogUtils.enterFolderName(page, "TestFolder");
+		UploadCatalogUtils.clickOnCreateButton(page);
 		FunctionTestUtils.verifyUserCanSeeFolder(page, "TestFolder");
-		CodeAppPageUtils.userSelectTheFolder(page, "TestFolder");
-		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
-		CodeAppPageUtils.selectAction(page, "New Directory");
-		CodeAppPageUtils.enterFolderName(page, "SubFolder");
-		CodeAppPageUtils.clickOnCreateButton(page);
-		CodeAppPageUtils.userCanSeeFolderUnderParentFolder(page, "SubFolder", "TestFolder");
-		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
-		CodeAppPageUtils.selectAction(page, "New File");
-		CodeAppPageUtils.enterFileName(page, "SubFile");
-		CodeAppPageUtils.clickOnCreateButton(page);
-		CodeAppPageUtils.userCanSeeFileUnderParentFolder(page, "SubFile", "TestFolder");
-		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
-		CodeAppPageUtils.selectAction(page, "New File");
-		CodeAppPageUtils.enterFileName(page, "TestFile");
-		CodeAppPageUtils.clickOnCreateButton(page);
-		FunctionTestUtils.verifyUserCanSeeFile(page, "TestFile");
-		CodeAppPageUtils.userSelectTheFile(page, "TestFile");
-		CodeAppPageUtils.userEditFileWithSomeContentAs(page, "dummydata");
+		CatalogCreationFromZipUtil.userClicksOnItemInFilesList(page, "TestFolder");
+		UploadCatalogUtils.clickOnCreateAtIconOnFileSection(page);
+		UploadCatalogUtils.selectAction(page, "New Directory");
+		UploadCatalogUtils.enterFolderName(page, "SubFolder");
+		UploadCatalogUtils.clickOnCreateButton(page);
+		UploadCatalogUtils.userCanSeeFolderUnderParentFolder(page, "SubFolder", "TestFolder");
+		UploadCatalogUtils.clickOnCreateAtIconOnFileSection(page);
+		UploadCatalogUtils.selectAction(page, "New File");
+		UploadCatalogUtils.enterFileName(page, "SubFile");
+		UploadCatalogUtils.clickOnCreateButton(page);
+		UploadCatalogUtils.userCanSeeFileUnderParentFolder(page, "SubFile", "TestFolder");
+		UploadCatalogUtils.clickOnCreateAtIconOnFileSection(page);
+		UploadCatalogUtils.selectAction(page, "New File");
+		UploadCatalogUtils.enterFileName(page, "TestFile");
+		UploadCatalogUtils.clickOnCreateButton(page);
+		FunctionTestUtils.verifyUserCanSeeFolder(page, "TestFile");
+		CatalogCreationFromZipUtil.userClicksOnItemInFilesList(page, "TestFile");
+		UploadCatalogUtils.userEditFileWithSomeContentAs(page, "dummydata");
 		CommonUtils.navigateAndDeleteCatalog(page, catalog, catalogName);
 	}
 }

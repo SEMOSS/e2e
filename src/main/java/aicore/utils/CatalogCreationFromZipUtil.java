@@ -3,23 +3,28 @@ package aicore.utils;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 
+import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.pages.base.AbstractBasePage;
 import aicore.pages.home.MainMenuUtils;
 
-public class CatalogCreationFromZipUtil {
+public class CatalogCreationFromZipUtil extends AbstractBasePage{
 	private static final String CATALOG_MENU_BUTTON_DATA_TESTID = "sidebar-{catalogName}-btn";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
 	private static final String ADD_FILE_NAME_XPATH = "//*[normalize-space()='{fileName}']";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
 	private static final String ZIP_UPLOAD_ICON_XPATH = "//button[contains(@data-testid,'-upload-file-button')]";
+	private static final String LIST_ITEM_TEMPLATE = "#{list-item}";
 
 	public static void openCatalog(Page page, String catalogName) {
-		page.getByTestId(CATALOG_MENU_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
-		MainMenuUtils.closeMainMenu(page);
+		Locator locator = page.getByTestId(CATALOG_MENU_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName));
+		MainMenuUtils.clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnAddCatalogButton(Page page, String catalogName) {
@@ -85,5 +90,17 @@ public class CatalogCreationFromZipUtil {
 			loadingSpinner
 					.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(120000));
 		}
+	}
+	
+	// alternative to CodeAppPAgeUtils.userCanSeeFolder
+	public static boolean userSeesItemInFilesList(Page page, String itemIdentifier) {
+		Locator listItem = page.getByTitle( itemIdentifier );
+		return listItem.isVisible();
+	}
+	
+	// alternative to CodeAppPAgeUtils.userSelectTheFolder
+	public static void userClicksOnItemInFilesList(Page page, String itemIdentifier) {
+		Locator listItem = page.getByTitle( itemIdentifier );
+		waitAndClick(listItem);
 	}
 }

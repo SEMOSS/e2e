@@ -25,14 +25,7 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 	static void setup() {
 		login(page, UserType.NATIVE);
 	}
-//	
-//	@Test
-//	void test() {
-//
-//		MainMenuUtils.openMainMenu(page);
-//		MainMenuUtils.closeMainMenu(page);
-//	}
-//	
+	
 	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
 	    return Stream.of(
 	    		Arguments.of( "AWS Image Text Extraction", "General","Function Type, Catalog Name","Credentials","Access Key, Secret Key","Settings","Region, S3 Bucket Engine Id, Function Name (metadata), Function Description (metadata), Function Required Parameters","Function Type, Catalog Name, Access Key, Secret Key, Region, S3 Bucket Engine Id, Function Name (metadata), Function Description (metadata), Function Required Parameters","Function Type=AWS REKOGNITION, Catalog Name=AWS-Image-Text-Extraction, Access Key=Test123, Secret Key=Test@123, Region=Asia, S3 Bucket Engine Id=s3, Function Name (metadata)=Text-Extraction, Function Description (metadata)=Testing, Function Required Parameters=[\"isFilePresentInS3\",\"filePath\"]"),
