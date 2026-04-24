@@ -323,7 +323,6 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void clickOnCommitsTab(Page page) {
-		page.reload();
 		Locator commitsTab = page.locator(COMMITS_TAB_XPATH);
 		commitsTab.click();
 	}
