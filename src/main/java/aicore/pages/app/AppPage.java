@@ -142,7 +142,19 @@ public class AppPage {
 	public void selectSortByOption(String optionName) {
 		AppPageUtils.selectSortByOption(page, optionName);
 	}
-	
+
+	public void clickOnViewFilterButton(String view) {
+		AppPageUtils.clickOnViewFilterButton(page, view);
+	}
+
+	public boolean verifyAppsInTheGridView() {
+		return AppPageUtils.verifyAppsInTheGridView(page);
+	}
+
+	public boolean verifyAppsInTheListView() {
+		return AppPageUtils.verifyAppsInTheListView(page);
+	}
+
 	/////////////////////// 
 	/// Settings
 	/////////////////////////////////

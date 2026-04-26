@@ -335,6 +335,20 @@ public class AppPageUtils {
 		optionLocator.click();
 	}
 
+	public static void clickOnViewFilterButton(Page page, String view) {
+		page.getByTitle(view).click();
+	}
+
+	public static boolean verifyAppsInTheGridView(Page page) {
+		int appInTheGridView =page.getByText("Open").count();
+		return appInTheGridView > 0;
+	}
+
+	public static boolean verifyAppsInTheListView(Page page) {
+		int appInTheListView =page.getByLabel("Open app in new tab").count();
+		return appInTheListView > 0;
+	}
+
 	public static boolean verifySortedByDateCreated(Page page, boolean ascending) {
         Locator dateCreatedLocator = page.locator(DATE_CREATED_XPATH);
         int appCount = dateCreatedLocator.count();
