@@ -119,16 +119,9 @@ public class AppPage {
 		AppPageUtils.clickOnInfoButton(page, buttonName);
 	}
 
-	public boolean verifyAppsSortedInAscendingOrder() {
-		return AppPageUtils.verifySortedInAscendingOrder(page);
-	}
 
 	public void clickOnFilterButton(String filterName) {
 		 AppPageUtils.clickOnFilterButton(page, filterName);
-	}
-
-	public boolean verifyAppsSortedInDescendingOrder() {
-		return AppPageUtils.verifySortedInDescendingOrder(page);
 	}
 
 	public boolean verifyAppsSortedByDateLastEdited() {

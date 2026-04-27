@@ -5,7 +5,12 @@ public class TestResources {
 	/** DATABASES */
 	public static String TEST_DATABASE_ZIP = "Database/TestDatabase.zip";
 	public static String TEST_DATABASE_NAME = "TestDatabase";
+	
 	public static String DIABETES_CSV = "Database/diabetes.csv";
+	
+	public static String DIABETES_DATABASE_ZIP = "Database/diabetes.zip";
+	public static String DIABETES_DATABASE_NAME = "diabetes";
+
 
 	/** MODELS */
 	public static String LLAMA3_70B_INSTRUCT_ZIP = "Model/Llama3-70B-Instruct.zip";
