@@ -13,7 +13,6 @@ Feature: Add Zip Database
     And User can see the Catalog title as 'TestDatabase'
     And User clicks on MetaData tab
     And User clicks on Refresh button
-    And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     And User clicks on Save button of Metadata tab
 

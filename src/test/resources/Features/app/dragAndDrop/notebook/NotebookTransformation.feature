@@ -13,7 +13,6 @@ Feature: Validate Transformation
     And User can see the Catalog title as 'TestDatabase'
     When User clicks on MetaData tab
     And User clicks on Refresh button
-    And User selects the 'DIABETES' from the dropdown
     And User clicks on apply database button
     Then User sees the table in the metadata tab
     When User clicks on Save button of Metadata tab

@@ -51,6 +51,9 @@ public class CatlogAccessPageUtility {
 	private static final String CLICK_ON_TAB_XPATH = "//button[text()='{tabName}']";
 	private static final String TOASTER_MESSAGE_DATATESTID = "notification-success-message";
 	private static final String MCP_USAGE_COPY_BUTTON_DATATESTID = "mcp-usage-copy-button-{sectionName}";
+	private static final String COMMITS_TAB_XPATH = "//button[normalize-space()='Commits']";
+	private static final String COMMIT_TAB_TITLE_XPATH = "//h4[normalize-space()='{title}']";
+	private static final String COMMIT_MESSAGE_XPATH = "//h4[text()='Commit History']/ancestor::div//span[contains(text(),'{message}')]";
 
 	public static boolean canViewOverview(Page page) {
 		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
@@ -312,4 +315,25 @@ public class CatlogAccessPageUtility {
 		copyButton.hover();
 		copyButton.click();
 	}
+
+	public static boolean canSeeCommitsTab(Page page) {
+		Locator commitsTab = page.locator(COMMITS_TAB_XPATH);
+		return commitsTab.isVisible();
+	}
+
+	public static void clickOnCommitsTab(Page page) {
+		Locator commitsTab = page.locator(COMMITS_TAB_XPATH);
+		commitsTab.click();
+	}
+
+	public static boolean getCommitMessage(Page page, String expectedMessage) {
+		Locator commitMessageLocator = page.locator(COMMIT_MESSAGE_XPATH.replace("{message}", expectedMessage));
+		return commitMessageLocator.isVisible();
+	}
+
+	public static boolean isCommitHistoryTitleVisible(Page page, String expectedTitle) {
+		Locator titleLocator = page.locator(COMMIT_TAB_TITLE_XPATH.replace("{title}", expectedTitle));
+		return titleLocator.isVisible();
+	}
+
 }
