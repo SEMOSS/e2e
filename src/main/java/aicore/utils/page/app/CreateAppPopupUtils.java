@@ -14,8 +14,8 @@ import aicore.utils.TestResourceTrackerHelper;
 public class CreateAppPopupUtils {
 	private static final String CODE_APP_GET_STARTED_BUTTON_XPATH = "//div[@data-slot='card' and .//div[@data-slot='card-title' and normalize-space(.)='Develop in code']]//button[normalize-space(.)='Get Started']";
 	public static final String NAME_TEXTBOX_DATATESTID = "newAppModal-textField-name";
-	private static final String DESCRIPTION_TEXTBOX_XPATH = "//div[contains(@class,'MuiFormControl-root MuiTextField-root')]//label[text()='Description']";
-	private static final String TAG_TEXTBOX_XPATH = "//input[contains(@placeholder,'to add tag') and @role='combobox']";
+	private static final String DESCRIPTION_TEXTBOX_DATATESTID = "newAppModal-description-txt";
+	private static final String TAG_TEXTBOX_DATATESTID = "newAppModal-tag-txt";
 	private static final String CREATE_BUTTON_DATATESTID = "newAppModal-create-btn";
 	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
 	private static final String SELECT_APP_XPATH = "//*[text()='{Select_App}']";
@@ -49,7 +49,7 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterAppDescription(Page page, String appDescription) {
-		page.locator(DESCRIPTION_TEXTBOX_XPATH).fill(appDescription);
+		page.getByTestId(DESCRIPTION_TEXTBOX_DATATESTID).fill(appDescription);
 	}
 
 	public static void enterTags(Page page, String tags) {
@@ -60,7 +60,7 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterTag(Page page, String tag) {
-		page.locator(TAG_TEXTBOX_XPATH).fill(tag);
+		page.getByTestId(TAG_TEXTBOX_DATATESTID).fill(tag);
 		page.keyboard().press("Enter");
 	}
 
