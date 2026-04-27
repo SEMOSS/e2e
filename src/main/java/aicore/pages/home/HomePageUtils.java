@@ -17,8 +17,8 @@ import aicore.utils.CommonUtils;
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
-	private static final String PAGE_TITLE_XPATH = "//h6[text()='"
-			+ ConfigUtils.getValue(AICoreTestConstants.APP_NAME) + "']";
+	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue(AICoreTestConstants.APP_NAME)
+			+ "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
 	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search apps, engines, and tools']";
 	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
@@ -33,7 +33,7 @@ public class HomePageUtils {
 	private static final String APP_TAB_XPATH = "//button[text()='{tab}']";
 
 	// Create app
-	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";
+	public static final String NAME_TEXTBOX_DATATESTID = "newAppModal-textField-name";
 	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
 	private static final String CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID = "importForm-Catalog-Name-textField";
 	private static final String STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID = "storage-form-input-NAME";
@@ -178,7 +178,7 @@ public class HomePageUtils {
 	// Created below 2 method to provide name without timestamp to verify home
 	// search functionality
 	public static void enterAppNameToCreateApp(Page page, String appName) {
-		page.locator(APP_NAME_TEXTBOX_XPATH).fill(appName);
+		page.getByTestId(NAME_TEXTBOX_DATATESTID).fill(appName);
 	}
 
 	public static void enterCatalogNameToCreateCatalog(Page page, String catalogName) {

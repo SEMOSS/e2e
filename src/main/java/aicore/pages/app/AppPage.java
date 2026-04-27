@@ -45,7 +45,7 @@ public class AppPage {
 	public void selectDataClassificationOptioninAppSettings(String domainName) {
 		AppPageUtils.selectDataClassificationOptioninAppSettings(page, domainName);
 	}
-	
+
 	public void selectDataRestrictionsOptioninAppSettings(String domainName) {
 		AppPageUtils.selectDataRestrictionsOptioninAppSettings(page, domainName);
 	}
@@ -53,7 +53,6 @@ public class AppPage {
 	public void clickOnSubmitButtoninAppSettings() {
 		AppPageUtils.clickOnSubmitButtoninAppSettings(page);
 	}
-
 
 	public void searchAppId(String appId) {
 		AppPageUtils.searchAppId(page, appId);
@@ -121,13 +120,13 @@ public class AppPage {
 
 
 	public void clickOnFilterButton(String filterName) {
-		 AppPageUtils.clickOnFilterButton(page, filterName);
+		AppPageUtils.clickOnFilterButton(page, filterName);
 	}
 
 	public boolean verifyAppsSortedByDateLastEdited() {
 		return AppPageUtils.verifyAppsSortedByDateLastEdited(page);
 	}
-	
+
 	public boolean verifySortedByDateCreated(boolean ascending) {
 		return AppPageUtils.verifySortedByDateCreated(page, ascending);
 	}
@@ -135,28 +134,48 @@ public class AppPage {
 	public void selectSortByOption(String optionName) {
 		AppPageUtils.selectSortByOption(page, optionName);
 	}
-	
+
+<<<<<<< feature/AT-app-view-filter
+	public void clickOnViewFilterButton(String view) {
+		AppPageUtils.clickOnViewFilterButton(page, view);
+	}
+
+	public boolean verifyAppsInTheGridView() {
+		return AppPageUtils.verifyAppsInTheGridView(page);
+	}
+
+	public boolean verifyAppsInTheListView() {
+		return AppPageUtils.verifyAppsInTheListView(page);
+	}
+
 	/////////////////////// 
+=======
+	public void clickOnCreatedByMeToggleSwitch() {
+		AppPageUtils.clickOnCreatedByMeToggleSwitch(page);
+	}
+
+	///////////////////////
+>>>>>>> main
 	/// Settings
 	/////////////////////////////////
 	public void clickOnAccessControlButton() {
 		AppSettingsPageUtils.clickOnAccessControlButton(page);
 	}
-	
+
 	//////////////////////////
-	///  Access Control
-	///////////////////////////// 
+	/// Access Control
+	/////////////////////////////
 
 	public void clickOnMakeDiscoverableButtoninSettings(String appName) {
 		AppAccessControlPageUtils.clickOnMakeDiscoverableButtoninSettings(page, appName);
 	}
-	
+
 	public void clickOnDeleteButton(String buttonName) {
 		AppAccessControlPageUtils.clickOnDeleteButton(page, buttonName);
 	}
-	
-	public void MakeAppPublic() {
-		AppAccessControlPageUtils.makeAppPublic(page);
+
+	public void MakeAppPublic(String appName) {
+		AppAccessControlPageUtils.makeAppPublic(page, appName);
 	}
-	
+
 }

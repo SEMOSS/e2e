@@ -13,13 +13,13 @@ import aicore.utils.TestResourceTrackerHelper;
 
 public class CreateAppPopupUtils {
 	private static final String CODE_APP_GET_STARTED_BUTTON_XPATH = "//div[@data-slot='card' and .//div[@data-slot='card-title' and normalize-space(.)='Develop in code']]//button[normalize-space(.)='Get Started']";
-	public static final String NAME_TEXTBOX_XPATH = "newAppModal-textField-name";
-	private static final String DESCRIPTION_TEXTBOX_XPATH = "newAppModal-description-txt";
-	private static final String TAG_TEXTBOX_XPATH = "newAppModal-tag-txt";
-	private static final String CREATE_BUTTON_XPATH = "newAppModal-create-btn";
+	public static final String NAME_TEXTBOX_DATATESTID = "newAppModal-textField-name";
+	private static final String DESCRIPTION_TEXTBOX_DATATESTID = "newAppModal-description-txt";
+	private static final String TAG_TEXTBOX_DATATESTID = "newAppModal-tag-txt";
+	private static final String CREATE_BUTTON_DATATESTID = "newAppModal-create-btn";
 	private static final String IFRAME_BUTTON_XPATH = "//button[text()='IFrame']";
 	private static final String SELECT_APP_XPATH = "//*[text()='{Select_App}']";
-	private static final String USER_FETCH_APP_NAME_XPATH = "//nav[contains(@class,'MuiBreadcrumbs-root')]//li[@class='MuiBreadcrumbs-li']//a[contains(@href,'/view')]//div";
+	private static final String USER_FETCH_APP_NAME_XPATH = "//a[contains(@href,'/view')]//div";
 	public static List<String> createdAppNames = new ArrayList<>();
 	private static final String BREADCRUMB_LINK_XPATH = "//a//div[text()='{appName}']";
 	private static final String DRAG_AND_DROP_GET_STARTED_XPATH = "//div[@data-slot='card' and .//div[@data-slot='card-title' and normalize-space(.)='Drag and drop blocks']]//button[normalize-space(.)='Get Started']";
@@ -58,13 +58,12 @@ public class CreateAppPopupUtils {
 			enterTag(page, tag);
 		}
 	}
-	
+
 	public static void enterTag(Page page, String tag) {
 		Locator locator = page.getByTestId(TAG_TEXTBOX_XPATH);
 		locator.fill(tag);
 		page.keyboard().press("Enter");
 	}
-
 
 	public static void clickOnCreateButton(Page page) {
 		Locator locator = page.getByTestId(CREATE_BUTTON_XPATH);
@@ -104,7 +103,7 @@ public class CreateAppPopupUtils {
 		Locator createNewAppBtn = page.getByTestId("appCatalogPage-create-new-app-btn");
 		createNewAppBtn.click();
 		clickOnGetStartedButton(page, appType);
-		page.locator(NAME_TEXTBOX_XPATH).fill(appName);
+		page.getByTestId(NAME_TEXTBOX_DATATESTID).fill(appName);
 		enterAppDescription(page, appDescription);
 		enterTags(page, appTags);
 		clickOnCreateButton(page);
