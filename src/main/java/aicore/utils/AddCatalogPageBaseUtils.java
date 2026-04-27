@@ -19,14 +19,11 @@ public class AddCatalogPageBaseUtils {
 	// XPath for catalogs without section grouping (e.g., Vector)
 	private static final String OPTIONS_WITHOUT_SECTION_XPATH = "//p[text()='{optionName}']";
 	private static final String ICONS_WITHOUT_SECTION_XPATH = "//p[text()='{optionName}']/parent::div/preceding-sibling::div//img";
-	// TODO need data-testid for catalog description
-	private static final String CATALOG_DESCRIPTION_XPATH = "//div[normalize-space(text())='{CatalogDescription}']";
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div//span";
 	private static final String COPY_ID_ICON_XPATH = "//button[contains(@data-testid,'engineHeader-copy')]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
 	private static final String SUBMIT_BUTTON_DATATESTID = "editEngineDetails-submit-btn";
-	private static final String CLOSE_BUTTON_XPATH = "//*[text()='Close']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "//div[text()='Successfully set the new metadata values for the engine']";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
 	private static final String EDIT_TAG_XPATH = "editEngineDetails-Tag-autocomplete";

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.ViewFunctionPage;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
@@ -21,7 +20,6 @@ import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestTags;
-import aicore.utils.AbstractE2ETest.UserType;
 
 public class ViewFunctionDetailsTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);

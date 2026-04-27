@@ -3,11 +3,8 @@ package aicore.utils;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 
-import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.pages.base.AbstractBasePage;
@@ -20,7 +17,6 @@ public class CatalogCreationFromZipUtil extends AbstractBasePage{
 	private static final String ADD_FILE_NAME_XPATH = "//*[normalize-space()='{fileName}']";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
 	private static final String ZIP_UPLOAD_ICON_XPATH = "//button[contains(@data-testid,'-upload-file-button')]";
-	private static final String LIST_ITEM_TEMPLATE = "#{list-item}";
 
 	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = page.getByTestId(CATALOG_MENU_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName));

@@ -7,12 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import aicore.base.GenericSetupUtils;
 import aicore.hooks.SetupHooks;
-import aicore.pages.EmbedDocumentPage;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
@@ -24,8 +21,6 @@ import aicore.utils.FunctionTestUtils;
 import aicore.utils.RequestAccessPopupUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.TestTags;
-import aicore.utils.AbstractE2ETest.UserType;
 
 public class AddFunctionFromZipTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(AddFunctionFromZipTests.class);

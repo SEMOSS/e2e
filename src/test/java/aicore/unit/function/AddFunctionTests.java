@@ -16,7 +16,6 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.AbstractE2ETest.UserType;
 
 public class AddFunctionTests extends AbstractE2ETest {
 	

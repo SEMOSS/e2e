@@ -12,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
@@ -26,7 +25,6 @@ import aicore.utils.FunctionTestUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestTags;
-import aicore.utils.AbstractE2ETest.UserType;
 
 public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(ViewExistingFunctionsOnCatalogPageTests.class);

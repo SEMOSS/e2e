@@ -9,7 +9,6 @@ import aicore.utils.page.app.BISystemAppUtils;
 public class BISystemAppPage {
 
 	private Page page;
-	private String timestamp;
 
 	// App option
 
@@ -23,9 +22,8 @@ public class BISystemAppPage {
 	private static final String TOOLS_OPTION_XPATH = "//span[text()='{optionName}']";
 	private static final String CHART_TABLE_XPATH = "//div[@role='grid']";
 
-	public BISystemAppPage(Page page, String timestamp) {
+	public BISystemAppPage(Page page) {
 		this.page = page;
-		this.timestamp = timestamp;
 	}
 
 	/**

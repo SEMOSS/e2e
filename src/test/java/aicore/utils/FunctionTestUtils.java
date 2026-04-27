@@ -12,12 +12,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.AbstractAddCatalogPageBase;
-import aicore.pages.CatalogCreationFromZipPage;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.model.EditModelPageUtils;
-import io.cucumber.datatable.DataTable;
 
 public class FunctionTestUtils {
 	public static void verifyFunctionCreationFormWithSelectFields(Page page, List<Map<String, String>> formFields){

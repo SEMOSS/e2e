@@ -31,7 +31,6 @@ public class DragAndDropBlocksPageUtils {
 	public static final String SHARE_APP_BUTTON_DATA_TEST_ID = "ShareRoundedIcon";
 	public static final String SAVE_APP_BUTTON_DATA_TEST_ID = "SaveOutlinedIcon";
 	public static final String SHOW_BUTTON_XPATH = "//a[span[text()='Show']]";
-	private static final String TERMINAL_XPATH = "//div[contains(text(),'Terminal')]";
 	public static final String BROWSE_TEMPLATES_XPATH = "text=Start build with a template";
 	private static final String SAVE_APP_BUTTON_NAME = "Save App (ctrl/command + s)";
 
@@ -525,8 +524,9 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnTerminalCard(Page page) {
-		page.locator(TERMINAL_XPATH).isVisible();
-		page.locator(TERMINAL_XPATH).click();
+		Locator terminalCard = page.getByTestId("appTileCard-Terminal-row");
+		AICorePageUtils.waitFor(terminalCard);
+		terminalCard.click();
 	}
 
 	public static void takeChartScreenshot(Page page, String actualImagePath, String chart) {

@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import aicore.hooks.SetupHooks;
 import aicore.pages.BISystemAppPage;
 import aicore.pages.HomePage;
-import aicore.steps.app.CreateAppUsingDragAndDropSteps;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,7 +22,7 @@ public class BICreateDatabaseAndInsightSteps {
 	public BICreateDatabaseAndInsightSteps() {
 		homePage = new HomePage(SetupHooks.getPage());
 		timestamp = SetupHooks.getTimestamp();
-		biApp = new BISystemAppPage(SetupHooks.getPage(), CreateAppUsingDragAndDropSteps.timestamp);
+		biApp = new BISystemAppPage(SetupHooks.getPage());
 	}
 
 	@And("User clicks on System app")

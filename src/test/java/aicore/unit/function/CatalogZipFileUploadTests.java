@@ -2,8 +2,6 @@ package aicore.unit.function;
 
 import java.util.stream.Stream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +19,6 @@ import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.UploadCatalogUtils;
-import aicore.utils.AbstractE2ETest.UserType;
 
 
 /**
@@ -34,8 +31,6 @@ public class CatalogZipFileUploadTests extends AbstractE2ETest {
 		login(page, UserType.NATIVE);
 	}
 	
-	private static final Logger logger = LogManager.getLogger(CatalogZipFileUploadTests.class);
-
 	private static Stream<Arguments> provideInputsForAllCatalogTypes() {
 	    return Stream.of(
 	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_MODEL, TestResources.LLAMA3_70B_INSTRUCT_ZIP, TestResources.LLAMA3_70B_INSTRUCT_NAME),

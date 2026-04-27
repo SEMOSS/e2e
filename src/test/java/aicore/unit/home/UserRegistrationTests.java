@@ -13,12 +13,12 @@ import aicore.utils.TestTags;
 import aicore.utils.UserRegistrationPageUtils;
 
 @Tag(TestTags.BROKEN)
+//TODO register button is not available
 public class UserRegistrationTests extends AbstractE2ETest {
 	
 	@Test
 	void testRegisterUser() {
 		String timestamp = CommonUtils.getTimeStampName();
-		//TODO register button is not available
 		UserRegistrationPageUtils.clickOnRegisterNowButton(page);
 		
 		String firstNameFiled = "First Name";

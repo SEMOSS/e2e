@@ -8,7 +8,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import aicore.pages.base.AbstractBasePage;
-import aicore.utils.AICorePageUtils;
 
 public class MainMenuUtils extends AbstractBasePage{
 	private static final Logger logger = LogManager.getLogger(MainMenuUtils.class);

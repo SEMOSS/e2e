@@ -13,7 +13,6 @@ import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestTags;
-import aicore.utils.AbstractE2ETest.UserType;
 
 public class ViewAddFunctionOptionsTests extends AbstractE2ETest {
 	

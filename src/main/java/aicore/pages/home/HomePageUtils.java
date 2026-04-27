@@ -24,7 +24,6 @@ public class HomePageUtils {
 	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
 
 	// build page options
-	private static final String BUILD_BUTTON_XPATH = "//button[@value='Build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
 	private static final String BUILD_PAGE_BUTTON = "//div[text()='{cardName}']/parent::div/following-sibling::div//button//span[text()='{buttonName}']";
 	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//a[text()='Browse Templates']";
@@ -32,7 +31,6 @@ public class HomePageUtils {
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String APP_TAB_XPATH = "//button[text()='{tab}']";
-	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
 
 	// Create app
 	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";

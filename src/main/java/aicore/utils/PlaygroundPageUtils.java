@@ -9,7 +9,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaygroundPageUtils {
 
@@ -60,10 +59,7 @@ public class PlaygroundPageUtils {
 	private static final String MODEL_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
 	private static final String KNOWLEDGE_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
 	private static final String MODEL_ITEM_BY_NAME = "//div[@data-slot='command-group']//div//div//div//span[contains(text(),'{modelName}')]";
-	private static final String UPLOADED_FILE_CARD_XPATH = "//div[contains(@class,'overflow-hidden border')]";
-	private static final String FILE_TOOLTIP_XPATH = "//div[@data-slot='tooltip-content']";
 	private static final String OPEN_SETTING_ICON_XPATH = "//button[@aria-label='Open settings']";
-	private static final String ATTACHED_FILE_OPTION_TEXT = "Attach Document";
 
 	public static void clickOnPlaygroundAppButton(Page page) {
 		Locator anchor = page.getByText(PLAYGROUND_APP_BUTTON_TEXT);
