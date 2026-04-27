@@ -40,6 +40,8 @@ public class AppPageUtils {
 	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
 	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//span[text()='{option}']";
 	private static final String APP_SETTINGS_SUBMIT_TESTID = "save";
+	private static final String APP_LIST_VIEW  = "Open app in new tab";
+	private static final String APP_GRID_VIEW = "Open";
 	private static final String DATE_CREATED_XPATH = "//button[@title='Private engine']/../../../div[1]//div[2]//span[contains(text(),'2026')]";
 	private static final String CREATED_BY_ME_FILTER_BUTTON_XPATH = "//label[text()='Created by me']/parent::div//button";
 
@@ -334,6 +336,20 @@ public class AppPageUtils {
 		Locator optionLocator = page.locator(SORT_BY_OPTION_XPATH.replace("{optionName}", optionName));
 		optionLocator.waitFor();
 		optionLocator.click();
+	}
+
+	public static void clickOnViewFilterButton(Page page, String view) {
+		page.getByTitle(view).click();
+	}
+
+	public static boolean verifyAppsInTheGridView(Page page) {
+		int appInTheGridView =page.getByText(APP_GRID_VIEW).count();
+		return appInTheGridView > 0;
+	}
+
+	public static boolean verifyAppsInTheListView(Page page) {
+		int appInTheListView =page.getByLabel(APP_LIST_VIEW).count();
+		return appInTheListView > 0;
 	}
 
 	public static boolean verifySortedByDateCreated(Page page, boolean ascending) {

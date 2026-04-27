@@ -142,11 +142,27 @@ public class AppPage {
 		AppPageUtils.selectSortByOption(page, optionName);
 	}
 
+<<<<<<< feature/AT-app-view-filter
+	public void clickOnViewFilterButton(String view) {
+		AppPageUtils.clickOnViewFilterButton(page, view);
+	}
+
+	public boolean verifyAppsInTheGridView() {
+		return AppPageUtils.verifyAppsInTheGridView(page);
+	}
+
+	public boolean verifyAppsInTheListView() {
+		return AppPageUtils.verifyAppsInTheListView(page);
+	}
+
+	/////////////////////// 
+=======
 	public void clickOnCreatedByMeToggleSwitch() {
 		AppPageUtils.clickOnCreatedByMeToggleSwitch(page);
 	}
 
 	///////////////////////
+>>>>>>> main
 	/// Settings
 	/////////////////////////////////
 	public void clickOnAccessControlButton() {

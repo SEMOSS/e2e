@@ -43,3 +43,18 @@ Feature: validate the filter and discoverable option for Drag and Drop app
     And User clicks on Open App Library
     When User selects 'Date Last Edited' from the Sort By dropdown
     Then User can see the apps are sorted by date last Edited
+
+  Scenario: Validate the view filter on app page
+    Given User opens Main Menu
+    When User clicks on Open App Library
+    And User clicks on Create New App button
+    And User clicks on Get Started button in "Drag and Drop"
+    And User enters app name as 'Test app'
+    And User clicks on Create button
+    And User fetch the app name
+    And User opens Main Menu
+    And User clicks on Open App Library
+    When User clicks on the 'List view' button on the app library page
+    Then User can see the apps in list view
+    When User clicks on the 'Grid View' button on the app library page
+    Then User can see the apps in grid view

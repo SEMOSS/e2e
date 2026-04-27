@@ -1034,6 +1034,23 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.selectSortByOption(sortByOption);
 	}
 
+	@When("User clicks on the {string} button on the app library page")
+	public void user_clicks_on_the_grid_view_button_on_the_app_library_page(String view) {
+		appPage.clickOnViewFilterButton(view);
+	}
+
+	@Then("User can see the apps in grid view")
+	public void user_can_see_the_apps_in_grid_view() {
+		boolean isGridViewVisible = appPage.verifyAppsInTheGridView();
+		Assertions.assertTrue(isGridViewVisible, "Apps are not visible in grid view");
+	}
+
+	@Then("User can see the apps in list view")
+	public void user_can_see_the_apps_in_list_view() {
+		boolean isListViewVisible = appPage.verifyAppsInTheListView();
+		Assertions.assertTrue(isListViewVisible, "Apps are not visible in list view");
+	}
+
 	@And("User drag the {string} block")
 	public void and_user_drag_the_block(String blockName) {
 		blocksPage.mouseHoverOnBlock(blockName);
