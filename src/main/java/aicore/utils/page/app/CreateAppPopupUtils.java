@@ -35,10 +35,9 @@ public class CreateAppPopupUtils {
 		}
 	}
 
-	public static String enterAppName(Page page, String appName, String timestamp) {
-		String appNameTesting = appName + " " + timestamp;
-		page.getByTestId(NAME_TEXTBOX_DATATESTID).fill(appNameTesting);
-		return appNameTesting;
+	public static void enterAppName(Page page, String appName) {
+		Locator locator = page.getByTestId(NAME_TEXTBOX_DATATESTID);
+		locator.fill(appName);
 	}
 
 	public static void selectApp(Page page, String appName, String timestamp) {
@@ -49,7 +48,8 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterAppDescription(Page page, String appDescription) {
-		page.getByTestId(DESCRIPTION_TEXTBOX_DATATESTID).fill(appDescription);
+		Locator locator = page.getByTestId(DESCRIPTION_TEXTBOX_DATATESTID);
+		locator.fill(appDescription);
 	}
 
 	public static void enterTags(Page page, String tags) {
@@ -60,12 +60,14 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterTag(Page page, String tag) {
-		page.getByTestId(TAG_TEXTBOX_DATATESTID).fill(tag);
+		Locator locator = page.getByTestId(TAG_TEXTBOX_DATATESTID);
+		locator.fill(tag);
 		page.keyboard().press("Enter");
 	}
 
 	public static void clickOnCreateButton(Page page) {
-		page.getByTestId(CREATE_BUTTON_DATATESTID).click();
+		Locator locator = page.getByTestId(CREATE_BUTTON_DATATESTID);
+		locator.click();
 	}
 
 	public static String userFetchAppName(Page page) {

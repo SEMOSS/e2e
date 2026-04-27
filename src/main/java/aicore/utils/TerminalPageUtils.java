@@ -2,7 +2,6 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class TerminalPageUtils {
@@ -14,12 +13,13 @@ public class TerminalPageUtils {
 	private static final String FILEDATE_XPATH = "//div[contains(@class, 'ace_layer')]//div[contains(@class, 'ace_line')][last()-2]//span[contains(@class,'ace_string')][last()]";
 
 	public static void runCommand(Page page, String pixelCommand) {
-		page.getByRole(AriaRole.TEXTBOX).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		Locator editor = page.locator("#terminal-console__content__editor");
+		Locator input = editor.locator("textarea.ace_text-input");
 		if (pixelCommand.contains("{VECTOR_ID}")) {
 			String copiedId = (String) page.evaluate("()=>navigator.clipboard.readText()");
 			pixelCommand = pixelCommand.replace("{VECTOR_ID}", copiedId);
 		}
-		page.getByRole(AriaRole.TEXTBOX).fill(pixelCommand);
+		input.fill(pixelCommand);
 		page.keyboard().press("Enter");
 	}
 

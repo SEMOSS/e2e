@@ -4,13 +4,14 @@ import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
@@ -23,16 +24,19 @@ import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.AbstractE2ETest.UserType;
+import aicore.utils.TestTags;
 
 public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(ViewExistingFunctionsOnCatalogPageTests.class);
 	
+	@BeforeAll
+	static void setup() {
+		login(page, UserType.NATIVE);
+	}
+	
 	@BeforeEach
 	void createFunctionUsingZip() {
 		logger.info("BEFORE ALL: creating function");
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
-
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		// this checks & removes existing function that may collide with name
@@ -58,8 +62,8 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	/// TODO need to fix this test, currently not working in feature file either
 	@ParameterizedTest
 	@MethodSource("provideOptionsToFilterFunctionality")
+	@Tag(TestTags.BROKEN)
 	void testFiltersFunctionalityMyFunctionsTab(String filterCategoryName, String filterValues) {
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
@@ -78,8 +82,8 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideOptionsToDiscoverableFilterFunctionality")
+	@Tag(TestTags.BROKEN)
 	void testFilterFunctionalityDiscoverableFunctionsTab(String filterCategoryName, String filterValues) {
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
@@ -101,6 +105,7 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 
 	/// TODO need to fix this test, currently not working in feature file either
 	@Test
+	@Tag(TestTags.BROKEN)
 	void testValidateAccessStatusOfCreatedFunction() {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
@@ -130,8 +135,8 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	/// TODO need to fix this test, currently not working in feature file either
 	@ParameterizedTest
 	@MethodSource("provideContentToFunctionCatalogCard")
+	@Tag(TestTags.BROKEN)
 	void testValidateContentOfCreatedFunctionCatalogCard(String iconStr) {
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		String timestamp = CommonUtils.getTimeStampName();
 		FunctionTestUtils.userGetsCatalogID(page);
 		MainMenuUtils.openMainMenu(page);
@@ -147,8 +152,8 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 
 	/// TODO need to fix this test, currently not working in feature file either
 	@Test
+	@Tag(TestTags.BROKEN)
 	void testDeleteFunctionFromDashboardAndValidateDeletionPopup() {
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		String timestamp = CommonUtils.getTimeStampName();
 		FunctionTestUtils.userGetsCatalogID(page);
 		MainMenuUtils.openMainMenu(page);

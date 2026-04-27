@@ -5,12 +5,11 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.base.GenericSetupUtils;
 import aicore.hooks.SetupHooks;
-import aicore.pages.EmbedDocumentPage;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
@@ -25,13 +24,15 @@ import aicore.utils.TestResourceTrackerHelper;
 
 public class AddFunctionFromZipTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(AddFunctionFromZipTests.class);
-	private static boolean useDocker = false;
+	
+	@BeforeAll
+	static void setup() {
+		login(page, UserType.NATIVE);
+	}
 	
 	@BeforeEach
 	void createFunctionUsingZip() {
 		logger.info("BEFORE ALL: creating function");
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
-
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		// this checks & removes existing function that may collide with name
@@ -45,12 +46,9 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
 	}
 	
-	/// TODO: THIS TEST IS FAILING N BOTH JUNIT AND CUCUMBER - NEEDS TO BE FIXED BEFORE
-	/// FEATURE FILE CAN BE DELETED
 	@Test
 	void testValidateChangeAccessPopup() throws InterruptedException {
 		logger.info("TESTING: testValidateChangeAccessPopup");
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 
@@ -59,28 +57,26 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
 		SettingsModelPageUtils.clickOnAccessControl(page);
-		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		SettingsModelPageUtils.addMember(page, "Editor", useDocker);
+		FunctionAccessSettingsUtils.clickOnAddMembersForFunction(page);
+		FunctionAccessSettingsUtils.searchAndAddMemberForFunction(page, "Editor");
 		logout(page);
 		login(page, UserType.EDITOR);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
 		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, "WeatherFunctionTest");
-		/// TODO we can to re-organize these non-page specific actions into a single source to be extended by the different pages
-		new EmbedDocumentPage(page).clickOnAccessControlButton();
+		FunctionAccessSettingsUtils.clickOnChangeAccessTab(page);
 		List<String> popupOptions = List.of("Author", "Editor", "Read-Only", "Comment Box", "Cancel Button", "Request Button");
 		FunctionTestUtils.verifyPopupWithSelectOptions(page, "Change Access", popupOptions);
 		StoragePageUtils.clickOnCancelButton(page);
 		logout(page);
+		// log back in as admin for subsequent tests
+		login(page, UserType.NATIVE);
 	}
 	
-	/// TODO: THIS TEST IS FAILING N BOTH JUNIT AND CUCUMBER - NEEDS TO BE FIXED BEFORE
-	/// FEATURE FILE CAN BE DELETED
 	@Test
 	void testChangeAccessRequest() throws InterruptedException {
 		logger.info("TESTING: testChangeAccessRequest");
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 
@@ -89,31 +85,26 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
 		SettingsModelPageUtils.clickOnAccessControl(page);
-		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		///TODO this boolean was dictated by GenericSetupUtils.useDocker() but that needs to be set to 'true'
-		/// to correctly run. But leaving it 'true' incorrectly sets up the member name for the search, 
-		/// causing this step to fail. Need to figure out if we need to modify this step logic to do the same 
-		/// thing for all members regardless of useDocker()
-		SettingsModelPageUtils.addMember(page, "Editor", useDocker);
+		FunctionAccessSettingsUtils.clickOnAddMembersForFunction(page);
+		FunctionAccessSettingsUtils.searchAndAddMemberForFunction(page, "Editor");
 		logout(page);
 		login(page, UserType.EDITOR);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
 		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, "WeatherFunctionTest");
-		/// TODO we can to re-organize these non-page specific actions into a single source to be extended by the different pages
-		new EmbedDocumentPage(page).clickOnAccessControlButton();
+		FunctionAccessSettingsUtils.clickOnChangeAccessTab(page);
 		RequestAccessPopupUtils.selectAccessType(page, "author");
 		RequestAccessPopupUtils.enterComment(SetupHooks.getPage(), "Access Request");
 		RequestAccessPopupUtils.clickOnRequestButton(page);
 		FunctionTestUtils.verifyUserSeesSuccessfulRequestToastMessage(page, "Successfully requested access to engine");
 		logout(page);
+		login(page, UserType.NATIVE);
 	}
 	
 	@AfterEach
 	void deleteFunction() {
 		logger.info("AFTER ALL: Deleting function");
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");

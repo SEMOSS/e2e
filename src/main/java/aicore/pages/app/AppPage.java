@@ -118,16 +118,9 @@ public class AppPage {
 		AppPageUtils.clickOnInfoButton(page, buttonName);
 	}
 
-	public boolean verifyAppsSortedInAscendingOrder() {
-		return AppPageUtils.verifySortedInAscendingOrder(page);
-	}
 
 	public void clickOnFilterButton(String filterName) {
 		AppPageUtils.clickOnFilterButton(page, filterName);
-	}
-
-	public boolean verifyAppsSortedInDescendingOrder() {
-		return AppPageUtils.verifySortedInDescendingOrder(page);
 	}
 
 	public boolean verifyAppsSortedByDateLastEdited() {
@@ -142,7 +135,6 @@ public class AppPage {
 		AppPageUtils.selectSortByOption(page, optionName);
 	}
 
-<<<<<<< feature/AT-app-view-filter
 	public void clickOnViewFilterButton(String view) {
 		AppPageUtils.clickOnViewFilterButton(page, view);
 	}
@@ -156,13 +148,11 @@ public class AppPage {
 	}
 
 	/////////////////////// 
-=======
 	public void clickOnCreatedByMeToggleSwitch() {
 		AppPageUtils.clickOnCreatedByMeToggleSwitch(page);
 	}
 
 	///////////////////////
->>>>>>> main
 	/// Settings
 	/////////////////////////////////
 	public void clickOnAccessControlButton() {

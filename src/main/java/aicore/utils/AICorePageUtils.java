@@ -42,7 +42,7 @@ public class AICorePageUtils {
 		Locator buttonLocator = page.getByRole(AriaRole.BUTTON,
 				new Page.GetByRoleOptions().setName(buttonLabel).setExact(true));
 		buttonLocator.scrollIntoViewIfNeeded();
-		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		AICorePageUtils.waitFor(buttonLocator);
 		buttonLocator.click();
 	}
 

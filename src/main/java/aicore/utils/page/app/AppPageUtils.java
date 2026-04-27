@@ -46,7 +46,8 @@ public class AppPageUtils {
 	private static final String CREATED_BY_ME_FILTER_BUTTON_XPATH = "//label[text()='Created by me']/parent::div//button";
 
 	public static void clickOnCreateNewAppButton(Page page) {
-		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
+		Locator locator = page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID);
+		locator.click();
 	}
 
 	public static void searchApp(Page page, String appName, String timestamp) {

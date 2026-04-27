@@ -17,8 +17,10 @@ import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
+import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.page.app.AppPageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -160,7 +162,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Given("User clicks on Build button")
 	public void user_navigates_to_build_button() {
-		homePage.clickOnBuildButton();
+		HomePageUtils.clickOnBuildButton(SetupHooks.getPage());
 	}
 
 	@And("User able to see the {string} button")
@@ -997,13 +999,13 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Then("User can see the {string} are sorted in ascending order")
 	public void user_can_see_the_apps_are_sorted_in_ascending_order(String catalogName) {
-		boolean isSortedInAscendingOrder = appPage.verifyAppsSortedInAscendingOrder();
+		boolean isSortedInAscendingOrder = AppPageUtils.verifySortedInAscendingOrder(SetupHooks.getPage());
 		Assertions.assertTrue(isSortedInAscendingOrder, catalogName + " are not sorted in ascending order");
 	}
 
 	@Then("User can see the {string} are sorted in descending order")
 	public void user_can_see_the_apps_are_sorted_in_descending_order(String catalogName) {
-		boolean isSortedInDescendingOrder = appPage.verifyAppsSortedInDescendingOrder();
+		boolean isSortedInDescendingOrder = AppPageUtils.verifySortedInDescendingOrder(SetupHooks.getPage());
 		Assertions.assertTrue(isSortedInDescendingOrder, catalogName + " are not sorted in descending order");
 	}
 
@@ -1016,13 +1018,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("User can see the {string} are sorted by date created in {string} order")
 	public void user_can_see_the_apps_are_sorted_by_date_created(String catalogName, String order) {
 		if (order.equalsIgnoreCase("ascending")) {
-			boolean isSortedByDateCreatedAsc = appPage.verifySortedByDateCreated(true);
-			Assertions.assertTrue(isSortedByDateCreatedAsc,
-					catalogName + " are not sorted by date created in ascending order");
+			boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), true);
+			Assertions.assertTrue(isSortedByDateCreatedAsc, catalogName + " are not sorted by date created in ascending order");
 		} else if (order.equalsIgnoreCase("descending")) {
-			boolean isSortedByDateCreatedDesc = appPage.verifySortedByDateCreated(false);
-			Assertions.assertTrue(isSortedByDateCreatedDesc,
-					catalogName + " are not sorted by date created in descending order");
+			boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), false);
+			Assertions.assertTrue(isSortedByDateCreatedDesc, catalogName + " are not sorted by date created in descending order");
 		} else {
 			Assertions.fail("Invalid sort order: " + order);
 		}
