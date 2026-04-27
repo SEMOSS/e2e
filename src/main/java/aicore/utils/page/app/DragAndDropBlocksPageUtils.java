@@ -175,6 +175,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SELECT_FILE_OPTION_XPATH = "//select[contains(@class,'w-full rounded border')]";
 	private static final String SELECT_FRAME_OPTION_XPATH = "//select[contains(@id,'export-frame-select')]";
 	private static final String CLICK_ON_EXPORT_BUTTON_XPATH = "//button[text()='{buttonName}']";
+	private static final String DIRECT_EXPORT_TOGGLE_XPATH = "//div//p[text()='Direct Export']/following::button[@role='switch']";
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -1197,5 +1198,16 @@ public class DragAndDropBlocksPageUtils {
 		Locator exportOptionLocator = page.locator(CLICK_ON_EXPORT_BUTTON_XPATH.replace("{buttonName}", exportOption));
 		exportOptionLocator.click();
 	}
+
+	public static void setDirectExportToggle(Page page, String action) {
+		Locator directExportToggle = page.locator(DIRECT_EXPORT_TOGGLE_XPATH);
+		  if(!directExportToggle.isChecked() && action.equalsIgnoreCase("Turn ON")) {
+	            directExportToggle.click();
+	        } 
+			else if(directExportToggle.isChecked() && action.equalsIgnoreCase("Turn OFF")) {
+	            directExportToggle.click();
+	        }
+
+		}
 
 }

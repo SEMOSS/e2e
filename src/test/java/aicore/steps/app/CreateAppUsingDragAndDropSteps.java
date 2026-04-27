@@ -1080,4 +1080,9 @@ public class CreateAppUsingDragAndDropSteps {
 		blocksPage.clickOnExportOption(exportOption);
 	}
 
+	@When("User {string} the Direct Export toggle for Export Data")
+	public void user_toggle_the_direct_export_toggle_for_export_data(String action) {
+		blocksPage.setDirectExportToggle(action);
+	}
+
 }
