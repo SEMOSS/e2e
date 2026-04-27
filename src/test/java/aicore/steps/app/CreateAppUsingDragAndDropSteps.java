@@ -16,6 +16,7 @@ import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
+import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.page.app.AppPageUtils;
@@ -160,7 +161,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Given("User clicks on Build button")
 	public void user_navigates_to_build_button() {
-		homePage.clickOnBuildButton();
+		HomePageUtils.clickOnBuildButton(SetupHooks.getPage());
 	}
 
 	@And("User able to see the {string} button")

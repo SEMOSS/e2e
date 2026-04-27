@@ -80,12 +80,30 @@ public class HomePageUtils {
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 	}
 
+	/**
+	 * Click on Build page with options like playground etc
+	 * @param page
+	 */
 	public static void clickOnBuildButton(Page page) {
 		Locator btn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Build"));
 		AICorePageUtils.waitFor(btn);
-		if (!btn.isVisible()) {
-			throw new RuntimeException("Build button is not visible");
-		} else {
+		
+		String classValue = btn.getAttribute("class");
+		if (classValue == null || !classValue.contains("bg-primary")) {
+			btn.click();
+		} 
+	}
+	
+	/**
+	 * Click on build search page
+	 * 
+	 * @param page
+	 */
+	public static void clickOnBuildSearchButton(Page page) {
+		Locator btn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Build"));
+		AICorePageUtils.waitFor(btn);
+		String classValue = btn.getAttribute("class");
+		if (classValue == null || classValue.contains("bg-primary")) {
 			btn.click();
 		}
 	}
