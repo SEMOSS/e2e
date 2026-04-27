@@ -36,7 +36,7 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterAppName(Page page, String appName) {
-		Locator locator = page.getByTestId(NAME_TEXTBOX_XPATH);
+		Locator locator = page.getByTestId(NAME_TEXTBOX_DATATESTID);
 		locator.fill(appName);
 	}
 
@@ -48,7 +48,7 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterAppDescription(Page page, String appDescription) {
-		Locator locator = page.getByTestId(DESCRIPTION_TEXTBOX_XPATH);
+		Locator locator = page.getByTestId(DESCRIPTION_TEXTBOX_DATATESTID);
 		locator.fill(appDescription);
 	}
 
@@ -60,13 +60,13 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void enterTag(Page page, String tag) {
-		Locator locator = page.getByTestId(TAG_TEXTBOX_XPATH);
+		Locator locator = page.getByTestId(TAG_TEXTBOX_DATATESTID);
 		locator.fill(tag);
 		page.keyboard().press("Enter");
 	}
 
 	public static void clickOnCreateButton(Page page) {
-		Locator locator = page.getByTestId(CREATE_BUTTON_XPATH);
+		Locator locator = page.getByTestId(CREATE_BUTTON_DATATESTID);
 		locator.click();
 	}
 

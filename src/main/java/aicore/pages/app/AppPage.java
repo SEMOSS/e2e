@@ -135,7 +135,6 @@ public class AppPage {
 		AppPageUtils.selectSortByOption(page, optionName);
 	}
 
-<<<<<<< feature/AT-app-view-filter
 	public void clickOnViewFilterButton(String view) {
 		AppPageUtils.clickOnViewFilterButton(page, view);
 	}
@@ -149,13 +148,11 @@ public class AppPage {
 	}
 
 	/////////////////////// 
-=======
 	public void clickOnCreatedByMeToggleSwitch() {
 		AppPageUtils.clickOnCreatedByMeToggleSwitch(page);
 	}
 
 	///////////////////////
->>>>>>> main
 	/// Settings
 	/////////////////////////////////
 	public void clickOnAccessControlButton() {
