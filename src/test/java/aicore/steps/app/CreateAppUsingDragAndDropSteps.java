@@ -1,11 +1,12 @@
 package aicore.steps.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -612,9 +613,9 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.clickOnButton(buttonName);
 	}
 
-	@When("User click on Make Public toggle switch")
-	public void user_click_on_make_public_toggle_switch() {
-		appPage.MakeAppPublic();
+	@When("User clicks on make {string} app public toggle switch")
+	public void user_clicks_on_make_app_public_toggle_switch(String appName) {
+		appPage.MakeAppPublic(appName + ' ' + timestamp);
 	}
 
 	@Then("User can see {string} app on the page")
@@ -1016,14 +1017,16 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_the_apps_are_sorted_by_date_created(String catalogName, String order) {
 		if (order.equalsIgnoreCase("ascending")) {
 			boolean isSortedByDateCreatedAsc = appPage.verifySortedByDateCreated(true);
-			Assertions.assertTrue(isSortedByDateCreatedAsc, catalogName + " are not sorted by date created in ascending order");
+			Assertions.assertTrue(isSortedByDateCreatedAsc,
+					catalogName + " are not sorted by date created in ascending order");
 		} else if (order.equalsIgnoreCase("descending")) {
 			boolean isSortedByDateCreatedDesc = appPage.verifySortedByDateCreated(false);
-			Assertions.assertTrue(isSortedByDateCreatedDesc, catalogName + " are not sorted by date created in descending order");
+			Assertions.assertTrue(isSortedByDateCreatedDesc,
+					catalogName + " are not sorted by date created in descending order");
 		} else {
 			Assertions.fail("Invalid sort order: " + order);
 		}
-		
+
 	}
 
 	@Then("User selects {string} from the Sort By dropdown")
@@ -1062,6 +1065,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User select value as {string} for {string} option from General Setting")
 	public void user_select_value_as_for_option_from_general_setting(String value, String optionName) {
 		blocksPage.selectValueForsettingOption(value, optionName);
+	}
+
+	@When("User clicks on Created by me toggle switch")
+	public void user_clicks_on_created_by_me_toggle_switch() {
+		appPage.clickOnCreatedByMeToggleSwitch();
 	}
 
 	@And("User clicks on Export option")
