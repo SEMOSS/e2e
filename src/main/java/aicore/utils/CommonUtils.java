@@ -53,7 +53,6 @@ public class CommonUtils {
 	private static final String SEARCH_CATALOG_DATATESTID = "search-bar";
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
 	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
-	static final String STORAGE_SETTING_XPATH = "//button[text()='Settings']";
 
 	private static final String APP_DELETE_BUTTON_XPATH = "//div[text()='Delete App']";
 	private static final String DELETE_CONFIRMATION_POPUP_BUTTON_XPATH = "//button[normalize-space()='Delete']";
@@ -303,7 +302,8 @@ public class CommonUtils {
 			logger.info("Version match: {}", version);
 			return true;
 		} else {
-			logger.error("Version mismatch: expected {}, got {}", ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION), version);
+			logger.error("Version mismatch: expected {}, got {}",
+					ConfigUtils.getValue(AICoreTestConstants.CURRENT_VERSION), version);
 			return false;
 		}
 	}
@@ -321,16 +321,12 @@ public class CommonUtils {
 			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> MainMenuUtils.clickOnGuardrail(page);
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
+			page.getByTestId(SEARCH_CATALOG_DATATESTID).click();
 			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
-			page.waitForTimeout(500);
+			page.waitForTimeout(1000);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
-
-			if (page.locator(ACCESS_CONTROL_XPATH).isVisible()) {
-				page.locator(ACCESS_CONTROL_XPATH).click();
-
-			} else if (page.locator(STORAGE_SETTING_XPATH).isVisible()) {
-				page.locator(STORAGE_SETTING_XPATH).click();
-			}
+			page.locator(ACCESS_CONTROL_XPATH).isVisible();
+			page.locator(ACCESS_CONTROL_XPATH).click();
 			page.locator(DELETE_BUTTON_XPATH).click();
 			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			return page.locator(DELETE_TOAST_MESSAGE_XPATH).first().isVisible();
