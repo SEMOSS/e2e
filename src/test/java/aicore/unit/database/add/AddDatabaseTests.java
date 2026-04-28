@@ -17,6 +17,7 @@ import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
 public class AddDatabaseTests extends AbstractE2ETest {
@@ -66,7 +67,7 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -101,7 +102,7 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -113,7 +114,7 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		String dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 }

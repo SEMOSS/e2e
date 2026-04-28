@@ -12,6 +12,7 @@ import aicore.utils.AbstractE2ETest;
 import aicore.utils.AppTestUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.app.BISystemAppUtils;
 
 public class BICSVAppTests extends AbstractE2ETest {
@@ -69,7 +70,7 @@ public class BICSVAppTests extends AbstractE2ETest {
 	@AfterAll
 	public static void cleanUp() {
 		CommonUtils.navigateAndDeleteApp(page, appName);
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", databaseCSV_ID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, databaseCSV_ID);
 	}
 
 }

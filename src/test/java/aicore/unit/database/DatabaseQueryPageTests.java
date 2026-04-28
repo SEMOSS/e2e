@@ -18,6 +18,7 @@ import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.StoragePageUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
 public class DatabaseQueryPageTests extends AbstractE2ETest {
@@ -123,6 +124,6 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 
 	@AfterAll
 	public static void tearDown() {
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 }

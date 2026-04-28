@@ -8,10 +8,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.pages.guardrail.AddGuardrailFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
+import aicore.utils.GuardrailTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.app.AppPageUtils;
 
@@ -26,17 +26,12 @@ public class AllGuardrailSortTests extends AbstractE2ETest {
 
 		// inputs
 		String timestamp = CommonUtils.getTimeStampName();
-		String modelNameType = "Gliner";
 		String catalogName = "abc guardrail" + timestamp;
-		String nerLabel = "label";
-		String threshold = "1";
-		ABC_GUARDRAIL_ID = AddGuardrailFormUtils.createGuardrail(page, modelNameType, catalogName, nerLabel, threshold);
+		ABC_GUARDRAIL_ID = GuardrailTestUtils.createGlinerGuardrail(page, catalogName);
 
 		// inputs
-		String timestamp2 = CommonUtils.getTimeStampName();
-		String catalogName2 = "xyz guardrail" + timestamp2;
-		XYZ_GUARDRAIL_ID = AddGuardrailFormUtils.createGuardrail(page, modelNameType, catalogName2, nerLabel,
-				threshold);
+		String catalogName2 = "xyz guardrail" + timestamp;
+		XYZ_GUARDRAIL_ID = GuardrailTestUtils.createGlinerGuardrail(page, catalogName2);
 	}
 
 	@BeforeEach

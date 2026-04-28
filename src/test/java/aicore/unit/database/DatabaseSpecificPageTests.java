@@ -19,6 +19,7 @@ import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.ViewUsagePageUtils;
@@ -81,6 +82,7 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 	public void testExport() throws IOException, InterruptedException {
 		Path path = AddDatabasePageUtils.clickOnExportButton(page);
 		assertTrue(path.toFile().exists());
+		assertTrue( path.toAbsolutePath().getFileName().toString().contains(dbID));
 	}
 	
 	/////////////////////// EDIT
@@ -92,7 +94,7 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 	}
 	
 	@Test
-	public void testViewDatabaseTags() throws IOException {
+	public void testViewMetadataTags() throws IOException {
 		AddCatalogPageBaseUtils.clickEditIcon(page);
 		String tagName = "embeddings";
 		AddCatalogPageBaseUtils.enterTagName(page, tagName);
@@ -105,7 +107,7 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 
 	@AfterAll
 	public static void tearDown() {
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 }

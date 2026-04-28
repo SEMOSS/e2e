@@ -25,6 +25,7 @@ import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -74,7 +75,7 @@ public class ModelSpecificPageTests extends AbstractE2ETest {
 		// Clean up: delete the test model catalog
 		if (modelCatalogName != null && page != null) {
 			try {
-				CommonUtils.navigateAndDeleteCatalog(page, "Model", modelCatalogName);
+				CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL, modelCatalogName);
 			} catch (Exception e) {
 				System.err.println("Failed to delete model catalog: " + e.getMessage());
 			}

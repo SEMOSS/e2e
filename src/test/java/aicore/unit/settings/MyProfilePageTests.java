@@ -18,6 +18,7 @@ import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
 import aicore.utils.settings.MyProfilePageUtils;
 
@@ -125,7 +126,7 @@ public class MyProfilePageTests extends AbstractE2ETest {
 		Assertions.assertEquals(actualCodeGenToastMessage, expectedCodeGenMessage,
 				"Toast message mismatch after selecting code generation model from dropdown");
 		// delete created catalog
-		CommonUtils.navigateAndDeleteCatalog(page, "Model", modelCatalogName);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL, modelCatalogName);
 	}
 
 }

@@ -24,6 +24,7 @@ import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
 public class AllDatabasePageTests extends AbstractE2ETest {
@@ -55,7 +56,7 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	void testDatabaseCatalogCard() {
+	void testCatalogCard() {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
@@ -122,7 +123,7 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 	@AfterAll
 	static void cleanUp() {
 		login(page, UserType.NATIVE);
-		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 		assertTrue(deleteDb);
 	}
 

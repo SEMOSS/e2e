@@ -14,6 +14,7 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.page.app.AppPageUtils;
 
@@ -62,10 +63,10 @@ public class AllDatabaseSortTests extends AbstractE2ETest {
 	@AfterAll
 	static void cleanUp() {
 		login(page, UserType.NATIVE);
-		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, "Database", TEST_DB_ID);
+		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TEST_DB_ID);
 		assertTrue(deleteDb);
 
-		deleteDb = CommonUtils.navigateAndDeleteCatalog(page, "Database", DIABETES_DB_ID);
+		deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, DIABETES_DB_ID);
 		assertTrue(deleteDb);
 	}
 }

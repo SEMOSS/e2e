@@ -13,6 +13,7 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
 
 public class AddModelTests {
@@ -47,7 +48,7 @@ public class AddModelTests {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Model", modelCatalogName);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL, modelCatalogName);
 
 	}
 }

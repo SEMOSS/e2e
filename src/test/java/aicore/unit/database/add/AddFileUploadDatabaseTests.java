@@ -16,6 +16,7 @@ import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
 public class AddFileUploadDatabaseTests extends AbstractE2ETest {
@@ -58,7 +59,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -71,7 +72,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = DatabaseTestUtils.addFlatCsv(page, dbName, fileName, dbType, metaModelType);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -99,7 +100,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	//////////////// METAMODEL FROM SCRATCH
@@ -129,7 +130,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -157,7 +158,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	//////////////// SUGGESTED METAMODEL
@@ -187,7 +188,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -218,7 +219,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -259,7 +260,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	/////////////////// Upload multiple files
@@ -299,7 +300,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -333,7 +334,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 }
