@@ -32,10 +32,6 @@ public class HomePage {
 		HomePageUtils.clickOnBIApp(page);
 	}
 
-	public void clickOnBuildButton() {
-		HomePageUtils.clickOnBuildButton(page);
-	}
-
 	public void verifyBuildPageButton(String buttonName) {
 		HomePageUtils.verifyBuildPageButton(page, buttonName);
 	}

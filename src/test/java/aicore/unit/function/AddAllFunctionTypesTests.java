@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,6 +19,11 @@ import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 
 public class AddAllFunctionTypesTests extends AbstractE2ETest {
+	
+	@BeforeAll
+	static void setup() {
+		login(page, UserType.NATIVE);
+	}
 	
 	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
 	    return Stream.of(
@@ -39,9 +45,7 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 					Map.of("SECTION_NAME", s1Name, "FIELDS", s1Fields),
 					Map.of("SECTION_NAME", s2Name, "FIELDS", s2Fields),
 					Map.of("SECTION_NAME", s3Name, "FIELDS", s3Fields));    		  
-		/// Only need to login for the first 
-		login(page, UserType.NATIVE); //TODO find a way to only login once at the beginning of the set of tests
-		
+				
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
@@ -72,8 +76,6 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 				Map.of("SECTION_NAME", s1Name, "FIELDS", s1Fields),
 				Map.of("SECTION_NAME", s2Name, "FIELDS", s2Fields), 
 				Map.of("SECTION_NAME", s3Name, "FIELDS", s3Fields));
-
-		login(page, UserType.NATIVE);
 
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);

@@ -131,8 +131,7 @@ public class AddFunctionPageUtils {
 		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
 		searchBar.fill(catalogName);
-		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID
-				.replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
+		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID .replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
 		return catalogLocator;
 	}
 

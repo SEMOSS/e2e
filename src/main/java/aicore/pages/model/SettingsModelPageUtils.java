@@ -144,11 +144,6 @@ public class SettingsModelPageUtils {
 		return isModelVisible;
 	}
 
-	public static boolean verifyTileIsVisible(Page page, String tileName) {
-		boolean isTileVisible = page.isVisible(TILE_XPATH.replace("{tileName}", tileName));
-		return isTileVisible;
-	}
-
 	public static void clickOnSearchBox(Page page, String string) {
 		page.getByTestId(SEARCH_BOX_DATATESTID).isVisible();
 		page.getByTestId(SEARCH_BOX_DATATESTID).click();
@@ -160,7 +155,9 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnAddMembersButton(Page page) {
-		page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).first().click();
+		Locator locator = page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID);
+		locator.scrollIntoViewIfNeeded();
+		locator.first().click();
 	}
 
 	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {

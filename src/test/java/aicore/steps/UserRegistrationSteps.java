@@ -11,6 +11,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
 import aicore.pages.UserRegistrationPage;
 import aicore.utils.LoginPageUtils;
+import aicore.utils.UserRegistrationPageUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -50,7 +51,7 @@ public class UserRegistrationSteps {
 
 	@Then("User can see {string} message on login page")
 	public void user_can_see_message_on_login_page(String expectedMessage) {
-		String actualMessage = userRegistration.verifyRegitrationSuccessMessage(expectedMessage);
+		String actualMessage =  UserRegistrationPageUtils.verifyRegitrationSuccessMessage(SetupHooks.getPage(), expectedMessage);
 		Assertions.assertEquals(expectedMessage, actualMessage, "Registration message is incorrect on login page");
 	}
 

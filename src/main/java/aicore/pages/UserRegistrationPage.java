@@ -23,8 +23,4 @@ public class UserRegistrationPage {
 		UserRegistrationPageUtils.clickOnRegisterButton(page);
 	}
 
-	public String verifyRegitrationSuccessMessage(String messageText) {
-		return UserRegistrationPageUtils.verifyRegitrationSuccessMessage(page, messageText);
-	}
-
 }

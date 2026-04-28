@@ -2,7 +2,7 @@ package aicore.pages.app;
 
 import com.microsoft.playwright.Page;
 
-import aicore.utils.page.app.CodeAppPageUtils;
+import aicore.utils.UploadCatalogUtils;
 
 public class CodeAppPage {
 	private Page page;
@@ -12,154 +12,154 @@ public class CodeAppPage {
 	}
 
 	public void clickOnFileUploadButton() {
-		CodeAppPageUtils.clickOnFileUploadButton(page);
+		UploadCatalogUtils.clickOnFileUploadButton(page);
 	}
 
 	public void clickOnUnzipCheckbox() {
-		CodeAppPageUtils.clickOnUnzipCheckbox(page);
+		UploadCatalogUtils.clickOnUnzipCheckbox(page);
 	}
 
 	public void clickOnPublishButton() {
-		CodeAppPageUtils.clickOnPublishButton(page);
+		UploadCatalogUtils.clickOnPublishButton(page);
 	}
 
 	public boolean userCanSeeFolder(String folderName) {
-		return CodeAppPageUtils.userCanSeeFolder(page, folderName);
+		return UploadCatalogUtils.userCanSeeFolder(page, folderName);
 	}
 
 	public void clickOnCreateNewFolderIcon() {
-		CodeAppPageUtils.clickOnCreateNewFolderIcon(page);
+		UploadCatalogUtils.clickOnCreateNewFolderIcon(page);
 	}
 
 	public void enterFolderName(String folderName) {
-		CodeAppPageUtils.enterFolderName(page, folderName);
+		UploadCatalogUtils.enterFolderName(page, folderName);
 	}
 
 	public void clickOnCreateButton() {
-		CodeAppPageUtils.clickOnCreateButton(page);
+		UploadCatalogUtils.clickOnCreateButton(page);
 	}
 
 	public void clickOnCreateNewFileIcon() {
-		CodeAppPageUtils.clickOnCreateNewFileIcon(page);
+		UploadCatalogUtils.clickOnCreateNewFileIcon(page);
 	}
 
 	public void enterFileName(String fileName) {
-		CodeAppPageUtils.enterFileName(page, fileName);
+		UploadCatalogUtils.enterFileName(page, fileName);
 	}
 
 	public boolean userCanSeeFile(String fileName) {
-		return CodeAppPageUtils.userCanSeeFile(page, fileName);
+		return UploadCatalogUtils.userCanSeeFile(page, fileName);
 	}
 
 	public void userSelectTheFolder(String folderName) {
-		CodeAppPageUtils.userSelectTheFolder(page, folderName);
+		UploadCatalogUtils.userSelectTheFolder(page, folderName);
 	}
 
 	public void userCanSeeFolderUnderParentFolder(String folderName, String parentFolderName) {
-		CodeAppPageUtils.userCanSeeFolderUnderParentFolder(page, folderName, parentFolderName);
+		UploadCatalogUtils.userCanSeeFolderUnderParentFolder(page, folderName, parentFolderName);
 	}
 
 	public void userCanSeeFileUnderParentFolder(String fileName, String parentFolderName) {
-		CodeAppPageUtils.userCanSeeFileUnderParentFolder(page, fileName, parentFolderName);
+		UploadCatalogUtils.userCanSeeFileUnderParentFolder(page, fileName, parentFolderName);
 	}
 
 	public void userSelectTheFile(String fileName) {
-		CodeAppPageUtils.userSelectTheFile(page, fileName);
+		UploadCatalogUtils.userSelectTheFile(page, fileName);
 	}
 
 	public void userEditFileWithSomeContentAs(String content) {
-		CodeAppPageUtils.userEditFileWithSomeContentAs(page, content);
+		UploadCatalogUtils.userEditFileWithSomeContentAs(page, content);
 	}
 
 	public void userSaveTheFile() {
-		CodeAppPageUtils.userSaveTheFile(page);
+		UploadCatalogUtils.userSaveTheFile(page);
 	}
 
 	public void seeFileTabIsOpenByDefault() {
-		CodeAppPageUtils.seeFileTabIsOpenByDefault(page);
+		UploadCatalogUtils.seeFileTabIsOpenByDefault(page);
 	}
 
 	public boolean isRefreshFilesOptionVisible() {
-		return CodeAppPageUtils.isRefreshFilesOptionVisible(page);
+		return UploadCatalogUtils.isRefreshFilesOptionVisible(page);
 	}
 
 	public void isRefreshFilesOptionClickable() {
-		CodeAppPageUtils.isRefreshFilesOptionClickable(page);
+		UploadCatalogUtils.isRefreshFilesOptionClickable(page);
 	}
 
 	public boolean isRecompileRefactorOptionVisible() {
-		return CodeAppPageUtils.isRecompileRefactorOptionVisible(page);
+		return UploadCatalogUtils.isRecompileRefactorOptionVisible(page);
 	}
 
 	public void isRecompileRefactorOptionClickable() {
-		CodeAppPageUtils.isRecompileRefactorOptionClickable(page);
+		UploadCatalogUtils.isRecompileRefactorOptionClickable(page);
 	}
 
 	public void clickOnShareAppLink() {
-		CodeAppPageUtils.clickOnShareAppLink(page);
+		UploadCatalogUtils.clickOnShareAppLink(page);
 	}
 
 	public void clickOnCopyButtonForUrl() {
-		CodeAppPageUtils.clickOnCopyButtonForUrl(page);
+		UploadCatalogUtils.clickOnCopyButtonForUrl(page);
 	}
 
 	public void openNewTab() {
-		CodeAppPageUtils.openNewTab(page);
+		UploadCatalogUtils.openNewTab(page);
 	}
 
 	public void pasteTheUrlOnNewTab() {
-		CodeAppPageUtils.pasteTheUrlOnNewTab(page);
+		UploadCatalogUtils.pasteTheUrlOnNewTab(page);
 	}
 
 	public boolean isAppVisibleOnNewTab(String appName) {
-		return CodeAppPageUtils.isAppVisibleOnNewTab(appName);
+		return UploadCatalogUtils.isAppVisibleOnNewTab(appName);
 	}
 
 	public void moveToMainPage() {
-		CodeAppPageUtils.moveToMainPage(page);
+		UploadCatalogUtils.moveToMainPage(page);
 	}
 
 	public void userEditFileForTitleAsUpdatedContent(String content) {
-		CodeAppPageUtils.userEditFileForTitleAsUpdatedContent(page, content);
+		UploadCatalogUtils.userEditFileForTitleAsUpdatedContent(page, content);
 	}
 
 	public boolean isAppTitleVisible(String appName) {
-		return CodeAppPageUtils.isAppTitleVisible(page, appName);
+		return UploadCatalogUtils.isAppTitleVisible(page, appName);
 	}
 
 	public void clickOnBookmarkAppIcon() {
-		CodeAppPageUtils.clickOnBookmarkAppIcon(page);
+		UploadCatalogUtils.clickOnBookmarkAppIcon(page);
 	}
 
 	public void clickOnSettingsTab() {
-		CodeAppPageUtils.clickOnSettingsTab(page);
+		UploadCatalogUtils.clickOnSettingsTab(page);
 	}
 
 	public void clickOnGeneralTab() {
-		CodeAppPageUtils.clickOnGeneralTab(page);
+		UploadCatalogUtils.clickOnGeneralTab(page);
 	}
 
 	public void clickOnAppsTab() {
-		CodeAppPageUtils.clickOnAppsTab(page);
+		UploadCatalogUtils.clickOnAppsTab(page);
 	}
 
 	public void clickOnCreateAtIconOnFileSection() {
-		CodeAppPageUtils.clickOnCreateAtIconOnFileSection(page);
+		UploadCatalogUtils.clickOnCreateAtIconOnFileSection(page);
 	}
 
 	public void selectAction(String action) {
-		CodeAppPageUtils.selectAction(page, action);
+		UploadCatalogUtils.selectAction(page, action);
 	}
 
 	public void clickOnUploadButtonToCreateCodeApp(String buttonName) {
-		CodeAppPageUtils.clickOnUploadButtonToCreateCodeApp(page, buttonName);
+		UploadCatalogUtils.clickOnUploadButtonToCreateCodeApp(page, buttonName);
 	}
 
 	public void clickOnThreeDotIcon(String fileName) {
-		CodeAppPageUtils.clickOnThreeDotIcon(page, fileName);
+		UploadCatalogUtils.clickOnThreeDotIcon(page, fileName);
 	}
 
 	public void userSelectTheOptionFromThreeDotIcon(String optionName) {
-		CodeAppPageUtils.userSelectTheOptionFromThreeDotIcon(page, optionName);
+		UploadCatalogUtils.userSelectTheOptionFromThreeDotIcon(page, optionName);
 	}
 }

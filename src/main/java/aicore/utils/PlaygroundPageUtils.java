@@ -7,8 +7,8 @@ import com.microsoft.playwright.FileChooser;
 import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class PlaygroundPageUtils {
 
@@ -59,10 +59,7 @@ public class PlaygroundPageUtils {
 	private static final String MODEL_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
 	private static final String KNOWLEDGE_CATALOG_SEARCH_INPUT = "//div/div/input[@placeholder='Search']";
 	private static final String MODEL_ITEM_BY_NAME = "//div[@data-slot='command-group']//div//div//div//span[contains(text(),'{modelName}')]";
-	private static final String UPLOADED_FILE_CARD_XPATH = "//div[contains(@class,'overflow-hidden border')]";
-	private static final String FILE_TOOLTIP_XPATH = "//div[@data-slot='tooltip-content']";
 	private static final String OPEN_SETTING_ICON_XPATH = "//button[@aria-label='Open settings']";
-	private static final String ATTACHED_FILE_OPTION_TEXT = "Attach Document";
 
 	public static void clickOnPlaygroundAppButton(Page page) {
 		Locator anchor = page.getByText(PLAYGROUND_APP_BUTTON_TEXT);
@@ -650,27 +647,53 @@ public class PlaygroundPageUtils {
 	public static boolean selectOption(Page page, String optionName) {
 		return page.getByText(optionName).isVisible();
 	}
+	
+	private static Locator getFileTile(Page page, String fileType) {
+	    return page.locator(String.format(
+	        "//span[normalize-space()='%s']/ancestor::div[contains(@class,'group')][1]",
+	        fileType.toLowerCase()
+	    ));
+	}
 
-	public static String verifyUploadedFile(Page page) {
-		Locator fileCard = page.locator(UPLOADED_FILE_CARD_XPATH).last();
-		AICorePageUtils.waitFor(fileCard);
-		fileCard.hover();
-		Locator tooltip = page.locator(FILE_TOOLTIP_XPATH)
-				.filter(new Locator.FilterOptions().setHasNotText("Open Settings"));
-		tooltip.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		return tooltip.textContent().trim();
+	public static String verifyUploadedFile(Page page, String fileType) {
+	    Locator fileTile = getFileTile(page, fileType);
+	    AICorePageUtils.waitFor(fileTile);
+	    fileTile.hover();
+
+	    Locator tooltip = page.getByRole(AriaRole.TOOLTIP);
+	    AICorePageUtils.waitFor(tooltip);
+	    return tooltip.innerText().trim();
 	}
 
 	public static void uploadFileInPlaygrounds(Page page, String fileName) {
-		Path filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "data", fileName);
-		Locator openSetting = page.locator(OPEN_SETTING_ICON_XPATH);
-		String isExpanded = openSetting.getAttribute("aria-expanded");
-		if (isExpanded == null || isExpanded.equals("false")) {
-			openSetting.click();
+		Path filePath = Paths.get(
+			    System.getProperty("user.dir"),
+			    "src", "test", "resources", "data", fileName
+			);
+
+			FileChooser fileChooser = page.waitForFileChooser(() -> {
+			    page.getByRole(
+			        AriaRole.MENUITEM,
+			        new Page.GetByRoleOptions().setName("Add Documents")
+			    ).click();
+			});
+
+			fileChooser.setFiles(filePath);
+	}
+
+	public static void closeTourButton(Page page) {
+		Locator closeTourButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close tour"));
+		if (closeTourButton.isVisible()) {
+			closeTourButton.click();
 		}
-		FileChooser fileChooser = page.waitForFileChooser(() -> {
-			page.getByText(ATTACHED_FILE_OPTION_TEXT).click();
-		});
-		fileChooser.setFiles(filePath);
+	}
+
+	public static void clickOnAddFilesButton(Page page) {
+		Locator addFilesButton = page.getByRole(AriaRole.BUTTON,
+				new Page.GetByRoleOptions().setName("Add files, agents, and more"));
+		AICorePageUtils.waitFor(addFilesButton);
+		if (addFilesButton.isVisible()) {
+			addFilesButton.click();
+		}
 	}
 }

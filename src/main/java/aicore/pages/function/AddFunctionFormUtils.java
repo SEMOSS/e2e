@@ -1,9 +1,5 @@
 package aicore.pages.function;
 
-import java.util.List;
-import java.util.Map;
-
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;

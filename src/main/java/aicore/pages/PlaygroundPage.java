@@ -266,10 +266,6 @@ public class PlaygroundPage {
 		return PlaygroundPageUtils.selectOption(page, optionName);
 	}
 
-	public String verifyUploadedFile() {
-		return PlaygroundPageUtils.verifyUploadedFile(page);
-	}
-
 	public void uploadFileInPlaygrounds(String fileName) {
 		PlaygroundPageUtils.uploadFileInPlaygrounds(page, fileName);
 	}
