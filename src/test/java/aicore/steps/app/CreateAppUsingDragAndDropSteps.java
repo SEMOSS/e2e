@@ -1019,10 +1019,12 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_the_apps_are_sorted_by_date_created(String catalogName, String order) {
 		if (order.equalsIgnoreCase("ascending")) {
 			boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), true);
-			Assertions.assertTrue(isSortedByDateCreatedAsc, catalogName + " are not sorted by date created in ascending order");
+			Assertions.assertTrue(isSortedByDateCreatedAsc,
+					catalogName + " are not sorted by date created in ascending order");
 		} else if (order.equalsIgnoreCase("descending")) {
 			boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), false);
-			Assertions.assertTrue(isSortedByDateCreatedDesc, catalogName + " are not sorted by date created in descending order");
+			Assertions.assertTrue(isSortedByDateCreatedDesc,
+					catalogName + " are not sorted by date created in descending order");
 		} else {
 			Assertions.fail("Invalid sort order: " + order);
 		}
@@ -1108,6 +1110,19 @@ public class CreateAppUsingDragAndDropSteps {
 	@When("User {string} the Direct Export toggle for Export Data")
 	public void user_toggle_the_direct_export_toggle_for_export_data(String action) {
 		blocksPage.setDirectExportToggle(action);
+	}
+
+	@Then("User sees export data success toast message as {string}")
+	public void user_sees_export_data_success_toast_message_as(String expectedToastMessage) {
+		String actualToastMessage = blocksPage.getExportDataSuccessToastMessage();
+		assertEquals(expectedToastMessage + NotebookCreationAndExecutionSteps.frameID + "...", actualToastMessage,
+				"Export data success toast message is incorrect");
+	}
+
+	@And("User sees downloaded file as {string} formate")
+	public void user_sees_downloaded_file_as_formate(String filetype) {
+		boolean isValid = blocksPage.isDownloadedFileVisible(filetype);
+		Assertions.assertTrue(isValid, "Expected file format: " + filetype + " but got different file");
 	}
 
 }

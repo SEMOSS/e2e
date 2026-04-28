@@ -79,6 +79,6 @@ Feature: Export Function for Drag And Drop App
     And User Select the file type as 'tsv'
     When User 'Turn ON' the Direct Export toggle for Export Data
     And User clicks on 'Export Data' for Export Data
-    Then User sees export success toast message as 'Exporting data from existing query...'
-    And User sees catalog zip file downloaded
+    Then User sees export data success toast message as 'Exporting data from '
+    And User sees downloaded file as 'tsv' formate
     Then User can sees the exported file in Notebook section with expected frame and file type as 'tsv'

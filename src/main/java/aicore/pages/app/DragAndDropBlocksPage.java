@@ -372,4 +372,12 @@ public class DragAndDropBlocksPage {
 	public void setDirectExportToggle(String action) {
 		DragAndDropBlocksPageUtils.setDirectExportToggle(page, action);
 	}
+
+	public String getExportDataSuccessToastMessage() {
+		return DragAndDropBlocksPageUtils.getExportDataSuccessToastMessage(page);
+	}
+
+	public boolean isDownloadedFileVisible(String fileType) {
+		return DragAndDropBlocksPageUtils.isDownloadedFileVisible(page, fileType);
+	}
 }

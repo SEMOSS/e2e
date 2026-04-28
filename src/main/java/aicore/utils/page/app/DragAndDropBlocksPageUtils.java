@@ -1,5 +1,7 @@
 package aicore.utils.page.app;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -175,6 +178,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SELECT_FRAME_OPTION_XPATH = "//select[contains(@id,'export-frame-select')]";
 	private static final String CLICK_ON_EXPORT_BUTTON_XPATH = "//button[text()='{buttonName}']";
 	private static final String DIRECT_EXPORT_TOGGLE_XPATH = "//div//p[text()='Direct Export']/following::button[@role='switch']";
+	private static final String EXPORT_DATA_SUCCESS_TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
+	private static Download download;
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -1178,7 +1183,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static boolean isExportedFileVisibleInNotebookSection(Page page, String frameId, String fileType) {
-		Locator exportedFile = page.locator(EXPORTED_FILE_IN_NOTEBOOK_SECTION_XPATH.replace("{frameId}", frameId).replace("{fileType}", fileType));
+		Locator exportedFile = page.locator(
+				EXPORTED_FILE_IN_NOTEBOOK_SECTION_XPATH.replace("{frameId}", frameId).replace("{fileType}", fileType));
 		return exportedFile.isVisible();
 	}
 
@@ -1196,18 +1202,46 @@ public class DragAndDropBlocksPageUtils {
 
 	public static void clickOnExportOption(Page page, String exportOption) {
 		Locator exportOptionLocator = page.locator(CLICK_ON_EXPORT_BUTTON_XPATH.replace("{buttonName}", exportOption));
+		if (exportOption.equalsIgnoreCase("Export Data")) {
+			download = page.waitForDownload(() -> {
+				exportOptionLocator.click();
+			});
+			Path downloadPath = Paths.get("downloads", download.suggestedFilename());
+			try {
+				Files.createDirectories(downloadPath.getParent());
+				download.saveAs(downloadPath);
+			} catch (IOException e) {
+				throw new RuntimeException("Failed to save downloaded file", e);
+			}
+			// return downloadPath;
+		}
 		exportOptionLocator.click();
+
 	}
 
 	public static void setDirectExportToggle(Page page, String action) {
 		Locator directExportToggle = page.locator(DIRECT_EXPORT_TOGGLE_XPATH);
-		  if(!directExportToggle.isChecked() && action.equalsIgnoreCase("Turn ON")) {
-	            directExportToggle.click();
-	        } 
-			else if(directExportToggle.isChecked() && action.equalsIgnoreCase("Turn OFF")) {
-	            directExportToggle.click();
-	        }
-
+		if (!directExportToggle.isChecked() && action.equalsIgnoreCase("Turn ON")) {
+			directExportToggle.click();
+		} else if (directExportToggle.isChecked() && action.equalsIgnoreCase("Turn OFF")) {
+			directExportToggle.click();
 		}
+
+	}
+
+	public static String getExportDataSuccessToastMessage(Page page) {
+		Locator toastMessage = page.locator(EXPORT_DATA_SUCCESS_TOAST_MESSAGE_XPATH).first();
+		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return toastMessage.textContent().trim();
+	}
+
+	public static boolean isDownloadedFileVisible(Page page, String fileType) {
+		if (download == null) {
+			throw new AssertionError("No download was initiated");
+		}
+		String fileName = download.suggestedFilename();
+		fileType = fileType.replace(".", "").toLowerCase();
+		return fileName.toLowerCase().endsWith("." + fileType);
+	}
 
 }
