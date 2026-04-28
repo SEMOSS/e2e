@@ -26,4 +26,4 @@ Feature: Model view logs dashboard Functionality
     And User should see the 'Refresh' button
     And User should see the 'Event History' section
     And User should see the 'Prompt & Response Timeline' section
-    And User should see the table with columns 'User Id', 'Session Id', 'Request', 'Response', 'Engine Type', 'Engine Name', 'Latency', 'Tokens', 'Timestamp', and 'Status'
+    And User should see the table with columns "User Id, Session Id, Request, Response, Engine Type, Engine Name, Latency, Tokens, Timestamp, Status"

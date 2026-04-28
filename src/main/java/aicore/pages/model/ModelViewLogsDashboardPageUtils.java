@@ -78,11 +78,9 @@ public class ModelViewLogsDashboardPageUtils {
             try {
                 AICorePageUtils.waitFor(columnHeader);
                 if (!columnHeader.isVisible()) {
-                    System.out.println("Column '" + columnName + "' is not visible");
                     return false;
                 }
             } catch (PlaywrightException e) {
-                System.out.println("Column '" + columnName + "' not found: " + e.getMessage());
                 return false;
             }
         }
@@ -101,7 +99,6 @@ public class ModelViewLogsDashboardPageUtils {
                 }
             }
         } catch (PlaywrightException e) {
-            System.out.println("Error retrieving column names: " + e.getMessage());
         }
         return columns;
     }
