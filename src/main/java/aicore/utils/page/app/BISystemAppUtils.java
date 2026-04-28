@@ -8,6 +8,8 @@ import com.microsoft.playwright.options.AriaRole;
 
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
+import aicore.pages.home.HomePageUtils;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
 
 public class BISystemAppUtils {
@@ -23,6 +25,7 @@ public class BISystemAppUtils {
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "(//input[@type='file'])[2]";
 	private static final String DATABASE_CREATED_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 	private static final String SELECT_STARTING_POINT_TEXT_XPATH = "//span[text()='Select a Starting Point']";
+	private static final String EXCEL_OPTION_XPATH = "//div[@class='smss-block__text']//span[text()='Excel']";
 
 
 	// insight options
@@ -40,7 +43,14 @@ public class BISystemAppUtils {
 	private static final String INSIGHT_SAVE_BUTTON_XPATH = "//div[@class='smss-action workspace-save__action']//span[normalize-space(text())='Save']";
 	private static final String INSIGHT_SAVE_TOAST_MESSAGE_XPATH = "//div[@class='smss-alert__content smss-alert__content--closable']";
 
-
+	public static void navigateToBIApp(Page page) {
+		HomePageUtils.navigateToHomePage(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenAppLibrary(page);
+		HomePageUtils.clickOnSystemApp(page);
+		HomePageUtils.clickOnBIApp(page);
+		BISystemAppUtils.closeWelcomePopup(page);
+	}
 	
 	public static void closeWelcomePopup(Page page) {
 		// accepting browser cookies
@@ -51,10 +61,9 @@ public class BISystemAppUtils {
 
 		// welcome popup
 		try {
-			boolean popUp = page.locator(WELCOME_POPUP_CLOSE_XPATH).isVisible();
-			if (popUp) {
-				page.click(WELCOME_POPUP_CLOSE_XPATH);
-			}
+			Locator closeBtn = page.locator(WELCOME_POPUP_CLOSE_XPATH);
+			AICorePageUtils.waitFor(closeBtn);
+			closeBtn.click();
 		} catch (Exception e) {
 			// no popup
 		}
@@ -68,11 +77,10 @@ public class BISystemAppUtils {
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add Database")).click();
 	}
 	
-	public static void enterDatabaseName(Page page, String databaseName, String timestamp) {
-		String createdDatabaseName = databaseName + ' ' + timestamp;
+	public static void enterDatabaseName(Page page, String databaseName) {
 		Locator databaseNameTextbox = page.locator(ENTER_DATABASE_NAME_TEXTBOX_XPATH);
 		AICorePageUtils.waitFor(databaseNameTextbox);
-		databaseNameTextbox.fill(createdDatabaseName);
+		databaseNameTextbox.fill(databaseName);
 	}
 	
 	public static void uploadCSVFile(Page page) {
@@ -93,10 +101,9 @@ public class BISystemAppUtils {
 		startingPointText.hover();
 	}
 	
-	public static void searchDatabaseName(Page page, String databaseName, String timestamp) {
-		String createdDatabaseName = databaseName + ' ' + timestamp;
-		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, createdDatabaseName);
-		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", createdDatabaseName));
+	public static void searchDatabaseName(Page page, String databaseName) {
+		page.fill(SEARCH_DATABASE_TEXTBOX_XPATH, databaseName);
+		page.click(DATABASE_SEARCH_LIST_XPATH.replace("{DatabaseName}", databaseName));
 	}
 	
 	public static void clickOnAddAllOption(Page page) {
@@ -122,14 +129,13 @@ public class BISystemAppUtils {
 	
 	// createdInsightName does not have " " whitespace separator between the name and timestamp,
 	// unlike appNameTesting (in CreateAppPopupUtils.java) and createdDatabaseName (in this file)
-	public static void enterInsightName(Page page, String insightName, String timestamp) {
-		String createdInsightName = insightName + timestamp;
-		page.fill(INSIGHT_NAME_TEXTBOX_ID, createdInsightName);
+	public static void enterInsightName(Page page, String insightName) {
+		page.fill(INSIGHT_NAME_TEXTBOX_ID, insightName);
 	}
 	
-	public static void selectProjectName(Page page, String projectName, String timestamp) {
+	public static void selectProjectName(Page page, String projectName) {
 		page.click(PROJECT_NAME_DROPDOWN_XPATH);
-		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, projectName + " " + timestamp);
+		page.fill(PROJECT_SEARCH_TEXTBOX_XPATH, projectName);
 		page.waitForSelector(PROJECT_SEARCH_LIST_XPATH);
 		page.click(PROJECT_SEARCH_LIST_XPATH);
 		page.click(INSIGHT_SAVE_BUTTON_XPATH);
@@ -138,6 +144,15 @@ public class BISystemAppUtils {
 	public static String verifySavedInsightSuccessMsg(Page page) {
 		Locator toast = page.locator(INSIGHT_SAVE_TOAST_MESSAGE_XPATH).last();
 		return toast.textContent().trim();
+	}
+	
+	public static void selectExcelOption(Page page) {
+		page.click(EXCEL_OPTION_XPATH);
+	}
+	
+	public static void uploadExcelFile(Page page) {
+		page.setInputFiles(UPLOAD_FILE_BUTTON_XPATH,
+				Paths.get(ConfigUtils.getValue(AICoreTestConstants.BI_IMPORT_EXCEL_FILE)));
 	}
 	
 	

@@ -7,13 +7,14 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
-import aicore.utils.AICorePageUtils;
+import aicore.pages.base.AbstractBasePage;
 
-public class MainMenuUtils {
+public class MainMenuUtils extends AbstractBasePage{
 	private static final Logger logger = LogManager.getLogger(MainMenuUtils.class);
 
 	// menu
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
+	private static final String SEMOSS_OPEN_MENU_LABEL = "Open sidebar";
 	private static final String SEMOSS_MENU_DATA_TESTID = "MenuRoundedIcon";
 	private static final String APP_MENU_XPATH = "//button[@aria-label='Open sidebar']";
 
@@ -31,24 +32,11 @@ public class MainMenuUtils {
 
 	// settings
 	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
-
+	
 	public static void openMainMenu(Page page) {
 		logger.info("OPEN MAIN MENU");
-		// check if menu is open
-		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
-		page.waitForTimeout(800);
-		if (isMenuOpen.isVisible()) {
-			isMenuOpen.dblclick();
-		}
-		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESTID);
-		Locator appMenu = page.locator(APP_MENU_XPATH);
-		if (appMenu.isVisible()) {
-			AICorePageUtils.waitFor(appMenu);
-			appMenu.click();
-		} else {
-			AICorePageUtils.waitFor(mainMenu);
-			mainMenu.click();
-		}
+		Locator mainMenuButtonLocator = page.getByLabel(SEMOSS_OPEN_MENU_LABEL);
+		waitAndClick(mainMenuButtonLocator);
 	}
 
 	public static void closeMainMenu(Page page) {
@@ -57,65 +45,62 @@ public class MainMenuUtils {
 			menuOpen.dblclick();
 		}
 	}
-
+	
 	public static void clickOnHome(Page page) {
 		Locator locator = page.locator(HOME_MENU_BUTTON_DATA_TESTID);
-		locator.click();
-		page.waitForTimeout(1000);// wait for home page to load and sync then close menu
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnOpenFunction(Page page) {
 		logger.info("Opening Function Page");
 		Locator locator = page.getByTestId(FUNCTION_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnOpenVector(Page page) {
 		Locator locator = page.getByTestId(VECTOR_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnGuardrail(Page page) {
-		page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TEST_ID).click();
-		MainMenuUtils.closeMainMenu(page);
+		Locator locator = page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TEST_ID);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnOpenAppLibrary(Page page) {
 		Locator locator = page.getByTestId(APP_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnOpenModel(Page page) {
 		Locator locator = page.getByTestId(MODEL_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnOpenStorage(Page page) {
 		Locator locator = page.getByTestId(STORAGE_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnOpenSettings(Page page) {
 		Locator locator = page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnOpenDatabase(Page page) {
 		logger.info("CLICK ON OPEN DATABASE");
 		Locator locator = page.getByTestId(DATABASE_MENU_BUTTON_DATA_TEST_ID);
-		locator.click();
-		MainMenuUtils.closeMainMenu(page);
+		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
 	public static void clickOnUserAccountButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
+		Locator locator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login"));
+		clickOnLocatorAndCLoseMainMenu(page, locator);
+	}
+	
+	public static void clickOnLocatorAndCLoseMainMenu(Page page, Locator locator) {
+		waitAndClick(locator);
+		clickAnywhereOnPage(page); // closes side-menu on main page
 	}
 
 	public static void logout(Page page) {
@@ -126,11 +111,10 @@ public class MainMenuUtils {
 		Locator mainMenu = page.getByTestId(SEMOSS_MENU_DATA_TESTID);
 		Locator appMenu = page.locator(APP_MENU_XPATH);
 		if (appMenu.isVisible()) {
-			AICorePageUtils.waitFor(appMenu);
-			appMenu.click();
+			waitAndClick(appMenu);
 		} else {
-			AICorePageUtils.waitFor(mainMenu);
-			mainMenu.click();
+
+			waitAndClick(mainMenu);
 		}
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();

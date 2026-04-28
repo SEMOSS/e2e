@@ -14,7 +14,6 @@ public class AdminQueryPageUtils {
 	private static final String QUERY_EXECUTED_TOAST_MESSAGE = "Successfully submitted query";
 	private static final String TOAST_MESSAGE_ClOSE_DATA_XPATH = "//button[@aria-label='Close']";
 	private static final String EXECUTE_QUERY_BUTTON_TEXT = "Run";
-	private static final String DATABASE_TABLE_HEADER_XPATH = "//table[contains(@class,'MuiTable-root')]//thead//th";
 	private static final String TOTAL_TABLE_ROWS_XPATH = "//table/tbody/tr";
 	private static final String MAX_ROW_COUNT_XPATH = "//input[@type='number']";
 

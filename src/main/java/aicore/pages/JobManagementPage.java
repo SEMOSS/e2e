@@ -78,72 +78,12 @@ public class JobManagementPage {
 		JobPageUtils.verifyAddedTag(page, expectedText, jobTitle + " " + timestamp);
 	}
 
-	public void verifyPauseButtonEnabled(String jobTitle) {
-		JobPageUtils.verifyPauseButtonEnabled(page, jobTitle);
-	}
-
 	public String verifyTitleOfJobPage(String expectedTitle) {
 		return JobPageUtils.verifyTitleOfJobPage(page, expectedTitle);
 	}
 
 	public String verifySubtitleOfJobPage(String expectedSubtitle) {
 		return JobPageUtils.verifySubtitleOfJobPage(page, expectedSubtitle);
-	}
-
-	public boolean verifyStatusTilesOnJobPage(String tile) {
-		return JobPageUtils.verifyStatusTilesVisibleOnJobPage(page, tile);
-	}
-
-	public boolean verifyButtonsVisibleOnJobPage(String buttonName) {
-		return JobPageUtils.verifyButtonsVisibleOnJobPage(page, buttonName);
-	}
-
-	public boolean verifyButtonsDisabledOnJobPage(String buttonName) {
-		return JobPageUtils.verifyButtonsDisabledOnJobPage(page, buttonName);
-	}
-
-	public boolean verifyTabsVisibleOnJobPage(String tabName) {
-		return JobPageUtils.verifyTabsVisibleOnJobPage(page, tabName);
-	}
-
-	public boolean verifySearchBoxVisibleOnJobPage() {
-		return JobPageUtils.verifySearchBoxVisibleOnJobPage(page);
-	}
-
-	public boolean verifyJobTableColumns(String columnName) {
-		return JobPageUtils.verifyJobTableColumns(page, columnName);
-	}
-
-	public boolean verifyHistoryTableColumns(String columnName) {
-		return JobPageUtils.verifyHistoryTableColumns(page, columnName);
-	}
-
-	public boolean verifyNoJobsMessageOnJobPage(String expectedMessage) {
-		return JobPageUtils.verifyNoJobsMessageOnJobPage(page, expectedMessage);
-	}
-
-	public boolean verifyHistoryTableCollapsed() {
-		return JobPageUtils.verifyHistoryTableCollapsed(page);
-	}
-
-	public boolean verifySearchBoxVisibleOnHistoryTable() {
-		return JobPageUtils.verifySearchBoxVisibleOnHistoryTable(page);
-	}
-
-	public boolean verifyNoJobHistoryMessageOnJobPage(String expectedMessage) {
-		return JobPageUtils.verifyNoJobHistoryMessageOnJobPage(page, expectedMessage);
-	}
-
-	public void expandHistoryTable() {
-		JobPageUtils.expandHistoryTable(page);
-	}
-
-	public void clickOnTab(String tabName) {
-		JobPageUtils.clickOnTab(page, tabName);
-	}
-
-	public String getStatusTileCount(String statusTile) {
-		return JobPageUtils.getStatusTileCount(page, statusTile);
 	}
 
 	public void clickOnRunJobIcon(String jobName) {

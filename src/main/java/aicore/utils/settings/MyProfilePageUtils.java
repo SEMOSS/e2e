@@ -88,13 +88,9 @@ public class MyProfilePageUtils {
 	}
 
 	public static String deleteKeyToastMessage(Page page) {
+		// TODO toast message should probably use a generic util
 		String toastMessage = page.textContent(DELETE_KEY_TOAST_MESSAGE_XPATH).trim();
 		return toastMessage;
-	}
-
-	public static String getExpectedAccessKeyTitle(Page page, String keyName, String timestamp) {
-		String expTitle = keyName + timestamp;
-		return expTitle;
 	}
 
 	public static String validateGeneratedKey(Page page, String keyName, String timestamp) {
@@ -107,11 +103,6 @@ public class MyProfilePageUtils {
 		String generatedDescription = page
 				.textContent(GENERATED_DESCRIPTION_XPATH.replace("{description}", description + timestamp)).trim();
 		return generatedDescription;
-	}
-
-	public static String getExpectedDescriptionName(Page page, String description, String timestamp) {
-		String expDescription = description + timestamp;
-		return expDescription;
 	}
 
 	public static boolean isFieldEnabled(Page page, String fieldName) {

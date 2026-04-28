@@ -1,4 +1,4 @@
-package aicore.unit.settings;
+package aicore.unit.settings.admin;
 
 import java.io.IOException;
 import java.util.Arrays;

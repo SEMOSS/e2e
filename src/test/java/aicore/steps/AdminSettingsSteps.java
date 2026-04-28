@@ -8,7 +8,7 @@ import org.assertj.core.api.SoftAssertions;
 import aicore.hooks.SetupHooks;
 import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.AddModelPage;
-import aicore.pages.model.SettingsModelPageUtils;
+import aicore.utils.settings.SettingsPageUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -29,7 +29,7 @@ public class AdminSettingsSteps {
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 		for (Map<String, String> row : rows) {
 			String tileName = row.get(SETTINGS_TILE_DATATABLE_COL_NAME);
-			boolean isTileVisible = SettingsModelPageUtils.verifyTileIsVisible(SetupHooks.getPage(), tileName);
+			boolean isTileVisible = SettingsPageUtils.checkCardVisible(SetupHooks.getPage(), tileName);
 			softAssert.assertThat(isTileVisible).isTrue();
 		}
 	}
@@ -41,7 +41,7 @@ public class AdminSettingsSteps {
 
 	@Then("User can view the {string} tile")
 	public void user_can_view_the_tile(String tileName) {
-		boolean isTileVisible = SettingsModelPageUtils.verifyTileIsVisible(SetupHooks.getPage(), tileName);
+		boolean isTileVisible = SettingsPageUtils.checkCardVisible(SetupHooks.getPage(), tileName);
 		softAssert.assertThat(isTileVisible).isTrue();
 	}
 }

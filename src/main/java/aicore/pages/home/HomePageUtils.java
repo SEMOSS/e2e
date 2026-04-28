@@ -17,14 +17,13 @@ import aicore.utils.CommonUtils;
 public class HomePageUtils {
 
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
-	private static final String PAGE_TITLE_XPATH = "//h6[text()='"
-			+ ConfigUtils.getValue(AICoreTestConstants.APP_NAME) + "']";
+	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue(AICoreTestConstants.APP_NAME)
+			+ "']";
 	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
 	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search apps, engines, and tools']";
 	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
 
 	// build page options
-	private static final String BUILD_BUTTON_XPATH = "//button[@value='Build']";
 	private static final String BUILD_PAGE_TITLE_XPATH = "//*[text()='{title}']";
 	private static final String BUILD_PAGE_BUTTON = "//div[text()='{cardName}']/parent::div/following-sibling::div//button//span[text()='{buttonName}']";
 	private static final String BUILD_PAGE_BROWSER_TEMPLATE_BUTTON_XPATH = "//a[text()='Browse Templates']";
@@ -32,10 +31,9 @@ public class HomePageUtils {
 	// system apps
 	private static final String SYSTEM_APP_BUTTON_XPATH = "//button[text()='System Apps']";
 	private static final String APP_TAB_XPATH = "//button[text()='{tab}']";
-	private static final String BI_APP_XPATH = "(//div[@class='css-uncsel']//div//a)[1]";
 
 	// Create app
-	private static final String APP_NAME_TEXTBOX_XPATH = "//label[text()='Name']";
+	public static final String NAME_TEXTBOX_DATATESTID = "newAppModal-textField-name";
 	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
 	private static final String CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID = "importForm-Catalog-Name-textField";
 	private static final String STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID = "storage-form-input-NAME";
@@ -73,23 +71,37 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnBIApp(Page page) {
-		String useDocker = ConfigUtils.getValue(AICoreTestConstants.USE_DOCKER);
-		if (useDocker.equals("true")) {
-			page.click(BI_APP_XPATH);
-		} else {
-			String bi = UrlUtils.getBaseFrontendUrl("packages/legacy/dist/#!/");
-			page.navigate(bi);
-			page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-			page.waitForLoadState(LoadState.NETWORKIDLE);
-		}
+		// TODO switch to clicking on app
+		String bi = UrlUtils.getBaseFrontendUrl("packages/legacy/dist/#!/");
+		page.navigate(bi);
+		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+		page.waitForLoadState(LoadState.NETWORKIDLE);
 	}
 
+	/**
+	 * Click on Build page with options like playground etc
+	 * @param page
+	 */
 	public static void clickOnBuildButton(Page page) {
 		Locator btn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Build"));
 		AICorePageUtils.waitFor(btn);
-		if (!btn.isVisible()) {
-			throw new RuntimeException("Build button is not visible");
-		} else {
+		
+		String classValue = btn.getAttribute("class");
+		if (classValue == null || !classValue.contains("bg-primary")) {
+			btn.click();
+		} 
+	}
+	
+	/**
+	 * Click on build search page
+	 * 
+	 * @param page
+	 */
+	public static void clickOnBuildSearchButton(Page page) {
+		Locator btn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Build"));
+		AICorePageUtils.waitFor(btn);
+		String classValue = btn.getAttribute("class");
+		if (classValue == null || classValue.contains("bg-primary")) {
 			btn.click();
 		}
 	}
@@ -166,7 +178,7 @@ public class HomePageUtils {
 	// Created below 2 method to provide name without timestamp to verify home
 	// search functionality
 	public static void enterAppNameToCreateApp(Page page, String appName) {
-		page.locator(APP_NAME_TEXTBOX_XPATH).fill(appName);
+		page.getByTestId(NAME_TEXTBOX_DATATESTID).fill(appName);
 	}
 
 	public static void enterCatalogNameToCreateCatalog(Page page, String catalogName) {

@@ -13,20 +13,8 @@ public class SettingsMyProfile {
 		this.timestamp = timestamp;
 	}
 
-	public void clickOnMyProfileCard() {
-		MyProfilePageUtils.clickOnMyProfileCard(page);
-	}
-
-	public boolean isSectionVisible(String sectionText) {
-		return MyProfilePageUtils.isSectionVisible(page, sectionText);
-	}
-
 	public String verifyPrivacyCenter() {
 		return MyProfilePageUtils.verifyPrivacyCenter(page);
-	}
-
-	public void clickNewKeyButton() {
-		MyProfilePageUtils.clickNewKeyButton(page);
 	}
 
 	public void enterKeyName(String keyName) {
@@ -37,20 +25,8 @@ public class SettingsMyProfile {
 		MyProfilePageUtils.enterDescription(page, description, timestamp);
 	}
 
-	public void clickGenerateButton() {
-		MyProfilePageUtils.clickGenerateButton(page);
-	}
-
 	public boolean isAccessKeyPopupVisible() {
 		return MyProfilePageUtils.isAccessKeyPopupVisible(page);
-	}
-
-	public String copyAccessKey(String KeyName) {
-		return MyProfilePageUtils.copyAccessKey(page, KeyName);
-	}
-
-	public String extractExampleSectionContent(String sectionName) {
-		return MyProfilePageUtils.extractExampleSectionContent(page, sectionName);
 	}
 
 	public void clickOnCancelButton() {
@@ -66,7 +42,7 @@ public class SettingsMyProfile {
 	}
 
 	public String getExpectedAccessKeyTitle(String keyName) {
-		return MyProfilePageUtils.getExpectedAccessKeyTitle(page, keyName, timestamp);
+		return keyName + timestamp;
 	}
 
 	public String validateGeneratedKey(String keyName) {
@@ -78,7 +54,7 @@ public class SettingsMyProfile {
 	}
 
 	public String getExpectedDescriptionName(String description) {
-		return MyProfilePageUtils.getExpectedDescriptionName(page, description, timestamp);
+		return description + timestamp;
 	}
 
 	public boolean isFieldEnabled(String fieldName) {

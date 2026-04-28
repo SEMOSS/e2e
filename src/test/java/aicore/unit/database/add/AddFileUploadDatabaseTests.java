@@ -16,6 +16,8 @@ import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResources;
 
 public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 
@@ -63,26 +65,11 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	@Test
 	public void testAddCSVFlatTable() throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
-		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
+		String fileName = TestResources.DIABETES_CSV;
 		String dbType = "h2";
 		String metaModelType = "asFlatTable";
-		String fileName = "Database/diabetes.csv";
-
-		// db options
-		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
-		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
-		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
-		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		AddDatabaseFormUtils.clickOnConnectButton(page);
-
-		// validate the db created
-		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
-		AICorePageUtils.clickOnButton(page, "Import");
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		String dbID = DatabaseTestUtils.addFlatCsv(page, dbName, fileName, dbType, metaModelType);
 
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
