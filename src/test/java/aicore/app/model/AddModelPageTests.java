@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.EditModelPageUtils;
@@ -29,7 +28,7 @@ import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ModelSpecificPageTests extends AbstractE2ETest {
+public class AddModelPageTests extends AbstractE2ETest {
 	
 	private static String modelCatalogName = null;
 
@@ -137,8 +136,8 @@ public class ModelSpecificPageTests extends AbstractE2ETest {
 	@Tag("model")
 	@DisplayName("View existing models in Model Catalog")
 	public void testViewModels() {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		boolean isModelDisplayed = EditModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelCatalogName);
 		Assertions.assertTrue(isModelDisplayed);
@@ -149,8 +148,8 @@ public class ModelSpecificPageTests extends AbstractE2ETest {
 	@Tag("model")
 	@DisplayName("Edit model details")
 	public void testEditModel() {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
 		AddCatalogPageBaseUtils.clickEditIcon(page);

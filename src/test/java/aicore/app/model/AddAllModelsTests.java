@@ -9,15 +9,13 @@ import com.microsoft.playwright.Page;
 import aicore.base.GenericSetupUtils;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
-import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
 
-public class AddModelTests {
+public class AddAllModelsTests {
 
 	@Test
 	public void testAddModel() throws IOException {
@@ -33,8 +31,8 @@ public class AddModelTests {
 		String modelName ="GPT-4.1";
 		String openAIKey = "Test@1234";
 
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		
 		// model form options
 		ModelPageUtils.clickAddModelButton(page);
@@ -49,7 +47,7 @@ public class AddModelTests {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL, modelCatalogName);
+		CommonUtils.navigateAndDeleteCatalog(page, "Model", modelCatalogName);
 
 	}
 }
