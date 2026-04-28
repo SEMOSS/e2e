@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import aicore.hooks.SetupHooks;
@@ -17,9 +18,8 @@ import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResources;
 import aicore.utils.page.app.AppPageUtils;
 
-public class AllDatabaseFilterPageTests extends AbstractE2ETest {
+public class AllDatabaseSortTests extends AbstractE2ETest {
 	private static String TEST_DB_ID = null;
-	
 	private static String DIABETES_DB_ID = null;
 
 	@BeforeAll
@@ -31,11 +31,14 @@ public class AllDatabaseFilterPageTests extends AbstractE2ETest {
 		DIABETES_DB_ID = DatabaseTestUtils.uploadDatabaseZip(page, TestResources.DIABETES_DATABASE_NAME, TestResources.DIABETES_DATABASE_ZIP);
 	}
 	
+	@BeforeEach
+	public void setup() throws IOException {
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
+	}
+	
 	@Test
-	void testFilters() {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		
+	void testNameSort() {
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
 		boolean isSortedInAscendingOrder = AppPageUtils.verifySortedInAscendingOrder(page);
 		Assertions.assertTrue(isSortedInAscendingOrder, "Database are not sorted in ascending order");
@@ -43,9 +46,10 @@ public class AllDatabaseFilterPageTests extends AbstractE2ETest {
 		AppPageUtils.clickOnFilterButton(page, "Descending");
 		boolean isSortedInDescendingOrder = AppPageUtils.verifySortedInDescendingOrder(page);
 		Assertions.assertTrue(isSortedInDescendingOrder, "Database are not sorted in descending order");
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+	}
+	
+	@Test
+	void testDateCreatedSort() {
 		AppPageUtils.selectSortByOption(page, "Date Created");
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
 		boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), true);
