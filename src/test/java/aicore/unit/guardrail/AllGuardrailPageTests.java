@@ -11,14 +11,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.GuardrailPageUtils;
 import aicore.utils.GuardrailTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.AbstractE2ETest.UserType;
 
 public class AllGuardrailPageTests extends AbstractE2ETest {
 	private static String GUARDRAIL_ID = null;
@@ -35,26 +36,37 @@ public class AllGuardrailPageTests extends AbstractE2ETest {
 		GUARDRAIL_ID = GuardrailTestUtils.createGlinerGuardrail(page, GUARDRAIL_NAME);
 		
 //		// edit db metadata for filter tests
-//		AddCatalogPageBaseUtils.clickEditIcon(page);
-//		// tags
-//		AddCatalogPageBaseUtils.enterTagName(page, "embeddings");
-//		AddCatalogPageBaseUtils.enterTagName(page, "Test1");
-//		// domains
-//		EditModelPageUtils.enterDomainName(page, "SAP");
-//		EditModelPageUtils.enterDomainName(page, "AI");
-//		EditModelPageUtils.selectDataClassificationOption(page, "IP");
-//		EditModelPageUtils.selectDataClassificationOption(page, "PHI");
-//		EditModelPageUtils.selectDataRestrictionsOption(page, "IP ALLOWED");
-//		EditModelPageUtils.selectDataRestrictionsOption(page, "PII ALLOWED");
-//		AddCatalogPageBaseUtils.clickOnSubmit(page);
+		EditMetadataPageUtils.clickEditIcon(page);
+		EditMetadataPageUtils.enterDetails(page, "Gliner guardrail");
+		EditMetadataPageUtils.enterDescription(page, "Test Gliner guardrail catalog");
+		// tags
+		EditMetadataPageUtils.enterTagName(page, "embeddings");
+		EditMetadataPageUtils.enterTagName(page, "Test1");
+		EditMetadataPageUtils.enterTagName(page, "Test2");
+		EditMetadataPageUtils.enterTagName(page, "Test3");
+
+		// domains
+		EditMetadataPageUtils.enterDomainName(page, "SAP");
+		EditMetadataPageUtils.enterDomainName(page, "AI");
+		EditMetadataPageUtils.enterDomainName(page, "Finance");
+
+		EditMetadataPageUtils.selectDataClassificationOption(page, "IP");
+		EditMetadataPageUtils.selectDataClassificationOption(page, "PHI");
+		EditMetadataPageUtils.selectDataClassificationOption(page, "PII");
+		EditMetadataPageUtils.selectDataClassificationOption(page, "PUBLIC");
+		EditMetadataPageUtils.selectDataRestrictionsOption(page, "IP ALLOWED");
+		EditMetadataPageUtils.selectDataRestrictionsOption(page, "PHI ALLOWED");
+		EditMetadataPageUtils.selectDataRestrictionsOption(page, "FOUO ALLOWED");
+
+		EditMetadataPageUtils.clickOnSubmit(page);
 	}
 	
 	@Test
 	void testCatalogCard() {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnGuardrail(page);
-		AddDatabasePageUtils.searchDatabaseCatalog(page, GUARDRAIL_NAME);
-
+		GuardrailPageUtils.searchGuardrailCatalog(page, GUARDRAIL_NAME);
+		
 		// validate search
 		String databaseNameInCatalog = AddDatabasePageUtils.verifyDatabaseNameInCatalog(page, GUARDRAIL_NAME);
 		boolean databaseNameFlag = databaseNameInCatalog.contains(GUARDRAIL_NAME);

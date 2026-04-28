@@ -13,10 +13,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.AbstractE2ETest;
-import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
@@ -63,7 +63,7 @@ public class MyProfilePageTests extends AbstractE2ETest {
 
 		Assertions.assertEquals(expectedAccessCount, actualAccessCount, "Access Key mismatch in: " + sectionName);
 		Assertions.assertEquals(expectedSecretCount, actualSecretCount, "Secret Key mismatch in: " + sectionName);
-		AddCatalogPageBaseUtils.clickOnClose(page);
+		EditMetadataPageUtils.clickOnClose(page);
 
 		// see personal access tokens on page
 		boolean isVisible = MyProfilePageUtils.isSectionVisible(page, sectionName);

@@ -16,11 +16,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.steps.CatalogFilterSteps;
 import aicore.utils.AbstractE2ETest;
-import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
@@ -41,18 +41,18 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 		dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
 
 		// edit db metadata for filter tests
-		AddCatalogPageBaseUtils.clickEditIcon(page);
+		EditMetadataPageUtils.clickEditIcon(page);
 		// tags
-		AddCatalogPageBaseUtils.enterTagName(page, "embeddings");
-		AddCatalogPageBaseUtils.enterTagName(page, "Test1");
+		EditMetadataPageUtils.enterTagName(page, "embeddings");
+		EditMetadataPageUtils.enterTagName(page, "Test1");
 		// domains
-		EditModelPageUtils.enterDomainName(page, "SAP");
-		EditModelPageUtils.enterDomainName(page, "AI");
-		EditModelPageUtils.selectDataClassificationOption(page, "IP");
-		EditModelPageUtils.selectDataClassificationOption(page, "PHI");
-		EditModelPageUtils.selectDataRestrictionsOption(page, "IP ALLOWED");
-		EditModelPageUtils.selectDataRestrictionsOption(page, "PII ALLOWED");
-		AddCatalogPageBaseUtils.clickOnSubmit(page);
+		EditMetadataPageUtils.enterDomainName(page, "SAP");
+		EditMetadataPageUtils.enterDomainName(page, "AI");
+		EditMetadataPageUtils.selectDataClassificationOption(page, "IP");
+		EditMetadataPageUtils.selectDataClassificationOption(page, "PHI");
+		EditMetadataPageUtils.selectDataRestrictionsOption(page, "IP ALLOWED");
+		EditMetadataPageUtils.selectDataRestrictionsOption(page, "PII ALLOWED");
+		EditMetadataPageUtils.clickOnSubmit(page);
 	}
 
 	@Test

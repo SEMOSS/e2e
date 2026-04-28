@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.EditModelPageUtils;
@@ -22,7 +23,6 @@ import aicore.pages.model.ModelSMSSPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
-import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
@@ -123,9 +123,9 @@ public class AddModelPageTests extends AbstractE2ETest {
 	@DisplayName("Add tag to model and verify it appears on the page")
 	public void testAddTagToModel() {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
-		AddCatalogPageBaseUtils.clickEditIcon(page);
-		AddCatalogPageBaseUtils.enterTagName(page, "embeddings");
-		AddCatalogPageBaseUtils.clickOnSubmit(page);
+		EditMetadataPageUtils.clickEditIcon(page);
+		EditMetadataPageUtils.enterTagName(page, "embeddings");
+		EditMetadataPageUtils.clickOnSubmit(page);
 		List<String> actualTagList = EditModelPageUtils.verifyTagNames(page);
 		List<String> expectedTagList = Arrays.asList(new String[] {"embeddings"});
 		Assertions.assertEquals(expectedTagList, actualTagList);
@@ -152,40 +152,40 @@ public class AddModelPageTests extends AbstractE2ETest {
 		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
-		AddCatalogPageBaseUtils.clickEditIcon(page);
+		EditMetadataPageUtils.clickEditIcon(page);
 		
 		String detailsText = "GPT-4.1 model";
-		EditModelPageUtils.enterDetails(page, detailsText);
+		EditMetadataPageUtils.enterDetails(page, detailsText);
 		
 		String descriptionText = "This is GPT-4.1 test model";
-		EditModelPageUtils.enterDescription(page, descriptionText);
+		EditMetadataPageUtils.enterDescription(page, descriptionText);
 		
 		String tagNames = "embeddings, Test1";
 		String[] tagsArray = tagNames.split(", ");
 		for (String tag : tagsArray) {
-			AddCatalogPageBaseUtils.enterTagName(page, tag);
+			EditMetadataPageUtils.enterTagName(page, tag);
 		}
 		
 		String domainNames = "SAP, AI, Finance";
 		String[] allDomainNames = domainNames.split(", ");
 		for (String domainName : allDomainNames) {
-			EditModelPageUtils.enterDomainName(page, domainName);
+			EditMetadataPageUtils.enterDomainName(page, domainName);
 		}
 		
 		String dataClassificationOptions = "IP, PHI, PII, PUBLIC";
 		String[] classificationOptions = dataClassificationOptions.split(", ");
 		for (String option : classificationOptions) {
-			EditModelPageUtils.selectDataClassificationOption(page, option);
+			EditMetadataPageUtils.selectDataClassificationOption(page, option);
 		}
 
 		String dataRestrictionOptions = "IP ALLOWED, PHI ALLOWED, FOUO ALLOWED";
 		String[] restrictionsOptions = dataRestrictionOptions.split(", ");
 		for (String option : restrictionsOptions) {
-			EditModelPageUtils.selectDataRestrictionsOption(page, option);
+			EditMetadataPageUtils.selectDataRestrictionsOption(page, option);
 		}
 
 		// save edit changes
-		AddCatalogPageBaseUtils.clickOnSubmit(page);
+		EditMetadataPageUtils.clickOnSubmit(page);
 
 		// verify model description
 		String actualDescriptionText = EditModelPageUtils.verifyDescriptionText(page);

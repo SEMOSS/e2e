@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.utils.AbstractE2ETest;
@@ -89,16 +90,16 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 
 	@Test
 	public void testEdit() throws IOException, InterruptedException {
-		AddCatalogPageBaseUtils.clickEditIcon(page);
-		AddCatalogPageBaseUtils.clickOnClose(page);
+		EditMetadataPageUtils.clickEditIcon(page);
+		EditMetadataPageUtils.clickOnClose(page);
 	}
 	
 	@Test
 	public void testViewMetadataTags() throws IOException {
-		AddCatalogPageBaseUtils.clickEditIcon(page);
+		EditMetadataPageUtils.clickEditIcon(page);
 		String tagName = "embeddings";
-		AddCatalogPageBaseUtils.enterTagName(page, tagName);
-		AddCatalogPageBaseUtils.clickOnSubmit(page);
+		EditMetadataPageUtils.enterTagName(page, tagName);
+		EditMetadataPageUtils.clickOnSubmit(page);
 		//TODO fix the toast message check
 //		AddCatalogPageBaseUtils.verifyEditSuccessfullToastMessage(page);
 		List<String> tags = EditModelPageUtils.verifyTagNames(page);

@@ -12,9 +12,9 @@ import aicore.base.GenericSetupUtils;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
 import aicore.pages.ViewCatalogPage;
+import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
-import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -59,12 +59,12 @@ public class AddModelSteps {
 			openModelPage.enterCatalogName(catalogName + "" + (i + 1));
 			openModelPage.enterOpenAIKey(apiKey);
 			openModelPage.clickOnCreateModelButton();
-			viewCatalogPage.clickEditIcon();
+			EditMetadataPageUtils.clickEditIcon(SetupHooks.getPage());
 			String[] tagsArray = tags.split(", ");
 			for (String tag : tagsArray) {
-				viewCatalogPage.enterTagName(tag);
+				EditMetadataPageUtils.enterTagName(SetupHooks.getPage(), tag);
 			}
-			viewCatalogPage.clickOnSubmit();
+			EditMetadataPageUtils.clickOnSubmit(SetupHooks.getPage());
 			if (i < modelCount - 1) {
 				MainMenuUtils.openMainMenu(SetupHooks.getPage());
 				MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
@@ -256,7 +256,7 @@ public class AddModelSteps {
 
 	@When("User clicks on Edit button")
 	public void user_clicks_on_edit_button() {
-		viewCatalogPage.clickEditIcon();
+		EditMetadataPageUtils.clickEditIcon(SetupHooks.getPage());
 	}
 
 	@When("User searches the {string} in the model catalog searchbox")
@@ -277,19 +277,19 @@ public class AddModelSteps {
 
 	@And("User enters the details as {string}")
 	public void user_enters_the_details_as(String detailsText) {
-		openModelPage.enterDetails(detailsText);
+		EditMetadataPageUtils.enterDetails(SetupHooks.getPage(), detailsText);
 	}
 
 	@And("User enters the description as {string}")
 	public void user_enters_the_description_as(String descriptionText) {
-		openModelPage.enterDescription(descriptionText);
+		EditMetadataPageUtils.enterDescription(SetupHooks.getPage(), descriptionText);
 	}
 
 	@And("User add Tags {string} and presses Enter")
 	public void user_add_tags_and_presses_enter(String tags) {
 		String[] tagsArray = tags.split(", ");
 		for (String tag : tagsArray) {
-			viewCatalogPage.enterTagName(tag);
+			EditMetadataPageUtils.enterTagName(SetupHooks.getPage(), tag);
 		}
 	}
 
@@ -297,7 +297,7 @@ public class AddModelSteps {
 	public void user_enters_the_domains_as(String domainNames) {
 		String[] allDomainNames = domainNames.split(", ");
 		for (String domainName : allDomainNames) {
-			openModelPage.enterDomainName(domainName);
+			EditMetadataPageUtils.enterDomainName(SetupHooks.getPage(), domainName);
 		}
 	}
 
@@ -305,7 +305,7 @@ public class AddModelSteps {
 	public void user_selects_from_the_data_classification_dropdown(String dataClassificationOptions) {
 		String[] options = dataClassificationOptions.split(", ");
 		for (String option : options) {
-			openModelPage.selectDataClassificationOption(option);
+			EditMetadataPageUtils.selectDataClassificationOption(SetupHooks.getPage(), option);
 		}
 	}
 
@@ -313,7 +313,7 @@ public class AddModelSteps {
 	public void user_selects_from_the_data_restrictions_dropdown(String dataRestictionOptions) {
 		String[] options = dataRestictionOptions.split(", ");
 		for (String option : options) {
-			openModelPage.selectDataRestrictionsOption(option);
+			EditMetadataPageUtils.selectDataRestrictionsOption(SetupHooks.getPage(), option);
 		}
 	}
 
@@ -378,12 +378,12 @@ public class AddModelSteps {
 
 	@When("User clicks on Submit button")
 	public void user_clicks_on_submit_button() {
-		viewCatalogPage.clickOnSubmit();
+		EditMetadataPageUtils.clickOnSubmit(SetupHooks.getPage());
 	}
 
 	@When("User clicks on Close button")
 	public void user_clicks_on_close_button() {
-		AddCatalogPageBaseUtils.clickOnClose(SetupHooks.getPage());
+		EditMetadataPageUtils.clickOnClose(SetupHooks.getPage());
 	}
 
 	// Edit SMSS
@@ -555,7 +555,7 @@ public class AddModelSteps {
 
 	@And("User enter the tag as {string}")
 	public void user_enter_the_tag_as(String tagName) {
-		openModelPage.enterTagName(tagName);
+		EditMetadataPageUtils.enterTagName(SetupHooks.getPage(), tagName);
 	}
 
 	@And("User enter the Version as {string}")
