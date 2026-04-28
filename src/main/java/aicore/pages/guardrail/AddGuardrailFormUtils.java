@@ -9,6 +9,7 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.GuardrailPageUtils;
+import aicore.utils.StoragePageUtils;
 
 public class AddGuardrailFormUtils {
 	public static List<String> createdGuardrailIds = new ArrayList<>();
@@ -47,6 +48,11 @@ public class AddGuardrailFormUtils {
 		enterDefaultThreshold(page, defaultThreshold);
 		AddModelFormUtils.clickOnCreateModelButton(page);
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
+	}
+
+	public static void clickOnConnectButton(Page page) {
+		String buttonName = "Connect";
+		StoragePageUtils.clickOnButton(page, buttonName);		
 	}
 
 }

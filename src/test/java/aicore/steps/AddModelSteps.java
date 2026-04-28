@@ -13,6 +13,7 @@ import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
 import aicore.pages.ViewCatalogPage;
 import aicore.pages.home.MainMenuUtils;
+import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import io.cucumber.datatable.DataTable;
@@ -54,7 +55,7 @@ public class AddModelSteps {
 		int modelCount = Integer.parseInt(index);
 		for (int i = 0; i < modelCount; i++) {
 			openModelPage.selectModelType(modelType);
-			openModelPage.selectModel(modelName);
+			AddModelFormUtils.selectModel(SetupHooks.getPage(), modelName);
 			openModelPage.enterCatalogName(catalogName + "" + (i + 1));
 			openModelPage.enterOpenAIKey(apiKey);
 			openModelPage.clickOnCreateModelButton();
@@ -139,7 +140,7 @@ public class AddModelSteps {
 
 	@When("User selects {string}")
 	public void user_selects(String aiModelName) {
-		openModelPage.selectModel(aiModelName);
+		AddModelFormUtils.selectModel(SetupHooks.getPage(), aiModelName);
 	}
 
 	@And("User enters Catalog Name as {string}")

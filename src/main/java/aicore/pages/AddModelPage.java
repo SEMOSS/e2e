@@ -33,10 +33,6 @@ public class AddModelPage {
 		AddModelFormUtils.selectModelType(page, modelType);
 	}
 
-	public void selectModel(String modelName) {
-		AddModelFormUtils.selectModel(page, modelName);
-	}
-
 	public void selectOpenAi(String aiModelName) {
 		AddModelFormUtils.selectOpenAi(page, aiModelName);
 	}
