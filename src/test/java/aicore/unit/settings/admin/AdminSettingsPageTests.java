@@ -45,7 +45,7 @@ public class AdminSettingsPageTests extends AbstractE2ETest {
         "My Profile"
     })
 	void testSettingOptions(String tileName) {
-		boolean isTileVisible = SettingsModelPageUtils.verifyTileIsVisible(SetupHooks.getPage(), tileName);
+		boolean isTileVisible = SettingsPageUtils.checkCardVisible(page, tileName);
 		assertTrue(isTileVisible, "Tile not visible: " + tileName);
 	}
     
@@ -54,7 +54,7 @@ public class AdminSettingsPageTests extends AbstractE2ETest {
     void testSearch() {
 		SettingsModelPageUtils.clickOnSearchBox(page, "mod");
 		String tileName = "Model Settings";
-		boolean isTileVisible = SettingsModelPageUtils.verifyTileIsVisible(SetupHooks.getPage(), tileName);
+		boolean isTileVisible = SettingsPageUtils.checkCardVisible(SetupHooks.getPage(), tileName);
 		assertTrue(isTileVisible, "Tile not visible: " + tileName);
     }
 }

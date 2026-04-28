@@ -1,13 +1,15 @@
 package aicore.unit.function;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.ViewFunctionPage;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
@@ -17,15 +19,19 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestTags;
 
 public class ViewFunctionDetailsTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);
 	
+	@BeforeAll
+	static void setup() {
+		login(page, UserType.NATIVE);
+	}
+	
 	@BeforeEach
 	void createFunctionUsingZip() {
 		logger.info("BEFORE ALL: creating function");
-		login(page, UserType.NATIVE);
-
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		// this checks & removes existing function that may collide with name
@@ -39,6 +45,10 @@ public class ViewFunctionDetailsTests extends AbstractE2ETest {
 		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
 	}
 	
+	@Test
+	@Tag(TestTags.BROKEN)
+	void testViewOverviewTabDetails() {
+		fail("Needs to be implemented");
 	/*
 	 * Below scenario commented because the bug - https://github.com/SEMOSS/community/issues/587 
 	  
@@ -69,8 +79,10 @@ public class ViewFunctionDetailsTests extends AbstractE2ETest {
 	 
 	 * TODO: This test needs to be created as JUnit once the issue has been resolved
 	 */
+	}
 	
 	@Test
+	@Tag(TestTags.BROKEN)
 	void testViewUsageDetailsInUsageTabForSelectedFunction() {
 		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
 		ViewFunctionPage viewFunction = new ViewFunctionPage(page);

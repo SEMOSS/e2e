@@ -100,7 +100,7 @@ public class JobManagementSteps {
 
 	@Then("{string} will start running and Pause button will be enabled")
 	public void will_start_running_and_pause_button_will_be_enabled(String jobTitle) {
-		jobManagementPage.verifyPauseButtonEnabled(jobTitle);
+		JobPageUtils.verifyPauseButtonEnabled(SetupHooks.getPage(), jobTitle);
 	}
 
 	@When("User clicks the checkbox of {string}")
@@ -144,13 +144,13 @@ public class JobManagementSteps {
 
 	@Then("User sees Jobs page title as {string}")
 	public void user_sees_jobs_page_title_as(String title) {
-		String actualTitle = jobManagementPage.verifyTitleOfJobPage(title);
+		String actualTitle = JobPageUtils.verifyTitleOfJobPage(SetupHooks.getPage(), title);;
 		Assertions.assertEquals(actualTitle, title, "Job page title mismatch");
 	}
 
 	@Then("User sees Jobs page subtitle as {string}")
 	public void user_sees_jobs_page_subtitle_as(String subtitle) {
-		String actualSubtitle = jobManagementPage.verifySubtitleOfJobPage(subtitle);
+		String actualSubtitle = JobPageUtils.verifySubtitleOfJobPage(SetupHooks.getPage(), subtitle);
 		Assertions.assertEquals(actualSubtitle, subtitle, "Job page subtitle mismatch");
 	}
 
@@ -158,7 +158,7 @@ public class JobManagementSteps {
 	public void user_sees_below_status_tiles_on_jobs_page(DataTable dataTable) {
 		List<String> tiles = dataTable.asList();
 		for (String tile : tiles) {
-			boolean isTileVisible = jobManagementPage.verifyStatusTilesOnJobPage(tile);
+			boolean isTileVisible =  JobPageUtils.verifyStatusTilesVisibleOnJobPage(SetupHooks.getPage(), tile);
 			Assertions.assertTrue(isTileVisible, "Tile not visible: " + tile);
 		}
 	}
@@ -167,7 +167,7 @@ public class JobManagementSteps {
 	public void user_sees_below_tabs_on_jobs_page(DataTable dataTable) {
 		List<String> tabs = dataTable.asList();
 		for (String tab : tabs) {
-			boolean isTabVisible = jobManagementPage.verifyTabsVisibleOnJobPage(tab);
+			boolean isTabVisible = JobPageUtils.verifyTabsVisibleOnJobPage(SetupHooks.getPage(), tab);
 			Assertions.assertTrue(isTabVisible, "Tab not visible: " + tab);
 		}
 	}
@@ -176,7 +176,7 @@ public class JobManagementSteps {
 	public void user_sees_below_buttons_on_jobs_page(DataTable dataTable) {
 		List<String> buttons = dataTable.asList();
 		for (String button : buttons) {
-			boolean isButtonVisible = jobManagementPage.verifyButtonsVisibleOnJobPage(button);
+			boolean isButtonVisible = JobPageUtils.verifyButtonsVisibleOnJobPage(SetupHooks.getPage(), button);
 			Assertions.assertTrue(isButtonVisible, "Button not visible: " + button);
 		}
 	}
@@ -185,14 +185,14 @@ public class JobManagementSteps {
 	public void user_sees_below_buttons_are_disabled_on_jobs_page(DataTable dataTable) {
 		List<String> buttons = dataTable.asList();
 		for (String button : buttons) {
-			boolean isButtonDisabled = jobManagementPage.verifyButtonsDisabledOnJobPage(button);
+			boolean isButtonDisabled = JobPageUtils.verifyButtonsDisabledOnJobPage(SetupHooks.getPage(), button);
 			Assertions.assertTrue(isButtonDisabled, "Button is not disabled: " + button);
 		}
 	}
 
 	@Then("User sees Search box on Jobs page")
 	public void user_sees_search_box_on_jobs_page() {
-		boolean isSearchboxVisible = jobManagementPage.verifySearchBoxVisibleOnJobPage();
+		boolean isSearchboxVisible = JobPageUtils.verifySearchBoxVisibleOnJobPage(SetupHooks.getPage());
 		Assertions.assertTrue(isSearchboxVisible, "Search box not visible on Jobs page");
 	}
 
@@ -200,52 +200,52 @@ public class JobManagementSteps {
 	public void user_sees_jobs_table_with_below_columns(DataTable dataTable) {
 		List<String> columns = dataTable.asList();
 		for (String column : columns) {
-			boolean isColumnVisible = jobManagementPage.verifyJobTableColumns(column);
+			boolean isColumnVisible = JobPageUtils.verifyJobTableColumns(SetupHooks.getPage(), column);
 			Assertions.assertTrue(isColumnVisible, "Column not visible: " + column);
 		}
 	}
 
 	@Then("User sees {string} message when there are no jobs present")
 	public void user_sees_message_when_there_are_no_jobs_present(String message) {
-		boolean isMessageVisible = jobManagementPage.verifyNoJobsMessageOnJobPage(message);
+		boolean isMessageVisible = JobPageUtils.verifyNoJobsMessageOnJobPage(SetupHooks.getPage(), message);
 		Assertions.assertTrue(isMessageVisible, "No jobs message not visible: " + message);
 	}
 
 	@Then("User sees History table is by default collapsed")
 	public void user_sees_history_table_is_by_default_collapsed() {
-		boolean isHistoryTableCollapsed = jobManagementPage.verifyHistoryTableCollapsed();
+		boolean isHistoryTableCollapsed = JobPageUtils.verifyHistoryTableCollapsed(SetupHooks.getPage());
 		Assertions.assertTrue(isHistoryTableCollapsed, "History table is not collapsed");
 	}
 
 	@When("User expands History table")
 	public void user_expands_history_table() {
-		jobManagementPage.expandHistoryTable();
+		JobPageUtils.expandHistoryTable(SetupHooks.getPage());
 	}
 
 	@Then("User sees History table with below columns")
 	public void user_sees_history_table_with_below_columns(DataTable dataTable) {
 		List<String> columns = dataTable.asList();
 		for (String column : columns) {
-			boolean isColumnVisible = jobManagementPage.verifyHistoryTableColumns(column);
+			boolean isColumnVisible = JobPageUtils.verifyHistoryTableColumns(SetupHooks.getPage(), column);
 			Assertions.assertTrue(isColumnVisible, "Column not visible: " + column);
 		}
 	}
 
 	@Then("User sees search box on History table")
 	public void user_sees_search_box_on_history_table() {
-		boolean isSearchBoxVisible = jobManagementPage.verifySearchBoxVisibleOnHistoryTable();
+		boolean isSearchBoxVisible = JobPageUtils.verifySearchBoxVisibleOnHistoryTable(SetupHooks.getPage());
 		Assertions.assertTrue(isSearchBoxVisible, "Search box not visible on History table");
 	}
 
 	@Then("User sees {string} message when there is no job history present")
 	public void user_sees_message_when_there_is_no_job_history_present(String message) {
-		boolean isMessageVisible = jobManagementPage.verifyNoJobHistoryMessageOnJobPage(message);
+		boolean isMessageVisible = JobPageUtils.verifyNoJobHistoryMessageOnJobPage(SetupHooks.getPage(), message);
 		Assertions.assertTrue(isMessageVisible, "No job history message not visible: " + message);
 	}
 
 	@When("User clicks on {string} tab")
 	public void user_clicks_on_tab(String tabName) {
-		jobManagementPage.clickOnTab(tabName);
+		JobPageUtils.clickOnTab(SetupHooks.getPage(), tabName);
 	}
 
 	@Then("User cannot see {string} in the {string} section list")
@@ -256,7 +256,7 @@ public class JobManagementSteps {
 
 	@Then("User can see {string} status tile count is {string}")
 	public void user_can_see_status_tile_count_is(String statusTile, String count) {
-		String actualCount = jobManagementPage.getStatusTileCount(statusTile);
+		String actualCount = JobPageUtils.getStatusTileCount(SetupHooks.getPage(), statusTile);
 		Assertions.assertEquals(count, actualCount, "Status tile count does not match: " + statusTile);
 	}
 

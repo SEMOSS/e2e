@@ -15,10 +15,10 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
-import aicore.utils.AddFunctionPageUtils;
-import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResources;
 
 public class AddDatabaseTests extends AbstractE2ETest {
 
@@ -109,29 +109,9 @@ public class AddDatabaseTests extends AbstractE2ETest {
 	public void testAddZip() throws IOException {
 		// delete zip db before upload
 		String dbName = "TestDatabase";
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		AddFunctionPageUtils.deleteCatalog(page, "Database", dbName);
 
-		
-		String fileName = "Database/TestDatabase.zip";
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenDatabase(page);
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
-		assertTrue(AddCatalogPageBaseUtils.isSearchBarPresent(page));
-		
-		// add zip db
-		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
-		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
-		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		String fileName = TestResources.TEST_DATABASE_ZIP;
+		String dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
 
 		// delete db
 		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);

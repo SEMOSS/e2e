@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.SettingsMyProfile;
 import aicore.utils.CommonUtils;
+import aicore.utils.settings.MyProfilePageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -28,7 +29,7 @@ public class SettingsMyProfileSteps {
 
 	@When("User clicks on My Profile")
 	public void user_clicks_on_my_profile() {
-		settings.clickOnMyProfileCard();
+		MyProfilePageUtils.clickOnMyProfileCard(SetupHooks.getPage());
 	}
 
 	@Then("User can see {string} link in the top right")
@@ -40,13 +41,13 @@ public class SettingsMyProfileSteps {
 
 	@Then("User can see {string} section on profile page")
 	public void user_can_see_section(String sectionName) {
-		boolean isVisible = settings.isSectionVisible(sectionName);
+		boolean isVisible =  MyProfilePageUtils.isSectionVisible(SetupHooks.getPage(), sectionName);
 		assertTrue(isVisible, "Expected section not found: " + sectionName);
 	}
 
 	@When("User clicks on New Key button")
 	public void user_clicks_on_new_key_button() {
-		settings.clickNewKeyButton();
+		MyProfilePageUtils.clickNewKeyButton(SetupHooks.getPage());
 	}
 
 	@Then("User fills Name as {string} in Name field")
@@ -61,12 +62,12 @@ public class SettingsMyProfileSteps {
 
 	@Then("User clicks on Generate button")
 	public void user_clicks_on_generate_button() {
-		settings.clickGenerateButton();
+		MyProfilePageUtils.clickGenerateButton(SetupHooks.getPage());
 	}
 
 	@When("User copies the {string} using copy icon and validate its alphanumeric")
 	public void user_copies_the_using_copy_icon_and_validate_its_alphanumeric(String KeyName) {
-		String copiedKey = settings.copyAccessKey(KeyName);
+		String copiedKey = MyProfilePageUtils.copyAccessKey(SetupHooks.getPage(), KeyName);
 		assertTrue(copiedKey.matches("^[a-zA-Z0-9-]+$"),
 				"Copied Key contains non-alphanumeric characters: " + copiedKey);
 		if (KeyName.equalsIgnoreCase("Access Key")) {
@@ -91,7 +92,7 @@ public class SettingsMyProfileSteps {
 			String sectionName = row.get(SECTIONS_COLUMN);
 			int expectedAccessKeyCount = Integer.parseInt(row.get(EXPECTED_ACCESS_KEY_COUNT));
 			int expectedSecretKeyCount = Integer.parseInt(row.get(EXPECTED_SECRET_KEY_COUNT));
-			String copiedSectionContents = settings.extractExampleSectionContent(sectionName);
+			String copiedSectionContents = MyProfilePageUtils.extractExampleSectionContent(SetupHooks.getPage(), sectionName);
 			int actualAccessKeyCount = CommonUtils.countIdOccurances(copiedSectionContents, copiedAccessKey);
 			System.out.println(actualAccessKeyCount);
 			int actualSecretKeyCount = CommonUtils.countIdOccurances(copiedSectionContents, copiedSecretKey);

@@ -1,12 +1,12 @@
 package aicore.steps;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.PlaygroundPage;
+import aicore.utils.PlaygroundPageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -339,43 +339,13 @@ public class PlaygroundSteps {
 
 	@And("User can see {string} option")
 	public void user_Select_The_Option(String optionName) {
-		boolean isOptionDisplay = playgroundPage.selectOption(optionName);
+		boolean isOptionDisplay = PlaygroundPageUtils.selectOption(SetupHooks.getPage(), optionName);
 		Assertions.assertTrue(isOptionDisplay, "Option '" + optionName + "' is not visible in the Option settings.");
-	}
-
-	@And("The uploaded file {string} should be displayed successfully")
-	public void then_The_Uploaded_File_Should_Be_Displayed_Successfully(String expectedFileName) {
-		String actualFileName = playgroundPage.verifyUploadedFile();
-		if (actualFileName.contains("/")) {
-			String[] ActualFileName = actualFileName.split("/");
-			int fileNameIndex = ActualFileName.length - 1;
-			Assertions.assertEquals(ActualFileName[fileNameIndex], actualFileName,
-					"Uploaded file name does not match expected file name.");
-		}
 	}
 
 	@And("User uploads the file {string} in playground")
 	public void user_Uploads_The_File_In_Playground(String fileName) {
 		playgroundPage.uploadFileInPlaygrounds(fileName);
-	}
-
-	@When("User uploads and verifies the files in Attach Document option on playground home page")
-	public void user_uploads_and_verifies_files(DataTable dataTable) {
-		List<Map<String, String>> files = dataTable.asMaps(String.class, String.class);
-		for (Map<String, String> data : files) {
-			String fileName = data.get("FILENAME");
-			playgroundPage.uploadFileInPlaygrounds(fileName);
-			String actualFileName = playgroundPage.verifyUploadedFile();
-			String expectedFileName;
-			if (fileName.contains("/")) {
-				expectedFileName = fileName.substring(fileName.lastIndexOf("/") + 1);
-			} else {
-				expectedFileName = fileName;
-			}
-			Assertions.assertTrue(actualFileName != null && actualFileName.contains(expectedFileName),
-					"File upload verification failed. Expected File: " + expectedFileName + " Actual File from UI: "
-							+ actualFileName);
-		}
 	}
 
 }

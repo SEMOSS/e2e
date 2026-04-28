@@ -40,10 +40,14 @@ public class AppPageUtils {
 	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
 	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//span[text()='{option}']";
 	private static final String APP_SETTINGS_SUBMIT_TESTID = "save";
+	private static final String APP_LIST_VIEW  = "Open app in new tab";
+	private static final String APP_GRID_VIEW = "Open";
 	private static final String DATE_CREATED_XPATH = "//button[@title='Private engine']/../../../div[1]//div[2]//span[contains(text(),'2026')]";
+	private static final String CREATED_BY_ME_FILTER_BUTTON_XPATH = "//label[text()='Created by me']/parent::div//button";
 
 	public static void clickOnCreateNewAppButton(Page page) {
-		page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID).click();
+		Locator locator = page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID);
+		locator.click();
 	}
 
 	public static void searchApp(Page page, String appName, String timestamp) {
@@ -57,7 +61,7 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnEditButtoninSettings(Page page) {
-		page.getByTestId("appDetail-edit-btn").click();			
+		page.getByTestId("appDetail-edit-btn").click();
 	}
 
 	public static void enterTagNameinAppSettings(Page page, String tagName) {
@@ -335,29 +339,47 @@ public class AppPageUtils {
 		optionLocator.click();
 	}
 
-	public static boolean verifySortedByDateCreated(Page page, boolean ascending) {
-        Locator dateCreatedLocator = page.locator(DATE_CREATED_XPATH);
-        int appCount = dateCreatedLocator.count();
-        String previousDateStr = null;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH);
+	public static void clickOnViewFilterButton(Page page, String view) {
+		page.getByTitle(view).click();
+	}
 
-        for (int i = 0; i < appCount; i++) {
-            String currentDateStr = dateCreatedLocator.nth(i).textContent().trim();
-            if (previousDateStr != null) {
-                LocalDate previousDate = LocalDate.parse(previousDateStr, formatter);
-                LocalDate currentDate = LocalDate.parse(currentDateStr, formatter);
-                if (ascending) {
-                    if (currentDate.isBefore(previousDate)) {
-                        return false;
-                    }
-                } else {
-                    if (currentDate.isAfter(previousDate)) {
-                        return false;
-                    }
-                }
-            }
-            previousDateStr = currentDateStr;
-        }
-        return true;
-    }
+	public static boolean verifyAppsInTheGridView(Page page) {
+		int appInTheGridView =page.getByText(APP_GRID_VIEW).count();
+		return appInTheGridView > 0;
+	}
+
+	public static boolean verifyAppsInTheListView(Page page) {
+		int appInTheListView =page.getByLabel(APP_LIST_VIEW).count();
+		return appInTheListView > 0;
+	}
+
+	public static boolean verifySortedByDateCreated(Page page, boolean ascending) {
+		Locator dateCreatedLocator = page.locator(DATE_CREATED_XPATH);
+		int appCount = dateCreatedLocator.count();
+		String previousDateStr = null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH);
+
+		for (int i = 0; i < appCount; i++) {
+			String currentDateStr = dateCreatedLocator.nth(i).textContent().trim();
+			if (previousDateStr != null) {
+				LocalDate previousDate = LocalDate.parse(previousDateStr, formatter);
+				LocalDate currentDate = LocalDate.parse(currentDateStr, formatter);
+				if (ascending) {
+					if (currentDate.isBefore(previousDate)) {
+						return false;
+					}
+				} else {
+					if (currentDate.isAfter(previousDate)) {
+						return false;
+					}
+				}
+			}
+			previousDateStr = currentDateStr;
+		}
+		return true;
+	}
+
+	public static void clickOnCreatedByMeToggleSwitch(Page page) {
+		page.locator(CREATED_BY_ME_FILTER_BUTTON_XPATH).click();
+	}
 }

@@ -1,11 +1,12 @@
 package aicore.steps.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.microsoft.playwright.Locator;
 
@@ -16,8 +17,10 @@ import aicore.pages.app.AppVariablePage;
 import aicore.pages.app.BlockSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
 import aicore.pages.app.DragAndDropBlocksPage;
+import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.page.app.AppPageUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -159,7 +162,7 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Given("User clicks on Build button")
 	public void user_navigates_to_build_button() {
-		homePage.clickOnBuildButton();
+		HomePageUtils.clickOnBuildButton(SetupHooks.getPage());
 	}
 
 	@And("User able to see the {string} button")
@@ -612,9 +615,9 @@ public class CreateAppUsingDragAndDropSteps {
 		appPage.clickOnButton(buttonName);
 	}
 
-	@When("User click on Make Public toggle switch")
-	public void user_click_on_make_public_toggle_switch() {
-		appPage.MakeAppPublic();
+	@When("User clicks on make {string} app public toggle switch")
+	public void user_clicks_on_make_app_public_toggle_switch(String appName) {
+		appPage.MakeAppPublic(appName + ' ' + timestamp);
 	}
 
 	@Then("User can see {string} app on the page")
@@ -996,13 +999,13 @@ public class CreateAppUsingDragAndDropSteps {
 
 	@Then("User can see the {string} are sorted in ascending order")
 	public void user_can_see_the_apps_are_sorted_in_ascending_order(String catalogName) {
-		boolean isSortedInAscendingOrder = appPage.verifyAppsSortedInAscendingOrder();
+		boolean isSortedInAscendingOrder = AppPageUtils.verifySortedInAscendingOrder(SetupHooks.getPage());
 		Assertions.assertTrue(isSortedInAscendingOrder, catalogName + " are not sorted in ascending order");
 	}
 
 	@Then("User can see the {string} are sorted in descending order")
 	public void user_can_see_the_apps_are_sorted_in_descending_order(String catalogName) {
-		boolean isSortedInDescendingOrder = appPage.verifyAppsSortedInDescendingOrder();
+		boolean isSortedInDescendingOrder = AppPageUtils.verifySortedInDescendingOrder(SetupHooks.getPage());
 		Assertions.assertTrue(isSortedInDescendingOrder, catalogName + " are not sorted in descending order");
 	}
 
@@ -1015,20 +1018,37 @@ public class CreateAppUsingDragAndDropSteps {
 	@Then("User can see the {string} are sorted by date created in {string} order")
 	public void user_can_see_the_apps_are_sorted_by_date_created(String catalogName, String order) {
 		if (order.equalsIgnoreCase("ascending")) {
-			boolean isSortedByDateCreatedAsc = appPage.verifySortedByDateCreated(true);
+			boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), true);
 			Assertions.assertTrue(isSortedByDateCreatedAsc, catalogName + " are not sorted by date created in ascending order");
 		} else if (order.equalsIgnoreCase("descending")) {
-			boolean isSortedByDateCreatedDesc = appPage.verifySortedByDateCreated(false);
+			boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), false);
 			Assertions.assertTrue(isSortedByDateCreatedDesc, catalogName + " are not sorted by date created in descending order");
 		} else {
 			Assertions.fail("Invalid sort order: " + order);
 		}
-		
+
 	}
 
 	@Then("User selects {string} from the Sort By dropdown")
 	public void user_selects_from_the_sort_by_dropdown(String sortByOption) {
 		appPage.selectSortByOption(sortByOption);
+	}
+
+	@When("User clicks on the {string} button on the app library page")
+	public void user_clicks_on_the_grid_view_button_on_the_app_library_page(String view) {
+		appPage.clickOnViewFilterButton(view);
+	}
+
+	@Then("User can see the apps in grid view")
+	public void user_can_see_the_apps_in_grid_view() {
+		boolean isGridViewVisible = appPage.verifyAppsInTheGridView();
+		Assertions.assertTrue(isGridViewVisible, "Apps are not visible in grid view");
+	}
+
+	@Then("User can see the apps in list view")
+	public void user_can_see_the_apps_in_list_view() {
+		boolean isListViewVisible = appPage.verifyAppsInTheListView();
+		Assertions.assertTrue(isListViewVisible, "Apps are not visible in list view");
 	}
 
 	@And("User drag the {string} block")
@@ -1045,6 +1065,11 @@ public class CreateAppUsingDragAndDropSteps {
 	@And("User select value as {string} for {string} option from General Setting")
 	public void user_select_value_as_for_option_from_general_setting(String value, String optionName) {
 		blocksPage.selectValueForsettingOption(value, optionName);
+	}
+
+	@When("User clicks on Created by me toggle switch")
+	public void user_clicks_on_created_by_me_toggle_switch() {
+		appPage.clickOnCreatedByMeToggleSwitch();
 	}
 
 	@And("User clicks on Export option")
