@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
@@ -58,8 +57,8 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		AddDatabasePageUtils.clickOnEmptyMetaModelButton(page);
 
 		// validation of the db created
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
@@ -93,8 +92,8 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		AddDatabasePageUtils.clickOnEmptyMetaModelButton(page);
 
 		// validation of the db created
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);

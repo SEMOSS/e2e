@@ -16,7 +16,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.steps.CatalogFilterSteps;
@@ -96,7 +95,7 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 				.of(Map.of("FILTER_CATEGORY", filterCategory, "FILTER_VALUE", filterValue));
 
 		CatalogFilterSteps.validateCatalogFilters(dbName, "FILTER_CATEGORY", "FILTER_VALUE", mapList,
-				SetupHooks.getPage());
+				page);
 	}
 
 	private void openCatalogAndValidateSearch() {

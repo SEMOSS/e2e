@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.guardrail.AddGuardrailFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
@@ -43,17 +42,17 @@ public class AllGuardrailSortTests extends AbstractE2ETest {
 	@BeforeEach
 	public void setup() throws IOException {
 		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnGuardrail(SetupHooks.getPage());
+		MainMenuUtils.clickOnGuardrail(page);
 	}
 	
 	@Test
 	void testNameSort() {
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
-		boolean isSortedInAscendingOrder = AppPageUtils.verifySortedInAscendingOrder(SetupHooks.getPage());
+		boolean isSortedInAscendingOrder = AppPageUtils.verifySortedInAscendingOrder(page);
 		Assertions.assertTrue(isSortedInAscendingOrder, "Guardrails are not sorted in ascending order");
 
 		AppPageUtils.clickOnFilterButton(page, "Descending");
-		boolean isSortedInDescendingOrder = AppPageUtils.verifySortedInDescendingOrder(SetupHooks.getPage());
+		boolean isSortedInDescendingOrder = AppPageUtils.verifySortedInDescendingOrder(page);
 		Assertions.assertTrue(isSortedInDescendingOrder, "Guardrails are not sorted in descending order");
 	}
 	
@@ -61,11 +60,11 @@ public class AllGuardrailSortTests extends AbstractE2ETest {
 	void testDateCreatedSort() {
 		AppPageUtils.selectSortByOption(page, "Date Created");
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
-		boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), true);
+		boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(page, true);
 		Assertions.assertTrue(isSortedByDateCreatedAsc,  "Guardrails are not sorted by date created in ascending order");
 
 		AppPageUtils.clickOnFilterButton(page, "Descending");
-		boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), false);
+		boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(page, false);
 		Assertions.assertTrue(isSortedByDateCreatedDesc,   "Guardrails are not sorted by date created in descending order");
 	}
 

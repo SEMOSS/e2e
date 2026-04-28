@@ -20,7 +20,6 @@ import com.microsoft.playwright.Page;
 import aicore.base.GenericSetupUtils;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.EditModelPageUtils;
@@ -145,8 +144,8 @@ public class ModelSpecificPageTests {
 	@Tag("model")
 	@DisplayName("View existing models in Model Catalog")
 	public void testViewModels() {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		boolean isModelDisplayed = EditModelPageUtils.verifyModelIsDisplayedOnCatalogPage(page, modelCatalogName);
 		Assertions.assertTrue(isModelDisplayed);
@@ -157,8 +156,8 @@ public class ModelSpecificPageTests {
 	@Tag("model")
 	@DisplayName("Edit model details")
 	public void testEditModel() {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
 		AddCatalogPageBaseUtils.clickEditIcon(page);

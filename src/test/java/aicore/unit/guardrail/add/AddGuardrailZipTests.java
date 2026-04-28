@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CatalogCreationFromZipUtil;
@@ -34,7 +33,7 @@ public class AddGuardrailZipTests extends AbstractE2ETest {
 		GuardrailPageUtils.clickOnAddGuardrailButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		String fileName = TestResources.GLINER_ZIP;
-		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(SetupHooks.getPage(), fileName);;
+		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, fileName);;
 		if (fileName.contains("/")) {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;

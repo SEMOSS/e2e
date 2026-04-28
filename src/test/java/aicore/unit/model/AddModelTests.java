@@ -9,7 +9,6 @@ import com.microsoft.playwright.Page;
 import aicore.base.GenericSetupUtils;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.CatlogAccessPageUtility;
@@ -32,8 +31,8 @@ public class AddModelTests {
 		String modelName ="GPT-4.1";
 		String openAIKey = "Test@1234";
 
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		
 		// model form options
 		ModelPageUtils.clickAddModelButton(page);

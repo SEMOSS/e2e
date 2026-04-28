@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
@@ -27,8 +26,8 @@ public class AddDatabaseFormValidationTests extends AbstractE2ETest {
 	@ParameterizedTest(name = "Validate add database form for {0}")
 	@MethodSource("databaseFormData")
 	void testDatabaseForm(String dbType, Map<String, String[]> sections, String[] mandatoryFields) {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		AddDatabaseFormUtils.selectDatabaseFromConnectionTypes(page, dbType);
 

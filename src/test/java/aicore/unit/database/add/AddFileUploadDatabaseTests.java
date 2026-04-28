@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
@@ -24,8 +23,8 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	@BeforeEach
 	public void setup() throws IOException {
 		login(page, UserType.NATIVE);
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 
 		// testing add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);

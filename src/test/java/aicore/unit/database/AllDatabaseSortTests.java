@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
@@ -52,11 +51,11 @@ public class AllDatabaseSortTests extends AbstractE2ETest {
 	void testDateCreatedSort() {
 		AppPageUtils.selectSortByOption(page, "Date Created");
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
-		boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), true);
+		boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(page, true);
 		Assertions.assertTrue(isSortedByDateCreatedAsc, "Database are not sorted by date created in ascending order");
 		
 		AppPageUtils.clickOnFilterButton(page, "Descending");
-		boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), false);
+		boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(page, false);
 		Assertions.assertTrue(isSortedByDateCreatedDesc, "Database are not sorted by date created in descending order");
 	}
 	
