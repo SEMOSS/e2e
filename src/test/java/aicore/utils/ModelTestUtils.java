@@ -25,6 +25,7 @@ public class ModelTestUtils {
 		assertTrue(AddCatalogPageBaseUtils.isSearchBarPresent(page));
 
 
+		// TODO: it fails for Admin user due to timeout error
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");

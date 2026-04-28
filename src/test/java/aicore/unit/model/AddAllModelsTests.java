@@ -4,28 +4,25 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
+import aicore.utils.AbstractE2ETest;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
-import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
 
-public class AddModelTests {
+public class AddAllModelsTests extends AbstractE2ETest{
 
 	@Test
 	public void testAddModel() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
+		// GenericSetupUtils.initialize();
+		// Page page = GenericSetupUtils.setupPlaywright();
+		// String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
+		// String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
+		// GenericSetupUtils.login(page, nativeUser, nativePassword);
 		
+		login(page, UserType.NATIVE);
+
 		String timestamp = CommonUtils.getTimeStampName();
 		String modelCatalogName = "Model" + timestamp;
 		String modelType ="OpenAI";
@@ -48,7 +45,7 @@ public class AddModelTests {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL, modelCatalogName);
+		CommonUtils.navigateAndDeleteCatalog(page, "Model", modelCatalogName);
 
 	}
 }

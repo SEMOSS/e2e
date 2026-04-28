@@ -15,35 +15,27 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.ModelSMSSPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AICorePageUtils;
+import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.model.ModelPageUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ModelSpecificPageTests {
-
+public class AddModelPageTests extends AbstractE2ETest {
+	
 	private static String modelCatalogName = null;
-	private static Page page = null;
 
 	@BeforeAll
 	public static void setup() throws IOException {
-		GenericSetupUtils.initialize();
-		page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
+		// login with native user before tests
+		login(page, UserType.NATIVE);
 
 		String timestamp = CommonUtils.getTimeStampName();
 		modelCatalogName = "Model" + timestamp;
@@ -62,7 +54,7 @@ public class ModelSpecificPageTests {
 		AddModelFormUtils.enterOpenAIKey(page, openAIKey);
 		AddModelFormUtils.clickOnCreateModelButton(page);
 	}
-
+	
 	@BeforeEach
 	public void navigateToModelPage() {
 		// Ensure we're on the model details page before each test
@@ -71,12 +63,12 @@ public class ModelSpecificPageTests {
 		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
-
+		
 		// Wait for page to stabilize
 		page.waitForLoadState();
 		page.waitForTimeout(500); // Small buffer for any animations
 	}
-
+	
 	@AfterAll
 	public static void teardown() {
 		// Clean up: delete the test model catalog
@@ -88,8 +80,8 @@ public class ModelSpecificPageTests {
 			}
 		}
 	}
-
-	@Order(1) // Run FIRST - read-only test
+	
+	@Order(1)  // Run FIRST - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("Verify SMSS properties are displayed correctly for a model")
@@ -104,9 +96,9 @@ public class ModelSpecificPageTests {
 		String actualVarName = CommonUtils.splitTrimValue(fullModelVarNameSmss, "VAR_NAME");
 		Assertions.assertEquals(actualVarName, "myModel", "Var name is not matching");
 	}
-
+	
 	@Test
-	@Order(5) // Run FIFTH - modifies SMSS properties
+	@Order(5)  // Run FIFTH - modifies SMSS properties
 	@Tag("model")
 	@DisplayName("Edit SMSS properties and verify changes are persisted")
 	public void testEditSMSS() {
@@ -120,13 +112,12 @@ public class ModelSpecificPageTests {
 		String fullModelVarNameSmss = ModelSMSSPageUtils.verifyVarNameInSMSS(page);
 		String actualVarName = CommonUtils.splitTrimValue(fullModelVarNameSmss, "VAR_NAME");
 		Assertions.assertEquals(actualVarName, "New_Name", "Var name is not matching");
-		String fullConversationHistory = ModelSMSSPageUtils.verifyKeepConversationHistoryValueInSMSS(page,
-				"KEEP_CONVERSATION_HISTORY");
+		String fullConversationHistory = ModelSMSSPageUtils.verifyKeepConversationHistoryValueInSMSS(page, "KEEP_CONVERSATION_HISTORY");
 		actualVarName = CommonUtils.splitTrimValue(fullConversationHistory, "KEEP_CONVERSATION_HISTORY");
 		Assertions.assertEquals(actualVarName, "True", "Conversation history setting is not matching");
 	}
-
-	@Order(2) // Run SECOND - read-only test
+	
+	@Order(2)  // Run SECOND - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("Add tag to model and verify it appears on the page")
@@ -136,11 +127,11 @@ public class ModelSpecificPageTests {
 		AddCatalogPageBaseUtils.enterTagName(page, "embeddings");
 		AddCatalogPageBaseUtils.clickOnSubmit(page);
 		List<String> actualTagList = EditModelPageUtils.verifyTagNames(page);
-		List<String> expectedTagList = Arrays.asList(new String[] { "embeddings" });
+		List<String> expectedTagList = Arrays.asList(new String[] {"embeddings"});
 		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
-	@Order(3) // Run THIRD - read-only test
+	@Order(3)  // Run THIRD - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("View existing models in Model Catalog")
@@ -152,7 +143,7 @@ public class ModelSpecificPageTests {
 		Assertions.assertTrue(isModelDisplayed);
 	}
 
-	@Order(4) // Run FOURTH - modifies model details and tags
+	@Order(4)  // Run FOURTH - modifies model details and tags
 	@Test
 	@Tag("model")
 	@DisplayName("Edit model details")
@@ -162,25 +153,25 @@ public class ModelSpecificPageTests {
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
 		AddCatalogPageBaseUtils.clickEditIcon(page);
-
+		
 		String detailsText = "GPT-4.1 model";
 		EditModelPageUtils.enterDetails(page, detailsText);
-
+		
 		String descriptionText = "This is GPT-4.1 test model";
 		EditModelPageUtils.enterDescription(page, descriptionText);
-
+		
 		String tagNames = "embeddings, Test1";
 		String[] tagsArray = tagNames.split(", ");
 		for (String tag : tagsArray) {
 			AddCatalogPageBaseUtils.enterTagName(page, tag);
 		}
-
+		
 		String domainNames = "SAP, AI, Finance";
 		String[] allDomainNames = domainNames.split(", ");
 		for (String domainName : allDomainNames) {
 			EditModelPageUtils.enterDomainName(page, domainName);
 		}
-
+		
 		String dataClassificationOptions = "IP, PHI, PII, PUBLIC";
 		String[] classificationOptions = dataClassificationOptions.split(", ");
 		for (String option : classificationOptions) {
@@ -212,18 +203,16 @@ public class ModelSpecificPageTests {
 		Assertions.assertEquals(actualDomainList, expectedDomainList);
 		// verify data classification
 		List<String> expectedDataClassificationOptionsList = Arrays.asList(classificationOptions);
-		List<String> actualDataClassificationOptionsList = EditModelPageUtils
-				.verifyDataClassificationOptionsUnderOverview(page);
+		List<String> actualDataClassificationOptionsList = EditModelPageUtils.verifyDataClassificationOptionsUnderOverview(page);
 		Assertions.assertEquals(actualDataClassificationOptionsList, expectedDataClassificationOptionsList);
 		// verfy data restrctions
 		List<String> expectedDataRestrictionOptionsList = Arrays.asList(restrictionsOptions);
-		List<String> actualDataRestrictionOptionsList = EditModelPageUtils
-				.verifyDataRestrictionOptionsUnderOverview(page);
+		List<String> actualDataRestrictionOptionsList = EditModelPageUtils.verifyDataRestrictionOptionsUnderOverview(page);
 		Assertions.assertEquals(actualDataRestrictionOptionsList, expectedDataRestrictionOptionsList);
 	}
 
 	@Test
-	@Order(6) // Run SIXTH - read-only test, validates model ID
+	@Order(6)  // Run SIXTH - read-only test, validates model ID
 	@Tag("model")
 	@DisplayName("Validate model catalog id occurences in usage sections")
 	public void testViewModelCatalogId() {
@@ -233,19 +222,22 @@ public class ModelSpecificPageTests {
 
 		// Create test data structure to replace DataTable
 		// Each entry: [section name, expected count]
-		Object[][] testData = { { "How to use in Pixel", 5 }, { "How to use in Python", 1 },
-				{ "How to use with LangChain API", 1 },
-				{ "How to use externally with OpenAI API (with or without our Python SDK)", 4 },
-				{ "How to use in Java", 1 } };
+		Object[][] testData = {
+			{"How to use in Pixel", 5},
+			{"How to use in Python", 1},
+			{"How to use with LangChain API", 1},
+			{"How to use externally with OpenAI API (with or without our Python SDK)", 4},
+			{"How to use in Java", 1}
+		};
 
 		// Validate model catalog id occurences in each section
 		for (Object[] data : testData) {
 			String sectionName = (String) data[0];
 			int expectedCount = (int) data[1];
-
+			
 			String copiedSectionContents = SettingsModelPageUtils.getFullSectionCodeByHeading(page, sectionName);
 			int countIdOccurances = CommonUtils.countIdOccurances(copiedSectionContents, modelId);
-
+			
 			Assertions.assertEquals(expectedCount, countIdOccurances,
 					"Model id count does not match for section '" + sectionName + "'");
 		}
