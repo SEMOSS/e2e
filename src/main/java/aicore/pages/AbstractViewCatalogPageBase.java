@@ -57,22 +57,6 @@ public abstract class AbstractViewCatalogPageBase {
 		return AddCatalogPageBaseUtils.verifyCopyToastMessage(page, toastMessage);
 	}
 
-	public boolean checkEditIcon() {
-		return AddCatalogPageBaseUtils.checkEditIcon(page);
-	}
-
-	public void clickEditIcon() {
-		AddCatalogPageBaseUtils.clickEditIcon(page);
-	}
-
-	public void enterTagName(String tagName) {
-		AddCatalogPageBaseUtils.enterTagName(page, tagName);
-	}
-
-	public void clickOnSubmit() {
-		AddCatalogPageBaseUtils.clickOnSubmit(page);
-	}
-	
 	public String verifyEditSuccessfullToastMessage() {
 		return AddCatalogPageBaseUtils.verifyEditSuccessfullToastMessage(page);
 	}

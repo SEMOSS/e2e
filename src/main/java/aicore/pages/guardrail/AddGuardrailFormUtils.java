@@ -9,6 +9,7 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.GuardrailPageUtils;
+import aicore.utils.StoragePageUtils;
 
 public class AddGuardrailFormUtils {
 	public static List<String> createdGuardrailIds = new ArrayList<>();
@@ -37,7 +38,7 @@ public class AddGuardrailFormUtils {
 		page.getByTestId(DEFAULT_THRESHOLD_FIELD_DATATESTID).fill(threshold);
 	}
 
-	public static void createGuardrail(Page page, String guardrailType, String catalogName, String nerLabels, String defaultThreshold) {
+	public static String createGuardrail(Page page, String guardrailType, String catalogName, String nerLabels, String defaultThreshold) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnGuardrail(page);
 		GuardrailPageUtils.clickOnAddGuardrailButton(page);
@@ -46,7 +47,12 @@ public class AddGuardrailFormUtils {
 		enterNerLabels(page, nerLabels);
 		enterDefaultThreshold(page, defaultThreshold);
 		AddModelFormUtils.clickOnCreateModelButton(page);
-		CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
+	}
+
+	public static void clickOnConnectButton(Page page) {
+		String buttonName = "Connect";
+		StoragePageUtils.clickOnButton(page, buttonName);		
 	}
 
 }

@@ -13,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.settings.AdminQueryPageUtils;
@@ -30,7 +29,7 @@ public class AdminQueryPageTests extends AbstractE2ETest {
 	@BeforeEach
 	public void openMainMenu() throws IOException {
 		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenSettings(SetupHooks.getPage());
+		MainMenuUtils.clickOnOpenSettings(page);
 		SettingsPageUtils.clickOnAdminButton(page);
 	}
 
