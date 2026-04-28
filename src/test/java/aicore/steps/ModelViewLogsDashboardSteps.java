@@ -3,10 +3,9 @@ package aicore.steps;
 import java.util.Arrays;
 import java.util.List;
 
-import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.hooks.SoftAssertionHooks;
 import aicore.pages.model.ModelViewLogsDashboardPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -14,11 +13,9 @@ import io.cucumber.java.en.When;
 
 public class ModelViewLogsDashboardSteps {
 	private ModelViewLogsDashboardPage dashboardPage;
-	private SoftAssertions softAssert;
 
 	public ModelViewLogsDashboardSteps() {
 		dashboardPage = new ModelViewLogsDashboardPage(SetupHooks.getPage());
-		softAssert = SoftAssertionHooks.getSoftAssertions();
 	}
 
 	@When("User navigates to the Model Insight Dashboard")
@@ -29,7 +26,7 @@ public class ModelViewLogsDashboardSteps {
 	@Then("User should see the heading 'Model Insight Dashboard'")
 	public void user_should_see_heading_model_insight_dashboard() {
 		boolean isHeadingVisible = dashboardPage.verifyDashboardHeading();
-		softAssert.assertThat(isHeadingVisible)
+		Assertions.assertThat(isHeadingVisible)
 			.as("Model Insight Dashboard heading should be visible")
 			.isTrue();
 	}
@@ -37,7 +34,7 @@ public class ModelViewLogsDashboardSteps {
 	@And("User should see the 'Refresh' button")
 	public void user_should_see_refresh_button() {
 		boolean isRefreshButtonVisible = dashboardPage.verifyRefreshButton();
-		softAssert.assertThat(isRefreshButtonVisible)
+		Assertions.assertThat(isRefreshButtonVisible)
 			.as("Refresh button should be visible")
 			.isTrue();
 	}
@@ -45,7 +42,7 @@ public class ModelViewLogsDashboardSteps {
 	@And("User should see the 'Event History' section")
 	public void user_should_see_event_history_section() {
 		boolean isEventHistorySectionVisible = dashboardPage.verifyEventHistorySection();
-		softAssert.assertThat(isEventHistorySectionVisible)
+		Assertions.assertThat(isEventHistorySectionVisible)
 			.as("Event History section should be visible")
 			.isTrue();
 	}
@@ -53,7 +50,7 @@ public class ModelViewLogsDashboardSteps {
 	@And("User should see the 'Prompt & Response Timeline' section")
 	public void user_should_see_prompt_response_timeline_section() {
 		boolean isTimelineSectionVisible = dashboardPage.verifyPromptResponseTimelineSection();
-		softAssert.assertThat(isTimelineSectionVisible)
+		Assertions.assertThat(isTimelineSectionVisible)
 			.as("Prompt & Response Timeline section should be visible")
 			.isTrue();
 	}
@@ -65,13 +62,13 @@ public class ModelViewLogsDashboardSteps {
 		
 		// Verify table exists
 		boolean isTableVisible = dashboardPage.verifyTableExists();
-		softAssert.assertThat(isTableVisible)
+		Assertions.assertThat(isTableVisible)
 			.as("Table should be visible on the dashboard")
 			.isTrue();
 		
 		// Verify all columns exist
 		boolean areAllColumnsPresent = dashboardPage.verifyTableColumnsExist(expectedColumns);
-		softAssert.assertThat(areAllColumnsPresent)
+		Assertions.assertThat(areAllColumnsPresent)
 			.as("All expected columns should be present in the table")
 			.isTrue();
 	}

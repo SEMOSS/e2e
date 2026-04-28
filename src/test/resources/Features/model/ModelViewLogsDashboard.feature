@@ -1,6 +1,6 @@
 @LoginWithAdmin @Regression @DeleteTestCatalog
-Feature: Add Model Chat Functionality
- 
+Feature: Model view logs dashboard Functionality
+
   Background: Create a Model -Llama_model
     Given User opens Main Menu
     And User clicks on Open Model
@@ -16,12 +16,14 @@ Feature: Add Model Chat Functionality
     When User click on send button to submit the query
     Then User should see the loader indicating that the response is being generated for the query
     And User should see the response generated for the query in the chat window
- 
-    @LoginWithAdmin @Regression @DeleteTestCatalog
-    Scenario: Validate the Model Insight Dashboard UI
-        When User navigates to the Model Insight Dashboard
-        Then User should see the heading 'Model Insight Dashboard'
-        And User should see the 'Refresh' button
-        And User should see the 'Event History' section
-        And User should see the 'Prompt & Response Timeline' section
-        And User should see the table with columns 'User Id', 'Session Id', 'Request', 'Response', 'Engine Type', 'Engine Name', 'Latency', 'Tokens', 'Timestamp', and 'Status'
+
+  @LoginWithAdmin @Regression @DeleteTestCatalog
+  Scenario: Validate the Model Insight Dashboard UI
+    Given User opens Main Menu
+    When User clicks on Open Model
+    And User navigates to the Model Insight Dashboard
+    Then User should see the heading 'Model Insight Dashboard'
+    And User should see the 'Refresh' button
+    And User should see the 'Event History' section
+    And User should see the 'Prompt & Response Timeline' section
+    And User should see the table with columns 'User Id', 'Session Id', 'Request', 'Response', 'Engine Type', 'Engine Name', 'Latency', 'Tokens', 'Timestamp', and 'Status'
