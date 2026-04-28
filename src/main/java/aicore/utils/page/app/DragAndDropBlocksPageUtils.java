@@ -1077,8 +1077,9 @@ public class DragAndDropBlocksPageUtils {
 
 	public static void clickOnBlockSettingsOption(Page page) {
 		Locator blockSetting = page.locator(BLOCK_SETTINGS_XPATH);
+		AICorePageUtils.waitFor(blockSetting);
 		if (blockSetting.isVisible()) {
-			blockSetting.click();
+			blockSetting.click(new Locator.ClickOptions().setForce(true));
 		}
 	}
 
