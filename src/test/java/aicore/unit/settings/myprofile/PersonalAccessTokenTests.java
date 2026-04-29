@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import aicore.pages.home.MainMenuUtils;
@@ -12,6 +13,9 @@ import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
 import aicore.utils.settings.MyProfilePageUtils;
 import aicore.utils.settings.PersonalAccessTokenUtils;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
 public class PersonalAccessTokenTests extends AbstractE2ETest {
 
@@ -26,8 +30,12 @@ public class PersonalAccessTokenTests extends AbstractE2ETest {
 		MainMenuUtils.clickOnOpenSettings(page);
 		MyProfilePageUtils.clickOnMyProfileCard(page);
 	}
-	
+
 	@Test
+    @Epic("Settings")
+    @Feature("My Profile")
+    @DisplayName("Generate Personal Access Key")
+    @Description("This test creates a personal access key. \nValidates examples and then deletes the access key.")
 	void testGenerateKey() {
 		// create key
 		String timestamp = CommonUtils.getTimeStampName();

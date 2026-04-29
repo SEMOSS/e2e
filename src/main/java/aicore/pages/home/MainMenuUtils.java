@@ -8,6 +8,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import aicore.pages.base.AbstractBasePage;
+import io.qameta.allure.Step;
 
 public class MainMenuUtils extends AbstractBasePage{
 	private static final Logger logger = LogManager.getLogger(MainMenuUtils.class);
@@ -33,12 +34,14 @@ public class MainMenuUtils extends AbstractBasePage{
 	// settings
 	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
 	
+	@Step("Open Main Menu")
 	public static void openMainMenu(Page page) {
 		logger.info("Open Main Menu");
 		Locator mainMenuButtonLocator = page.getByLabel(SEMOSS_OPEN_MENU_LABEL);
 		waitAndClick(mainMenuButtonLocator);
 	}
 
+	@Step("Close Main Menu")
 	public static void closeMainMenu(Page page) {
 		logger.info("Close Main Menu");
 		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
@@ -47,24 +50,28 @@ public class MainMenuUtils extends AbstractBasePage{
 		}
 	}
 	
+	@Step("Click on Home")
 	public static void clickOnHome(Page page) {
 		logger.info("Click on Home");
 		Locator locator = page.locator(HOME_MENU_BUTTON_DATA_TESTID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Function")
 	public static void clickOnOpenFunction(Page page) {
 		logger.info("Opening Function Page");
 		Locator locator = page.getByTestId(FUNCTION_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Vector")
 	public static void clickOnOpenVector(Page page) {
 		logger.info("Opening Vector Page");
 		Locator locator = page.getByTestId(VECTOR_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Guardrail")
 	public static void clickOnGuardrail(Page page) {
 		logger.info("Opening Guardrail Page");
 		Locator locator = page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TEST_ID);
