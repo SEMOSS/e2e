@@ -49,7 +49,7 @@ public class CatlogAccessPageUtility {
 	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//button[text()='{buttonName}']";
 	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
 	private static final String CLICK_ON_TAB_XPATH = "//button[text()='{tabName}']";
-	private static final String TOASTER_MESSAGE_DATATESTID = "notification-success-message";
+	private static final String TOASTER_MESSAGE_XPATH = "//li[@data-type='success']";
 	private static final String MCP_USAGE_COPY_BUTTON_DATATESTID = "mcp-usage-copy-button-{sectionName}";
 	private static final String COMMITS_TAB_XPATH = "//button[normalize-space()='Commits']";
 	private static final String COMMIT_TAB_TITLE_XPATH = "//h4[normalize-space()='{title}']";
@@ -301,7 +301,7 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String getToastMessage(Page page, String toastMessage) {
-		Locator toast = page.getByTestId(TOASTER_MESSAGE_DATATESTID);
+		Locator toast = page.locator(TOASTER_MESSAGE_XPATH).first();
 		String actualToastMessage = toast.innerText().trim();
 		return actualToastMessage;
 	}
