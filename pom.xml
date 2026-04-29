@@ -12,54 +12,87 @@
         <log4j.version>2.24.3</log4j.version>
         <junit.version>6.0.0</junit.version>
         <cucumber.version>7.31.0</cucumber.version>
-        <assertj.version>3.27.6</assertj.version>
-        <playwright.version>1.58.0</playwright.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+		<assertj.version>3.27.6</assertj.version>
+		<playwright.version>1.58.0</playwright.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Allure reports -->
+		<aspectj.version>1.9.21</aspectj.version>
+		<allure.version>2.32.0</allure.version>
+		<allure.maven.version>2.17.0</allure.maven.version>
+		<allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+	</properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.0</version>
-                <!-- References to interface static methods are allowed only at
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.14.0</version>
+				<!-- References to interface static methods are allowed only at
                 source level 1.8 or above -->
-                <configuration>
-                    <release>${java.version}</release>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.2</version>
-                <configuration>
-                    <includes>
-                        <include>**/FullSuite.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-
-            <!-- Git hook plugin test -->
-            <plugin>
-                <groupId>com.rudikershaw.gitbuildhook</groupId>
-                <artifactId>git-build-hook-maven-plugin</artifactId>
-                <version>3.5.0</version>
-                <configuration>
-                    <gitConfig>
-                        <core.hooksPath>hooks/</core.hooksPath>
-                    </gitConfig>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>configure</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+				<configuration>
+					<release>${java.version}</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.5.2</version>
+				<configuration>
+					<includes>
+						<include>**/UnitSuite.java</include>
+					</includes>
+					<argLine>
+						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
+					<systemPropertyVariables>
+						<allure.results.directory>${allure.results.directory}</allure.results.directory>
+					</systemPropertyVariables>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-maven</artifactId>
+				<version>${allure.maven.version}</version>
+				<configuration>
+					<singleFile>true</singleFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>allure-report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Git hook plugin test -->
+			<plugin>
+				<groupId>com.rudikershaw.gitbuildhook</groupId>
+				<artifactId>git-build-hook-maven-plugin</artifactId>
+				<version>3.5.0</version>
+				<configuration>
+					<gitConfig>
+						<core.hooksPath>hooks/</core.hooksPath>
+					</gitConfig>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>configure</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
     <repositories>
         <repository>
@@ -118,18 +151,25 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-bom</artifactId>
+				<version>${allure.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <!--
+		<!--
         https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-        <!--
+		<!--
         https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -143,14 +183,14 @@
             <version>${playwright.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.18.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -163,21 +203,21 @@
             <version>2.18.2</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
             <version>5.4.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5-fluent -->
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5-fluent -->
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5-fluent</artifactId>
             <version>5.4.3</version>
         </dependency>
 
-        <!--
+		<!--
 
         TEST DEPENDENCIES
 
@@ -195,7 +235,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -227,14 +267,14 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/com.github.romankh3/image-comparison -->
+		<!-- https://mvnrepository.com/artifact/com.github.romankh3/image-comparison -->
         <dependency>
              <groupId>com.github.romankh3</groupId>
              <artifactId>image-comparison</artifactId>
              <version>4.4.0</version>
         </dependency>
-        
-        		<!--Allure reporting-->
+
+		<!--Allure reporting-->
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-junit5</artifactId>
@@ -244,5 +284,5 @@
 			<artifactId>allure-cucumber7-jvm</artifactId>
 		</dependency>
 
-    </dependencies>
+	</dependencies>
 </project>
