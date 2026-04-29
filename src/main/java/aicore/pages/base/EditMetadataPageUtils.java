@@ -90,10 +90,10 @@ public class EditMetadataPageUtils {
 		submitButton.scrollIntoViewIfNeeded();
 		submitButton.click();
 	}
-	
+
 	public static void clickOnClose(Page page) {
 		logger.info("Click on Close Button");
-		Locator closeButton =page.getByTestId(CLOSE_BUTTON_DATATESTID);
+		Locator closeButton = page.getByTestId(CLOSE_BUTTON_DATATESTID);
 		closeButton.scrollIntoViewIfNeeded();
 		closeButton.click();
 	}
