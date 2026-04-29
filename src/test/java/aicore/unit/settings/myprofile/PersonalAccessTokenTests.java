@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AICoreAllureLabels;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
 import aicore.utils.settings.MyProfilePageUtils;
@@ -32,8 +33,8 @@ public class PersonalAccessTokenTests extends AbstractE2ETest {
 	}
 
 	@Test
-    @Epic("Settings")
-    @Feature("My Profile")
+    @Epic(AICoreAllureLabels.SETTINGS_EPIC)
+    @Feature(AICoreAllureLabels.MY_PROFILE_FEATURE)
     @DisplayName("Generate Personal Access Key")
     @Description("This test creates a personal access key. \nValidates examples and then deletes the access key.")
 	void testGenerateKey() {

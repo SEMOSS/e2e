@@ -8,5 +8,4 @@ public class TestTags {
 	public static final String BE_BUG = "beBug";
 	public static final String FE_BUG = "feBug";
 
-
 }
