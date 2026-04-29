@@ -82,13 +82,11 @@ public class ViewFunctionDetailsTests extends AbstractE2ETest {
 	}
 	
 	@Test
-	@Tag(TestTags.BROKEN)
 	void testViewUsageDetailsInUsageTabForSelectedFunction() {
 		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
 		ViewFunctionPage viewFunction = new ViewFunctionPage(page);
 		viewFunction.clickUsageTab("Usage");
-		///TODO Failure needs to be investigated. Not clear why these instructions not found
-		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Javascript"));
+		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Pixel"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Python"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Java"));
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");

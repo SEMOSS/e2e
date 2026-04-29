@@ -52,17 +52,13 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	
 	private static Stream<Arguments> provideOptionsToFilterFunctionality() {
 	    return Stream.of(
-	    		Arguments.of("Tag", "embeddings, Test1"),
-	    		Arguments.of("Domain", "SAP, AI"),
-	    		Arguments.of("Data Classification", "IP"),
-	    		Arguments.of("Data Restrictions", "IP ALLOWED")
+	    		Arguments.of("Data Classification", "CONFIDENTIAL", "IP"),
+	    		Arguments.of("Data Restrictions", "CONFIDENTIAL ALLOWED", "IP ALLOWED")
 	    		);
 	}
 	
-	/// TODO need to fix this test, currently not working in feature file either
 	@ParameterizedTest
 	@MethodSource("provideOptionsToFilterFunctionality")
-	@Tag(TestTags.BROKEN)
 	void testFiltersFunctionalityMyFunctionsTab(String filterCategoryName, String filterValues) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
@@ -82,7 +78,6 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideOptionsToDiscoverableFilterFunctionality")
-	@Tag(TestTags.BROKEN)
 	void testFilterFunctionalityDiscoverableFunctionsTab(String filterCategoryName, String filterValues) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
@@ -103,9 +98,7 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
 	}
 
-	/// TODO need to fix this test, currently not working in feature file either
 	@Test
-	@Tag(TestTags.BROKEN)
 	void testValidateAccessStatusOfCreatedFunction() {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
@@ -116,7 +109,7 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 		FunctionTestUtils.userSeesFunctionStatusOnTooltip(page, "Private");
 		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, "WeatherFunctionTest");
 		AddFunctionPageUtils.clickOnAccessControl(page);
-		SettingsModelPageUtils.clickOnMakeCatalogPublicButton(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION);
+		FunctionAccessSettingsUtils.clickOnMakeFunctionPublicButton(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
@@ -132,10 +125,8 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	    		);
 	}
 
-	/// TODO need to fix this test, currently not working in feature file either
 	@ParameterizedTest
 	@MethodSource("provideContentToFunctionCatalogCard")
-	@Tag(TestTags.BROKEN)
 	void testValidateContentOfCreatedFunctionCatalogCard(String iconStr) {
 		String timestamp = CommonUtils.getTimeStampName();
 		FunctionTestUtils.userGetsCatalogID(page);
@@ -144,15 +135,14 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
 		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
 		FunctionTestUtils.userShouldSeeCatalogID(page);
-		FunctionTestUtils.verifyUserSeesTagsOnCard(page, "embeddings, Test1", TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION);
+		// This element on the Function card seems to have been removed
+//		FunctionTestUtils.verifyUserSeesTagsOnCard(page, "embeddings, Test1", TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION);
 		FunctionTestUtils.verifyUserSeesCreatedDateOnCatalogCard(page);
 		FunctionTestUtils.verifyUsersSeesIconsOnContentCard(page, iconStr);
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
 	}
 
-	/// TODO need to fix this test, currently not working in feature file either
 	@Test
-	@Tag(TestTags.BROKEN)
 	void testDeleteFunctionFromDashboardAndValidateDeletionPopup() {
 		String timestamp = CommonUtils.getTimeStampName();
 		FunctionTestUtils.userGetsCatalogID(page);

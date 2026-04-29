@@ -233,6 +233,16 @@
              <artifactId>image-comparison</artifactId>
              <version>4.4.0</version>
         </dependency>
+        
+        		<!--Allure reporting-->
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-junit5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-cucumber7-jvm</artifactId>
+		</dependency>
 
     </dependencies>
 </project>

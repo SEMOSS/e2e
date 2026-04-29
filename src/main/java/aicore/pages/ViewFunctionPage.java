@@ -1,6 +1,9 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+
+import aicore.utils.AICorePageUtils;
 
 public class ViewFunctionPage {
 
@@ -49,8 +52,9 @@ public class ViewFunctionPage {
 	}
 
 	public boolean verifyUsageInstructionsSection(String usageInstructionsSection) {
-		return page.getByText(USAGE_INSTRUCTIONS_SECTION_XPATH.replace("{UsageInstructionsSection}", usageInstructionsSection))
-				.isVisible();
+		Locator l =  page.locator("p").filter(new Locator.FilterOptions().setHasText(usageInstructionsSection));
+		AICorePageUtils.waitFor(l);
+		return l.isVisible();
 	}
 
 }
