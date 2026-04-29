@@ -80,7 +80,7 @@ public class MemberSettingSteps {
 	@When("User clicks on search button")
 	public void user_clicks_on_search_button() {
 		settingPage.clickOnSearchButton();
-		settingPage.clickOnSearchBox();
+		// settingPage.clickOnSearchBox();
 	}
 
 	@Then("User searchs for user having username {string}")
