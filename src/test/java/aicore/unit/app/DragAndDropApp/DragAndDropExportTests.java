@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import aicore.pages.database.AddDatabaseFormUtils;
@@ -77,7 +76,6 @@ public class DragAndDropExportTests extends AbstractE2ETest {
 		CommonUtils.navigateAndDeleteCatalog(page, catalog, catalogName);
 	}
 
-	@Order(1) // Run FIRST - read-only test
 	@Test
 	@DisplayName("Validate Export Data functionality")
 	public void testExportDataFunctionality() throws Exception {
