@@ -102,12 +102,14 @@ public class PersonalAccessTokenUtils {
 	
 	////////// ACCESS KEY TABLE VIEW
 
+	@Step("Validate keyName is in the table: {keyName}")
 	public static String validateGeneratedKey(Page page, String keyName) {
 		String generatedKeyName = page.textContent(GENERATED_KEY_XPATH.replace("{keyName}", keyName))
 				.trim();
 		return generatedKeyName;
 	}
 
+	@Step("Validate description is in the table: {description}")
 	public static String validateDescriptionName(Page page, String description) {
 		String generatedDescription = page
 				.textContent(GENERATED_DESCRIPTION_XPATH.replace("{description}", description)).trim();
