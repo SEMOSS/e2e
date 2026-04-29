@@ -59,7 +59,7 @@ public class AICorePageUtils {
 		Double timeout = Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT));
 		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(timeout));
 	}
-	
+
 	public static void refreshPage(Page page) {
 		page.reload(new Page.ReloadOptions().setWaitUntil(WaitUntilState.NETWORKIDLE));
 	}

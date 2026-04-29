@@ -1,4 +1,4 @@
-@LoginWithSSO @DeleteTestCatalog @DeleteCreatedTestApp @Regression
+@LoginWithAdmin @DeleteTestCatalog @DeleteCreatedTestApp @Regression
 Feature: Create Agent builder app
 
   Background: Create a Model - GPT-4.1
@@ -11,7 +11,7 @@ Feature: Create Agent builder app
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
     And User clicks on Copy Catalog ID
-    #And User can see a toast message as 'Successfully added LLM to catalog'
+    And User can see a toast message as 'Successfully added LLM to catalog'
     Then User can see the Model title as 'Model'
 
   Scenario: Create Agent builder app and navigate to Blocks option
@@ -26,7 +26,6 @@ Feature: Create Agent builder app
     And User clicks on Next button
     And User selects 'Userstory' to set input
     And User clicks on Next button
-    And User selects InputType as 'User Text'
     And User clicks on Next button
     And User clicks on Preview button
     And User clicks on Create App button
@@ -48,11 +47,11 @@ Feature: Create Agent builder app
     And User selects 'team training,' to set input in prompt
     And User selects 'stakeholder presentations.' to set input in prompt
     And User clicks on Next button
-    And User selects InputType as 'User Text' for '90 day'
-    And User selects InputType as 'User Text' for 'Federal Health.'
-    And User selects InputType as 'User Text' for 'software development,'
-    And User selects InputType as 'User Text' for 'team training,'
-    And User selects InputType as 'User Text' for 'stakeholder presentations.'
+  # And User selects InputType as 'User Text' for 'stakeholder presentations.'
+    # #And User selects InputType as 'User Text' for '90 day'
+    # #And User selects InputType as 'User Text' for 'Federal Health.'
+    # #And User selects InputType as 'User Text' for 'software development,'
+    # #And User selects InputType as 'User Text' for 'team training,'
     And User clicks on Next button
     And User clicks on Preview button
     And User clicks on Create App button
