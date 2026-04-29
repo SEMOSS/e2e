@@ -4,6 +4,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import aicore.utils.AICorePageUtils;
+
 public class MyProfilePageUtils {
 
 	///// SETTING MY PROFILE PAGE
@@ -25,6 +27,10 @@ public class MyProfilePageUtils {
 	private static final String CLICK_ON_PROFILE_ICON_XPATH = "//ul[@aria-label='user navigation']";
 	private static final String ENTER_PASSWORD_XPATH = "//div//p[text()='{fieldName}']/following::div//div//input[@type='password']";
 	private static final String PASSWORDS_DO_NOT_MATCH_ERROR_XPATH = "//p[text()='The passwords do not match']";
+	private static final String TEXT_GENERATION_MODEL_DROPDOWN_DATATESTID = "myProfilePage-default-model-select";
+	private static final String CODE_GENERATION_MODEL_DROPDOWN_DATATESTID = "myProfilePage-secondary-model-select";
+	private static final String MODEL_OPTION_XPATH = "//span[text()='{modelName}']";
+	private static final String TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
 
 	public static void clickOnMyProfileCard(Page page) {
 		page.getByText("My profile").click();
@@ -149,5 +155,25 @@ public class MyProfilePageUtils {
 	public static String getErrorMessage(Page page, String message) {
 		String errorMessage = page.locator(PASSWORDS_DO_NOT_MATCH_ERROR_XPATH).textContent().trim();
 		return errorMessage;
+	}
+
+	// Model Dropdown Methods
+
+	public static void selectModelFromTextGenerationModelDropdown(Page page, String modelName) {
+		page.getByTestId(TEXT_GENERATION_MODEL_DROPDOWN_DATATESTID).click();
+		page.waitForSelector(MODEL_OPTION_XPATH.replace("{modelName}", modelName));
+		page.click(MODEL_OPTION_XPATH.replace("{modelName}", modelName));
+	}
+
+	public static void selectModelFromCodeGenerationModelDropdown(Page page, String modelName) {
+		page.getByTestId(CODE_GENERATION_MODEL_DROPDOWN_DATATESTID).click();
+		Locator modelOption = page.locator(MODEL_OPTION_XPATH.replace("{modelName}", modelName)).nth(1);
+		AICorePageUtils.waitFor(modelOption);
+		modelOption.click();
+	}
+
+	public static String getToastMessage(Page page) {
+		Locator toastLocator = page.locator(TOAST_MESSAGE_XPATH).first();
+		return toastLocator.textContent().trim();
 	}
 }

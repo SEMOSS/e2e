@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
@@ -49,7 +48,7 @@ public class AdminThemePageTests extends AbstractE2ETest {
 		Assertions.assertTrue(isDropdownVisible, "Dropdown '" + "' is not visible.");
 
 		String inputFieldName = "Name";
-		boolean isInputFieldVisible = SettingAdminThemeUtils.verifyInputFieldIsDisplay(SetupHooks.getPage(),
+		boolean isInputFieldVisible = SettingAdminThemeUtils.verifyInputFieldIsDisplay(page,
 				inputFieldName);
 		Assertions.assertTrue(isInputFieldVisible, "Input field '" + inputFieldName + "' is not visible.");
 
@@ -87,7 +86,7 @@ public class AdminThemePageTests extends AbstractE2ETest {
 		SettingAdminThemeUtils.clickCreateButton(page, buttonName);
 
 		String expectedMessage = "Theme created successfully";
-		boolean isToastVisible = SettingAdminThemeUtils.verifyToastMessage(SetupHooks.getPage(), expectedMessage);
+		boolean isToastVisible = SettingAdminThemeUtils.verifyToastMessage(page, expectedMessage);
 		Assertions.assertTrue(isToastVisible, "Expected toast message '" + expectedMessage + "' is not visible.");
 
 		// delete theme
@@ -95,7 +94,7 @@ public class AdminThemePageTests extends AbstractE2ETest {
 		StoragePageUtils.clickOnButton(page, buttonName);
 
 		expectedMessage = "Theme deleted successfully";
-		isToastVisible = SettingAdminThemeUtils.verifyToastMessage(SetupHooks.getPage(), expectedMessage);
+		isToastVisible = SettingAdminThemeUtils.verifyToastMessage(page, expectedMessage);
 		Assertions.assertTrue(isToastVisible, "Expected toast message '" + expectedMessage + "' is not visible.");
 
 	}

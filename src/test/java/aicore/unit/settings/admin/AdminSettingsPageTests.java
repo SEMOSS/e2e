@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AbstractE2ETest;
@@ -25,7 +24,7 @@ public class AdminSettingsPageTests extends AbstractE2ETest {
 	@BeforeEach
 	public void openMainMenu() throws IOException {
 		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenSettings(SetupHooks.getPage());
+		MainMenuUtils.clickOnOpenSettings(page);
 		SettingsPageUtils.clickOnAdminButton(page);
 	}
 	
@@ -54,7 +53,7 @@ public class AdminSettingsPageTests extends AbstractE2ETest {
     void testSearch() {
 		SettingsModelPageUtils.clickOnSearchBox(page, "mod");
 		String tileName = "Model Settings";
-		boolean isTileVisible = SettingsPageUtils.checkCardVisible(SetupHooks.getPage(), tileName);
+		boolean isTileVisible = SettingsPageUtils.checkCardVisible(page, tileName);
 		assertTrue(isTileVisible, "Tile not visible: " + tileName);
     }
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.HomePageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
@@ -62,8 +61,8 @@ public class UserRegistrationTests extends AbstractE2ETest {
 		String actualMessage =  UserRegistrationPageUtils.verifyRegitrationSuccessMessage(page, expectedMessage);
 		Assertions.assertEquals(expectedMessage, actualMessage, "Registration message is incorrect on login page");
 		
-		LoginPageUtils.enterUsernameAndPassword(SetupHooks.getPage(), userNameValue, passwordValue);
-		LoginPageUtils.clickLoginButton(SetupHooks.getPage());
+		LoginPageUtils.enterUsernameAndPassword(page, userNameValue, passwordValue);
+		LoginPageUtils.clickLoginButton(page);
 		
 		HomePageUtils.navigateToHomePage(page);
 		

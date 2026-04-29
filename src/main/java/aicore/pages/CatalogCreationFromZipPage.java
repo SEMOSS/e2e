@@ -27,10 +27,6 @@ public class CatalogCreationFromZipPage {
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 	}
 
-	public String uploadFile(String fileName) {
-		return CatalogCreationFromZipUtil.uploadFile(page, fileName);
-	}
-
 	public void clickOnCreateCatalogButton() {
 		CatalogCreationFromZipUtil.clickOnCreateCatalogButton(page);
 	}

@@ -33,10 +33,6 @@ public class AddModelPage {
 		AddModelFormUtils.selectModelType(page, modelType);
 	}
 
-	public void selectModel(String modelName) {
-		AddModelFormUtils.selectModel(page, modelName);
-	}
-
 	public void selectOpenAi(String aiModelName) {
 		AddModelFormUtils.selectOpenAi(page, aiModelName);
 	}
@@ -180,30 +176,6 @@ public class AddModelPage {
 
 	public void clickOnEditButton() {
 		EditModelPageUtils.clickOnEditButton(page);
-	}
-
-	public void enterDetails(String detailsText) {
-		EditModelPageUtils.enterDetails(page, detailsText);
-	}
-
-	public void enterDescription(String descriptionText) {
-		EditModelPageUtils.enterDescription(page, descriptionText);
-	}
-
-	public void enterTagName(String tagName) {
-		EditModelPageUtils.enterTagName(page, tagName);
-	}
-
-	public void enterDomainName(String domainName) {
-		EditModelPageUtils.enterDomainName(page, domainName);
-	}
-
-	public void selectDataClassificationOption(String option) {
-		EditModelPageUtils.selectDataClassificationOption(page, option);
-	}
-
-	public void selectDataRestrictionsOption(String option) {
-		EditModelPageUtils.selectDataRestrictionsOption(page, option);
 	}
 
 	public void clickOnSubmit() {

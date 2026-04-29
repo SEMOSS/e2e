@@ -4,9 +4,10 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import com.microsoft.playwright.options.WaitUntilState;
 
-import aicore.framework.ConfigUtils;
 import aicore.framework.AICoreTestConstants;
+import aicore.framework.ConfigUtils;
 
 /**
  * Main AI Core Home page utils
@@ -57,5 +58,9 @@ public class AICorePageUtils {
 	public static void waitFor(Locator locator) {
 		Double timeout = Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT));
 		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(timeout));
+	}
+	
+	public static void refreshPage(Page page) {
+		page.reload(new Page.ReloadOptions().setWaitUntil(WaitUntilState.NETWORKIDLE));
 	}
 }
