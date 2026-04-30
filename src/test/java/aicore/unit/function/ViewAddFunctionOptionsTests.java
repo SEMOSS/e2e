@@ -15,11 +15,11 @@ import aicore.utils.FunctionTestUtils;
 public class ViewAddFunctionOptionsTests extends AbstractE2ETest {
 	
 	@BeforeAll
-	static void setup() {
+	void setup() {
 		login(page, UserType.NATIVE);
 	}
 
-	private static Stream<Arguments> provideOptionsToAddOnFunctionPage() {
+	private Stream<Arguments> provideOptionsToAddOnFunctionPage() {
 	    return Stream.of(
 	    		Arguments.of("AWS Image Text Extraction, AWS Polly, AWS Transcribe, AWS Comprehend, Azure Document Intelligence, Azure Speech To Text, Google Speech To Text, Google OCR, REST")
 	    		);

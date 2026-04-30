@@ -28,11 +28,11 @@ import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
 public class AllDatabasePageTests extends AbstractE2ETest {
-	private static String dbName = null;
-	private static String dbID = null;
+	private String dbName = null;
+	private String dbID = null;
 
 	@BeforeAll
-	public static void setupAddDB() throws IOException {
+	public void setupAddDB() throws IOException {
 		login(page, UserType.NATIVE);
 		
 		// add zip db
@@ -121,7 +121,7 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 	}
 
 	@AfterAll
-	static void cleanUp() {
+	void cleanUp() {
 		login(page, UserType.NATIVE);
 		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 		assertTrue(deleteDb);

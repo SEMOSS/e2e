@@ -25,12 +25,12 @@ import aicore.utils.ViewUsagePageUtils;
 
 public class GuardrailSpecificPageTests extends AbstractE2ETest {
 
-	private static String GUARDRAIL_ID = null;
-	private static String GUARDRAIL_NAME = null;
+	private String GUARDRAIL_ID = null;
+	private String GUARDRAIL_NAME = null;
 
 
 	@BeforeAll
-	public static void setupBeforeAll() throws IOException {
+	public void setupBeforeAll() throws IOException {
 		login(page, UserType.NATIVE);
 		String timestamp = CommonUtils.getTimeStampName();
 		GUARDRAIL_NAME = "guardrail" + timestamp;
@@ -89,7 +89,7 @@ public class GuardrailSpecificPageTests extends AbstractE2ETest {
 	}
 
 	@AfterAll
-	static void deleteGuardrail() {
+	void deleteGuardrail() {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL, GUARDRAIL_ID);
 	}
 }

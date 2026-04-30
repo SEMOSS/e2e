@@ -25,7 +25,7 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(AddFunctionFromZipTests.class);
 	
 	@BeforeAll
-	static void setup() {
+	void setup() {
 		login(page, UserType.NATIVE);
 	}
 	

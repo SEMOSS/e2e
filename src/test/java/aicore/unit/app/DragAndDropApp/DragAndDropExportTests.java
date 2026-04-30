@@ -28,15 +28,15 @@ import aicore.utils.page.app.NotebookPageUtils;
 
 public class DragAndDropExportTests extends AbstractE2ETest {
 
-	private static String appType = "Drag and Drop";
-	private static String appName = "Test app";
-	private static String catalog = "Database";
-	private static String catalogName = "TestDatabase";
+	private String appType = "Drag and Drop";
+	private String appName = "Test app";
+	private String catalog = "Database";
+	private String catalogName = "TestDatabase";
 	private String frameID;
 	String timestamp = CommonUtils.getTimeStampName();
 
 	@BeforeAll
-	static void setup() {
+	void setup() {
 		login(page, UserType.NATIVE);
 	}
 

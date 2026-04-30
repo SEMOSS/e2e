@@ -28,11 +28,11 @@ import aicore.utils.ViewUsagePageUtils;
 @Tag(TestTags.SMOKE)
 public class DatabaseSpecificPageTests extends AbstractE2ETest {
 
-	private static String dbName = null;
-	private static String dbID = null;
+	private String dbName = null;
+	private String dbID = null;
 
 	@BeforeAll
-	public static void setupBeforeAll() throws IOException {
+	public void setupBeforeAll() throws IOException {
 		login(page, UserType.NATIVE);
 		String timestamp = CommonUtils.getTimeStampName();
 		dbName = "CSV db" + timestamp;
@@ -107,7 +107,7 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 	}
 
 	@AfterAll
-	public static void tearDown() {
+	public void tearDown() {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 

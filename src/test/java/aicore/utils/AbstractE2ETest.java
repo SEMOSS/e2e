@@ -11,39 +11,52 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 
 import aicore.base.GenericSetupUtils;
-import aicore.catalog.impl.AbstractCatalog;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
-import aicore.framework.ResourcePool;
 import aicore.pages.home.HomePageUtils;
 
 /**
- * Superclass to initialize and shutdown e2e env for JUnit tests
+ * Superclass to initialize and shutdown e2e env for JUnit tests.
+ * Uses PER_CLASS lifecycle so each test class gets its own instance
+ * with isolated Playwright page/context, enabling parallel execution
+ * across test classes.
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Execution(ExecutionMode.CONCURRENT)
 public class AbstractE2ETest {
 	
 	private static final Logger logger = LogManager.getLogger(AbstractE2ETest.class);
 
-	protected static Page page;
-	static String adminUser;
-	static String adminPassword;
+	protected Page page;
+	private Playwright playwright;
+	private Browser browser;
+	private BrowserContext context;
 
-	static String adminUser2;
-	static String adminPassword2;
+	String adminUser;
+	String adminPassword;
 
-	static String authorUser;
-	static String authorPassword ;
+	String adminUser2;
+	String adminPassword2;
 
-	static String editorUser ;
-	static String editorPassword ;
+	String authorUser;
+	String authorPassword;
 
-	static String readUser;
-	static String readPassword;
-	static boolean alreadLoggedIn;
+	String editorUser;
+	String editorPassword;
+
+	String readUser;
+	String readPassword;
+	boolean alreadLoggedIn;
 	
 	public enum UserType {
         NATIVE,
@@ -54,15 +67,31 @@ public class AbstractE2ETest {
     }
 	
 	@BeforeAll
-	public static void beforeAll() {
+	public void beforeAll() {
 		logger.info("Initializing setup for ALL tests");
 		try {
 			GenericSetupUtils.initialize();
 		} catch (IOException e) {
 			fail(e.getMessage());
 		}
-		/// sets up a Resource with a Playwright instance, Browser, and Browser context
-		page = GenericSetupUtils.setupPlaywright();
+		// Each test class creates its own isolated Playwright/Browser/Context/Page
+		playwright = Playwright.create();
+		browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+		context = browser.newContext(GenericSetupUtils.getContextOptions()
+				.setViewportSize(1280, 720)
+				.setDeviceScaleFactor(1)
+				.setPermissions(java.util.Arrays.asList("clipboard-read", "clipboard-write"))
+				.setTimezoneId("America/New_York"));
+		context.grantPermissions(java.util.Arrays.asList("clipboard-read", "clipboard-write"));
+		
+		if (GenericSetupUtils.useTrace()) {
+			context.tracing().start(GenericSetupUtils.getStartOptions());
+		}
+		
+		page = context.newPage();
+		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT)));
+		GenericSetupUtils.setupLoggers(page);
+
 		adminUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		adminPassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		
@@ -80,7 +109,7 @@ public class AbstractE2ETest {
 		alreadLoggedIn = false;
 	}
 	
-	public static void login(Page page, UserType userType) {
+	public void login(Page page, UserType userType) {
 		if (!alreadLoggedIn) {
 			logger.info("Logging in as: " + userType);
 			switch (userType) {
@@ -109,7 +138,7 @@ public class AbstractE2ETest {
 		}
 	}
 	
-	public static void logout(Page page) {
+	public void logout(Page page) {
 		if (alreadLoggedIn) {
 			GenericSetupUtils.logout(page);
 			alreadLoggedIn = false;
@@ -120,22 +149,68 @@ public class AbstractE2ETest {
 	
 	@AfterEach
 	public void afterEach() {
-		logger.info("Navigating home");
-		HomePageUtils.navigateToHomePage(page);
+		if (page != null && !page.isClosed()) {
+			logger.info("Navigating home");
+			try {
+				HomePageUtils.navigateToHomePage(page);
+			} catch (Exception e) {
+				logger.warn("Failed to navigate home after test: {}", e.getMessage());
+			}
+		}
 	}
 	
 	@AfterAll
-	public static void afterAll() throws IOException {
+	public void afterAll() throws IOException {
 		logger.info("Cleaning up after ALL tests");
-		GenericSetupUtils.logout(page);
+		try {
+			if (page != null && !page.isClosed()) {
+				GenericSetupUtils.logout(page);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to logout during cleanup: {}", e.getMessage());
+		}
 		alreadLoggedIn = false;
-		ResourcePool.get().getContext().close();
 		
 		// TODO modify this to use the 'fail' logic in SetupHooks.java
-		if (GenericSetupUtils.useVideo()) {
-			Path og = page.video().path();
-			Files.deleteIfExists(og);
+		try {
+			if (GenericSetupUtils.useVideo() && page != null) {
+				Path og = page.video().path();
+				Files.deleteIfExists(og);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to clean up video: {}", e.getMessage());
 		}
-		page.close();
+		
+		try {
+			if (page != null && !page.isClosed()) {
+				page.close();
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to close page: {}", e.getMessage());
+		}
+		
+		try {
+			if (context != null) {
+				context.close();
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to close browser context: {}", e.getMessage());
+		}
+		
+		try {
+			if (browser != null) {
+				browser.close();
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to close browser: {}", e.getMessage());
+		}
+		
+		try {
+			if (playwright != null) {
+				playwright.close();
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to close playwright: {}", e.getMessage());
+		}
 	}
 }

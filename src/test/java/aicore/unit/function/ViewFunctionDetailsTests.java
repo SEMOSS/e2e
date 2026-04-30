@@ -25,7 +25,7 @@ public class ViewFunctionDetailsTests extends AbstractE2ETest {
 	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);
 	
 	@BeforeAll
-	static void setup() {
+	void setup() {
 		login(page, UserType.NATIVE);
 	}
 	

@@ -20,11 +20,11 @@ import aicore.utils.TestResourceTrackerHelper;
 public class AddFunctionTests extends AbstractE2ETest {
 	
 	@BeforeAll
-	static void setup() {
+	void setup() {
 		login(page, UserType.NATIVE);
 	}
 	
-	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
+	private Stream<Arguments> provideFormInputsForTestValidateFunctions() {
 	    return Stream.of(
 	    		Arguments.of("REST","TestFunction{Timestamp}","https://api.api-ninjas.com/v1/weather","GET","json","{\"X-Api-Key\": \"myKey\"}", "[{\"parameterName\":\"lat\",\"parameterType\":\"String\",\"parameterDescription\":\"The lat of the location\"},{\"parameterName\":\"lon\",\"parameterType\":\"String\",\"parameterDescription\":\"lon of the location\"}]","[\"lat\", \"lon\"]","WeatherFunction","a function to call weather based on lat and long","catalog_name","Create function","Successfully added function database to catalog","Function Type,Catalog Name,URL,Http Method,POST Message Body Type,Function Parameters,Function Required Parameters,Function Name (metadata),Function Description (metadata)")
 	    		);

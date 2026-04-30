@@ -19,11 +19,11 @@ import aicore.utils.TestResources;
 import aicore.utils.page.app.AppPageUtils;
 
 public class AllDatabaseSortTests extends AbstractE2ETest {
-	private static String TEST_DB_ID = null;
-	private static String DIABETES_DB_ID = null;
+	private String TEST_DB_ID = null;
+	private String DIABETES_DB_ID = null;
 
 	@BeforeAll
-	public static void setupAddDB() throws IOException {
+	public void setupAddDB() throws IOException {
 		login(page, UserType.NATIVE);
 		
 		// add 2 zip db
@@ -61,7 +61,7 @@ public class AllDatabaseSortTests extends AbstractE2ETest {
 	}
 	
 	@AfterAll
-	static void cleanUp() {
+	void cleanUp() {
 		login(page, UserType.NATIVE);
 		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TEST_DB_ID);
 		assertTrue(deleteDb);

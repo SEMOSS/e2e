@@ -30,10 +30,10 @@ import aicore.utils.page.model.ModelPageUtils;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AddModelPageTests extends AbstractE2ETest {
 	
-	private static String modelCatalogName = null;
+	private String modelCatalogName = null;
 
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		// login with native user before tests
 		login(page, UserType.NATIVE);
 
@@ -70,7 +70,7 @@ public class AddModelPageTests extends AbstractE2ETest {
 	}
 	
 	@AfterAll
-	public static void teardown() {
+	public void teardown() {
 		// Clean up: delete the test model catalog
 		if (modelCatalogName != null && page != null) {
 			try {

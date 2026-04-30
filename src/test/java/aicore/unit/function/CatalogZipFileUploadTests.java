@@ -27,11 +27,11 @@ import aicore.utils.UploadCatalogUtils;
 public class CatalogZipFileUploadTests extends AbstractE2ETest {
 	
 	@BeforeAll
-	static void setup() {
+	void setup() {
 		login(page, UserType.NATIVE);
 	}
 	
-	private static Stream<Arguments> provideInputsForAllCatalogTypes() {
+	private Stream<Arguments> provideInputsForAllCatalogTypes() {
 	    return Stream.of(
 	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_MODEL, TestResources.LLAMA3_70B_INSTRUCT_ZIP, TestResources.LLAMA3_70B_INSTRUCT_NAME),
 	    		Arguments.of(TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TestResources.TEST_DATABASE_ZIP, TestResources.TEST_DATABASE_NAME),

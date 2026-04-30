@@ -48,7 +48,7 @@ public class GenericSetupUtils {
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
 	private static final String SETTINGS_XPATH = "//div[@aria-label='Settings']";
 
-	public static void initialize() throws IOException {
+	public static synchronized void initialize() throws IOException {
 		if (RunInfo.isFirstRun()) {
 			doInit();
 		}
@@ -88,7 +88,7 @@ public class GenericSetupUtils {
 			}
 		}
 
-		initializeResources();
+		// initializeResources();
 	}
 
 	public static void logCheck() {

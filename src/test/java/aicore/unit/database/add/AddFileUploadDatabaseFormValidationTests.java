@@ -20,7 +20,7 @@ import aicore.utils.AddDatabasePageUtils;
 public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
 
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		login(page, UserType.NATIVE);
 	}
 
@@ -54,7 +54,7 @@ public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static Stream<Arguments> fileUploadDatabaseFormData() {
+	private Stream<Arguments> fileUploadDatabaseFormData() {
 		return Stream.of(
 				Arguments.of("CSV",
 						sections(
