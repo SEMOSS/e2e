@@ -57,7 +57,6 @@ public class MyProfilePageTests extends AbstractE2ETest {
 
 		// 3. Validation Logic
 		String sectionContents = MyProfilePageUtils.extractExampleSectionContent(page, sectionName);
-
 		int actualAccessCount = CommonUtils.countIdOccurances(sectionContents, accessKey);
 		int actualSecretCount = CommonUtils.countIdOccurances(sectionContents, secretKey);
 

@@ -53,10 +53,9 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 	@Then("User should see the following {string} options with valid icons on the Connect to Storage page")
 	public void user_should_see_the_following_options_with_valid_icons_on_the_connect_to_storage_page(String catalog,
 			DataTable dataTable) {
-		final String GROUP_NAME = "GROUP";
 		final String STORAGE_OPTION_NAMES = "STORAGE_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-		validateOptionsWithIcon(catalog, GROUP_NAME, STORAGE_OPTION_NAMES, rows, SetupHooks.getPage());
+		validateOptionsWithIcon(catalog, STORAGE_OPTION_NAMES, rows, storagePage);
 	}
 
 	@And("User selects {string} storage")
@@ -349,8 +348,8 @@ public class AddStorageSteps extends AbstractAddCatalogBase {
 			String storageType, String catalogName, String region, String bucket) {
 		for (int i = 1; i <= Integer.parseInt(storageCount); i++) {
 			String catalogNameWithTimestamp = catalogName + System.currentTimeMillis();
-		storagePage.createStorage(storageType, catalogNameWithTimestamp, region, bucket);
+			storagePage.createStorage(storageType, catalogNameWithTimestamp, region, bucket);
+		}
 	}
-}
 
 }

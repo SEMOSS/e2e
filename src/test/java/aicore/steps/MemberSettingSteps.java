@@ -27,7 +27,6 @@ public class MemberSettingSteps {
 		} else {
 			logger.info("Admin button is not visible");
 		}
-
 	}
 
 	@When("User clicks on {string} Card")
