@@ -47,7 +47,7 @@ public class PersonalAccessTokenTests extends AbstractE2ETest {
 		PersonalAccessTokenUtils.clickNewKeyButton(page);
 		PersonalAccessTokenUtils.enterKeyName(page, keyName);
 		PersonalAccessTokenUtils.enterDescription(page, description);
-		AICorePageUtils.saveScreenshotAtStep(page, "Capture screenshot after login");
+		AICorePageUtils.saveScreenshotAtStep(page, "Capture screenshot of generating a personal access toke");
 		PersonalAccessTokenUtils.clickGenerateButton(page);
 
 		// Extract key info
