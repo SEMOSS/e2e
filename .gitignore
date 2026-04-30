@@ -18,3 +18,4 @@ src/test/resources/data/screenshots/
 /screenshots/**/diffChart.png
 /testresults/
 /downloads
+/allure-results/

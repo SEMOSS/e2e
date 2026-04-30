@@ -59,7 +59,7 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 	void testCatalogCard() {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
-		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
+		searchForCatalog(page, CATALOG_TYPE.DATABASE, dbName);//AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
 
 		// validate search
 		String databaseNameInCatalog = AddDatabasePageUtils.verifyDatabaseNameInCatalog(page, dbName);
