@@ -3,6 +3,9 @@ package aicore.utils;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -27,7 +30,13 @@ public class AbstractE2ETest {
 	
 	private static final Logger logger = LogManager.getLogger(AbstractE2ETest.class);
 
-	protected static Page page;
+	// `page` is a proxy shared across test classes, but each worker thread resolves
+	// its own actual Playwright Page instance via the thread-local CURRENT_PAGE.
+	// This allows class-level parallel execution while preserving sequential order
+	// within ordered dependent test classes.
+	private static final ThreadLocal<Page> CURRENT_PAGE = new ThreadLocal<>();
+	private static final ThreadLocal<Boolean> ALREADY_LOGGED_IN = ThreadLocal.withInitial(() -> false);
+	protected static final Page page = createPageProxy();
 	static String adminUser;
 	static String adminPassword;
 
@@ -42,7 +51,6 @@ public class AbstractE2ETest {
 
 	static String readUser;
 	static String readPassword;
-	static boolean alreadLoggedIn;
 	
 	public enum UserType {
         NATIVE,
@@ -51,6 +59,17 @@ public class AbstractE2ETest {
         EDITOR,
         READER
     }
+
+	private static Page createPageProxy() {
+		InvocationHandler handler = (proxy, method, args) -> {
+			Page current = CURRENT_PAGE.get();
+			if (current == null) {
+				throw new IllegalStateException("No Playwright Page available for current thread");
+			}
+			return method.invoke(current, args);
+		};
+		return (Page) Proxy.newProxyInstance(Page.class.getClassLoader(), new Class<?>[] { Page.class }, handler);
+	}
 	
 	@BeforeAll
 	public static void beforeAll() {
@@ -61,7 +80,7 @@ public class AbstractE2ETest {
 			fail(e.getMessage());
 		}
 		/// sets up a Resource with a Playwright instance, Browser, and Browser context
-		page = GenericSetupUtils.setupPlaywright();
+		CURRENT_PAGE.set(GenericSetupUtils.setupPlaywright());
 		adminUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
 		adminPassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
 		
@@ -76,11 +95,11 @@ public class AbstractE2ETest {
 
 		readUser = ConfigUtils.getValue(AICoreTestConstants.READ_USERNAME);
 		readPassword = ConfigUtils.getValue(AICoreTestConstants.READ_PASSWORD);
-		alreadLoggedIn = false;
+		ALREADY_LOGGED_IN.set(false);
 	}
 	
 	public static void login(Page page, UserType userType) {
-		if (!alreadLoggedIn) {
+		if (!ALREADY_LOGGED_IN.get()) {
 			logger.info("Logging in as: " + userType);
 			switch (userType) {
 			case NATIVE:
@@ -102,16 +121,16 @@ public class AbstractE2ETest {
 				throw new AssertionError(
 						"Could not login in user type. Needs to be one of Native, Admin, Author, Editor, or Reader");
 			}
-			alreadLoggedIn = true;
+			ALREADY_LOGGED_IN.set(true);
 		} else {
 			logger.warn("Tried to login as: " + userType + " while already logged in. Unsuccessful attempt");
 		}
 	}
 	
 	public static void logout(Page page) {
-		if (alreadLoggedIn) {
+		if (ALREADY_LOGGED_IN.get()) {
 			GenericSetupUtils.logout(page);
-			alreadLoggedIn = false;
+			ALREADY_LOGGED_IN.set(false);
 		} else {
 			logger.warn("Tried to logout while not logged in. Unsuccessful attempt");
 		}
@@ -126,15 +145,26 @@ public class AbstractE2ETest {
 	@AfterAll
 	public static void afterAll() throws IOException {
 		logger.info("Cleaning up after ALL tests");
-		GenericSetupUtils.logout(page);
-		alreadLoggedIn = false;
-		ResourcePool.get().getContext().close();
-		
-		// TODO modify this to use the 'fail' logic in SetupHooks.java
-		if (GenericSetupUtils.useVideo()) {
-			Path og = page.video().path();
-			Files.deleteIfExists(og);
+		Page currentPage = CURRENT_PAGE.get();
+		if (currentPage != null) {
+			try {
+				GenericSetupUtils.logout(currentPage);
+			} catch (Throwable t) {
+				logger.warn("Logout during teardown failed", t);
+			}
+			ALREADY_LOGGED_IN.set(false);
+			ResourcePool.get().getContext().close();
+			
+			// TODO modify this to use the 'fail' logic in SetupHooks.java
+			if (GenericSetupUtils.useVideo()) {
+				Path og = currentPage.video().path();
+				Files.deleteIfExists(og);
+			}
+			currentPage.close();
+		} else {
+			logger.warn("No Playwright Page available for current thread during afterAll cleanup");
 		}
-		page.close();
+		CURRENT_PAGE.remove();
+		ALREADY_LOGGED_IN.remove();
 	}
 }
