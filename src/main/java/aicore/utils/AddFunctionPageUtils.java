@@ -17,7 +17,6 @@ public class AddFunctionPageUtils extends AbstractBasePage{
 	
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
 	private static final String FUNCTION_OPTIONS_GRID_TEST_ID = "function-grid";
-	private static final String OPTION_IN_FUNCTION_GRID_CSS_ATTR_SELECTR = "[data-testid*=\"{FUNCTION_OPTION}\"]";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";

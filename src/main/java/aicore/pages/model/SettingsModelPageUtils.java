@@ -23,7 +23,6 @@ public class SettingsModelPageUtils {
 	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h4[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
 	private static final String PENDING_REQUESTS_COUNT_DATA_DATATESTID = "pending-requests-count";
 	private static final String MEMBER_SECTION_TITLE_XPATH = "//h2[text()='Member Permissions']";
-	private static final String MEMBER_SEARCH_ICON_DATA_TESTID = "membersTable-searchIcon";
 	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search";
 	private static final String ADD_MEMBERS_BUTTON_XPATH = "//span[text()='Add Members']";
 	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//span[text()='Rows per page:']/parent::div//button";

@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeAll;
 import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
-import aicore.catalog.impl.AbstractCatalog;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.ResourcePool;

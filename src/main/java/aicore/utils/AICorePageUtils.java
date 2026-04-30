@@ -91,4 +91,8 @@ public class AICorePageUtils {
 			}
 		});
 	}
+
+	public static String getPageUrl(Page page) {
+		return  page.url();
+	}
 }

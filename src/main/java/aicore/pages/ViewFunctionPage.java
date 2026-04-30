@@ -16,7 +16,6 @@ public class ViewFunctionPage {
 	private static final String MARKUP_FUNCTION_XPATH = "//div[text()='{MarkupFunction}']";
 	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='{ChangeAccessButton}']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='{UsageTab}']";
-	private static final String USAGE_INSTRUCTIONS_SECTION_XPATH = "//h6[text()='{UsageInstructionsSection}']";
 
 	public ViewFunctionPage(Page page) {
 		this.page = page;

@@ -2,9 +2,7 @@ package aicore.pages.engine;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 
-import aicore.catalog.api.ICatalog.CATALOG_TYPE;
 import aicore.pages.base.AbstractBasePage;
 import aicore.utils.AICorePageUtils;
 
