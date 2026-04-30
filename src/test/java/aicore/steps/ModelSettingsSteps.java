@@ -36,11 +36,12 @@ public class ModelSettingsSteps {
 		case "Pending Requests":
 			isSectionVisible = modelPage.verifyPendingRequestsSectionIsVisible();
 			break;
-		case "Permissions":
+		case "Member Permissions":
 			isSectionVisible = modelPage.verifyMembersSectionIsVisible();
 			break;
 		default:
-			isSectionVisible = ModelAccessSettingsUtils.verifyMakePublicSectionIsVisible(SetupHooks.getPage(), sectionName);
+			isSectionVisible = ModelAccessSettingsUtils.verifyMakePublicSectionIsVisible(SetupHooks.getPage(),
+					sectionName);
 		}
 		softAssert.assertThat(isSectionVisible).isTrue();
 	}
@@ -69,10 +70,12 @@ public class ModelSettingsSteps {
 		boolean isToggleButtonVisible = false;
 		switch (sectionName) {
 		case "Private":
-			isToggleButtonVisible = ModelAccessSettingsUtils.verifyMakePublicToggleButtonIsVisible(SetupHooks.getPage());
+			isToggleButtonVisible = ModelAccessSettingsUtils
+					.verifyMakePublicToggleButtonIsVisible(SetupHooks.getPage());
 			break;
 		case "Non Discoverable":
-			isToggleButtonVisible = ModelAccessSettingsUtils.verifyMakeDiscoverableToggleButtonIsVisible(SetupHooks.getPage());
+			isToggleButtonVisible = ModelAccessSettingsUtils
+					.verifyMakeDiscoverableToggleButtonIsVisible(SetupHooks.getPage());
 			break;
 		default:
 			System.out.println("Invalid section name: " + sectionName);

@@ -12,10 +12,10 @@
         <log4j.version>2.24.3</log4j.version>
         <junit.version>6.0.0</junit.version>
         <cucumber.version>7.31.0</cucumber.version>
-		<assertj.version>3.27.6</assertj.version>
-		<playwright.version>1.58.0</playwright.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- Allure reports -->
+        <assertj.version>3.27.6</assertj.version>
+        <playwright.version>1.58.0</playwright.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Allure reports -->
 		<aspectj.version>1.9.21</aspectj.version>
 		<allure.version>2.32.0</allure.version>
 		<allure.maven.version>2.17.0</allure.maven.version>
@@ -151,14 +151,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
+			<dependency>
 				<groupId>io.qameta.allure</groupId>
 				<artifactId>allure-bom</artifactId>
 				<version>${allure.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-        </dependencies>
+		</dependencies>
     </dependencyManagement>
 
     <dependencies>
@@ -273,8 +273,8 @@
              <artifactId>image-comparison</artifactId>
              <version>4.4.0</version>
         </dependency>
-
-		<!--Allure reporting-->
+        
+        <!--Allure reporting-->
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-junit5</artifactId>

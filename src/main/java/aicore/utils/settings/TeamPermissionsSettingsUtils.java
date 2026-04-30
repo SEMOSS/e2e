@@ -27,7 +27,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String LIST_DROPDOWN_XPATH = "//input[contains(@placeholder,'Search')]/parent::div";
 	private static final String TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
 	private static final String MEMBER_XPATH = "//div[contains(text(),'NATIVE ID: {member}')]";
-	private static final String NAME_XPATH = "//p[normalize-space()='{Name}']";
+	private static final String NAME_XPATH = "//span[normalize-space()='{Name}']";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//p[normalize-space()='{description}']";
 	private static final String SELECT_ENGINE_ROLE_XPATH = "//button[@value='{role}']";
 	private static final String SELELCT_THE_ENGINE_DROPDOWN_XPATH = "//input[@placeholder='Search engines']";
@@ -50,7 +50,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String USER_LIST_XPATH = "//div[contains(@class,'rounded-md p-3')]";
 	private static final String SELECT_USER_FROM_LIST_XPATH = "//div[contains(@class,'rounded-md p-3')][.//div[text()='{userName}']]";
 	private static final String CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_APPS_XPATH = "//div//h2[text()='Add Apps']/following::button[@role='checkbox']";
-	private static final String FETCH_TEAM_NAME_XPATH = "//span[contains(@class,'text-muted-foreground')]";
+	private static final String FETCH_TEAM_NAME_XPATH = "//*[contains(@class,'text-muted-foreground')]//span";
 	private static String engineAddedDteTime;
 	private static final String ENGINE_DATE_TIME_XPATH = "//tr[.//div[normalize-space()='{catalogName}']]//td[last()-1]";
 	private static final String CATALOG_DATE_TIME_XPATH = "//td[text()='{teamName}']/following-sibling::td";
@@ -143,7 +143,7 @@ public class TeamPermissionsSettingsUtils {
 
 	// add engine to all catalog with different
 	public static void userClickOnCreatedTeamName(Page page, String teamName, String timestamp) {
-		Locator teamNameLocator = page.locator("//p[text()='" + teamName + " " + timestamp + "']");
+		Locator teamNameLocator = page.locator("//span[text()='" + teamName + " " + timestamp + "']");
 		AICorePageUtils.waitFor(teamNameLocator);
 		if (!teamNameLocator.isVisible()) {
 			throw new AssertionError("Team name: " + teamName + " with timestamp: " + timestamp + " is not visible.");

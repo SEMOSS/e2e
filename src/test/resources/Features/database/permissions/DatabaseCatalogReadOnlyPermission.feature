@@ -13,7 +13,7 @@ Feature: Database Catalog permissions for Read user
     And User clicks on Copy Catalog ID
     And User sees success toast message 'Successfully Created Database'
     And User can see the Catalog title as 'TestDatabase'
-    Then 'Author' user clicks on Access Control
+    And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User logs out from the application

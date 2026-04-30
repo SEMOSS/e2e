@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICoreAllureLabels;
+import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
 import aicore.utils.settings.MyProfilePageUtils;
@@ -46,6 +47,7 @@ public class PersonalAccessTokenTests extends AbstractE2ETest {
 		PersonalAccessTokenUtils.clickNewKeyButton(page);
 		PersonalAccessTokenUtils.enterKeyName(page, keyName);
 		PersonalAccessTokenUtils.enterDescription(page, description);
+		AICorePageUtils.saveScreenshotAtStep(page, "Capture screenshot of generating a personal access toke");
 		PersonalAccessTokenUtils.clickGenerateButton(page);
 
 		// Extract key info

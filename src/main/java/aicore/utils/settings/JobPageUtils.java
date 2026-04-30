@@ -12,17 +12,17 @@ public class JobPageUtils {
 
 	private static final String JOBS_TILE_DATATESTID = "settingsIndexPage-Jobs-card";
 	private static final String PIXEL_XPATH = "//label[text()='Pixel']/parent::div/div/textarea[@aria-invalid=\"false\"]";
-	private static final String JOB_LIST_XPATH = "//button[text()='{sectionName}' and @aria-selected='true']/ancestor::div/following-sibling::div//div[@title='{jobName}']";
+	private static final String JOB_LIST_XPATH = "//button[text()='{sectionName}' and @aria-selected='true']/ancestor::div/following-sibling::div//tbody//td[text()='{jobName}']";
 	private static final String EDIT_ICON_XPATH = "//div[@role='row']//div[@title='{jobName}']/ancestor::div[@role='row']//button[@data-testid='jobsTable-edit-btn']";
 	private static final String EDIT_TAGS_XPATH = "//span[text()='Tags']/ancestor::fieldset/parent::div//input";
 	private static final String ADDED_TAG_XPATH = "//div[contains(text(),'{jobName}')]/following-sibling::div//div//span[text()='{textValue}']";
-	private static final String DELETE_ICON_XPATH = "//div[@role='row']//div[@title='{jobName}']/ancestor::div[@role='row']//button[@data-testid='jobsTable-delete-btn']";
+	private static final String DELETE_ICON_XPATH = "//td[text()='{jobName}']//following-sibling::td//*[contains(@class,'trash')]";
 	private static final String DELETE_JOB_TOAST_MESSAGE_DATA_TESTID = "notification-success-message";
 	private static final String CHECKBOX_XPATH = "//div[@role='row'][.//div[@title='{jobName}']]//input[@type='checkbox']";
-	private static final String JOB_CHECKBOX_XPATH = "//div[@role='row'][.//div[@title='{jobName}']]//input[@type='checkbox']";
+	private static final String JOB_CHECKBOX_XPATH = "//td[text()='{jobName}']//..//td//input[@type='checkbox']";
 	private static final String JOB_STATUS_CHECK_XPATH = "//div[@role='row'][.//div[@title='{jobName}']]//div[@data-field='isActive']";
-	private static final String RESUME_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Resume']";
-	private static final String PAUSE_BUTTON_XPATH = "//button[@type='button' and normalize-space(.) = 'Pause']";
+	private static final String RESUME_BUTTON_XPATH = "//button[normalize-space(.) = 'Resume']";
+	private static final String PAUSE_BUTTON_XPATH = "//button[normalize-space(.) = 'Pause']";
 	private static final String JOB_PAGE_SUB_TITLE_XPATH = "//p[text()='{subTitle}']";
 	private static final String STATUS_TILES_XPATH = "//div[contains(@class,'MuiBox')]//p[text()='{tileName}']";
 	private static final String NO_JOBS_MESSAGE_XPATH = "//div[text()='{message}']";
@@ -31,11 +31,11 @@ public class JobPageUtils {
 	private static final String HISTORY_TABLE_COLUMNS_XPATH = "//table//thead//tr//th[text()='{columnName}']";
 	private static final String HISTORY_TABLE_SEARCHBOX_XPATH = "//div[text()='History']/ancestor::h3//following-sibling::div//input[@placeholder='Search']";
 	private static final String NO_JOB_HISTORY_MESSAGE_XPATH = "//table//tbody//tr//td[text()='{message}']";
-	private static final String ADD_BUTTON_DATATESTID = "jobBuilder-add-save-btn";
+	private static final String ADD_BUTTON_XPATH = "//button[text()='Add Job']";
 	private static final String DELETE_JOB_CONFIRMATION_BUTTON_DATATESTID = "deleteJobModal-delete-btn";
 	private static final String TAB_XPATH = "//button[text()='{tabName}']";
-	private static final String STATUS_TITLE_COUNT_XPATH = "//p[text()='{statusTile}']/parent::div//span";
-	private static final String RUN_JOB_ICON_XPATH = "//div[@title='{jobName}']/ancestor::div[@role='row']//button[@data-testid='jobsTable-play-btn']";
+	private static final String STATUS_TITLE_COUNT_XPATH = "//*[text()='{statusTile}']/following-sibling::p";
+	private static final String RUN_JOB_ICON_XPATH = "//td[text()='{jobName}']//following-sibling::td//*[contains(@class,'play')]";
 
 	public static void clickOnJobTile(Page page) {
 		page.getByTestId(JOBS_TILE_DATATESTID).isVisible();
@@ -48,8 +48,8 @@ public class JobPageUtils {
 	}
 
 	public static void clickAddButton(Page page) {
-		page.getByTestId(ADD_BUTTON_DATATESTID).isVisible();
-		page.getByTestId(ADD_BUTTON_DATATESTID).click();
+		page.locator(ADD_BUTTON_XPATH).isVisible();
+		page.locator(ADD_BUTTON_XPATH).click();
 	}
 
 	public static void clickEditIcon(Page page, String jobTitle) {
@@ -96,13 +96,13 @@ public class JobPageUtils {
 	}
 
 	public static void fillName(Page page, String name) {
-		Locator locator = page.locator("label:has-text('Name') + input");
+		Locator locator = page.locator("[placeholder='Enter the Name']");
 		locator.isVisible();
 		locator.fill(name);
 	}
 
 	public static void fillPixel(Page page, String value) {
-		Locator txtArea = page.locator("label:has-text('Pixel') + textarea");
+		Locator txtArea = page.locator("[placeholder='Enter Pixel']");
 		txtArea.isVisible();
 		txtArea.fill(value);
 	}

@@ -60,7 +60,7 @@ public class StoragePageUtils {
 	}
 
 	public static String verifyStorageCreatedToastMessage(Page page, String toastMessage) {
-		Locator alert = page.locator(TOAST_MESSAGE_XPATH.replace("{message}", toastMessage));
+		Locator alert = page.locator(TOAST_MESSAGE_XPATH.replace("{message}", toastMessage)).first();
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 

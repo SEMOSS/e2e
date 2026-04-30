@@ -9,6 +9,7 @@ state.json
 .classpath
 .project
 /.settings
+/.allure
 .idea/
 .env
 /results
@@ -18,3 +19,4 @@ src/test/resources/data/screenshots/
 /screenshots/**/diffChart.png
 /testresults/
 /downloads
+/allure-results/

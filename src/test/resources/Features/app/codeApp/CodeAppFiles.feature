@@ -31,7 +31,6 @@ Feature: Code app files
     And User click on Create button
     Then User can see the 'TestFolder' folder in the Files section
 
-  @ApplicationBugFailure
   Scenario: Create a file in the files section for code app
     Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
@@ -109,9 +108,9 @@ Feature: Code app files
     And User able to see the 'Get New Stock Updated' title on the new tab page
     And User move to main page
 
-@ApplicationBugFailure
+  @ApplicationBugFailure
   Scenario: Edit the uploaded file in code app and verify changes in code app preview
-     Given User clicks on the file icon in the left panel
+    Given User clicks on the file icon in the left panel
     And User clicks on Create at Icon on File Tab
     And User select Action as 'Upload Files'
     When User uploads the file 'Playground/mcp.zip'

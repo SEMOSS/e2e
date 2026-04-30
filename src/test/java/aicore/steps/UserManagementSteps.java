@@ -32,8 +32,9 @@ public class UserManagementSteps {
 
 	@And("User enables admin mode")
 	public void user_enables_admin_mode() {
-		settingpage.checkAdminButton();
-		settingpage.clickOnAdminButton();
+		if(settingpage.checkAdminButton()) {
+			settingpage.clickOnAdminButton();
+		}
 	}
 
 	@When("User Management clicks on {string} Card")

@@ -85,7 +85,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_MARKDOWN_BLOCK_XPATH = "//p[strong[text()='Hello world']]";
 	private static final String DROPPED_LOGS_BLOCK_XPATH = "//div[text()='Attach Query']";
 	private static final String DROPPED_INPUT_BLOCK_XPATH = "//label[text()='Example Input']";
-	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//div[text()='No rows']";
+	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//td[text()='No rows']";
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
@@ -99,7 +99,7 @@ public class DragAndDropBlocksPageUtils {
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
-	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][@data-testid='DeleteOutlineIcon']";
+	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][contains(@class,'lucide-trash')]";
 	private static final String CLICK_ON_AREA_CHART_VIEW_OPTIONS = "//div[@aria-label='Vega visualization']";
 	private static final String DUPLICATE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Duplicate']";
 	private static final String DELETE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Delete']";
@@ -167,7 +167,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String BUTTON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Button";
 	private static final String SETTINGS_PANEL_TITLE_XPATH = "//span[normalize-space()='{sectionName}']";
 	private static final String SECTION_ON_BLOCK_SETTINGS_XPATH = "//button[normalize-space()='{sectionName}']";
-	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
+	private static final String OPTION_UNDER_SECTION_XPATH = "//p[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
 	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
 	private static final String ICON_OPTION_FROM_GENERAL_SETTING_XPATH = "//p[text()='{optionName}']/following::input";
