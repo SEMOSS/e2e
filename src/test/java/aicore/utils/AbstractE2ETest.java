@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeAll;
 import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
+import aicore.catalog.impl.AbstractCatalog;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.ResourcePool;
@@ -23,7 +24,7 @@ import aicore.pages.home.HomePageUtils;
 /**
  * Superclass to initialize and shutdown e2e env for JUnit tests
  */
-public class AbstractE2ETest {
+public class AbstractE2ETest extends AbstractCatalog {
 	
 	private static final Logger logger = LogManager.getLogger(AbstractE2ETest.class);
 

@@ -58,11 +58,11 @@ public class AddFunctionPageUtils extends AbstractBasePage{
 		return icon.getAttribute("src");
 	}
 	
-	public static void clickOnAddFunctionButton(Page page) {
-		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
-		page.getByLabel(ADD_FUNCTION_BUTTON).click();
-		logger.info("Clicked on Add Function Button");
-	}
+//	public static void clickOnAddFunctionButton(Page page) {
+//		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
+//		page.getByLabel(ADD_FUNCTION_BUTTON).click();
+//		logger.info("Clicked on Add Function Button");
+//	}
 
 	public static String verifyFunctionNameInCatalog(Page page, String catalogName, String timestamp) {
 		if (catalogName.contains("{Timestamp}")) {

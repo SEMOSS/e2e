@@ -34,9 +34,8 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		logger.info("BEFORE ALL: creating function");
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		// this checks & removes existing function that may collide with name
-		AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
-		AddFunctionPageUtils.clickOnAddFunctionButton(page);
+		deleteCatalogIfExists(page, CATALOG_TYPE.FUNCTION, "WeatherFunctionTest");
+		clickCreateOrAddNewCatalog(page, CATALOG_TYPE.FUNCTION);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		FunctionTestUtils.userUploadsFile(page, "Function/weatherFunctionTest.zip");
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
@@ -53,17 +52,17 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 
 		// if there are multiple functions, ours may be not visible without scrolling or searching
 		// this will let us filter out the list of functions so we can 'see' ours
-		FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
-		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
-		SettingsModelPageUtils.clickOnAccessControl(page);
+		searchForCatalog(page, CATALOG_TYPE.FUNCTION, "WeatherFunctionTest");//FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
+		selectCatalog(page, CATALOG_TYPE.FUNCTION, "WeatherFunctionTest");//AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
+		clickOnAccessControl(page, CATALOG_TYPE.FUNCTION);//SettingsModelPageUtils.clickOnAccessControl(page);
 		FunctionAccessSettingsUtils.clickOnAddMembersForFunction(page);
 		FunctionAccessSettingsUtils.searchAndAddMemberForFunction(page, "Editor");
 		logout(page);
 		login(page, UserType.EDITOR);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
-		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, "WeatherFunctionTest");
+		searchForCatalog(page, CATALOG_TYPE.FUNCTION, "WeatherFunctionTest");//AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
+		selectCatalog(page, CATALOG_TYPE.FUNCTION, "WeatherFunctionTest");//AddFunctionPageUtils.selectFunctionFromSearchOptions(page, "WeatherFunctionTest");
 		FunctionAccessSettingsUtils.clickOnChangeAccessTab(page);
 		List<String> popupOptions = List.of("Author", "Editor", "Read-Only", "Comment Box", "Cancel Button", "Request Button");
 		FunctionTestUtils.verifyPopupWithSelectOptions(page, "Change Access", popupOptions);
@@ -106,9 +105,9 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		logger.info("AFTER ALL: Deleting function");
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
-		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);
-		AddFunctionPageUtils.clickOnAccessControl(page);
+		searchForCatalog(page, CATALOG_TYPE.FUNCTION, "WeatherFunctionTest");//FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
+		selectCatalog(page, CATALOG_TYPE.FUNCTION, "WeatherFunctionTest");//AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);
+		clickOnAccessControl(page, CATALOG_TYPE.FUNCTION);//AddFunctionPageUtils.clickOnAccessControl(page);
 		/// following 2 steps are to delete function
 		FunctionAccessSettingsUtils.clickOnDeleteButton(page);
 		FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
