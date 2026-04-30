@@ -19,7 +19,7 @@ public class CatlogAccessPageUtility {
 	private static final String VIEW_ACCESSCONTROL_DATA_TESTID = "engineLayout-Access Control-tab";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
 	private static final String CLICK_ON_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
-	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
+	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search";
 	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//li[@data-type='error']";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
@@ -172,9 +172,9 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String editorUserSeeToastMessageText(Page page) {
-		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH)
+		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).first()
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).innerText();
+		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).first().innerText();
 		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
 		return toasterMessage;
 	}
@@ -201,6 +201,7 @@ public class CatlogAccessPageUtility {
 	// 🔹 Common reusable method
 
 	public static void searchUser(Page page, String role, boolean useDocker) {
+		page.waitForTimeout(5000);
 		Locator searchIcon = page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
@@ -212,7 +213,7 @@ public class CatlogAccessPageUtility {
 		}
 
 		// Fill the search input
-		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(username);
+		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).first().fill(username);
 		page.waitForTimeout(1000);
 
 		// Optional: click the matching result if needed

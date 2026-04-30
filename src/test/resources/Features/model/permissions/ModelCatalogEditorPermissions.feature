@@ -4,26 +4,26 @@ Feature: Model Catalog Permission - Editor
 
   Background: Model Catalog - Editor - View overview
     Given User opens Main Menu
-    And User clicks on Open Model
+    When User clicks on Open Model
     And User clicks on Add Model
-     And User selects 'OpenAI' type
+    And User selects 'OpenAI' type
     And User selects 'GPT-4.1'
     And User enters Catalog Name as 'Catalog'
     And User enters Open AI Key as 'Test@1234'
     And User clicks on Create Model button
     And User can see the Model title as 'Catalog'
     And User clicks on Copy Catalog ID
-    Then 'Author' user clicks on Access Control
+    And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as "Editor"
     And User logs out from the application
-    Then User login as "editor"
+    And User login as "editor"
     And User opens Main Menu
     And User clicks on Open Model
     And User searches the 'Catalog' in the model catalog searchbox
     And User selects the 'Catalog' from the model catalog
-    Given User can see the Model title as 'Catalog'
-    Then 'Editor' user can 'View' Overview
+    Then User can see the Model title as 'Catalog'
+    And 'Editor' user can 'View' Overview
 
   @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - View usage
@@ -58,11 +58,11 @@ Feature: Model Catalog Permission - Editor
     And User login as 'Author'
 
   #Scenario: Model Catalog - Editor -  Delete Model
-    #And 'Editor' user clicks on Access Control
-    #Then 'Editor' user clicks on delete button and see the permission error toast message
-    #And User logs out from the application
-    #Then User login as "author"
-
+  #And 'Editor' user clicks on Access Control
+  #Then 'Editor' user clicks on delete button and see the permission error toast message
+  #And User logs out from the application
+  #Then User login as "author"
+  
   @DeleteTestCatalog @Regression
   Scenario: Model Catalog - Editor - Add Read
     And 'Editor' user clicks on Access Control

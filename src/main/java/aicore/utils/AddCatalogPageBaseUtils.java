@@ -106,7 +106,7 @@ public class AddCatalogPageBaseUtils {
 	public static boolean verifyCatalogDescription(Page page, String catalogDescription) {
 		// TODO add data-testid
 		Locator locator = page.locator("div.text-muted-foreground")
-		           .filter(new Locator.FilterOptions().setHasText(catalogDescription));
+				.filter(new Locator.FilterOptions().setHasText(catalogDescription));
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
@@ -154,7 +154,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static void clickOnClose(Page page) {
-		Locator closeButton =page.getByTestId("editEngineDetails-close-btn");
+		Locator closeButton = page.getByTestId("editEngineDetails-close-btn");
 		closeButton.scrollIntoViewIfNeeded();
 		closeButton.click();
 	}
@@ -173,7 +173,7 @@ public class AddCatalogPageBaseUtils {
 	}
 
 	public static String verifyEditSuccessfullToastMessage(Page page) {
-		Locator alert = page.locator(EDIT_SUCCESS_TOAST_MESSAGE);
+		Locator alert = page.locator(EDIT_SUCCESS_TOAST_MESSAGE).first();
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -204,8 +204,7 @@ public class AddCatalogPageBaseUtils {
 			throw new UnsupportedOperationException(
 					"Use isIconVisible(page, catalog, sectionName, optionName) for grouped catalogs like database");
 		default:
-			return page.locator(ICONS_WITHOUT_SECTION_XPATH.replace("{optionName}", optionName))
-					.isVisible();
+			return page.locator(ICONS_WITHOUT_SECTION_XPATH.replace("{optionName}", optionName)).isVisible();
 		}
 	}
 
