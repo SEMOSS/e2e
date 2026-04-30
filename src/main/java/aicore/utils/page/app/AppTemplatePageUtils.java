@@ -234,7 +234,6 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyAppPageTitle(String title, Page page) {
-		page.pause();
 		Locator pageTitle = page.locator(APP_TITLE_XPATH);
 		AICorePageUtils.waitFor(pageTitle);
 		String titleText = pageTitle.textContent();

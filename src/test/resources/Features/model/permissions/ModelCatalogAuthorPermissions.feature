@@ -2,7 +2,7 @@
 Feature: Model catalog permission - Author
   Adding LLM to the catalog
 
-  Background: Create a Model - GPT 4.1 
+  Background: Create a Model - GPT 4.1
     Given User opens Main Menu
     When User clicks on Open Model
     And User clicks on Add Model
@@ -28,7 +28,7 @@ Feature: Model catalog permission - Author
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Edit SMSS
-    And User clicks on SMSS
+    When User clicks on SMSS
     Then 'Author' user can 'View' Edit SMSS
 
   @DeleteTestCatalog
@@ -37,37 +37,37 @@ Feature: Model catalog permission - Author
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Member setting
-    And 'Author' user clicks on Access Control
+    When 'Author' user clicks on Access Control
     Then 'Author' user 'can' see Member Setting
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Add Editor Member
-    And 'Author' user clicks on Access Control
+    When 'Author' user clicks on Access Control
     And User clicks on Add Member button
-    And User adds one user and assigns them as 'Editor'
+    Then User adds one user and assigns them as 'Editor'
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Add Read Member
-    And 'Author' user clicks on Access Control
+    When 'Author' user clicks on Access Control
     And User clicks on Add Member button
-    And User adds one user and assigns them as 'Read'
+    Then User adds one user and assigns them as 'Read'
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Delete editor Member
-    And 'Author' user clicks on Access Control
+    When 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User Search the 'Editor' user from Access Control
-    And User deletes the 'Editor' user
+    Then User deletes the 'Editor' user
 
   @DeleteTestCatalog
   Scenario: Model Catalog - Author - Delete read Member
-    And 'Author' user clicks on Access Control
+    When 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Read'
     And User Search the 'Read' user from Access Control
-    And User deletes the 'Read' user
+    Then User deletes the 'Read' user
 
   Scenario: Model Catalog - Author - Delete Model
-    And 'Author' user clicks on Access Control
+    When 'Author' user clicks on Access Control
     Then 'Author' user 'can' Delete Catalog

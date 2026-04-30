@@ -1,11 +1,8 @@
 package aicore.utils.settings;
 
-import java.util.regex.Pattern;
-
 import com.microsoft.playwright.Keyboard;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
@@ -13,29 +10,30 @@ import aicore.utils.CommonUtils;
 public class SettingsPageUtils {
 
 	///// SETTING PAGE
-	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "//button[text()='Admin Off']";
+	private static final String ADMIN_ON_OFF_BUTTON_XPATH = "//*[text()='Admin Off']";
 	private static final String CARD_XPATH = "//div[text()='{cardName}']/parent::div[@data-slot='card-header']";
+	private static final String ADMIN_SWITCH = "//*[contains(text(),'Admin')]";
 	private static final String ADMIN_ON_BUTTON_XPATH = "//span[text()='Admin on']";
 	private static final String ADD_MEMBER_XPATH = "[data-testid='AddIcon']";
-	private static final String MEMBER_COUNT_XPATH = "//div[@class='css-1lxwves']//span";
+	private static final String MEMBER_COUNT_XPATH = "//div[text()='Members']//following-sibling::span";
 	private static final String ROWS_PER_PAGE_XPATH = "//div[(@aria-haspopup='listbox')]";
 	private static final String ROWS_FILTER_UNIT_VALUE_XPATH = "//li[@data-value='{unitValue}']";
 	private static final String TOTAL_ROWS_XPATH = "//tbody[contains(@class, 'MuiTableBody-root')]/tr";
 	private static final String NEXT_PAGE_XPATH = "//button[contains(@title,'Go to next page')]";
 	private static final String PREVIOUS_PAGE_XPATH = "//button[contains(@title,'Go to previous page')]";
-	private static final String SEARCH_BUTTON_XPATH = "[data-testid='SearchIcon']";
+	private static final String SEARCH_BUTTON_XPATH = "[placeholder='Search Users']";
 	private static final String SEARCH_BAR_XPATH = "//input[contains(@class,'MuiInputBase-input')]";
-	private static final String USERLIST_XPATH = "[title='Name: {userName}']";
+	private static final String USERLIST_XPATH = "//*[text()='{userName}']";
 	private static final String TAB_XPATH = "//button[contains(normalize-space(),'{tabName}')]";
 	private static final String SECTION_DATA_TESTID = "engineLayout-{sectionName}-tab";
 
 	public static boolean checkAdminButton(Page page) {
+		page.waitForTimeout(2000);
 		return page.locator(ADMIN_ON_OFF_BUTTON_XPATH).isVisible();
 	}
 
 	public static void clickOnAdminButton(Page page) {
-		Locator adminButton = page.getByRole(AriaRole.BUTTON,
-				new Page.GetByRoleOptions().setName(Pattern.compile("Admin (On|Off)")));
+		Locator adminButton = page.locator(ADMIN_SWITCH);
 		if (adminButton.innerText().contains("Admin Off")) {
 			adminButton.click();
 		}

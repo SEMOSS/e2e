@@ -46,8 +46,8 @@ Feature: Add Vector Database
       | FAISS      | FAISS Vector DB01 | Catalog    | Token             |            510 |              17 |
       | FAISS      | FAISS Vector DB02 | Catalog    | Page by page      |            512 |              19 |
       | FAISS      | FAISS Vector DB03 | Catalog    | Markdown          |            512 |              15 |
-
-  #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
+     #Note: For 'Page by page' and 'Markdown' chunking strategies, the Content Length defaults to '512' as the field is not present
+ 
   @DeleteTestCatalog @Regression
   Scenario: Validate usage of vector
     Given User is on Home page

@@ -5,13 +5,13 @@ import com.microsoft.playwright.Page;
 
 public class AgentBuilderAppsUtils {
 
-	private static final String SELECT_llM_XPATH = "//input[@id='model-autocomplete' and @type='text' and contains(@class, 'MuiAutocomplete-input')]";
-	private static final String ENTER_NAME_XPATH = "//div[contains(@class, 'MuiInputBase-root')]//legend/span[text()='Name']/ancestor::div[contains(@class, 'MuiInputBase-root')]//input";
-	private static final String PROMPT_CONTEXT_XPATH = "//textarea[@rows='6' and contains(@class, 'MuiOutlinedInput-input') and @placeholder and not(@readonly)]";
-	private static final String SET_INPUT_XPATH = "//div[contains(@class, 'MuiPaper-root')]//button[normalize-space(text())='{setInput}']";
-	private static final String SET_INPUT_BUTTON_XPATH = "//button[span[text()='Set Input']]";
-	private static final String PREVIEW_BUTTON_XPATH = "//button[span[normalize-space(text())='Preview']]";
-	private static final String INPUT_TYPE_XPATH = "//div[contains(@class, 'MuiInputBase-root') and contains(@class, 'MuiAutocomplete-inputRoot')]/input[@id='input-token-autocomplete']";
+	private static final String SELECT_llM_XPATH = "//span[text()='Select LLM']/parent::button";
+	private static final String ENTER_NAME_XPATH = "//label[text()='Name']/following::input";
+	private static final String PROMPT_CONTEXT_XPATH = "//p[text()='Prompt Context']/parent::div/following::textarea";
+	private static final String SET_INPUT_XPATH = "//button[normalize-space(text())='{setInput}']";
+	private static final String SET_INPUT_BUTTON_XPATH = "//button[text()='Set Input']";
+	private static final String PREVIEW_BUTTON_XPATH = "//button[normalize-space()='Preview']";
+	private static final String INPUT_TYPE_XPATH = "//span[text()='Select Input Type']/parent::button";
 	private static final String CREATE_APP_BUTTON_XPATH = "//button[normalize-space(.)='Create App']";
 	private static final String INPUT_TYPE_FOR_INPUT_XPATH = "//span[text()='{INPUT_TEXT}']/ancestor::div[contains(@class,'MuiGrid-item')]/following-sibling::div//label[text()='Input Type']/ancestor::div[contains(@class,'MuiFormControl-root')]//input";
 	private static final String USER_FETCH_APP_NAME_XPATH = "//div[@id='navbar--left']//div//div";
@@ -21,9 +21,8 @@ public class AgentBuilderAppsUtils {
 	}
 
 	public static void clickOnSelectLLM(Page page, String modelTitle) {
-		page.fill(SELECT_llM_XPATH, modelTitle);
-		page.locator(SELECT_llM_XPATH).press("ArrowDown");
-		page.locator(SELECT_llM_XPATH).press("Enter");
+		page.locator(SELECT_llM_XPATH).click();
+		page.getByText(modelTitle).click();
 	}
 
 	public static void fillPrompt(Page page, String promptContext) {
@@ -43,9 +42,8 @@ public class AgentBuilderAppsUtils {
 	public static void selectInputType(Page page, String inputType) {
 		Locator selectInputTypeButton = page.locator(INPUT_TYPE_XPATH);
 		selectInputTypeButton.click();
-		selectInputTypeButton.pressSequentially(inputType);
-		selectInputTypeButton.press("ArrowDown");
-		selectInputTypeButton.press("Enter");
+		page.getByText(inputType).click();
+		page.waitForTimeout(200);
 	}
 
 	public static void clickOnPreviewButton(Page page) {

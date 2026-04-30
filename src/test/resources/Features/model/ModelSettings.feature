@@ -28,7 +28,7 @@ Feature: Model settings
     And User can see Delete button in 'Delete Model' section
     And User can see 'Pending Requests' section
     And User can see 'Pending Requests' section contains 'pending request' or 'pending requests' text with count
-    And User can see 'Permissions' section
+    And User can see 'Member Permissions' section
     And User can see 'Search Members' textbox
     And User can see 'Add Members' button
     And User can see 'Rows per page' selection dropdown

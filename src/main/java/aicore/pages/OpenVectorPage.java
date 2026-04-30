@@ -78,9 +78,9 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public boolean verifyToastMessage(String expectedToastMessage) {
-		page.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage));
 		String actualToastMessage = page
-				.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage)).textContent().trim();
+				.locator(TOASTER_MESSAGE_XPATH.replace("{toasterMessage}", expectedToastMessage)).first().textContent()
+				.trim();
 		return actualToastMessage.equals(expectedToastMessage);
 	}
 
@@ -90,8 +90,7 @@ public class OpenVectorPage extends AbstractAddCatalogPageBase {
 	}
 
 	public String copiedSuccessToastMessage() {
-		page.locator(COPIED_TOAST_DATA_XPATH);
-		String toastMessage = page.locator(COPIED_TOAST_DATA_XPATH).textContent();
+		String toastMessage = page.locator(COPIED_TOAST_DATA_XPATH).first().textContent();
 		return toastMessage;
 	}
 

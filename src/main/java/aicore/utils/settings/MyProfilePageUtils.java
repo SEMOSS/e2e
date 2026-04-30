@@ -13,13 +13,16 @@ public class MyProfilePageUtils {
 	private static final String CANCEL_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root') and .//span[normalize-space()='Close']]";
 	private static final String DELETE_KEY_TOAST_MESSAGE_XPATH = "//div[contains(@class, 'MuiAlert-message')]";
 
-	private static final String EDIT_PROFILE_INFORMATION_STATE_XPATH = "//label[text()='{fieldName}']/following::input | //span[text()='{fieldName}']/parent::button";
+
+	//TODO check if this or the other works
+//	private static final String EDIT_PROFILE_INFORMATION_STATE_XPATH = "//label[text()='{fieldName}']/following::input | //span[text()='{fieldName}']/parent::button";
+	private static final String EDIT_PROFILE_INFORMATION_STATE_XPATH = "//div//button//following-sibling::button[text()='{fieldName}'] | //div//button[text()='{fieldName}']";
 	private static final String UPDATED_NAME_XPATH = "//span[text()='{name}']";
 	private static final String CLICK_ON_CHANGE_PASSWORD_LINK_TEXT = "Change Password";
-	private static final String CHANGE_PASSWORD_POP_TITLE_XPATH = "//h6[text()='Change Password']";
+	private static final String CHANGE_PASSWORD_POP_TITLE_XPATH = "//*[@data-slot='dialog-title']";
 	private static final String CLICK_ON_PROFILE_ICON_XPATH = "//ul[@aria-label='user navigation']";
-	private static final String ENTER_PASSWORD_XPATH = "//div//p[text()='{fieldName}']/following::div//div//input[@type='password']";
-	private static final String PASSWORDS_DO_NOT_MATCH_ERROR_XPATH = "//p[text()='The passwords do not match']";
+	private static final String ENTER_PASSWORD_XPATH = "//div//span[text()='{fieldName}']/parent::div//div[contains(@class,'relative')]//input[@type='password']";
+	private static final String PASSWORDS_DO_NOT_MATCH_ERROR_XPATH = "//span[text()='The passwords do not match']";
 	private static final String TEXT_GENERATION_MODEL_DROPDOWN_DATATESTID = "myProfilePage-default-model-select";
 	private static final String CODE_GENERATION_MODEL_DROPDOWN_DATATESTID = "myProfilePage-secondary-model-select";
 	private static final String MODEL_OPTION_XPATH = "//span[text()='{modelName}']";

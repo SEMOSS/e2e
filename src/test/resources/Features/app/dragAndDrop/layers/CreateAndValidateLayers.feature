@@ -1,7 +1,8 @@
 Feature: Validate layers
 
   Background: 
-    Given User opens Main Menu
+    Given User is on Home page
+    And User opens Main Menu
     When User clicks on Open App Library
     And User clicks on Create New App button
     And User clicks on Get Started button in "Drag and Drop"
