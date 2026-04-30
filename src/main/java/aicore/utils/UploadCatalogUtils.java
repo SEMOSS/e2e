@@ -11,7 +11,7 @@ public class UploadCatalogUtils {
 	private static final String FILE_UPLOAD_TESTID = "workspace-Files-image";
 	private static final String UNZIP_CHECKBOX_TESTID = "CheckBoxOutlineBlankIcon";
 	private static final String PUBLISH_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-cloud-up')]";
-	private static final String FOLDER_NAME_XPATH = "//span[normalize-space()='{folderName}']";
+	private static final String FOLDER_NAME_XPATH = "//button[normalize-space()='{folderName}']";
 	private static final String CREATE_NEW_FOLDER_ICON_XPATH = "//*[name()='svg'][@data-testid='CreateNewFolderOutlinedIcon']";
 	private static final String FOLDER_NAME_INPUT_XPATH = "//label[text()='Directory Name']/parent::div//input";
 	private static final String CREATE_NEW_FILE_ICON_XPATH = "//*[name()='svg'][@data-testid='NoteAddOutlinedIcon']";

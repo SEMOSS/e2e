@@ -49,7 +49,7 @@ public class SettingsModelPageUtils {
 	private static final String USER_NAME_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]";
 	private static final String USER_ROLE_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]//td//button//span[text()='{role}']";
 	private static final String REQUESTED_ACCESS_ROLE_RADIO_BUTTON_DATATESTID = "{role}-radio";
-	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-Model-public-private-switch";
+	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -259,7 +259,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnMakeCatalogPublicButton(Page page, String catalogName) {
-		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID).click();
+		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static String getPendingRequestCountText(Page page) {
