@@ -8,6 +8,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import aicore.pages.base.AbstractBasePage;
+import io.qameta.allure.Step;
 
 public class MainMenuUtils extends AbstractBasePage{
 	private static final Logger logger = LogManager.getLogger(MainMenuUtils.class);
@@ -33,67 +34,88 @@ public class MainMenuUtils extends AbstractBasePage{
 	// settings
 	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
 	
+	@Step("Open Main Menu")
 	public static void openMainMenu(Page page) {
-		logger.info("OPEN MAIN MENU");
+		logger.info("Open Main Menu");
 		Locator mainMenuButtonLocator = page.getByLabel(SEMOSS_OPEN_MENU_LABEL);
 		waitAndClick(mainMenuButtonLocator);
 	}
 
+	@Step("Close Main Menu")
 	public static void closeMainMenu(Page page) {
+		logger.info("Close Main Menu");
 		Locator menuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (menuOpen.isVisible()) {
 			menuOpen.dblclick();
 		}
 	}
 	
+	@Step("Click on Home")
 	public static void clickOnHome(Page page) {
+		logger.info("Click on Home");
 		Locator locator = page.locator(HOME_MENU_BUTTON_DATA_TESTID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Function Library")
 	public static void clickOnOpenFunction(Page page) {
 		logger.info("Opening Function Page");
 		Locator locator = page.getByTestId(FUNCTION_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Vector Library")
 	public static void clickOnOpenVector(Page page) {
+		logger.info("Opening Vector Page");
 		Locator locator = page.getByTestId(VECTOR_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Guardrail Library")
 	public static void clickOnGuardrail(Page page) {
+		logger.info("Opening Guardrail Page");
 		Locator locator = page.getByTestId(GUARDRAIL_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open App Library")
 	public static void clickOnOpenAppLibrary(Page page) {
+		logger.info("Opening App Page");
 		Locator locator = page.getByTestId(APP_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open App Library")
 	public static void clickOnOpenModel(Page page) {
+		logger.info("Opening Model Page");
 		Locator locator = page.getByTestId(MODEL_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Storage Library")
 	public static void clickOnOpenStorage(Page page) {
+		logger.info("Opening Storage Page");
 		Locator locator = page.getByTestId(STORAGE_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Settings")
 	public static void clickOnOpenSettings(Page page) {
+		logger.info("Opening Settings Page");
 		Locator locator = page.getByTestId(SETTINGS_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on Open Database Library")
 	public static void clickOnOpenDatabase(Page page) {
-		logger.info("CLICK ON OPEN DATABASE");
+		logger.info("Click on Open Database");
 		Locator locator = page.getByTestId(DATABASE_MENU_BUTTON_DATA_TEST_ID);
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
 
+	@Step("Click on User Account button")
 	public static void clickOnUserAccountButton(Page page) {
+		logger.info("Opening User Account Button");
 		Locator locator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login"));
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
@@ -103,7 +125,9 @@ public class MainMenuUtils extends AbstractBasePage{
 		clickAnywhereOnPage(page); // closes side-menu on main page
 	}
 
+	@Step("Logging out")
 	public static void logout(Page page) {
+		logger.info("Logging out...");
 		Locator isMenuOpen = page.locator(SEMOSS_OPEN_MEN_XPATH);
 		if (isMenuOpen.isVisible()) {
 			isMenuOpen.dblclick();

@@ -1,5 +1,8 @@
 package aicore.pages.function;
 
+
+import java.util.regex.Pattern;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -16,8 +19,10 @@ public class FunctionAccessSettingsUtils extends AbstractBasePage{
 	// locate add members button by label until a test-id is added
 	private static final String ADD_MEMBERS_BUTTON_LABEL = "Add Members";
 	private static final String ADD_MEMBERS_MODAL_SEARCH_BAR_PLACEHOLDER = "Search by name or email...";
-	private static final String ADD_MEMBERS_MODAL_INVITE_BUTTON_TEXT = "Invite";
+	private static final String ADD_MEMBERS_MODAL_ADD_BUTTON_TEXT = "Add";
 	private static final String CHANGE_ACCESS_XPATH = "//button[text()='Change Access']";
+	
+	private static final String PUBLIC_PRIVATE_SWITCH_TEST_ID = "settingsTiles-make-Function-public-private-switch";
 
 	
 	private static final String MAKE_DISCOVERABLE_BUTTON_DATATESTID = "settingsTiles-{catalogName}-makeDiscoverable-switch";
@@ -59,12 +64,28 @@ public class FunctionAccessSettingsUtils extends AbstractBasePage{
 		Locator memberButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(username));
 		waitAndClick(memberButton);
 		
-		Locator inviteButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(ADD_MEMBERS_MODAL_INVITE_BUTTON_TEXT));
-		waitAndClick(inviteButton);
+		Locator addButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(Pattern.compile("^" + ADD_MEMBERS_MODAL_ADD_BUTTON_TEXT + ".*")));
+		waitAndClick(addButton);
 	}
 	
 	public static void clickOnChangeAccessTab(Page page) {
 		Locator locator = page.locator(CHANGE_ACCESS_XPATH);
 		waitAndClick(locator);
+	}
+	
+	public static void clickOnMakeFunctionPublicButton(Page page) {
+		Locator publicPrivateSwitch = page.getByTestId(PUBLIC_PRIVATE_SWITCH_TEST_ID);
+		AICorePageUtils.waitFor(publicPrivateSwitch);
+		if (publicPrivateSwitch.isChecked()) {
+			publicPrivateSwitch.click();
+		}
+	}
+	
+	public static void clickOnMakeFunctionPrivateButton(Page page) {
+		Locator publicPrivateSwitch = page.getByTestId(PUBLIC_PRIVATE_SWITCH_TEST_ID);
+		AICorePageUtils.waitFor(publicPrivateSwitch);
+		if (!publicPrivateSwitch.isChecked()) {
+			publicPrivateSwitch.click();
+		}
 	}
 }

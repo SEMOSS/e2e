@@ -63,7 +63,9 @@ public class HomePageUtils {
 	}
 
 	public static void clickOnSystemApp(Page page) {
-		page.click(SYSTEM_APP_BUTTON_XPATH);
+		Locator button = page.locator(SYSTEM_APP_BUTTON_XPATH);
+		AICorePageUtils.waitFor(button);
+		button.click();
 	}
 
 	public static void clickOnTab(Page page, String tabName) {

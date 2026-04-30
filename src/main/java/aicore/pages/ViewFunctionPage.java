@@ -1,6 +1,9 @@
 package aicore.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+
+import aicore.utils.AICorePageUtils;
 
 public class ViewFunctionPage {
 
@@ -13,7 +16,6 @@ public class ViewFunctionPage {
 	private static final String MARKUP_FUNCTION_XPATH = "//div[text()='{MarkupFunction}']";
 	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='{ChangeAccessButton}']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='{UsageTab}']";
-	private static final String USAGE_INSTRUCTIONS_SECTION_XPATH = "//h6[text()='{UsageInstructionsSection}']";
 
 	public ViewFunctionPage(Page page) {
 		this.page = page;
@@ -49,8 +51,9 @@ public class ViewFunctionPage {
 	}
 
 	public boolean verifyUsageInstructionsSection(String usageInstructionsSection) {
-		return page.getByText(USAGE_INSTRUCTIONS_SECTION_XPATH.replace("{UsageInstructionsSection}", usageInstructionsSection))
-				.isVisible();
+		Locator l =  page.locator("p").filter(new Locator.FilterOptions().setHasText(usageInstructionsSection));
+		AICorePageUtils.waitFor(l);
+		return l.isVisible();
 	}
 
 }

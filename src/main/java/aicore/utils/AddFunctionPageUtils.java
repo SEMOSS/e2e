@@ -8,13 +8,15 @@ import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
 
+import aicore.pages.base.AbstractBasePage;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 
-public class AddFunctionPageUtils {
+public class AddFunctionPageUtils extends AbstractBasePage{
 	private static final Logger logger = LogManager.getLogger(AddFunctionPageUtils.class);
 	
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
+	private static final String FUNCTION_OPTIONS_GRID_TEST_ID = "function-grid";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
@@ -31,6 +33,30 @@ public class AddFunctionPageUtils {
 	private static final String TOASTER_MESSAGE_XPATH = "//*[text()='{toastMessage}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
 
+	public static boolean userCanSeeFunctionsGridOfOptions(Page page) {
+		Locator locator = page.getByTestId(FUNCTION_OPTIONS_GRID_TEST_ID);
+		AICorePageUtils.waitFor(locator);
+		return locator.isVisible();
+	}
+	
+	public static boolean userCanSeeOptionInFunctionsGrid(Page page, String functionOption) {
+		Locator locator = page.getByText(functionOption).first();
+		AICorePageUtils.waitFor(locator);
+		return locator.isVisible();
+	}
+	
+	public static boolean userCanSeeOptionIconInFunctionsGrid(Page page, String functionOption) {
+		Locator icon = page.getByAltText(functionOption);
+		AICorePageUtils.waitFor(icon);
+		return icon.isVisible();
+	}
+	
+	public static String getIconURL(Page page, String functionOption) {
+		Locator icon = page.getByAltText(functionOption);
+		AICorePageUtils.waitFor(icon);
+		return icon.getAttribute("src");
+	}
+	
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
 		page.getByLabel(ADD_FUNCTION_BUTTON).click();

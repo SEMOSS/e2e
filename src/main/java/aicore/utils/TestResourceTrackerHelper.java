@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//TODO Do we need this class?
 public final class TestResourceTrackerHelper {
 
 	private static final ThreadLocal<TestResourceTrackerHelper> instance = ThreadLocal
@@ -24,6 +25,7 @@ public final class TestResourceTrackerHelper {
 	public static final String CATALOG_TYPE_FUNCTION = "Function";
 	public static final String CATALOG_TYPE_STORAGE = "Storage";
 	public static final String CATALOG_TYPE_GUARDRAIL = "Guardrail";
+	public static final String CATALOG_TYPE_APP = "App";
 
 	public static final List<String> CATALOG_TYPES = List.of(CATALOG_TYPE_DATABASE, CATALOG_TYPE_MODEL,
 			CATALOG_TYPE_VECTOR, CATALOG_TYPE_FUNCTION, CATALOG_TYPE_STORAGE);
