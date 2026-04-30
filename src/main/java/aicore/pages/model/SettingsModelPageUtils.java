@@ -75,7 +75,6 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifySearchMembersSearchBoxIsVisible(Page page) {
-//		page.getByTestId(MEMBER_SEARCH_ICON_DATA_TESTID).click();
 		boolean isSearchMembersTextBoxVisible = page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).isVisible();
 		return isSearchMembersTextBoxVisible;
 	}
@@ -174,9 +173,6 @@ public class SettingsModelPageUtils {
 			page.waitForTimeout(2000);
 			page.getByText(Pattern.compile("id:\\s*" + username)).click();
 		}
-//		if (role.equalsIgnoreCase("Read")) {
-//			role = "readonly";
-//		}
 		switch (role.toLowerCase()) {
 		case "author":
 			role = "Owner";

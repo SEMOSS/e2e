@@ -28,8 +28,6 @@ public class ViewAddFunctionOptionsSteps extends AbstractAddCatalogBase {
 			DataTable dataTable) {
 		final String FUNCTION_OPTION_NAMES = "FUNCTION_OPTIONS";
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-
-//		validateOptionsWithIcon(catalog, GROUP_NAME, FUNCTION_OPTION_NAMES, rows, SetupHooks.getPage());
 		validateOptionsWithIcon(catalog, FUNCTION_OPTION_NAMES, rows, functionPage);
 	}
 

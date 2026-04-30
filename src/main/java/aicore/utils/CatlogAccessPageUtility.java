@@ -201,7 +201,6 @@ public class CatlogAccessPageUtility {
 	// 🔹 Common reusable method
 
 	public static void searchUser(Page page, String role, boolean useDocker) {
-		page.waitForTimeout(5000);
 		Locator searchIcon = page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID);
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
