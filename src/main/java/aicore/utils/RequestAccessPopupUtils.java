@@ -64,12 +64,11 @@ public class RequestAccessPopupUtils {
 	}
 
 	public static String isRequestSuccessToastVisible(Page page) {
-		Locator toastMessage = page.locator(REQUEST_SUCCESS_TOAST_XPATH);
+		Locator toastMessage = page.locator(REQUEST_SUCCESS_TOAST_XPATH).first();
 		toastMessage.scrollIntoViewIfNeeded();
 		AICorePageUtils.waitFor(toastMessage);
 		return toastMessage.innerText().trim();
 	}
-	
 
 	public static String verifyRequestSuccessToastVisible(Page page, String toastMessage) {
 		Locator alert = page.locator(REQUEST_SUCCESS_TOAST_XPATH.replace("{toastMessage}", toastMessage)).first();
