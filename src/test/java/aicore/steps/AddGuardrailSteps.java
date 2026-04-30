@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.GuardrailPage;
+import aicore.pages.guardrail.AddGuardrailFormUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.GuardrailPageUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -29,7 +31,7 @@ public class AddGuardrailSteps {
 
 	@When("User clicks on Add Guardrail button")
 	public void user_clicks_on_add_guardrail() {
-		guardrailPage.clickOnAddGuardrailButton();
+		GuardrailPageUtils.clickOnAddGuardrailButton(SetupHooks.getPage());
 	}
 
 	@When("User enters guardrail Catalog Name as {string}")
@@ -48,12 +50,12 @@ public class AddGuardrailSteps {
 
 	@When("User enters NER Labels as {string} and presses Enter")
 	public void user_enters_ner_labels_as_and_presses_Enter(String label) {
-		guardrailPage.enterNerLabels(label);
+		AddGuardrailFormUtils.enterNerLabels(SetupHooks.getPage(), label);
 	}
 
 	@When("User enters Default Threshold as {string}")
 	public void user_enters_default_threshold_as(String threshold) {
-		guardrailPage.enterDefaultThreshold(threshold);
+		AddGuardrailFormUtils.enterDefaultThreshold(SetupHooks.getPage(), threshold);
 	}
 
 	@Then("User can see the Guardrail Catalog title as {string}")

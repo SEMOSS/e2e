@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.utils.AbstractE2ETest;
@@ -19,6 +20,7 @@ import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.ViewUsagePageUtils;
@@ -81,22 +83,23 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 	public void testExport() throws IOException, InterruptedException {
 		Path path = AddDatabasePageUtils.clickOnExportButton(page);
 		assertTrue(path.toFile().exists());
+		assertTrue( path.toAbsolutePath().getFileName().toString().contains(dbID));
 	}
 	
 	/////////////////////// EDIT
 
 	@Test
 	public void testEdit() throws IOException, InterruptedException {
-		AddCatalogPageBaseUtils.clickEditIcon(page);
-		AddCatalogPageBaseUtils.clickOnClose(page);
+		EditMetadataPageUtils.clickEditIcon(page);
+		EditMetadataPageUtils.clickOnClose(page);
 	}
 	
 	@Test
-	public void testViewDatabaseTags() throws IOException {
-		AddCatalogPageBaseUtils.clickEditIcon(page);
+	public void testViewMetadataTags() throws IOException {
+		EditMetadataPageUtils.clickEditIcon(page);
 		String tagName = "embeddings";
-		AddCatalogPageBaseUtils.enterTagName(page, tagName);
-		AddCatalogPageBaseUtils.clickOnSubmit(page);
+		EditMetadataPageUtils.enterTagName(page, tagName);
+		EditMetadataPageUtils.clickOnSubmit(page);
 		//TODO fix the toast message check
 //		AddCatalogPageBaseUtils.verifyEditSuccessfullToastMessage(page);
 		List<String> tags = EditModelPageUtils.verifyTagNames(page);
@@ -105,7 +108,7 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 
 	@AfterAll
 	public static void tearDown() {
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 }

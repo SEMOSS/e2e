@@ -1019,10 +1019,12 @@ public class CreateAppUsingDragAndDropSteps {
 	public void user_can_see_the_apps_are_sorted_by_date_created(String catalogName, String order) {
 		if (order.equalsIgnoreCase("ascending")) {
 			boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), true);
-			Assertions.assertTrue(isSortedByDateCreatedAsc, catalogName + " are not sorted by date created in ascending order");
+			Assertions.assertTrue(isSortedByDateCreatedAsc,
+					catalogName + " are not sorted by date created in ascending order");
 		} else if (order.equalsIgnoreCase("descending")) {
 			boolean isSortedByDateCreatedDesc = AppPageUtils.verifySortedByDateCreated(SetupHooks.getPage(), false);
-			Assertions.assertTrue(isSortedByDateCreatedDesc, catalogName + " are not sorted by date created in descending order");
+			Assertions.assertTrue(isSortedByDateCreatedDesc,
+					catalogName + " are not sorted by date created in descending order");
 		} else {
 			Assertions.fail("Invalid sort order: " + order);
 		}
@@ -1070,39 +1072,6 @@ public class CreateAppUsingDragAndDropSteps {
 	@When("User clicks on Created by me toggle switch")
 	public void user_clicks_on_created_by_me_toggle_switch() {
 		appPage.clickOnCreatedByMeToggleSwitch();
-	}
-
-	@And("User clicks on Export option")
-	public void user_clicks_on_export_option() {
-		blocksPage.clickOnExportOption();
-	}
-
-	@And("User can sees the Export Data section")
-	public void user_can_sees_the_export_data_section() {
-		boolean isExportDataSectionVisible = blocksPage.isExportDataSectionVisible();
-		Assertions.assertTrue(isExportDataSectionVisible, "Export Data section is not visible");
-	}
-
-	@And("User can sees the exported file in Notebook section with expected frame and file type as {string}")
-	public void user_can_sees_the_exported_file_in_notebook_section(String filetype) {
-		boolean isExportedFileVisible = blocksPage
-				.isExportedFileVisibleInNotebookSection(NotebookCreationAndExecutionSteps.frameID, filetype);
-		Assertions.assertTrue(isExportedFileVisible, "Exported file is not visible in Notebook section");
-	}
-
-	@And("User Select the file type as {string}")
-	public void user_select_the_file_type_as(String fileType) {
-		blocksPage.selectFileTypeAs(fileType);
-	}
-
-	@And("User select the frame for export data")
-	public void user_select_the_frame_for_export_data() {
-		blocksPage.selectFrameForExportData(NotebookCreationAndExecutionSteps.frameID);
-	}
-
-	@And("User clicks on {string} for Export Data")
-	public void user_clicks_on_for_export_data(String exportOption) {
-		blocksPage.clickOnExportOption(exportOption);
 	}
 
 }

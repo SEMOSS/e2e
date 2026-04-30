@@ -1,4 +1,4 @@
-@DeleteTestCatalog @DeleteCreatedTestApp @Regression
+@LoginWithSSO @DeleteTestCatalog @DeleteCreatedTestApp @Regression
 Feature: Create Agent builder app
 
   Background: Create a Model - GPT-4.1

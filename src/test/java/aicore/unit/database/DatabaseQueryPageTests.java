@@ -12,13 +12,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.StoragePageUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
 public class DatabaseQueryPageTests extends AbstractE2ETest {
@@ -40,8 +40,8 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 
 	@BeforeEach
 	public void setup() throws IOException {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
@@ -124,6 +124,6 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 
 	@AfterAll
 	public static void tearDown() {
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 }

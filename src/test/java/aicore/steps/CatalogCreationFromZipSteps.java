@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.CatalogCreationFromZipPage;
+import aicore.utils.CatalogCreationFromZipUtil;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 
@@ -37,7 +38,7 @@ public class CatalogCreationFromZipSteps {
 
 	@And("User uploads the file {string}")
 	public void user_uploads_the_file(String fileName) {
-		String uploadedFileName = fileUploadPage.uploadFile(fileName);
+		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(SetupHooks.getPage(), fileName);;
 		if (fileName.contains("/")) {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;

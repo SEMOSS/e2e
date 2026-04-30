@@ -22,11 +22,8 @@ public class AddCatalogPageBaseUtils {
 	private static final String CATALOG_ID_XPATH = "//button[@aria-label='{CatalogID}']/parent::div//span";
 	private static final String COPY_ID_ICON_XPATH = "//button[contains(@data-testid,'engineHeader-copy')]";
 	private static final String COPY_TOAST_MESSAGE_XPATH = "//div[text()='{ToastMessage}']";
-	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
-	private static final String SUBMIT_BUTTON_DATATESTID = "editEngineDetails-submit-btn";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "//div[text()='Successfully set the new metadata values for the engine']";
 	private static final String MODEL_TAGS_XPATH = "//div[@class='css-fm4r4t']//span";
-	private static final String EDIT_TAG_XPATH = "editEngineDetails-Tag-autocomplete";
 
 	// View Database Type on Connect To database page
 	private static final String SEARCH_INPUT_DATATESTID = "search-box";
@@ -129,34 +126,6 @@ public class AddCatalogPageBaseUtils {
 		Locator toastMessageLocator = page.locator(COPY_TOAST_MESSAGE_XPATH.replace("{ToastMessage}", toastMessage));
 		AICorePageUtils.waitFor(toastMessageLocator);
 		return toastMessageLocator.isVisible();
-	}
-
-	public static boolean checkEditIcon(Page page) {
-		return page.locator(EDIT_BUTTON_XPATH).isVisible();
-	}
-
-	public static void clickEditIcon(Page page) {
-		page.locator(EDIT_BUTTON_XPATH).click();
-	}
-
-	public static void enterTagName(Page page, String tagName) {
-		Locator enterTag = page.getByTestId(EDIT_TAG_XPATH);
-		enterTag.scrollIntoViewIfNeeded();
-		enterTag.click();
-		enterTag.fill(tagName);
-		enterTag.press("Enter");
-	}
-
-	public static void clickOnSubmit(Page page) {
-		Locator submitButton = page.getByTestId(SUBMIT_BUTTON_DATATESTID);
-		submitButton.scrollIntoViewIfNeeded();
-		submitButton.click();
-	}
-
-	public static void clickOnClose(Page page) {
-		Locator closeButton =page.getByTestId("editEngineDetails-close-btn");
-		closeButton.scrollIntoViewIfNeeded();
-		closeButton.click();
 	}
 
 	public static void waitForEditSuccessToastMessageToDisappear(Page page) {
