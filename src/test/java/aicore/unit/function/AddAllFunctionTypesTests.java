@@ -49,7 +49,8 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		clickCreateOrAddNewCatalog(page, CATALOG_TYPE.FUNCTION);
+//		clickCreateOrAddNewCatalog(page, CATALOG_TYPE.FUNCTION);
+		AddFunctionPageUtils.clickOnAddFunctionButton(page);
 		AddFunctionFormUtils.selectFunction(page, functionName);
 
 		FunctionTestUtils.verifyFunctionCreationFormWithSelectFields(page, fields);
@@ -80,7 +81,8 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
-		clickCreateOrAddNewCatalog(page, CATALOG_TYPE.FUNCTION);
+//		clickCreateOrAddNewCatalog(page, CATALOG_TYPE.FUNCTION);
+		AddFunctionPageUtils.clickOnAddFunctionButton(page);
 		AddFunctionFormUtils.selectFunction(page, functionName);
 
 		FunctionTestUtils.verifyFunctionCreationFormWithSelectFields(page, fields);
