@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
@@ -95,7 +94,7 @@ public class AddFunctionFromZipTests extends AbstractE2ETest {
 		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, "WeatherFunctionTest");
 		FunctionAccessSettingsUtils.clickOnChangeAccessTab(page);
 		RequestAccessPopupUtils.selectAccessType(page, "author");
-		RequestAccessPopupUtils.enterComment(SetupHooks.getPage(), "Access Request");
+		RequestAccessPopupUtils.enterComment(page, "Access Request");
 		RequestAccessPopupUtils.clickOnRequestButton(page);
 		FunctionTestUtils.verifyUserSeesSuccessfulRequestToastMessage(page, "Successfully requested access to engine");
 		logout(page);

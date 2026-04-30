@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
@@ -17,6 +16,7 @@ import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
 public class AddFileUploadDatabaseTests extends AbstractE2ETest {
@@ -24,8 +24,8 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	@BeforeEach
 	public void setup() throws IOException {
 		login(page, UserType.NATIVE);
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 
 		// testing add file upload db
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
@@ -59,7 +59,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = DatabaseTestUtils.addFlatCsv(page, dbName, fileName, dbType, metaModelType);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	//////////////// METAMODEL FROM SCRATCH
@@ -130,7 +130,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -158,7 +158,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	//////////////// SUGGESTED METAMODEL
@@ -188,7 +188,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -219,7 +219,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -260,7 +260,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	/////////////////// Upload multiple files
@@ -300,7 +300,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 	@Test
@@ -334,7 +334,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 
 		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
 }

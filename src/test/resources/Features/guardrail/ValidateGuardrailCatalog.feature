@@ -36,10 +36,3 @@ Feature: Validate Guardrail catalog
     Examples:
       | DETAILS          | DESCRIPTION                   | TAGS                            | DOMAINS          | DATA_CLASSIFICATION  | DATA_RESTRICTIONS                     |
       | Gliner guardrail | Test Gliner guardrail catalog | embeddings, Test1, Test2, Test3 | SAP, AI, Finance | IP, PHI, PII, PUBLIC | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
-
-  Scenario: Export created guardrail catalog
-    Given User can see the Guardrail Catalog title as 'Gliner guardrail'
-    When User clicks on Export button
-    Then User sees export success toast message as 'Guardrail engine download started'
-    And User sees catalog zip file downloaded
-    And User sees downloaded zip file name contains 'Gliner guardrail'

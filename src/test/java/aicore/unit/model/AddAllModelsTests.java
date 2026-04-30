@@ -1,39 +1,36 @@
-package aicore.app.model;
+package aicore.unit.model;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import com.microsoft.playwright.Page;
-
-import aicore.base.GenericSetupUtils;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
+import aicore.utils.AbstractE2ETest;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.page.model.ModelPageUtils;
 
-public class AddModelTests {
+public class AddAllModelsTests extends AbstractE2ETest{
 
 	@Test
 	public void testAddModel() throws IOException {
-		GenericSetupUtils.initialize();
-		Page page = GenericSetupUtils.setupPlaywright();
-		String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
-		String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
-		GenericSetupUtils.login(page, nativeUser, nativePassword);
+		// GenericSetupUtils.initialize();
+		// Page page = GenericSetupUtils.setupPlaywright();
+		// String nativeUser = ConfigUtils.getValue(AICoreTestConstants.NATIVE_USERNAME);
+		// String nativePassword = ConfigUtils.getValue(AICoreTestConstants.NATIVE_PASSWORD);
+		// GenericSetupUtils.login(page, nativeUser, nativePassword);
 		
+		login(page, UserType.NATIVE);
+
 		String timestamp = CommonUtils.getTimeStampName();
 		String modelCatalogName = "Model" + timestamp;
 		String modelType ="OpenAI";
 		String modelName ="GPT-4.1";
 		String openAIKey = "Test@1234";
 
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		
 		// model form options
 		ModelPageUtils.clickAddModelButton(page);

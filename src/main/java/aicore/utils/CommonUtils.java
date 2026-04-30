@@ -341,6 +341,7 @@ public class CommonUtils {
 			page.navigate(UrlUtils.getUrl("#/"));
 			MainMenuUtils.openMainMenu(page);
 			MainMenuUtils.clickOnOpenAppLibrary(page);
+			page.waitForTimeout(200);
 			page.getByLabel(SEARCH_APP_LABEL).fill(appName);
 			page.waitForTimeout(500);
 			page.locator(THREE_DOT_ICON_XPATH).first().click();

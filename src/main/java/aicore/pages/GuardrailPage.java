@@ -14,20 +14,8 @@ public class GuardrailPage {
 		this.page = page;
 	}
 
-	public void clickOnAddGuardrailButton() {
-		GuardrailPageUtils.clickOnAddGuardrailButton(page);
-	}
-
 	public void enterCatalogName(String catalogName) {
 		AddGuardrailFormUtils.enterCatalogName(page, catalogName);
-	}
-
-	public void enterNerLabels(String label) {
-		AddGuardrailFormUtils.enterNerLabels(page, label);
-	}
-
-	public void enterDefaultThreshold(String threshold) {
-		AddGuardrailFormUtils.enterDefaultThreshold(page, threshold);
 	}
 
 	public void createGuardrail(String guardrailType, String catalogName, String nerLabels, String defaultThreshold) {

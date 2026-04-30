@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
@@ -18,6 +17,7 @@ import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 
@@ -75,8 +75,8 @@ public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnMakeCatalogPublicButton(page, dbName);
 
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
 		
 		// validate search
@@ -93,6 +93,6 @@ public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 	
 	@AfterAll
 	public static void tearDown() {
-		CommonUtils.navigateAndDeleteCatalog(page, "Database", dbID);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 }

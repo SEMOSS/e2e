@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
@@ -29,8 +28,8 @@ public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
 	@MethodSource("fileUploadDatabaseFormData")
 	void testFileUploadDatabaseForm(String dbType, Map<String, String[]> sections, String[] mandatoryFields) {
 
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 
 		AddDatabaseFileUploadUtils.selectTab(page, "file uploads");
@@ -54,6 +53,7 @@ public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private static Stream<Arguments> fileUploadDatabaseFormData() {
 		return Stream.of(
 				Arguments.of("CSV",
@@ -78,7 +78,7 @@ public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
 		// TODO SQLite, H2, Neo4j, Tinker
 	}
 
-	private static Map<String, String[]> sections(Map.Entry<String, String[]>... entries) {
+	private static Map<String, String[]> sections(@SuppressWarnings("unchecked") Map.Entry<String, String[]>... entries) {
 		Map<String, String[]> map = new LinkedHashMap<>();
 		for (Map.Entry<String, String[]> entry : entries) {
 			map.put(entry.getKey(), entry.getValue());
