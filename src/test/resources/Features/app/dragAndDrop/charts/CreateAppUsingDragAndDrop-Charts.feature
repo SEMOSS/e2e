@@ -65,7 +65,7 @@ Feature: Create drag and drop app
     Then Duplicate '<BLOCK_NAME>' chart should be remove from the page
     When User clicks on the Save App icon
 
-    Examples: 
+    Examples:
       | NOTEBOOK_NAME | HIDDEN_OPTION | DATA_IMPORT_OPTION | DATABASE_NAME | BLOCK_NAME          | COLUMN_NAMES                                                    | FIELD_NAMES                                                                                          |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Scatter Plot        | AGE, BLOODPRESSURE, BMI, GLUCOSE                                | Select Label, Select X Axis, Select Y Axis, Select Tooltip                                           |
       | Test          | Import Data   | From Data Catalog  | TestDatabase  | Line Chart          | AGE, BLOODPRESSURE, BMI                                         | Select X Axis, Select Y Axis, Select Tooltip                                                         |

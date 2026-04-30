@@ -135,8 +135,8 @@ public class AppPageUtils {
 	}
 
 	public static String getAppIdCopiedToastMessage(Page page) {
-		page.locator(ID_COPY_TOAST_MESSAGE_XPATH).isVisible();
-		return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).textContent().trim();
+		page.locator(ID_COPY_TOAST_MESSAGE_XPATH).first().isVisible();
+		return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).first().textContent().trim();
 	}
 
 	public static void enterCloneAppName(Page page, String appName, String timestamp) {
