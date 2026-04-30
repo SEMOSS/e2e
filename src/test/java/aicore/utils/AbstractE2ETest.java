@@ -24,7 +24,7 @@ import aicore.pages.home.HomePageUtils;
 /**
  * Superclass to initialize and shutdown e2e env for JUnit tests
  */
-public class AbstractE2ETest extends AbstractCatalog {
+public class AbstractE2ETest {
 	
 	private static final Logger logger = LogManager.getLogger(AbstractE2ETest.class);
 

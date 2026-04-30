@@ -2,12 +2,20 @@ package aicore.utils;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Assertions;
+
 import com.microsoft.playwright.Page;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.EditModelPageUtils;
+import aicore.pages.model.ModelSMSSPageUtils;
 import aicore.utils.page.model.ModelPageUtils;
 
 public class ModelTestUtils {
@@ -46,5 +54,76 @@ public class ModelTestUtils {
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelName);
 		String modelId = CatlogAccessPageUtility.getCatalogAndCopyId(page);
 		return modelId;
+	}
+
+	public static List<Map<String, String>> buildSections(String s1Name, String s1Fields, String s2Name,
+			String s2Fields, String s3Name, String s3Fields) {
+		List<Map<String, String>> sections = new ArrayList<>();
+		addSection(sections, s1Name, s1Fields);
+		addSection(sections, s2Name, s2Fields);
+		addSection(sections, s3Name, s3Fields);
+		return sections;
+	}
+
+	public static void verifyFormSections(Page page, List<Map<String, String>> sections) {
+		for (Map<String, String> section : sections) {
+			String[] fields = section.get("FIELDS").split(", ");
+			for (String field : fields) {
+				Assertions.assertTrue(AddModelFormUtils.fieldUnderSection(page, section.get("SECTION_NAME"), field),
+						field + " is not visible under " + section.get("SECTION_NAME") + " section");
+			}
+		}
+	}
+
+	public static void verifyMandatoryFields(Page page, String mandatoryFields) {
+		for (String field : mandatoryFields.split(", ")) {
+			Assertions.assertTrue(AddModelFormUtils.isFieldMandatory(page, field), field + " is not a mandatory field");
+		}
+	}
+
+	public static void fillModelCreationForm(Page page, String formFields, String timestamp) {
+		for (String fieldAssignment : formFields.split(", ")) {
+			if (!fieldAssignment.contains("=")) {
+				continue;
+			}
+			String[] keyValue = fieldAssignment.split("=", 2);
+			AddModelFormUtils.fillCatalogCreationForm(page, keyValue[0].trim(), keyValue[1].trim(), timestamp);
+		}
+	}
+
+	public static void verifySmssFields(Page page, String smssFields) {
+		for (String fieldAssignment : smssFields.split(", ")) {
+			if (!fieldAssignment.contains("=")) {
+				continue;
+			}
+			String[] keyValue = fieldAssignment.split("=", 2);
+			String fieldName = keyValue[0].trim();
+			String expectedValue = keyValue[1].trim();
+			String fullText = ModelSMSSPageUtils.getAllFieldsInSMSSProperties(page, fieldName);
+			Assertions.assertNotNull(fullText, "No SMSS value found for field: " + fieldName);
+			String normalizedText = fullText.replace("\u00A0", " ").trim().replaceAll("\\s+", " ");
+			String actualValue = normalizedText;
+			if (normalizedText.toUpperCase().startsWith(fieldName.toUpperCase())) {
+				int firstSpaceIndex = normalizedText.indexOf(' ');
+				actualValue = firstSpaceIndex >= 0 ? normalizedText.substring(firstSpaceIndex + 1).trim() : "";
+			}
+			if ("NAME".equalsIgnoreCase(fieldName)) {
+				actualValue = actualValue.replaceAll("\\d+$", "");
+			}
+			if ("INIT_MODEL_ENGINE".equalsIgnoreCase(fieldName)) {
+				Assertions.assertTrue(actualValue.contains(expectedValue),
+						"Field validation failed for '" + fieldName + "' ==> expected partial text: <" + expectedValue
+								+ "> but was: <" + actualValue + ">");
+			} else {
+				Assertions.assertEquals(expectedValue, actualValue,
+						"Field validation failed for '" + fieldName + "'");
+			}
+		}
+	}
+
+	private static void addSection(List<Map<String, String>> sections, String sectionName, String fields) {
+		if (sectionName != null && !sectionName.isBlank() && fields != null && !fields.isBlank()) {
+			sections.add(Map.of("SECTION_NAME", sectionName, "FIELDS", fields));
+		}
 	}
 }
