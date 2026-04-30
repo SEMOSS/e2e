@@ -47,6 +47,7 @@ public class AppPageUtils {
 
 	public static void clickOnCreateNewAppButton(Page page) {
 		Locator locator = page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID);
+		AICorePageUtils.waitFor(locator);
 		locator.click();
 	}
 

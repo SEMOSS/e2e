@@ -9,6 +9,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.pages.base.AbstractBasePage;
 import aicore.pages.home.MainMenuUtils;
+import io.qameta.allure.Step;
 
 public class CatalogCreationFromZipUtil extends AbstractBasePage{
 	private static final String CATALOG_MENU_BUTTON_DATA_TESTID = "sidebar-{catalogName}-btn";
@@ -39,6 +40,7 @@ public class CatalogCreationFromZipUtil extends AbstractBasePage{
 		icon.click();
 	}
 
+	@Step("Upload File: {fileName}")
 	public static String uploadFile(Page page, String fileName) {
 		String pathSeparator = FileSystems.getDefault().getSeparator();
 		Locator fileInput = page.locator(ADD_FILE_XPATH);

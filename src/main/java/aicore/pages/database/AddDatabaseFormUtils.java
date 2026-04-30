@@ -11,6 +11,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
+import io.qameta.allure.Step;
 
 public class AddDatabaseFormUtils {
 	private static final Logger logger = LogManager.getLogger(AddDatabaseFormUtils.class);
@@ -111,6 +112,7 @@ public class AddDatabaseFormUtils {
 		userNameInput.fill(userName);
 	}
 
+	@Step("Click on Connect button")
 	public static void clickOnConnectButton(Page page) {
 		logger.info("CLICK ON CONNECT BUTTON");
 		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);

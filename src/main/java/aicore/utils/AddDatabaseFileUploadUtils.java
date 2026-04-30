@@ -7,6 +7,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import io.qameta.allure.Step;
+
 public class AddDatabaseFileUploadUtils {
 	private static final Logger logger = LogManager.getLogger(AddDatabaseFileUploadUtils.class);
 
@@ -34,6 +36,7 @@ public class AddDatabaseFileUploadUtils {
 		page.getByTestId(TAB_SELECTION_TESTID.replace("{tabName}", tabName)).click();
 	}
 
+	@Step("Select File Type as: {fileType}")
 	public static void selectFileType(Page page, String fileType) {
 		logger.info("SELECT FILE TYPE: " + fileType);
 		page.getByText(fileType).click();
@@ -45,12 +48,14 @@ public class AddDatabaseFileUploadUtils {
 		page.getByTestId(DATABASE_TYPE_SELECTION_TESTID.replace("{dbType}", dbType)).click();
 	}
 
+	@Step("Select Metamodel Type as: {metaModelType}")
 	public static void selectMetamodelType(Page page, String metaModelType) {
 		logger.info("SELECT METAMODEL TYPE: " + metaModelType);
 		page.locator(METAMODEL_TYPE_DROPDOWN_XPATH).click();
 		page.getByTestId(METAMODEL_TYPE_SELECTION_TESTID.replace("{metaModelType}", metaModelType)).click();
 	}
 
+	@Step("Enter Database Name: {dbName}")
 	public static void enterDatabaseName(Page page, String dbName) {
 		logger.info("ENTER DATABASE NAME: " + dbName);
 		page.locator(DATABASE_NAME_INPUT_XPATH).fill(dbName);

@@ -71,14 +71,15 @@ public class AICorePageUtils {
 		page.reload(new Page.ReloadOptions().setWaitUntil(WaitUntilState.NETWORKIDLE));
 	}
 	
-	public static void saveScreenshotAtStep(Page page, String stepName) {
+	public static void saveScreenshotAtStep(Page page, String stepName, Path dir, String fileName) {
 		Allure.step(stepName, () -> {
 			try {
-				Path dir = Paths.get("test-output", "screenshots");
-				Files.createDirectories(dir);
+				Path baseDir = Paths.get("test-output", "screenshots");
+				Files.createDirectories(baseDir);
 
-				Path file = dir.resolve("login-" + System.currentTimeMillis() + ".png");
-
+				Path imageFolder = baseDir.resolve(dir);
+				Files.createDirectories(imageFolder);
+				Path file = imageFolder.resolve(fileName+".png");
 				page.screenshot(new Page.ScreenshotOptions().setPath(file).setFullPage(true));
 
 				try (InputStream is = Files.newInputStream(file)) {

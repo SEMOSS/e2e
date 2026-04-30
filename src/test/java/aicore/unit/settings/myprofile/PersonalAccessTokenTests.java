@@ -1,6 +1,7 @@
 package aicore.unit.settings.myprofile;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,7 +48,7 @@ public class PersonalAccessTokenTests extends AbstractE2ETest {
 		PersonalAccessTokenUtils.clickNewKeyButton(page);
 		PersonalAccessTokenUtils.enterKeyName(page, keyName);
 		PersonalAccessTokenUtils.enterDescription(page, description);
-		AICorePageUtils.saveScreenshotAtStep(page, "Capture screenshot of generating a personal access toke");
+		AICorePageUtils.saveScreenshotAtStep(page, "Capture screenshot of generating a personal access token", Paths.get("PlatformNavigation", "Settings", "MyProfile"), "CreateAccessToken");
 		PersonalAccessTokenUtils.clickGenerateButton(page);
 
 		// Extract key info
