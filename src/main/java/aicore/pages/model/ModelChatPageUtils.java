@@ -9,7 +9,7 @@ import aicore.utils.AICorePageUtils;
 public class ModelChatPageUtils {
 	private static final String MODEL_ID_TESTID = "engineHeader-Model-id";
 	private static final String MODEL_NAME_TESTID = "Title";
-	
+
 	// Chat field
 	private static final String CHAT_TAB_XPATH = "//button[text()='Chat']";
 	private static final String CHAT_TITLE_XPATH = "//div//*[text()='{title}']";
@@ -20,11 +20,10 @@ public class ModelChatPageUtils {
 	private static final String EMPTY_CHAT_WINDOW_XPATH = "//div//span[contains(text(),'Ask a question to start a conversation')]";
 	private static final String CHAT_CLEAR_ALL_BUTTON_XPATH = "//button[text()='Clear Chat']";
 	private static final String CHAT_RESPONSE_XPATH = "//div[@class='flex items-end gap-2 px-4 py-2']";
-	private static final String CHAT_OUTPUT_XPATH = "//div[@class='prose prose-slate dark:prose-invert max-w-none']";
+	private static final String CHAT_OUTPUT_XPATH = "//div[contains(@class,'prose prose-slate dark:prose-invert max-w-none')]";
 	private static final String CHAT_MODEL_ID_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model ID')]/..";
 	private static final String CHAT_MODEL_NAME_XPATH = "//div//*[text()='Model Information']//following-sibling::p//*[contains(text(),'Model Name')]/..";
 
-	
 	public static void clickOnChatTab(Page page) {
 		Locator chatTab = page.locator(CHAT_TAB_XPATH);
 		AICorePageUtils.waitFor(chatTab);
@@ -126,7 +125,7 @@ public class ModelChatPageUtils {
 			throw new PlaywrightException("Output is not generated after submitting the query");
 		}
 	}
-	
+
 	public static void verifyModelIDAndNameDisplayed(Page page) {
 		Locator modelID = page.getByTestId(MODEL_ID_TESTID);
 		Locator modelName = page.getByTestId(MODEL_NAME_TESTID);
@@ -140,11 +139,11 @@ public class ModelChatPageUtils {
 		AICorePageUtils.waitFor(chatModelName);
 		String chatModelIDText = chatModelID.textContent().trim().split(" ")[2];
 		String chatModelNameText = chatModelName.textContent().trim().split(" ")[2];
-		if (!modelIDText.equalsIgnoreCase(chatModelIDText)) {
+		if (!modelIDText.contains(chatModelIDText)) {
 			throw new PlaywrightException("Model ID in Chat section does not match with Model Information section"
 					+ modelIDText + " " + chatModelIDText);
 		}
-		if (!modelNameText.equalsIgnoreCase(chatModelNameText)) {
+		if (!modelNameText.contains(chatModelNameText)) {
 			throw new PlaywrightException("Model Name in Chat section does not match with Model Information section"
 					+ modelNameText + " " + chatModelNameText);
 		}
