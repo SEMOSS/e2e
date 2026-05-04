@@ -25,7 +25,7 @@ Feature: App Templates
     And User enters app name as 'Test app'
     And User clicks on Create button
     And User fetch the app name
-    And User clicks on description block
+    And User clicks on 'Question' block
     And User clicks on the Block Settings option
     And User adds description as "Give me list of people over the age of 50"
     Then User captures a "promptcontext" and highlights the "Value" with name "AskCSV4"
