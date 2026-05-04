@@ -39,20 +39,20 @@ public class NotebookPageUtils {
 	private static final String DEFAULT_LANGUAGE_XPATH = "//*[@value='py']";
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
-	private static final String NOTEBOOK_NAME_XPATH = "//p[text()='Notebook']/..//following::div//p[text()='{notebookName}']";
+	private static final String NOTEBOOK_NAME_XPATH = "//span[text()='Notebook']/following::li//span[text()='{notebookName}']";
 	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
 	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
 	private static final String QUERY_CODE_RUN_NULL_OUTPUT_XPATH = "//tbody//td[contains(text(),'There was an issue generating a preview.')]";
-	private static final String CHECK_DEFAULT_OPERATOR_XPATH = "(//div[text()='{operator}'])";
-	private static final String CHANGE_DEFAULT_OPERATOR_XPATH = "(//li[text()='{operator}'])";
-	private static final String COLOUMN_SELECTOR_XPATH = "(//div[@title='Select Header'])";
+	private static final String CHECK_DEFAULT_OPERATOR_XPATH = "(//span[text()='{operator}'])";
+	private static final String CHANGE_DEFAULT_OPERATOR_XPATH = "//div[@role='option']//span[text()='{operator}']";
+	private static final String COLOUMN_SELECTOR_XPATH = "//button[@role='combobox']//span[text()='Select Header']";
 	private static final String COLOUMN_INPUT_SELECTOR_XPATH = "(//div[@title='Select Header']//input)";
 	private static final String COLOUMN_OPTION_SELECTOR_XPATH = "(//li[@data-value='{columnName}'])";
 	private static final String OPERATOR_SELECTOR_XPATH = "(//div[@title='select operator'])";
-	private static final String DATA_SELECTOR_XPATH = "(//label[text()='Select Data']/..)";
+	private static final String DATA_SELECTOR_XPATH = "//span[text()='{selectValue}']/parent::label//button";
 	private static final String DATA_LIST_ITEM_SELECTOR_XPATH = "(//li[text()='{value}'])";
 	private static final String DATA_SPAN_SELECTOR_XPATH = "(//label[text()='Select Data']/..//div//div[@role='button']//span)";
-	private static final String RULE_BUTTON_XPATH = "//span[contains(normalize-space(),'{buttonName}')]";
+	private static final String RULE_BUTTON_XPATH = "//button[contains(normalize-space(),'{buttonName}')]";
 	private static final String FILTER_SELECT_FRAME_BLOCK_XPATH = "//input[@title='Set Frame Variable Name']";
 	private static final String FILTER_SELECT_DATABASE_BLOCK_XPATH = "//div[@title ='Select Database']";
 	private static final String QUERY_XPATH = "(//div[contains(@class,'view-line')]//div[contains(@class,'view-line')]//span//span)[1]";
@@ -74,6 +74,8 @@ public class NotebookPageUtils {
 	private static final String DROPDOWN_BUTTON_XPATH = "//label[text()='{dropdownName}']/..//button";
 	private static final String RUN_CELL_OPTION_XPATH = "//button[@title='Run cell']";
 	private static final String RUN_CELL_LOADING_ICON_XPATH = "//button[@title='Run cell']//*[name()='svg'][@aria-label='Loading']";
+	private static final String CELL_XPATH = "//div[contains(@id,'notebook-cell')]";
+	private static final String NOTEBOOK_SELECT_HEADER_XPATH = "//div[@role='option']//span[text()='{selectHeader}']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -377,6 +379,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void deleteFirstCell(Page page) {
+		page.locator(CELL_XPATH).first().hover();
 		Locator deleteIcon = page.locator(DELETE_CELL_DATA_XAPTH);
 		AICorePageUtils.waitFor(deleteIcon);
 		deleteIcon.click();
@@ -394,7 +397,7 @@ public class NotebookPageUtils {
 		if (block.isVisible()) {
 			block.hover();
 		}
-		Locator runCellButton = page.locator(RUN_CELL_OPTION_XPATH);
+		Locator runCellButton = page.locator(RUN_CELL_OPTION_XPATH).first();
 		AICorePageUtils.waitFor(runCellButton);
 		runCellButton.click();
 		Locator checkCircle = page.locator(RUN_CELL_LOADING_ICON_XPATH);
@@ -562,25 +565,26 @@ public class NotebookPageUtils {
 	}
 
 	public static void enterValueInInput(Page page, String value) {
-		Locator dataValue = page.locator(DATA_SELECTOR_XPATH);
-		int count = dataValue.count();
-		int lastVisibleIndex = 0;
-
-		for (int i = 1; i <= count; i++) {
-
-			boolean isVisible = page.locator(DATA_SPAN_SELECTOR_XPATH + "[" + i + "]").isVisible();
-			if (isVisible) {
-				lastVisibleIndex = i;
-			} else {
-				break;
-			}
-		}
-		int nextIndex = lastVisibleIndex + 1;
-		if (nextIndex <= count) {
-			Locator nextDatavalue = page.locator(DATA_SELECTOR_XPATH + "[" + nextIndex + "]");
-			nextDatavalue.click();
-			page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value)).click();
-		}
+		Locator dataValue = page.locator(DATA_SELECTOR_XPATH.replace("{selectValue}", value));
+		dataValue.click();
+		// int count = dataValue.count();
+//		int lastVisibleIndex = 0;
+//
+//		for (int i = 1; i <= count; i++) {
+//
+//			boolean isVisible = page.locator(DATA_SPAN_SELECTOR_XPATH + "[" + i + "]").isVisible();
+//			if (isVisible) {
+//				lastVisibleIndex = i;
+//			} else {
+//				break;
+//			}
+//		}
+//		int nextIndex = lastVisibleIndex + 1;
+//		if (nextIndex <= count) {
+//			Locator nextDatavalue = page.locator(DATA_SELECTOR_XPATH + "[" + nextIndex + "]");
+//			nextDatavalue.click();
+//			page.locator(DATA_LIST_ITEM_SELECTOR_XPATH.replace("{value}", value)).click();
+//		}
 	}
 
 	public static void selectOperatorFromDropdown(Page page, String operator) {
@@ -603,20 +607,23 @@ public class NotebookPageUtils {
 
 	public static void selectColumnFromDropdown(Page page, String columnName) {
 		Locator Headers = page.locator(COLOUMN_SELECTOR_XPATH);
-		int count = Headers.count();
-		for (int i = 0; i < count; i++) {
-			Locator header = page.locator(COLOUMN_SELECTOR_XPATH + "[" + (i + 1) + "]");
-			Locator input = page.locator(COLOUMN_INPUT_SELECTOR_XPATH + "[" + (i + 1) + "]");
+		Headers.click();
+		page.locator(NOTEBOOK_SELECT_HEADER_XPATH.replace("{selectHeader}", columnName)).click();
 
-			for (int j = 0; j < input.count(); j++) {
-				String value = input.nth(j).inputValue();
-				if (value == null || value.trim().isEmpty()) {
-					header.click();
-					page.locator(COLOUMN_OPTION_SELECTOR_XPATH.replace("{columnName}", columnName)).click();
-
-				}
-			}
-		}
+//		int count = Headers.count();
+//		for (int i = 0; i < count; i++) {
+//			Locator header = page.locator(COLOUMN_SELECTOR_XPATH + "[" + (i + 1) + "]");
+//			Locator input = page.locator(COLOUMN_INPUT_SELECTOR_XPATH + "[" + (i + 1) + "]");
+//
+//			for (int j = 0; j < input.count(); j++) {
+//				String value = input.nth(j).inputValue();
+//				if (value == null || value.trim().isEmpty()) {
+//					header.click();
+//					page.locator(COLOUMN_OPTION_SELECTOR_XPATH.replace("{columnName}", columnName)).click();
+//
+//				}
+//			}
+//		}
 	}
 
 	public static void clickOnRuleButton(Page page, String buttonName) {
@@ -625,7 +632,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void changeOperatorTo(Page page, String operator) {
-		page.locator("//div[text()='AND']").click();
+		page.locator("//span[text()='AND']").click();
 		page.locator(CHANGE_DEFAULT_OPERATOR_XPATH.replace("{operator}", operator)).click();
 	}
 
