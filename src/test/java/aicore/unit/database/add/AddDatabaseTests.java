@@ -16,6 +16,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICoreAllureLabels;
+import aicore.utils.AbstractDatabaseTestBase;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
@@ -30,7 +31,7 @@ import io.qameta.allure.Feature;
 
 @Epic(AICoreAllureLabels.DATABASE_EPIC)
 @Feature(AICoreAllureLabels.ADD_DATABASE_FEATURE)
-public class AddDatabaseTests extends AbstractE2ETest {
+public class AddDatabaseTests extends AbstractDatabaseTestBase {
 
 	@BeforeEach
 	void setup(@PWPage Page page) {

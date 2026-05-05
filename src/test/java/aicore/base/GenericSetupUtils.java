@@ -48,16 +48,16 @@ public class GenericSetupUtils {
 	private static final String SEMOSS_OPEN_MEN_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-panel-left')]";
 	private static final String SETTINGS_XPATH = "//div[@aria-label='Settings']";
 
-	public static synchronized void initialize() throws IOException {
+	public static void initialize() throws IOException {
 		if (RunInfo.isFirstRun()) {
 			doInit();
 		}
 	}
 
-	public static void doInit() throws IOException {
+	private static void doInit() throws IOException {
 		logCheck();
 
-//		loadUrls();
+		loadUrls();
 
 		useDocker = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_DOCKER));
 		useVideo = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO));
@@ -87,8 +87,8 @@ public class GenericSetupUtils {
 				FileUtils.cleanDirectory(trace.toFile());
 			}
 		}
-		
-		// initializeResources();
+
+		initializeResources();
 	}
 
 	public static void logCheck() {
@@ -117,7 +117,7 @@ public class GenericSetupUtils {
 
 		RunInfo.setURLS(urls);
 	}
-	
+
 	private static void initializeResources() {
 		int parallelCount = RunInfo.getParallelism();
 		List<String> urls = RunInfo.getUrls();

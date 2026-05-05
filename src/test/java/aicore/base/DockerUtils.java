@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import aicore.framework.JunitUrlUtils;
 import aicore.framework.UrlUtils;
 
 public class DockerUtils {
@@ -14,6 +15,10 @@ public class DockerUtils {
 
 	public static void startup() {
 		pingAllServers();
+	}
+	
+	public static void startUpJunit() {
+		pingAllServersJunit();
 	}
 	
 	private static void pingServer(String baseUrl, String endpoint, int retryCount, int timeoutInMilliseconds)  {
@@ -54,7 +59,22 @@ public class DockerUtils {
 
 	public static void pingAllServers() {
 		List<String> urls = RunInfo.getUrls();
-		String first = UrlUtils.getUrl();;//urls.getFirst();
+		String first = urls.getFirst();
+		String endpoint = RunInfo.getApiEndpoint();
+		pingServer(first, endpoint, 120, 5000);
+		if (urls.size() > 1) {
+			// skip the first server, ping the rest of the servers.
+			for (int i = 1; i < urls.size(); i++) {
+				// set a more aggressive timeout since the other containers should be built
+				// at the same time
+				pingServer(urls.get(i), endpoint, 100, 1);
+			}
+		}
+	}
+
+	public static void pingAllServersJunit() {
+		List<String> urls = RunInfo.getUrls();
+		String first = JunitUrlUtils.getUrl();;//urls.getFirst();
 		String endpoint = RunInfo.getApiEndpoint();
 		pingServer(first, endpoint, 120, 5000);
 		if (urls.size() > 1) {

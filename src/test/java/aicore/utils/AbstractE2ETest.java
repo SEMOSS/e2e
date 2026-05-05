@@ -236,7 +236,7 @@ public class AbstractE2ETest {
 			s = s + "/";
 		}
 
-		UrlUtils.setURL(s);
+//		UrlUtils.setURL(s);
 	}
 	
 	public void login(Page page, UserType userType) {

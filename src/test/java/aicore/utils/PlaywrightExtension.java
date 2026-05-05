@@ -1,20 +1,34 @@
 package aicore.utils;
 
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.Browser.NewContextOptions;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Tracing.StartOptions;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 
-import aicore.base.GenericSetupUtils;
+import aicore.base.DockerUtils;
+import aicore.base.RunInfo;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
+import aicore.framework.HttpLogger;
+import aicore.framework.JunitUrlUtils;
 import aicore.framework.UrlUtils;
+import aicore.pages.home.HomePageUtils;
+import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest.UserType;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.extension.*;
@@ -38,6 +52,7 @@ import org.junit.jupiter.api.extension.*;
 public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback, ParameterResolver {
 	private static final Logger logger = LogManager.getLogger(PlaywrightExtension.class);
 
+    private static final AtomicBoolean firstRun = new AtomicBoolean(true);
 	private Playwright playwright;
 	private Browser browser;
 
@@ -45,6 +60,10 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 	private static final String BROWSER_KEY = "BROWSER";
 	private static final String CONTEXT_KEY = "CONTEXT";
 	private static final String PAGE_KEY = "PAGE";
+
+	private static boolean useDocker = false;
+	private static boolean useVideo = false;
+	private static boolean useTrace = false;
 
 	String adminUser;
 	String adminPassword;
@@ -65,14 +84,17 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 	public static enum UserType {
 		NATIVE, ADMIN, AUTHOR, EDITOR, READER
 	}
+	
+	public static boolean isFirstRun() {
+        return firstRun.compareAndSet(true, false);
+    }
 
 	@Override
 	public void beforeAll(ExtensionContext context) {
 		try {
-//			if (RunInfo.isFirstRun()) {
-			loadUrl();
-			GenericSetupUtils.initialize();
-//			}
+			if (isFirstRun()) {
+			doInit();
+			}
 		} catch (IOException e) {
 			fail("Init failed: " + e.getMessage());
 		}
@@ -95,7 +117,40 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 		alreadyLoggedIn = false;
 
 		playwright = Playwright.create();
-		browser = playwright.chromium().launch(GenericSetupUtils.getLaunchOptions());
+		browser = playwright.chromium().launch(getLaunchOptions());
+	}
+	
+	public static void doInit() throws IOException {
+		logCheck();
+		loadUrl();
+		useDocker = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_DOCKER));
+		useVideo = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO));
+		useTrace = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_TRACE));
+		logger.info("docker: {}, videos: {}, traces: {}", useDocker, useVideo, useTrace);
+
+		// shouldn't matter if this is docker or not, should still just ping server
+		// you're trying
+		// to connect to
+		DockerUtils.startUpJunit();
+
+		if (useVideo) {
+			Path p = Paths.get("videos");
+			logger.info("Videos will be saved to: {}", p.toString());
+			if (Files.isDirectory(p)) {
+				logger.info("Cleaning directory: {}", p.toString());
+				FileUtils.deleteDirectory(p.toFile());
+				Files.createDirectory(p);
+			}
+		}
+
+		if (useTrace) {
+			Path trace = Paths.get("traces");
+			logger.info("Traces will be saved to: {}", trace);
+			if (Files.isDirectory(trace)) {
+				logger.info("Cleaning directory: {}", trace.toString());
+				FileUtils.cleanDirectory(trace.toFile());
+			}
+		}		
 	}
 
 	@Override
@@ -106,7 +161,7 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 
 	@Override
 	public void beforeEach(ExtensionContext context) {
-		Browser.NewContextOptions newContextOptions = GenericSetupUtils.getContextOptions().setViewportSize(1280, 720)
+		Browser.NewContextOptions newContextOptions = getContextOptions().setViewportSize(1280, 720)
 				.setDeviceScaleFactor(1).setPermissions(Arrays.asList("clipboard-read", "clipboard-write"))
 				.setTimezoneId("America/New_York"); // ensures DPI/zoom consistency;
 		BrowserContext browserContext = browser.newContext(newContextOptions);
@@ -120,11 +175,50 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 
 		Page page = browserContext.newPage();
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT)));
-		GenericSetupUtils.setupLoggers(page);
+		setupLoggers(page);
 
 		ExtensionContext.Store store = context.getStore(ExtensionContext.Namespace.create(getClass(), context));
 		store.put(CONTEXT_KEY, browserContext);
 		store.put(PAGE_KEY, page);
+	}
+	
+	public static LaunchOptions getLaunchOptions() {
+		LaunchOptions lp = new LaunchOptions();
+		lp.setChannel(ConfigUtils.getValue(AICoreTestConstants.BROWSER_TYPE));
+		lp.setHeadless(Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.HEADLESS)));
+		lp.setSlowMo(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.SLOMO)));
+		lp.setTimeout(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT)));
+		return lp;
+	}
+
+	public static NewContextOptions getContextOptions() {
+		NewContextOptions co = new Browser.NewContextOptions();
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO))) {
+			co.setRecordVideoDir(Paths.get("videos"));
+			co.setRecordVideoSize(1920, 1080);
+			co.setViewportSize(1920, 1080);
+		}
+
+		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_STATE))) {
+			co.setStorageStatePath(Paths.get("state.json"));
+		}
+		return co;
+	}
+
+	public static StartOptions getStartOptions() {
+		StartOptions so = new Tracing.StartOptions();
+		so.setScreenshots(true);
+		so.setSnapshots(true);
+		so.setSources(true);
+		return so;
+	}
+
+	public static void setupLoggers(Page page) {
+		// request handling
+		page.onRequest(HttpLogger::logRequest);
+
+		// response handling
+		page.onResponse(HttpLogger::logResponse);
 	}
 
 	@Override
@@ -176,6 +270,16 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 		throw new ParameterResolutionException("Unsupported parameter type: " + type);
 	}
 
+	public static void logCheck() {
+		logger.info("Log check");
+		logger.info("INFO");
+		logger.debug("DEBUG");
+		logger.warn("WARN");
+		logger.error("ERROR");
+		logger.fatal("FATAL");
+		logger.info("Log check end");
+	}
+	
 	private static void loadUrl() {
 		String environmentUrls = ConfigUtils.getValue(AICoreTestConstants.URLS);
 		logger.info("URLS: {}", environmentUrls);
@@ -186,7 +290,7 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 			s = s + "/";
 		}
 
-		UrlUtils.setURL(s);
+		JunitUrlUtils.setURL(s);
 	}
 
 	public void login(Page page, UserType userType) {
@@ -194,19 +298,19 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 			logger.info("Logging in as: " + userType);
 			switch (userType) {
 			case NATIVE:
-				GenericSetupUtils.login(page, adminUser, adminPassword);
+				login(page, adminUser, adminPassword);
 				break;
 			case ADMIN:
-				GenericSetupUtils.login(page, adminUser2, adminPassword2);
+				login(page, adminUser2, adminPassword2);
 				break;
 			case AUTHOR:
-				GenericSetupUtils.login(page, authorUser, authorPassword);
+				login(page, authorUser, authorPassword);
 				break;
 			case EDITOR:
-				GenericSetupUtils.login(page, editorUser, editorPassword);
+				login(page, editorUser, editorPassword);
 				break;
 			case READER:
-				GenericSetupUtils.login(page, readUser, readPassword);
+				login(page, readUser, readPassword);
 				break;
 			default:
 				throw new AssertionError(
@@ -217,10 +321,60 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 			logger.warn("Tried to login as: " + userType + " while already logged in. Unsuccessful attempt");
 		}
 	}
+	
+	public String login(Page page, String user, String password) {
+		// going to login
+		String url = JunitUrlUtils.getUrl("#/login");
+		page.navigate(url);
+		Locator acceptBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Accept"));
+		if (acceptBtn.isVisible()) {
+			try {
+				acceptBtn.click();
+			} catch (Error | Exception e) {
+				logger.info("Failed to click Accept button: " + e.getMessage());
+			}
+		}
+// Added page reload because after adding a new user in app and logging in with that user, the page needs to be refreshed.
+		page.reload();
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		page.getByTestId("loginPage-textField-username").click();
+		page.getByTestId("loginPage-textField-username").fill(user);
+		page.getByTestId("loginPage-textField-password").click();
+		page.getByTestId("loginPage-textField-password").fill(password);
+// Commented below code due to the set-cookie header removed from api/auth/login.
+
+//		Response response = page.waitForResponse(UrlUtils.getApi("api/auth/login"),
+//				() -> page.getByTestId("loginPage-button-login").click());
+//
+//		assertEquals(200, response.status());
+//		String cookie = response.allHeaders().get("set-cookie").split("; ")[0];
+//		Map<String, String> newMap = new HashMap<>();
+//		newMap.put("cookie", cookie);
+//		page.setExtraHTTPHeaders(newMap);
+//		page.reload();
+//		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+//		page.waitForLoadState(LoadState.NETWORKIDLE);
+//		page.waitForLoadState(LoadState.LOAD);
+//		navigateToHomePage(page);
+//		return cookie;
+		Response response = page.waitForResponse(
+				resp -> resp.url().contains("/api/auth/login") && resp.request().method().equals("POST"),
+				() -> page.getByTestId("loginPage-button-login").click());
+		assertEquals(200, response.status());
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		HomePageUtils.navigateToHomePage(page, JunitUrlUtils.getUrl("#"));
+		return "Login Successful";
+	}
 
 	public void logout(Page page) {
 		if (alreadyLoggedIn) {
-			GenericSetupUtils.logout(page);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnUserAccountButton(page);
+			MainMenuUtils.logout(page);
+
+			String loginPage = JunitUrlUtils.getUrl("#/login");
+			page.waitForURL(loginPage);
+			assertEquals(loginPage, page.url());
 			alreadyLoggedIn = false;
 		} else {
 			logger.warn("Tried to logout while not logged in. Unsuccessful attempt");
