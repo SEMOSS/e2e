@@ -19,11 +19,11 @@ import aicore.utils.page.model.ModelPageUtils;
 public class AddAllModelsTests extends AbstractE2ETest {
 
 	@BeforeAll
-	static void setup() {
+	void setup() {
 		login(page, UserType.NATIVE);
 	}
 
-	private static Stream<Arguments> provideModelCreationCases() {
+	private Stream<Arguments> provideModelCreationCases() {
 		return Stream.of(
 				Arguments.of(
 						"OpenAI",
@@ -1040,7 +1040,7 @@ public class AddAllModelsTests extends AbstractE2ETest {
 		CommonUtils.navigateAndDeleteCatalog(page, "Model", catalogName + timestamp);
 	}
 
-	private static void openAddModelForm(String group, String model) {
+	private void openAddModelForm(String group, String model) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
 		ModelPageUtils.clickAddModelButton(page);

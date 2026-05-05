@@ -2,21 +2,29 @@ package aicore.unit.function;
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.FunctionTestUtils;
+import aicore.utils.PWPage;
 
-public class ViewAddFunctionOptionsTests extends AbstractE2ETest {
+public class ViewAddFunctionOptionsTests extends AbstractPlaywrightTestBase {
 	
-	@BeforeAll
-	static void setup() {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
+	}	
+	@AfterEach
+	void goHome(@PWPage Page page) {
+		logout(page);
 	}
 
 	private static Stream<Arguments> provideOptionsToAddOnFunctionPage() {
@@ -27,7 +35,7 @@ public class ViewAddFunctionOptionsTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideOptionsToAddOnFunctionPage")
-	void testVerifyOptionsOnAddFunctionPage(String functionOptions) {		
+	void testVerifyOptionsOnAddFunctionPage(String functionOptions, @PWPage Page page) {		
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);

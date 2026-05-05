@@ -16,8 +16,8 @@ public class DatabaseTestUtils {
 
 	public static String uploadDatabaseZip(Page page, String dbName, String fileName) {
 		// delete db before
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddFunctionPageUtils.deleteCatalog(page, "Database", dbName);
 
 		// click on add db
@@ -34,8 +34,8 @@ public class DatabaseTestUtils {
 	}
 	
 	public static String addFlatCsv(Page page, String dbName, String fileName, String dbType, String metaModelType) {
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
 		AddDatabaseFileUploadUtils.selectTab(page, tabName);
@@ -59,8 +59,8 @@ public class DatabaseTestUtils {
 	
 	public static String getDatabaseID(Page page, String dbName) {
 		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenDatabase(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);

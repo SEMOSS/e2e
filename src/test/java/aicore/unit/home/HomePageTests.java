@@ -20,7 +20,7 @@ import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 public class HomePageTests extends AbstractE2ETest {
 
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		login(page, UserType.NATIVE);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnHome(page);
@@ -29,7 +29,7 @@ public class HomePageTests extends AbstractE2ETest {
 
 	///////////// Loading tests
 
-	static Stream<String> pageTitles() {
+	Stream<String> pageTitles() {
 		return Stream.of(
 				"Experiment with AI in the Playground", 
 				"Get started with our tool", 

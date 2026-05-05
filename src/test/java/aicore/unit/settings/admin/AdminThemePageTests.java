@@ -16,7 +16,7 @@ import aicore.utils.settings.SettingsPageUtils;
 
 public class AdminThemePageTests extends AbstractE2ETest {
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		login(page, UserType.NATIVE);
 	}
 

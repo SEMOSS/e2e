@@ -683,8 +683,13 @@ public class PlaygroundPageUtils {
 
 	public static void closeTourButton(Page page) {
 		Locator closeTourButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close tour"));
-		if (closeTourButton.isVisible()) {
-			closeTourButton.click();
+		try {
+			closeTourButton.waitFor(new Locator.WaitForOptions().setTimeout(3000));
+			if (closeTourButton.isVisible()) {
+				closeTourButton.click();
+			}
+		} catch (Exception e) {
+			// Tour button may not appear — safe to ignore
 		}
 	}
 

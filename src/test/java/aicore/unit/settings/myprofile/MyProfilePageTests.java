@@ -22,10 +22,10 @@ import aicore.utils.settings.MyProfilePageUtils;
 
 public class MyProfilePageTests extends AbstractE2ETest {
 
-	private static String modelCatalogName = null;
+	private String modelCatalogName = null;
 
 	@BeforeAll
-	public static void login() throws IOException {
+	public void login() throws IOException {
 		login(page, UserType.NATIVE);
 	}
 
@@ -44,7 +44,7 @@ public class MyProfilePageTests extends AbstractE2ETest {
 
 	}
 
-	private static void createModelCatalog() throws IOException {
+	private void createModelCatalog() throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		modelCatalogName = "ProfileModel" + timestamp;
 		String modelType = "OpenAI";

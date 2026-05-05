@@ -3,41 +3,43 @@ package aicore.unit.database;
 import java.io.IOException;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
+import aicore.utils.AbstractDatabaseTestBase;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 
-public class DatabaseAccessControlPageTests extends AbstractE2ETest {
+public class DatabaseAccessControlPageTests extends AbstractDatabaseTestBase {
 
-	private static String dbName = null;
-	private static String dbID = null;
+	private String dbName = null;
+	private String dbID = null;
 
-	@BeforeAll
-	public static void setupBeforeAll() throws IOException {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	public void setup(@PWPage Page page) throws IOException {
+		loginNativeAdmin(page);
 
 		// add db
 		String fileName = TestResources.TEST_DATABASE_ZIP;
 		dbName = "TestDatabase";
-		dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
-	}
-	
-	@BeforeEach
-	public void setup() throws IOException {
+		acquireTestDatabaseZipLock(()->DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName));
+		dbID = DatabaseTestUtils.getDatabaseID(page, dbName);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
@@ -46,7 +48,7 @@ public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 	
 	@Test
 	@Tag(TestTags.FE_BUG)
-	public void testAccessControl() throws IOException, InterruptedException {
+	public void testAccessControl(@PWPage Page page) throws IOException, InterruptedException {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);
 		String role = "Read";
@@ -55,7 +57,7 @@ public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 	}
 	
 	@Test
-	void testLockDatabase() {
+	void testLockDatabase(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
@@ -91,8 +93,9 @@ public class DatabaseAccessControlPageTests extends AbstractE2ETest {
 
 	}
 	
-	@AfterAll
-	public static void tearDown() {
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+	@AfterEach
+	public void tearDown(@PWPage Page page) {
+		releaseTestDatabaseZipLock(()-> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID));
+		logout(page);
 	}
 }

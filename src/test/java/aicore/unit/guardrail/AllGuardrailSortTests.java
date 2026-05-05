@@ -16,11 +16,11 @@ import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.app.AppPageUtils;
 
 public class AllGuardrailSortTests extends AbstractE2ETest {
-	private static String ABC_GUARDRAIL_ID = null;
-	private static String XYZ_GUARDRAIL_ID = null;
+	private String ABC_GUARDRAIL_ID = null;
+	private String XYZ_GUARDRAIL_ID = null;
 
 	@BeforeAll
-	public static void setupBeforeAll() throws IOException {
+	public void setupBeforeAll() throws IOException {
 		// login with native user before tests
 		login(page, UserType.NATIVE);
 
@@ -64,7 +64,7 @@ public class AllGuardrailSortTests extends AbstractE2ETest {
 	}
 
 	@AfterAll
-	static void deleteGuardrail() {
+	void deleteGuardrail() {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL, ABC_GUARDRAIL_ID);
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL, XYZ_GUARDRAIL_ID);
 

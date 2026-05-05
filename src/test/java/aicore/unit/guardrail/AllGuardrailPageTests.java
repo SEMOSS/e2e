@@ -22,12 +22,12 @@ import aicore.utils.GuardrailTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 
 public class AllGuardrailPageTests extends AbstractE2ETest {
-	private static String GUARDRAIL_ID = null;
-	private static String GUARDRAIL_NAME = null;
+	private String GUARDRAIL_ID = null;
+	private String GUARDRAIL_NAME = null;
 
 	
 	@BeforeAll
-	public static void setupAddGuardrail() throws IOException {
+	public void setupAddGuardrail() throws IOException {
 		login(page, UserType.NATIVE);
 		
 		// add guardrail
@@ -93,7 +93,7 @@ public class AllGuardrailPageTests extends AbstractE2ETest {
 	}
 	
 	@AfterAll
-	static void cleanUp() {
+	void cleanUp() {
 		login(page, UserType.NATIVE);
 		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL, GUARDRAIL_ID);
 		assertTrue(deleteDb);
