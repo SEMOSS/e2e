@@ -92,6 +92,7 @@ public class UserManagementPage {
 	}
 
 	public String getModelLimitValue(String limit) {
+		page.waitForTimeout(2000);
 		return UserManagementPageUtils.getModelLimitValue(page, limit);
 	}
 

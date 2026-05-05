@@ -19,22 +19,6 @@ Feature: Team Permissions - add User
     And User clicks on "Add" button in Add Team form
     And User fetch the team name
 
-  Scenario: User add different user to the team
-    When User clicks on "Add Member" button in Add Team Page
-    And User selects "userId1" member from the list
-    And User clicks on save button
-    Then User sees "userId1231" card in the Add Member form
-    And User clicks on "Save" button in Add Member form
-    And User sees the message "Successfully added member permissions" is displayed
-    And User can see the new member "userId1" added in the team member list
-    And User opens Main Menu
-    And User clicks on Open Settings
-    And User enables admin mode
-    And User clicks on 'Member Settings' Card
-    And User sees the search button
-    And User searches for the created user
-    And User clicks on Delete Selected button 1 times
-
   Scenario: Delete a single member from the team
     When User clicks on "Add Member" button in Add Team Page
     And User selects "userId1" member from the list
@@ -47,6 +31,22 @@ Feature: Team Permissions - add User
     And User clicks on 'Confirm' button in the confirmation modal
     Then User sees the message 'Successfully removed user' is displayed
     And User should not see the "userId1231" card in the team member list
+    And User opens Main Menu
+    And User clicks on Open Settings
+    And User enables admin mode
+    And User clicks on 'Member Settings' Card
+    And User sees the search button
+    And User searches for the created user
+    And User clicks on Delete Selected button 1 times
+
+    Scenario: User add different user to the team
+    When User clicks on "Add Member" button in Add Team Page
+    And User selects "userId1" member from the list
+    And User clicks on save button
+    Then User sees "userId1231" card in the Add Member form
+    And User clicks on "Save" button in Add Member form
+    And User sees the message "Successfully added member permissions" is displayed
+    And User can see the new member "userId1" added in the team member list
     And User opens Main Menu
     And User clicks on Open Settings
     And User enables admin mode
