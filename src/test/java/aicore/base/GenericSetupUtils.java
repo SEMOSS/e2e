@@ -54,10 +54,10 @@ public class GenericSetupUtils {
 		}
 	}
 
-	private static void doInit() throws IOException {
+	public static void doInit() throws IOException {
 		logCheck();
 
-		loadUrls();
+//		loadUrls();
 
 		useDocker = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_DOCKER));
 		useVideo = Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_VIDEO));
@@ -87,7 +87,7 @@ public class GenericSetupUtils {
 				FileUtils.cleanDirectory(trace.toFile());
 			}
 		}
-
+		
 		// initializeResources();
 	}
 
@@ -117,7 +117,7 @@ public class GenericSetupUtils {
 
 		RunInfo.setURLS(urls);
 	}
-
+	
 	private static void initializeResources() {
 		int parallelCount = RunInfo.getParallelism();
 		List<String> urls = RunInfo.getUrls();

@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import aicore.framework.UrlUtils;
+
 public class DockerUtils {
 	private static final Logger logger = LogManager.getLogger(DockerUtils.class);
 
@@ -52,7 +54,7 @@ public class DockerUtils {
 
 	public static void pingAllServers() {
 		List<String> urls = RunInfo.getUrls();
-		String first = urls.getFirst();
+		String first = UrlUtils.getUrl();;//urls.getFirst();
 		String endpoint = RunInfo.getApiEndpoint();
 		pingServer(first, endpoint, 120, 5000);
 		if (urls.size() > 1) {

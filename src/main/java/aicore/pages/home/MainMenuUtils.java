@@ -36,7 +36,7 @@ public class MainMenuUtils extends AbstractBasePage{
 	
 	@Step("Open Main Menu")
 	public static void openMainMenu(Page page) {
-		logger.info("Open Main Menu");
+		logger.info(Thread.currentThread().getName() + " Open Main Menu");
 		// If sidebar is already open, skip clicking
 		Locator sidebarOpen = page.locator("[data-slot='sheet-content'][data-state='open']");
 		if (sidebarOpen.isVisible()) {

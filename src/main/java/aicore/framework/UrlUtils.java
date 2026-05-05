@@ -1,26 +1,34 @@
 package aicore.framework;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UrlUtils {
 
+	private static String URL = "";
 	private static String newWebRoute = "packages/client/dist/";
 
+    public static void setURL(String url) {
+        URL = url;
+    }
+    
+    public static String getUrl() {
+    	return URL;
+    }
+	
 	public static String getApi(String path) {
-		String base = ResourcePool.get().getUrl();
-		String x = base + ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT) + "/" + path;
+		String x = URL + ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT) + "/" + path;
 		return x;
 	}
 
 	public static String getUrl(String path) {
-		String base = ResourcePool.get().getUrl();
-		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + newWebRoute + path;
+		String x = URL + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + newWebRoute + path;
 		return x;
 	}
 
 	public static String getBaseFrontendUrl(String path) {
-		String base = ResourcePool.get().getUrl();
-		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + path;
+		String x = URL + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + path;
 		return x;
 	}
 
