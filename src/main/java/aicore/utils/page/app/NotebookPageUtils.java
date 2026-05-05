@@ -174,8 +174,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnRecordButton(Page page, String buttonName) {
-		Locator addRecordButton = page.getByRole(AriaRole.BUTTON,
-				new Page.GetByRoleOptions().setName(buttonName + " Record"));
+		Locator addRecordButton = page.locator("//span[text()='Add record']/parent::button").last();
 		AICorePageUtils.waitFor(addRecordButton);
 		addRecordButton.scrollIntoViewIfNeeded();
 		if (!addRecordButton.isVisible()) {
@@ -381,12 +380,11 @@ public class NotebookPageUtils {
 	}
 
 	public static void selectDatabaseType(Page page, String databaseName) {
-		Locator slectDatabase = page.locator("//button//span[text()=+" + databaseName + "+]");
-		if (!slectDatabase.isVisible()) {
-			page.getByTitle("Select Database").isVisible();
-			page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]")
-					.click(new Locator.ClickOptions().setForce(true));
-			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
+		Locator selectDatabase = page.locator("//button//span[text()=" + databaseName + "]");
+		if (!selectDatabase.isVisible()) {
+			page.locator("//div[@class='flex flex-row items-center justify-between']//button[@role='combobox']")
+					.click();
+			page.getByText(databaseName).first().click();
 		}
 
 	}
