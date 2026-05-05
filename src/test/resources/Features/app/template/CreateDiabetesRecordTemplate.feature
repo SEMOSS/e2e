@@ -22,12 +22,13 @@ Feature: Create Diabetes Record Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
+    And User closes the Block Settings button
     And User clicks on Notebook
     And User clicks on Query name as 'insert-diabetes-record'
     And User selects 'TestDatabase' database from the dropdown
-    And User clicks on Run cell button of database cell
-    Then User can see the output for database cell
+    And User clicks on Run cell button
+    Then User can see header names as 'AGE, BLOODPRESSURE, BMI, DIABETES_UNIQUE_ROW_ID, DIABETESPEDIGREEFUNCTION, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP'
 
   @LoginWithAdmin @Regression @ApplicationBugFailure
   Scenario: validate the Updated Diabetes Record app Template with data filling
@@ -40,7 +41,7 @@ Feature: Create Diabetes Record Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Preview app button
     And user add value "1234" in "ID" field
     And user add value "23" in "AGE" field
@@ -60,7 +61,7 @@ Feature: Create Diabetes Record Template
     And User enters description as 'Diabetes app created by automation script'
     And User enters tags 'Test1, Test2' and presses Enter
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
     And User clicks on Preview app button
     And user add value "16767" in "ID" field
     And user add value "35" in "AGE" field
@@ -75,7 +76,7 @@ Feature: Create Diabetes Record Template
     And User clicks on Run cell button of database cell
     Then User can see the output for database cell
     When User modify the Sql query "SELECT * from diabetes WHERE ID=16767 AND AGE=35 AND LOCATION='Pune' AND GENDER='Male'"
-    And User clicks on Run cell button of database cell
+    And User clicks on Run cell button
     Then User sees the output of the executed query where 'AGE' is '35'
     And User sees the output of the executed query where 'LOCATION' is 'Pune'
     And User sees the output of the executed query where 'GENDER' is 'Male'

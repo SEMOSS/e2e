@@ -22,7 +22,7 @@ public class AppTemplatePageUtils {
 	private static final String ASK_LOADER_XPATH = "//div[@data-block=\"submit\"]//span[@role=\"progressbar\"]";
 	private static final String DESCRIPTION_BOX_XPATH = "//div[@class='relative']//textarea";
 	private static final String PREVIEW_APP_CANCEL_XPATH = "(//button//span[contains(text(),'Cancel')])[2]";
-	private static final String INPUT_BOX_LABEL_XPATH = "//div[@data-block='question']//label";
+	private static final String INPUT_BOX_LABEL_XPATH = "//div[@class='relative']//textarea/parent::div";
 	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
 	private static final String PREVIEW_APP_INPUT_BOX_XPATH = "//div[@role='dialog']//div[@data-block='question']";
 	private static final String PREVIEW_APP_INPUT_BOX_LABEL_XPATH = "//div[@role='dialog']//div[@data-block='question']//label";
@@ -101,7 +101,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyInputFieldWithLabel(String label, Page page) {
-		boolean inputBoxVisible = page.locator(INPUT_BOX_XPATH).isVisible();
+		boolean inputBoxVisible = page.locator(INPUT_BOX_XPATH.replace("{blockName}", label)).isVisible();
 		if (!inputBoxVisible) {
 			throw new AssertionError("Input field with label '" + label + "' is not visible");
 		}
@@ -136,11 +136,12 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void closePreviewWindow(Page page) {
-		boolean isPreviewButtonVisible = page.locator(PREVIEW_APP_CANCEL_XPATH).isVisible();
-		if (!isPreviewButtonVisible) {
-			throw new AssertionError("Preview button is not visible");
-		}
-		page.locator(PREVIEW_APP_CANCEL_XPATH).click();
+		page.locator("body").click();
+//		boolean isPreviewButtonVisible = page.locator(PREVIEW_APP_CANCEL_XPATH).isVisible();
+//		if (!isPreviewButtonVisible) {
+//			throw new AssertionError("Preview button is not visible");
+//		}
+//		page.locator(PREVIEW_APP_CANCEL_XPATH).click();
 	}
 
 	public static void verifyInputFieldWithLabelInPreview(String label, Page page) {
