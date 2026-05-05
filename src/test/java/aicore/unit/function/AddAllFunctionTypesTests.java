@@ -1,31 +1,41 @@
 package aicore.unit.function;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractFunctionTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
+import aicore.utils.PWPage;
 
-public class AddAllFunctionTypesTests extends AbstractE2ETest {
+public class AddAllFunctionTypesTests extends AbstractFunctionTestBase {
 	
-	@BeforeAll
-	void setup() {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
+	}	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 	
-	private Stream<Arguments> provideFormInputsForTestValidateFunctions() {
+	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
 	    return Stream.of(
 	    		Arguments.of( "AWS Image Text Extraction", "General","Function Type, Catalog Name","Credentials","Access Key, Secret Key","Settings","Region, S3 Bucket Engine Id, Function Name (metadata), Function Description (metadata), Function Required Parameters","Function Type, Catalog Name, Access Key, Secret Key, Region, S3 Bucket Engine Id, Function Name (metadata), Function Description (metadata), Function Required Parameters","Function Type=AWS REKOGNITION, Catalog Name=AWS-Image-Text-Extraction, Access Key=Test123, Secret Key=Test@123, Region=Asia, S3 Bucket Engine Id=s3, Function Name (metadata)=Text-Extraction, Function Description (metadata)=Testing, Function Required Parameters=[\"isFilePresentInS3\",\"filePath\"]"),
 	    		Arguments.of("AWS Polly","General","Function Type, Catalog Name","Credentials","Access Key, Secret Key","Settings","Region, Function Name (metadata), Function Description (metadata), Function Required Parameters","Function Type, Catalog Name, Access Key, Secret Key, Region, Function Name (metadata), Function Description (metadata), Function Required Parameters","Catalog Name=AWS-Polly, Access Key=Test123, Secret Key=Test@123, Region=Asia, Function Name (metadata)=AWS Polly, Function Description (metadata)=Testing, Function Required Parameters=[\"isFilePresentInS3\",\"filePath\"]" ),
@@ -39,7 +49,7 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideFormInputsForTestValidateFunctions")
-	void testValidateFunctions(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields) throws IOException {
+	void testValidateFunctions(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields, @PWPage Page page) throws IOException {
 		/// set up test parameters
 		List<Map<String, String>> fields = List.of(
 					Map.of("SECTION_NAME", s1Name, "FIELDS", s1Fields),
@@ -71,7 +81,7 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideFormInputsForTestValidateFunctionsRequiringUpload")
-	void testValidateFunctionsRequiringUpload(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields) throws IOException {
+	void testValidateFunctionsRequiringUpload(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields, @PWPage Page page) throws IOException {
 		/// set up test parameters
 		List<Map<String, String>> fields = List.of(
 				Map.of("SECTION_NAME", s1Name, "FIELDS", s1Fields),

@@ -5,49 +5,48 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
+import com.microsoft.playwright.Page;
 
 import aicore.pages.ViewFunctionPage;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractFunctionTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
+import aicore.utils.PWPage;
+import aicore.utils.PlaywrightExtension;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
 import aicore.utils.TestTags;
+import aicore.utils.PlaywrightExtension.UserType;
 
-public class ViewFunctionDetailsTests extends AbstractE2ETest {
+public class ViewFunctionDetailsTests extends AbstractFunctionTestBase{
 	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);
 	
-	@BeforeAll
-	void setup() {
-		login(page, UserType.NATIVE);
-	}
-	
 	@BeforeEach
-	void createFunctionUsingZip() {
-		logger.info("BEFORE ALL: creating function");
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenFunction(page); 
-		// this checks & removes existing function that may collide with name
-		AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
-		AddFunctionPageUtils.clickOnAddFunctionButton(page);
-		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
-		FunctionTestUtils.userUploadsFile(page, "Function/weatherFunctionTest.zip");
-		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
-		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
+		createFunctionFromZip(page);
+	}	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 	
 	@Test
 	@Tag(TestTags.BROKEN)
-	void testViewOverviewTabDetails() {
+	void testViewOverviewTabDetails(@PWPage Page page) {
+		deleteZipFunction(page); // need this to counter the create zip call from the BeforeAll
 		fail("Needs to be implemented");
 	/*
 	 * Below scenario commented because the bug - https://github.com/SEMOSS/community/issues/587 
@@ -82,14 +81,14 @@ public class ViewFunctionDetailsTests extends AbstractE2ETest {
 	}
 	
 	@Test
-	void testViewUsageDetailsInUsageTabForSelectedFunction() {
-		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
+	void testViewUsageDetailsInUsageTabForSelectedFunction(@PWPage Page page) {
+		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
 		ViewFunctionPage viewFunction = new ViewFunctionPage(page);
 		viewFunction.clickUsageTab("Usage");
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Pixel"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Python"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Java"));
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
+		releaseFunctionZipLock(() -> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME));
 	}
 	
 }
