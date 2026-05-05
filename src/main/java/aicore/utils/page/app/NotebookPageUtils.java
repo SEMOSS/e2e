@@ -25,7 +25,7 @@ public class NotebookPageUtils {
 	private static final String IMPORT_DATA_OPTIONS_XPATH = "//div[text()='{optionName}']";
 	private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//button//span[text()='Select Database']";
 	private static final String SELECT_ALL_COLUMNS_XPATH = "//span[text()='Fields']/ancestor::tr//button";
-	private static final String EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID = "EditIcon";
+	private static final String EDIT_IMPORTED_DATA_CELL_BUTTON_XPATH = "//button[text()='Edit']";
 	private static final String UPDATE_CELL_BUTTON_XPATH = "//button[@type='submit']";
 	private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'caption-bottom')]//tbody//tr[position()>1]//td[2]";
 	private static final String IMPORT_BUTTON_XPATH = "//button[text()='Import']";
@@ -60,13 +60,13 @@ public class NotebookPageUtils {
 	private static final String LOADING_ICON_XPATH = "(//span[@role=\"progressbar\"]/../p[contains(text(), \"Loading\")])[2]";
 	private static final String PROGRESS_BAR_READ_IN_FIELD_XPATH = "(//label[contains(text(),'Select Unique ID')]/../div//div//span)[1]";
 	private static final String READ_RECORD_XPATH = "//p[contains(text(),'[DIABETES_UNIQUE_ROW_ID] : {uniqueId}')]";
-	private static final String NOTEBOOK_SEARCH_XPATH = "//p[contains(text(),'Notebook')]//..//..//div//div//input[@placeholder='Search']";
-	private static final String DELETE_DIALOG_BOX_XPATH = "(//div[@role='dialog']//div//p)[1]";
-	private static final String DELETE_DIALOG_BOX_DELETE_BUTTON_XPATH = "(//div[@role='dialog']//div//button//span[text()='Delete'])[2]";
+	private static final String NOTEBOOK_SEARCH_TEXT = "Search";
+	private static final String DELETE_DIALOG_BOX_XPATH = "//p/ancestor::div[@role='dialog']";
+	private static final String DELETE_DIALOG_BOX_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String NOTEBOOK_MENU_BUTTON_XPATH = "//p[text()='{NOTEBOOK_NAME}']/../div//div//button";
-	private static final String NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH = "//li[@value='Duplicate']";
-	private static final String NOTEBOOK_MENU_DELETE_BUTTON_XPATH = "//li[@value='Delete']";
-	private static final String NOTEBOOK_LIST_XPATH = "//li//p[text()='{NotebookName}']";
+	private static final String NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH = "//span[text()='{notebookName}']/following::div//button[@title='Duplicate']";
+	private static final String NOTEBOOK_MENU_DELETE_BUTTON_XPATH = "//span[normalize-space()='{notebookName}']/following::div//button[@title='Delete']";
+	private static final String NOTEBOOK_LIST_XPATH = "//li//span[text()='{NotebookName}']";
 	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
 	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
@@ -76,6 +76,7 @@ public class NotebookPageUtils {
 	private static final String RUN_CELL_LOADING_ICON_XPATH = "//button[@title='Run cell']//*[name()='svg'][@aria-label='Loading']";
 	private static final String CELL_XPATH = "//div[contains(@id,'notebook-cell')]";
 	private static final String NOTEBOOK_SELECT_HEADER_XPATH = "//div[@role='option']//span[text()='{selectHeader}']";
+	private static final String CONFIRM_DUPLICATE_NOTEBOOK_XPATH = "//button[text()='Duplicate']";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -223,7 +224,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void SearchForNotebook(Page page, String notebookName) {
-		Locator searchLocator = page.locator(NOTEBOOK_SEARCH_XPATH);
+		Locator searchLocator = page.getByPlaceholder(NOTEBOOK_SEARCH_TEXT);
 		AICorePageUtils.waitFor(searchLocator);
 		searchLocator.fill(notebookName);
 		Locator notebookLocator = page.getByText(notebookName);
@@ -235,26 +236,19 @@ public class NotebookPageUtils {
 	}
 
 	public static void duplicateNotebook(Page page, String notebookName) {
-		Locator notebookLocator = page.locator(NOTEBOOK_LIST_XPATH.replace("{NotebookName}", notebookName));
-		AICorePageUtils.waitFor(notebookLocator);
-		notebookLocator.hover();
-		Locator NotebookMenuButton = page.locator(NOTEBOOK_MENU_BUTTON_XPATH.replace("{NOTEBOOK_NAME}", notebookName));
-		NotebookMenuButton.click();
-		Locator notebookDuplicateButton = page.locator(NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH);
+		Locator notebookDuplicateButton = page
+				.locator(NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH.replace("{notebookName}", notebookName));
 		AICorePageUtils.waitFor(notebookDuplicateButton);
 		if (!notebookDuplicateButton.isVisible()) {
 			throw new AssertionError("Duplicate button is not present in the notebook Menu list");
 		}
 		notebookDuplicateButton.click();
+		page.locator(CONFIRM_DUPLICATE_NOTEBOOK_XPATH).click();
 	}
 
 	public static void deleteNotebook(Page page, String notebookName) {
-		Locator notebookLocator = page.locator(NOTEBOOK_LIST_XPATH.replace("{NotebookName}", notebookName));
-		AICorePageUtils.waitFor(notebookLocator);
-		notebookLocator.hover();
-		Locator notebookMenuButton = page.locator(NOTEBOOK_MENU_BUTTON_XPATH.replace("{NOTEBOOK_NAME}", notebookName));
-		notebookMenuButton.click();
-		Locator notebookDeleteButton = page.locator(NOTEBOOK_MENU_DELETE_BUTTON_XPATH);
+		Locator notebookDeleteButton = page
+				.locator(NOTEBOOK_MENU_DELETE_BUTTON_XPATH.replace("{notebookName}", notebookName)).first();
 		AICorePageUtils.waitFor(notebookDeleteButton);
 		if (!notebookDeleteButton.isVisible()) {
 			throw new AssertionError("Delete button is not present in the notebook Menu list");
@@ -357,7 +351,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnEditButtonForImportedDataCell(Page page) {
-		Locator editButton = page.getByTestId(EDIT_IMPORTED_DATA_CELL_BUTTON_DATA_TESTID);
+		Locator editButton = page.locator(EDIT_IMPORTED_DATA_CELL_BUTTON_XPATH);
 		AICorePageUtils.waitFor(editButton);
 		if (!editButton.isVisible()) {
 			throw new AssertionError("Edit button for imported data cell is not visible");
@@ -382,14 +376,19 @@ public class NotebookPageUtils {
 		page.locator(CELL_XPATH).first().hover();
 		Locator deleteIcon = page.locator(DELETE_CELL_DATA_XAPTH);
 		AICorePageUtils.waitFor(deleteIcon);
-		deleteIcon.click();
+		deleteIcon.hover();
+		deleteIcon.click(new Locator.ClickOptions().setForce(true));
 	}
 
 	public static void selectDatabaseType(Page page, String databaseName) {
-		page.getByTitle("Select Database").isVisible();
-		page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]")
-				.click(new Locator.ClickOptions().setForce(true));
-		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
+		Locator slectDatabase = page.locator("//button//span[text()=+" + databaseName + "+]");
+		if (!slectDatabase.isVisible()) {
+			page.getByTitle("Select Database").isVisible();
+			page.locator("//*[@title=\"Select Database\"]//*[@data-testid=\"KeyboardArrowDownIcon\"]")
+					.click(new Locator.ClickOptions().setForce(true));
+			page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(databaseName)).click();
+		}
+
 	}
 
 	public static void clickOnRunCellButton(Page page) {
