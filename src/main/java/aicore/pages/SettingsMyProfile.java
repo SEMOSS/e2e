@@ -17,14 +17,6 @@ public class SettingsMyProfile {
 		return MyProfilePageUtils.verifyPrivacyCenter(page);
 	}
 
-	public void enterKeyName(String keyName) {
-		MyProfilePageUtils.enterKeyName(page, keyName, timestamp);
-	}
-
-	public void enterDescription(String description) {
-		MyProfilePageUtils.enterDescription(page, description, timestamp);
-	}
-
 	public boolean isAccessKeyPopupVisible() {
 		return MyProfilePageUtils.isAccessKeyPopupVisible(page);
 	}
@@ -33,24 +25,12 @@ public class SettingsMyProfile {
 		MyProfilePageUtils.clickOnCancelButton(page);
 	}
 
-	public void clickOnDeleteIcon(String KeyName) {
-		MyProfilePageUtils.clickOnDeleteIcon(page, KeyName, timestamp);
-	}
-
 	public String deleteKeyToastMessage() {
 		return MyProfilePageUtils.deleteKeyToastMessage(page);
 	}
 
 	public String getExpectedAccessKeyTitle(String keyName) {
 		return keyName + timestamp;
-	}
-
-	public String validateGeneratedKey(String keyName) {
-		return MyProfilePageUtils.validateGeneratedKey(page, keyName, timestamp);
-	}
-
-	public String validateDescriptionName(String description) {
-		return MyProfilePageUtils.validateDescriptionName(page, description, timestamp);
 	}
 
 	public String getExpectedDescriptionName(String description) {

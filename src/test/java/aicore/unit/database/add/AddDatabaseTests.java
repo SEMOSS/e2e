@@ -7,10 +7,12 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AICoreAllureLabels;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
@@ -19,7 +21,11 @@ import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
+@Epic(AICoreAllureLabels.DATABASE_EPIC)
+@Feature(AICoreAllureLabels.ADD_DATABASE_FEATURE)
 public class AddDatabaseTests extends AbstractE2ETest {
 
 	@BeforeEach
@@ -31,6 +37,7 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		assertTrue(AddCatalogPageBaseUtils.isSearchBarPresent(page));
 	}
 	
+    @DisplayName("Add H2 Database")
 	@Test
 	public void testAddH2() throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
@@ -70,6 +77,7 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
+    @DisplayName("Add SQLite Database")
 	@Test
 	public void testAddSQLite() throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
@@ -105,6 +113,7 @@ public class AddDatabaseTests extends AbstractE2ETest {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
+    @DisplayName("Add Shared Zip Database")
 	@Test
 	public void testAddZip() throws IOException {
 		// delete zip db before upload

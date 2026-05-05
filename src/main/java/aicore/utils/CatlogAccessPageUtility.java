@@ -19,7 +19,7 @@ public class CatlogAccessPageUtility {
 	private static final String VIEW_ACCESSCONTROL_DATA_TESTID = "engineLayout-Access Control-tab";
 	private static final String VIEW_METADATA_TAB_Text = "Metadata";
 	private static final String CLICK_ON_SEARCH_ICON_DATATESTID = "membersTable-searchIcon";
-	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
+	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search";
 	private static final String EXPORT_OPTION_TEXT = "//button[text()='Export']";
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//li[@data-type='error']";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
@@ -49,7 +49,7 @@ public class CatlogAccessPageUtility {
 	private static final String SETTING_PAGE_APP_OPTION_XPATH = "//button[text()='{buttonName}']";
 	private static final String GENERAL_SETTING_SECTION_XPATH = "//p[normalize-space()='{section}']";
 	private static final String CLICK_ON_TAB_XPATH = "//button[text()='{tabName}']";
-	private static final String TOASTER_MESSAGE_DATATESTID = "notification-success-message";
+	private static final String TOASTER_MESSAGE_XPATH = "//li[@data-type='success']";
 	private static final String MCP_USAGE_COPY_BUTTON_DATATESTID = "mcp-usage-copy-button-{sectionName}";
 	private static final String COMMITS_TAB_XPATH = "//button[normalize-space()='Commits']";
 	private static final String COMMIT_TAB_TITLE_XPATH = "//h4[normalize-space()='{title}']";
@@ -172,9 +172,9 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String editorUserSeeToastMessageText(Page page) {
-		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH)
+		page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).first()
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).innerText();
+		String toasterMessage = page.locator(EDITOR_SEE_TOASTER_MESSAGE_XPATH).first().innerText();
 		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
 		return toasterMessage;
 	}
@@ -212,7 +212,7 @@ public class CatlogAccessPageUtility {
 		}
 
 		// Fill the search input
-		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(username);
+		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).first().fill(username);
 		page.waitForTimeout(1000);
 
 		// Optional: click the matching result if needed
@@ -301,7 +301,7 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static String getToastMessage(Page page, String toastMessage) {
-		Locator toast = page.getByTestId(TOASTER_MESSAGE_DATATESTID);
+		Locator toast = page.locator(TOASTER_MESSAGE_XPATH).first();
 		String actualToastMessage = toast.innerText().trim();
 		return actualToastMessage;
 	}

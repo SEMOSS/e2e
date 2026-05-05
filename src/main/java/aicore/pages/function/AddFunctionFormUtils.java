@@ -33,6 +33,7 @@ public class AddFunctionFormUtils {
 		page.getByText(functionType).first().click();
 	}
 	
+	
 	public static void enterCatalogName(Page page, String catalogName, String timestamp) {
 		catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
 		page.getByTestId(CATALOG_NAME_DATA_TESTID).click();

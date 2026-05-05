@@ -25,7 +25,7 @@ Feature: Bookmark app - Code app files
     Then User sees success toast message 'App unbookmarked'
     Then User cannot see 'Test app' in the Bookmarked Apps section
     And User clicks on the My Apps tab
-    
+
   Scenario: Bookmark an app and verify the toast message and its presence in the Bookmarks section on the App Home page
     Given The Files section should be open by default
     And User click on 'Code app' from breadcrumb link

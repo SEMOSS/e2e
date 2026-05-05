@@ -13,6 +13,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
+import io.qameta.allure.Step;
 
 public class AppPageUtils {
 
@@ -40,16 +41,19 @@ public class AppPageUtils {
 	private static final String COPY_ID_XPATH = "//button[@aria-label='{icon}']";
 	private static final String DATA_CLASSIFICATION_CHECKBOX_XPATH = "//span[text()='{option}']";
 	private static final String APP_SETTINGS_SUBMIT_TESTID = "save";
-	private static final String APP_LIST_VIEW  = "Open app in new tab";
+	private static final String APP_LIST_VIEW = "Open app in new tab";
 	private static final String APP_GRID_VIEW = "Open";
 	private static final String DATE_CREATED_XPATH = "//button[@title='Private engine']/../../../div[1]//div[2]//span[contains(text(),'2026')]";
 	private static final String CREATED_BY_ME_FILTER_BUTTON_XPATH = "//label[text()='Created by me']/parent::div//button";
 
+	@Step("Click on Create New App button")
 	public static void clickOnCreateNewAppButton(Page page) {
 		Locator locator = page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID);
+		AICorePageUtils.waitFor(locator);
 		locator.click();
 	}
 
+	@Step("Search app: {appName}")
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search apps").click();
 		page.getByLabel("Search apps").fill(appName + " " + timestamp);
@@ -135,8 +139,8 @@ public class AppPageUtils {
 	}
 
 	public static String getAppIdCopiedToastMessage(Page page) {
-		page.locator(ID_COPY_TOAST_MESSAGE_XPATH).isVisible();
-		return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).textContent().trim();
+		page.locator(ID_COPY_TOAST_MESSAGE_XPATH).first().isVisible();
+		return page.locator(ID_COPY_TOAST_MESSAGE_XPATH).first().textContent().trim();
 	}
 
 	public static void enterCloneAppName(Page page, String appName, String timestamp) {
@@ -344,12 +348,12 @@ public class AppPageUtils {
 	}
 
 	public static boolean verifyAppsInTheGridView(Page page) {
-		int appInTheGridView =page.getByText(APP_GRID_VIEW).count();
+		int appInTheGridView = page.getByText(APP_GRID_VIEW).count();
 		return appInTheGridView > 0;
 	}
 
 	public static boolean verifyAppsInTheListView(Page page) {
-		int appInTheListView =page.getByLabel(APP_LIST_VIEW).count();
+		int appInTheListView = page.getByLabel(APP_LIST_VIEW).count();
 		return appInTheListView > 0;
 	}
 

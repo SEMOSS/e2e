@@ -1,5 +1,7 @@
 package aicore.utils.page.app;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.microsoft.playwright.Download;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -82,7 +85,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_MARKDOWN_BLOCK_XPATH = "//p[strong[text()='Hello world']]";
 	private static final String DROPPED_LOGS_BLOCK_XPATH = "//div[text()='Attach Query']";
 	private static final String DROPPED_INPUT_BLOCK_XPATH = "//label[text()='Example Input']";
-	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//div[text()='No rows']";
+	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//td[text()='No rows']";
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
@@ -96,7 +99,7 @@ public class DragAndDropBlocksPageUtils {
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
-	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][@data-testid='DeleteOutlineIcon']";
+	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][contains(@class,'lucide-trash')]";
 	private static final String CLICK_ON_AREA_CHART_VIEW_OPTIONS = "//div[@aria-label='Vega visualization']";
 	private static final String DUPLICATE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Duplicate']";
 	private static final String DELETE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Delete']";
@@ -164,7 +167,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String BUTTON_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Button";
 	private static final String SETTINGS_PANEL_TITLE_XPATH = "//span[normalize-space()='{sectionName}']";
 	private static final String SECTION_ON_BLOCK_SETTINGS_XPATH = "//button[normalize-space()='{sectionName}']";
-	private static final String OPTION_UNDER_SECTION_XPATH = "//h6[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
+	private static final String OPTION_UNDER_SECTION_XPATH = "//p[text()='{section}']/parent::div/following-sibling::div//div[text()='{optionName}']";
 	private static final String APP_LEFT_PANEL_OPTION_DATATESTID = "workspace-{option}-image";
 	private static final String NEW_ACTION_XPATH = "//*[text()='{blockName}']//../../../..//button//*[@data-testid='AddIcon']";
 	private static final String ICON_OPTION_FROM_GENERAL_SETTING_XPATH = "//p[text()='{optionName}']/following::input";
@@ -174,6 +177,9 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SELECT_FILE_OPTION_XPATH = "//select[contains(@class,'w-full rounded border')]";
 	private static final String SELECT_FRAME_OPTION_XPATH = "//select[contains(@id,'export-frame-select')]";
 	private static final String CLICK_ON_EXPORT_BUTTON_XPATH = "//button[text()='{buttonName}']";
+	private static final String DIRECT_EXPORT_TOGGLE_XPATH = "//div//p[text()='Direct Export']/following::button[@role='switch']";
+	private static final String EXPORT_DATA_SUCCESS_TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
+	private static Download download;
 
 	public static boolean verifyPage1IsVisible(Page page) {
 		Locator element = page.locator(PAGE_1_ID);
@@ -1071,8 +1077,9 @@ public class DragAndDropBlocksPageUtils {
 
 	public static void clickOnBlockSettingsOption(Page page) {
 		Locator blockSetting = page.locator(BLOCK_SETTINGS_XPATH);
+		AICorePageUtils.waitFor(blockSetting);
 		if (blockSetting.isVisible()) {
-			blockSetting.click();
+			blockSetting.click(new Locator.ClickOptions().setForce(true));
 		}
 	}
 
@@ -1177,7 +1184,8 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static boolean isExportedFileVisibleInNotebookSection(Page page, String frameId, String fileType) {
-		Locator exportedFile = page.locator(EXPORTED_FILE_IN_NOTEBOOK_SECTION_XPATH.replace("{frameId}", frameId).replace("{fileType}", fileType));
+		Locator exportedFile = page.locator(
+				EXPORTED_FILE_IN_NOTEBOOK_SECTION_XPATH.replace("{frameId}", frameId).replace("{fileType}", fileType));
 		return exportedFile.isVisible();
 	}
 
@@ -1195,7 +1203,46 @@ public class DragAndDropBlocksPageUtils {
 
 	public static void clickOnExportOption(Page page, String exportOption) {
 		Locator exportOptionLocator = page.locator(CLICK_ON_EXPORT_BUTTON_XPATH.replace("{buttonName}", exportOption));
+		if (exportOption.equalsIgnoreCase("Export Data")) {
+			download = page.waitForDownload(() -> {
+				exportOptionLocator.click();
+			});
+			Path downloadPath = Paths.get("downloads", download.suggestedFilename());
+			try {
+				Files.createDirectories(downloadPath.getParent());
+				download.saveAs(downloadPath);
+			} catch (IOException e) {
+				throw new RuntimeException("Failed to save downloaded file", e);
+			}
+			// return downloadPath;
+		}
 		exportOptionLocator.click();
+
+	}
+
+	public static void setDirectExportToggle(Page page, String action) {
+		Locator directExportToggle = page.locator(DIRECT_EXPORT_TOGGLE_XPATH);
+		if (!directExportToggle.isChecked() && action.equalsIgnoreCase("Turn ON")) {
+			directExportToggle.click();
+		} else if (directExportToggle.isChecked() && action.equalsIgnoreCase("Turn OFF")) {
+			directExportToggle.click();
+		}
+
+	}
+
+	public static String getExportDataSuccessToastMessage(Page page) {
+		Locator toastMessage = page.locator(EXPORT_DATA_SUCCESS_TOAST_MESSAGE_XPATH).first();
+		toastMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		return toastMessage.textContent().trim();
+	}
+
+	public static boolean isDownloadedFileVisible(Page page, String fileType) {
+		if (download == null) {
+			throw new AssertionError("No download was initiated");
+		}
+		String fileName = download.suggestedFilename();
+		fileType = fileType.replace(".", "").toLowerCase();
+		return fileName.toLowerCase().endsWith("." + fileType);
 	}
 
 }

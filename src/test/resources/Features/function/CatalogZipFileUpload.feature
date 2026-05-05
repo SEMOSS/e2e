@@ -1,6 +1,6 @@
 Feature: Validate zip catalog upload functionality in Files Section for all catalog types
 
-## TODO: THIS SCENARIO IS FAILILNG. NEEDS TO BE FIXED AND THE JUNIT VERSION COMPLETED
+## THIS SCENARIO IS FAILILNG. NEEDS TO BE FIXED AND THE JUNIT VERSION COMPLETED--Fixed
   @LoginWithAuthor @DeleteTestCatalog @Regression
   Scenario Outline: Validate zip catalog upload functionality in Files Section for all catalog types
     Given User opens Main Menu

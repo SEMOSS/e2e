@@ -11,7 +11,7 @@ public class UploadCatalogUtils {
 	private static final String FILE_UPLOAD_TESTID = "workspace-Files-image";
 	private static final String UNZIP_CHECKBOX_TESTID = "CheckBoxOutlineBlankIcon";
 	private static final String PUBLISH_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-cloud-up')]";
-	private static final String FOLDER_NAME_XPATH = "//span[normalize-space()='{folderName}']";
+	private static final String FOLDER_NAME_XPATH = "//button[normalize-space()='{folderName}']";
 	private static final String CREATE_NEW_FOLDER_ICON_XPATH = "//*[name()='svg'][@data-testid='CreateNewFolderOutlinedIcon']";
 	private static final String FOLDER_NAME_INPUT_XPATH = "//label[text()='Directory Name']/parent::div//input";
 	private static final String CREATE_NEW_FILE_ICON_XPATH = "//*[name()='svg'][@data-testid='NoteAddOutlinedIcon']";
@@ -22,7 +22,7 @@ public class UploadCatalogUtils {
 	private static final String FILES_REFRESH_OPTION_XPATH = "//button//*[name()='svg'][contains(@class,'refresh-cw')]";
 	private static final String FILES_RECOMPILE_REACTOR_XPATH = "//button[@aria-label='Recompile reactors']";
 	private static Page newTab;
-	private static final String SHARE_APP_LINK_XPATH = "//button[@aria-label='Share App']";
+	private static final String SHARE_APP_LINK_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-share')]";
 	private static final String COPY_BUTTON_XPATH = "//span[normalize-space()='Copy']";
 	private static final String EDIT_TITLE_OF_TITLE_SECOND_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Stock')]";
 	private static final String EDIT_TITLE_OF_TITLE_FIRST_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Get')]";
@@ -36,6 +36,7 @@ public class UploadCatalogUtils {
 	private static final String FILE_NAME_INPUT_XPATH = "//label[text()='File Name']/parent::div//input";
 	private static final String CLICK_ON_THREE_DOT_ICON_OF_FILE_XPATH = "//div//span[text()='{fileName}']/parent::div//*[name()='svg'][contains(@class,'lucide-ellipsis')]";
 	private static final String SELECT_THE_OPTION_FROM_THREE_DOT_ICON = "//div[text()='{optionName}']";
+	private static final String SAVE_FILE_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
 
 	public static void clickOnFileUploadButton(Page page) {
 		Locator unselectedFile = page.locator(FILE_SECTION_IS_DISABLE_XPATH);
@@ -111,7 +112,7 @@ public class UploadCatalogUtils {
 	}
 
 	public static void userSaveTheFile(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save").setExact(true)).last().click();
+		page.locator(SAVE_FILE_XPATH).click();
 	}
 
 	public static void seeFileTabIsOpenByDefault(Page page) {
@@ -121,8 +122,8 @@ public class UploadCatalogUtils {
 	}
 
 	public static boolean isRefreshFilesOptionVisible(Page page) {
-		page.locator(FILES_REFRESH_OPTION_XPATH).isVisible();
-		return page.locator(FILES_REFRESH_OPTION_XPATH).isEnabled();
+		page.locator(FILES_REFRESH_OPTION_XPATH).first().isVisible();
+		return page.locator(FILES_REFRESH_OPTION_XPATH).first().isEnabled();
 	}
 
 	public static void isRefreshFilesOptionClickable(Page page) {

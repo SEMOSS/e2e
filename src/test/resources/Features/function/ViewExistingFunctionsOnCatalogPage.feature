@@ -18,7 +18,6 @@ Feature: View existing functions on Function Catalog Page
     And User clicks on Submit button
     Then User can see a edit success toast message as 'Successfully set the new metadata values for the engine'
 
-### TODO: FAILING, NEEDS TO BE FIXED AND JUNIT TEST UPDATED
   @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: view and validate filter functionality - My Functions
     Given User opens Main Menu
@@ -31,28 +30,27 @@ Feature: View existing functions on Function Catalog Page
       | Data Classification | IP                |
       | Data Restrictions   | IP ALLOWED        |
 
-#  @DeleteTestCatalog @Regression
-#  Scenario: view and validate filter functionality - Discoverable Functions
-#    Given User opens Main Menu
-#    When User clicks on Open Function
-#    Then User sees the function name 'WeatherFunctionTest' in the function catalog
-#    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
-#    And User clicks on Access Control Tab
-#    And User clicks Make 'Function' Discoverable button
-#    And User logs out from the application
-#    And User login as 'editor'
-#    And User opens Main Menu
-#    And User clicks on Open Function
-#    And User clicks on Discoverable Functions button
-#    Then User sees the function name 'WeatherFunctionTest' in the function catalog
-#    And User applies each filter and validate 'WeatherFunctionTest' catalog is visible on the 'function' catalog page
-#      | FILTER_CATEGORY     | FILTER_VALUE |
-#      | Data Classification | IP           |
-#      | Data Restrictions   | IP ALLOWED   |
-#    When User logs out from the application
-#    And User login as 'admin'
+  @DeleteTestCatalog @Regression
+  Scenario: view and validate filter functionality - Discoverable Functions
+    Given User opens Main Menu
+    When User clicks on Open Function
+    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    When User clicks on the function name 'WeatherFunctionTest' in the function catalog
+    And User clicks on Access Control Tab
+    And User clicks Make 'Function' Discoverable button
+    And User logs out from the application
+    And User login as 'editor'
+    And User opens Main Menu
+    And User clicks on Open Function
+    And User clicks on Discoverable Functions button
+    Then User sees the function name 'WeatherFunctionTest' in the function catalog
+    And User applies each filter and validate 'WeatherFunctionTest' catalog is visible on the 'function' catalog page
+      | FILTER_CATEGORY     | FILTER_VALUE |
+      | Data Classification | IP           |
+      | Data Restrictions   | IP ALLOWED   |
+    When User logs out from the application
+    And User login as 'admin'
 
-### TODO: FAILING, NEEDS TO BE FIXED AND JUNIT TEST UPDATED
   @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Validate access status of created Function catalog
     When User opens Main Menu
@@ -71,7 +69,6 @@ Feature: View existing functions on Function Catalog Page
     When User mouse hover on Lock icon displayed on catalog card
     Then User can see engine access status as 'Global' on the tooltip
 
-### TODO: FAILING, NEEDS TO BE FIXED AND JUNIT TEST UPDATED
   @LoginWithAdmin @Regression @DeleteTestCatalog
   Scenario: Validate content of created Function catalog card
     When User get the catalog ID
@@ -88,7 +85,6 @@ Feature: View existing functions on Function Catalog Page
       | view logs dashboard |
       | delete              |
 
-### TODO: FAILING, NEEDS TO BE FIXED AND JUNIT TEST UPDATED
   @LoginWithAdmin @Regression
   Scenario: Delete function catalog from dashboard and validate delete confirmation pop-up
     When User get the catalog ID

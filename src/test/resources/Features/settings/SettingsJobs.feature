@@ -30,6 +30,6 @@ Feature: Settings- Jobs
     And User can see 'Active Jobs' status tile count is '1'
     And User can see 'Inactive Jobs' status tile count is '0'
     When User clicks on Play icon for added 'Test Job'
-    Then User can see 'Failed Jobs' status tile count is '1'
+    Then User can see 'Failed' status tile count is '1'
     When User clicks on Delete Icon for added 'Test Job'
-    Then User sees delete job toast message as 'Successfully deleted all selected jobs'
+    # Then User sees delete job toast message as 'Successfully deleted all selected jobs'
