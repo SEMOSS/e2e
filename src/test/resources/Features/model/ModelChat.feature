@@ -3,10 +3,10 @@ Feature: Add Model Chat Functionality
   Background: Create a Model -Llama_model
     Given User opens Main Menu
     And User clicks on Open Model
-    And User checks if 'Model' catalog created and Deletes the 'Llama3-70B-Instruct'
+    And User checks if 'Model' catalog created and Deletes the 'Perplexity 1'
     When User clicks on Add Model
     And User clicks on file upload icon
-    And User uploads the file 'Model/Llama3-70B-Instruct.zip'
+    And User uploads the file 'Model/Perplexity.zip'
     And User clicks on 'Upload' button to create catalog
     And User get the CatalogName for variable
     And User clicks on Copy Catalog ID

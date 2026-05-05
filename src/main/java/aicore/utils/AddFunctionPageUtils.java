@@ -12,9 +12,9 @@ import aicore.pages.base.AbstractBasePage;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 
-public class AddFunctionPageUtils extends AbstractBasePage{
+public class AddFunctionPageUtils extends AbstractBasePage {
 	private static final Logger logger = LogManager.getLogger(AddFunctionPageUtils.class);
-	
+
 	private static final String ADD_FUNCTION_BUTTON = "Navigate to import Function";
 	private static final String FUNCTION_OPTIONS_GRID_TEST_ID = "function-grid";
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
@@ -38,25 +38,21 @@ public class AddFunctionPageUtils extends AbstractBasePage{
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
-	
 	public static boolean userCanSeeOptionInFunctionsGrid(Page page, String functionOption) {
 		Locator locator = page.getByText(functionOption).first();
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
-	
 	public static boolean userCanSeeOptionIconInFunctionsGrid(Page page, String functionOption) {
 		Locator icon = page.getByAltText(functionOption);
 		AICorePageUtils.waitFor(icon);
 		return icon.isVisible();
 	}
-	
 	public static String getIconURL(Page page, String functionOption) {
 		Locator icon = page.getByAltText(functionOption);
 		AICorePageUtils.waitFor(icon);
 		return icon.getAttribute("src");
 	}
-	
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
 		page.getByLabel(ADD_FUNCTION_BUTTON).click();
@@ -142,22 +138,24 @@ public class AddFunctionPageUtils extends AbstractBasePage{
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
-		//TODO duplicate code in CommonUtils.navigateAndDeleteCatalog!!!!!!
+		// TODO duplicate code in CommonUtils.navigateAndDeleteCatalog!!!!!!
 		Locator catalogLocator = searchForAndLocateCatalog(page, catalog, catalogName);
 		if (catalogLocator.isVisible()) {
-			catalogLocator.first().waitFor();
 			catalogLocator.first().click();
 			clickOnAccessControl(page);
 			FunctionAccessSettingsUtils.clickOnDeleteButton(page);
 			FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
 		}
 	}
-	
+
 	public static Locator searchForAndLocateCatalog(Page page, String catalog, String catalogName) {
 		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
 		searchBar.fill(catalogName);
-		Locator catalogLocator = page.getByTestId(SEARCHED_CATALOG_DATATESTID .replace("{catalogType}", catalog.toUpperCase()).replace("{catalogName}", catalogName));
+		page.waitForTimeout(300);
+		Locator catalogLocator = page
+				.getByTestId(SEARCHED_CATALOG_DATATESTID.replace("{catalogType}", catalog.toUpperCase())
+						.replace("{catalogName}", catalogName.replace(" ", "-")));
 		return catalogLocator;
 	}
 
@@ -181,7 +179,7 @@ public class AddFunctionPageUtils extends AbstractBasePage{
 	public static boolean isFieldMandatory(Page page, String field) {
 		return AddFunctionFormUtils.isFieldMandatory(page, field);
 	}
-	
+
 	public static void fillFunctionCreationForm(Page page, String fieldName, String fieldValue, String timestamp) {
 		AddFunctionFormUtils.fillFunctionCreationForm(page, fieldName, fieldValue, timestamp);
 	}
