@@ -1,7 +1,7 @@
 Feature: Validate storage creation form
 
   @LoginWithAdmin @Regression
-  Scenario Outline: View and fill '<FUNCTION_NAME>' storage creation form
+  Scenario Outline: View and fill '<STORAGE_NAME>' storage creation form
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Storage

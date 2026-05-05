@@ -8,13 +8,14 @@ import java.io.IOException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AICoreAllureLabels;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
@@ -24,8 +25,12 @@ import aicore.utils.DatabaseTestUtils;
 import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
-public class AddDatabaseTests extends AbstractDatabaseTestBase {
+@Epic(AICoreAllureLabels.DATABASE_EPIC)
+@Feature(AICoreAllureLabels.ADD_DATABASE_FEATURE)
+public class AddDatabaseTests extends AbstractE2ETest {
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -41,6 +46,7 @@ public class AddDatabaseTests extends AbstractDatabaseTestBase {
 		logout(page);
 	}
 	
+    @DisplayName("Add H2 Database")
 	@Test
 	public void testAddH2(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
@@ -80,6 +86,7 @@ public class AddDatabaseTests extends AbstractDatabaseTestBase {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
+    @DisplayName("Add SQLite Database")
 	@Test
 	public void testAddSQLite(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
@@ -115,6 +122,7 @@ public class AddDatabaseTests extends AbstractDatabaseTestBase {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 	}
 
+    @DisplayName("Add Shared Zip Database")
 	@Test
 	public void testAddZip(@PWPage Page page) throws IOException {
 		// delete zip db before upload

@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,7 +17,6 @@ import com.microsoft.playwright.Page;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
-import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AbstractFunctionTestBase;
 import aicore.utils.AbstractPlaywrightTestBase;
@@ -30,7 +28,6 @@ import aicore.utils.FunctionTestUtils;
 import aicore.utils.PWPage;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.TestTags;
 
 public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTestBase {
 	private static final Logger logger = LogManager.getLogger(ViewExistingFunctionsOnCatalogPageTests.class);

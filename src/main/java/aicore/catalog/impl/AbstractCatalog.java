@@ -9,7 +9,6 @@ import com.microsoft.playwright.options.AriaRole;
 
 import aicore.catalog.api.ICatalog;
 import aicore.pages.base.AbstractBasePage;
-import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.utils.AICorePageUtils;
 
 public abstract class AbstractCatalog extends AbstractBasePage implements ICatalog {

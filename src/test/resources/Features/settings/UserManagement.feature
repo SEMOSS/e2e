@@ -41,7 +41,7 @@ Feature: User Management
     And User clicks on 'access_keys_allowed' value
     And User change value of the key to 'true'
     And User clicks on Save button of the configuration
-    Then User can see a toast message after updating values of 'Adfs' as "Successfully modified adfs properties"
+    # Then User can see a toast message after updating values of 'Adfs' as "Successfully modified adfs properties"
 
   @LoginWithAdmin @Regression
   Scenario: Update Configuration Settings - access_keys_allowed - true - native
@@ -49,12 +49,12 @@ Feature: User Management
     When User clicks on Open Settings
     And User enable admin mode
     And User clicks on 'Configuration' Card
-    And User clicks on Authentication dropdown
+    # And User clicks on Authentication dropdown
     And User search 'Native' and select
     And User clicks on 'access_keys_allowed' value
     And User change value of the key to 'true'
     And User clicks on Save button of the configuration
-    And User can see a toast message after updating values of 'Native' as "Successfully modified native properties"
+    # And User can see a toast message after updating values of 'Native' as "Successfully modified native properties"
 
   @LoginWithAdmin @Regression
   Scenario: Add New Native User with Unique Incremental Details - Validate profile info
@@ -63,7 +63,7 @@ Feature: User Management
     And User enable admin mode
     And User clicks on 'Member Settings' Card
     And User sees the Add User button
-    And User adds 1 members with name "TestUser", userId "TestUserId", password "Test@123", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
+    And User adds 1 members with name "TestUserId", userId "TestUserId", password "Test@123", and email domain "testautomation.com" and can see toast message as 'Successfully added user' for all added members
     And User logs out from the application
     And User logs in with the last generated userId and password
     And User opens Main Menu

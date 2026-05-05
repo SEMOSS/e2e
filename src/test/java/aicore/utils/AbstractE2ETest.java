@@ -27,7 +27,6 @@ import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
 
 import aicore.base.GenericSetupUtils;
-import aicore.base.RunInfo;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.Resource;
