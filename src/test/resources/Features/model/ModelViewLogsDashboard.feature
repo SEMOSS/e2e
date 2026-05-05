@@ -1,13 +1,13 @@
 @LoginWithAdmin @Regression @DeleteTestCatalog
 Feature: Model view logs dashboard Functionality
 
-  Background: Create a Model -Llama_model
+  Background: Create a Model -Perplexity
     Given User opens Main Menu
     And User clicks on Open Model
-    And User checks if 'Model' catalog created and Deletes the 'Llama3-70B-Instruct'
+    And User checks if 'Model' catalog created and Deletes the 'Perplexity 1'
     When User clicks on Add Model
     And User clicks on file upload icon
-    And User uploads the file 'Model/Llama3-70B-Instruct.zip'
+    And User uploads the file 'Model/Perplexity.zip'
     And User clicks on 'Upload' button to create catalog
     And User get the CatalogName for variable
     And User clicks on Copy Catalog ID
@@ -21,6 +21,7 @@ Feature: Model view logs dashboard Functionality
   Scenario: Validate the Model Insight Dashboard UI
     Given User opens Main Menu
     When User clicks on Open Model
+    And User searches the 'Perplexity 1' in the model catalog searchbox
     And User navigates to the Model Insight Dashboard
     Then User should see the heading 'Model Insight Dashboard'
     And User should see the 'Refresh' button
