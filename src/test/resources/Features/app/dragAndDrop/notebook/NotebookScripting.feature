@@ -9,7 +9,7 @@ Feature: Notebook Scripting
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as 'Test app'
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
 
   @LoginWithAdmin @Regression
   Scenario: Pixel Output in Notebook

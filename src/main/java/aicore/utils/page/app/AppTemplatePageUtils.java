@@ -20,7 +20,7 @@ public class AppTemplatePageUtils {
 	private static final String INPUT_BOX_XPATH = "//*[@data-block='{blockName}']";
 	private static final String RESPONSE_BOX_XPATH = "//p[@data-block='response']";
 	private static final String ASK_LOADER_XPATH = "//div[@data-block=\"submit\"]//span[@role=\"progressbar\"]";
-	private static final String DESCRIPTION_BOX_XPATH = "//p[text()='Value']/../..//div//div//input";
+	private static final String DESCRIPTION_BOX_XPATH = "//div[@class='relative']//textarea";
 	private static final String PREVIEW_APP_CANCEL_XPATH = "(//button//span[contains(text(),'Cancel')])[2]";
 	private static final String INPUT_BOX_LABEL_XPATH = "//div[@data-block='question']//label";
 	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
@@ -44,7 +44,7 @@ public class AppTemplatePageUtils {
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
-	private static final String PREVIEWBUTTON_XPATH = "//button[@aria-label='Preview App']";
+	private static final String PREVIEWBUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-eye')]";
 
 	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
 	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'MuiAutocomplete')]]";
@@ -71,7 +71,8 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnQuestionBlock(Page page, String blockName) {
-		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName))
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).isVisible();
 		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).click();
 	}
@@ -90,9 +91,10 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void selectTemplateFromList(String templateName, Page page) {
-		boolean isTemplateVisible = page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName))
-				.isVisible();
-		if (!isTemplateVisible) {
+		Locator isTemplateVisible = page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName));
+		isTemplateVisible.scrollIntoViewIfNeeded();
+		isTemplateVisible.isVisible();
+		if (!isTemplateVisible.isVisible()) {
 			throw new AssertionError("Template " + templateName + " is not visible in the list");
 		}
 		page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName)).click();
@@ -117,7 +119,8 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyPageWithTitleInPreview(String title, Page page) {
-		Locator titleLocator = page.getByRole(AriaRole.DIALOG).getByText("Ask LLM");
+		Locator titleLocator = page.locator("//div[@role='dialog']//div[@id='page-1']//div//p[@data-block='title']")
+				.last();
 		titleLocator.isVisible();
 		String pageTitle = titleLocator.textContent();
 		if (!pageTitle.equals(title)) {
@@ -394,9 +397,9 @@ public class AppTemplatePageUtils {
 		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
 
 		return switch (condition.toLowerCase()) {
-			case "above" -> ages.stream().allMatch(age -> age > number);
-			case "below" -> ages.stream().allMatch(age -> age < number);
-			default -> false;
+		case "above" -> ages.stream().allMatch(age -> age > number);
+		case "below" -> ages.stream().allMatch(age -> age < number);
+		default -> false;
 		};
 	}
 
@@ -452,9 +455,9 @@ public class AppTemplatePageUtils {
 
 	public static void verifyButtonIsEnabled(String buttonName, Page page) {
 		page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
-.isVisible();
-		boolean isEnabled =page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
-				.isEnabled();
+				.isVisible();
+		boolean isEnabled = page.locator("#page-1")
+				.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName)).isEnabled();
 		if (!isEnabled) {
 			throw new AssertionError(buttonName + " is not enabled");
 		}
