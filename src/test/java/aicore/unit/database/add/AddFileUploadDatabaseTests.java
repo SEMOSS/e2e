@@ -2,28 +2,32 @@ package aicore.unit.database.add;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractDatabaseTestBase;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
-public class AddFileUploadDatabaseTests extends AbstractE2ETest {
+public class AddFileUploadDatabaseTests extends AbstractDatabaseTestBase {
 
 	@BeforeEach
-	public void setup() throws IOException {
-		login(page, UserType.NATIVE);
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 
@@ -31,11 +35,16 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
 		AddDatabaseFileUploadUtils.selectTab(page, tabName);
+	}	
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 	////////////////// UPLOAD as flat table
 
 	@Test
-	public void testAddExcelFlatTable() throws IOException {
+	public void testAddExcelFlatTable(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "Excel";
 		String dbName = "Excel db" + timestamp;
@@ -63,7 +72,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddCSVFlatTable() throws IOException {
+	public void testAddCSVFlatTable(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String dbName = "CSV db" + timestamp;
 		String fileName = TestResources.DIABETES_CSV;
@@ -76,7 +85,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddTSVFlatTable() throws IOException {
+	public void testAddTSVFlatTable(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
@@ -106,7 +115,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	//////////////// METAMODEL FROM SCRATCH
 
 	@Test
-	public void testAddCSVFromScratch() throws IOException {
+	public void testAddCSVFromScratch(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
@@ -134,7 +143,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddTSVFromScratch() throws IOException {
+	public void testAddTSVFromScratch(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
@@ -163,11 +172,11 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 
 	//////////////// SUGGESTED METAMODEL
 	@Test
-	public void testAddTSVSuggestedMetamodel() throws IOException {
+	public void testAddTSVSuggestedMetamodel(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
-		String dbType = "h2";
+		String dbType = "rdf";//"h2";
 		String metaModelType = "asSuggestedMetaModel";
 		String fileName = "Database/Employee.tsv";
 
@@ -192,11 +201,11 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddCSVSuggestedMetamodel() throws IOException {
+	public void testAddCSVSuggestedMetamodel(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
-		String dbType = "h2";
+		String dbType = "rdf";//"h2";
 		String metaModelType = "asSuggestedMetaModel";
 		String fileName = "Database/diabetes.csv";
 
@@ -223,7 +232,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddTSVSuggestedMetamodelEditRelationship() throws IOException {
+	public void testAddTSVSuggestedMetamodelEditRelationship(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
@@ -265,7 +274,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 
 	/////////////////// Upload multiple files
 	@Test
-	public void testAddMultiCSVFromScratch() throws IOException {
+	public void testAddMultiCSVFromScratch(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
@@ -304,7 +313,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddMultiTSVFromScratch() throws IOException {
+	public void testAddMultiTSVFromScratch(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;

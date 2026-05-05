@@ -1,32 +1,46 @@
 package aicore.unit.database.add;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AbstractDatabaseTestBase;
 import aicore.utils.AbstractE2ETest;
+import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
+import aicore.utils.PWPage;
 
-public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
+public class AddFileUploadDatabaseFormValidationTests extends AbstractDatabaseTestBase {
 
-	@BeforeAll
-	public void setup() throws IOException {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
+	}	
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 
 	@ParameterizedTest(name = "Validate file upload database form for {0}")
 	@MethodSource("fileUploadDatabaseFormData")
-	void testFileUploadDatabaseForm(String dbType, Map<String, String[]> sections, String[] mandatoryFields) {
+	void testFileUploadDatabaseForm(String dbType, Map<String, String[]> sections, String[] mandatoryFields, @PWPage Page page) {
 
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
@@ -60,13 +74,13 @@ public class AddFileUploadDatabaseFormValidationTests extends AbstractE2ETest {
 						sections(
 								section("General", "Enter Database Name", "Enter Database Description",
 										"Enter Database Tag"),
-								section("Database", "Enter Database Type", "Enter Delimiter", "Enter Metamodel Type")),
+								section("Database", "Enter Database Type",/* "Enter Delimiter",*/ "Enter Metamodel Type")),
 						new String[] { "Enter Database Name", "Enter Database Type", "Enter Metamodel Type" }),
 				Arguments.of("TSV",
 						sections(
 								section("General", "Enter Database Name", "Enter Database Description",
 										"Enter Database Tag"),
-								section("Database", "Enter Database Type", "Enter Delimiter", "Enter Metamodel Type")),
+								section("Database", "Enter Database Type",/* "Enter Delimiter",*/ "Enter Metamodel Type")),
 						new String[] { "Enter Database Name", "Enter Database Type", "Enter Metamodel Type" }),
 				Arguments.of("Excel",
 						sections(

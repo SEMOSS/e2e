@@ -7,39 +7,40 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AbstractDatabaseTestBase;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.PWPage;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 
-public class DatabaseQueryPageTests extends AbstractE2ETest {
+public class DatabaseQueryPageTests extends AbstractDatabaseTestBase {
 	private String dbName = null;
 	private String dbID = null;
 
-	@BeforeAll
-	public void setupBeforeAll() throws IOException {
-		login(page, UserType.NATIVE);
-
+	@BeforeEach
+	public void setup(@PWPage Page page) throws IOException {
+		loginNativeAdmin(page);
+		
 		String timestamp = CommonUtils.getTimeStampName();
 		dbName = "CSV db" + timestamp;
 		String fileName = TestResources.DIABETES_CSV;
 		String dbType = "h2";
 		String metaModelType = "asFlatTable";
 		dbID = DatabaseTestUtils.addFlatCsv(page, dbName, fileName, dbType, metaModelType);
-	}
-	
-
-	@BeforeEach
-	public void setup() throws IOException {
+		
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
@@ -49,7 +50,7 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testRunQueryDB() {
+	public void testRunQueryDB(@PWPage Page page) {
 		AddDatabasePageUtils.clickOnQueryTab(page);
 		String query = "SELECT AGE, BMI from DIABETES";
 		AddDatabasePageUtils.enterQuery(page, query);
@@ -63,7 +64,7 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testViewAllDBColumns() {
+	public void testViewAllDBColumns(@PWPage Page page) {
 		AddDatabasePageUtils.clickOnOverview(page);
 		AddDatabasePageUtils.clickOnQueryTab(page);
 
@@ -75,7 +76,7 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testSearchDBColumns() {
+	public void testSearchDBColumns(@PWPage Page page) {
 		AddDatabasePageUtils.clickOnQueryTab(page);
 		String columnName = "BMI";
 		AddDatabasePageUtils.searchDataColumn(page, columnName);
@@ -86,7 +87,7 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testResetButton() {
+	public void testResetButton(@PWPage Page page) {
 		AddDatabasePageUtils.clickOnQueryTab(page);
 		String query = "SELECT AGE, BMI from DIABETES";
 		AddDatabasePageUtils.enterQuery(page, query);
@@ -95,7 +96,7 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testRefreshDatabaseStructure() {
+	public void testRefreshDatabaseStructure(@PWPage Page page) {
 		AddDatabasePageUtils.clickOnQueryTab(page);
 		AddDatabasePageUtils.clickOnRefreshButtonForDataColumns(page);
 		String text = "Refreshing database structure";
@@ -104,7 +105,7 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testCollapseButtons() {
+	public void testCollapseButtons(@PWPage Page page) {
 		AddDatabasePageUtils.clickOnQueryTab(page);
 
 		// collapse
@@ -122,8 +123,9 @@ public class DatabaseQueryPageTests extends AbstractE2ETest {
 		assertTrue(AddDatabasePageUtils.verifyAllColumnsAreCollapsed(page));
 	}
 
-	@AfterAll
-	public void tearDown() {
+	@AfterEach
+	public void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+		logout(page);
 	}
 }
