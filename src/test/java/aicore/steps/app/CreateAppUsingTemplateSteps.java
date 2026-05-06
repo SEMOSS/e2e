@@ -41,7 +41,7 @@ public class CreateAppUsingTemplateSteps {
 	}
 
 	@And("User clicks on {string} block")
-	public void user_clicks_on_description_block(String blockName) {
+	public void user_clicks_on_block(String blockName) {
 		appTemplatePage.clickOnQuestionBlock(blockName);
 	}
 
