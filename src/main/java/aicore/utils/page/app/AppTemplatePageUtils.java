@@ -47,9 +47,9 @@ public class AppTemplatePageUtils {
 	private static final String PREVIEWBUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-eye')]";
 
 	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
-	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'MuiAutocomplete')]]";
+	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'flex items-center')]]";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
-	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
+	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//span[@data-slot='select-value']/parent::button";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
 	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
 	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
@@ -325,7 +325,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static String getSelectedFont(Page page) {
-		return page.locator(VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH).inputValue();
+		return page.locator(VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH).textContent();
 	}
 
 	public static void changeFontSize(Page page, String size) {

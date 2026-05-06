@@ -47,7 +47,7 @@ Feature: Create Diabetes Record Template
     And user add value "23" in "AGE" field
     And user add value "Male" in "GENDER" field
     And user add value "Delhi" in "LOCATION" field
-    And User click on 'Add' Record button
+    And User click on 'Add record' Record button
     Then User sees the success message "true"
 
   @LoginWithAdmin @Regression @ApplicationBugFailure
@@ -67,7 +67,7 @@ Feature: Create Diabetes Record Template
     And user add value "35" in "AGE" field
     And user add value "Male" in "GENDER" field
     And user add value "Pune" in "LOCATION" field
-    And User click on 'Add' Record button
+    And User click on 'Add record' Record button
     Then User sees the success message "true"
     When User close the Preview app window
     And User clicks on Notebook
