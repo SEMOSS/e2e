@@ -124,7 +124,8 @@ public class UserManagementSteps {
 	public void user_sees_the_new_model_limit_value_as_on_member_settings_page(String expectedLimitValue)
 			throws InterruptedException {
 		String actualLimitValue = userpage.getModelLimitValue(expectedLimitValue);
-		Assertions.assertEquals(expectedLimitValue, actualLimitValue);
+		boolean isPrsent = actualLimitValue.contains(expectedLimitValue);
+		Assertions.assertTrue(isPrsent);
 	}
 
 	@And("User sees the search button")

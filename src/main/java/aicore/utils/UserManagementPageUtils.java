@@ -18,13 +18,13 @@ public class UserManagementPageUtils {
 	private static final String ADD_MEMBER_PHONE_NUMBER_XPATH = "//label[text()='Phone Number']/parent::div/input";
 	private static final String ADD_MEMBER_EXTENSION_XPATH = "//label[text()='Extension']/parent::div/input";
 	private static final String ADD_MEMBER_TYPE_SAVE_XPATH = "//button[text()='Save']";
-	private static final String EDIT_ICON_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td//*[name()='svg'][@data-testid='EditIcon']";
-	private static final String MODEL_DROPDOWN_XPATH = "//div[text()='None']";
-	private static final String TOKEN_VALUE_XPATH = "//li[text()='{dropdown_value}']";
-	private static final String MAX_TOKEN_VALUE_XPATH = "//label[text()='Max Tokens']";
-	private static final String FREQUENCY_DROPDOWN_XPATH = "//label[text()='Frequency']//parent::div//div";
-	private static final String WEEKELY_VALUE_XPATH = "//li[text()='{dropdown_option}']";
-	private static final String MODEL_LIMIT_XPATH = "//p[text()='Name1']/ancestor::td/following-sibling::td[text()='{limitValue}']";
+	private static final String EDIT_ICON_XPATH = "//span[text()='Name1']/ancestor::td/following-sibling::td//*[contains(@class,'pencil')]";
+	private static final String MODEL_DROPDOWN_XPATH = "//span[text()='None']";
+	private static final String TOKEN_VALUE_XPATH = "//span[text()='{dropdown_value}']";
+	private static final String MAX_TOKEN_VALUE_XPATH = "//label[text()='Max Tokens']//following-sibling::input";
+	private static final String FREQUENCY_DROPDOWN_XPATH = "//label[text()='Frequency']//parent::div//button";
+	private static final String WEEKELY_VALUE_XPATH = "//span[text()='{dropdown_option}']";
+	private static final String MODEL_LIMIT_XPATH = "//span[text()='Name1']/ancestor::td/following-sibling::td//div//div[text()='{limitValue}']";
 	private static final String SEARCH_BUTTON_XPATH = "[placeholder=\"Search Users\"]";
 	private static final String SELECT_ALL_BUTTON_XPATH = "//button[@aria-label='Select all members']";// "//th//label//span//input[@type='checkbox']";
 	private static final String DELETE_MEMBER_TOAST_MESSAGE_XPATH = "//div[text()='Successfully deleted users']";
@@ -32,7 +32,7 @@ public class UserManagementPageUtils {
 	private static final String DELETE_POPUP_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String SEARCH_ICON_XPATH = "//input[@placeholder='Search Users']";
 	private static final String TOAST_MESSAGE_CLOSE_XPATH = "[data-testid='CloseIcon']";
-	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../following-sibling::div//input";
+	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../div//label[text()='Value']/following-sibling::input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
 	private static final String ADFS_TOAST_MESSAGE_XPATH = "//span[text()='{message}']";
 
@@ -212,7 +212,7 @@ public class UserManagementPageUtils {
 	}
 
 	public static void searchAndSelectOption(Page page, String optionText) {
-		Locator resultButton = page.locator("//button[.//span[text()='" + optionText + "']]");
+		Locator resultButton = page.locator("//button[text()='" + optionText + "']");
 		AICorePageUtils.waitFor(resultButton);
 		resultButton.click();
 	}

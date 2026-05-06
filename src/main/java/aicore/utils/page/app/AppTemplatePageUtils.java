@@ -73,10 +73,10 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnQuestionBlock(Page page, String blockName) {
-		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName))
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName.toLowerCase()))
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).isVisible();
-		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).click();
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName.toLowerCase())).isVisible();
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName.toLowerCase())).click();
 	}
 
 	public static void addDescription(String description, Page page) {

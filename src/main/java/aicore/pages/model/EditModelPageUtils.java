@@ -20,7 +20,7 @@ public class EditModelPageUtils {
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
 	private static final String EDIT_SUCCESS_TOAST_MESSAGE = "Successfully set the new metadata values for the engine";
-	
+
 	private static final String DESCRIPTION_TEXT_DATA_TESTID = "Description";
 	private static final String MODEL_TAGS_XPATH = "//h4[text()='Tag']/parent::section//div//span";
 	private static final String DETAILS_UNDER_OVERVIEW_DATA_TESTID = "engine-overview-markdown";
@@ -29,13 +29,14 @@ public class EditModelPageUtils {
 	private static final String DATA_CLASSIFICATION_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data Classification')]/parent::section//div";
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data Restrictions')]/parent::section//div";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
-	
+
 	private static final String ENGINE_ACCESS_STATUS_ICON_XPATH = "//*[contains(@class,'lucide lucide-lock-keyhole')]";
 	private static final String CATALOG_ID_ON_CARD_XPATH = "//p[contains(text(),'{modelId}')]";
 	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
 	private static final String TAGS_DISPLAYED_ON_CARD_XPATH = "//div[contains(@data-testid,'genericEngineCards-{catalogName}')]//div[@class='flex items-center justify-center']/div/span";
 	private static final String DATE_DISPLAYED_ON_CARD_XPATH = "//span[text()='{date}']";
 	private static final String ICONS_DISPLAYED_ON_CARD_XPATH = "//button[contains(@title,'{iconName}')]";
+	private static final String ACCESS_STATUS_TOOLTIP_XPATH = "//div[@data-slot='tooltip-content']";
 	private static String catalogID;
 	private static final String DELETE_CONFIRMATION_MESSAGE_XPATH = "//div[@role='dialog']//p[text()='Are you sure you want to delete this engine?']";
 	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_NAME_XAPTH = "//span[text()='Engine Name:']/following-sibling::span";
@@ -76,7 +77,6 @@ public class EditModelPageUtils {
 		page.getByLabel(TAG_TEXTBOX).fill(tagName);
 		page.getByLabel(TAG_TEXTBOX).press("Enter");
 	}
-
 
 	public static void clickOnSubmit(Page page) {
 		page.click(SUBMIT_BUTTON_XPATH);
@@ -150,7 +150,7 @@ public class EditModelPageUtils {
 
 	public static String getEngineAccessStatusTooltipText(Page page, String status) {
 		// Added evaluate method because getting tooltip text twice(due to hidden span)
-		return page.locator("[data-slot='tooltip-content']").evaluate("el => el.childNodes[0].textContent.trim()")
+		return page.locator(ACCESS_STATUS_TOOLTIP_XPATH).evaluate("el => el.childNodes[0].textContent.trim()")
 				.toString();
 	}
 
@@ -262,7 +262,8 @@ public class EditModelPageUtils {
 		viewInputParameterLocator.isVisible();
 		viewInputParameterLocator.click();
 		for (String inputParameter : viewInputParameters) {
-			Locator parameterLocator = page.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter));
+			Locator parameterLocator = page
+					.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter));
 			if (!parameterLocator.isVisible()) {
 				return false;
 			}

@@ -1,8 +1,7 @@
 Feature: Validate zip catalog upload functionality in Files Section for all catalog types
 
-## THIS SCENARIO IS FAILILNG. NEEDS TO BE FIXED AND THE JUNIT VERSION COMPLETED--Fixed
   @LoginWithAuthor @DeleteTestCatalog @Regression
-  Scenario Outline: Validate zip catalog upload functionality in Files Section for all catalog types
+  Scenario Outline: Validate zip catalog upload functionality in Files Section for '<CATALOG>' catalog
     Given User opens Main Menu
     When User opens '<CATALOG>'
     And User checks if '<CATALOG>' catalog created and Deletes the '<CATALOG_NAME>'

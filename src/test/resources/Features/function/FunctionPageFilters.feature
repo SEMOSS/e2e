@@ -1,10 +1,12 @@
- Feature: Function Page Filters
- 
+Feature: Function Page Filters
+
   @LoginWithAdmin @DeleteTestCatalog @Regression
   Scenario: Validate the Function filter on app page
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open Function
+    And User checks if 'Function' catalog created and Deletes the 'TestFunction'
+    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
     And User clicks on Add Function
     And User clicks on file upload icon
     And User uploads the file 'Function/weatherFunctionTest.zip'

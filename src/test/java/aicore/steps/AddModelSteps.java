@@ -261,7 +261,10 @@ public class AddModelSteps {
 
 	@When("User searches the {string} in the model catalog searchbox")
 	public void user_searches_the_in_the_model_catalog_searchbox(String modelName) {
-		openModelPage.searchModelCatalog(modelName + timestamp);
+		if (!modelName.contains("Perplexity")) {
+			modelName = modelName + timestamp;
+		}
+		openModelPage.searchModelCatalog(modelName);
 	}
 
 	@Then("User should see the {string} on the model catalog page")
@@ -272,7 +275,10 @@ public class AddModelSteps {
 
 	@And("User selects the {string} from the model catalog")
 	public void user_selects_the_from_the_model_catalog(String modelName) throws InterruptedException {
-		openModelPage.selectModelFromSearchOptions(modelName + timestamp);
+		if (!modelName.contains("Perplexity")) {
+			modelName = modelName + timestamp;
+		}
+		openModelPage.selectModelFromSearchOptions(modelName);
 	}
 
 	@And("User enters the details as {string}")
