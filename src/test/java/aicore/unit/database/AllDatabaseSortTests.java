@@ -12,15 +12,16 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppPageUtils;
 
-public class AllDatabaseSortTests extends AbstractDatabaseTestBase {
+public class AllDatabaseSortTests extends AbstractPlaywrightTestBase {
 	private String TEST_DB_ID = null;
 	private String DIABETES_DB_ID = null;
 
@@ -31,16 +32,22 @@ public class AllDatabaseSortTests extends AbstractDatabaseTestBase {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		// add 2 zip db
-		acquireTestDatabaseZipLock(() ->DatabaseTestUtils.uploadDatabaseZip(page, TestResources.TEST_DATABASE_NAME, TestResources.TEST_DATABASE_ZIP));
-		TEST_DB_ID = DatabaseTestUtils.getDatabaseID(page, TestResources.TEST_DATABASE_NAME);
-		acquireDiabetesDatabaseZipLock(()->DatabaseTestUtils.uploadDatabaseZip(page, TestResources.DIABETES_DATABASE_NAME, TestResources.DIABETES_DATABASE_ZIP));
-		DIABETES_DB_ID = DatabaseTestUtils.getDatabaseID(page, TestResources.DIABETES_DATABASE_NAME);
+//		acquireTestDatabaseZipLock(() ->
+		TEST_DB_ID = DatabaseTestUtils.uploadDatabaseZip(page, TestResources.TEST_DATABASE_NAME, TestResources.TEST_DATABASE_ZIP);
+		//);
+//		TEST_DB_ID = DatabaseTestUtils.getDatabaseID(page, TestResources.TEST_DATABASE_NAME);
+//		acquireDiabetesDatabaseZipLock(()->
+		DIABETES_DB_ID = DatabaseTestUtils.uploadDatabaseZip(page, TestResources.DIABETES_DATABASE_NAME, TestResources.DIABETES_DATABASE_ZIP);
+//		);
+//		DIABETES_DB_ID = DatabaseTestUtils.getDatabaseID(page, TestResources.DIABETES_DATABASE_NAME);
 		// need to return back to main engine page
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 	}
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	@ResourceUploadLock(TestResources.DIABETES_DATABASE_ZIP)
 	void testNameSort(@PWPage Page page) {
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
 		boolean isSortedInAscendingOrder = AppPageUtils.verifySortedInAscendingOrder(page);
@@ -52,6 +59,8 @@ public class AllDatabaseSortTests extends AbstractDatabaseTestBase {
 	}
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	@ResourceUploadLock(TestResources.DIABETES_DATABASE_ZIP)
 	void testDateCreatedSort(@PWPage Page page) {
 		AppPageUtils.selectSortByOption(page, "Date Created");
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
@@ -66,8 +75,12 @@ public class AllDatabaseSortTests extends AbstractDatabaseTestBase {
 	@AfterEach
 	void cleanUp(@PWPage Page page) {
 		loginNativeAdmin(page);
-		releaseDiabetesDatabaseZipLock(()-> assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TEST_DB_ID)));
-		releaseTestDatabaseZipLock(()-> assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, DIABETES_DB_ID)));
+//		releaseDiabetesDatabaseZipLock(()-> 
+		assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TEST_DB_ID));
+		//);
+//		releaseTestDatabaseZipLock(()-> 
+		assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, DIABETES_DB_ID));
+//		);
 		logout(page);
 	}
 }

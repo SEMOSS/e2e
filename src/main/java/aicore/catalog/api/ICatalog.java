@@ -31,53 +31,53 @@ public interface ICatalog {
 		}
 	}
 	
-	/** MAIN CATALOG PAGE OPERATIONS */
-	void clickCreateOrAddNewCatalog(Page page, CATALOG_TYPE catalogType);
-	
-	void deleteCatalogIfExists(Page page, CATALOG_TYPE catalogType, String catalogName);
-	
-	void searchForCatalog(Page page, CATALOG_TYPE catalogType, String catalogName);
-	
-	boolean selectCatalog(Page page, CATALOG_TYPE catalogType, String catalogName);
-
-	/** CATALOG SETTINGS PAGE OPERATIONS */
-	void navigateToCatalogSetting(Page page);
-	
-	void viewOverviewTab(Page page);
-	
-	void viewDependenciesTab(Page page);
-	
-	void viewMCPUsageTab(Page page);
-	
-	void viewCommitsTab(Page page);
-	
-	void viewSettingsTab(Page page);
-	
-	void viewAccessControlTab(Page page);
-	
-	void viewFilesTab(Page page);
-	
-	void viewSMSSTab(Page page);
-	
-	void exportCatalog(Page page);
-	
-	void editCatalog(Page page);
-	
-	void openCatalog(Page page);
-	
-	/** SECONDARY CATALOG PAGE OPERATIONS */
-	void filterCatalogPage(Page page);
-	
-	void searchByFilter(Page page);
-	
-	void toggleBetweenCatalogListTabs(Page page);
-	
-	void toggleSearchAscendingDescending(Page page);
-	
-	/** CREATE OR ADD CATALOG PAGE OPERATIONS */
-	void searchForCatalogTypes(Page page);
-	
-	void uploadCatalog(Page page);
-	
-	void clickOnCatalogTypeToAdd(Page page);
+//	/** MAIN CATALOG PAGE OPERATIONS */
+//	void clickCreateOrAddNewCatalog(Page page, CATALOG_TYPE catalogType);
+//	
+//	void deleteCatalogIfExists(Page page, CATALOG_TYPE catalogType, String catalogName);
+//	
+//	void searchForCatalog(Page page, CATALOG_TYPE catalogType, String catalogName);
+//	
+//	boolean selectCatalog(Page page, CATALOG_TYPE catalogType, String catalogName);
+//
+//	/** CATALOG SETTINGS PAGE OPERATIONS */
+//	void navigateToCatalogSetting(Page page);
+//	
+//	void viewOverviewTab(Page page);
+//	
+//	void viewDependenciesTab(Page page);
+//	
+//	void viewMCPUsageTab(Page page);
+//	
+//	void viewCommitsTab(Page page);
+//	
+//	void viewSettingsTab(Page page);
+//	
+//	void viewAccessControlTab(Page page);
+//	
+//	void viewFilesTab(Page page);
+//	
+//	void viewSMSSTab(Page page);
+//	
+//	void exportCatalog(Page page);
+//	
+//	void editCatalog(Page page);
+//	
+//	void openCatalog(Page page);
+//	
+//	/** SECONDARY CATALOG PAGE OPERATIONS */
+//	void filterCatalogPage(Page page);
+//	
+//	void searchByFilter(Page page);
+//	
+//	void toggleBetweenCatalogListTabs(Page page);
+//	
+//	void toggleSearchAscendingDescending(Page page);
+//	
+//	/** CREATE OR ADD CATALOG PAGE OPERATIONS */
+//	void searchForCatalogTypes(Page page);
+//	
+//	void uploadCatalog(Page page);
+//	
+//	void clickOnCatalogTypeToAdd(Page page);
 }

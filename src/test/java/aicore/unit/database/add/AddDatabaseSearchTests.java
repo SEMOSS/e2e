@@ -19,11 +19,11 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.steps.AbstractAddCatalogBase;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.annotations.PWPage;
 
-public class AddDatabaseSearchTests extends AbstractDatabaseTestBase {
+public class AddDatabaseSearchTests extends AbstractPlaywrightTestBase {
 
 	private static final String GROUP_NAME = "GROUP";
 	private static final String DATABASE_OPTION_NAMES = "DATABASE_OPTIONS";

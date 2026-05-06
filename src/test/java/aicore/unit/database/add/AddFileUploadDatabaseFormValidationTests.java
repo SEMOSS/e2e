@@ -15,12 +15,12 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.annotations.PWPage;
 
-public class AddFileUploadDatabaseFormValidationTests extends AbstractDatabaseTestBase {
+public class AddFileUploadDatabaseFormValidationTests extends AbstractPlaywrightTestBase {
 
 	@BeforeEach
 	void setup(@PWPage Page page) {

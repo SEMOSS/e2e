@@ -15,11 +15,11 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.annotations.PWPage;
 
-public class AddDatabaseFormValidationTests extends AbstractDatabaseTestBase {
+public class AddDatabaseFormValidationTests extends AbstractPlaywrightTestBase {
 
 	@BeforeEach
 	void setup(@PWPage Page page) {

@@ -13,21 +13,40 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 
 import aicore.pages.ViewFunctionPage;
-import aicore.utils.AbstractFunctionTestBase;
+import aicore.pages.function.GeneralFunctionPage;
+import aicore.pages.home.MainMenuUtils;
+import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.AddFunctionPageUtils;
+import aicore.utils.CatalogCreationFromZipUtil;
+import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 
-public class ViewFunctionDetailsTests extends AbstractFunctionTestBase{
+public class ViewFunctionDetailsTests extends AbstractPlaywrightTestBase {
 	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		createFunctionFromZip(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenFunction(page);
+		GeneralFunctionPage.deleteFunctionIfExists(page, TestResources.WEATHER_FUNC_NAME);
+//		AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION,
+//				TestResources.WEATHER_FUNC_NAME);
+		AddFunctionPageUtils.clickOnAddFunctionButton(page);
+		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+		FunctionTestUtils.userUploadsFile(page, TestResources.WEATHER_FUNC_ZIP);
+//		acquireFunctionZipLock(()->{
+			CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
+//		});	
+		CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
+		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
@@ -36,8 +55,11 @@ public class ViewFunctionDetailsTests extends AbstractFunctionTestBase{
 	
 	@Test
 	@Tag(TestTags.BROKEN)
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testViewOverviewTabDetails(@PWPage Page page) {
-		deleteZipFunction(page); // need this to counter the create zip call from the BeforeAll
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME);
+//		); 
 		fail("Needs to be implemented");
 	/*
 	 * Below scenario commented because the bug - https://github.com/SEMOSS/community/issues/587 
@@ -72,6 +94,7 @@ public class ViewFunctionDetailsTests extends AbstractFunctionTestBase{
 	}
 	
 	@Test
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testViewUsageDetailsInUsageTabForSelectedFunction(@PWPage Page page) {
 		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
 		ViewFunctionPage viewFunction = new ViewFunctionPage(page);
@@ -79,7 +102,9 @@ public class ViewFunctionDetailsTests extends AbstractFunctionTestBase{
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Pixel"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Python"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Java"));
-		releaseFunctionZipLock(() -> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME));
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME);
+		//);
 	}
 	
 }

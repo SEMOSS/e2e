@@ -17,13 +17,13 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractFunctionTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.annotations.PWPage;
 
-public class AddAllFunctionTypesTests extends AbstractFunctionTestBase {
+public class AddAllFunctionTypesTests extends AbstractPlaywrightTestBase {
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {

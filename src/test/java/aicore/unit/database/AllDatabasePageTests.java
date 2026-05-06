@@ -22,15 +22,16 @@ import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.steps.CatalogFilterSteps;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 
-public class AllDatabasePageTests extends AbstractDatabaseTestBase {
+public class AllDatabasePageTests extends AbstractPlaywrightTestBase {
 	private String dbName = null;
 	private String dbID = null;
 
@@ -41,8 +42,10 @@ public class AllDatabasePageTests extends AbstractDatabaseTestBase {
 		// add zip db
 		String fileName = TestResources.TEST_DATABASE_ZIP;
 		dbName = "TestDatabase";
-		acquireTestDatabaseZipLock(() -> DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName));
-		dbID = DatabaseTestUtils.getDatabaseID(page, dbName);
+//		acquireTestDatabaseZipLock(() -> 
+		dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
+//		);
+//		dbID = DatabaseTestUtils.getDatabaseID(page, dbName);
 
 		// edit db metadata for filter tests
 		EditMetadataPageUtils.clickEditIcon(page);
@@ -62,13 +65,14 @@ public class AllDatabasePageTests extends AbstractDatabaseTestBase {
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		loginNativeAdmin(page);
-		releaseTestDatabaseZipLock(()->
-		assertTrue( CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID))
-		);
+//		releaseTestDatabaseZipLock(()->
+		assertTrue( CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID));
+//		);
 		logout(page);
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void testCatalogCard(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
@@ -102,6 +106,7 @@ public class AllDatabasePageTests extends AbstractDatabaseTestBase {
 	//////////////// test filters
 	@ParameterizedTest(name = "{index} => {0} = {1}")
 	@MethodSource("filterData")
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void testFilters(String filterCategory, String filterValue, @PWPage Page page) {
 		openCatalogAndValidateSearch(page);
 

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
@@ -23,7 +23,7 @@ import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
 
-public class DatabaseQueryPageTests extends AbstractDatabaseTestBase {
+public class DatabaseQueryPageTests extends AbstractPlaywrightTestBase {
 	private String dbName = null;
 	private String dbID = null;
 

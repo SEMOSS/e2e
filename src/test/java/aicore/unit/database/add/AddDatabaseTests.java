@@ -15,7 +15,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICoreAllureLabels;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatlogAccessPageUtility;
@@ -24,12 +24,13 @@ import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 
 @Epic(AICoreAllureLabels.DATABASE_EPIC)
 @Feature(AICoreAllureLabels.ADD_DATABASE_FEATURE)
-public class AddDatabaseTests extends AbstractDatabaseTestBase {
+public class AddDatabaseTests extends AbstractPlaywrightTestBase {
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -123,16 +124,21 @@ public class AddDatabaseTests extends AbstractDatabaseTestBase {
 
     @DisplayName("Add Shared Zip Database")
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void testAddZip(@PWPage Page page) throws IOException {
 		// delete zip db before upload
 		String dbName = "TestDatabase";
 
 		String fileName = TestResources.TEST_DATABASE_ZIP;
-		acquireTestDatabaseZipLock(()-> DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName));
-		String dbID = DatabaseTestUtils.getDatabaseID(page, dbName);
+//		acquireTestDatabaseZipLock(()-> 
+		String dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
+		//);
+//		 DatabaseTestUtils.getDatabaseID(page, dbName);
 
 		// delete db
-		releaseTestDatabaseZipLock(() ->CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID));
+//		releaseTestDatabaseZipLock(() ->
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+		//);
 	}
 
 }

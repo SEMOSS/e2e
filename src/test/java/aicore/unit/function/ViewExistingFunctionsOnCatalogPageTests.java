@@ -13,17 +13,22 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.microsoft.playwright.Page;
 
 import aicore.pages.function.FunctionAccessSettingsUtils;
+import aicore.pages.function.GeneralFunctionPage;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
-import aicore.utils.AbstractFunctionTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
+import aicore.utils.CatalogCreationFromZipUtil;
+import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 
-public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTestBase {
+public class ViewExistingFunctionsOnCatalogPageTests extends AbstractPlaywrightTestBase {
 	private static final Logger logger = LogManager.getLogger(ViewExistingFunctionsOnCatalogPageTests.class);
 	
 	private final String baseFunctionName = "WeatherFunctionTest";
@@ -32,7 +37,20 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 	void setup(@PWPage Page page) {
 		logger.info("BEFORE ALL: creating function");
 		loginNativeAdmin(page);
-		createFunctionFromZip(page);
+//		acquireFunctionZipLock(()->{
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenFunction(page);
+			GeneralFunctionPage.deleteFunctionIfExists(page, TestResources.WEATHER_FUNC_NAME);
+//			AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION,
+//					TestResources.WEATHER_FUNC_NAME);
+			AddFunctionPageUtils.clickOnAddFunctionButton(page);
+			CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+			FunctionTestUtils.userUploadsFile(page, TestResources.WEATHER_FUNC_ZIP);
+			CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
+			CatlogAccessPageUtility.getCatalogAndCopyId(page);
+			FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
+			FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
+//		});	
 	}
 	
 	private static Stream<Arguments> provideOptionsToFilterFunctionality() {
@@ -44,13 +62,16 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 	
 	@ParameterizedTest
 	@MethodSource("provideOptionsToFilterFunctionality")
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testFiltersFunctionalityMyFunctionsTab(String filterCategoryName, String filterValues, @PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
 		FunctionTestUtils.validateFunctionFilters(page, baseFunctionName, filterCategoryName, filterValues);
-		releaseFunctionZipLock(() -> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName));
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
 		logout(page);
 	}
 
@@ -64,6 +85,7 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 	
 	@ParameterizedTest
 	@MethodSource("provideOptionsToDiscoverableFilterFunctionality")
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testFilterFunctionalityDiscoverableFunctionsTab(String filterCategoryName, String filterValues, @PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
@@ -81,11 +103,14 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 		FunctionTestUtils.validateFunctionFilters(page, baseFunctionName, filterCategoryName, filterValues);
 		logout(page);
 		loginNativeAdmin(page);
-		releaseFunctionZipLock(() -> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName));
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
 		logout(page);
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testValidateAccessStatusOfCreatedFunction(@PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
@@ -103,7 +128,9 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
 		EditModelPageUtils.mouseHoverOnEngineAccessStatusIcon(page);
 		FunctionTestUtils.userSeesFunctionStatusOnTooltip(page, "Global");
-		releaseFunctionZipLock(() -> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName));
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
 		logout(page);
 	}
 	
@@ -115,6 +142,7 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 
 	@ParameterizedTest
 	@MethodSource("provideContentToFunctionCatalogCard")
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testValidateContentOfCreatedFunctionCatalogCard(String iconStr, @PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		FunctionTestUtils.userGetsCatalogID(page);
@@ -127,13 +155,16 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 //		FunctionTestUtils.verifyUserSeesTagsOnCard(page, "embeddings, Test1", TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION);
 		FunctionTestUtils.verifyUserSeesCreatedDateOnCatalogCard(page);
 		FunctionTestUtils.verifyUsersSeesIconsOnContentCard(page, iconStr);
-		releaseFunctionZipLock(() -> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName));
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
 		logout(page);
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testDeleteFunctionFromDashboardAndValidateDeletionPopup(@PWPage Page page) {
-		releaseFunctionZipLock(() -> {
+//		releaseFunctionZipLock(() -> {
 			String timestamp = CommonUtils.getTimeStampName();
 			FunctionTestUtils.userGetsCatalogID(page);
 			MainMenuUtils.openMainMenu(page);
@@ -150,6 +181,6 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractFunctionTes
 			StoragePageUtils.clickOnButton(page, "Delete");
 			FunctionTestUtils.verifyUserSeesDeletedToastMessage(page, "Successfully deleted " + baseFunctionName);
 			logout(page);
-		});
+//		});
 	}
 }

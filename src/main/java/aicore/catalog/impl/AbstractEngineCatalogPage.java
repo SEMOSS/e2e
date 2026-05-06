@@ -36,8 +36,8 @@ public abstract class AbstractEngineCatalogPage extends AbstractBasePage impleme
 	private static final String DELETE_CONFIRMATION_POPUP_XPATH = "//div[@data-slot='dialog-content']";
 	private static final String ACCESS_SETTINGS_CONFIRM_DELETE_BUTTON_TEST_ID = "//button[contains(@data-testid,'confirmDelete-btn')]";
 
-	@Override
-	public void clickCreateOrAddNewCatalog(Page page, CATALOG_TYPE catalogType) {
+	
+	public static void clickCreateOrAddNewCatalog(Page page, CATALOG_TYPE catalogType) {
 		Locator locator = null;
 		switch (catalogType) {
 		case CATALOG_TYPE.APP:
@@ -57,8 +57,8 @@ public abstract class AbstractEngineCatalogPage extends AbstractBasePage impleme
 		logger.info("Clicked on Add " + catalogType.getType() + " Button");
 	}
 
-	@Override
-	public void deleteCatalogIfExists(Page page, CATALOG_TYPE catalogType, String catalogName) {
+	
+	public static void deleteCatalogIfExists(Page page, CATALOG_TYPE catalogType, String catalogName) {
 		// step 1. search for the catalog
 		searchForCatalog(page, catalogType, catalogName);
 		// step 2. click on the catalog
@@ -77,8 +77,8 @@ public abstract class AbstractEngineCatalogPage extends AbstractBasePage impleme
 		}
 	}
 
-	@Override
-	public void searchForCatalog(Page page, CATALOG_TYPE catalogType, String catalogName) {
+	
+	public static void searchForCatalog(Page page, CATALOG_TYPE catalogType, String catalogName) {
 		Locator searchBar = null;
 		switch (catalogType) {
 		case CATALOG_TYPE.APP:
@@ -97,8 +97,8 @@ public abstract class AbstractEngineCatalogPage extends AbstractBasePage impleme
 		waitAndFill(searchBar, catalogName);
 	}
 
-	@Override
-	public boolean selectCatalog(Page page, CATALOG_TYPE catalogType, String catalogName) {
+	
+	public static boolean selectCatalog(Page page, CATALOG_TYPE catalogType, String catalogName) {
 		Locator catalogLocator = null;
 		switch (catalogType) {
 		case CATALOG_TYPE.APP:
@@ -124,43 +124,43 @@ public abstract class AbstractEngineCatalogPage extends AbstractBasePage impleme
 		return false;
 	}
 
-	@Override
+	
 	public void navigateToCatalogSetting(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void viewOverviewTab(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void viewDependenciesTab(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void viewMCPUsageTab(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void viewCommitsTab(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void viewSettingsTab(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void viewAccessControlTab(Page page) {
 		// TODO Auto-generated method stub
 
@@ -185,73 +185,73 @@ public abstract class AbstractEngineCatalogPage extends AbstractBasePage impleme
 		waitAndClick(btn);
 	}
 
-	@Override
+	
 	public void viewFilesTab(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void viewSMSSTab(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void exportCatalog(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void editCatalog(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void openCatalog(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void filterCatalogPage(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void searchByFilter(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void toggleBetweenCatalogListTabs(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void toggleSearchAscendingDescending(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void searchForCatalogTypes(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void uploadCatalog(Page page) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void clickOnCatalogTypeToAdd(Page page) {
 		// TODO Auto-generated method stub
 

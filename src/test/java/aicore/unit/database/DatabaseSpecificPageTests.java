@@ -16,7 +16,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
@@ -28,7 +28,7 @@ import aicore.utils.ViewUsagePageUtils;
 import aicore.utils.annotations.PWPage;
 
 @Tag(TestTags.SMOKE)
-public class DatabaseSpecificPageTests extends AbstractDatabaseTestBase {
+public class DatabaseSpecificPageTests extends AbstractPlaywrightTestBase {
 
 	private String dbName = null;
 	private String dbID = null;

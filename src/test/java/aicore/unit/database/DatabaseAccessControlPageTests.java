@@ -13,7 +13,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
-import aicore.utils.AbstractDatabaseTestBase;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
@@ -22,8 +22,9 @@ import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 
-public class DatabaseAccessControlPageTests extends AbstractDatabaseTestBase {
+public class DatabaseAccessControlPageTests extends AbstractPlaywrightTestBase {
 
 	private String dbName = null;
 	private String dbID = null;
@@ -35,8 +36,10 @@ public class DatabaseAccessControlPageTests extends AbstractDatabaseTestBase {
 		// add db
 		String fileName = TestResources.TEST_DATABASE_ZIP;
 		dbName = "TestDatabase";
-		acquireTestDatabaseZipLock(()->DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName));
-		dbID = DatabaseTestUtils.getDatabaseID(page, dbName);
+//		acquireTestDatabaseZipLock(()->
+		dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
+//		);
+//		dbID = DatabaseTestUtils.getDatabaseID(page, dbName);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
@@ -45,6 +48,7 @@ public class DatabaseAccessControlPageTests extends AbstractDatabaseTestBase {
 	
 	@Test
 	@Tag(TestTags.FE_BUG)
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void testAccessControl(@PWPage Page page) throws IOException, InterruptedException {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);
@@ -54,6 +58,7 @@ public class DatabaseAccessControlPageTests extends AbstractDatabaseTestBase {
 	}
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void testLockDatabase(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
@@ -92,7 +97,9 @@ public class DatabaseAccessControlPageTests extends AbstractDatabaseTestBase {
 	
 	@AfterEach
 	public void tearDown(@PWPage Page page) {
-		releaseTestDatabaseZipLock(()-> CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID));
+//		releaseTestDatabaseZipLock(()-> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+		//);
 		logout(page);
 	}
 }
