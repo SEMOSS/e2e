@@ -40,8 +40,8 @@ public class NotebookPageUtils {
 	private static final String OUTPUT_XPATH = "//pre[text()='{Output}']";
 	private static final String PYTHON_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 	private static final String NOTEBOOK_NAME_XPATH = "//span[text()='Notebook']/following::li//span[text()='{notebookName}']";
-	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//th[text()='{queryLocator}']";
-	private static final String QUERY_OUTPUT_FIELD_XPATH = "//tr[contains(@class,'MuiTableRow-root')]//td[text()='{valueLocator}']";
+	private static final String QUERY_OUTPUT_COLUMN_XPATH = "//th[text()='{queryLocator}']";
+	private static final String QUERY_OUTPUT_FIELD_XPATH = "//td[text()='{valueLocator}']";
 	private static final String QUERY_CODE_RUN_NULL_OUTPUT_XPATH = "//tbody//td[contains(text(),'There was an issue generating a preview.')]";
 	private static final String CHECK_DEFAULT_OPERATOR_XPATH = "(//span[text()='{operator}'])";
 	private static final String CHANGE_DEFAULT_OPERATOR_XPATH = "//div[@role='option']//span[text()='{operator}']";
@@ -387,7 +387,7 @@ public class NotebookPageUtils {
 		if (!selectDatabase.isVisible()) {
 			page.locator("//div[@class='flex flex-row items-center justify-between']//button[@role='combobox']")
 					.click();
-			page.getByText(databaseName).first().click();
+			page.getByText(databaseName).nth(1).click();
 		}
 
 	}
@@ -403,6 +403,7 @@ public class NotebookPageUtils {
 		Locator checkCircle = page.locator(RUN_CELL_LOADING_ICON_XPATH);
 		AICorePageUtils.waitFor(checkCircle);
 		checkCircle.isVisible();
+		page.waitForTimeout(500);
 	}
 
 	public static String getFrameID(Page page) {
@@ -526,10 +527,10 @@ public class NotebookPageUtils {
 	}
 
 	public static boolean validateQuery(Page page, String queryLocator, String value) {
-		boolean isColumnVisible = page.locator(QUERY_OUTPUT_COLUMN_XPATH.replace("{queryLocator}", queryLocator))
-				.isVisible();
+		Locator columnName = page.locator(QUERY_OUTPUT_COLUMN_XPATH.replace("{queryLocator}", queryLocator));
+		AICorePageUtils.waitFor(columnName);
 		boolean isFieldVisible = page.locator(QUERY_OUTPUT_FIELD_XPATH.replace("{queryLocator}", value)).isVisible();
-		if (!isFieldVisible && !isColumnVisible) {
+		if (!isFieldVisible && !columnName.isVisible()) {
 			throw new AssertionError(
 					"Column with header " + queryLocator + " and value " + value + " is not visible in the output");
 		}

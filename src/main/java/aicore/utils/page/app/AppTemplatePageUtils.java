@@ -23,7 +23,7 @@ public class AppTemplatePageUtils {
 	private static final String DESCRIPTION_BOX_XPATH = "//div[@class='relative']//textarea";
 	private static final String PREVIEW_APP_CANCEL_XPATH = "//button[text()='Cancel']";
 	private static final String INPUT_BOX_LABEL_XPATH = "//div[@class='relative']//textarea/ancestor::div[@data-block='question']";
-	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
+	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//div[@role='dialog']/following::p[text()='Ask an LLM a question']";
 	private static final String PREVIEW_APP_INPUT_BOX_XPATH = "//div[@role='dialog']//div[@data-block='question']";
 	private static final String PREVIEW_APP_INPUT_BOX_LABEL_XPATH = "//div[@role='dialog']//div[@data-block='question']//label";
 	private static final String PREVIEW_APP_SUBMIT_BUTTON_XPATH = "//div[@role='dialog']//div[@data-block='submit']";
@@ -54,6 +54,7 @@ public class AppTemplatePageUtils {
 	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
 	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
 	private static final String SAVE_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
+	private static final String PREVIEW_APP_CANCEL_BUTTON_XPATH = "//button[text()='Cancel']";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -107,8 +108,10 @@ public class AppTemplatePageUtils {
 			throw new AssertionError("Input field with label '" + label + "' is not visible");
 		}
 		String inputBoxLabel = page.locator(INPUT_BOX_LABEL_XPATH).textContent();
+		inputBoxLabel = inputBoxLabel.replace("*", "").toLowerCase();
 		if (!inputBoxLabel.contains(label)) {
-			throw new AssertionError("Input field label " + label + " does not match with expected label ");
+			throw new AssertionError(
+					"Input field label " + label + " does not match with expected label " + inputBoxLabel);
 		}
 	}
 
@@ -159,7 +162,6 @@ public class AppTemplatePageUtils {
 	public static void verifyDescriptionInPreview(String description, Page page) {
 		page.locator(PREVIEW_APP_DESCRIPTION_XPATH).first().isVisible();
 		String actualDescription = page.locator(PREVIEW_APP_DESCRIPTION_XPATH).first().textContent();
-
 		if (!actualDescription.equals(description)) {
 			throw new AssertionError("Description in preview does not match");
 		}
@@ -193,7 +195,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickClosePreviewButton(Page page) {
-		Locator cancelButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel"));
+		Locator cancelButton = page.locator(PREVIEW_APP_CANCEL_BUTTON_XPATH).nth(1);
 		cancelButton.isVisible();
 		cancelButton.click();
 	}

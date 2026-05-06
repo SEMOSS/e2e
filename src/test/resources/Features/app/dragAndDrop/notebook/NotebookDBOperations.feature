@@ -42,12 +42,12 @@ Feature: Notebook Validate Database Operations
     And User mouse hover below the existing cell
     And User selects 'Import Data' from the hidden options
     And User selects 'Custom Import (SQL)' from the data import options
+   And User selects 'TestDatabase' database from the dropdown
     And User deletes the previous cell
-    And User selects 'TestDatabase' database from the dropdown
     And User writes the query 'SELECT * FROM DIABETES where Age = 50 AND BloodPressure = 90'
     And User clicks on Run cell button
-    Then User sees the output of the executed query where 'Age' is '50'
-    And User sees the output of the executed query where 'BloodPressure' is '90'
+    Then User sees the output of the executed query where 'AGE' is '50'
+    And User sees the output of the executed query where 'BLOODPRESSURE' is '90'
 
   Scenario: Import Data
     Given User is on Home page
