@@ -10,7 +10,7 @@ import com.microsoft.playwright.options.AriaRole;
 import aicore.pages.base.AbstractBasePage;
 import io.qameta.allure.Step;
 
-public class MainMenuUtils extends AbstractBasePage{
+public class MainMenuUtils extends AbstractBasePage {
 	private static final Logger logger = LogManager.getLogger(MainMenuUtils.class);
 
 	// menu
@@ -33,7 +33,7 @@ public class MainMenuUtils extends AbstractBasePage{
 
 	// settings
 	private static final String SETTINGS_MENU_BUTTON_DATA_TEST_ID = "sidebar-settings-btn";
-	
+
 	@Step("Open Main Menu")
 	public static void openMainMenu(Page page) {
 		logger.info("Open Main Menu");
@@ -49,7 +49,7 @@ public class MainMenuUtils extends AbstractBasePage{
 			menuOpen.dblclick();
 		}
 	}
-	
+
 	@Step("Click on Home")
 	public static void clickOnHome(Page page) {
 		logger.info("Click on Home");
@@ -119,7 +119,7 @@ public class MainMenuUtils extends AbstractBasePage{
 		Locator locator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login"));
 		clickOnLocatorAndCLoseMainMenu(page, locator);
 	}
-	
+
 	public static void clickOnLocatorAndCLoseMainMenu(Page page, Locator locator) {
 		waitAndClick(locator);
 		clickAnywhereOnPage(page); // closes side-menu on main page
@@ -142,6 +142,5 @@ public class MainMenuUtils extends AbstractBasePage{
 		}
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
 	}
 }
