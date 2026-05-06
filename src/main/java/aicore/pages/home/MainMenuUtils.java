@@ -148,6 +148,6 @@ public class MainMenuUtils extends AbstractBasePage{
 		}
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login")).click();
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Logout")).click();
-		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome!")).click();
+		page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Welcome back")).click();
 	}
 }
