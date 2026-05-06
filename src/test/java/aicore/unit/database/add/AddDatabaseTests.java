@@ -1,6 +1,5 @@
 package aicore.unit.database.add;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -17,15 +16,14 @@ import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICoreAllureLabels;
 import aicore.utils.AbstractDatabaseTestBase;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
-import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 

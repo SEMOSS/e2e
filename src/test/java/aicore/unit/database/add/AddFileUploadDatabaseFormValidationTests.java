@@ -1,15 +1,11 @@
 package aicore.unit.database.add;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,11 +16,9 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractDatabaseTestBase;
-import aicore.utils.AbstractE2ETest;
-import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
-import aicore.utils.PWPage;
+import aicore.utils.annotations.PWPage;
 
 public class AddFileUploadDatabaseFormValidationTests extends AbstractDatabaseTestBase {
 

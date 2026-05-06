@@ -2,10 +2,8 @@ package aicore.unit.database;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,15 +14,14 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AbstractDatabaseTestBase;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
-import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
+import aicore.utils.annotations.PWPage;
 
 public class DatabaseAccessControlPageTests extends AbstractDatabaseTestBase {
 

@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,14 +15,13 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractDatabaseTestBase;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
-import aicore.utils.PWPage;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
 
 public class DatabaseQueryPageTests extends AbstractDatabaseTestBase {
 	private String dbName = null;

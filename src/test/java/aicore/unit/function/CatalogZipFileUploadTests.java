@@ -3,7 +3,6 @@ package aicore.unit.function;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,18 +12,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
-import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.UploadCatalogUtils;
+import aicore.utils.annotations.PWPage;
 
 
 /**

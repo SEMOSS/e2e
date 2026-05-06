@@ -4,10 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,12 +13,11 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractDatabaseTestBase;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
-import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 
 public class AllDatabaseSortTests extends AbstractDatabaseTestBase {

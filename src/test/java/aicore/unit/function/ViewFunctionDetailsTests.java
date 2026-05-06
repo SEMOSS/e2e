@@ -6,29 +6,20 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
 
 import com.microsoft.playwright.Page;
 
 import aicore.pages.ViewFunctionPage;
-import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.AbstractFunctionTestBase;
-import aicore.utils.AddFunctionPageUtils;
-import aicore.utils.CatalogCreationFromZipUtil;
-import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
-import aicore.utils.PWPage;
-import aicore.utils.PlaywrightExtension;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.TestTags;
-import aicore.utils.PlaywrightExtension.UserType;
+import aicore.utils.annotations.PWPage;
 
 public class ViewFunctionDetailsTests extends AbstractFunctionTestBase{
 	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);

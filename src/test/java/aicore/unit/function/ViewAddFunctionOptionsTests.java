@@ -14,7 +14,7 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.FunctionTestUtils;
-import aicore.utils.PWPage;
+import aicore.utils.annotations.PWPage;
 
 public class ViewAddFunctionOptionsTests extends AbstractPlaywrightTestBase {
 	

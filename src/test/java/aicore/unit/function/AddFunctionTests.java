@@ -18,8 +18,8 @@ import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
-import aicore.utils.PWPage;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.annotations.PWPage;
 
 public class AddFunctionTests extends AbstractPlaywrightTestBase {
 	

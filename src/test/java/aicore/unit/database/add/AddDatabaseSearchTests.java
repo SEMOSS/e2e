@@ -20,9 +20,8 @@ import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.steps.AbstractAddCatalogBase;
 import aicore.utils.AbstractDatabaseTestBase;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
-import aicore.utils.PWPage;
+import aicore.utils.annotations.PWPage;
 
 public class AddDatabaseSearchTests extends AbstractDatabaseTestBase {
 

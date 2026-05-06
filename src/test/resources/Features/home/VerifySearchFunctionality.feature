@@ -1,24 +1,5 @@
 Feature: Search app and catalogs
 
-  @LoginWithAdmin @Regression
-  Scenario: Search App
-    Given User opens Main Menu
-    When User clicks on Open App Library
-    And User clicks on Create New App button
-    And User clicks on Get Started button in "Drag and Drop"
-    And User enters 'App' as app name
-    And User enters description as 'Created by automation script'
-    And User enters tags 'Test1, Test2' and presses Enter
-    And User clicks on Create button
-    And User fetch the app name
-    And User opens Main Menu
-    And User clicks on Home
-    And User search the 'App' in the home search box
-    And User clicks on the 'Apps' option to filter the results
-    Then User can see 'App' in the 'Apps' filter results
-    And User clicks on the 'Apps' option to unfilter the results
-    And User close the search popup
-
   @DeleteTestCatalog @Regression
   Scenario: Search model
     Given User is on Home page

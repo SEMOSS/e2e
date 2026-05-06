@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,17 +13,12 @@ import com.microsoft.playwright.Page;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
-import aicore.utils.AbstractE2ETest;
 import aicore.utils.AbstractFunctionTestBase;
-import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
-import aicore.utils.CatalogCreationFromZipUtil;
-import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.FunctionTestUtils;
-import aicore.utils.PWPage;
 import aicore.utils.RequestAccessPopupUtils;
 import aicore.utils.StoragePageUtils;
-import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.annotations.PWPage;
 
 
 public class AddFunctionFromZipTests extends AbstractFunctionTestBase{

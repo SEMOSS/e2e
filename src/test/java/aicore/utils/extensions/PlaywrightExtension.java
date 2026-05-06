@@ -1,22 +1,4 @@
-package aicore.utils;
-
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.Browser.NewContextOptions;
-import com.microsoft.playwright.BrowserType.LaunchOptions;
-import com.microsoft.playwright.Tracing.StartOptions;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
-
-import aicore.base.DockerUtils;
-import aicore.base.RunInfo;
-import aicore.framework.AICoreTestConstants;
-import aicore.framework.ConfigUtils;
-import aicore.framework.HttpLogger;
-import aicore.framework.JunitUrlUtils;
-import aicore.framework.UrlUtils;
-import aicore.pages.home.HomePageUtils;
-import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest.UserType;
+package aicore.utils.extensions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -31,7 +13,36 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Browser.NewContextOptions;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Response;
+import com.microsoft.playwright.Tracing;
+import com.microsoft.playwright.Tracing.StartOptions;
+import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
+
+import aicore.base.DockerUtils;
+import aicore.framework.AICoreTestConstants;
+import aicore.framework.ConfigUtils;
+import aicore.framework.HttpLogger;
+import aicore.framework.JunitUrlUtils;
+import aicore.pages.home.HomePageUtils;
+import aicore.pages.home.MainMenuUtils;
+import aicore.utils.annotations.PWPage;
 
 /*
  * This is a JUnit extension that tests can use to instantiate a set of playwright, browser, browsercontext, and page objects

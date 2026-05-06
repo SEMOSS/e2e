@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.microsoft.playwright.Page;
 
+import aicore.utils.extensions.PlaywrightExtension;
+
 /*
  * Provides an abstract class for tests to inherit the Playwright extension class and access the user type enum and login/logout 
  * operations

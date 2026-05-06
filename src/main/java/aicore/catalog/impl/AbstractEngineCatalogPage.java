@@ -11,8 +11,8 @@ import aicore.catalog.api.ICatalog;
 import aicore.pages.base.AbstractBasePage;
 import aicore.utils.AICorePageUtils;
 
-public abstract class AbstractCatalog extends AbstractBasePage implements ICatalog {
-	private static final Logger logger = LogManager.getLogger(AbstractCatalog.class);
+public abstract class AbstractEngineCatalogPage extends AbstractBasePage implements ICatalog {
+	private static final Logger logger = LogManager.getLogger(AbstractEngineCatalogPage.class);
 
 	// TODO should move to separate file if this list starts to become too large
 	/** create or add new catalog item constants */
