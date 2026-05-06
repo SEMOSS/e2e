@@ -48,7 +48,7 @@ Feature: Create app using Delete diabetesTemplate
     And User fetch the app name 
     And User clicks on Preview app button
     And user selects "4" from "Select Unique ID" dropdown
-    And User click on 'Delete' Record button
+    And User click on 'Delete Record' Record button
     Then User sees the success message "true"
     When User close the Preview app window
     And User clicks on Notebook

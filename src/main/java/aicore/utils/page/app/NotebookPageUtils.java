@@ -67,7 +67,7 @@ public class NotebookPageUtils {
 	private static final String NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH = "//span[text()='{notebookName}']/following::div//button[@title='Duplicate']";
 	private static final String NOTEBOOK_MENU_DELETE_BUTTON_XPATH = "//span[normalize-space()='{notebookName}']/following::div//button[@title='Delete']";
 	private static final String NOTEBOOK_LIST_XPATH = "//li//span[text()='{NotebookName}']";
-	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//label[text()='{label}']/parent::div//input[@aria-autocomplete='list']";
+	private static final String UNIQUE_ROW_ID_FIELD_XPATH = "//div[@class='relative']//button//*[name()='svg'][contains(@class,'lucide-chevron-down')]";
 	private static final String TRANSFORMATION_OPTIONS_XPATH = "//li[@value='{optionName}']";
 	private static final String TRANSFORMATION_TIMESTAMP_INCLUDE_CHECKBOX_XPATH = "//p[text()='Include time']";
 	private static final String NOTEBOOK_MOUSE_HOVER_ABOVE_THE_CELL_XPATH = "//div[contains(@class,'MuiPaper-elevation MuiPaper-rounded')]//div[@title='Database Not Editable']";
@@ -77,6 +77,8 @@ public class NotebookPageUtils {
 	private static final String CELL_XPATH = "//div[contains(@id,'notebook-cell')]";
 	private static final String NOTEBOOK_SELECT_HEADER_XPATH = "//div[@role='option']//span[text()='{selectHeader}']";
 	private static final String CONFIRM_DUPLICATE_NOTEBOOK_XPATH = "//button[text()='Duplicate']";
+	private static final String RUN_CELL_LOADER_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-loader-circle')]";
+	private static final String PREVIEW_APP_BUTTON_XPATH = "//span[text()='{buttonName}']/parent::button";
 
 	public static void clickOnNotebooksOption(Page page) {
 		page.locator(NOTEBOOK_OPTION_XPATH).click();
@@ -103,10 +105,10 @@ public class NotebookPageUtils {
 		if (block.isVisible()) {
 			block.hover();
 		}
-		Locator runCellButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Run cell"));
+		Locator runCellButton = page.locator(RUN_CELL_OPTION_XPATH).first();
 		AICorePageUtils.waitFor(runCellButton);
 		runCellButton.click();
-		Locator checkCircle = page.getByTestId("CheckCircleIcon");
+		Locator checkCircle = page.locator(RUN_CELL_LOADING_ICON_XPATH);
 		AICorePageUtils.waitFor(checkCircle);
 		checkCircle.isVisible();
 	}
@@ -120,7 +122,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void checkDatabaseOutput(Page page) {
-		Locator databaseblock = page.getByTestId("CheckCircleIcon");
+		Locator databaseblock = page.locator(RUN_CELL_LOADER_XPATH).last();
 		AICorePageUtils.waitFor(databaseblock);
 		if (!databaseblock.isVisible()) {
 			throw new AssertionError("Database command not executed successfully");
@@ -139,12 +141,13 @@ public class NotebookPageUtils {
 	}
 
 	public static void selectValueFromDropdown(Page page, String value, String fieldName) {
-		Locator appFieldLocator = page.locator(UNIQUE_ROW_ID_FIELD_XPATH.replace("{label}", fieldName)).nth(2);
+		page.waitForTimeout(1000);
+		Locator appFieldLocator = page.locator(UNIQUE_ROW_ID_FIELD_XPATH).nth(2);
 		AICorePageUtils.waitFor(appFieldLocator);
 		appFieldLocator.click();
-		appFieldLocator.fill(value);
-		appFieldLocator.press("ArrowDown");
-		appFieldLocator.press("Enter");
+		Locator selectValue = page.getByRole(AriaRole.OPTION,
+				new Page.GetByRoleOptions().setName(Pattern.compile("^" + value + "$")));
+		selectValue.click();
 	}
 
 	public static void selectValueFromReadAppDropdown(Page page, String value, String fieldName) {
@@ -174,7 +177,7 @@ public class NotebookPageUtils {
 	}
 
 	public static void clickOnRecordButton(Page page, String buttonName) {
-		Locator addRecordButton = page.locator("//span[text()='Add record']/parent::button").last();
+		Locator addRecordButton = page.locator(PREVIEW_APP_BUTTON_XPATH.replace("{buttonName}", buttonName)).last();
 		AICorePageUtils.waitFor(addRecordButton);
 		addRecordButton.scrollIntoViewIfNeeded();
 		if (!addRecordButton.isVisible()) {
