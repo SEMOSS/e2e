@@ -22,7 +22,7 @@ public class AppTemplatePageUtils {
 	private static final String ASK_LOADER_XPATH = "//div[@data-block=\"submit\"]//span[@role=\"progressbar\"]";
 	private static final String DESCRIPTION_BOX_XPATH = "//div[@class='relative']//textarea";
 	private static final String PREVIEW_APP_CANCEL_XPATH = "//button[text()='Cancel']";
-	private static final String INPUT_BOX_LABEL_XPATH = "//div[@class='relative']//textarea/parent::div";
+	private static final String INPUT_BOX_LABEL_XPATH = "//div[@class='relative']//textarea/ancestor::div[@data-block='question']";
 	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
 	private static final String PREVIEW_APP_INPUT_BOX_XPATH = "//div[@role='dialog']//div[@data-block='question']";
 	private static final String PREVIEW_APP_INPUT_BOX_LABEL_XPATH = "//div[@role='dialog']//div[@data-block='question']//label";
