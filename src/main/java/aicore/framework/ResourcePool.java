@@ -9,6 +9,8 @@ public class ResourcePool {
 
 	private static final AtomicInteger COUNT = new AtomicInteger(0);
 
+	private static volatile boolean initialized = false;
+
 	private static ThreadLocal<Resource> CURRENT = ThreadLocal.withInitial(() -> {
 		int index = Math.floorMod(COUNT.getAndIncrement(), RESOURCES.size());
 		return RESOURCES.get(index);
@@ -23,9 +25,19 @@ public class ResourcePool {
 		}
 
 		RESOURCES = List.copyOf(resources);
+		initialized = true;
 	}
 
 	public static Resource get() {
+		if (!initialized) {
+			synchronized (ResourcePool.class) {
+				if (!initialized) {
+					List<Resource> defaultResources = List.of(new Resource("http://localhost:9090/", 0));
+					RESOURCES = List.copyOf(defaultResources);
+					initialized = true;
+				}
+			}
+		}
 		return CURRENT.get();
 	}
 
