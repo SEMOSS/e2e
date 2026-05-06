@@ -681,6 +681,45 @@ public class PlaygroundPageUtils {
 			fileChooser.setFiles(filePath);
 	}
 
+	public static void openSideBar(Page page) {
+		Locator sidebar = page.locator("//button[@data-slot='sidebar-trigger']");
+		if (sidebar.isVisible()) {
+			sidebar.click();
+		}
+	}
+
+	public static void launchTour(Page page) {
+		Locator nextTourButton = page.locator("//button[@data-tour='tour-take-tour']");
+		if (nextTourButton.isVisible()) {
+			nextTourButton.click();
+		}
+	}
+
+	public static void skipTourButton(Page page) {
+		Locator skipTourButton = page.locator("//button[text()='Skip']");
+		if (skipTourButton.isVisible()) {
+			skipTourButton.click();
+		}
+	}
+
+	public static void nextTourButton(Page page) {
+		Locator nextTourButton = page.locator("//button[text()='Next']");
+		if (nextTourButton.isVisible()) {
+			nextTourButton.click();
+		}
+	}
+
+	public static int getTotalSteps(Page page) {
+		Locator totalStepsLocator = page.locator("//span[contains(text(),'Welcome')]//ancestor::div//following-sibling::div//span");
+		AICorePageUtils.waitFor(totalStepsLocator);
+		String totalStepsText = totalStepsLocator.textContent().trim();
+		totalStepsText = totalStepsText.split(" ")[0].trim();
+		try {
+			return Integer.parseInt(totalStepsText);
+		} catch (NumberFormatException e) {
+			throw new AssertionError("Failed to parse total steps from text: '" + totalStepsText + "'", e);
+		}
+	}
 	public static void closeTourButton(Page page) {
 		Locator closeTourButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close tour"));
 		if (closeTourButton.isVisible()) {
