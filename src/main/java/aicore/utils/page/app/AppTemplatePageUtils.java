@@ -33,7 +33,7 @@ public class AppTemplatePageUtils {
 	private static final String TEXT_XPATH = "//a[text()='{text}']";
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
-	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
+	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//input[contains(@data-testid,'inputSettings-Destination-link')]";
 	private static final String APP_TITLE_XPATH = "//*[@id='page-1']//h1";
 	private static final String APP_BLOCK_TITLE_XPATH = "//input[@value='{text}']";
 	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
@@ -53,6 +53,7 @@ public class AppTemplatePageUtils {
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
 	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
 	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
+	private static final String SAVE_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -231,7 +232,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickSaveButtonOfTheApp(Page page) {
-		Locator saveButton = page.getByTestId("SaveRoundedIcon");
+		Locator saveButton = page.locator(SAVE_BUTTON_XPATH);
 		saveButton.isVisible();
 		saveButton.click();
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
