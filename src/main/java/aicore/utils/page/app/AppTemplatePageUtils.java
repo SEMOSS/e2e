@@ -71,9 +71,10 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnQuestionBlock(Page page, String blockName) {
-		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).isVisible();
-		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName)).click();
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName.toLowerCase()))
+				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName.toLowerCase())).isVisible();
+		page.locator(INPUT_BOX_XPATH.replace("{blockName}", blockName.toLowerCase())).click();
 	}
 
 	public static void addDescription(String description, Page page) {
@@ -394,9 +395,9 @@ public class AppTemplatePageUtils {
 		List<Integer> ages = ageLocator.allInnerTexts().stream().map(String::trim).map(Integer::parseInt).toList();
 
 		return switch (condition.toLowerCase()) {
-			case "above" -> ages.stream().allMatch(age -> age > number);
-			case "below" -> ages.stream().allMatch(age -> age < number);
-			default -> false;
+		case "above" -> ages.stream().allMatch(age -> age > number);
+		case "below" -> ages.stream().allMatch(age -> age < number);
+		default -> false;
 		};
 	}
 
@@ -452,9 +453,9 @@ public class AppTemplatePageUtils {
 
 	public static void verifyButtonIsEnabled(String buttonName, Page page) {
 		page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
-.isVisible();
-		boolean isEnabled =page.locator("#page-1").getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName))
-				.isEnabled();
+				.isVisible();
+		boolean isEnabled = page.locator("#page-1")
+				.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(buttonName)).isEnabled();
 		if (!isEnabled) {
 			throw new AssertionError(buttonName + " is not enabled");
 		}

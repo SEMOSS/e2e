@@ -50,7 +50,7 @@ public class TeamPermissionsSettingsUtils {
 	private static final String USER_LIST_XPATH = "//div[contains(@class,'rounded-md p-3')]";
 	private static final String SELECT_USER_FROM_LIST_XPATH = "//div[contains(@class,'rounded-md p-3')][.//div[text()='{userName}']]";
 	private static final String CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_APPS_XPATH = "//div//h2[text()='Add Apps']/following::button[@role='checkbox']";
-	private static final String FETCH_TEAM_NAME_XPATH = "//*[contains(@class,'text-muted-foreground')]//span";
+	private static final String FETCH_TEAM_NAME_XPATH = "//*[contains(@class,'text-muted-foreground')]//span[@data-slot=\"breadcrumb-page\"]";
 	private static String engineAddedDteTime;
 	private static final String ENGINE_DATE_TIME_XPATH = "//tr[.//div[normalize-space()='{catalogName}']]//td[last()-1]";
 	private static final String CATALOG_DATE_TIME_XPATH = "//td[text()='{teamName}']/following-sibling::td";
