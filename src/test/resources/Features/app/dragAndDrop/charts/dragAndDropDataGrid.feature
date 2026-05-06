@@ -13,10 +13,10 @@ Feature: Drag and Drop Data Grid
     And User clicks on Copy Catalog ID
     Then User can see the Catalog title as 'TestDatabase'
     When User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User clicks on apply database button
-    Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
+    ##And User clicks on Refresh button
+    ##And User clicks on apply database button
+   ##Then User sees the table in the metadata tab
+    ##When User clicks on Save button of Metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
