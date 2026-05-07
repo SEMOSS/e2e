@@ -790,24 +790,4 @@ public class AddModelSteps {
 		openModelPage.changeRequestedAccessRole(newRole);
 	}
 
-	@And("User clicks on Generate MCP button")
-	public void user_clicks_on_generate_mcp_button() {
-		openModelPage.clickOnGenerateMCPButtonFromMCPUsageTab();
-	}
-
-	@And("User can see the Avialble Tools as {string}")
-	public void user_can_see_the_available_tools_as(String expectedTool) {
-		boolean isToolPresent = openModelPage.verifyToolsInGeneratedMCP(expectedTool);
-		Assertions.assertTrue(isToolPresent, "Tool are not displayed as expected in generated MCP");
-	}
-
-	@And("User can see the below Input parameters under the View parameter")
-	public void user_can_see_the_below_input_parameters_under_the_view_parameter(String toolName, DataTable dataTable) {
-		String param = dataTable.cell(0, 0);
-		List<String> expectedParameters = Arrays.asList(param.split(", "));
-		boolean isInputParameterPresent = openModelPage.verifyInputParameters(toolName, expectedParameters);
-		Assertions.assertTrue(isInputParameterPresent,
-				"Input parameters are not displayed as expected in generated MCP ");
-	}
-
 }
