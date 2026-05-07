@@ -802,10 +802,10 @@ public class AddModelSteps {
 	}
 
 	@And("User can see the below Input parameters under the View parameter")
-	public void user_can_see_the_below_input_parameters_under_the_view_parameter(DataTable dataTable) {
+	public void user_can_see_the_below_input_parameters_under_the_view_parameter(String toolName, DataTable dataTable) {
 		String param = dataTable.cell(0, 0);
 		List<String> expectedParameters = Arrays.asList(param.split(", "));
-		boolean isInputParameterPresent = openModelPage.verifyInputParameters(expectedParameters);
+		boolean isInputParameterPresent = openModelPage.verifyInputParameters(toolName, expectedParameters);
 		Assertions.assertTrue(isInputParameterPresent,
 				"Input parameters are not displayed as expected in generated MCP ");
 	}
