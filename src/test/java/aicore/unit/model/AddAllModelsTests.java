@@ -3,24 +3,28 @@ package aicore.unit.model;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.ModelTestUtils;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.page.model.ModelPageUtils;
 
-public class AddAllModelsTests extends AbstractE2ETest {
+public class AddAllModelsTests extends AbstractPlaywrightTestBase {
 
-	@BeforeAll
-	void setup() {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		// login with admin user before tests
+		loginNativeAdmin(page);
 	}
 
 	private Stream<Arguments> provideModelCreationCases() {
@@ -1019,10 +1023,10 @@ public class AddAllModelsTests extends AbstractE2ETest {
 	@MethodSource("provideModelCreationCases")
 	public void testAddModelType(String group, String model, String s1Name, String s1Fields, String s2Name,
 			String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields,
-			String catalogName, String smssFields) {
+			String catalogName, String smssFields, @PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 
-		openAddModelForm(group, model);
+		openAddModelForm(page, group, model);
 		ModelTestUtils.verifyFormSections(page,
 				ModelTestUtils.buildSections(s1Name, s1Fields, s2Name, s2Fields, s3Name, s3Fields));
 		ModelTestUtils.verifyMandatoryFields(page, mandatoryFields);
@@ -1038,9 +1042,10 @@ public class AddAllModelsTests extends AbstractE2ETest {
 		ModelPageUtils.clickOnSMSSTab(page);
 		ModelTestUtils.verifySmssFields(page, smssFields);
 		CommonUtils.navigateAndDeleteCatalog(page, "Model", catalogName + timestamp);
+		logout(page);
 	}
 
-	private void openAddModelForm(String group, String model) {
+	private void openAddModelForm(Page page, String group, String model) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
 		ModelPageUtils.clickAddModelButton(page);
