@@ -33,7 +33,6 @@ public class FunctionTestUtils {
 		}
 	}
 	
-	
 	public static void verifyFunctionCreationFormWithMandatoryFields(Page page, String mandatoryFields){
 		String[] fields = mandatoryFields.split(", ");
 		for (String field : fields) {
@@ -121,9 +120,7 @@ public class FunctionTestUtils {
 		assertTrue( catalogLocator.isVisible() );
 	}
 	
-	
-	public static void verifyPopupWithSelectOptions(Page page, String expectedTitle, List<String> options){//user_should_see_the_popup_with_following_options(String expectedTitle,
-//			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
+	public static void verifyPopupWithSelectOptions(Page page, String expectedTitle, List<String> options){
 		Assertions.assertTrue(RequestAccessPopupUtils.isPopupVisible(SetupHooks.getPage()), expectedTitle + " popup is not visible");
 		for (String option : options) {
 			Assertions.assertTrue(RequestAccessPopupUtils.isOptionVisible(SetupHooks.getPage(), option),
@@ -149,21 +146,17 @@ public class FunctionTestUtils {
 
 	public static void verifyOptionsWithIconsOnConnectToFunctionPage(Page page, String optionsStr) {
 		List<String> optionsList = List.of(optionsStr.split(", "));
-		final String sectionName = "Functions";
-
-		boolean isSectionVisible = AddCatalogPageBaseUtils.verifySectionIsVisible(page, "function", sectionName);
-		Assertions.assertTrue(isSectionVisible, sectionName + " section not visible");
+		boolean isFunctionGridVisible = AddFunctionPageUtils.userCanSeeFunctionsGridOfOptions(page);
+		Assertions.assertTrue(isFunctionGridVisible, "Function Options section not visible");
 		for (String option : optionsList) {
 			// Verify option is visible
-			boolean isOptionVisible = AddCatalogPageBaseUtils.verifyOptionIsVisible(page, "function", sectionName, option);
+			boolean isOptionVisible = AddFunctionPageUtils.userCanSeeOptionInFunctionsGrid(page, option);
 			Assertions.assertTrue(isOptionVisible, option + " option not visible");
 			// Verify icon is visible
-			Locator icon = AddCatalogPageBaseUtils.getIconByLabel(page, "function", sectionName, option);
-			icon.waitFor();
-			boolean isIconVisible = AddCatalogPageBaseUtils.isIconVisible(page, "function", sectionName, option);
+			boolean isIconVisible = AddFunctionPageUtils.userCanSeeOptionIconInFunctionsGrid(page, option);
 			Assertions.assertTrue(isIconVisible, option + " icon is not visible");
 			// verify icon is not broken
-			String iconUrl = icon.getAttribute("src");
+			String iconUrl = AddFunctionPageUtils.getIconURL(page, option);
 			// for 'Local File System' storage & 'FAISS' vector options getting broken image
 			if (isIconVisible && !option.matches(".*(Local File System||FAISS).*")) {
 				boolean isIconValid = CommonUtils.isIconValid(iconUrl);
@@ -173,21 +166,17 @@ public class FunctionTestUtils {
 	}
 	
 	public static void validateFunctionFilters(Page page, String catalogName, String filterCategoryName, String filterValues) {
-//		for (Map<String, String> row : rows) {
-//			row.get(filterCategoryName);
-//			String filterValues = row.get(filterValueName);
+		String[] filterValuesArray = filterValues.split(", ");
+		for (String filterValue : filterValuesArray) {
+			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
+			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
+			boolean isCatalogVisible = CatalogFilterPageUtils.verifyCatalogIsVisibleOnCatalogPage(page, catalogName);
+			Assertions.assertTrue(isCatalogVisible,
+					"Catalog is not present for " + "'" + filterValue + "'" + " filter value");
+			// To de-select selected filter we again call this method
+			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
 
-			String[] filterValuesArray = filterValues.split(", ");
-			for (String filterValue : filterValuesArray) {
-				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
-				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
-				boolean isCatalogVisible = CatalogFilterPageUtils.verifyCatalogIsVisibleOnCatalogPage(page, catalogName);
-				Assertions.assertTrue(isCatalogVisible, "Catalog is not present for " + "'" + filterValue + "'" + " filter value");
-				// To de-select selected filter we again call this method
-				CatalogFilterPageUtils.selectFilterValue(page , filterValue);
-
-			}
-//		}
+		}
 	}
 	
 	public static void userSeesFunctionStatusOnTooltip(Page page, String expectedStatus) {

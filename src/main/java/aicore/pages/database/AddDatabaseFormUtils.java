@@ -11,6 +11,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
+import io.qameta.allure.Step;
 
 public class AddDatabaseFormUtils {
 	private static final Logger logger = LogManager.getLogger(AddDatabaseFormUtils.class);
@@ -27,12 +28,14 @@ public class AddDatabaseFormUtils {
 
 	private static final String MANDATORY_FIELD_XPATH = "//div//label[text()='{fieldName}']//span";
 
+	@Step("Click on Add Database button")
 	public static void clickAddDatabaseButton(Page page) {
 		logger.info("CLICK ON ADD DATABASE BUTTON");
 		page.getByLabel(ADD_DATABASE_BUTTON).isVisible();
 		page.getByLabel(ADD_DATABASE_BUTTON).click();
 	}
 
+	@Step("Select database type as: {dbType}")
 	public static void selectDatabaseFromConnectionTypes(Page page, String dbType) {
 		logger.info("SELECT " + dbType + " AS DATABASE TYPE");
 		Locator option = page.locator(DATABASE_CONNECTION_XPATH).filter(new Locator.FilterOptions().setHasText(dbType));
@@ -42,6 +45,7 @@ public class AddDatabaseFormUtils {
 		option.click();
 	}
 
+	@Step("Enter Catalog Name: {catalogName}")
 	public static void enterCatalogName(Page page, String catalogName) {
 		logger.info("ENTER CATALOG NAME: " + catalogName);
 		Locator catalogNameInput = page.locator(CATALOG_NAME_XPATH);
@@ -51,6 +55,7 @@ public class AddDatabaseFormUtils {
 		catalogNameInput.fill(catalogName);
 	}
 
+	@Step("Enter hostname: {hostName}")
 	public static void enterHostName(Page page, String hostName) {
 		logger.info("ENTER HOSTNAME: " + hostName);
 		Locator hostNameInput = page.locator(HOST_NAME_XPATH);
@@ -73,6 +78,7 @@ public class AddDatabaseFormUtils {
 		portNumberInput.fill("");
 	}
 
+	@Step("Enter schema name: {schemaName}")
 	public static void enterSchemaName(Page page, String schemaName) {
 		logger.info("ENTER SCHEMA NAME: " + schemaName);
 		Locator schemaNameInput = page.locator(SCHEMA_NAME_XPATH);
@@ -93,6 +99,7 @@ public class AddDatabaseFormUtils {
 		return jdbcUrlInput;
 	}
 
+	@Step("Enter jdbc url: {jdbcUrl}")
 	public static void enterJDBCUrl(Page page, String jdbcUrl) {
 		logger.info("ENTER JDBC URL: " + jdbcUrl);
 		Locator jdbcUrlLocator = page.locator(JDBC_URL_XPATH);
@@ -111,6 +118,7 @@ public class AddDatabaseFormUtils {
 		userNameInput.fill(userName);
 	}
 
+	@Step("Click on Connect button")
 	public static void clickOnConnectButton(Page page) {
 		logger.info("CLICK ON CONNECT BUTTON");
 		Locator connectButton = page.getByTestId(CONNECT_BUTTON_DATA_TESTID);

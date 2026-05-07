@@ -13,6 +13,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
+import io.qameta.allure.Step;
 
 public class AppPageUtils {
 
@@ -45,11 +46,14 @@ public class AppPageUtils {
 	private static final String DATE_CREATED_XPATH = "//button[@title='Private engine']/../../../div[1]//div[2]//span[contains(text(),'2026')]";
 	private static final String CREATED_BY_ME_FILTER_BUTTON_XPATH = "//label[text()='Created by me']/parent::div//button";
 
+	@Step("Click on Create New App button")
 	public static void clickOnCreateNewAppButton(Page page) {
 		Locator locator = page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID);
+		AICorePageUtils.waitFor(locator);
 		locator.click();
 	}
 
+	@Step("Search app: {appName}")
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search apps").click();
 		page.getByLabel("Search apps").fill(appName + " " + timestamp);

@@ -13,11 +13,11 @@ Feature: Database Catalog permissions for Editor user
     And User clicks on Copy Catalog ID
     And User sees success toast message 'Successfully Created Database'
     And User can see the Catalog title as 'TestDatabase'
-    Then 'Author' user clicks on Access Control
+    And 'Author' user clicks on Access Control
     And User clicks on Add Member button
     And User adds one user and assigns them as 'Editor'
     And User logs out from the application
-    Then User login as 'Editor'
+    And User login as 'Editor'
     And User opens Main Menu
     And User clicks on Open Database
     And User searches the 'TestDatabase' in the database Catalog searchbox

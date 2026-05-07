@@ -53,8 +53,7 @@ public class AddFunctionTests extends AbstractE2ETest {
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
 		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, toastMessage);
 		// delete db
-		//TODO fails to delete catalog but doesn't throw error - needs to investigate
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, functionName);
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, catalogName.replace("{Timestamp}", " " + timestamp));
 	}
 	
 	private static Stream<Arguments> provideIncompleteInputsForTestValidateFunctions() {

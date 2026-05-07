@@ -60,7 +60,7 @@ public class StoragePageUtils {
 	}
 
 	public static String verifyStorageCreatedToastMessage(Page page, String toastMessage) {
-		Locator alert = page.locator(TOAST_MESSAGE_XPATH.replace("{message}", toastMessage));
+		Locator alert = page.locator(TOAST_MESSAGE_XPATH.replace("{message}", toastMessage)).first();
 		return AICorePageUtils.verifySuccessToastMessage(page, alert);
 	}
 
@@ -193,9 +193,9 @@ public class StoragePageUtils {
 	}
 
 	public static String verifyDeleteToastMessage(Page page) {
-		page.getByText(DELETE_TOAST_MESSAGE)
+		page.getByText(DELETE_TOAST_MESSAGE).first()
 				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).textContent();
+		String toastMessage = page.getByText(DELETE_TOAST_MESSAGE).first().textContent();
 		return toastMessage;
 	}
 

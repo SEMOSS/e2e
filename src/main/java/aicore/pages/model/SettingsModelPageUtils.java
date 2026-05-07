@@ -1,6 +1,7 @@
 package aicore.pages.model;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -21,20 +22,20 @@ public class SettingsModelPageUtils {
 	private static final String PENDING_REQUESTS_SECTION_TITLE_XPATH = "//h4[text()='Pending Requests']";
 	private static final String PENDING_REQUESTS_SECTION_TEXT_MESSAGE_XPATH = "//div[h4[text()='Pending Requests']]/following-sibling::div//p[contains(text(),'0 pending requests')]";
 	private static final String PENDING_REQUESTS_COUNT_DATA_DATATESTID = "pending-requests-count";
-	private static final String MEMBER_SECTION_TITLE_XPATH = "//h4[text()='Permissions']";
-	private static final String MEMBER_SEARCH_ICON_DATA_TESTID = "membersTable-searchIcon";
-	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search Members";
-	private static final String ADD_MEMBERS_BUTTON_DATA_TESTID = "membersTables-addMembers-btn";
-	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//h4[text()='Permissions']/parent::div/../following-sibling::div//span[contains(text(),'Rows per page:')]";
+	private static final String MEMBER_SECTION_TITLE_XPATH = "//h2[text()='Member Permissions']";
+	private static final String SEARCH_MEMBER_PLACEHOLDER_TEXT = "Search";
+	private static final String ADD_MEMBERS_BUTTON_XPATH = "//span[text()='Add Members']";
+	private static final String ROWS_PER_PAGE_DROPDOWN_XPATH = "//span[text()='Rows per page:']/parent::div//button";
 	private static final String ROWS_PER_PAGE_DROPDOWN_OPTIONS_LIST_XPATH = "//ul[contains(@class,'MuiList-root MuiList-padding MuiMenu-list')]//li";
-	private static final String CLICK_ON_SEARCH_USER_DATATESTID = "members-add-overlay-autocomplete";
-	private static final String ADD_MEMBER_XPATH = "//input[@data-slot='command-input']";
-	private static final String RADIO_BUTTON_DATATESTID = "{role}-role-radio";
-	private static final String SAVE_BUTTON_DATATESTID = "members-add-overlay-add-button";
+	private static final String SEARCH_USER_XPATH = "//input[contains(@placeholder,'Search by name')]";
+	private static final String ADD_MEMBER_XPATH = "//input[contains(@placeholder,'Search by name')]";
+	private static final String ROLE_SELECT_DROPDOWN_XPATH = "//h2[text()='Add Members']/../..//button[@data-slot='dropdown-menu-trigger']";
+	private static final String SELECT_ROLE_XPTAH = "//div[text()='{role}']";
+	private static final String ADD_BUTTON_XPATH = "//button[contains(text(),'Add')]";
 	private static final String DELETE_SUCCESS_TOAST_XPATH = "//li[@data-type='success']";
 	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//li[@data-type='error']";
 	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//td//*[contains(@class,'lucide-trash')]";
-	private static final String CONFIRM_BUTTON_XPATH = "//button[text()='Confirm']";
+	private static final String CONFIRM_DELETE_BUTTON_XPATH = "//h2[text()='Delete Member']/parent::div//button[text()='Delete']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
 	private static final String USAGE_CODE_SECTION_XPATH = "//*[text()='{sectionName}']/../div[@data-slot='markdown']";
@@ -47,7 +48,7 @@ public class SettingsModelPageUtils {
 	private static final String USER_NAME_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]";
 	private static final String USER_ROLE_IN_MEMBER_LIST_XPATH = "//tr[.//span[text()='{username}']]//td//button//span[text()='{role}']";
 	private static final String REQUESTED_ACCESS_ROLE_RADIO_BUTTON_DATATESTID = "{role}-radio";
-	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-Database-public-private-switch";
+	private static final String PRIVATE_MODELS_BUTTON_DATA_TESTID = "settingsTiles-make-{catalogName}-public-private-switch";
 
 	public static void clickOnSettingsTab(Page page) {
 		page.click(SETTINGS_TAB_XPATH);
@@ -73,13 +74,12 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean verifySearchMembersSearchBoxIsVisible(Page page) {
-		page.getByTestId(MEMBER_SEARCH_ICON_DATA_TESTID).click();
 		boolean isSearchMembersTextBoxVisible = page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).isVisible();
 		return isSearchMembersTextBoxVisible;
 	}
 
 	public static boolean verifyAddMembersButtonIsVisible(Page page) {
-		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).first().isVisible();
+		return page.locator(ADD_MEMBERS_BUTTON_XPATH).first().isVisible();
 	}
 
 	public static boolean verifyRowsPerPageDropdownIsVisible(Page page) {
@@ -154,30 +154,39 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnAddMembersButton(Page page) {
-		Locator locator = page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID);
+		Locator locator = page.locator(ADD_MEMBERS_BUTTON_XPATH);
 		locator.scrollIntoViewIfNeeded();
 		locator.first().click();
 	}
 
 	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
-		page.getByTestId(CLICK_ON_SEARCH_USER_DATATESTID).click();
+		page.locator(SEARCH_USER_XPATH).click();
 		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME").split("@")[0];
 		if (useDocker) {
 			username = username + " lastname";
 			// search is by user name first name and lastname
-			page.fill(ADD_MEMBER_XPATH, username);
+			page.fill(SEARCH_USER_XPATH, username);
 			page.getByTitle(username).click();
 		} else {
 			page.fill(ADD_MEMBER_XPATH, username);
 			page.waitForTimeout(2000);
-			page.locator(ADD_MEMBER_XPATH).press("ArrowDown");
-			page.locator(ADD_MEMBER_XPATH).press("Enter");
+			page.getByText(Pattern.compile("id:\\s*" + username)).click();
 		}
-		if (role.equalsIgnoreCase("Read")) {
-			role = "readonly";
+		switch (role.toLowerCase()) {
+		case "author":
+			role = "Owner";
+			break;
+		case "editor":
+			role = "Editor";
+			break;
+		case "read":
+			role = "Viewer";
+			break;
 		}
-		page.getByTestId(RADIO_BUTTON_DATATESTID.replace("{role}", role.toLowerCase())).click();
-		page.getByTestId(SAVE_BUTTON_DATATESTID).click();
+		page.locator(ROLE_SELECT_DROPDOWN_XPATH).click();
+		page.locator(SELECT_ROLE_XPTAH.replace("{role}", role)).click();
+		page.locator(ADD_BUTTON_XPATH).isEnabled();
+		page.locator(ADD_BUTTON_XPATH).click();
 	}
 
 	public static boolean isDeleteSuccessful(Page page) {
@@ -189,7 +198,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static boolean isAddMemberButtonVisible(Page page) {
-		return page.getByTestId(ADD_MEMBERS_BUTTON_DATA_TESTID).first().isVisible();
+		return page.locator(ADD_MEMBERS_BUTTON_XPATH).first().isVisible();
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
@@ -197,7 +206,7 @@ public class SettingsModelPageUtils {
 		deleteIcon.scrollIntoViewIfNeeded();
 		deleteIcon.hover();
 		deleteIcon.click();
-		page.locator(CONFIRM_BUTTON_XPATH).click();
+		page.locator(CONFIRM_DELETE_BUTTON_XPATH).click();
 	}
 
 	public static void clickOnUsageTab(Page page) {
@@ -245,7 +254,7 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnMakeCatalogPublicButton(Page page, String catalogName) {
-		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID).click();
+		page.getByTestId(PRIVATE_MODELS_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName)).click();
 	}
 
 	public static String getPendingRequestCountText(Page page) {

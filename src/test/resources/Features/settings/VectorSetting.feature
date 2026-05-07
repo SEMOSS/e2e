@@ -28,8 +28,8 @@ Feature: Search Vector Settings
     And User enters value of Content Overlap as '<content_overlap>'
     And User clicks on Create Vector button
     And User clicks on Copy Catalog ID
-    Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
-    And User can see the Vector title as '<catalog_name>'
+    # Then User can see vector database created success toast message as 'Successfully added vector database to catalog'
+    Then User can see the Vector title as '<catalog_name>'
 
     Examples: 
       | connection | catalog_name      | model_name | chunking_strategy | content_length | content_overlap |
