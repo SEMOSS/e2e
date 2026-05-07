@@ -247,6 +247,7 @@ public class AddModelPageTests extends AbstractE2ETest {
 	}
 
 	@Test
+	@Order(7)
 	@DisplayName("Validate the available tool and their input parameter after MCP Generation for Model")
 	public void testValidateToolsAfterMCPGeneration() throws IOException {
 		String toastMessage = "MCP generated";

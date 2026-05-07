@@ -17,10 +17,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
+import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
@@ -31,7 +31,6 @@ import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.ViewUsagePageUtils;
 import aicore.utils.page.model.ModelPageUtils;
-import aicore.utils.settings.JobPageUtils;
 
 @Tag(TestTags.SMOKE)
 public class DatabaseSpecificPageTests extends AbstractE2ETest {
@@ -117,7 +116,7 @@ public class DatabaseSpecificPageTests extends AbstractE2ETest {
 	@DisplayName("Validate the available tool and their input parameter after MCP Generation for database")
 	public void testValidateToolsAfterMCPGeneration() throws IOException {
 		String toastMessage = "MCP generated";
-		JobPageUtils.clickOnTab(SetupHooks.getPage(), "MCP Usage");
+		AICorePageUtils.clickOnTabButton(page, "MCP Usage");
 		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
 		String actualMessage = ModelPageUtils.modelCreationToastMessage(page, toastMessage);
 		Assertions.assertEquals(actualMessage, toastMessage, "Generate MCP creation failed");
