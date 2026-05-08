@@ -1,17 +1,13 @@
 package aicore.steps;
 
-import com.microsoft.playwright.Page;
-
 import aicore.hooks.SetupHooks;
 import aicore.pages.ViewFunctionPage;
 import io.cucumber.java.en.Then;
 
 public class ViewFunctionSteps {
 	private ViewFunctionPage viewFunction;
-	private Page page;
 
-	public ViewFunctionSteps(Page page) {
-		this.page = page;
+	public ViewFunctionSteps() {
 		viewFunction = new ViewFunctionPage(SetupHooks.getPage());
 	}
 
@@ -43,7 +39,7 @@ public class ViewFunctionSteps {
 
 	@Then("User sees {string} button")
 	public void user_sees_button(String changeAccessButton) {
-		viewFunction.verifyChangeAccessButton(page, changeAccessButton);
+		viewFunction.verifyChangeAccessButton(changeAccessButton);
 	}
 
 	@Then("User selects {string} tab")

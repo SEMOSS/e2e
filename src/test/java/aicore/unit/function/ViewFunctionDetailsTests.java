@@ -69,7 +69,7 @@ public class ViewFunctionDetailsTests extends AbstractE2ETest {
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());
 		MainMenuUtils.clickOnOpenFunction(SetupHooks.getPage());
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
-		ViewFunctionPage.verifyChangeAccessButton(page, "Change Access");
+		AddFunctionPageUtils.verifyChangeAccessButton(page, "Change Access");
 		logout(page);
 		login(page, UserType.NATIVE);
 		MainMenuUtils.openMainMenu(SetupHooks.getPage());

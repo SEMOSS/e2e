@@ -7,7 +7,7 @@ import aicore.utils.AICorePageUtils;
 
 public class ViewFunctionPage {
 
-	private static Page page;
+	private Page page;
 
 	private static final String FUNCTION_NAME_XPATH = "//h4[text()='{FunctionName}']";
 	private static final String FUNCTION_ID_XPATH = "//button[@aria-label=\"copy Function ID\"]/parent::span";
@@ -41,7 +41,7 @@ public class ViewFunctionPage {
 		page.getByText(MARKUP_FUNCTION_XPATH.replace("{MarkupFunction}", markupFunction)).isVisible();
 	}
 
-	public static void verifyChangeAccessButton(Page page, String changeAccessButton) {
+	public void verifyChangeAccessButton(String changeAccessButton) {
 		page.getByText(CHANGE_ACCESS_BUTTON_XPATH.replace("{ChangeAccessButton}", changeAccessButton)).isVisible();
 	}
 
