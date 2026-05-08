@@ -508,7 +508,7 @@ public class AddModelPage {
 		return EditModelPageUtils.verifyToolsInGeneratedMCP(page, toolName);
 	}
 
-	public boolean verifyInputParameters(List<String> expectedParameters) {
-		return EditModelPageUtils.verifyInputParameters(page, expectedParameters);
+	public boolean verifyInputParameters(String toolName, List<String> expectedParameters) {
+		return EditModelPageUtils.verifyInputParameters(page, toolName, expectedParameters);
 	}
 }
