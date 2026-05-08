@@ -257,13 +257,19 @@ public class EditModelPageUtils {
 		return true;
 	}
 
-	public static boolean verifyInputParameters(Page page, List<String> viewInputParameters) {
-		Locator viewInputParameterLocator = page.locator(VIEW_INPUT_PARAMETER_XPATH);
-		viewInputParameterLocator.isVisible();
+	public static boolean verifyInputParameters(Page page, String toolName, List<String> viewInputParameters) {
+		// Click specific tool first
+		Locator toolLocator = page.locator(VIEW_AVAILABLE_TOOL_XPATH.replace("{toolName}", toolName));
+		AICorePageUtils.waitFor(toolLocator);
+		toolLocator.isVisible();
+		// Open parameter section
+		Locator viewInputParameterLocator = page.locator(VIEW_INPUT_PARAMETER_XPATH.replace("{toolName}", toolName))
+				.first();
 		viewInputParameterLocator.click();
 		for (String inputParameter : viewInputParameters) {
-			Locator parameterLocator = page
-					.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter));
+			Locator parameterLocator = page.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter))
+					.first();
+
 			if (!parameterLocator.isVisible()) {
 				return false;
 			}
