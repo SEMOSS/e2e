@@ -32,6 +32,7 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 	private static final String SEARCH_BAR_DATATESTID = "search-bar";
 	private static final String TOASTER_MESSAGE_XPATH = "//*[text()='{toastMessage}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
+	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='{ChangeAccessButton}']";
 
 	public static boolean userCanSeeFunctionsGridOfOptions(Page page) {
 		Locator locator = page.getByTestId(FUNCTION_OPTIONS_GRID_TEST_ID);
@@ -186,5 +187,9 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 
 	public static void fillFunctionCreationForm(Page page, String fieldName, String fieldValue, String timestamp) {
 		AddFunctionFormUtils.fillFunctionCreationForm(page, fieldName, fieldValue, timestamp);
+	}
+
+	public static void verifyChangeAccessButton(Page page, String changeAccessButton) {
+		page.getByText(CHANGE_ACCESS_BUTTON_XPATH.replace("{ChangeAccessButton}", changeAccessButton)).isVisible();
 	}
 }
