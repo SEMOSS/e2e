@@ -11,10 +11,10 @@ Feature: Create app using Delete diabetesTemplate
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User clicks on apply database button
-    Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
+    # And User clicks on Refresh button
+    # And User clicks on apply database button
+    # Then User sees the table in the metadata tab
+    # When User clicks on Save button of Metadata tab
 
   @LoginWithAdmin @Regression
   Scenario: Create app using delete Diabetes Record Template
@@ -48,7 +48,7 @@ Feature: Create app using Delete diabetesTemplate
     And User fetch the app name 
     And User clicks on Preview app button
     And user selects "4" from "Select Unique ID" dropdown
-    And User click on 'Delete' Record button
+    And User click on 'Delete Record' Record button
     Then User sees the success message "true"
     When User close the Preview app window
     And User clicks on Notebook

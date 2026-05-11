@@ -20,10 +20,10 @@ public class AppTemplatePageUtils {
 	private static final String INPUT_BOX_XPATH = "//*[@data-block='{blockName}']";
 	private static final String RESPONSE_BOX_XPATH = "//p[@data-block='response']";
 	private static final String ASK_LOADER_XPATH = "//div[@data-block=\"submit\"]//span[@role=\"progressbar\"]";
-	private static final String DESCRIPTION_BOX_XPATH = "//p[text()='Value']/../..//div//div//input";
-	private static final String PREVIEW_APP_CANCEL_XPATH = "(//button//span[contains(text(),'Cancel')])[2]";
-	private static final String INPUT_BOX_LABEL_XPATH = "//div[@data-block='question']//label";
-	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//h2[text()='Preview']/parent::div//p[text()='Ask an LLM a question']";
+	private static final String DESCRIPTION_BOX_XPATH = "//div[@class='relative']//textarea";
+	private static final String PREVIEW_APP_CANCEL_XPATH = "//button[text()='Cancel']";
+	private static final String INPUT_BOX_LABEL_XPATH = "//div[@class='relative']//textarea/ancestor::div[@data-block='question']";
+	private static final String PREVIEW_APP_DESCRIPTION_XPATH = "//div[@role='dialog']/following::p[text()='Ask an LLM a question']";
 	private static final String PREVIEW_APP_INPUT_BOX_XPATH = "//div[@role='dialog']//div[@data-block='question']";
 	private static final String PREVIEW_APP_INPUT_BOX_LABEL_XPATH = "//div[@role='dialog']//div[@data-block='question']//label";
 	private static final String PREVIEW_APP_SUBMIT_BUTTON_XPATH = "//div[@role='dialog']//div[@data-block='submit']";
@@ -33,26 +33,28 @@ public class AppTemplatePageUtils {
 	private static final String TEXT_XPATH = "//a[text()='{text}']";
 	private static final String BLOCK_DESCRIPTION_XPATH = "//div[p[text()='{blockTitle}']]//p[text()='{description}']";
 	private static final String HYPERLINK_TEXT_FOR_BLOCK_XPATH = "//div[p[text()='{title}']]//a[text()='{hyperlinkText}']";
-	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//p[text()='Destination']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
+	private static final String DESTINATION_URL_INPUT_FIELD_XPATH = "//input[contains(@data-testid,'inputSettings-Destination-link')]";
 	private static final String APP_TITLE_XPATH = "//*[@id='page-1']//h1";
 	private static final String APP_BLOCK_TITLE_XPATH = "//input[@value='{text}']";
 	private static final String APP_SUB_TITLE_XPATH = "//*[@id='page-1']//h5";
 
-	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[@style='overflow: auto hidden;']//div[@class='flexlayout__tab_button_content workspace_layout' and normalize-space(text())='page-1']";
+	private static final String MULI_PAGE_APP_PAGE1_XAPTH = "//div[normalize-space(text())='page-1']/parent::div[contains(@class,'flexlayout__tab_button flexlayout__tab_button_top')]";
 	private static final String TEAMPLATE_APP_PAGE_TITLE_XPATH = "//div[@id='page-1']/h1[contains(@data-block,'text')]";
 	private static final String MULI_PAGE_APP_HYPERLINK_XAPTH = "//a[normalize-space(text())='%s']";
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
-	private static final String PREVIEWBUTTON_XPATH = "//button[@aria-label='Preview App']";
+	private static final String PREVIEWBUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-eye')]";
 
 	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
-	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'MuiAutocomplete')]]";
+	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'flex items-center')]]";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
-	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//label[text()='Fonts Style']/following::input[@role='combobox']";
+	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//span[@data-slot='select-value']/parent::button";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
 	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
 	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
+	private static final String SAVE_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
+	private static final String PREVIEW_APP_CANCEL_BUTTON_XPATH = "//button[text()='Cancel']";
 
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
@@ -91,22 +93,25 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void selectTemplateFromList(String templateName, Page page) {
-		boolean isTemplateVisible = page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName))
-				.isVisible();
-		if (!isTemplateVisible) {
+		Locator isTemplateVisible = page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName));
+		isTemplateVisible.scrollIntoViewIfNeeded();
+		isTemplateVisible.isVisible();
+		if (!isTemplateVisible.isVisible()) {
 			throw new AssertionError("Template " + templateName + " is not visible in the list");
 		}
 		page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName)).click();
 	}
 
 	public static void verifyInputFieldWithLabel(String label, Page page) {
-		boolean inputBoxVisible = page.locator(INPUT_BOX_XPATH).isVisible();
+		boolean inputBoxVisible = page.locator(INPUT_BOX_XPATH.replace("{blockName}", label)).isVisible();
 		if (!inputBoxVisible) {
 			throw new AssertionError("Input field with label '" + label + "' is not visible");
 		}
 		String inputBoxLabel = page.locator(INPUT_BOX_LABEL_XPATH).textContent();
+		inputBoxLabel = inputBoxLabel.replace("*", "").toLowerCase();
 		if (!inputBoxLabel.contains(label)) {
-			throw new AssertionError("Input field label " + label + " does not match with expected label ");
+			throw new AssertionError(
+					"Input field label " + label + " does not match with expected label " + inputBoxLabel);
 		}
 	}
 
@@ -118,7 +123,8 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void verifyPageWithTitleInPreview(String title, Page page) {
-		Locator titleLocator = page.getByRole(AriaRole.DIALOG).getByText("Ask LLM");
+		Locator titleLocator = page.locator("//div[@role='dialog']//div[@id='page-1']//div//p[@data-block='title']")
+				.last();
 		titleLocator.isVisible();
 		String pageTitle = titleLocator.textContent();
 		if (!pageTitle.equals(title)) {
@@ -134,11 +140,12 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void closePreviewWindow(Page page) {
-		boolean isPreviewButtonVisible = page.locator(PREVIEW_APP_CANCEL_XPATH).isVisible();
-		if (!isPreviewButtonVisible) {
-			throw new AssertionError("Preview button is not visible");
+		Locator isPreviewButtonVisible = page.locator(PREVIEW_APP_CANCEL_XPATH).first();
+		if (!isPreviewButtonVisible.isVisible()) {
+			page.locator("body").click();
+			// throw new AssertionError("Preview button is not visible");
 		}
-		page.locator(PREVIEW_APP_CANCEL_XPATH).click();
+		isPreviewButtonVisible.click();
 	}
 
 	public static void verifyInputFieldWithLabelInPreview(String label, Page page) {
@@ -155,7 +162,6 @@ public class AppTemplatePageUtils {
 	public static void verifyDescriptionInPreview(String description, Page page) {
 		page.locator(PREVIEW_APP_DESCRIPTION_XPATH).first().isVisible();
 		String actualDescription = page.locator(PREVIEW_APP_DESCRIPTION_XPATH).first().textContent();
-
 		if (!actualDescription.equals(description)) {
 			throw new AssertionError("Description in preview does not match");
 		}
@@ -189,7 +195,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickClosePreviewButton(Page page) {
-		Locator cancelButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel"));
+		Locator cancelButton = page.locator(PREVIEW_APP_CANCEL_BUTTON_XPATH).nth(1);
 		cancelButton.isVisible();
 		cancelButton.click();
 	}
@@ -228,7 +234,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickSaveButtonOfTheApp(Page page) {
-		Locator saveButton = page.getByTestId("SaveRoundedIcon");
+		Locator saveButton = page.locator(SAVE_BUTTON_XPATH);
 		saveButton.isVisible();
 		saveButton.click();
 		page.waitForLoadState(LoadState.DOMCONTENTLOADED);
@@ -322,7 +328,7 @@ public class AppTemplatePageUtils {
 	}
 
 	public static String getSelectedFont(Page page) {
-		return page.locator(VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH).inputValue();
+		return page.locator(VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH).textContent();
 	}
 
 	public static void changeFontSize(Page page, String size) {

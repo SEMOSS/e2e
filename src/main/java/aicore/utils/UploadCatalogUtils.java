@@ -23,7 +23,7 @@ public class UploadCatalogUtils {
 	private static final String FILES_RECOMPILE_REACTOR_XPATH = "//button[@aria-label='Recompile reactors']";
 	private static Page newTab;
 	private static final String SHARE_APP_LINK_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-share')]";
-	private static final String COPY_BUTTON_XPATH = "//span[normalize-space()='Copy']";
+	private static final String COPY_BUTTON_XPATH = "//button[text()='Copy']";
 	private static final String EDIT_TITLE_OF_TITLE_SECOND_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Stock')]";
 	private static final String EDIT_TITLE_OF_TITLE_FIRST_TEXT_XPATH = "//div[@class='monaco-scrollable-element editor-scrollable vs']//div[@class='view-line']//span//span[@class='mtk1' and contains(normalize-space(.),'Get')]";
 	private static final String CODEAPPBOOKMARK_ICON_DATATESTID = "viewAppPage-bookmark-btn";
@@ -127,7 +127,7 @@ public class UploadCatalogUtils {
 	}
 
 	public static void isRefreshFilesOptionClickable(Page page) {
-		page.locator(FILES_REFRESH_OPTION_XPATH).click();
+		page.locator(FILES_REFRESH_OPTION_XPATH).first().click();
 	}
 
 	public static boolean isRecompileRefactorOptionVisible(Page page) {
@@ -144,7 +144,7 @@ public class UploadCatalogUtils {
 	}
 
 	public static void clickOnCopyButtonForUrl(Page page) {
-		Locator copyButton = page.locator(COPY_BUTTON_XPATH).nth(1);
+		Locator copyButton = page.locator(COPY_BUTTON_XPATH);
 		copyButton.click();
 	}
 

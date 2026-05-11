@@ -9,7 +9,7 @@ Feature: Verify Notebook Operations - creation, deletion, searching and duplicat
     And User clicks on Get Started button in "Drag and Drop"
     And User enters app name as "Test app"
     And User clicks on Create button
-    And User fetch the app name 
+    And User fetch the app name
 
   @LoginWithAdmin @Regression
   Scenario: Verify creation and duplication of new Notebook
@@ -26,7 +26,7 @@ Feature: Verify Notebook Operations - creation, deletion, searching and duplicat
     And User clicks on query Submit button
     Then User see "Test query" notebook present in the notebook list
     When User duplicates the notebook named "Test query"
-    Then User see "Test query (1)" notebook present in the notebook list
+    Then User see "Test query copy" notebook present in the notebook list
 
   @LoginWithAdmin @Regression
   Scenario: Verify deletion of new Notebook
@@ -59,6 +59,6 @@ Feature: Verify Notebook Operations - creation, deletion, searching and duplicat
     And User clicks on query Submit button
     Then User see "Test query" notebook present in the notebook list
     When User duplicates the notebook named "Test query"
-    Then User see "Test query (1)" notebook present in the notebook list
-    When User searches for notebook named "Test query (1)"
-    Then User see "Test query (1)" notebook present in the notebook list
+    Then User see "Test query copy" notebook present in the notebook list
+    When User searches for notebook named "Test query copy"
+    Then User see "Test query copy" notebook present in the notebook list
