@@ -2,7 +2,9 @@ package aicore.unit.model;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +31,7 @@ import aicore.utils.page.model.ModelPageUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AddModelPageTests extends AbstractE2ETest {
-	
+
 	private static String modelCatalogName = null;
 
 	@BeforeAll
@@ -54,7 +56,7 @@ public class AddModelPageTests extends AbstractE2ETest {
 		AddModelFormUtils.enterOpenAIKey(page, openAIKey);
 		AddModelFormUtils.clickOnCreateModelButton(page);
 	}
-	
+
 	@BeforeEach
 	public void navigateToModelPage() {
 		// Ensure we're on the model details page before each test
@@ -63,25 +65,26 @@ public class AddModelPageTests extends AbstractE2ETest {
 		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
-		
+
 		// Wait for page to stabilize
 		page.waitForLoadState();
 		page.waitForTimeout(500); // Small buffer for any animations
 	}
-	
+
 	@AfterAll
 	public static void teardown() {
 		// Clean up: delete the test model catalog
 		if (modelCatalogName != null && page != null) {
 			try {
-				CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL, modelCatalogName);
+				CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL,
+						modelCatalogName);
 			} catch (Exception e) {
 				System.err.println("Failed to delete model catalog: " + e.getMessage());
 			}
 		}
 	}
-	
-	@Order(1)  // Run FIRST - read-only test
+
+	@Order(1) // Run FIRST - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("Verify SMSS properties are displayed correctly for a model")
@@ -96,9 +99,9 @@ public class AddModelPageTests extends AbstractE2ETest {
 		String actualVarName = CommonUtils.splitTrimValue(fullModelVarNameSmss, "VAR_NAME");
 		Assertions.assertEquals(actualVarName, "myModel", "Var name is not matching");
 	}
-	
+
 	@Test
-	@Order(5)  // Run FIFTH - modifies SMSS properties
+	@Order(5) // Run FIFTH - modifies SMSS properties
 	@Tag("model")
 	@DisplayName("Edit SMSS properties and verify changes are persisted")
 	public void testEditSMSS() {
@@ -112,12 +115,13 @@ public class AddModelPageTests extends AbstractE2ETest {
 		String fullModelVarNameSmss = ModelSMSSPageUtils.verifyVarNameInSMSS(page);
 		String actualVarName = CommonUtils.splitTrimValue(fullModelVarNameSmss, "VAR_NAME");
 		Assertions.assertEquals(actualVarName, "New_Name", "Var name is not matching");
-		String fullConversationHistory = ModelSMSSPageUtils.verifyKeepConversationHistoryValueInSMSS(page, "KEEP_CONVERSATION_HISTORY");
+		String fullConversationHistory = ModelSMSSPageUtils.verifyKeepConversationHistoryValueInSMSS(page,
+				"KEEP_CONVERSATION_HISTORY");
 		actualVarName = CommonUtils.splitTrimValue(fullConversationHistory, "KEEP_CONVERSATION_HISTORY");
 		Assertions.assertEquals(actualVarName, "True", "Conversation history setting is not matching");
 	}
-	
-	@Order(2)  // Run SECOND - read-only test
+
+	@Order(2) // Run SECOND - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("Add tag to model and verify it appears on the page")
@@ -127,11 +131,11 @@ public class AddModelPageTests extends AbstractE2ETest {
 		EditMetadataPageUtils.enterTagName(page, "embeddings");
 		EditMetadataPageUtils.clickOnSubmit(page);
 		List<String> actualTagList = EditModelPageUtils.verifyTagNames(page);
-		List<String> expectedTagList = Arrays.asList(new String[] {"embeddings"});
+		List<String> expectedTagList = Arrays.asList(new String[] { "embeddings" });
 		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
-	@Order(3)  // Run THIRD - read-only test
+	@Order(3) // Run THIRD - read-only test
 	@Test
 	@Tag("model")
 	@DisplayName("View existing models in Model Catalog")
@@ -143,7 +147,7 @@ public class AddModelPageTests extends AbstractE2ETest {
 		Assertions.assertTrue(isModelDisplayed);
 	}
 
-	@Order(4)  // Run FOURTH - modifies model details and tags
+	@Order(4) // Run FOURTH - modifies model details and tags
 	@Test
 	@Tag("model")
 	@DisplayName("Edit model details")
@@ -153,32 +157,32 @@ public class AddModelPageTests extends AbstractE2ETest {
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
 		EditMetadataPageUtils.clickEditIcon(page);
-		
+
 		String detailsText = "GPT-4.1 model";
 		EditMetadataPageUtils.enterDetails(page, detailsText);
-		
+
 		String descriptionText = "This is GPT-4.1 test model";
 		EditMetadataPageUtils.enterDescription(page, descriptionText);
-		
+
 		String tagNames = "embeddings, Test1";
 		String[] tagsArray = tagNames.split(", ");
 		for (String tag : tagsArray) {
 			EditMetadataPageUtils.enterTagName(page, tag);
 		}
-		
+
 		String domainNames = "SAP, AI, Finance";
 		String[] allDomainNames = domainNames.split(", ");
 		for (String domainName : allDomainNames) {
 			EditMetadataPageUtils.enterDomainName(page, domainName);
 		}
-		
-		String dataClassificationOptions = "IP, PHI, PII, PUBLIC";
+
+		String dataClassificationOptions = "IP, PHI, PII, Public";
 		String[] classificationOptions = dataClassificationOptions.split(", ");
 		for (String option : classificationOptions) {
 			EditMetadataPageUtils.selectDataClassificationOption(page, option);
 		}
 
-		String dataRestrictionOptions = "IP ALLOWED, PHI ALLOWED, FOUO ALLOWED";
+		String dataRestrictionOptions = "IP Allowed, PHI Allowed, FOUO Allowed";
 		String[] restrictionsOptions = dataRestrictionOptions.split(", ");
 		for (String option : restrictionsOptions) {
 			EditMetadataPageUtils.selectDataRestrictionsOption(page, option);
@@ -203,16 +207,18 @@ public class AddModelPageTests extends AbstractE2ETest {
 		Assertions.assertEquals(actualDomainList, expectedDomainList);
 		// verify data classification
 		List<String> expectedDataClassificationOptionsList = Arrays.asList(classificationOptions);
-		List<String> actualDataClassificationOptionsList = EditModelPageUtils.verifyDataClassificationOptionsUnderOverview(page);
+		List<String> actualDataClassificationOptionsList = EditModelPageUtils
+				.verifyDataClassificationOptionsUnderOverview(page);
 		Assertions.assertEquals(actualDataClassificationOptionsList, expectedDataClassificationOptionsList);
 		// verfy data restrctions
 		List<String> expectedDataRestrictionOptionsList = Arrays.asList(restrictionsOptions);
-		List<String> actualDataRestrictionOptionsList = EditModelPageUtils.verifyDataRestrictionOptionsUnderOverview(page);
+		List<String> actualDataRestrictionOptionsList = EditModelPageUtils
+				.verifyDataRestrictionOptionsUnderOverview(page);
 		Assertions.assertEquals(actualDataRestrictionOptionsList, expectedDataRestrictionOptionsList);
 	}
 
 	@Test
-	@Order(6)  // Run SIXTH - read-only test, validates model ID
+	@Order(6) // Run SIXTH - read-only test, validates model ID
 	@Tag("model")
 	@DisplayName("Validate model catalog id occurences in usage sections")
 	public void testViewModelCatalogId() {
@@ -222,24 +228,43 @@ public class AddModelPageTests extends AbstractE2ETest {
 
 		// Create test data structure to replace DataTable
 		// Each entry: [section name, expected count]
-		Object[][] testData = {
-			{"How to use in Pixel", 5},
-			{"How to use in Python", 1},
-			{"How to use with LangChain API", 1},
-			{"How to use externally with OpenAI API (with or without our Python SDK)", 4},
-			{"How to use in Java", 1}
-		};
+		Object[][] testData = { { "How to use in Pixel", 5 }, { "How to use in Python", 1 },
+				{ "How to use with LangChain API", 1 },
+				{ "How to use externally with OpenAI API (with or without our Python SDK)", 4 },
+				{ "How to use in Java", 1 } };
 
 		// Validate model catalog id occurences in each section
 		for (Object[] data : testData) {
 			String sectionName = (String) data[0];
 			int expectedCount = (int) data[1];
-			
+
 			String copiedSectionContents = SettingsModelPageUtils.getFullSectionCodeByHeading(page, sectionName);
 			int countIdOccurances = CommonUtils.countIdOccurances(copiedSectionContents, modelId);
-			
+
 			Assertions.assertEquals(expectedCount, countIdOccurances,
 					"Model id count does not match for section '" + sectionName + "'");
 		}
+	}
+
+	@Test
+	@Order(7)
+	@DisplayName("Validate the available tool and their input parameter after MCP Generation for Model")
+	public void testValidateToolsAfterMCPGeneration() throws IOException {
+		String toastMessage = "MCP generated";
+		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
+		String modelId = SettingsModelPageUtils.copyModelID(page);
+		AICorePageUtils.clickOnTabButton(page, "MCP Usage");
+		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
+		String actualMessage = ModelPageUtils.modelCreationToastMessage(page, toastMessage);
+		Assertions.assertEquals(actualMessage, toastMessage, "Generate MCP creation failed");
+		Map<String, List<String>> toolData = new HashMap<>();
+		toolData.put("LLM",
+				Arrays.asList("useHistory", "paramValues", "image", "engine", "context", "command", "roomId", "url"));
+		toolData.forEach((toolName, parameters) -> {
+			boolean isToolPresent = EditModelPageUtils.verifyToolsInGeneratedMCP(page, toolName);
+			Assertions.assertTrue(isToolPresent, "Tool not displayed: " + toolName);
+			boolean isParamPresent = EditModelPageUtils.verifyInputParameters(page, toolName, parameters);
+			Assertions.assertTrue(isParamPresent, "Parameters not correct for: " + toolName);
+		});
 	}
 }

@@ -84,11 +84,4 @@ Feature: Add Model
       | How to use externally with OpenAI API (with or without our Python SDK) | 4                       |
       | How to use in Java                                                     | 1                       |
 
-  Scenario: Validate the available tool and their input parameter after MCP Generation
-    Given User can see the Model title as 'Model'
-    When User clicks on 'MCP Usage' tab
-    And User clicks on Generate MCP button
-    Then User can see a toast message as 'MCP generated'
-    And User can see the Avialble Tools as 'LLM'
-    And User can see the below Input parameters under the View parameter
-      | useHistory, paramValues, image, engine, context, command, roomId, url |
+ 
