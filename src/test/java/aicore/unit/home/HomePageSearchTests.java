@@ -2,74 +2,83 @@ package aicore.unit.home;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AppTestUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.ModelTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.CreateAppPopupUtils;
 
-public class HomePageSearchTests extends AbstractE2ETest  {
+public class HomePageSearchTests extends AbstractPlaywrightTestBase {
 
 	@BeforeEach
-	public void setup() throws IOException {
-		login(page, UserType.NATIVE);
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
 	}
 
 	@AfterEach
-	public void teardown() throws IOException {
+	void tearDown(@PWPage Page page) {
 		logout(page);
 	}
 
 	@Test
-	void testApp() {
+	void testApp(@PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		String appName = "Test app " + timestamp;
-		AppTestUtils.createApp(page, appName);
+		try {
+			AppTestUtils.createApp(page, appName);
 
-		String appNameActual = CreateAppPopupUtils.userFetchAppName(page);
-		assertEquals(appName, appNameActual);
-		MainMenuUtils.clickOnHome(page);
+			String appNameActual = CreateAppPopupUtils.userFetchAppName(page);
+			assertEquals(appName, appNameActual);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnHome(page);
+			
+			// search
+			HomePageUtils.searchCatalog(page, appName);
+			HomePageUtils.selectSearchResultFilterOption(page, appName);
+			boolean isCardVisible = HomePageUtils.verifySearchResultIsVisible(page, appName);
+			Assertions.assertTrue(isCardVisible, "Searched data is not visible in search result list");
+			HomePageUtils.selectSearchResultFilterOption(page, appName);
+			HomePageUtils.closeSearchPopup(page);
+		} finally {
+			// clean up
+			CommonUtils.navigateAndDeleteApp(page, appName);
+		}
 
-		// search
-		HomePageUtils.searchCatalog(page, appName);
-		HomePageUtils.selectSearchResultFilterOption(page, appName);
-		boolean isCardVisible = HomePageUtils.verifySearchResultIsVisible(page, appName);
-		Assertions.assertTrue(isCardVisible, "Searched data is not visible in search result list");
-		HomePageUtils.selectSearchResultFilterOption(page, appName);
-		HomePageUtils.closeSearchPopup(page);
-
-		// clean up
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_APP, appName);
 	}
 
 	@Test
-	void testModel() {
+	void testModel(@PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		String modelName = "Test app " + timestamp;
 
-		String modelId = ModelTestUtils.addModel(page, modelName);
+		try {
 
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnHome(page);
+			String modelId = ModelTestUtils.addModel(page, modelName);
 
-		// search
-		HomePageUtils.searchCatalog(page, modelName);
-		HomePageUtils.selectSearchResultFilterOption(page, modelName);
-		boolean isCardVisible = HomePageUtils.verifySearchResultIsVisible(page, modelName);
-		Assertions.assertTrue(isCardVisible, "Searched data is not visible in search result list");
-		HomePageUtils.selectSearchResultFilterOption(page, modelName);
-		HomePageUtils.closeSearchPopup(page);
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_APP, modelId);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnHome(page);
+
+			// search
+			HomePageUtils.searchCatalog(page, modelName);
+			HomePageUtils.selectSearchResultFilterOption(page, modelName);
+			boolean isCardVisible = HomePageUtils.verifySearchResultIsVisible(page, modelName);
+			Assertions.assertTrue(isCardVisible, "Searched data is not visible in search result list");
+			HomePageUtils.selectSearchResultFilterOption(page, modelName);
+			HomePageUtils.closeSearchPopup(page);
+		} finally {
+			CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_APP, modelName);
+		}
 	}
 
 }

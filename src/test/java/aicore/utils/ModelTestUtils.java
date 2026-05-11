@@ -24,7 +24,6 @@ public class ModelTestUtils {
 		String modelType = "OpenAI";
 		String modelTypeName = "GPT-4.1";
 		String openAIKey = "Test@1234";
-
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
 

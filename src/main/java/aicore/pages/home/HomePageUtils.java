@@ -145,7 +145,8 @@ public class HomePageUtils {
 	}
 
 	public static void searchCatalog(Page page, String searchData) {
-		Locator locator = page.locator(APP_SEARCH_TEXTBOX_XPATH);
+		Locator locator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Search"));
+		AICorePageUtils.waitFor(locator);
 		locator.click();
 		Locator search = page.locator(SEARCH_TEXTBOX_ON_POPUP_XPATH);
 		AICorePageUtils.waitFor(search);

@@ -1,25 +1,5 @@
 Feature: Search app and catalogs
 
-  @DeleteTestCatalog @Regression
-  Scenario: Search model
-    Given User is on Home page
-    And User opens Main Menu
-    When User clicks on Open Model
-    When User clicks on Add Model
-    And User selects 'OpenAI' type
-    And User selects 'GPT-4.1'
-    And User enters 'Model' as Catalog name
-    And User enters Open AI Key as 'Test@1234'
-    And User clicks on Create Model button
-    And User clicks on Copy Catalog ID
-    And User opens Main Menu
-    And User clicks on Home
-    And User search the 'Model' in the home search box
-    And User clicks on the 'Model' option to filter the results
-    Then User can see 'Model' in the 'Model' filter results
-    And User clicks on the 'Model' option to unfilter the results
-    And User close the search popup
-
   @Regression
   Scenario: Search Function
     Given User is on Home page
