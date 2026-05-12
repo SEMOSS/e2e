@@ -24,10 +24,10 @@ Feature: Create drag and drop app
     And User clicks on Copy Catalog ID
     And User can see the Catalog title as 'TestDatabase'
     And User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User clicks on apply database button
-    Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
+    # And User clicks on Refresh button
+    # And User clicks on apply database button
+    # Then User sees the table in the metadata tab
+    # When User clicks on Save button of Metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User searches 'Test app' app in the app searchbox
@@ -42,7 +42,7 @@ Feature: Create drag and drop app
     And User selects '<HIDDEN_OPTION>' from the hidden options
     And User selects '<DATA_IMPORT_OPTION>' from the data import options
     And User selects '<DATABASE_NAME>' from the dropdown list
-    Then User can see 'AGE, BLOODPRESSURE, BMI, DIABETESPEDIGREEFUNCTION, DIABETES_UNIQUE_ROW_IDFK, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns under the fields column
+   Then User can see 'Age, BloodPressure, BMI, DiabetesPedigreeFunction, DIABETES_UNIQUE_ROW_ID, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell

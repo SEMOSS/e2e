@@ -51,7 +51,7 @@ public class ViewFunctionPage {
 	}
 
 	public boolean verifyUsageInstructionsSection(String usageInstructionsSection) {
-		Locator l =  page.locator("p").filter(new Locator.FilterOptions().setHasText(usageInstructionsSection));
+		Locator l = page.locator("p").filter(new Locator.FilterOptions().setHasText(usageInstructionsSection));
 		AICorePageUtils.waitFor(l);
 		return l.isVisible();
 	}

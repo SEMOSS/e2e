@@ -42,7 +42,7 @@ public class EditModelPageUtils {
 	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_NAME_XAPTH = "//span[text()='Engine Name:']/following-sibling::span";
 	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_ID_XAPTH = "//span[text()='Engine ID:']/following-sibling::span";
 	private static final String VIEW_INPUT_PARAMETERS_XPATH = "//code[text()='{parameters}']";
-	private static final String VIEW_INPUT_PARAMETER_XPATH = "//summary[contains(text(),'View input parameters')]";
+	private static final String VIEW_INPUT_PARAMETER_XPATH = "//h4[text()='{toolName}']/ancestor::div/following::summary[contains(text(),'View input parameters')]";
 	private static final String GENRATE_MCP_CONFIRAMTION_BUTTON_XPATH = "//button[text()='Yes']";
 	private static final String VIEW_AVAILABLE_TOOL_XPATH = "//div//h4[text()='Available Tools']/following::div//h4[text()='{toolName}']";
 
@@ -257,13 +257,19 @@ public class EditModelPageUtils {
 		return true;
 	}
 
-	public static boolean verifyInputParameters(Page page, List<String> viewInputParameters) {
-		Locator viewInputParameterLocator = page.locator(VIEW_INPUT_PARAMETER_XPATH);
-		viewInputParameterLocator.isVisible();
+	public static boolean verifyInputParameters(Page page, String toolName, List<String> viewInputParameters) {
+		// Click specific tool first
+		Locator toolLocator = page.locator(VIEW_AVAILABLE_TOOL_XPATH.replace("{toolName}", toolName));
+		AICorePageUtils.waitFor(toolLocator);
+		toolLocator.isVisible();
+		// Open parameter section
+		Locator viewInputParameterLocator = page.locator(VIEW_INPUT_PARAMETER_XPATH.replace("{toolName}", toolName))
+				.first();
 		viewInputParameterLocator.click();
 		for (String inputParameter : viewInputParameters) {
-			Locator parameterLocator = page
-					.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter));
+			Locator parameterLocator = page.locator(VIEW_INPUT_PARAMETERS_XPATH.replace("{parameters}", inputParameter))
+					.first();
+
 			if (!parameterLocator.isVisible()) {
 				return false;
 			}

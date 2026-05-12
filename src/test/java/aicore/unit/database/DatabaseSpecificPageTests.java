@@ -4,10 +4,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +33,7 @@ import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.ViewUsagePageUtils;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.page.model.ModelPageUtils;
 
 @Tag(TestTags.SMOKE)
 public class DatabaseSpecificPageTests extends AbstractPlaywrightTestBase {
@@ -47,7 +55,6 @@ public class DatabaseSpecificPageTests extends AbstractPlaywrightTestBase {
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
 		AddDatabasePageUtils.clickOnDatabaseNameInCatalog(page, dbName);
 	}
-
 
 	@Test
 	public void testUsage(@PWPage Page page) throws IOException {
@@ -81,9 +88,9 @@ public class DatabaseSpecificPageTests extends AbstractPlaywrightTestBase {
 	public void testExport(@PWPage Page page) throws IOException, InterruptedException {
 		Path path = AddDatabasePageUtils.clickOnExportButton(page);
 		assertTrue(path.toFile().exists());
-		assertTrue( path.toAbsolutePath().getFileName().toString().contains(dbID));
+		assertTrue(path.toAbsolutePath().getFileName().toString().contains(dbID));
 	}
-	
+
 	/////////////////////// EDIT
 
 	@Test
@@ -91,17 +98,36 @@ public class DatabaseSpecificPageTests extends AbstractPlaywrightTestBase {
 		EditMetadataPageUtils.clickEditIcon(page);
 		EditMetadataPageUtils.clickOnClose(page);
 	}
-	
+
 	@Test
 	public void testViewMetadataTags(@PWPage Page page) throws IOException {
 		EditMetadataPageUtils.clickEditIcon(page);
 		String tagName = "embeddings";
 		EditMetadataPageUtils.enterTagName(page, tagName);
 		EditMetadataPageUtils.clickOnSubmit(page);
-		//TODO fix the toast message check
+		// TODO fix the toast message check
 //		AddCatalogPageBaseUtils.verifyEditSuccessfullToastMessage(page);
 		List<String> tags = EditModelPageUtils.verifyTagNames(page);
 		assertTrue(tags.contains(tagName));
+	}
+
+	@Test
+	@DisplayName("Validate the available tool and their input parameter after MCP Generation for database")
+	public void testValidateToolsAfterMCPGeneration() throws IOException {
+		String toastMessage = "MCP generated";
+		AICorePageUtils.clickOnTabButton(page, "MCP Usage");
+		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
+		String actualMessage = ModelPageUtils.modelCreationToastMessage(page, toastMessage);
+		Assertions.assertEquals(actualMessage, toastMessage, "Generate MCP creation failed");
+		Map<String, List<String>> toolData = new HashMap<>();
+		toolData.put("Get Database Table Structure", Arrays.asList("database"));
+		toolData.put("Sql Query Base64", Arrays.asList("database", "limit", "query", "commit"));
+		toolData.forEach((toolName, parameters) -> {
+			boolean isToolPresent = EditModelPageUtils.verifyToolsInGeneratedMCP(page, toolName);
+			Assertions.assertTrue(isToolPresent, "Tool not displayed: " + toolName);
+			boolean isParamPresent = EditModelPageUtils.verifyInputParameters(page, toolName, parameters);
+			Assertions.assertTrue(isParamPresent, "Parameters not correct for: " + toolName);
+		});
 	}
 
 	@AfterEach

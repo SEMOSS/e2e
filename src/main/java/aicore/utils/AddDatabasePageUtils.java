@@ -54,49 +54,45 @@ public class AddDatabasePageUtils {
 	private static final String RUN_QUER_BUTTON_DATATESTID = "query-run-btn";
 	private static final String CONFIRM_EXPORT_BUTTON_XPATH = "//button[text()='Yes']";
 
-	private static final String QUERY_EDITOR_LINES_XPATH =
-	        "//div[contains(@class,'monaco-editor')]//div[contains(@class,'view-line')]";
+	private static final String QUERY_EDITOR_LINES_XPATH = "//div[contains(@class,'monaco-editor')]//div[contains(@class,'view-line')]";
 
 	public static void clickOnResetButton(Page page) {
-	    Locator resetBtn = page.getByTestId("query-reset-btn");
-	    AICorePageUtils.waitFor(resetBtn);
-	    resetBtn.click();
+		Locator resetBtn = page.getByTestId("query-reset-btn");
+		AICorePageUtils.waitFor(resetBtn);
+		resetBtn.click();
 
-	    page.waitForCondition(() -> getMonacoEditorText(page).isEmpty());
+		page.waitForCondition(() -> getMonacoEditorText(page).isEmpty());
 	}
 
 	public static void verifyQueryFieldIsEmpty(Page page) {
-	    String queryText = getMonacoEditorText(page);
+		String queryText = getMonacoEditorText(page);
 
-	    if (!queryText.isEmpty()) {
-	        throw new AssertionError("Query field is not empty. Actual value: " + queryText);
-	    }
+		if (!queryText.isEmpty()) {
+			throw new AssertionError("Query field is not empty. Actual value: " + queryText);
+		}
 	}
 
 	private static String getMonacoEditorText(Page page) {
-	    Locator lines = page.locator(QUERY_EDITOR_LINES_XPATH);
-	    int count = lines.count();
+		Locator lines = page.locator(QUERY_EDITOR_LINES_XPATH);
+		int count = lines.count();
 
-	    StringBuilder text = new StringBuilder();
-	    for (int i = 0; i < count; i++) {
-	        String line = lines.nth(i).textContent();
-	        if (line != null) {
-	            line = line
-	                    .replace("\u00A0", "")
-	                    .replace("\u200B", "")
-	                    .trim();
+		StringBuilder text = new StringBuilder();
+		for (int i = 0; i < count; i++) {
+			String line = lines.nth(i).textContent();
+			if (line != null) {
+				line = line.replace("\u00A0", "").replace("\u200B", "").trim();
 
-	            if (!line.isEmpty()) {
-	                if (text.length() > 0) {
-	                    text.append("\n");
-	                }
-	                text.append(line);
-	            }
-	        }
-	    }
-	    return text.toString().trim();
+				if (!line.isEmpty()) {
+					if (text.length() > 0) {
+						text.append("\n");
+					}
+					text.append(line);
+				}
+			}
+		}
+		return text.toString().trim();
 	}
-	
+
 	public static boolean verifyFieldUnderSection(Page page, String sectionName, String fieldName) {
 		page.locator(FORM_SECTION_XPATH.replace("{sectionName}", sectionName));
 		if (sectionName.toLowerCase().equals("advanced settings")) {
@@ -289,8 +285,8 @@ public class AddDatabasePageUtils {
 	}
 
 	public static void clickOnRefreshButton(Page page) {
-		page.getByTestId("engineMetadata-refresh-btn").isVisible();
-		page.getByTestId("engineMetadata-refresh-btn").click();
+		page.getByTestId("engineMetadata-sync-btn").isVisible();
+		page.getByTestId("engineMetadata-sync-btn").click();
 	}
 
 	public static void selectDatabaseFromDropdown(Page page, String dbName) {
@@ -333,14 +329,10 @@ public class AddDatabasePageUtils {
 	}
 
 	public static List<String> getDataColumns(Page page) {
-	    Locator columns = page.locator(DATA_COLUMNS_XPATH);
-	    columns.first().waitFor();
+		Locator columns = page.locator(DATA_COLUMNS_XPATH);
+		columns.first().waitFor();
 
-	    return columns.allTextContents()
-	            .stream()
-	            .map(String::trim)
-	            .filter(text -> !text.isEmpty())
-	            .toList();
+		return columns.allTextContents().stream().map(String::trim).filter(text -> !text.isEmpty()).toList();
 	}
 
 	public static void searchDataColumn(Page page, String columnName) {
@@ -401,6 +393,7 @@ public class AddDatabasePageUtils {
 
 	/**
 	 * Button used to acknowledge a database with an empty metamodel
+	 * 
 	 * @param page
 	 */
 	public static void clickOnEmptyMetaModelButton(Page page) {

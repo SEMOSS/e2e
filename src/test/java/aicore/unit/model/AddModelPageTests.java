@@ -3,7 +3,9 @@ package aicore.unit.model;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -72,7 +74,7 @@ public class AddModelPageTests extends AbstractPlaywrightTestBase {
 		String actualVarName = CommonUtils.splitTrimValue(fullModelVarNameSmss, "VAR_NAME");
 		Assertions.assertEquals(actualVarName, "myModel", "Var name is not matching");
 	}
-	
+
 	@Test
 	public void testEditSMSS(@PWPage Page page) {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
@@ -85,7 +87,8 @@ public class AddModelPageTests extends AbstractPlaywrightTestBase {
 		String fullModelVarNameSmss = ModelSMSSPageUtils.verifyVarNameInSMSS(page);
 		String actualVarName = CommonUtils.splitTrimValue(fullModelVarNameSmss, "VAR_NAME");
 		Assertions.assertEquals(actualVarName, "New_Name", "Var name is not matching");
-		String fullConversationHistory = ModelSMSSPageUtils.verifyKeepConversationHistoryValueInSMSS(page, "KEEP_CONVERSATION_HISTORY");
+		String fullConversationHistory = ModelSMSSPageUtils.verifyKeepConversationHistoryValueInSMSS(page,
+				"KEEP_CONVERSATION_HISTORY");
 		actualVarName = CommonUtils.splitTrimValue(fullConversationHistory, "KEEP_CONVERSATION_HISTORY");
 		Assertions.assertEquals(actualVarName, "True", "Conversation history setting is not matching");
 	}
@@ -98,7 +101,7 @@ public class AddModelPageTests extends AbstractPlaywrightTestBase {
 		EditMetadataPageUtils.enterTagName(page, "embeddings");
 		EditMetadataPageUtils.clickOnSubmit(page);
 		List<String> actualTagList = EditModelPageUtils.verifyTagNames(page);
-		List<String> expectedTagList = Arrays.asList(new String[] {"embeddings"});
+		List<String> expectedTagList = Arrays.asList(new String[] { "embeddings" });
 		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
@@ -118,32 +121,32 @@ public class AddModelPageTests extends AbstractPlaywrightTestBase {
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
 		EditMetadataPageUtils.clickEditIcon(page);
-		
+
 		String detailsText = "GPT-4.1 model";
 		EditMetadataPageUtils.enterDetails(page, detailsText);
-		
+
 		String descriptionText = "This is GPT-4.1 test model";
 		EditMetadataPageUtils.enterDescription(page, descriptionText);
-		
+
 		String tagNames = "embeddings, Test1";
 		String[] tagsArray = tagNames.split(", ");
 		for (String tag : tagsArray) {
 			EditMetadataPageUtils.enterTagName(page, tag);
 		}
-		
+
 		String domainNames = "SAP, AI, Finance";
 		String[] allDomainNames = domainNames.split(", ");
 		for (String domainName : allDomainNames) {
 			EditMetadataPageUtils.enterDomainName(page, domainName);
 		}
-		
-		String dataClassificationOptions = "IP, PHI, PII, PUBLIC";
+
+		String dataClassificationOptions = "IP, PHI, PII, Public";
 		String[] classificationOptions = dataClassificationOptions.split(", ");
 		for (String option : classificationOptions) {
 			EditMetadataPageUtils.selectDataClassificationOption(page, option);
 		}
 
-		String dataRestrictionOptions = "IP ALLOWED, PHI ALLOWED, FOUO ALLOWED";
+		String dataRestrictionOptions = "IP Allowed, PHI Allowed, FOUO Allowed";
 		String[] restrictionsOptions = dataRestrictionOptions.split(", ");
 		for (String option : restrictionsOptions) {
 			EditMetadataPageUtils.selectDataRestrictionsOption(page, option);
@@ -168,11 +171,13 @@ public class AddModelPageTests extends AbstractPlaywrightTestBase {
 		Assertions.assertEquals(actualDomainList, expectedDomainList);
 		// verify data classification
 		List<String> expectedDataClassificationOptionsList = Arrays.asList(classificationOptions);
-		List<String> actualDataClassificationOptionsList = EditModelPageUtils.verifyDataClassificationOptionsUnderOverview(page);
+		List<String> actualDataClassificationOptionsList = EditModelPageUtils
+				.verifyDataClassificationOptionsUnderOverview(page);
 		Assertions.assertEquals(actualDataClassificationOptionsList, expectedDataClassificationOptionsList);
 		// verfy data restrctions
 		List<String> expectedDataRestrictionOptionsList = Arrays.asList(restrictionsOptions);
-		List<String> actualDataRestrictionOptionsList = EditModelPageUtils.verifyDataRestrictionOptionsUnderOverview(page);
+		List<String> actualDataRestrictionOptionsList = EditModelPageUtils
+				.verifyDataRestrictionOptionsUnderOverview(page);
 		Assertions.assertEquals(actualDataRestrictionOptionsList, expectedDataRestrictionOptionsList);
 	}
 
@@ -184,24 +189,42 @@ public class AddModelPageTests extends AbstractPlaywrightTestBase {
 
 		// Create test data structure to replace DataTable
 		// Each entry: [section name, expected count]
-		Object[][] testData = {
-			{"How to use in Pixel", 5},
-			{"How to use in Python", 1},
-			{"How to use with LangChain API", 1},
-			{"How to use externally with OpenAI API (with or without our Python SDK)", 4},
-			{"How to use in Java", 1}
-		};
+		Object[][] testData = { { "How to use in Pixel", 5 }, { "How to use in Python", 1 },
+				{ "How to use with LangChain API", 1 },
+				{ "How to use externally with OpenAI API (with or without our Python SDK)", 4 },
+				{ "How to use in Java", 1 } };
 
 		// Validate model catalog id occurences in each section
 		for (Object[] data : testData) {
 			String sectionName = (String) data[0];
 			int expectedCount = (int) data[1];
-			
+
 			String copiedSectionContents = SettingsModelPageUtils.getFullSectionCodeByHeading(page, sectionName);
 			int countIdOccurances = CommonUtils.countIdOccurances(copiedSectionContents, modelId);
-			
+
 			Assertions.assertEquals(expectedCount, countIdOccurances,
 					"Model id count does not match for section '" + sectionName + "'");
 		}
+	}
+
+	@Test
+	@DisplayName("Validate the available tool and their input parameter after MCP Generation for Model")
+	public void testValidateToolsAfterMCPGeneration(@PWPage Page page) throws IOException {
+		String toastMessage = "MCP generated";
+		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
+		String modelId = SettingsModelPageUtils.copyModelID(page);
+		AICorePageUtils.clickOnTabButton(page, "MCP Usage");
+		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
+		String actualMessage = ModelPageUtils.modelCreationToastMessage(page, toastMessage);
+		Assertions.assertEquals(actualMessage, toastMessage, "Generate MCP creation failed");
+		Map<String, List<String>> toolData = new HashMap<>();
+		toolData.put("LLM",
+				Arrays.asList("useHistory", "paramValues", "image", "engine", "context", "command", "roomId", "url"));
+		toolData.forEach((toolName, parameters) -> {
+			boolean isToolPresent = EditModelPageUtils.verifyToolsInGeneratedMCP(page, toolName);
+			Assertions.assertTrue(isToolPresent, "Tool not displayed: " + toolName);
+			boolean isParamPresent = EditModelPageUtils.verifyInputParameters(page, toolName, parameters);
+			Assertions.assertTrue(isParamPresent, "Parameters not correct for: " + toolName);
+		});
 	}
 }

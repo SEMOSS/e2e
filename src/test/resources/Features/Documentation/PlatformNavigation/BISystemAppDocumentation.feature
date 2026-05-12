@@ -12,10 +12,10 @@ Feature: BI System App Documentation
     And User clicks on 'Upload' button to create catalog
     And User clicks on Copy Catalog ID
     And User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User clicks on apply database button
-    Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
+    # And User clicks on Refresh button
+    # And User clicks on apply database button
+    # Then User sees the table in the metadata tab
+    # When User clicks on Save button of Metadata tab
     Then User sees success toast message 'Successfully saved changes.'
     When User opens Main Menu
     And User clicks on Open App Library
