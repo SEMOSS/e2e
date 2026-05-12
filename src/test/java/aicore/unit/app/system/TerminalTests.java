@@ -13,7 +13,7 @@ import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 public class TerminalTests extends AbstractE2ETest {
 
 	@BeforeAll
-	public static void createApp() {
+	public void createApp() {
 		login(page, UserType.NATIVE);
 		HomePageUtils.navigateToHomePage(page);
 		MainMenuUtils.openMainMenu(page);

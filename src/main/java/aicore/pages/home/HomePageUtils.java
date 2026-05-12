@@ -44,11 +44,15 @@ public class HomePageUtils {
 
 	public static void navigateToHomePage(Page page) {
 		String homePage = UrlUtils.getUrl("#");
-		page.navigate(homePage);
+		navigateToHomePage(page, homePage);
+	}
+	
+	public static void navigateToHomePage(Page page, String homePageUrl) {
+		page.navigate(homePageUrl);
 		try {
-			page.waitForURL(homePage);
+			page.waitForURL(homePageUrl);
 		} catch (Throwable t) {
-			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePage, page.url());
+			logger.warn("Waiting for: {}\nCurrent: {}\nContinuing anyway", homePageUrl, page.url());
 		}
 	}
 
@@ -141,7 +145,8 @@ public class HomePageUtils {
 	}
 
 	public static void searchCatalog(Page page, String searchData) {
-		Locator locator = page.locator(APP_SEARCH_TEXTBOX_XPATH);
+		Locator locator = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Search"));
+		AICorePageUtils.waitFor(locator);
 		locator.click();
 		Locator search = page.locator(SEARCH_TEXTBOX_ON_POPUP_XPATH);
 		AICorePageUtils.waitFor(search);

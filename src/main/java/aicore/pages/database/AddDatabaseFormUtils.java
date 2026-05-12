@@ -17,7 +17,8 @@ public class AddDatabaseFormUtils {
 	private static final Logger logger = LogManager.getLogger(AddDatabaseFormUtils.class);
 
 	private static final String ADD_DATABASE_BUTTON = "Navigate to import Database";
-	private static final String DATABASE_CONNECTION_XPATH = "[data-testid='database-card-undefined']";
+	private static final String DATABASE_TYPE_CSS_TAG = "{DATABASE_TYPE_TAG}";
+	private static final String DATABASE_CONNECTION_XPATH = "database-card-" + DATABASE_TYPE_CSS_TAG;
 	private static final String CATALOG_NAME_XPATH = "//input[@data-testid='database-form-input-NAME']";
 	private static final String HOST_NAME_XPATH = "//input[@data-testid='database-form-input-hostname']";
 	private static final String PORT_NUMBER_XPATH = "//input[@data-testid='database-form-input-port']";
@@ -38,7 +39,7 @@ public class AddDatabaseFormUtils {
 	@Step("Select database type as: {dbType}")
 	public static void selectDatabaseFromConnectionTypes(Page page, String dbType) {
 		logger.info("SELECT " + dbType + " AS DATABASE TYPE");
-		Locator option = page.locator(DATABASE_CONNECTION_XPATH).filter(new Locator.FilterOptions().setHasText(dbType));
+		Locator option = page.getByTestId(DATABASE_CONNECTION_XPATH.replace(DATABASE_TYPE_CSS_TAG, dbType));
 		if (!option.isVisible()) {
 			throw new AssertionError("Database connection type '" + dbType + "' is not visible.");
 		}

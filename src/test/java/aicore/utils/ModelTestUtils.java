@@ -19,6 +19,45 @@ import aicore.pages.model.ModelSMSSPageUtils;
 import aicore.utils.page.model.ModelPageUtils;
 
 public class ModelTestUtils {
+	
+	public static String addModel(Page page, String modelCatalogName) {
+		String modelType = "OpenAI";
+		String modelTypeName = "GPT-4.1";
+		String openAIKey = "Test@1234";
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+
+		// model form options
+		ModelPageUtils.clickAddModelButton(page);
+		AddModelFormUtils.selectModelType(page, modelType);
+		AddModelFormUtils.selectModel(page, modelTypeName);
+		AddModelFormUtils.enterCatalogName(page, modelCatalogName);
+		AddModelFormUtils.enterOpenAIKey(page, openAIKey);
+		AddModelFormUtils.clickOnCreateModelButton(page);
+		
+		// get the name of the model
+		// TODO there might be an easier way to do this
+		HomePageUtils.navigateToHomePage(page);
+		MainMenuUtils.openMainMenu(SetupHooks.getPage());
+		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
+		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
+		String modelId = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		return modelId;
+	}
+
+	public static void addModel(Page page, String modelType, String modelName, String catalogName,
+			String openAIKey) {
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		ModelPageUtils.clickAddModelButton(page);
+		AddModelFormUtils.selectModelType(page, modelType);
+		AddModelFormUtils.selectModel(page, modelName);
+		AddModelFormUtils.enterCatalogName(page, catalogName);
+		AddModelFormUtils.enterOpenAIKey(page, openAIKey);
+		AddModelFormUtils.clickOnCreateModelButton(page);
+	}
+	
     public static String uploadModelZip(Page page, String modelName, String fileName) {
 		// delete model before
 		MainMenuUtils.openMainMenu(page);
@@ -32,8 +71,6 @@ public class ModelTestUtils {
 		ModelPageUtils.clickAddModelButton(page);
 		assertTrue(AddCatalogPageBaseUtils.isSearchBarPresent(page));
 
-
-		// TODO: it fails for Admin user due to timeout error
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
@@ -48,8 +85,8 @@ public class ModelTestUtils {
 
     public static String getModelID(Page page, String modelName) {
 		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelName);
 		String modelId = CatlogAccessPageUtility.getCatalogAndCopyId(page);

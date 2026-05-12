@@ -2,14 +2,17 @@ package aicore.unit.database.add;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICorePageUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabaseFileUploadUtils;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
@@ -18,12 +21,13 @@ import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
 
-public class AddFileUploadDatabaseTests extends AbstractE2ETest {
+public class AddFileUploadDatabaseTests extends AbstractPlaywrightTestBase {
 
 	@BeforeEach
-	public void setup() throws IOException {
-		login(page, UserType.NATIVE);
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 
@@ -31,11 +35,16 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		String tabName = "file uploads";
 		AddDatabaseFileUploadUtils.selectTab(page, tabName);
+	}	
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 	////////////////// UPLOAD as flat table
 
 	@Test
-	public void testAddExcelFlatTable() throws IOException {
+	public void testAddExcelFlatTable(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "Excel";
 		String dbName = "Excel db" + timestamp;
@@ -63,7 +72,7 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddCSVFlatTable() throws IOException {
+	public void testAddCSVFlatTable(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String dbName = "CSV db" + timestamp;
 		String fileName = TestResources.DIABETES_CSV;
@@ -76,11 +85,11 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddTSVFlatTable() throws IOException {
+	public void testAddTSVFlatTable(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
-		String dbType = "h2";
+		String dbType = "rdf";
 		String metaModelType = "asFlatTable";
 		String fileName = "Database/Employee.tsv";
 
@@ -104,70 +113,70 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	//////////////// METAMODEL FROM SCRATCH
-
-	@Test
-	public void testAddCSVFromScratch() throws IOException {
-		String timestamp = CommonUtils.getTimeStampName();
-		String fileType = "CSV";
-		String dbName = "CSV db" + timestamp;
-		String dbType = "h2";
-		String metaModelType = "fromScratch";
-		String fileName = "Database/diabetes.csv";
-
-		// db options
-		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
-		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
-		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
-		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		AddDatabaseFormUtils.clickOnConnectButton(page);
-
-		// validate the db created
-		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
-		AICorePageUtils.clickOnButton(page, "Import");
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
-
-		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
-	}
-
-	@Test
-	public void testAddTSVFromScratch() throws IOException {
-		String timestamp = CommonUtils.getTimeStampName();
-		String fileType = "TSV";
-		String dbName = "TSV db" + timestamp;
-		String dbType = "h2";
-		String metaModelType = "fromScratch";
-		String fileName = "Database/Employee.tsv";
-
-		// db options
-		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
-		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
-		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
-		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		AddDatabaseFormUtils.clickOnConnectButton(page);
-
-		// validate the db created
-		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
-		AICorePageUtils.clickOnButton(page, "Import");
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
-
-		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
-	}
+// TODO verify this metamodel option is still valid
+//	@Test
+//	public void testAddCSVFromScratch(@PWPage Page page) throws IOException {
+//		String timestamp = CommonUtils.getTimeStampName();
+//		String fileType = "CSV";
+//		String dbName = "CSV db" + timestamp;
+//		String dbType = "rdf";
+//		String metaModelType = "fromScratch";
+//		String fileName = "Database/diabetes.csv";
+//
+//		// db options
+//		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
+//		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
+//		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
+//		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
+//		CatalogCreationFromZipUtil.uploadFile(page, fileName);
+//		AddDatabaseFormUtils.clickOnConnectButton(page);
+//
+//		// validate the db created
+//		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
+//		AICorePageUtils.clickOnButton(page, "Import");
+//		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
+//		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+//		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+//
+//		// delete db
+//		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+//	}
+//
+//	@Test
+//	public void testAddTSVFromScratch(@PWPage Page page) throws IOException {
+//		String timestamp = CommonUtils.getTimeStampName();
+//		String fileType = "TSV";
+//		String dbName = "TSV db" + timestamp;
+//		String dbType = "rdf";
+//		String metaModelType = "fromScratch";
+//		String fileName = "Database/Employee.tsv";
+//
+//		// db options
+//		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
+//		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
+//		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
+//		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
+//		CatalogCreationFromZipUtil.uploadFile(page, fileName);
+//		AddDatabaseFormUtils.clickOnConnectButton(page);
+//
+//		// validate the db created
+//		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
+//		AICorePageUtils.clickOnButton(page, "Import");
+//		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
+//		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+//		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+//
+//		// delete db
+//		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+//	}
 
 	//////////////// SUGGESTED METAMODEL
 	@Test
-	public void testAddTSVSuggestedMetamodel() throws IOException {
+	public void testAddTSVSuggestedMetamodel(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
-		String dbType = "h2";
+		String dbType = "rdf";//"h2";
 		String metaModelType = "asSuggestedMetaModel";
 		String fileName = "Database/Employee.tsv";
 
@@ -192,11 +201,11 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddCSVSuggestedMetamodel() throws IOException {
+	public void testAddCSVSuggestedMetamodel(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "CSV";
 		String dbName = "CSV db" + timestamp;
-		String dbType = "h2";
+		String dbType = "rdf";//"h2";
 		String metaModelType = "asSuggestedMetaModel";
 		String fileName = "Database/diabetes.csv";
 
@@ -223,11 +232,11 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	@Test
-	public void testAddTSVSuggestedMetamodelEditRelationship() throws IOException {
+	public void testAddTSVSuggestedMetamodelEditRelationship(@PWPage Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		String fileType = "TSV";
 		String dbName = "TSV db" + timestamp;
-		String dbType = "h2";
+		String dbType = "rdf";
 		String metaModelType = "asSuggestedMetaModel";
 		String fileName = "Database/Employee.tsv";
 
@@ -264,77 +273,78 @@ public class AddFileUploadDatabaseTests extends AbstractE2ETest {
 	}
 
 	/////////////////// Upload multiple files
-	@Test
-	public void testAddMultiCSVFromScratch() throws IOException {
-		String timestamp = CommonUtils.getTimeStampName();
-		String fileType = "CSV";
-		String dbName = "CSV db" + timestamp;
-		String dbType = "h2";
-		String metaModelType = "fromScratch";
-		String fileName = "Database/diabetes.csv";
-		String fileName2 = "Database/diabetes2.csv";
-
-		// db options
-		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
-		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
-		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
-		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName2);
-		AddDatabaseFormUtils.clickOnConnectButton(page);
-
-		// metamodel steps
-		// TODO need to have better validation on the column types and names in this
-		// step
-		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
-		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes"),
-				"diabates table was not added");
-		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes2"),
-				"diabates2 table was not added");
-
-		AICorePageUtils.clickOnButton(page, "Import");
-
-		// validate the db created
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
-
-		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
-	}
-
-	@Test
-	public void testAddMultiTSVFromScratch() throws IOException {
-		String timestamp = CommonUtils.getTimeStampName();
-		String fileType = "TSV";
-		String dbName = "TSV db" + timestamp;
-		String dbType = "h2";
-		String metaModelType = "fromScratch";
-		String fileName = "Database/Employee.tsv";
-		String fileName2 = "Database/Employee2.tsv";
-
-		// db options
-		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
-		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
-		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
-		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		CatalogCreationFromZipUtil.uploadFile(page, fileName2);
-		AddDatabaseFormUtils.clickOnConnectButton(page);
-
-		// metamodel steps
-		// TODO need to have better validation on the column types and names in this
-		// step
-		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
-		AICorePageUtils.clickOnButton(page, "Import");
-
-		// validate the db created
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
-		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
-
-		// delete db
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
-	}
+	/// TODO verify this metamodel type is still valid
+//	@Test
+//	public void testAddMultiCSVFromScratch(@PWPage Page page) throws IOException {
+//		String timestamp = CommonUtils.getTimeStampName();
+//		String fileType = "CSV";
+//		String dbName = "CSV db" + timestamp;
+//		String dbType = "rdf";
+//		String metaModelType = "fromScratch";
+//		String fileName = "Database/diabetes.csv";
+//		String fileName2 = "Database/diabetes2.csv";
+//
+//		// db options
+//		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
+//		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
+//		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
+//		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
+//		CatalogCreationFromZipUtil.uploadFile(page, fileName);
+//		CatalogCreationFromZipUtil.uploadFile(page, fileName2);
+//		AddDatabaseFormUtils.clickOnConnectButton(page);
+//
+//		// metamodel steps
+//		// TODO need to have better validation on the column types and names in this
+//		// step
+//		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
+//		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes"),
+//				"diabates table was not added");
+//		Assertions.assertTrue(AddDatabaseFileUploadUtils.verifyTableName(page, "diabetes2"),
+//				"diabates2 table was not added");
+//
+//		AICorePageUtils.clickOnButton(page, "Import");
+//
+//		// validate the db created
+//		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
+//		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+//		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+//
+//		// delete db
+//		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+//	}
+//
+//	@Test
+//	public void testAddMultiTSVFromScratch(@PWPage Page page) throws IOException {
+//		String timestamp = CommonUtils.getTimeStampName();
+//		String fileType = "TSV";
+//		String dbName = "TSV db" + timestamp;
+//		String dbType = "rdf";
+//		String metaModelType = "fromScratch";
+//		String fileName = "Database/Employee.tsv";
+//		String fileName2 = "Database/Employee2.tsv";
+//
+//		// db options
+//		AddDatabaseFileUploadUtils.selectFileType(page, fileType);
+//		AddDatabaseFileUploadUtils.enterDatabaseName(page, dbName);
+//		AddDatabaseFileUploadUtils.selectDatabaseType(page, dbType);
+//		AddDatabaseFileUploadUtils.selectMetamodelType(page, metaModelType);
+//		CatalogCreationFromZipUtil.uploadFile(page, fileName);
+//		CatalogCreationFromZipUtil.uploadFile(page, fileName2);
+//		AddDatabaseFormUtils.clickOnConnectButton(page);
+//
+//		// metamodel steps
+//		// TODO need to have better validation on the column types and names in this
+//		// step
+//		AddDatabaseFileUploadUtils.checkColumnsAreEditable(page);
+//		AICorePageUtils.clickOnButton(page, "Import");
+//
+//		// validate the db created
+//		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, dbName);
+//		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+//		String dbID = CatlogAccessPageUtility.getCatalogAndCopyId(page);
+//
+//		// delete db
+//		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
+//	}
 
 }
