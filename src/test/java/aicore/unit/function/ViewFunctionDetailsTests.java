@@ -22,6 +22,9 @@ import com.microsoft.playwright.Page;
 import aicore.pages.ViewFunctionPage;
 import aicore.pages.function.GeneralFunctionPage;
 import aicore.pages.home.MainMenuUtils;
+import aicore.pages.model.EditModelPageUtils;
+import aicore.pages.model.SettingsModelPageUtils;
+import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
@@ -33,6 +36,7 @@ import aicore.utils.TestResources;
 import aicore.utils.TestTags;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.annotations.ResourceUploadLock;
+import aicore.utils.page.model.ModelPageUtils;
 
 public class ViewFunctionDetailsTests extends AbstractPlaywrightTestBase {
 	private static final Logger logger = LogManager.getLogger(ViewFunctionDetailsTests.class);
@@ -61,22 +65,22 @@ public class ViewFunctionDetailsTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	void testViewOverviewTabDetails() throws InterruptedException {
+	void testViewOverviewTabDetails(@PWPage Page page) throws InterruptedException {
 		String timestamp = CommonUtils.getTimeStampName();
 		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		SettingsModelPageUtils.addMember(page, "read", GenericSetupUtils.useDocker());
+		SettingsModelPageUtils.addMember(page, "read", false);
 		logout(page);
-		login(page, UserType.READER);
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenFunction(SetupHooks.getPage());
+		loginReadOnly(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenFunction(page);
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
 		AddFunctionPageUtils.verifyChangeAccessButton(page, "Change Access");
 		logout(page);
-		login(page, UserType.NATIVE);
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenFunction(SetupHooks.getPage());
+		loginNativeAdmin(page);
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenFunction(page);
 		AddFunctionPageUtils.verifyFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
 		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
 	}
@@ -95,7 +99,7 @@ public class ViewFunctionDetailsTests extends AbstractPlaywrightTestBase {
 
 	@Test
 	@DisplayName("Validate the available tool and their input parameter after MCP Generation for Function")
-	public void testValidateToolsAfterMCPGeneration() throws IOException {
+	public void testValidateToolsAfterMCPGeneration(@PWPage Page page) throws IOException {
 		String toastMessage = "MCP generated";
 		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
 		AICorePageUtils.clickOnTabButton(page, "MCP Usage");
