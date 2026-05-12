@@ -23,6 +23,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
+import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddDatabasePageUtils;
@@ -113,7 +114,7 @@ public class DatabaseSpecificPageTests extends AbstractPlaywrightTestBase {
 
 	@Test
 	@DisplayName("Validate the available tool and their input parameter after MCP Generation for database")
-	public void testValidateToolsAfterMCPGeneration() throws IOException {
+	public void testValidateToolsAfterMCPGeneration(@PWPage Page page) throws IOException {
 		String toastMessage = "MCP generated";
 		AICorePageUtils.clickOnTabButton(page, "MCP Usage");
 		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
