@@ -39,5 +39,5 @@ public class TestResources {
 	public static final String TEST_TXT = "Playground/Test.txt";
 
 	/** APP FILES */
-	public static final String APP_FILE = "CreateDiabetesRecordapp.zip";
+	public static final String APP_FILE = "App/CreateDiabetesRecordapp.zip";
 }

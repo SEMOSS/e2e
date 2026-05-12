@@ -18,6 +18,10 @@ public class CatalogCreationFromZipUtil extends AbstractBasePage {
 	private static final String ADD_FILE_NAME_XPATH = "//*[normalize-space()='{fileName}']";
 	private static final String UPLOAD_FILE_BUTTON_XPATH = "//button[contains(@data-testid,'upload-submit-button')]";
 	private static final String ZIP_UPLOAD_ICON_XPATH = "//button[contains(@data-testid,'-upload-file-button')]";
+	private static final String APP_UPLOAD_BUTTON_DATATESTID = "createAppSection-upload-btn";
+	private static final String CLICK_ON_NEXT_BUTTON_FOR_UPLOAD_FILE_XPATH = "//button[text()='Next']";
+	private static final String CLICK_ON_UPLOAD_BUTTON_FOR_UPLOAD_FILE_XPATH = "//div[@data-slot='dialog-footer']//button[text()='Upload']";
+	private static final String SELECT_FOLDER_TYPE_XPATH = "//label[text()='Folder Type']/parent::div//button";
 
 	public static void openCatalog(Page page, String catalogName) {
 		Locator locator = page.getByTestId(CATALOG_MENU_BUTTON_DATA_TESTID.replace("{catalogName}", catalogName));
@@ -58,7 +62,6 @@ public class CatalogCreationFromZipUtil extends AbstractBasePage {
 		} else {
 			fileInput.setInputFiles(Paths.get(relativePath + fileName));
 		}
-
 		if (fileName.contains("/")) {
 			String[] ActualFileName = fileName.split("/");
 			int fileNameIndex = ActualFileName.length - 1;
@@ -103,10 +106,22 @@ public class CatalogCreationFromZipUtil extends AbstractBasePage {
 	}
 
 	public static void clickOnFileUploadIconForAPP(Page page) {
-		page.getByTestId("createAppSection-upload-btn").click();
-		Locator selectFile = page
-				.locator("//button[@type=\"button\"]//*[name()='svg'][contains(@class,'lucide-upload')]");
-		AICorePageUtils.waitFor(selectFile);
-		selectFile.click();
+		page.getByTestId(APP_UPLOAD_BUTTON_DATATESTID).click();
+
+	}
+
+	public static void clickOnNextButton(Page page) {
+		page.locator(CLICK_ON_NEXT_BUTTON_FOR_UPLOAD_FILE_XPATH).click();
+	}
+
+	public static void selectTheFolderType(Page page) {
+		Locator selectFolderType = page.locator(SELECT_FOLDER_TYPE_XPATH);
+		selectFolderType.click();
+		selectFolderType.selectOption("App Zip");
+
+	}
+
+	public static void clickOnUploadButton(Page page) {
+		page.locator(CLICK_ON_UPLOAD_BUTTON_FOR_UPLOAD_FILE_XPATH).click();
 	}
 }
