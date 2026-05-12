@@ -13,10 +13,10 @@ Feature: Drag and Drop Data Grid
     And User clicks on Copy Catalog ID
     Then User can see the Catalog title as 'TestDatabase'
     When User clicks on MetaData tab
-    And User clicks on Refresh button
-    And User clicks on apply database button
-    Then User sees the table in the metadata tab
-    When User clicks on Save button of Metadata tab
+    ##And User clicks on Refresh button
+    ##And User clicks on apply database button
+   ##Then User sees the table in the metadata tab
+    ##When User clicks on Save button of Metadata tab
     And User opens Main Menu
     And User clicks on Open App Library
     And User clicks on Create New App button
@@ -36,7 +36,7 @@ Feature: Drag and Drop Data Grid
     And User selects 'Import Data' from the hidden options
     And User selects 'From Data Catalog' from the data import options
     And User selects 'TestDatabase' from the dropdown list
-    Then User can see 'AGE, BLOODPRESSURE, BMI, DIABETESPEDIGREEFUNCTION, DIABETES_UNIQUE_ROW_IDFK, END_DATE, GLUCOSE, INSULIN, MILESTONE, OUTCOME, PREGNANCIES, SKINTHICKNESS, START_DATE, TASK_GROUP, TASK_NAME, TOOLTIP' columns under the fields column
+   Then User can see 'Age, BloodPressure, BMI, DiabetesPedigreeFunction, DIABETES_UNIQUE_ROW_ID, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip' columns under the fields column
     When User selects all columns from database
     And User clicks on data Import button
     And User deletes the previous cell

@@ -27,7 +27,7 @@ public class AppPageUtils {
 	public static final String MORE_VERTICAL_OPTIONS_ICON_XPATH = "//button[@aria-label='More options']";
 	public static final String MORE_VERTICAL_OPTION_XPATH = "//li[@value='{optionValue}']";
 	public static final String ID_COPY_TOAST_MESSAGE_XPATH = "//li[@data-type='success']";
-	private static final String SELECT_FILTER_VALUE_XPATH = "//h6[text()='{filterCategory}']/parent::button/following-sibling::div//span[text()='{filterValue}']";
+	private static final String SELECT_FILTER_VALUE_XPATH = "//span[text()='{filterCategory}']/ancestor::button/following-sibling::div//span[text()='{filterValue}']";
 	private static final String INFO_BUTTON_XPATH = "//a[text()='{buttonName}']";
 	private static final String APP_BOOKMARK_ICON_XPATH = "//button[@aria-label='Add bookmark']";
 	private static final String PUBLISHED_DATE_XPATH = "//p[text()='{publishedDate}']";
@@ -216,7 +216,7 @@ public class AppPageUtils {
 	}
 
 	public static void searchFilterValueOnAppPage(Page page, String filterValue) {
-		page.getByPlaceholder("Search by...").fill(filterValue);
+		page.getByPlaceholder("Search filters...").fill(filterValue);
 	}
 
 	public static void selectFilterValueOnAppPage(Page page, String filterCategory, String filterValue) {

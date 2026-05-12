@@ -14,7 +14,7 @@ Scenario: Create app using Template
     And User fetch the app name 
     Then User sees the title 'Ask LLM'
     And User sees description as 'Ask an LLM a question'
-    And User sees input field with With label 'Question'
+    And User sees input field with With label 'question'
     And User sees submit button
     When User clicks on Preview app button
     Then User sees the title 'Ask LLM' in Preview App

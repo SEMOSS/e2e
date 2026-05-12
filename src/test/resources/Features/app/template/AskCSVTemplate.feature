@@ -1,7 +1,7 @@
-Feature:Create app using csv Template 
+Feature: Create app using csv Template
 
-@LoginWithAdmin @Regression
-Scenario: Create app using Template Visualize CSV
+  @LoginWithAdmin @Regression
+  Scenario: Create app using Template Visualize CSV
     Given User is on Home page
     When User opens Main Menu
     And User clicks on Open App Library

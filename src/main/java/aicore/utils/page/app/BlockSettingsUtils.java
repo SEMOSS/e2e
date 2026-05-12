@@ -10,7 +10,7 @@ import aicore.utils.CommonUtils;
 public class BlockSettingsUtils {
 	// Block settings for Text elements
 	public static final String APP_SETTINGS_DATA_TEST_ID = "MenuIcon";
-	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content workspace_layout' and text()='Block Settings']/parent::div";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	public static final String PERMISSION_SETTINGS_DATA_TEST_ID = "SettingsIcon";
 	private static final String DESTINATION_TEXTBOX_XPATH = "//p[text()='Destination']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String TEXT_TEXTBOX_XPATH = "//p[text()='Text']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
@@ -24,7 +24,7 @@ public class BlockSettingsUtils {
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
 	private static final String DROP_FIELD_XPATH = "//span[normalize-space()= '{fieldName}']/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
-	private static final String SELECT_FRAME_IN_NOTEBOOK_XPATH = "//*[@data-testid='AccountTreeIcon']//parent::div//following-sibling::div";
+	private static final String SELECT_FRAME_IN_NOTEBOOK_XPATH = "//button[contains(@class,'items-center')]//span[text()='Select Frame']";
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
 	private static final String OPTION_XPATH = "//p[text()='{optionName}']/../following-sibling::div//button";
 

@@ -42,7 +42,7 @@ public class EditModelPageUtils {
 	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_NAME_XAPTH = "//span[text()='Engine Name:']/following-sibling::span";
 	private static final String DELETE_CONFIRMATION_POPUP_ENAGINE_ID_XAPTH = "//span[text()='Engine ID:']/following-sibling::span";
 	private static final String VIEW_INPUT_PARAMETERS_XPATH = "//code[text()='{parameters}']";
-	private static final String VIEW_INPUT_PARAMETER_XPATH = "//summary[contains(text(),'View input parameters')]";
+	private static final String VIEW_INPUT_PARAMETER_XPATH = "//h4[text()='{toolName}']/ancestor::div/following::summary[contains(text(),'View input parameters')]";
 	private static final String GENRATE_MCP_CONFIRAMTION_BUTTON_XPATH = "//button[text()='Yes']";
 	private static final String VIEW_AVAILABLE_TOOL_XPATH = "//div//h4[text()='Available Tools']/following::div//h4[text()='{toolName}']";
 
