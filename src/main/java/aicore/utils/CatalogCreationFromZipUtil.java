@@ -11,7 +11,7 @@ import aicore.pages.base.AbstractBasePage;
 import aicore.pages.home.MainMenuUtils;
 import io.qameta.allure.Step;
 
-public class CatalogCreationFromZipUtil extends AbstractBasePage{
+public class CatalogCreationFromZipUtil extends AbstractBasePage {
 	private static final String CATALOG_MENU_BUTTON_DATA_TESTID = "sidebar-{catalogName}-btn";
 	private static final String ADD_CATALOG_BUTTON_DATA_TESTID = "engineIndex-add-{catalog}-btn";
 	private static final String ADD_FILE_XPATH = "//input[@type='file']";
@@ -89,16 +89,24 @@ public class CatalogCreationFromZipUtil extends AbstractBasePage{
 					.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(120000));
 		}
 	}
-	
+
 	// alternative to CodeAppPAgeUtils.userCanSeeFolder
 	public static boolean userSeesItemInFilesList(Page page, String itemIdentifier) {
-		Locator listItem = page.getByTitle( itemIdentifier );
+		Locator listItem = page.getByTitle(itemIdentifier);
 		return listItem.isVisible();
 	}
-	
+
 	// alternative to CodeAppPAgeUtils.userSelectTheFolder
 	public static void userClicksOnItemInFilesList(Page page, String itemIdentifier) {
-		Locator listItem = page.getByTitle( itemIdentifier );
+		Locator listItem = page.getByTitle(itemIdentifier);
 		waitAndClick(listItem);
+	}
+
+	public static void clickOnFileUploadIconForAPP(Page page) {
+		page.getByTestId("createAppSection-upload-btn").click();
+		Locator selectFile = page
+				.locator("//button[@type=\"button\"]//*[name()='svg'][contains(@class,'lucide-upload')]");
+		AICorePageUtils.waitFor(selectFile);
+		selectFile.click();
 	}
 }
