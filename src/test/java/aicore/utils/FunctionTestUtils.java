@@ -169,13 +169,13 @@ public class FunctionTestUtils {
 		String[] filterValuesArray = filterValues.split(", ");
 		for (String filterValue : filterValuesArray) {
 			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
-			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
+//			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
 			boolean isCatalogVisible = CatalogFilterPageUtils.verifyCatalogIsVisibleOnCatalogPage(page, catalogName);
 			Assertions.assertTrue(isCatalogVisible,
 					"Catalog is not present for " + "'" + filterValue + "'" + " filter value");
 			// To de-select selected filter we again call this method
 			//TODO we need to check this logic, might be missing a step to add filter to function
-//			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
+			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
 
 		}
 	}

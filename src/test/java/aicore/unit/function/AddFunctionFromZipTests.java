@@ -38,13 +38,10 @@ public class AddFunctionFromZipTests extends AbstractPlaywrightTestBase {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
 		GeneralFunctionPage.deleteFunctionIfExists(page, TestResources.WEATHER_FUNC_NAME);
-//		AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME);
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		FunctionTestUtils.userUploadsFile(page, TestResources.WEATHER_FUNC_ZIP);
-//		acquireFunctionZipLock(()->{
-			CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-//		});		
+		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
 		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
 		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
@@ -53,9 +50,7 @@ public class AddFunctionFromZipTests extends AbstractPlaywrightTestBase {
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		logger.info("AFTER ALL: Deleting function");
-//		releaseFunctionZipLock(() -> 
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME);
-//		); 
 		logout(page);
 	}
 	
@@ -67,8 +62,6 @@ public class AddFunctionFromZipTests extends AbstractPlaywrightTestBase {
 		MainMenuUtils.clickOnOpenFunction(page); 
 		// if there are multiple functions, ours may be not visible without scrolling or searching
 		// this will let us filter out the list of functions so we can 'see' ours
-//		FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
-//		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
 		GeneralFunctionPage.searchForFunction(page, TestResources.WEATHER_FUNC_NAME);
 		GeneralFunctionPage.clickOnFunction(page, TestResources.WEATHER_FUNC_NAME);
 		SettingsModelPageUtils.clickOnAccessControl(page);
@@ -98,8 +91,6 @@ public class AddFunctionFromZipTests extends AbstractPlaywrightTestBase {
 
 		// if there are multiple functions, ours may be not visible without scrolling or searching
 		// this will let us filter out the list of functions so we can 'see' ours
-//		FunctionTestUtils.userSearchesForAndLocatesFunction(page, "WeatherFunctionTest");
-//		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", null);// no timestamp
 		GeneralFunctionPage.searchForFunction(page, TestResources.WEATHER_FUNC_NAME);
 		GeneralFunctionPage.clickOnFunction(page, TestResources.WEATHER_FUNC_NAME);
 		SettingsModelPageUtils.clickOnAccessControl(page);

@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,6 @@ import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
-import aicore.utils.TestTags;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.model.ModelPageUtils;
@@ -47,27 +45,25 @@ public class ViewFunctionDetailsTests extends AbstractPlaywrightTestBase {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
 		GeneralFunctionPage.deleteFunctionIfExists(page, TestResources.WEATHER_FUNC_NAME);
-//		AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION,
-//				TestResources.WEATHER_FUNC_NAME);
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		FunctionTestUtils.userUploadsFile(page, TestResources.WEATHER_FUNC_ZIP);
-//		acquireFunctionZipLock(()->{
-			CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-//		});	
+		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
 		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
 		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME);
 		logout(page);
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	void testViewOverviewTabDetails(@PWPage Page page) throws InterruptedException {
 		String timestamp = CommonUtils.getTimeStampName();
-		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
+		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);
 		SettingsModelPageUtils.addMember(page, "read", false);
@@ -75,14 +71,14 @@ public class ViewFunctionDetailsTests extends AbstractPlaywrightTestBase {
 		loginReadOnly(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
-		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
+		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, TestResources.WEATHER_FUNC_NAME, timestamp);
 		AddFunctionPageUtils.verifyChangeAccessButton(page, "Change Access");
 		logout(page);
 		loginNativeAdmin(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
-		AddFunctionPageUtils.verifyFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
-		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
+		AddFunctionPageUtils.verifyFunctionNameInCatalog(page, TestResources.WEATHER_FUNC_NAME, timestamp);
+		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, TestResources.WEATHER_FUNC_NAME, timestamp);
 	}
 
 	@Test
@@ -94,14 +90,14 @@ public class ViewFunctionDetailsTests extends AbstractPlaywrightTestBase {
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Pixel"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Python"));
 		assertTrue(viewFunction.verifyUsageInstructionsSection("How to use in Java"));
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME);
 	}
 
 	@Test
 	@DisplayName("Validate the available tool and their input parameter after MCP Generation for Function")
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
 	public void testValidateToolsAfterMCPGeneration(@PWPage Page page) throws IOException {
 		String toastMessage = "MCP generated";
-		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
+		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
 		AICorePageUtils.clickOnTabButton(page, "MCP Usage");
 		EditModelPageUtils.clickOnGenerateMCPButtonFromMCPUsageTab(page);
 		String actualMessage = ModelPageUtils.modelCreationToastMessage(page, toastMessage);

@@ -1,12 +1,18 @@
 package aicore.pages.function;
 
+import java.util.List;
+import java.util.Map;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.SelectOption;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
+import aicore.pages.base.AbstractBasePage;
 
-public class AddFunctionFormUtils {
+
+public class AddFunctionFormUtils extends AbstractBasePage{
 	
 	private static final String CATALOG_NAME_DATA_TESTID = "function-form-input-NAME";
 	private static final String HTTP_METHOD_DATA_TESTID = "function-form-input-HTTP_METHOD";
@@ -20,10 +26,11 @@ public class AddFunctionFormUtils {
 	private static final String HTTP_METHOD_TYPE_TESTID = "function-form-option-HTTP_METHOD-{method}";
 	private static final String POST_MESSAGE_BODY_TYPE_TESTID = "function-form-option-CONTENT_TYPE-json";
 	private static final String URL_DATA_TESTID = "function-form-input-URL";
+	private static final String PYTHON_FILE_INPUT_TESTID = "function-form-input-PYTHON_FILE_NAME";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
 
 	private static final String FIELDS_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='{section}']]/following-sibling::div//*[@data-testid='function-form-input-{fieldName}']";
-	private static final String FILE_FIELD_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='Settings']]/following-sibling::div[@data-testid='function-form-field-{fieldName}']";
+	private static final String FILE_FIELD_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='{section}']]/following-sibling::div[@data-testid='function-form-field-{fieldName}']";
 	private static final String MANDATORY_FIELDS_XPATH = "//label[text()='{fieldName}']//span[text()='*']";
 	private static final String FIELDS_DATA_TESTID = "function-form-input-{fieldName}";
 	private static final String DROPDOWN_FIELDS_XPATH = "//button[@data-testid='function-form-input-{fieldName}']";
@@ -38,6 +45,11 @@ public class AddFunctionFormUtils {
 		catalogName = catalogName.replace("{Timestamp}", " " + timestamp);
 		page.getByTestId(CATALOG_NAME_DATA_TESTID).click();
 		page.getByTestId(CATALOG_NAME_DATA_TESTID).fill(catalogName);
+	}
+	
+	public static void enterPythonFileName(Page page, String fileName) {
+		page.getByTestId(PYTHON_FILE_INPUT_TESTID).click();
+		page.getByTestId(PYTHON_FILE_INPUT_TESTID).fill(fileName);
 	}
 
 	public static void enterUrl(Page page, String url) {
@@ -62,6 +74,47 @@ public class AddFunctionFormUtils {
 	public static void enterHeaders(Page page, String headers) {
 		page.getByTestId(HEADERS_DATA_TESTID).click();
 		page.getByTestId(HEADERS_DATA_TESTID).fill(headers);
+	}
+	
+	public static void enterFunctionParameters(Page page, List<Map<String, String>> functionParameters) {
+		for (int i = 0; i < functionParameters.size(); i++) {
+			Map<String, String> parameter = functionParameters.get(i);
+//		for (Map<String, String> parameter : functionParameters) {
+			String paramName = parameter.get("parameterName");
+			String paramType = parameter.get("parameterType");
+			String paramDesc = parameter.get("parameterDescription");
+			
+			Locator addParamButton = page.getByTestId("function-form-add-FUNCTION_PARAMETERS");
+			waitAndClick(addParamButton);
+
+			Locator addparamNameInput = page.getByTestId("function-form-input-FUNCTION_PARAMETERS-name-{index}".replace("{index}", "" + i));
+			waitAndFill(addparamNameInput, paramName);
+			
+			// TODO the param type select element does not have an id or label to grab and is not attached to the button so difficult to grab and click an option
+//			Locator addParamTypeButton = page.getByTestId("function-form-input-FUNCTION_PARAMETERS-type-{index}".replace("{index}", "" + i));
+//			waitAndClick(addParamTypeButton);
+////			addParamTypeButton.selectOption(paramType.toLowerCase());
+//			Locator hiddenSelect = addParamTypeButton.locator("xpath=following-sibling::select");
+//			hiddenSelect.selectOption(new SelectOption().setValue(paramType.toLowerCase()));
+			
+//			page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).isVisible();
+//			page.getByTestId(HTTP_METHOD_TYPE_TESTID.replace("{method}", httpMethod)).click();
+			
+			Locator addParamDescInput = page.getByTestId("function-form-input-FUNCTION_PARAMETERS-desc-{index}".replace("{index}", "" + i));
+			waitAndFill(addParamDescInput, paramDesc);
+		}
+	}
+	
+	public static void enterFunctionRequiredParameters(Page page, List<String> requiredFunctionParameters) {
+		for (int i = 0; i < requiredFunctionParameters.size(); i++) {
+			String paramName = requiredFunctionParameters.get(i);
+			
+			Locator addParamButton = page.getByTestId("function-form-add-FUNCTION_REQUIRED_PARAMETERS");
+			waitAndClick(addParamButton);
+
+			Locator addparamNameInput = page.getByTestId("function-form-input-FUNCTION_REQUIRED_PARAMETERS-{index}".replace("{index}", "" + i));
+			waitAndFill(addparamNameInput, paramName);
+		}
 	}
 
 	public static void enterFunctionParameters(Page page, String functionParameters) {
@@ -143,12 +196,21 @@ public class AddFunctionFormUtils {
 		return false;
 	}
 
-	public static boolean isFieldMandatory(Page page, String field) {
-		Locator mandatoryField = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", field));
-		if (mandatoryField.textContent().contains("*")) {
-			return true;
-		}
-		return false;
+	public static boolean isFieldMandatory(Page page, String field) {		
+		// 1. Locate the <label> by its 'for' attribute
+        Locator label = page.locator("label:has-text(\"{fieldName}\")".replace("{fieldName}", field));
+
+        // 2. Scope to the <span> containing the asterisk
+        Locator asterisk = label.locator("span.text-destructive");
+
+        // 3. Assert that the span is visible and its text is exactly "*"
+        return asterisk.isVisible() && asterisk.textContent().contains("*");
+		
+//		Locator mandatoryField = page.locator(MANDATORY_FIELDS_XPATH.replace("{fieldName}", field));
+//		if (mandatoryField.textContent().contains("*")) {
+//			return true;
+//		}
+//		return false;
 	}
 
 	public static void fillFunctionCreationForm(Page page, String fieldName, String fieldValue, String timestamp) {
