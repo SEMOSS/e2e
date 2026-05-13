@@ -8,10 +8,43 @@ import com.microsoft.playwright.Page;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
+import aicore.utils.CommonUtils;
+import aicore.utils.TestResources;
 
 public class AddSpecificFunctionPage {
 
-
+	/**
+	 * Adds a REST function with default values for quick tests
+	 * @param page
+	 * @param catalogName
+	 */
+	public static void addFunction(Page page, String catalogName) {
+		String timestamp = CommonUtils.getTimeStampName();
+		String url = "https://api.api-ninjas.com/v1/weather"; 
+		String httpMethod = "GET"; 
+		String postBodyMessage = "json";
+		String headers = "{\"X-Api-Key\": \"myKey\"}";
+		List<Map<String, String>> functionParameters = List.of(Map.of("parameterName", "lat", "parameterType", "String", "parameterDescription",
+				"The lat of the location"),
+				Map.of("parameterName", "lon", "parameterType", "String", "parameterDescription",
+						"lon of the location"));
+		List<String> functionRequiredParameters = List.of("lat", "lon");
+		String functionName = "testFunction"; 
+		String functionDescription = "a function to call weather based on lat and long";
+		addParameterizedFunction(page,
+				TestResources.FUNC_REST, 
+				catalogName,
+				timestamp,
+				functionName,  
+				null,
+				url, 
+				httpMethod, 
+				postBodyMessage, 
+				headers,
+				functionDescription,
+				functionParameters, 
+				functionRequiredParameters);
+	}
 	
 	/**
 	 * used for aws and azure functions - does not need parameter selection
@@ -32,7 +65,7 @@ public class AddSpecificFunctionPage {
 	}
 	
 	/**
-	 * used for REST and Python functions - require parameters to be selelected, not required field in form
+	 * used for REST and Python functions - require parameters to be selected, not required field in form
 	 * 
 	 * @param page
 	 * @param functionType - EX: TestResources.FUNC_REST
@@ -53,6 +86,7 @@ public class AddSpecificFunctionPage {
 	 */
 	public static void addParameterizedFunction(Page page, 
 			String functionType, 
+			String catalogName,
 			String timestamp,
 			String functionName,  
 			String fileName,
