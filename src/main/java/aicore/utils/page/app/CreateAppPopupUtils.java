@@ -71,7 +71,7 @@ public class CreateAppPopupUtils {
 	}
 
 	public static String userFetchAppName(Page page) {
-		page.waitForTimeout(2000);
+		page.waitForTimeout(5000);
 		Locator getAppName = page.locator(USER_FETCH_APP_NAME_XPATH);
 		AICorePageUtils.waitFor(getAppName);
 		String actualAppName = getAppName.textContent().trim();
