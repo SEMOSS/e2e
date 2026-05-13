@@ -8,6 +8,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
+import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResources;
 
@@ -18,7 +19,7 @@ public class AddSpecificFunctionPage {
 	 * @param page
 	 * @param catalogName
 	 */
-	public static void addFunction(Page page, String catalogName) {
+	public static String addFunction(Page page, String catalogName) {
 		String timestamp = CommonUtils.getTimeStampName();
 		String url = "https://api.api-ninjas.com/v1/weather"; 
 		String httpMethod = "GET"; 
@@ -31,7 +32,7 @@ public class AddSpecificFunctionPage {
 		List<String> functionRequiredParameters = List.of("lat", "lon");
 		String functionName = "testFunction"; 
 		String functionDescription = "a function to call weather based on lat and long";
-		addParameterizedFunction(page,
+		return addParameterizedFunction(page,
 				TestResources.FUNC_REST, 
 				catalogName,
 				timestamp,
@@ -54,7 +55,7 @@ public class AddSpecificFunctionPage {
 	 * @param timestamp
 	 * @param formFields - ex: "Catalog Name=Azure-Speech-To-Text, Speech Key=Test@123, Speech region=Asia"
 	 */
-	public static void addNormalInputFunction(Page page, String functionType, String timestamp, String formFields) {
+	public static String addNormalInputFunction(Page page, String functionType, String timestamp, String formFields) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);
@@ -62,6 +63,7 @@ public class AddSpecificFunctionPage {
 		fillFunctionCreationForm(page, formFields, timestamp);
 		AddFunctionFormUtils.checkCreateFunctionButton(page);
 		AddFunctionFormUtils.clickOnConnectButton(page);
+		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
 	}
 	
 	/**
@@ -84,7 +86,7 @@ public class AddSpecificFunctionPage {
 			* Needs all three keys in map
 	 * @param functionRequiredParameters - Ex: List.of("lat", "lon")
 	 */
-	public static void addParameterizedFunction(Page page, 
+	public static String addParameterizedFunction(Page page, 
 			String functionType, 
 			String catalogName,
 			String timestamp,
@@ -115,6 +117,7 @@ public class AddSpecificFunctionPage {
 		AddFunctionFormUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
 		AddFunctionFormUtils.checkCreateFunctionButton(page);
 		AddFunctionFormUtils.clickOnConnectButton(page);
+		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
 	}
 	
 	/**
@@ -126,13 +129,16 @@ public class AddSpecificFunctionPage {
 	 * @param formFields - EX: "Catalog Name=Google-OCR, Project Id=01, Processor Id=1.1, Region=Asia, Google Bucket Engine Id=G10"
 	 * @param fileUploadResource - needs to be the resource the test is locked on
 	 */
-	public static void addUploadFunction(Page page, String functionType, String timestamp, String formFields, String fileUploadResource) {
+	public static String addUploadFunction(Page page, String functionType, String timestamp, String formFields, String fileUploadResource) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);
 		AddFunctionFormUtils.selectFunction(page, functionType);
 		fillFunctionCreationForm(page, formFields, timestamp);
 		CatalogCreationFromZipUtil.uploadFile(page, fileUploadResource);
+		AddFunctionFormUtils.checkCreateFunctionButton(page);
+		AddFunctionFormUtils.clickOnConnectButton(page);
+		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
 	}
 	
 	/**
