@@ -17,7 +17,7 @@ public class AddSpecificFunctionPage {
 	 * used for aws and azure functions - does not need parameter selection
 	 * 
 	 * @param page
-	 * @param functionType
+	 * @param functionType - EX: TestResources.FUNC_AWS_IMG_TXT_EXTRACTION
 	 * @param timestamp
 	 * @param formFields - ex: "Catalog Name=Azure-Speech-To-Text, Speech Key=Test@123, Speech region=Asia"
 	 */
@@ -35,7 +35,7 @@ public class AddSpecificFunctionPage {
 	 * used for REST and Python functions - require parameters to be selelected, not required field in form
 	 * 
 	 * @param page
-	 * @param functionType
+	 * @param functionType - EX: TestResources.FUNC_REST
 	 * @param timestamp
 	 * @param functionName
 	 * @param fileName - only needed for Local Python function
@@ -87,9 +87,9 @@ public class AddSpecificFunctionPage {
 	 * Used for Google speech-to-text and OCR functions
 	 * 
 	 * @param page
-	 * @param functionType
+	 * @param functionType - EX: TestResources.FUNC_GOOGLE_OCR
 	 * @param timestamp
-	 * @param formFields
+	 * @param formFields - EX: "Catalog Name=Google-OCR, Project Id=01, Processor Id=1.1, Region=Asia, Google Bucket Engine Id=G10"
 	 * @param fileUploadResource - needs to be the resource the test is locked on
 	 */
 	public static void addUploadFunction(Page page, String functionType, String timestamp, String formFields, String fileUploadResource) {
