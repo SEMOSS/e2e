@@ -151,7 +151,7 @@ public class AddAllFunctionTypesTests extends AbstractPlaywrightTestBase {
 		if (!fileName.isBlank()) AddFunctionFormUtils.enterPythonFileName(page, fileName);
 		if (!url.isBlank()) AddFunctionFormUtils.enterUrl(page, url);
 		if (!httpMethod.isBlank()) AddFunctionFormUtils.selectHttpMethod(page, httpMethod);
-		if (!httpMethod.isBlank()) AddFunctionFormUtils.selectPostBodyMessage(page, postBodyMessage);
+		if (!postBodyMessage.isBlank()) AddFunctionFormUtils.selectPostBodyMessage(page, postBodyMessage);
 		if (!headers.isBlank()) AddFunctionFormUtils.enterHeaders(page, headers);
 		AddFunctionFormUtils.enterFunctionName(page, functionName);
 		AddFunctionFormUtils.enterFunctionDescription(page, functionDescription);

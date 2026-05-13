@@ -16,6 +16,18 @@ public class TestResources {
 	/** FUNCTIONS */
 	public static final String WEATHER_FUNC_ZIP = "Function/weatherFunctionTest.zip";
 	public static final String WEATHER_FUNC_NAME = "WeatherFunctionTest";
+	
+	// function types
+	public static final String FUNC_AWS_IMG_TXT_EXTRACTION = "AWS Image Text Extraction";
+	public static final String FUNC_AWS_POLLY = "AWS Polly";
+	public static final String FUNC_AWS_TRANSCRIBE = "AWS Transcribe";
+	public static final String FUNC_AWS_COMPREHEND = "AWS Comprehend";
+	public static final String FUNC_AWS_DOC_INTEL = "Azure Document Intelligence";
+	public static final String FUNC_AWS_SPEECH_TO_TXT = "Azure Speech To Text";
+	public static final String FUNC_REST = "REST";
+	public static final String FUNC_LOCAL_PYTHON = "Local Python Function";
+	public static final String FUNC_GOOGLE_SPEECH_TO_TXT = "Google Speech To Text";
+	public static final String FUNC_GOOGLE_OCR = "Google OCR";
 
 	/** STORAGES */
 	public static final String LOCAL_MINIO_ZIP = "Storage/Localminio.zip";
