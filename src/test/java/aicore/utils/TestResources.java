@@ -37,4 +37,7 @@ public class TestResources {
 	public static final String MCP_ZIP = "Playground/mcp.zip";
 	public static final String DOCUMENT_DOCS = "Playground/Document.docs";
 	public static final String TEST_TXT = "Playground/Test.txt";
+
+	/** APP FILES */
+	public static final String APP_FILE = "App/CreateDiabetesRecordapp.zip";
 }
