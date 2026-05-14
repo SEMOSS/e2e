@@ -17,7 +17,11 @@ public class AgentBuilderAppsUtils {
 	private static final String USER_FETCH_APP_NAME_XPATH = "//div[@id='navbar--left']//div//div";
 
 	public static void enterName(Page page, String appName, String timestamp) {
-		page.locator(ENTER_NAME_XPATH).fill(appName + " " + timestamp);
+		if (timestamp != null && !timestamp.isEmpty()) {
+			page.locator(ENTER_NAME_XPATH).fill(appName + " " + timestamp);
+		} else {
+			page.locator(ENTER_NAME_XPATH).fill(appName);
+		}
 	}
 
 	public static void clickOnSelectLLM(Page page, String modelTitle) {

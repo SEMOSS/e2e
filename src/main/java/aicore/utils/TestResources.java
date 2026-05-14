@@ -12,6 +12,10 @@ public class TestResources {
 	/** MODELS */
 	public static final String LLAMA3_70B_INSTRUCT_ZIP = "Model/Llama3-70B-Instruct.zip";
 	public static final String LLAMA3_70B_INSTRUCT_NAME = "Llama3-70B-Instruct";
+	
+	// model types
+	public static final String MODEL_OPEN_AI = "OpenAI";
+	public static final String MDL_OPEN_AI_GPT_4_1 = "GPT-4.1";
 
 	/** FUNCTIONS */
 	public static final String WEATHER_FUNC_ZIP = "Function/weatherFunctionTest.zip";
