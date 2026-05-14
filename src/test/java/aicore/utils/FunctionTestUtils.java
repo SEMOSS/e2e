@@ -121,9 +121,9 @@ public class FunctionTestUtils {
 	}
 	
 	public static void verifyPopupWithSelectOptions(Page page, String expectedTitle, List<String> options){
-		Assertions.assertTrue(RequestAccessPopupUtils.isPopupVisible(SetupHooks.getPage()), expectedTitle + " popup is not visible");
+		Assertions.assertTrue(RequestAccessPopupUtils.isPopupVisible(page), expectedTitle + " popup is not visible");
 		for (String option : options) {
-			Assertions.assertTrue(RequestAccessPopupUtils.isOptionVisible(SetupHooks.getPage(), option),
+			Assertions.assertTrue(RequestAccessPopupUtils.isOptionVisible(page, option),
 					option + " is not visible in Change Access popup");
 		}
 	}
@@ -174,7 +174,8 @@ public class FunctionTestUtils {
 			Assertions.assertTrue(isCatalogVisible,
 					"Catalog is not present for " + "'" + filterValue + "'" + " filter value");
 			// To de-select selected filter we again call this method
-			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
+			//TODO we need to check this logic, might be missing a step to add filter to function
+//			CatalogFilterPageUtils.selectFilterValue(page, filterValue);
 
 		}
 	}

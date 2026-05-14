@@ -18,10 +18,10 @@ import aicore.utils.TestResources;
 
 public class AddGuardrailZipTests extends AbstractE2ETest {
 	
-	private static String GUARDRAIL_ID = null;
+	private String GUARDRAIL_ID = null;
 
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		// login with native user before tests
 		login(page, UserType.NATIVE);
 	}
@@ -58,7 +58,7 @@ public class AddGuardrailZipTests extends AbstractE2ETest {
 	}
 	
 	@AfterAll
-	static void deleteGuardrail() {
+	void deleteGuardrail() {
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL, GUARDRAIL_ID);
 	}
 }

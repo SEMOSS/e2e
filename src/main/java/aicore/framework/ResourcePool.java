@@ -10,6 +10,9 @@ public class ResourcePool {
 	private static final AtomicInteger COUNT = new AtomicInteger(0);
 
 	private static ThreadLocal<Resource> CURRENT = ThreadLocal.withInitial(() -> {
+		if (RESOURCES.isEmpty()) {
+			return null; // this case is expected to only occur in JUnit tests, not cucumber
+		}
 		int index = Math.floorMod(COUNT.getAndIncrement(), RESOURCES.size());
 		return RESOURCES.get(index);
 	});
@@ -26,6 +29,9 @@ public class ResourcePool {
 	}
 
 	public static Resource get() {
+		if (CURRENT == null) {
+			return null; // null check when running JUnit tests, not cucumber
+		}
 		return CURRENT.get();
 	}
 

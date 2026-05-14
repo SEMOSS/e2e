@@ -16,7 +16,7 @@ import aicore.utils.AbstractE2ETest;
 public class MainMenuTests extends AbstractE2ETest {
 
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		login(page, UserType.NATIVE);
 	}
 

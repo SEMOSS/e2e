@@ -17,7 +17,7 @@ import aicore.utils.TestResourceTrackerHelper;
 
 public class AddGuardrailTests extends AbstractE2ETest {
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		// login with native user before tests
 		login(page, UserType.NATIVE);
 	}

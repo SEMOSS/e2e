@@ -1,35 +1,31 @@
 package aicore.unit.model;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.pages.notifications.NotificationsUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.page.model.ModelPageUtils;
 
-public class NotificationsTests extends AbstractE2ETest {
+public class NotificationsTests extends AbstractPlaywrightTestBase {
 	private static String catalogName = null;
 
-	@BeforeAll
-	public static void setup() throws IOException {
-		// login with native user before tests
-		login(page, UserType.ADMIN);
-	}
-
 	@BeforeEach
-	public void createModelCatalog() {
+	public void createModelCatalog(@PWPage Page page) {
+		loginNativeAdmin(page);
+
 		String timestamp = CommonUtils.getTimeStampName();
 		catalogName = "Model" + timestamp;
 		String modelType = "OpenAI";
@@ -49,7 +45,7 @@ public class NotificationsTests extends AbstractE2ETest {
 
 	@Test
 	@DisplayName("Validate newly added member received notification")
-	public void verifyNewlyAddedMemberReceivesNotification() throws InterruptedException {
+	public void verifyNewlyAddedMemberReceivesNotification(@PWPage Page page) throws InterruptedException {
 		String accessProvided = "Editor";
 		String accessProvidedByUser = "Admin";
 		// Open access control tab and add a new member
@@ -58,7 +54,7 @@ public class NotificationsTests extends AbstractE2ETest {
 		SettingsModelPageUtils.addMember(page, accessProvided, GenericSetupUtils.useDocker());
 		// Logout and login with the newly added member
 		logout(page);
-		login(page, UserType.EDITOR);
+		loginEditor(page);
 		// Validate the notification message for the newly added member
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
@@ -73,12 +69,13 @@ public class NotificationsTests extends AbstractE2ETest {
 		NotificationsUtils.closeNotificationPane(page);
 		// Logout from newly added member account and login back with admin for cleanup
 		logout(page);
-		login(page, UserType.ADMIN);
+		loginNativeAdmin(page);
 	}
 
 	@Test
 	@DisplayName("Validate along with the newly added user, all owner users receive a notification")
-	public void verifyNewUserAndAllOwnersReceivesNotification() throws InterruptedException {
+
+	public void verifyNewUserAndAllOwnersReceivesNotification(@PWPage Page page) throws InterruptedException {
 		// Open access control tab
 		SettingsModelPageUtils.clickOnAccessControl(page);
 		SettingsModelPageUtils.clickOnAddMembersButton(page);
@@ -99,7 +96,7 @@ public class NotificationsTests extends AbstractE2ETest {
 		SettingsModelPageUtils.addMember(page, "Editor", GenericSetupUtils.useDocker());
 		// Logout and login with the newly added member
 		logout(page);
-		login(page, UserType.AUTHOR);
+		loginAuthor(page);
 		// Validate notification message for the first newly added member who is Author
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
@@ -114,11 +111,11 @@ public class NotificationsTests extends AbstractE2ETest {
 		NotificationsUtils.closeNotificationPane(page);
 		// Logout from newly added member account and login back with Admin for cleanup
 		logout(page);
-		login(page, UserType.ADMIN);
+		loginNativeAdmin(page);
 	}
 
 	@AfterEach
-	public void teardown() {
+	public void teardown(@PWPage Page page) {
 		// Clean up: delete the test model catalog
 		if (catalogName != null && page != null) {
 			try {
@@ -127,5 +124,6 @@ public class NotificationsTests extends AbstractE2ETest {
 				System.err.println("Failed to delete model catalog: " + e.getMessage());
 			}
 		}
+		logout(page);
 	}
 }

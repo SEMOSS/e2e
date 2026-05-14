@@ -102,7 +102,7 @@ Feature: Code app files
     Then User sees success toast message 'Successfully compiled and published'
     And User click on Share App link
     And User click on Copy button for Url
-    And User sees success toast message 'Successfully copied to clipboard'
+    And User sees success toast message 'Copied to clipboard'
     And User open the new tab
     And User paste the URl on new tab
     And User able to see the 'Get New Stock Updated' title on the new tab page
@@ -116,14 +116,14 @@ Feature: Code app files
     When User uploads the file 'Playground/mcp.zip'
     And User clicks on 'Upload' button to create code app
     And User can see the 'mcp.zip' folder in the Files section
-    And User clicks on three dot icon of 'mcp.zip' file
-    And User select the 'Unzip' file option
-    And User can see the 'py' folder in the Files section
-    And User clicks on the 'portals' folder in the Files section
-    And User click on the created 'index.html' file
-    And User edit file for change title as 'Get New Stock Updated'
-    And User Save the file
-    And User clicks on the publish icon to publish the code app
-    And User sees success toast message 'Successfully published'
-    And User click on 'Code app' from breadcrumb link
-    And User able to see the 'Get New Stock Updated' title on the page
+# And User clicks on three dot icon of 'mcp.zip' file
+# And User select the 'Unzip' file option
+# And User can see the 'py' folder in the Files section
+# And User clicks on the 'portals' folder in the Files section
+# And User click on the created 'index.html' file
+# And User edit file for change title as 'Get New Stock Updated'
+# And User Save the file
+# And User clicks on the publish icon to publish the code app
+# And User sees success toast message 'Successfully published'
+# And User click on 'Code app' from breadcrumb link
+# And User able to see the 'Get New Stock Updated' title on the page

@@ -8,34 +8,42 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.steps.AbstractAddCatalogBase;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
+import aicore.utils.annotations.PWPage;
 
-public class AddDatabaseSearchTests extends AbstractE2ETest {
+public class AddDatabaseSearchTests extends AbstractPlaywrightTestBase {
 
 	private static final String GROUP_NAME = "GROUP";
 	private static final String DATABASE_OPTION_NAMES = "DATABASE_OPTIONS";
 
 	@BeforeEach
-	void setUp() {
-		login(page, UserType.NATIVE);
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		assertTrue(AddCatalogPageBaseUtils.isSearchBarPresent(page));
+	}	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 
 	@ParameterizedTest(name = "{index} => group={0}")
 	@MethodSource("databaseSelectionData")
-	void testDatabaseSelectionIsViewable(String group, String databaseOptions) {
+	void testDatabaseSelectionIsViewable(String group, String databaseOptions, @PWPage Page page) {
 		List<Map<String, String>> mapList = new ArrayList<>();
 
 		Map<String, String> map = new HashMap<>();
@@ -48,7 +56,7 @@ public class AddDatabaseSearchTests extends AbstractE2ETest {
 
 	@ParameterizedTest(name = "{index} => group={0}")
 	@MethodSource("databaseSelectionData")
-	void testSearchDatabaseOption(String group, String databaseOptions) {
+	void testSearchDatabaseOption(String group, String databaseOptions, @PWPage Page page) {
 		List<Map<String, String>> mapList = new ArrayList<>();
 
 		Map<String, String> map = new HashMap<>();

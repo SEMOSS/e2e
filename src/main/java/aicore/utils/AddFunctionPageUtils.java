@@ -39,25 +39,21 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
-
 	public static boolean userCanSeeOptionInFunctionsGrid(Page page, String functionOption) {
 		Locator locator = page.getByText(functionOption).first();
 		AICorePageUtils.waitFor(locator);
 		return locator.isVisible();
 	}
-
 	public static boolean userCanSeeOptionIconInFunctionsGrid(Page page, String functionOption) {
 		Locator icon = page.getByAltText(functionOption);
 		AICorePageUtils.waitFor(icon);
 		return icon.isVisible();
 	}
-
 	public static String getIconURL(Page page, String functionOption) {
 		Locator icon = page.getByAltText(functionOption);
 		AICorePageUtils.waitFor(icon);
 		return icon.getAttribute("src");
 	}
-
 	public static void clickOnAddFunctionButton(Page page) {
 		page.getByLabel(ADD_FUNCTION_BUTTON).isVisible();
 		page.getByLabel(ADD_FUNCTION_BUTTON).click();

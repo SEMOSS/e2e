@@ -17,8 +17,8 @@ Feature: Filter By option in the app
     And User enters the description as 'Test app'
     And User add Tags 'embeddings, Test1, Test2, Test3' in app settings and presses Enter
     And User enters the Domains as 'SAP, AI, Finance' in the app settings and presses Enter
-    And User selects 'IP, PHI, PII, PUBLIC' from the Data Classification in the app settings
-    And User selects 'IP ALLOWED, PHI ALLOWED, FOUO ALLOWED' from the Data Restrictions in the app settings
+    And User selects 'IP, PHI, PII, Public' from the Data Classification in the app settings
+    And User selects 'IP Allowed, PHI Allowed, FOUO Allowed' from the Data Restrictions in the app settings
     And User clicks on Submit button in the app settings
 
   Scenario: Verify the app is visible while applying filters in the app library
@@ -28,8 +28,8 @@ Feature: Filter By option in the app
       | FILTER_CATEGORY     | FILTER_VALUE                          |
       | Tag                 | embeddings, Test1                     |
       | Domain              | SAP, AI                               |
-      | Data Classification | IP, PHI, PII, PUBLIC                  |
-      | Data Restrictions   | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+      | Data Classification | IP, PHI, PII, Public                  |
+      | Data Restrictions   | IP Allowed, PHI Allowed, FOUO Allowed |
 
   Scenario: Verify the discoverable  app is visible while applying filters in the app library
     When User clicks on Access Control Tab
@@ -42,8 +42,8 @@ Feature: Filter By option in the app
       | FILTER_CATEGORY     | FILTER_VALUE                          |
       | Tag                 | embeddings, Test1                     |
       | Domain              | SAP, AI                               |
-      | Data Classification | IP, PHI, PII, PUBLIC                  |
-      | Data Restrictions   | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+      | Data Classification | IP, PHI, PII, Public                  |
+      | Data Restrictions   | IP Allowed, PHI Allowed, FOUO Allowed |
 
   Scenario: Verify the Bookmarked app is visible while applying filters in the app library
     When User opens Main Menu
@@ -55,5 +55,5 @@ Feature: Filter By option in the app
       | FILTER_CATEGORY     | FILTER_VALUE                          |
       | Tag                 | embeddings, Test1                     |
       | Domain              | SAP, AI                               |
-      | Data Classification | IP, PHI, PII, PUBLIC                  |
-      | Data Restrictions   | IP ALLOWED, PHI ALLOWED, FOUO ALLOWED |
+      | Data Classification | IP, PHI, PII, Public                  |
+      | Data Restrictions   | IP Allowed, PHI Allowed, FOUO Allowed |

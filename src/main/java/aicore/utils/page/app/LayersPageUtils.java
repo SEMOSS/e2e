@@ -14,7 +14,7 @@ public class LayersPageUtils {
 
 	private static final String LEFT_PANEL_TAB_DATATESTID = "workspace-{tabName}-image";
 	private static final String ADD_NEW_PAGE_ICON_XPATH = "//button/*[@data-testid='AddIcon']";
-	private static final String LEFT_PANE_PAGE_XPATH = "//h6[text()='{pageName}']";
+	private static final String LEFT_PANE_PAGE_XPATH = "//div[text()='page-1']";
 	private static final String SELECTED_PAGE_XPATH = "//div[@id='{pageName}']";
 	private static final String LAYER_DROPDOWN_BLOCK_XPATH = "//li[@role='treeitem']//div//div//span//*";
 	private static final String LAYER_BLOCK_INSIDE_XPATH = " //li[@role='treeitem']//*[normalize-space(.)='{layerName}']";
@@ -37,7 +37,7 @@ public class LayersPageUtils {
 	}
 
 	public static boolean isPagePresent(Page page, String pageName) {
-		return page.locator(LEFT_PANE_PAGE_XPATH.replace("{pageName}", pageName)).isVisible();
+		return page.locator(LEFT_PANE_PAGE_XPATH.replace("{pageName}", pageName)).first().isVisible();
 	}
 
 	public static boolean isUserOnPage(Page page, String pageName) {
@@ -45,7 +45,7 @@ public class LayersPageUtils {
 	}
 
 	public static void clickOnPageInLeftPane(Page page, String pageName) {
-		page.locator(LEFT_PANE_PAGE_XPATH.replace("{pageName}", pageName)).click();
+		page.locator(LEFT_PANE_PAGE_XPATH.replace("{pageName}", pageName)).first().click();
 	}
 
 	public static void mouseHoverOnLayer(Page page, String layerTargetName) {

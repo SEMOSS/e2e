@@ -5,21 +5,28 @@ import java.net.URI;
 public class UrlUtils {
 
 	private static String newWebRoute = "packages/client/dist/";
+	
+	private static String getUrlBase(){
+		if (ResourcePool.get() == null) { // only necessary until resource pool is removed
+			return JunitUrlUtils.getUrl();
+		}
+		return ResourcePool.get().getUrl();
+	}
 
 	public static String getApi(String path) {
-		String base = ResourcePool.get().getUrl();
+		String base = getUrlBase();
 		String x = base + ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT) + "/" + path;
 		return x;
 	}
 
 	public static String getUrl(String path) {
-		String base = ResourcePool.get().getUrl();
+		String base = getUrlBase();
 		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + newWebRoute + path;
 		return x;
 	}
 
 	public static String getBaseFrontendUrl(String path) {
-		String base = ResourcePool.get().getUrl();
+		String base = getUrlBase();
 		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + path;
 		return x;
 	}

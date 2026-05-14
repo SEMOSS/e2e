@@ -8,37 +8,44 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.steps.CatalogFilterSteps;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 
-public class AllDatabasePageTests extends AbstractE2ETest {
-	private static String dbName = null;
-	private static String dbID = null;
+public class AllDatabasePageTests extends AbstractPlaywrightTestBase {
+	private String dbName = null;
+	private String dbID = null;
 
-	@BeforeAll
-	public static void setupAddDB() throws IOException {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	public void setupAddDB(@PWPage Page page) throws IOException {
+		loginNativeAdmin(page);
 		
 		// add zip db
 		String fileName = TestResources.TEST_DATABASE_ZIP;
 		dbName = "TestDatabase";
+//		acquireTestDatabaseZipLock(() -> 
 		dbID = DatabaseTestUtils.uploadDatabaseZip(page, dbName, fileName);
+//		);
+//		dbID = DatabaseTestUtils.getDatabaseID(page, dbName);
 
 		// edit db metadata for filter tests
 		EditMetadataPageUtils.clickEditIcon(page);
@@ -54,9 +61,19 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 		EditMetadataPageUtils.selectDataRestrictionsOption(page, "PII ALLOWED");
 		EditMetadataPageUtils.clickOnSubmit(page);
 	}
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		loginNativeAdmin(page);
+//		releaseTestDatabaseZipLock(()->
+		assertTrue( CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID));
+//		);
+		logout(page);
+	}
 
 	@Test
-	void testCatalogCard() {
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	void testCatalogCard(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 		AddDatabasePageUtils.searchDatabaseCatalog(page, dbName);
@@ -89,8 +106,9 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 	//////////////// test filters
 	@ParameterizedTest(name = "{index} => {0} = {1}")
 	@MethodSource("filterData")
-	void testFilters(String filterCategory, String filterValue) {
-		openCatalogAndValidateSearch();
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	void testFilters(String filterCategory, String filterValue, @PWPage Page page) {
+		openCatalogAndValidateSearch(page);
 
 		List<Map<String, String>> mapList = List
 				.of(Map.of("FILTER_CATEGORY", filterCategory, "FILTER_VALUE", filterValue));
@@ -99,7 +117,7 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 				page);
 	}
 
-	private void openCatalogAndValidateSearch() {
+	private void openCatalogAndValidateSearch(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 
@@ -118,13 +136,6 @@ public class AllDatabasePageTests extends AbstractE2ETest {
 					Arguments.of("Data Restrictions", "IP ALLOWED"), 
 					Arguments.of("Data Restrictions", "PII ALLOWED")
 		);
-	}
-
-	@AfterAll
-	static void cleanUp() {
-		login(page, UserType.NATIVE);
-		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
-		assertTrue(deleteDb);
 	}
 
 }

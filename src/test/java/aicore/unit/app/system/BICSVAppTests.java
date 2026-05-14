@@ -16,14 +16,14 @@ import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.page.app.BISystemAppUtils;
 
 public class BICSVAppTests extends AbstractE2ETest {
-	private static String timestamp = CommonUtils.getTimeStampName();
-	private static String appName = "Test app " + timestamp;
-	private static String databaseNameCSV = "DB created from CSV " + timestamp;
-	private static String databaseCSV_ID = null;
-	private static String insightName = "Test Automation " + timestamp;
+	private String timestamp = CommonUtils.getTimeStampName();
+	private String appName = "Test app " + timestamp;
+	private String databaseNameCSV = "DB created from CSV " + timestamp;
+	private String databaseCSV_ID = null;
+	private String insightName = "Test Automation " + timestamp;
 
 	@BeforeAll
-	public static void createApp() {
+	public void createApp() {
 		login(page, UserType.NATIVE);
 		HomePageUtils.navigateToHomePage(page);
 		AppTestUtils.createApp(page, appName);
@@ -68,7 +68,7 @@ public class BICSVAppTests extends AbstractE2ETest {
 	}
 	
 	@AfterAll
-	public static void cleanUp() {
+	public void cleanUp() {
 		CommonUtils.navigateAndDeleteApp(page, appName);
 		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, databaseCSV_ID);
 	}
