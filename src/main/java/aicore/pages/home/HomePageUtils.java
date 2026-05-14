@@ -154,8 +154,9 @@ public class HomePageUtils {
 	}
 
 	public static void selectSearchResultFilterOption(Page page, String optionName) {
-		Locator option = page.getByRole(AriaRole.BUTTON,
-				new Page.GetByRoleOptions().setName(optionName).setExact(true));
+//		Locator option = page.getByRole(AriaRole.BUTTON,
+//				new Page.GetByRoleOptions().setName(optionName).setExact(true));
+		Locator option = page.locator("div[data-slot='command-item']").filter(new Locator.FilterOptions().setHasText(optionName));
 		AICorePageUtils.waitFor(option);
 		option.click();
 	}

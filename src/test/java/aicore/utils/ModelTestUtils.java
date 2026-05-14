@@ -38,8 +38,8 @@ public class ModelTestUtils {
 		// get the name of the model
 		// TODO there might be an easier way to do this
 		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(SetupHooks.getPage());
-		MainMenuUtils.clickOnOpenModel(SetupHooks.getPage());
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
 		String modelId = CatlogAccessPageUtility.getCatalogAndCopyId(page);

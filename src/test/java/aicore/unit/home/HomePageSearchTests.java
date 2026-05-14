@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
+import aicore.pages.function.AddSpecificFunctionPage;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
@@ -42,7 +43,7 @@ public class HomePageSearchTests extends AbstractPlaywrightTestBase {
 			assertEquals(appName, appNameActual);
 			MainMenuUtils.openMainMenu(page);
 			MainMenuUtils.clickOnHome(page);
-			
+
 			// search
 			HomePageUtils.searchCatalog(page, appName);
 			HomePageUtils.selectSearchResultFilterOption(page, appName);
@@ -60,7 +61,7 @@ public class HomePageSearchTests extends AbstractPlaywrightTestBase {
 	@Test
 	void testModel(@PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
-		String modelName = "Test app " + timestamp;
+		String modelName = "Test model " + timestamp;
 
 		try {
 
@@ -78,6 +79,29 @@ public class HomePageSearchTests extends AbstractPlaywrightTestBase {
 			HomePageUtils.closeSearchPopup(page);
 		} finally {
 			CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_APP, modelName);
+		}
+	}
+
+	@Test
+	void testFunction(@PWPage Page page) {
+		String timestamp = CommonUtils.getTimeStampName();
+		String functionName = "Test function " + timestamp;
+
+		try {
+			String functionId = AddSpecificFunctionPage.addFunction(page, functionName);
+
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnHome(page);
+
+			// search
+			HomePageUtils.searchCatalog(page, functionName);
+			HomePageUtils.selectSearchResultFilterOption(page, functionName);
+			boolean isCardVisible = HomePageUtils.verifySearchResultIsVisible(page, functionName);
+			Assertions.assertTrue(isCardVisible, "Searched data is not visible in search result list");
+			HomePageUtils.selectSearchResultFilterOption(page, functionName);
+			HomePageUtils.closeSearchPopup(page);
+		} finally {
+			CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, functionName);
 		}
 	}
 
