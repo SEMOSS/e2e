@@ -2,7 +2,6 @@ package aicore.unit.model;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,10 +27,9 @@ public class NotificationsTests extends AbstractE2ETest {
 		// login with native user before tests
 		login(page, UserType.ADMIN);
 	}
-	
+
 	@BeforeEach
-	public static void createModelCatalog()
-	{
+	public void createModelCatalog() {
 		String timestamp = CommonUtils.getTimeStampName();
 		catalogName = "Model" + timestamp;
 		String modelType = "OpenAI";
@@ -65,35 +63,7 @@ public class NotificationsTests extends AbstractE2ETest {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
 		NotificationsUtils.clickOnNotificationBellIcon(page);
-		String actualUserAddedNotificationMessage = NotificationsUtils.validateUserAddedNotificationMessage(page,
-				accessProvided, catalogName, accessProvidedByUser);
-		String expectedMessage = String.format("You are added as %s to %s by %s.", accessProvided, catalogName,
-				accessProvidedByUser + "User");
-		Assertions.assertEquals(expectedMessage, actualUserAddedNotificationMessage,
-				"The notification message is not as expected.");
-		// Close the notification pane
-		NotificationsUtils.closeNotificationPane(page);
-		// Logout from newly added member account and login back with admin for cleanup
-		logout(page);
-		login(page, UserType.ADMIN);
-	}
-	@Test
-	@DisplayName("Validate along with the newly added user, all owner users receive a notification")
-	public void verifyNewUserAndAllOwnersReceivesNotification() throws InterruptedException {
-		String accessProvided = "Editor";
-		String accessProvidedByUser = "Admin";
-		// Open access control tab and add a new member
-		SettingsModelPageUtils.clickOnAccessControl(page);
-		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		SettingsModelPageUtils.addMember(page, accessProvided, GenericSetupUtils.useDocker());
-		// Logout and login with the newly added member
-		logout(page);
-		login(page, UserType.EDITOR);
-		// Validate the notification message for the newly added member
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenModel(page);
-		NotificationsUtils.clickOnNotificationBellIcon(page);
-		String actualUserAddedNotificationMessage = NotificationsUtils.validateUserAddedNotificationMessage(page,
+		String actualUserAddedNotificationMessage = NotificationsUtils.validateUserAddedNotificationMessageForUser(page,
 				accessProvided, catalogName, accessProvidedByUser);
 		String expectedMessage = String.format("You are added as %s to %s by %s.", accessProvided, catalogName,
 				accessProvidedByUser + "User");
@@ -106,8 +76,49 @@ public class NotificationsTests extends AbstractE2ETest {
 		login(page, UserType.ADMIN);
 	}
 
+	@Test
+	@DisplayName("Validate along with the newly added user, all owner users receive a notification")
+	public void verifyNewUserAndAllOwnersReceivesNotification() throws InterruptedException {
+		// Open access control tab
+		SettingsModelPageUtils.clickOnAccessControl(page);
+		SettingsModelPageUtils.clickOnAddMembersButton(page);
+		// Add a new member as Author
+		SettingsModelPageUtils.addMember(page, "Author", GenericSetupUtils.useDocker());
+		// Validate the notification message for the owner who added the new member
+		NotificationsUtils.clickOnNotificationBellIcon(page);
+		String actualUserAddedNotificationMessageForOwner = NotificationsUtils
+				.validateUserAddedNotificationMessageForOwner(page, "Author", "Author", catalogName);
+		String expectedUserAddedNotificationMessageForOwner = String.format("%s has been added as %s to %s by you.",
+				"Author User", "Author", catalogName);
+		Assertions.assertEquals(expectedUserAddedNotificationMessageForOwner,
+				actualUserAddedNotificationMessageForOwner, "The notification message is not as expected.");
+		// Close the notification pane
+		NotificationsUtils.closeNotificationPane(page);
+		// Now add another member as Editor
+		SettingsModelPageUtils.clickOnAddMembersButton(page);
+		SettingsModelPageUtils.addMember(page, "Editor", GenericSetupUtils.useDocker());
+		// Logout and login with the newly added member
+		logout(page);
+		login(page, UserType.AUTHOR);
+		// Validate notification message for the first newly added member who is Author
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		NotificationsUtils.clickOnNotificationBellIcon(page);
+		String actualUserAddedNotificationMessageForOtherOwner = NotificationsUtils
+				.validateUserAddedNotificationMessageForOtherOwner(page, "Editor", "Editor", catalogName, "Admin");
+		String expectedUserAddedNotificationMessageForOtherOwner = String
+				.format("%s User's has been added as %s to %s by %sUser.", "Editor", "Editor", catalogName, "Admin");
+		Assertions.assertEquals(expectedUserAddedNotificationMessageForOtherOwner,
+				actualUserAddedNotificationMessageForOtherOwner, "The notification message is not as expected.");
+		// Close the notification pane
+		NotificationsUtils.closeNotificationPane(page);
+		// Logout from newly added member account and login back with Admin for cleanup
+		logout(page);
+		login(page, UserType.ADMIN);
+	}
+
 	@AfterEach
-	public static void teardown() {
+	public void teardown() {
 		// Clean up: delete the test model catalog
 		if (catalogName != null && page != null) {
 			try {
