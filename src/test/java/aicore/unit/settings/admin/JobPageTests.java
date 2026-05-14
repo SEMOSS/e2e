@@ -18,10 +18,10 @@ import aicore.utils.settings.SettingsPageUtils;
 //TODO this is buggy and needs to be fixed
 public class JobPageTests extends AbstractE2ETest {
 
-	private static String jobName = null;
+	private String jobName = null;
 
 	@BeforeAll
-	public static void addJob() throws IOException {
+	public void addJob() throws IOException {
 		login(page, UserType.NATIVE);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenSettings(page);
@@ -87,7 +87,7 @@ public class JobPageTests extends AbstractE2ETest {
 	}
 
 	@AfterAll
-	static void deleteJob() {
+	void deleteJob() {
 		JobPageUtils.clickDeleteIcon(page, jobName);
 		JobPageUtils.verifyPauseButtonEnabled(page, jobName);
 

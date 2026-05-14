@@ -4,17 +4,19 @@ import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.function.FunctionAccessSettingsUtils;
+import aicore.pages.function.GeneralFunctionPage;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
@@ -22,47 +24,55 @@ import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 
-public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
+public class ViewExistingFunctionsOnCatalogPageTests extends AbstractPlaywrightTestBase {
 	private static final Logger logger = LogManager.getLogger(ViewExistingFunctionsOnCatalogPageTests.class);
 	
-	@BeforeAll
-	static void setup() {
-		login(page, UserType.NATIVE);
-	}
-	
+	private final String baseFunctionName = "WeatherFunctionTest";
+
 	@BeforeEach
-	void createFunctionUsingZip() {
+	void setup(@PWPage Page page) {
 		logger.info("BEFORE ALL: creating function");
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenFunction(page); 
-		// this checks & removes existing function that may collide with name
-		AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
-		AddFunctionPageUtils.clickOnAddFunctionButton(page);
-		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
-		FunctionTestUtils.userUploadsFile(page, "Function/weatherFunctionTest.zip");
-		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
-		FunctionTestUtils.userCanSeeCatalogTitle(page, "WeatherFunctionTest");
+		loginNativeAdmin(page);
+//		acquireFunctionZipLock(()->{
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenFunction(page);
+			GeneralFunctionPage.deleteFunctionIfExists(page, TestResources.WEATHER_FUNC_NAME);
+//			AddFunctionPageUtils.deleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION,
+//					TestResources.WEATHER_FUNC_NAME);
+			AddFunctionPageUtils.clickOnAddFunctionButton(page);
+			CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+			FunctionTestUtils.userUploadsFile(page, TestResources.WEATHER_FUNC_ZIP);
+			CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
+			CatlogAccessPageUtility.getCatalogAndCopyId(page);
+			FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
+			FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
+//		});	
 	}
 	
 	private static Stream<Arguments> provideOptionsToFilterFunctionality() {
 	    return Stream.of(
-	    		Arguments.of("Data Classification", "CONFIDENTIAL", "IP"),
-	    		Arguments.of("Data Restrictions", "CONFIDENTIAL ALLOWED", "IP ALLOWED")
+	    		Arguments.of("Data Classification", "CONFIDENTIAL, IP"),
+	    		Arguments.of("Data Restrictions", "CONFIDENTIAL ALLOWED, IP ALLOWED")
 	    		);
 	}
 	
 	@ParameterizedTest
 	@MethodSource("provideOptionsToFilterFunctionality")
-	void testFiltersFunctionalityMyFunctionsTab(String filterCategoryName, String filterValues) {
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
+	void testFiltersFunctionalityMyFunctionsTab(String filterCategoryName, String filterValues, @PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
-		FunctionTestUtils.validateFunctionFilters(page, "WeatherFunctionTest", filterCategoryName, filterValues);
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
+		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
+		FunctionTestUtils.validateFunctionFilters(page, baseFunctionName, filterCategoryName, filterValues);
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
+		logout(page);
 	}
 
 	
@@ -75,85 +85,102 @@ public class ViewExistingFunctionsOnCatalogPageTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideOptionsToDiscoverableFilterFunctionality")
-	void testFilterFunctionalityDiscoverableFunctionsTab(String filterCategoryName, String filterValues) {
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
+	void testFilterFunctionalityDiscoverableFunctionsTab(String filterCategoryName, String filterValues, @PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
-		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, "WeatherFunctionTest", timestamp);
+		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
+		AddFunctionPageUtils.clickOnFunctionNameInCatalog(page, baseFunctionName, timestamp);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		FunctionAccessSettingsUtils.clickOnMakeDiscoverableButton(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION);
 		logout(page);
-		login(page, UserType.EDITOR);
+		loginEditor(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
 		AddFunctionPageUtils.clickOnDiscoverableFunctionsButton(page);
-		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
-		FunctionTestUtils.validateFunctionFilters(page, "WeatherFunctionTest", filterCategoryName, filterValues);
+		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
+		FunctionTestUtils.validateFunctionFilters(page, baseFunctionName, filterCategoryName, filterValues);
 		logout(page);
-		login(page, UserType.NATIVE);
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
+		loginNativeAdmin(page);
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
+		logout(page);
 	}
 
 	@Test
-	void testValidateAccessStatusOfCreatedFunction() {
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
+	void testValidateAccessStatusOfCreatedFunction(@PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
-		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
+		AddFunctionPageUtils.searchFunctionCatalog(page, baseFunctionName);
+		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
 		EditModelPageUtils.mouseHoverOnEngineAccessStatusIcon(page);
 		FunctionTestUtils.userSeesFunctionStatusOnTooltip(page, "Private");
-		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, "WeatherFunctionTest");
+		AddFunctionPageUtils.selectFunctionFromSearchOptions(page, baseFunctionName);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		FunctionAccessSettingsUtils.clickOnMakeFunctionPublicButton(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
-		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
+		AddFunctionPageUtils.searchFunctionCatalog(page, baseFunctionName);
+		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
 		EditModelPageUtils.mouseHoverOnEngineAccessStatusIcon(page);
 		FunctionTestUtils.userSeesFunctionStatusOnTooltip(page, "Global");
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
+		logout(page);
 	}
 	
 	private static Stream<Arguments> provideContentToFunctionCatalogCard() {
 	    return Stream.of(
-	    		Arguments.of("lock", "bookmark", "view logs dashboard", "delete")
+	    		Arguments.of("lock, bookmark, view logs dashboard, delete")
 	    		);
 	}
 
 	@ParameterizedTest
 	@MethodSource("provideContentToFunctionCatalogCard")
-	void testValidateContentOfCreatedFunctionCatalogCard(String iconStr) {
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
+	void testValidateContentOfCreatedFunctionCatalogCard(String iconStr, @PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		FunctionTestUtils.userGetsCatalogID(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
-		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
-		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
+		AddFunctionPageUtils.searchFunctionCatalog(page, baseFunctionName);
+		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
 		FunctionTestUtils.userShouldSeeCatalogID(page);
 		// This element on the Function card seems to have been removed
 //		FunctionTestUtils.verifyUserSeesTagsOnCard(page, "embeddings, Test1", TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION);
 		FunctionTestUtils.verifyUserSeesCreatedDateOnCatalogCard(page);
 		FunctionTestUtils.verifyUsersSeesIconsOnContentCard(page, iconStr);
-		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, "WeatherFunctionTest");
+//		releaseFunctionZipLock(() -> 
+		CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, baseFunctionName);
+//		);
+		logout(page);
 	}
 
 	@Test
-	void testDeleteFunctionFromDashboardAndValidateDeletionPopup() {
-		String timestamp = CommonUtils.getTimeStampName();
-		FunctionTestUtils.userGetsCatalogID(page);
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenFunction(page); 
-		AddFunctionPageUtils.searchFunctionCatalog(page, "WeatherFunctionTest");
-		FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, "WeatherFunctionTest", timestamp);
-		EditModelPageUtils.clickOnCatalogCardOption(page, "Delete Engine");
-		FunctionTestUtils.verifyUserSeesDeleteConfirmationPopupWithMessage(page, "Are you sure you want to delete this engine?");
-		FunctionTestUtils.verifyFunctionNameIsOnDeletionConfirmationPopup(page, "WeatherFunctionTest");
-		FunctionTestUtils.verifyUsersSeesEngineIdOnDeleteConfirmationPopup(page); 
-		FunctionTestUtils.verifUserSeesButtonOnDeleteConfirmationPopup(page, "Cancel");
-		FunctionTestUtils.verifUserSeesButtonOnDeleteConfirmationPopup(page, "Delete");
-		StoragePageUtils.clickOnButton(page, "Delete");
-		FunctionTestUtils.verifyUserSeesDeletedToastMessage(page, "Successfully deleted WeatherFunctionTest");
+	@ResourceUploadLock(TestResources.WEATHER_FUNC_ZIP)
+	void testDeleteFunctionFromDashboardAndValidateDeletionPopup(@PWPage Page page) {
+//		releaseFunctionZipLock(() -> {
+			String timestamp = CommonUtils.getTimeStampName();
+			FunctionTestUtils.userGetsCatalogID(page);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenFunction(page);
+			AddFunctionPageUtils.searchFunctionCatalog(page, baseFunctionName);
+			FunctionTestUtils.verifyUserSeesFunctionInCatalog(page, baseFunctionName, timestamp);
+			EditModelPageUtils.clickOnCatalogCardOption(page, "Delete Engine");
+			FunctionTestUtils.verifyUserSeesDeleteConfirmationPopupWithMessage(page,
+					"Are you sure you want to delete this engine?");
+			FunctionTestUtils.verifyFunctionNameIsOnDeletionConfirmationPopup(page, baseFunctionName);
+			FunctionTestUtils.verifyUsersSeesEngineIdOnDeleteConfirmationPopup(page);
+			FunctionTestUtils.verifUserSeesButtonOnDeleteConfirmationPopup(page, "Cancel");
+			FunctionTestUtils.verifUserSeesButtonOnDeleteConfirmationPopup(page, "Delete");
+			StoragePageUtils.clickOnButton(page, "Delete");
+			FunctionTestUtils.verifyUserSeesDeletedToastMessage(page, "Successfully deleted " + baseFunctionName);
+			logout(page);
+//		});
 	}
 }

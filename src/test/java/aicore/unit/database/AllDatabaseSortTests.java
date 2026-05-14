@@ -4,41 +4,51 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppPageUtils;
 
-public class AllDatabaseSortTests extends AbstractE2ETest {
-	private static String TEST_DB_ID = null;
-	private static String DIABETES_DB_ID = null;
+public class AllDatabaseSortTests extends AbstractPlaywrightTestBase {
+	private String TEST_DB_ID = null;
+	private String DIABETES_DB_ID = null;
 
-	@BeforeAll
-	public static void setupAddDB() throws IOException {
-		login(page, UserType.NATIVE);
-		
-		// add 2 zip db
-		TEST_DB_ID = DatabaseTestUtils.uploadDatabaseZip(page, TestResources.TEST_DATABASE_NAME, TestResources.TEST_DATABASE_ZIP);
-		DIABETES_DB_ID = DatabaseTestUtils.uploadDatabaseZip(page, TestResources.DIABETES_DATABASE_NAME, TestResources.DIABETES_DATABASE_ZIP);
-	}
-	
 	@BeforeEach
-	public void setup() throws IOException {
+	public void setupAddDB(@PWPage Page page) throws IOException {
+		loginNativeAdmin(page);	
+
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenDatabase(page);
+		// add 2 zip db
+//		acquireTestDatabaseZipLock(() ->
+		TEST_DB_ID = DatabaseTestUtils.uploadDatabaseZip(page, TestResources.TEST_DATABASE_NAME, TestResources.TEST_DATABASE_ZIP);
+		//);
+//		TEST_DB_ID = DatabaseTestUtils.getDatabaseID(page, TestResources.TEST_DATABASE_NAME);
+//		acquireDiabetesDatabaseZipLock(()->
+		DIABETES_DB_ID = DatabaseTestUtils.uploadDatabaseZip(page, TestResources.DIABETES_DATABASE_NAME, TestResources.DIABETES_DATABASE_ZIP);
+//		);
+//		DIABETES_DB_ID = DatabaseTestUtils.getDatabaseID(page, TestResources.DIABETES_DATABASE_NAME);
+		// need to return back to main engine page
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
 	}
 	
 	@Test
-	void testNameSort() {
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	@ResourceUploadLock(TestResources.DIABETES_DATABASE_ZIP)
+	void testNameSort(@PWPage Page page) {
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
 		boolean isSortedInAscendingOrder = AppPageUtils.verifySortedInAscendingOrder(page);
 		Assertions.assertTrue(isSortedInAscendingOrder, "Database are not sorted in ascending order");
@@ -49,7 +59,9 @@ public class AllDatabaseSortTests extends AbstractE2ETest {
 	}
 	
 	@Test
-	void testDateCreatedSort() {
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	@ResourceUploadLock(TestResources.DIABETES_DATABASE_ZIP)
+	void testDateCreatedSort(@PWPage Page page) {
 		AppPageUtils.selectSortByOption(page, "Date Created");
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
 		boolean isSortedByDateCreatedAsc = AppPageUtils.verifySortedByDateCreated(page, true);
@@ -60,13 +72,15 @@ public class AllDatabaseSortTests extends AbstractE2ETest {
 		Assertions.assertTrue(isSortedByDateCreatedDesc, "Database are not sorted by date created in descending order");
 	}
 	
-	@AfterAll
-	static void cleanUp() {
-		login(page, UserType.NATIVE);
-		boolean deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TEST_DB_ID);
-		assertTrue(deleteDb);
-
-		deleteDb = CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, DIABETES_DB_ID);
-		assertTrue(deleteDb);
+	@AfterEach
+	void cleanUp(@PWPage Page page) {
+		loginNativeAdmin(page);
+//		releaseDiabetesDatabaseZipLock(()-> 
+		assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, TEST_DB_ID));
+		//);
+//		releaseTestDatabaseZipLock(()-> 
+		assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, DIABETES_DB_ID));
+//		);
+		logout(page);
 	}
 }

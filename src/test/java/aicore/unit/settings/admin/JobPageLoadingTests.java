@@ -16,7 +16,7 @@ import aicore.utils.settings.SettingsPageUtils;
 public class JobPageLoadingTests extends AbstractE2ETest {
 
 	@BeforeAll
-	public static void addJob() throws IOException {
+	public void addJob() throws IOException {
 		login(page, UserType.NATIVE);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenSettings(page);

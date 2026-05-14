@@ -2,32 +2,31 @@ package aicore.framework;
 
 import java.net.URI;
 
-public class UrlUtils {
+public class JunitUrlUtils {
 
+	private static String URL = "";
 	private static String newWebRoute = "packages/client/dist/";
-	
-	private static String getUrlBase(){
-		if (ResourcePool.get() == null) { // only necessary until resource pool is removed
-			return JunitUrlUtils.getUrl();
-		}
-		return ResourcePool.get().getUrl();
-	}
 
+    public static void setURL(String url) {
+        URL = url;
+    }
+    
+    public static String getUrl() {
+    	return URL;
+    }
+	
 	public static String getApi(String path) {
-		String base = getUrlBase();
-		String x = base + ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT) + "/" + path;
+		String x = URL + ConfigUtils.getValue(AICoreTestConstants.API_ENDPOINT) + "/" + path;
 		return x;
 	}
 
 	public static String getUrl(String path) {
-		String base = getUrlBase();
-		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + newWebRoute + path;
+		String x = URL + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + newWebRoute + path;
 		return x;
 	}
 
 	public static String getBaseFrontendUrl(String path) {
-		String base = getUrlBase();
-		String x = base + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + path;
+		String x = URL + ConfigUtils.getValue(AICoreTestConstants.FRONTEND) + "/" + path;
 		return x;
 	}
 
@@ -58,4 +57,5 @@ public class UrlUtils {
 				.replaceAll("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", ".*");
 		return normalizedActual;
 	}
+
 }

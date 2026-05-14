@@ -22,7 +22,7 @@ import aicore.utils.settings.SettingsPageUtils;
 public class AdminQueryPageTests extends AbstractE2ETest {
 
 	@BeforeAll
-	public static void setup() throws IOException {
+	public void setup() throws IOException {
 		login(page, UserType.NATIVE);
 	}
 
@@ -50,7 +50,7 @@ public class AdminQueryPageTests extends AbstractE2ETest {
 		Assertions.assertEquals(expectedHeaderNamesList, actualHeaderNamesList, "Column names are not matching");
 	}
 
-	static Stream<Arguments> queryTestData() {
+	Stream<Arguments> queryTestData() {
 		return Stream.of(
 				Arguments.of("Local Master Database", "select * from ENGINECONCEPT", 14,
 				"engine, parentsemossname, semossname, parentphysicalname, parentphysicalnameid, physicalname, physicalnameid, parentlocalconceptid, localconceptid, ignore_data, pk, original_type, property_type, additional_type"),

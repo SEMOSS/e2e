@@ -1,94 +1,71 @@
 package aicore.unit.model;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+
+import com.microsoft.playwright.Page;
 
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.pages.model.AddModelFormUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.ModelSMSSPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AICorePageUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
+import aicore.utils.ModelTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.page.model.ModelPageUtils;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AddModelPageTests extends AbstractE2ETest {
 
-	private static String modelCatalogName = null;
+public class AddModelPageTests extends AbstractPlaywrightTestBase {
+	
+	private String modelCatalogName = null;
 
-	@BeforeAll
-	public static void setup() throws IOException {
-		// login with native user before tests
-		login(page, UserType.NATIVE);
+	@BeforeEach
+    public void setup(@PWPage Page page) {
+        // login with admin user before tests
+		loginNativeAdmin(page);
 
-		String timestamp = CommonUtils.getTimeStampName();
+        // setup models
+        String timestamp = CommonUtils.getTimeStampName();
 		modelCatalogName = "Model" + timestamp;
 		String modelType = "OpenAI";
 		String modelName = "GPT-4.1";
 		String openAIKey = "Test@1234";
 
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenModel(page);
+        // add model 
+        ModelTestUtils.addModel(page, modelType, modelName, modelCatalogName, openAIKey);
 
-		// model form options
-		ModelPageUtils.clickAddModelButton(page);
-		AddModelFormUtils.selectModelType(page, modelType);
-		AddModelFormUtils.selectModel(page, modelName);
-		AddModelFormUtils.enterCatalogName(page, modelCatalogName);
-		AddModelFormUtils.enterOpenAIKey(page, openAIKey);
-		AddModelFormUtils.clickOnCreateModelButton(page);
-	}
-
-	@BeforeEach
-	public void navigateToModelPage() {
-		// Ensure we're on the model details page before each test
-		// This prevents tests from failing due to previous test navigation
+        // need to return back to main engine page
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
 		EditModelPageUtils.selectModelFromSearchOptions(page, modelCatalogName);
+    }
 
-		// Wait for page to stabilize
-		page.waitForLoadState();
-		page.waitForTimeout(500); // Small buffer for any animations
-	}
-
-	@AfterAll
-	public static void teardown() {
+	@AfterEach
+    public void tearDown(@PWPage Page page) {
+        loginNativeAdmin(page);
 		// Clean up: delete the test model catalog
-		if (modelCatalogName != null && page != null) {
-			try {
-				CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL,
-						modelCatalogName);
-			} catch (Exception e) {
-				System.err.println("Failed to delete model catalog: " + e.getMessage());
-			}
-		}
-	}
-
-	@Order(1) // Run FIRST - read-only test
+		assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_MODEL, modelCatalogName));
+        logout(page);
+    }
+	
 	@Test
-	@Tag("model")
-	@DisplayName("Verify SMSS properties are displayed correctly for a model")
-	public void testViewSMSS() {
+	public void testViewSMSS(@PWPage Page page) {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 		ModelPageUtils.clickOnSMSSTab(page);
 		String fullModelNameSmss = ModelSMSSPageUtils.verifyNameInSMSS(page);
@@ -101,10 +78,7 @@ public class AddModelPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	@Order(5) // Run FIFTH - modifies SMSS properties
-	@Tag("model")
-	@DisplayName("Edit SMSS properties and verify changes are persisted")
-	public void testEditSMSS() {
+	public void testEditSMSS(@PWPage Page page) {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 		ModelPageUtils.clickOnSMSSTab(page);
 		SettingsModelPageUtils.clickOnEditSMSSButton(page);
@@ -120,12 +94,10 @@ public class AddModelPageTests extends AbstractE2ETest {
 		actualVarName = CommonUtils.splitTrimValue(fullConversationHistory, "KEEP_CONVERSATION_HISTORY");
 		Assertions.assertEquals(actualVarName, "True", "Conversation history setting is not matching");
 	}
+	
 
-	@Order(2) // Run SECOND - read-only test
 	@Test
-	@Tag("model")
-	@DisplayName("Add tag to model and verify it appears on the page")
-	public void testAddTagToModel() {
+	public void testAddTagToModel(@PWPage Page page) {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 		EditMetadataPageUtils.clickEditIcon(page);
 		EditMetadataPageUtils.enterTagName(page, "embeddings");
@@ -135,11 +107,8 @@ public class AddModelPageTests extends AbstractE2ETest {
 		Assertions.assertEquals(expectedTagList, actualTagList);
 	}
 
-	@Order(3) // Run THIRD - read-only test
 	@Test
-	@Tag("model")
-	@DisplayName("View existing models in Model Catalog")
-	public void testViewModels() {
+	public void testViewModels(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
@@ -147,11 +116,8 @@ public class AddModelPageTests extends AbstractE2ETest {
 		Assertions.assertTrue(isModelDisplayed);
 	}
 
-	@Order(4) // Run FOURTH - modifies model details and tags
 	@Test
-	@Tag("model")
-	@DisplayName("Edit model details")
-	public void testEditModel() {
+	public void testEditModel(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenModel(page);
 		EditModelPageUtils.searchModelCatalog(page, modelCatalogName);
@@ -218,10 +184,7 @@ public class AddModelPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	@Order(6) // Run SIXTH - read-only test, validates model ID
-	@Tag("model")
-	@DisplayName("Validate model catalog id occurences in usage sections")
-	public void testViewModelCatalogId() {
+	public void testViewModelCatalogId(@PWPage Page page) {
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 		String modelId = SettingsModelPageUtils.copyModelID(page);
 		AICorePageUtils.clickOnTabButton(page, "Usage");
@@ -247,9 +210,8 @@ public class AddModelPageTests extends AbstractE2ETest {
 	}
 
 	@Test
-	@Order(7)
 	@DisplayName("Validate the available tool and their input parameter after MCP Generation for Model")
-	public void testValidateToolsAfterMCPGeneration() throws IOException {
+	public void testValidateToolsAfterMCPGeneration(@PWPage Page page) throws IOException {
 		String toastMessage = "MCP generated";
 		ModelPageUtils.verifyModelTitle(page, modelCatalogName);
 		String modelId = SettingsModelPageUtils.copyModelID(page);

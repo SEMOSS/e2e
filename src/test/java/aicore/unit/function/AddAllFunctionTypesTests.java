@@ -1,28 +1,37 @@
 package aicore.unit.function;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
+import aicore.utils.annotations.PWPage;
 
-public class AddAllFunctionTypesTests extends AbstractE2ETest {
+public class AddAllFunctionTypesTests extends AbstractPlaywrightTestBase {
 	
-	@BeforeAll
-	static void setup() {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
+	}	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 	
 	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
@@ -39,7 +48,7 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideFormInputsForTestValidateFunctions")
-	void testValidateFunctions(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields) throws IOException {
+	void testValidateFunctions(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields, @PWPage Page page) throws IOException {
 		/// set up test parameters
 		List<Map<String, String>> fields = List.of(
 					Map.of("SECTION_NAME", s1Name, "FIELDS", s1Fields),
@@ -71,7 +80,7 @@ public class AddAllFunctionTypesTests extends AbstractE2ETest {
 	
 	@ParameterizedTest
 	@MethodSource("provideFormInputsForTestValidateFunctionsRequiringUpload")
-	void testValidateFunctionsRequiringUpload(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields) throws IOException {
+	void testValidateFunctionsRequiringUpload(String functionName, String s1Name, String s1Fields, String s2Name, String s2Fields, String s3Name, String s3Fields, String mandatoryFields, String formFields, @PWPage Page page) throws IOException {
 		/// set up test parameters
 		List<Map<String, String>> fields = List.of(
 				Map.of("SECTION_NAME", s1Name, "FIELDS", s1Fields),

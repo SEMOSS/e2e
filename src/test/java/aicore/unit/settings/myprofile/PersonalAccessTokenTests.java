@@ -25,7 +25,7 @@ import io.qameta.allure.Feature;
 public class PersonalAccessTokenTests extends AbstractE2ETest {
 
 	@BeforeAll
-	public static void login() throws IOException {
+	public void login() throws IOException {
 		login(page, UserType.NATIVE);
 	}
 
