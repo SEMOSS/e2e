@@ -12,6 +12,8 @@ public class TestResources {
 	/** MODELS */
 	public static final String LLAMA3_70B_INSTRUCT_ZIP = "Model/Llama3-70B-Instruct.zip";
 	public static final String LLAMA3_70B_INSTRUCT_NAME = "Llama3-70B-Instruct";
+	public static final String PERPLEXITY_ZIP = "Model/Perplexity.zip";
+	public static final String PERPLEXITY_NAME = "Perplexity 1";
 	
 	// model types
 	public static final String MODEL_OPEN_AI = "OpenAI";
