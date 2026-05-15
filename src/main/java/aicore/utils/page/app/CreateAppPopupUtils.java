@@ -121,6 +121,10 @@ public class CreateAppPopupUtils {
 	}
 
 	public static void userClickOnBreadcrumbLink(Page page, String appName, String timestamp) {
-		page.locator(BREADCRUMB_LINK_XPATH.replace("{appName}", appName + " " + timestamp)).first().click();
+		if (timestamp != null && !timestamp.isEmpty()) {
+			page.locator(BREADCRUMB_LINK_XPATH.replace("{appName}", appName + " " + timestamp)).first().click();
+		} else {
+			page.locator(BREADCRUMB_LINK_XPATH.replace("{appName}", appName)).first().click();
+		}
 	}
 }
