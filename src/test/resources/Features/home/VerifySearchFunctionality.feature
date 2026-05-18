@@ -1,5 +1,6 @@
 Feature: Search app and catalogs
 
+#HomePageSearchTests.java
   @Regression
   Scenario: Search Vector
     Given User is on Home page
@@ -32,25 +33,6 @@ Feature: Search app and catalogs
     And User clicks on the 'Vector' option to filter the results
     Then User can see 'Vector' in the 'Vector' filter results
     And User clicks on the 'Vector' option to unfilter the results
-    And User close the search popup
-
-  @Regression
-  Scenario: Search Database
-    Given User is on Home page
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
-    When User clicks on Add Database
-    And User clicks on file upload icon
-    And User uploads the file 'Database/TestDatabase.zip'
-    And User clicks on 'Upload' button to create catalog
-    And User clicks on Copy Catalog ID
-    And User opens Main Menu
-    And User clicks on Home
-    And User search the 'TestDatabase' in the home search box
-    And User clicks on the 'Database' option to filter the results
-    Then User can see 'TestDatabase' in the 'Database' filter results
-    And User clicks on the 'Database' option to unfilter the results
     And User close the search popup
 
   @Regression
@@ -94,9 +76,3 @@ Feature: Search app and catalogs
       | Vector              | All    |
       | TestDatabase        | All    |
       | Storage             | All    |
-
-  @DeleteTestCatalog @DeleteCreatedTestApp @Regression
-  Scenario: Delete created resources
-    Given User is on Home page
-    And User opens Main Menu
-    When User clicks on Home

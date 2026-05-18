@@ -19,7 +19,7 @@ public class HomePageUtils {
 	private static final Logger logger = LogManager.getLogger(HomePageUtils.class);
 	private static final String PAGE_TITLE_XPATH = "//h6[text()='" + ConfigUtils.getValue(AICoreTestConstants.APP_NAME)
 			+ "']";
-	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[normalize-space()='Search']";
+	public static final String APP_SEARCH_TEXTBOX_XPATH = "//button[@aria-label='Search']";
 	public static final String SEARCH_TEXTBOX_ON_POPUP_XPATH = "//input[@Placeholder='Search apps, engines, and tools']";
 	public static final String SEARCH_RESULT_XPATH = "//span[text()='{catalogName}']";
 
@@ -35,7 +35,7 @@ public class HomePageUtils {
 	// Create app
 	public static final String NAME_TEXTBOX_DATATESTID = "newAppModal-textField-name";
 	private static final String CATALOG_NAME_TEXTBOX_DATA_TESTID = "importForm-NAME-textField";
-	private static final String CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID = "importForm-Catalog-Name-textField";
+	private static final String CATALOG_NAME_TEXTBOX_NEW_UI_DATA_TESTID = "model-import-form-input-NAME";
 	private static final String STORAGE_CATALOG_NAME_TEXTBOX_DATA_TESTID = "storage-form-input-NAME";
 	private static final String VECTOR_CATALOG_NAME_TEXTBOX_DATA_TESTID = "vector-form-input-NAME";
 	// pop ups
