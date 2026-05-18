@@ -115,7 +115,6 @@ public class HomePageSearchTests extends AbstractPlaywrightTestBase {
 		} finally {
 			CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_DATABASE, dbID);
 		}
-
 	}
 	
 	private void searchTests(Page page, String catalogName) {

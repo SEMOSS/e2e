@@ -1,29 +1,38 @@
 package aicore.unit.app.DragAndDropApp;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
-import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 
-public class CreateAppUsingUploadZip extends AbstractE2ETest {
+public class CreateAppUsingUploadZip extends AbstractPlaywrightTestBase {
 
-	@BeforeAll
-	static void setup() {
-		login(page, UserType.NATIVE);
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
+	}
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 
 	@Test
 	@DisplayName("Create App Using Upload Zip")
-	public void testExportDataFunctionality() {
+	public void testExportDataFunctionality(@PWPage Page page) {
 		String fileName = TestResources.APP_FILE;
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
