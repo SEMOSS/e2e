@@ -1,4 +1,4 @@
-package aicore.unit.model;
+package aicore.unit.notifications.model;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
