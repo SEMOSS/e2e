@@ -45,6 +45,7 @@ public class EditModelPageUtils {
 	private static final String VIEW_INPUT_PARAMETER_XPATH = "//h4[text()='{toolName}']/ancestor::div/following::summary[contains(text(),'View input parameters')]";
 	private static final String GENRATE_MCP_CONFIRAMTION_BUTTON_XPATH = "//button[text()='Yes']";
 	private static final String VIEW_AVAILABLE_TOOL_XPATH = "//div//h4[text()='Available Tools']/following::div//h4[text()='{toolName}']";
+	private static final String REQUEST_ACCESS_BUTTON = "//button[text()='Request Access']";
 
 	public static void searchModelCatalog(Page page, String modelName) {
 		page.getByTestId("search-bar").click();
@@ -276,4 +277,9 @@ public class EditModelPageUtils {
 		}
 		return true;
 	}
+
+	public static void clickOnRequestAccessButtonOfDiscoverableCatalog(Page page) {
+		page.locator(REQUEST_ACCESS_BUTTON).click();
+	}
+
 }
