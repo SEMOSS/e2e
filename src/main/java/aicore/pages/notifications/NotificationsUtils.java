@@ -1,5 +1,6 @@
 package aicore.pages.notifications;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class NotificationsUtils {
@@ -44,4 +45,37 @@ public class NotificationsUtils {
 	public static void closeNotificationPane(Page page) {
 		page.locator(NOTIFICATION_PANE_CLOSE_XPATH).click();
 	}
+
+	public static void clickOnNotificationMessage(Page page, String NotificationMessage) {
+		Locator Notification = page
+				.locator("//div[@data-testid='notification-item']//div[span[contains(text(),'" + NotificationMessage + "')]]").first();
+		Notification.isVisible();
+		Notification.click();
+	}
+
+	public static void clickOnUnreadTab(Page page) {
+		page.locator("//button[text()='Unread']").click();
+	}
+
+	public static void clickOnReadTab(Page page) {
+		page.locator("//button[text()='Read']").click();
+	}
+
+	public static void clickOnClearAllButton(Page page) {
+		page.locator("//button[text()='Clear All']").click();
+	}
+
+	public static boolean isNotificationMessagePresentInReadSection(Page page, String notificationMessage) {
+		page.waitForTimeout(1500); // Wait for the notification message to appear in the Read section
+		return page.locator("//div[span[contains(text(),'" + notificationMessage + "')]]").isVisible();
+	}
+
+	public static boolean isUnreadSectionBlank(Page page) {
+		return page.locator("///div//p[text()='No notifications yet.']").isVisible();
+	}
+
+	public static boolean isReadSectionBlank(Page page) {
+		return page.locator("//div//p[text()='No notifications yet.']").isVisible();
+	}
+
 }
