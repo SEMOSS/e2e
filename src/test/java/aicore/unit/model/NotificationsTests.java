@@ -131,20 +131,25 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 				"Author User", "Author", catalogName);
 		Assertions.assertEquals(expectedUserAddedNotificationMessageForOwner,
 				actualUserAddedNotificationMessageForOwner, "The notification message is not as expected.");
-				//click on the notification message to move it to unread to read section and Unread section is blank
-				NotificationsUtils.clickOnUnreadTab(page);
-				NotificationsUtils.clickOnNotificationMessage(page, actualUserAddedNotificationMessageForOwner);
-				boolean isUnreadSectionBlank = NotificationsUtils.isUnreadSectionBlank(page);
-				Assertions.assertTrue(isUnreadSectionBlank, "The Unread section is not blank after clicking on the notification message.");
-				//switching to read section and validate the notification message is present there
-				NotificationsUtils.clickOnReadTab(page);
-				boolean isNotificationMessagePresentInReadSection = NotificationsUtils.isNotificationMessagePresentInReadSection(page, "You are added as");
-				Assertions.assertTrue(isNotificationMessagePresentInReadSection, "The notification message is not present in the Read section after clicking on the notification message.");
-				// Clear all notifications
-				NotificationsUtils.clickOnClearAllButton(page);
-				boolean isReadSectionBlank = NotificationsUtils.isReadSectionBlank(page);
-				//Check all notifications are cleared and read section is blank
-				Assertions.assertTrue(isReadSectionBlank, "The Read section is not blank after clearing all notifications.");
+		// click on the notification message to move it to unread to read section and
+		// Unread section is blank
+		NotificationsUtils.clickOnUnreadTab(page);
+		NotificationsUtils.clickOnNotificationMessage(page, actualUserAddedNotificationMessageForOwner);
+		boolean isUnreadSectionBlank = NotificationsUtils.isUnreadSectionBlank(page);
+		Assertions.assertTrue(isUnreadSectionBlank,
+				"The Unread section is not blank after clicking on the notification message.");
+		// switching to read section and validate the notification message is present
+		// there
+		NotificationsUtils.clickOnReadTab(page);
+		boolean isNotificationMessagePresentInReadSection = NotificationsUtils
+				.isNotificationMessagePresentInReadSection(page, "You are added as");
+		Assertions.assertTrue(isNotificationMessagePresentInReadSection,
+				"The notification message is not present in the Read section after clicking on the notification message.");
+		// Clear all notifications
+		NotificationsUtils.clickOnClearAllButton(page);
+		boolean isReadSectionBlank = NotificationsUtils.isReadSectionBlank(page);
+		// Check all notifications are cleared and read section is blank
+		Assertions.assertTrue(isReadSectionBlank, "The Read section is not blank after clearing all notifications.");
 		// Close the notification pane
 		NotificationsUtils.closeNotificationPane(page);
 		// Now add another member as Editor
@@ -169,7 +174,6 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 		logout(page);
 		loginNativeAdmin(page);
 	}
-
 
 	@AfterEach
 	public void teardown(@PWPage Page page) {
