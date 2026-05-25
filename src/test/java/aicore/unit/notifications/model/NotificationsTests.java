@@ -133,8 +133,7 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 		SettingsModelPageUtils.addMember(page, "Author", GenericSetupUtils.useDocker());
 		// Validate the notification message for the owner who added the new member
 		NotificationsUtils.clickOnNotificationBellIcon(page);
-		String actualUserAddedNotificationMessageForOwner = NotificationsUtils
-				.validateUserAddedNotificationMessageForOwner(page, "Author", "Author", catalogName);
+		String actualUserAddedNotificationMessageForOwner = NotificationsUtils.validateUserAddedNotificationMessageForOtherOwner(page, "Author", "Author", catalogName);
 		String expectedUserAddedNotificationMessageForOwner = String.format("%s has been added as %s to %s by you.",
 				"Author User", "Author", catalogName);
 		Assertions.assertEquals(expectedUserAddedNotificationMessageForOwner,
