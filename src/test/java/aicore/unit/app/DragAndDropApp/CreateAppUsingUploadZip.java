@@ -1,7 +1,7 @@
 package aicore.unit.app.DragAndDropApp;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 
 public class CreateAppUsingUploadZip extends AbstractPlaywrightTestBase {
 
-	@BeforeAll
+	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
 	}
@@ -28,6 +28,7 @@ public class CreateAppUsingUploadZip extends AbstractPlaywrightTestBase {
 	@DisplayName("Create App Using Upload Zip")
 	public void testExportDataFunctionality(@PWPage Page page) {
 		String fileName = TestResources.APP_FILE;
+		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
 		AppPageUtils.clickOnCreateNewAppButton(page);
