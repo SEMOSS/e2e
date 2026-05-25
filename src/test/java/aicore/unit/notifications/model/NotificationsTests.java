@@ -123,8 +123,8 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Validate Notification message for Accept the request")
-	public void testAcceptRequestAndValidateMemberList(@PWPage Page page) {
+	@DisplayName("Validate notification message for request reject")
+	public void verifyAccessRequestAcceptedNotification(@PWPage Page page) {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		FunctionAccessSettingsUtils.clickOnMakeDiscoverableButton(page, "Model");
 		logout(page);
@@ -156,10 +156,56 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 		loginEditor(page);
 		NotificationsUtils.clickOnNotificationBellIcon(page);
 		String byUser = ConfigUtils.getValue("Admin".toUpperCase() + "_USERNAME").split("@")[0];
-		String actualNotificationMessage = NotificationsUtils
-				.validateActionPerformOnRequestAccessNotificationMessage(page, "Author", catalogName, byUser);
+		String actualNotificationMessage = NotificationsUtils.validateActionPerformOnRequestAccessNotificationMessage(
+				page, "Author", catalogName, "approved", byUser);
 		Assertions.assertEquals(actualNotificationMessage,
 				"Your request for Author permission on " + catalogName + " has been approved by " + byUser + ".");
+		NotificationsUtils.closeNotificationPane(page);
+		logout(page);
+		loginAdmin(page);
+	}
+
+	@Test
+	@DisplayName("Validate notification message for request denied")
+	public void verifyAccessRequestRejectedNotification(@PWPage Page page) {
+		// Make catalog discoverable
+		AddFunctionPageUtils.clickOnAccessControl(page);
+		FunctionAccessSettingsUtils.clickOnMakeDiscoverableButton(page, "Model");
+		logout(page);
+		loginEditor(page);
+		// Request for access
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
+		EditModelPageUtils.searchModelCatalog(page, catalogName);
+		EditModelPageUtils.selectModelFromSearchOptions(page, catalogName);
+		EditModelPageUtils.clickOnRequestAccessButtonOfDiscoverableCatalog(page);
+		RequestAccessPopupUtils.selectAccessType(page, "author");
+		RequestAccessPopupUtils.enterComment(page, "Access Request");
+		RequestAccessPopupUtils.clickOnRequestButton(page);
+		logout(page);
+		loginAdmin(page);
+		// Perform action on access request
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		EditModelPageUtils.searchModelCatalog(page, catalogName);
+		EditModelPageUtils.selectModelFromSearchOptions(page, catalogName);
+		AddFunctionPageUtils.clickOnAccessControl(page);
+		String actualCountWithText = SettingsModelPageUtils.getPendingRequestCountText(page);
+		Assertions.assertEquals("1 pending request", actualCountWithText, "Pending request text not correct");
+		SettingsModelPageUtils.clickOnPendingRequestsExpandButton(page);
+		SettingsModelPageUtils.performActionOnPendingRequest(page, "Reject");
+		String actualMessage = ModelPageUtils.modelCreationToastMessage(page, "Successfully denied user permissions");
+		Assertions.assertEquals(actualMessage, "Successfully denied user permissions", "Toast message not correct");
+		logout(page);
+		loginEditor(page);
+		// validate request denied notification message
+		NotificationsUtils.clickOnNotificationBellIcon(page);
+		String byUser = ConfigUtils.getValue("Admin".toUpperCase() + "_USERNAME").split("@")[0];
+		String actualNotificationMessage = NotificationsUtils
+				.validateActionPerformOnRequestAccessNotificationMessage(page, "Author", catalogName, "denied", byUser);
+		Assertions.assertEquals(actualNotificationMessage,
+				"Your request for Author permission on " + catalogName + " has been denied by " + byUser + ".");
 		NotificationsUtils.closeNotificationPane(page);
 		logout(page);
 		loginAdmin(page);
