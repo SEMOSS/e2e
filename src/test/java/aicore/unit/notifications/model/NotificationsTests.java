@@ -123,6 +123,66 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@DisplayName("Validate along with the newly added user, can perform read, unread and clear all notifications operation")
+
+	public void verifyNewUserAndAllOwnersReceivesNotificationOperation(@PWPage Page page) throws InterruptedException {
+		// Open access control tab
+		SettingsModelPageUtils.clickOnAccessControl(page);
+		SettingsModelPageUtils.clickOnAddMembersButton(page);
+		// Add a new member as Author
+		SettingsModelPageUtils.addMember(page, "Author", GenericSetupUtils.useDocker());
+		// Validate the notification message for the owner who added the new member
+		NotificationsUtils.clickOnNotificationBellIcon(page);
+		String actualUserAddedNotificationMessageForOwner = NotificationsUtils.validateUserAddedNotificationMessageForOtherOwner(page, "Author", "Author", catalogName);
+		String expectedUserAddedNotificationMessageForOwner = String.format("%s has been added as %s to %s by you.",
+				"Author User", "Author", catalogName);
+		Assertions.assertEquals(expectedUserAddedNotificationMessageForOwner,
+				actualUserAddedNotificationMessageForOwner, "The notification message is not as expected.");
+		// click on the notification message to move it to unread to read section and
+		// Unread section is blank
+		NotificationsUtils.clickOnUnreadTab(page);
+		NotificationsUtils.clickOnNotificationMessage(page, actualUserAddedNotificationMessageForOwner);
+		boolean isUnreadSectionBlank = NotificationsUtils.isUnreadSectionBlank(page);
+		Assertions.assertTrue(isUnreadSectionBlank,
+				"The Unread section is not blank after clicking on the notification message.");
+		// switching to read section and validate the notification message is present
+		// there
+		NotificationsUtils.clickOnReadTab(page);
+		boolean isNotificationMessagePresentInReadSection = NotificationsUtils
+				.isNotificationMessagePresentInReadSection(page, "You are added as");
+		Assertions.assertTrue(isNotificationMessagePresentInReadSection,
+				"The notification message is not present in the Read section after clicking on the notification message.");
+		// Clear all notifications
+		NotificationsUtils.clickOnClearAllButton(page);
+		boolean isReadSectionBlank = NotificationsUtils.isReadSectionBlank(page);
+		// Check all notifications are cleared and read section is blank
+		Assertions.assertTrue(isReadSectionBlank, "The Read section is not blank after clearing all notifications.");
+		// Close the notification pane
+		NotificationsUtils.closeNotificationPane(page);
+		// Now add another member as Editor
+		SettingsModelPageUtils.clickOnAddMembersButton(page);
+		SettingsModelPageUtils.addMember(page, "Editor", GenericSetupUtils.useDocker());
+		// Logout and login with the newly added member
+		logout(page);
+		loginAuthor(page);
+		// Validate notification message for the first newly added member who is Author
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		NotificationsUtils.clickOnNotificationBellIcon(page);
+		String actualUserAddedNotificationMessageForOtherOwner = NotificationsUtils
+				.validateUserAddedNotificationMessageForOtherOwner(page, "Editor", "Editor", catalogName, "Admin");
+		String expectedUserAddedNotificationMessageForOtherOwner = String
+				.format("%s User's has been added as %s to %s by %sUser.", "Editor", "Editor", catalogName, "Admin");
+		Assertions.assertEquals(expectedUserAddedNotificationMessageForOtherOwner,
+				actualUserAddedNotificationMessageForOtherOwner, "The notification message is not as expected.");
+		// Close the notification pane
+		NotificationsUtils.closeNotificationPane(page);
+		// Logout from newly added member account and login back with Admin for cleanup
+		logout(page);
+		loginNativeAdmin(page);
+	}
+
+	@Test
 	@DisplayName("Validate Notification message for Accept the request")
 	public void testAcceptRequestAndValidateMemberList(@PWPage Page page) {
 		AddFunctionPageUtils.clickOnAccessControl(page);
