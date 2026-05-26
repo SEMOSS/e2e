@@ -35,6 +35,7 @@ public class CreateAppUsingUploadZip extends AbstractPlaywrightTestBase {
 	public void testExportDataFunctionality(@PWPage Page page) {
 		String fileName = TestResources.APP_FILE;
 		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
 		AppPageUtils.clickOnCreateNewAppButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIconForAPP(page);
