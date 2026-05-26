@@ -12,7 +12,7 @@ public class EditMetadataPageUtils {
 	private static final Logger logger = LogManager.getLogger(EditMetadataPageUtils.class);
 
 	// btns
-	private static final String EDIT_BUTTON_XPATH = "//button[text()='Edit']";
+	private static final String EDIT_BUTTON_XPATH = "//button[@aria-label='Edit']";
 	private static final String SUBMIT_BUTTON_DATATESTID = "editEngineDetails-submit-btn";
 	private static final String CLOSE_BUTTON_DATATESTID = "editEngineDetails-close-btn";
 
