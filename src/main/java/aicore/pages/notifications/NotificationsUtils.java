@@ -15,7 +15,7 @@ public class NotificationsUtils {
 	public static final String NOTIFICATION_PANE_CLOSE_XPATH = "//h2[text()='Notifications']/parent::div/following-sibling::button[span[text()='Close']]";
 	public static final String USER_ADDED_NOTIFICATION_MESSAGE_FOR_OWNER_XPATH = "//div[@data-testid='notification-item'][.//span[normalize-space()='{accessProvided}'] and .//span[normalize-space()='{catalogName}']] //div[span[contains(text(),'has been added as')]]";
 	public static final String USER_ADDED_NOTIFICATION_MESSAGE_FOR_OTHER_OWNER_XPATH = "//div[@data-testid='notification-item'][.//span[normalize-space()='{accessProvided}'] and .//span[normalize-space()='{catalogName}'] and .//span[normalize-space()='{accessProvidedByUser}']]//div[span[contains(text(),'has been added as')]]";
-	public static final String REQUEST_ACTION_NOTIFICATION_XPATH = "//div[@data-testid='notification-item']//div[@class='text-sm'][.//span[normalize-space()='Your request for'] and .//span[normalize-space()='{accessType}'] and .//span[normalize-space()='permission on'] and .//span[normalize-space()='{catalogName}'] and .//span[normalize-space()='has been approved by'] and .//span[contains(text(),'{userName}')]]";
+	public static final String REQUEST_ACTION_NOTIFICATION_XPATH = "//div[@data-testid='notification-item']//div[@class='text-sm'][.//span[normalize-space()='Your request for'] and .//span[normalize-space()='{accessType}'] and .//span[normalize-space()='permission on'] and .//span[normalize-space()='{catalogName}'] and .//span[contains(text(),'{action}')] and .//span[contains(text(),'{userName}')]]";
 
 	public static void clickOnNotificationBellIcon(Page page) {
 		page.locator(NOTIFICATION_BELL_ICON_XPATH_).click();
@@ -86,9 +86,10 @@ public class NotificationsUtils {
 	}
 
 	public static String validateActionPerformOnRequestAccessNotificationMessage(Page page, String accessType,
-			String catalogName, String byUser) {
+			String catalogName, String action, String byUser) {
 		String actualMessage = page.locator(REQUEST_ACTION_NOTIFICATION_XPATH.replace("{accessType}", accessType)
-				.replace("{catalogName}", catalogName).replace("{userName}", byUser)).textContent().trim();
+				.replace("{catalogName}", catalogName).replace("{action}", action).replace("{userName}", byUser))
+				.textContent().trim();
 		return actualMessage;
 	}
 }
