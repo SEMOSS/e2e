@@ -56,7 +56,11 @@ public class AppPageUtils {
 	@Step("Search app: {appName}")
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search apps").click();
-		page.getByLabel("Search apps").fill(appName + " " + timestamp);
+		if (timestamp != null && !timestamp.isEmpty()) {
+			page.getByLabel("Search apps").fill(appName + " " + timestamp);
+		} else {
+			page.getByLabel("Search apps").fill(appName);
+		}
 		page.waitForTimeout(500);
 	}
 

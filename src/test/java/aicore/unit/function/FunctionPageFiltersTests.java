@@ -1,5 +1,8 @@
 package aicore.unit.function;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
@@ -40,8 +43,8 @@ public class FunctionPageFiltersTests extends AbstractPlaywrightTestBase {
 		String url = "https://api.api-ninjas.com/v1/weather";
 		String httpMethod = "GET";
 		String postBodyMessage = "json";
-		String functionParameters = "[{\"parameterName\":\"lat\",\"parameterType\":\"String\",\"parameterDescription\":\"The lat of the location\"},{\"parameterName\":\"lon\",\"parameterType\":\"String\",\"parameterDescription\":\"lon of the location\"}]";
-		String functionRequiredParameters = "[\"lat\", \"lon\"]";
+		List<Map<String, String>> functionParameters = List.of(Map.of("parameterName","lat","parameterType","String","parameterDescription","The lat of the location"),Map.of("parameterName","lon","parameterType","String","parameterDescription","lon of the location"));
+		List<String> functionRequiredParameters = List.of("lat", "lon");
 		String functionName = "Weatherfunction";
 		String functionDescription = "a function to call weather based on lat and long";
 		// check for and delete functions to be tested

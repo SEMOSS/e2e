@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
 import aicore.pages.HomePage;
+import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -33,7 +34,7 @@ public class HomePageSteps {
 
 	@Then("User can see {string} in the {string} filter results")
 	public void user_can_see_in_the_filter_results(String searchResult, String optionName) {
-		boolean isCardVisible = homePage.verifySearchResultIsVisible(searchResult);
+		boolean isCardVisible = HomePageUtils.verifySearchResultIsVisible(SetupHooks.getPage(), searchResult);
 		Assertions.assertTrue(isCardVisible, "Searched data is not visible in search result list");
 	}
 
