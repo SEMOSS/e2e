@@ -56,7 +56,7 @@ public class AppPageUtils {
 	@Step("Search app: {appName}")
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search apps").click();
-		page.getByLabel("Search apps").fill(appName + " " + timestamp);
+		page.getByLabel("Search apps").fill(appName + "" + timestamp);
 		page.waitForTimeout(500);
 	}
 
@@ -107,7 +107,7 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnAppCard(Page page, String appName, String timestamp) {
-		String expectedAppName = appName + " " + timestamp;
+		String expectedAppName = appName + "" + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
 		AICorePageUtils.waitFor(appCard);
 		appCard.click();

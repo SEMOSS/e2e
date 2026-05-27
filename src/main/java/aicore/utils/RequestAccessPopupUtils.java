@@ -9,7 +9,7 @@ public class RequestAccessPopupUtils {
 	private static final String READONLY_OPTION_XPATH = "//button[@value='READ_ONLY' and @data-slot='radio-group-item']";
 	private static final String COMMENT_BOX_XPATH = "//textarea[not(@aria-hidden) and not(@readonly)]";
 	private static final String CANCEL_BUTTON_XPATH = "//button[text()= 'Cancel']";
-	private static final String REQUEST_BUTTON_XPATH = "//button[text()= 'Request']";
+	private static final String REQUEST_BUTTON_XPATH = "//button[text()= 'Request'] | //button[text()= 'Submit']";
 	private static final String CHANGE_ACCESS_POPUP_XPATH = "//h2[text()='Change Access']";
 	private static final String REQUEST_SUCCESS_TOAST_XPATH = "//*[contains(text(),'Successfully requested access to engine')]";
 
