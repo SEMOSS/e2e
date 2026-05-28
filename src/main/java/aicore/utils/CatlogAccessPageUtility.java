@@ -24,7 +24,7 @@ public class CatlogAccessPageUtility {
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//li[@data-type='error']";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_XPATH = "//img[@data-testid='workspace-Settings-image']/../..";
+	private static final String CLICK_ON_SETTINGS_XPATH = "//button[@data-testid='workspace-Settings-image']/../..";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
 	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";

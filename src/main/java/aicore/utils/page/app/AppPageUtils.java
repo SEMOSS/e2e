@@ -111,7 +111,7 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnAppCard(Page page, String appName, String timestamp) {
-		String expectedAppName = appName + " " + timestamp;
+		String expectedAppName = appName + "" + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
 		AICorePageUtils.waitFor(appCard);
 		appCard.click();

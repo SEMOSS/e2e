@@ -78,7 +78,6 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 
 	@Test
 	@DisplayName("Validate along with the newly added user, all owner users receive a notification")
-
 	public void verifyNewUserAndAllOwnersReceivesNotification(@PWPage Page page) throws InterruptedException {
 		// Open access control tab
 		SettingsModelPageUtils.clickOnAccessControl(page);
