@@ -115,6 +115,22 @@ public class DragAndDropExportTests extends AbstractE2ETest {
 	}
 
 	@Test
+	@DisplayName("Validate Block Filter functionality")
+	public void testBlockFilterFunctionality() throws Exception {
+		String[] blockFilters = { "Most Frequent Used", "Data Charts", "Element", "Input", "Layout", "Text", "Miscellaneous" };
+		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
+		for (String filter : blockFilters) {
+			DragAndDropBlocksPageUtils.clickOnBlocksFilterOption(page);
+			DragAndDropBlocksPageUtils.clickBlockFilterMenuOption(page, filter);
+			DragAndDropBlocksPageUtils.clickApplyBtn(page);
+			boolean isAppliedBlockVisible = DragAndDropBlocksPageUtils.isBlockVisibleForSelectedFilter(page, filter);
+			Assertions.assertTrue(isAppliedBlockVisible,"Blocks are not visible for the selected filter option: " + filter);
+			DragAndDropBlocksPageUtils.clickOnBlocksFilterOption(page);
+			DragAndDropBlocksPageUtils.clickClearAllBtn(page);
+		}
+	}
+
+	@Test
 	@DisplayName("Validate Direct Export Data functionality")
 	void testDirectExportFunctionality() throws Exception {
 		String expectedToastMessage = "Exporting data from ";
