@@ -78,7 +78,6 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 
 	@Test
 	@DisplayName("Validate along with the newly added user, all owner users receive a notification")
-
 	public void verifyNewUserAndAllOwnersReceivesNotification(@PWPage Page page) throws InterruptedException {
 		// Open access control tab
 		SettingsModelPageUtils.clickOnAccessControl(page);
@@ -133,7 +132,8 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 		SettingsModelPageUtils.addMember(page, "Author", GenericSetupUtils.useDocker());
 		// Validate the notification message for the owner who added the new member
 		NotificationsUtils.clickOnNotificationBellIcon(page);
-		String actualUserAddedNotificationMessageForOwner = NotificationsUtils.validateUserAddedNotificationMessageForOtherOwner(page, "Author", "Author", catalogName);
+		String actualUserAddedNotificationMessageForOwner = NotificationsUtils
+				.validateUserAddedNotificationMessageForOtherOwner(page, "Author", "Author", catalogName);
 		String expectedUserAddedNotificationMessageForOwner = String.format("%s has been added as %s to %s by you.",
 				"Author User", "Author", catalogName);
 		Assertions.assertEquals(expectedUserAddedNotificationMessageForOwner,
@@ -170,9 +170,9 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 		MainMenuUtils.clickOnOpenModel(page);
 		NotificationsUtils.clickOnNotificationBellIcon(page);
 		String actualUserAddedNotificationMessageForOtherOwner = NotificationsUtils
-				.validateUserAddedNotificationMessageForOtherOwner(page, "Editor", "Editor", catalogName, "Admin");
+				.validateUserAddedNotificationMessageForOtherOwner(page, "Editor", catalogName, "Admin");
 		String expectedUserAddedNotificationMessageForOtherOwner = String
-				.format("%s User's has been added as %s to %s by %sUser.", "Editor", "Editor", catalogName, "Admin");
+				.format("has been added as %s to %s by %sUser.", "Editor", catalogName, "Admin");
 		Assertions.assertEquals(expectedUserAddedNotificationMessageForOtherOwner,
 				actualUserAddedNotificationMessageForOtherOwner, "The notification message is not as expected.");
 		// Close the notification pane
@@ -216,10 +216,56 @@ public class NotificationsTests extends AbstractPlaywrightTestBase {
 		loginEditor(page);
 		NotificationsUtils.clickOnNotificationBellIcon(page);
 		String byUser = ConfigUtils.getValue("Admin".toUpperCase() + "_USERNAME").split("@")[0];
-		String actualNotificationMessage = NotificationsUtils
-				.validateActionPerformOnRequestAccessNotificationMessage(page, "Author", catalogName, byUser);
+		String actualNotificationMessage = NotificationsUtils.validateActionPerformOnRequestAccessNotificationMessage(
+				page, "Author", catalogName, "approved", byUser);
 		Assertions.assertEquals(actualNotificationMessage,
 				"Your request for Author permission on " + catalogName + " has been approved by " + byUser + ".");
+		NotificationsUtils.closeNotificationPane(page);
+		logout(page);
+		loginAdmin(page);
+	}
+
+	@Test
+	@DisplayName("Validate notification message for request denied")
+	public void verifyAccessRequestRejectedNotification(@PWPage Page page) {
+		// Make catalog discoverable
+		AddFunctionPageUtils.clickOnAccessControl(page);
+		FunctionAccessSettingsUtils.clickOnMakeDiscoverableButton(page, "Model");
+		logout(page);
+		loginEditor(page);
+		// Request for access
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		SettingsModelPageUtils.clickOnDiscoverableModelsButton(page);
+		EditModelPageUtils.searchModelCatalog(page, catalogName);
+		EditModelPageUtils.selectModelFromSearchOptions(page, catalogName);
+		EditModelPageUtils.clickOnRequestAccessButtonOfDiscoverableCatalog(page);
+		RequestAccessPopupUtils.selectAccessType(page, "author");
+		RequestAccessPopupUtils.enterComment(page, "Access Request");
+		RequestAccessPopupUtils.clickOnRequestButton(page);
+		logout(page);
+		loginAdmin(page);
+		// Perform action on access request
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenModel(page);
+		EditModelPageUtils.searchModelCatalog(page, catalogName);
+		EditModelPageUtils.selectModelFromSearchOptions(page, catalogName);
+		AddFunctionPageUtils.clickOnAccessControl(page);
+		String actualCountWithText = SettingsModelPageUtils.getPendingRequestCountText(page);
+		Assertions.assertEquals("1 pending request", actualCountWithText, "Pending request text not correct");
+		SettingsModelPageUtils.clickOnPendingRequestsExpandButton(page);
+		SettingsModelPageUtils.performActionOnPendingRequest(page, "Reject");
+		String actualMessage = ModelPageUtils.modelCreationToastMessage(page, "Successfully denied user permissions");
+		Assertions.assertEquals(actualMessage, "Successfully denied user permissions", "Toast message not correct");
+		logout(page);
+		loginEditor(page);
+		// validate request denied notification message
+		NotificationsUtils.clickOnNotificationBellIcon(page);
+		String byUser = ConfigUtils.getValue("Admin".toUpperCase() + "_USERNAME").split("@")[0];
+		String actualNotificationMessage = NotificationsUtils
+				.validateActionPerformOnRequestAccessNotificationMessage(page, "Author", catalogName, "denied", byUser);
+		Assertions.assertEquals(actualNotificationMessage,
+				"Your request for Author permission on " + catalogName + " has been denied by " + byUser + ".");
 		NotificationsUtils.closeNotificationPane(page);
 		logout(page);
 		loginAdmin(page);
