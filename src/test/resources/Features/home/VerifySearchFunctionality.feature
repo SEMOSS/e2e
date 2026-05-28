@@ -1,24 +1,6 @@
 Feature: Search app and catalogs
 
-  @Regression
-  Scenario: Search Function
-    Given User is on Home page
-    And User opens Main Menu
-    When User clicks on Open Function
-    And User checks if 'Function' catalog created and Deletes the 'WeatherFunctionTest'
-    And User clicks on Add Function
-    And User clicks on file upload icon
-    And User uploads the file 'Function/weatherFunctionTest.zip'
-    And User clicks on 'Upload' button to create catalog
-    And User clicks on Copy Catalog ID
-    And User opens Main Menu
-    And User clicks on Home
-    And User search the 'weatherFunctionTest' in the home search box
-    And User clicks on the 'Function' option to filter the results
-    Then User can see 'WeatherFunctionTest' in the 'Function' filter results
-    And User clicks on the 'Function' option to unfilter the results
-    And User close the search popup
-
+# finish tests in HomePageSearchTests.java
   @Regression
   Scenario: Search Vector
     Given User is on Home page
@@ -54,25 +36,6 @@ Feature: Search app and catalogs
     And User close the search popup
 
   @Regression
-  Scenario: Search Database
-    Given User is on Home page
-    And User opens Main Menu
-    And User clicks on Open Database
-    And User checks if 'Database' catalog created and Deletes the 'TestDatabase'
-    When User clicks on Add Database
-    And User clicks on file upload icon
-    And User uploads the file 'Database/TestDatabase.zip'
-    And User clicks on 'Upload' button to create catalog
-    And User clicks on Copy Catalog ID
-    And User opens Main Menu
-    And User clicks on Home
-    And User search the 'TestDatabase' in the home search box
-    And User clicks on the 'Database' option to filter the results
-    Then User can see 'TestDatabase' in the 'Database' filter results
-    And User clicks on the 'Database' option to unfilter the results
-    And User close the search popup
-
-  @Regression
   Scenario: Search Storage
     Given User is on Home page
     And User opens Main Menu
@@ -93,29 +56,3 @@ Feature: Search app and catalogs
     Then User can see 'Storage' in the 'Storage' filter results
     And User clicks on the 'Storage' option to unfilter the results
     And User close the search popup
-
-  @Regression
-  Scenario Outline: Search All
-    Given User is on Home page
-    When User opens Main Menu
-    And User clicks on Home
-    And User search the '<CATALOG NAME>' in the home search box
-    #And User clicks on the '<OPTION>' option to filter the results
-    Then User can see '<CATALOG NAME>' in the '<OPTION>' filter results
-    #And User clicks on the '<OPTION>' option to unfilter the results
-    And User close the search popup
-
-    Examples: 
-      | CATALOG NAME        | OPTION |
-      | App                 | All    |
-      | Model               | All    |
-      | WeatherFunctionTest | All    |
-      | Vector              | All    |
-      | TestDatabase        | All    |
-      | Storage             | All    |
-
-  @DeleteTestCatalog @DeleteCreatedTestApp @Regression
-  Scenario: Delete created resources
-    Given User is on Home page
-    And User opens Main Menu
-    When User clicks on Home

@@ -1,5 +1,7 @@
 package aicore.unit.function;
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -34,13 +36,20 @@ public class AddFunctionTests extends AbstractPlaywrightTestBase {
 	
 	private static Stream<Arguments> provideFormInputsForTestValidateFunctions() {
 	    return Stream.of(
-	    		Arguments.of("REST","TestFunction{Timestamp}","https://api.api-ninjas.com/v1/weather","GET","json","{\"X-Api-Key\": \"myKey\"}", "[{\"parameterName\":\"lat\",\"parameterType\":\"String\",\"parameterDescription\":\"The lat of the location\"},{\"parameterName\":\"lon\",\"parameterType\":\"String\",\"parameterDescription\":\"lon of the location\"}]","[\"lat\", \"lon\"]","WeatherFunction","a function to call weather based on lat and long","catalog_name","Create function","Successfully added function database to catalog","Function Type,Catalog Name,URL,Http Method,POST Message Body Type,Function Parameters,Function Required Parameters,Function Name (metadata),Function Description (metadata)")
-	    		);
+				Arguments.of("REST", "TestFunction{Timestamp}", "https://api.api-ninjas.com/v1/weather", "GET", "json",
+						"{\"X-Api-Key\": \"myKey\"}",
+						List.of(Map.of("parameterName", "lat", "parameterType", "String", "parameterDescription",
+								"The lat of the location"),
+								Map.of("parameterName", "lon", "parameterType", "String", "parameterDescription",
+										"lon of the location")),
+						List.of("lat", "lon"), "WeatherFunction", "a function to call weather based on lat and long",
+						"catalog_name", "Create function", "Successfully added function database to catalog",
+						"Function Type,Catalog Name,URL,Http Method,POST Message Body Type,Function Name (metadata),Function Description (metadata)")	    		);
 	}
 	
 	@ParameterizedTest
 	@MethodSource("provideFormInputsForTestValidateFunctions")
-	void testCreateFunctionWithAllRequiredFields(String functionType, String catalogName, String url, String httpMethod, String postBodyMessage, String headers, String functionParameters, String functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields, @PWPage Page page) {		
+	void testCreateFunctionWithAllRequiredFields(String functionType, String catalogName, String url, String httpMethod, String postBodyMessage, String headers, List<Map<String, String>> functionParameters, List<String> functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields, @PWPage Page page) {		
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
@@ -66,13 +75,18 @@ public class AddFunctionTests extends AbstractPlaywrightTestBase {
 	
 	private static Stream<Arguments> provideIncompleteInputsForTestValidateFunctions() {
 	    return Stream.of(
-	    		Arguments.of("REST","TestFunction{Timestamp}","GET","json","{\"X-Api-Key\": \"myKey\"}", "[{\"parameterName\":\"lat\",\"parameterType\":\"String\",\"parameterDescription\":\"The lat of the location\"},{\"parameterName\":\"lon\",\"parameterType\":\"String\",\"parameterDescription\":\"lon of the location\"}]","[\"lat\", \"lon\"]","WeatherFunction","a function to call weather based on lat and long","catalog_name","Create function","Successfully added function database to catalog","Function Type,Catalog Name,URL,Http Method,POST Message Body Type,Function Parameters,Function Required Parameters,Function Name (metadata),Function Description (metadata)")
-	    		);
+				Arguments.of("REST", "TestFunction{Timestamp}", "GET", "json", "{\"X-Api-Key\": \"myKey\"}",
+						List.of(Map.of("parameterName", "lat", "parameterType", "String", "parameterDescription",
+								"The lat of the location"),
+								Map.of("parameterName", "lon", "parameterType", "String", "parameterDescription",
+										"lon of the location")),
+						List.of("lat", "lon"), "WeatherFunction", "a function to call weather based on lat and long",
+						"catalog_name", "Create function", "Successfully added function database to catalog",
+						"Function Type,Catalog Name,URL,Http Method,POST Message Body Type,Function Name (metadata),Function Description (metadata)")	    		);
 	}
 	
-	@ParameterizedTest
-	@MethodSource("provideIncompleteInputsForTestValidateFunctions")
-	void testCreateFunctionWithMissingFields(String functionType, String catalogName, String httpMethod, String postBodyMessage, String headers, String functionParameters, String functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields, @PWPage Page page) {		
+	@ParameterizedTest	@MethodSource("provideIncompleteInputsForTestValidateFunctions")
+	void testCreateFunctionWithMissingFields(String functionType, String catalogName, String httpMethod, String postBodyMessage, String headers, List<Map<String, String>> functionParameters, List<String> functionRequiredParameters, String functionName, String functionDescription, String functionTitle, String createFunction, String toastMessage, String requiredFields, @PWPage Page page) {		
 		String timestamp = CommonUtils.getTimeStampName();
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page); 
@@ -83,10 +97,10 @@ public class AddFunctionTests extends AbstractPlaywrightTestBase {
 		AddFunctionFormUtils.selectHttpMethod(page, httpMethod);
 		AddFunctionFormUtils.selectPostBodyMessage(page, postBodyMessage);
 		AddFunctionFormUtils.enterHeaders(page, headers);
-		AddFunctionFormUtils.enterFunctionParameters(page, functionParameters);
-		AddFunctionFormUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
 		AddFunctionFormUtils.enterFunctionName(page, functionName);
 		AddFunctionFormUtils.enterFunctionDescription(page, functionDescription);
+		AddFunctionFormUtils.enterFunctionParameters(page, functionParameters);
+		AddFunctionFormUtils.enterFunctionRequiredParameters(page, functionRequiredParameters);
 
 		boolean isButtonEnabled = AddFunctionFormUtils.validateConnectButtonEnabled(page);
 		Assertions.assertFalse(isButtonEnabled, "'Connect' button is enabled");

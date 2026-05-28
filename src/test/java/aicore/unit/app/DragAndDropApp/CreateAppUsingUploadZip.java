@@ -1,5 +1,6 @@
 package aicore.unit.app.DragAndDropApp;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +23,11 @@ public class CreateAppUsingUploadZip extends AbstractPlaywrightTestBase {
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
+	}
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
 	}
 
 	@Test
