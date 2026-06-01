@@ -112,8 +112,8 @@ public class AppNotificationTests extends AbstractPlaywrightTestBase {
 		loginEditor(page);
 		NotificationsUtils.clickOnNotificationBellIcon(page);
 		String byUser = ConfigUtils.getValue("Admin".toUpperCase() + "_USERNAME").split("@")[0];
-		String actualNotificationMessage = NotificationsUtils
-				.validateActionPerformOnRequestAccessNotificationMessage(page, "Author", appName + timestamp, byUser);
+		String actualNotificationMessage = NotificationsUtils.validateActionPerformOnRequestAccessNotificationMessage(
+				page, "Author", appName + timestamp, "approved", byUser);
 		Assertions.assertEquals(actualNotificationMessage, "Your request for Author permission on " + appName
 				+ timestamp + " has been approved by " + byUser + ".");
 		NotificationsUtils.closeNotificationPane(page);
