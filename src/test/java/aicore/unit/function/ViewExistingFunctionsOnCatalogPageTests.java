@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.microsoft.playwright.Page;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.function.GeneralFunctionPage;

@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,10 +27,6 @@ import com.microsoft.playwright.Tracing;
 import aicore.base.GenericSetupUtils;
 import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
-import aicore.framework.Resource;
-import aicore.framework.ResourcePool;
-import aicore.framework.UrlUtils;
-import aicore.pages.home.HomePageUtils;
 
 /**
  * Superclass to initialize and shutdown e2e env for JUnit tests.

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.GeneralFunctionPage;
 import aicore.pages.home.MainMenuUtils;

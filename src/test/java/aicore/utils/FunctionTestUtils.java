@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Assertions;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.model.EditModelPageUtils;

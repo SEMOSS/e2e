@@ -1,7 +1,5 @@
 package aicore.catalog.api;
 
-import com.microsoft.playwright.Page;
-
 public interface ICatalog {
 	
 	public static final String CATALOG_TYPE_DATABASE = "Database";

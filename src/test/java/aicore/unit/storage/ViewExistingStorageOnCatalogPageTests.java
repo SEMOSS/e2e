@@ -11,12 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-import aicore.base.GenericSetupUtils;
-import aicore.framework.ConfigUtils;
-import aicore.hooks.SetupHooks;
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
 import aicore.pages.home.HomePageUtils;
@@ -24,23 +20,15 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.pages.storage.AddStorageFormUtils;
-import aicore.steps.AddModelSteps;
-import aicore.steps.AddStorageSteps;
-import aicore.steps.AddVectorDatabaseSteps;
-import aicore.utils.AddCatalogPageBaseUtils;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
+import aicore.utils.CatalogFilterPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.SearchAndSelectCatalogPageUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.AbstractE2ETest;
-
-import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.annotations.PWPage;
-import com.microsoft.playwright.Page;
-
-import aicore.utils.CatalogFilterPageUtils;
 
 
 public class ViewExistingStorageOnCatalogPageTests extends AbstractPlaywrightTestBase {

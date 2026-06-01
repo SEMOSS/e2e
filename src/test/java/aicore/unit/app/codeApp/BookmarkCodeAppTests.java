@@ -8,20 +8,15 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
-import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
-import aicore.utils.AgentBuilderAppsUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
-import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.TestResources;
 import aicore.utils.UploadCatalogUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
-import aicore.utils.page.model.ModelPageUtils;
 
 public class BookmarkCodeAppTests extends AbstractPlaywrightTestBase {
 	private String testAppName = "";

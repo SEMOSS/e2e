@@ -1,9 +1,7 @@
 package aicore.unit.storage;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -12,20 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.storage.AddStorageFormUtils;
-import aicore.utils.StoragePageUtils;
-import aicore.utils.AbstractE2ETest.UserType;
-import aicore.utils.annotations.PWPage;
-import io.cucumber.datatable.DataTable;
-import aicore.utils.AbstractE2ETest;
-import aicore.utils.CommonUtils;
-
 import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
+import aicore.utils.StoragePageUtils;
 import aicore.utils.annotations.PWPage;
-import com.microsoft.playwright.Page;
 
 
 

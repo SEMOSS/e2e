@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +14,13 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
-import aicore.framework.ConfigUtils;
-import aicore.hooks.SetupHooks;
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.pages.storage.AddStorageFormUtils;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
@@ -33,13 +30,8 @@ import aicore.utils.SearchAndSelectCatalogPageUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.ViewUsagePageUtils;
-import aicore.utils.page.model.ModelPageUtils;
-import aicore.utils.AbstractE2ETest;
-
-import io.cucumber.datatable.DataTable;
-import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.annotations.PWPage;
-import com.microsoft.playwright.Page;
+import aicore.utils.page.model.ModelPageUtils;
 
 
 
