@@ -39,6 +39,11 @@ public class DragAndDropBlocksPageUtils {
 	private static final String SAVE_APP_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
 
 	// Blocks section
+	private static final String BLOCKS_FILTER_OPTION_XPATH = "//input[@placeholder='Search']/following-sibling::button";
+	private static final String BLOCKS_FILTER_MENU_OPTION_XPATH = "//span[text()='{filterOption}']/..//button";
+	private static final String BLOCKS_FILTER_SELECTED_OPTION_XPATH = "//div//p[text()='{filterOption}']";
+	private static final String APPLY_BTN_XPATH = "//button[text()='Apply']";
+	private static final String CLEAR_ALL_BTN_XPATH = "//button[text()='Clear All']";
 	private static final String BLOCKS_OPTION_XPATH = "//div[contains(@class,'flexlayout__border_button')][@title='Blocks']";
 	private static final String LINK_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Link";
 	private static final String HEADING_1_BLOCK_DATA_TESTID = "blockMenuCardContent-card-Text-(h1)";
@@ -216,6 +221,33 @@ public class DragAndDropBlocksPageUtils {
 		if (!blocksOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
 			blocksOption.click();
 		}
+	}
+
+	public static void clickOnBlocksFilterOption(Page page) {
+		Locator blockFilterOption = page.locator(BLOCKS_FILTER_OPTION_XPATH);
+		blockFilterOption.click();
+	}
+
+	public static void clickBlockFilterMenuOption(Page page, String filterOption) {
+		Locator blockFilterOption = page.locator(BLOCKS_FILTER_MENU_OPTION_XPATH.replace("{filterOption}", filterOption));
+		blockFilterOption.click();
+	}
+
+	public static boolean isBlockVisibleForSelectedFilter(Page page, String filterOption) {
+		Locator blockFilterOption = page.locator(BLOCKS_FILTER_SELECTED_OPTION_XPATH.replace("{filterOption}", filterOption));
+		return blockFilterOption.isVisible();
+	}
+
+	public static void clickApplyBtn(Page page) {
+		page.waitForTimeout(500); // Add a short wait to ensure the UI has updated after selecting the filter option
+		Locator applyBtn = page.locator(APPLY_BTN_XPATH);
+		applyBtn.click();
+	}
+
+	public static void clickClearAllBtn(Page page) {
+		Locator clearAllBtn = page.locator(CLEAR_ALL_BTN_XPATH);
+		clearAllBtn.click();
+		page.waitForTimeout(500); // Add a short wait to ensure the UI has cleared the filters after clicking Clear All
 	}
 
 	public static void closeBlocksOption(Page page) {
