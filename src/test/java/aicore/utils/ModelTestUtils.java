@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 
 import com.microsoft.playwright.Page;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;

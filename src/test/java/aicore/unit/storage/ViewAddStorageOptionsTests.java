@@ -1,8 +1,5 @@
 package aicore.unit.storage;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,24 +11,13 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-import aicore.hooks.SetupHooks;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
-import aicore.pages.model.EditModelPageUtils;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CommonUtils;
-import aicore.utils.ModelTestUtils;
 import aicore.utils.StoragePageUtils;
-import aicore.utils.TestResourceTrackerHelper;
-import aicore.utils.AbstractE2ETest.UserType;
 import aicore.utils.annotations.PWPage;
-import aicore.steps.AbstractAddCatalogBase;
-
-import io.cucumber.datatable.DataTable;
-
-import aicore.utils.AbstractE2ETest;
-
-import aicore.utils.AbstractPlaywrightTestBase;
 
 public class ViewAddStorageOptionsTests extends AbstractPlaywrightTestBase {
 	

@@ -1,9 +1,7 @@
 package aicore.unit.playground;
 
-import java.awt.print.PageFormat;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import aicore.pages.home.HomePageUtils;
 import aicore.utils.AbstractE2ETest;

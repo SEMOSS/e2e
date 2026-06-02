@@ -12,22 +12,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aicore.hooks.SetupHooks;
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.storage.AddStorageFormUtils;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddCatalogPageBaseUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.StoragePageUtils;
 import aicore.utils.TestResourceTrackerHelper;
-import io.cucumber.datatable.DataTable;
-
-import aicore.utils.AbstractE2ETest;
-
-import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.annotations.PWPage;
-import com.microsoft.playwright.Page;
 
 public class ViewAndValidateStorageCreationFormTests extends AbstractPlaywrightTestBase {
 	

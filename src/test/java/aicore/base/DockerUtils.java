@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import aicore.framework.JunitUrlUtils;
-import aicore.framework.UrlUtils;
 
 public class DockerUtils {
 	private static final Logger logger = LogManager.getLogger(DockerUtils.class);

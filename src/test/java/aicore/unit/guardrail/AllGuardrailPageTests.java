@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,7 +18,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.microsoft.playwright.Page;
 
-import aicore.pages.AddFunctionToCatalogPage;
 import aicore.pages.AddModelPage;
 import aicore.pages.base.EditMetadataPageUtils;
 import aicore.pages.home.MainMenuUtils;

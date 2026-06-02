@@ -13,7 +13,6 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
-import aicore.pages.model.ModelChatPageUtils;
 import aicore.pages.model.ModelViewLogsDashboardPageUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
