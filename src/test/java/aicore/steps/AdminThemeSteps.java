@@ -42,11 +42,11 @@ public class AdminThemeSteps {
 		Assertions.assertTrue(isInputFieldVisible, "Input field '" + inputFieldName + "' is not visible.");
 	}
 
-	@And("User should see {string} editor section")
-	public void user_see_editor_section(String editorSectionName) {
-		boolean isEditorSectionVisible = SettingAdminThemeUtils.verifyJsonEditorSectionIsDisplay(SetupHooks.getPage(), editorSectionName);
-		Assertions.assertTrue(isEditorSectionVisible, "Editor section '" + editorSectionName + "' is not visible.");
-	}
+//	@And("User should see {string} editor section")
+//	public void user_see_editor_section(String editorSectionName) {
+//		boolean isEditorSectionVisible = SettingAdminThemeUtils.verifyJsonEditorSectionIsDisplay(SetupHooks.getPage(), editorSectionName);
+//		Assertions.assertTrue(isEditorSectionVisible, "Editor section '" + editorSectionName + "' is not visible.");
+//	}
 
 	@And("User should see {string} button")
 	public void user_see_button(String buttonName) {

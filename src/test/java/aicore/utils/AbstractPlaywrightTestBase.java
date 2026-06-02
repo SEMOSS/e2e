@@ -18,7 +18,7 @@ import aicore.utils.extensions.PlaywrightExtension;
  * operations
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ExtendWith({ PlaywrightExtension.class, MultiResourceUploadLockExtension.class})//FunctionZipLockExtension.class })
+@ExtendWith({ PlaywrightExtension.class, MultiResourceUploadLockExtension.class})
 public class AbstractPlaywrightTestBase {
 	private static final Logger logger = LogManager.getLogger(AbstractPlaywrightTestBase.class);
 

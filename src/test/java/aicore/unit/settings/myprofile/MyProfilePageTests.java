@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,39 +13,57 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.AddModelFormUtils;
 import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.page.model.ModelPageUtils;
 import aicore.utils.settings.MyProfilePageUtils;
+import aicore.utils.settings.SettingsPageUtils;
 
-public class MyProfilePageTests extends AbstractE2ETest {
+public class MyProfilePageTests extends AbstractPlaywrightTestBase {
 
 	private String modelCatalogName = null;
-
-	@BeforeAll
-	public void login() throws IOException {
-		login(page, UserType.NATIVE);
-	}
-
+	
 	@BeforeEach
-	public void setup() throws IOException {
+	public void setup(@PWPage Page page) throws IOException {
+		loginNativeAdmin(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenSettings(page);
 		MyProfilePageUtils.clickOnMyProfileCard(page);
 	}
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
+	}
+
+//	@BeforeAll
+//	public void login() throws IOException {
+//		login(page, UserType.NATIVE);
+//	}
+//
+//	@BeforeEach
+//	public void setup() throws IOException {
+//		MainMenuUtils.openMainMenu(page);
+//		MainMenuUtils.clickOnOpenSettings(page);
+//		MyProfilePageUtils.clickOnMyProfileCard(page);
+//	}
 
 	@ParameterizedTest
 	@ValueSource(strings = { "Edit profile information", "Javascript SDK", "Python SDK", "Personal Access Tokens" })
-	void testSectionLoad(String sectionName) {
+	void testSectionLoad(String sectionName, @PWPage Page page) {
 		boolean isVisible = MyProfilePageUtils.isSectionVisible(page, sectionName);
 		assertTrue(isVisible, "Expected section not found: " + sectionName);
 
 	}
 
-	private void createModelCatalog() throws IOException {
+	private void createModelCatalog(Page page) throws IOException {
 		String timestamp = CommonUtils.getTimeStampName();
 		modelCatalogName = "ProfileModel" + timestamp;
 		String modelType = "OpenAI";
@@ -62,9 +81,9 @@ public class MyProfilePageTests extends AbstractE2ETest {
 
 	@Test
 	@DisplayName("Select default AI model for your requests")
-	void testSelectModelInDropdown() throws IOException {
+	void testSelectModelInDropdown(@PWPage Page page) throws IOException {
 		// Create model catalog
-		createModelCatalog();
+		createModelCatalog(page);
 		// Perform validation on my profile card
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenSettings(page);

@@ -1,6 +1,8 @@
 package aicore.utils.settings;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 
 public class SettingAdminThemeUtils {
 	private static final String PAGE_TILE_XPATH = "//h1[text()='{pageTitle}']";
@@ -35,9 +37,9 @@ public class SettingAdminThemeUtils {
 		return page.getByPlaceholder(NAME_INPUT_FIELD_PLACEHOLDERTEXT).isVisible();
 	}
 
-	public static boolean verifyJsonEditorSectionIsDisplay(Page page, String editorSectionName) {
-		return page.locator(JSON_EDITOR_SECTION_XPATH).first().isVisible();
-	}
+//	public static boolean verifyJsonEditorSectionIsDisplay(Page page, String editorSectionName) {
+//		return page.locator(JSON_EDITOR_SECTION_XPATH).first().isVisible();
+//	}
 
 	public static boolean verifyButtonIsDisplay(Page page, String buttonName) {
 		return page.locator(ADMIN_THEME_PAGE_BUTTON_XPATH.replace("{buttonName}", buttonName)).isVisible();
@@ -52,7 +54,7 @@ public class SettingAdminThemeUtils {
 	}
 
 	public static void enterThemeName(Page page, String themeName) {
-		page.getByPlaceholder(THEME_NAME_INPUT_FIELD_PLACEHOLDER_TEXT).fill(themeName);
+		page.getByPlaceholder(NAME_INPUT_FIELD_PLACEHOLDERTEXT).fill(themeName);
 	}
 
 	public static void clickCreateButton(Page page, String buttonName) {

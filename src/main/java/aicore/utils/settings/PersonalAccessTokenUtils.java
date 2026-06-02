@@ -12,6 +12,7 @@ public class PersonalAccessTokenUtils {
 	private static final String GENERATED_KEY_XPATH = "//td[contains(text(),'{keyName}')]";
 	private static final String GENERATED_DESCRIPTION_XPATH = "//td[text()='{description}']";
 	private static final String DELETE_BUTTON_XPATH = "//td[text()='{KeyName}']/following-sibling::td//button[@title='Delete']";
+	private static final String DELETE_CONFIRM_BTN_TEST_ID = "myProfilePage-delete-key-confirm-btn";
 
 	/////////////////// Methods to create token
 
@@ -121,5 +122,9 @@ public class PersonalAccessTokenUtils {
 		String deleteButtonXpath = DELETE_BUTTON_XPATH.replace("{KeyName}", keyName);
 		page.waitForSelector(deleteButtonXpath);
 		page.click(deleteButtonXpath);
+		
+		Locator confirmDelete = page.getByTestId(DELETE_CONFIRM_BTN_TEST_ID);
+		AICorePageUtils.waitFor(confirmDelete);
+		confirmDelete.click();
 	}
 }

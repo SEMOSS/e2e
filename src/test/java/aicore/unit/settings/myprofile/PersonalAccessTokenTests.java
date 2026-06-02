@@ -3,44 +3,64 @@ package aicore.unit.settings.myprofile;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AICoreAllureLabels;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.settings.MyProfilePageUtils;
 import aicore.utils.settings.PersonalAccessTokenUtils;
+import aicore.utils.settings.SettingsPageUtils;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 
 @Epic(AICoreAllureLabels.SETTINGS_EPIC)
 @Feature(AICoreAllureLabels.MY_PROFILE_FEATURE)
-public class PersonalAccessTokenTests extends AbstractE2ETest {
-
-	@BeforeAll
-	public void login() throws IOException {
-		login(page, UserType.NATIVE);
-	}
-
+public class PersonalAccessTokenTests extends AbstractPlaywrightTestBase {
+	
 	@BeforeEach
-	public void setup() throws IOException {
+	public void setup(@PWPage Page page) throws IOException {
+		loginNativeAdmin(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenSettings(page);
 		MyProfilePageUtils.clickOnMyProfileCard(page);
 		AICorePageUtils.saveScreenshotAtStep(page, "Capture screenshot of My Profile page", Paths.get("PlatformNavigation", "Settings", "MyProfile"), "MyProfilePage");
 	}
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
+	}
+
+//	@BeforeAll
+//	public void login() throws IOException {
+//		login(page, UserType.NATIVE);
+//	}
+//
+//	@BeforeEach
+//	public void setup() throws IOException {
+//		MainMenuUtils.openMainMenu(page);
+//		MainMenuUtils.clickOnOpenSettings(page);
+//		MyProfilePageUtils.clickOnMyProfileCard(page);
+//		AICorePageUtils.saveScreenshotAtStep(page, "Capture screenshot of My Profile page", Paths.get("PlatformNavigation", "Settings", "MyProfile"), "MyProfilePage");
+//	}
 
 	@Test
     @DisplayName("Generate Personal Access Key")
     @Description("This test creates a personal access key. \nValidates examples and then deletes the access key.")
-	void testGenerateKey() {
+	void testGenerateKey(@PWPage Page page) {
 		// create key
 		String timestamp = CommonUtils.getTimeStampName();
 		String keyName = "New Key" + timestamp;

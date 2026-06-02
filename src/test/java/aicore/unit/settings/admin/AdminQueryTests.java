@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,29 +14,34 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.microsoft.playwright.Page;
+
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractE2ETest;
+import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.annotations.PWPage;
 import aicore.utils.settings.AdminQueryPageUtils;
 import aicore.utils.settings.SettingsPageUtils;
 
 @Tag("REGRESSION")
-public class AdminQueryPageTests extends AbstractE2ETest {
-
-	@BeforeAll
-	public void setup() throws IOException {
-		login(page, UserType.NATIVE);
-	}
+public class AdminQueryTests extends AbstractPlaywrightTestBase {
 
 	@BeforeEach
-	public void openMainMenu() throws IOException {
+	public void setup(@PWPage Page page) throws IOException {
+		loginNativeAdmin(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenSettings(page);
 		SettingsPageUtils.clickOnAdminButton(page);
 	}
+	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		logout(page);
+	}
 
 	@ParameterizedTest(name = "[{index}] DB={0}, Query={1}")
 	@MethodSource("queryTestData")
-	void testQueries(String databaseName, String query, int expectedColumnCount, String expectedNames) {
+	void testQueries(String databaseName, String query, int expectedColumnCount, String expectedNames, @PWPage Page page) {
 		SettingsPageUtils.clickOnCard(page, "Admin Query");
 		AdminQueryPageUtils.clickOnSelectDatabase(page);
 		AdminQueryPageUtils.selectDatabase(page, databaseName);

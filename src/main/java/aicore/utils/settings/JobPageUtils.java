@@ -24,7 +24,7 @@ public class JobPageUtils {
 	private static final String RESUME_BUTTON_XPATH = "//button[normalize-space(.) = 'Resume']";
 	private static final String PAUSE_BUTTON_XPATH = "//button[normalize-space(.) = 'Pause']";
 	private static final String JOB_PAGE_SUB_TITLE_XPATH = "//p[text()='{subTitle}']";
-	private static final String STATUS_TILES_XPATH = "//div[contains(@class,'MuiBox')]//p[text()='{tileName}']";
+	private static final String STATUS_TILES_XPATH = "div span:has-text('{tileName}')";//"//div[contains(@class,'MuiBox')]//p[text()='{tileName}']";
 	private static final String NO_JOBS_MESSAGE_XPATH = "//div[text()='{message}']";
 	private static final String JOBS_TABLE_COULMNS_XPATH = "//div[@role='columnheader']//div[text()='{columnName}']";
 	private static final String HISTORY_TABLE_XPATH = "//div[@aria-expanded='false']//div[text()='History']";
@@ -43,8 +43,8 @@ public class JobPageUtils {
 	}
 
 	public static void clickOnAddJobButton(Page page) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).isVisible();
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add New")).isVisible();
+		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add New")).click();
 	}
 
 	public static void clickAddButton(Page page) {
@@ -215,7 +215,10 @@ public class JobPageUtils {
 	}
 
 	public static boolean verifyJobTableColumns(Page page, String columnName) {
-		return page.locator(JOBS_TABLE_COULMNS_XPATH.replace("{columnName}", columnName)).isVisible();
+		return page.getByRole(AriaRole.COLUMNHEADER)
+			    .filter(new Locator.FilterOptions().setHasText(columnName)).isVisible();
+		
+//		return page.locator(JOBS_TABLE_COULMNS_XPATH.replace("{columnName}", columnName)).isVisible();
 	}
 
 	public static boolean verifyNoJobsMessageOnJobPage(Page page, String expectedMessage) {
