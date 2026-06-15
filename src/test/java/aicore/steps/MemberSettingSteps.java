@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.SettingsPage;
+import aicore.pages.settings.SettingsPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

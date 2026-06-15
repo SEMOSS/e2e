@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.SettingsMyProfile;
+import aicore.pages.settings.SettingsMyProfile;
 import aicore.utils.settings.PersonalAccessTokenUtils;
 import aicore.utils.settings.MyProfilePageUtils;
 import io.cucumber.datatable.DataTable;

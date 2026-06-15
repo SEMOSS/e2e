@@ -372,8 +372,15 @@ public class CommonUtils {
 			page.getByTestId(TEAM_PERMISSION_DATATESTID).click();
 			page.getByPlaceholder(SEARCH_TEAM_PLACEHOLDER_TEXT).fill(teamName);
 			page.waitForTimeout(500);
-			page.getByTestId(CLICK_THREE_DOT_ICON_FOR_TEAM_DATATESTID).click();
-			page.locator(TEAM_DELETE_BUTTON_XPATH).click();
+			// STEP 1. Locate the card with the team name
+			Locator card = page.locator("div[role='button']:has-text(\"" + teamName + "\")");
+	        // Step 2: Find the menu trigger button within that card and click it.
+	        Locator menuButton = card.locator("button[data-slot='dropdown-menu-trigger']");
+	        menuButton.click();
+			// Click the delete button
+	        Locator menu = page.locator("div[role='menu'][data-state='open']");
+	        Locator deleteItem = menu.locator("div[role='menuitem']:has-text(\"Delete team\")");
+	        deleteItem.click();
 			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {

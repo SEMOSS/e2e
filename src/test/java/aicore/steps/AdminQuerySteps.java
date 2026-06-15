@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import aicore.hooks.SetupHooks;
 import aicore.pages.AddModelPage;
 import aicore.pages.JobManagementPage;
-import aicore.pages.SettingsAdminQueryPage;
+import aicore.pages.settings.SettingsAdminQueryPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

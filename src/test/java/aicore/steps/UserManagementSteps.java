@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Assertions;
 
 import aicore.framework.RestCaller;
 import aicore.hooks.SetupHooks;
-import aicore.pages.SettingsPage;
 import aicore.pages.UserManagementPage;
 import aicore.pages.home.MainMenuUtils;
+import aicore.pages.settings.SettingsPage;
 import aicore.utils.LastCreatedUser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;

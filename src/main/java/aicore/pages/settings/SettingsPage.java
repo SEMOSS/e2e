@@ -1,4 +1,4 @@
-package aicore.pages;
+package aicore.pages.settings;
 
 import com.microsoft.playwright.Page;
 

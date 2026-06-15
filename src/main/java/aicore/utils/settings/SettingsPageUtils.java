@@ -33,7 +33,7 @@ public class SettingsPageUtils {
 	}
 
 	public static void clickOnAdminButton(Page page) {
-		Locator adminButton = page.locator(ADMIN_SWITCH);
+		Locator adminButton = page.locator("button:has-text('Admin On'), button:has-text('Admin Off')");//page.locator(ADMIN_SWITCH);
 		if (adminButton.innerText().contains("Admin Off")) {
 			adminButton.click();
 		}

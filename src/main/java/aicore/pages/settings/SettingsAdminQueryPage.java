@@ -1,4 +1,4 @@
-package aicore.pages;
+package aicore.pages.settings;
 
 import java.util.List;
 

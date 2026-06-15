@@ -64,6 +64,12 @@ public class TeamPermissionsSettingsUtils {
 		page.waitForTimeout(300);
 		page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(type)).click();
 	}
+	
+	public static void searchForTeamNameInSearchBar(Page page, String teamName) {
+		Locator searchBar = page.getByLabel("Search teams");
+		AICorePageUtils.waitFor(searchBar);
+		searchBar.fill(teamName);
+	}
 
 	public static void fillTeamName(Page page, String value) {
 		page.locator(TEAM_NAME_XPATH).isVisible();
@@ -129,8 +135,8 @@ public class TeamPermissionsSettingsUtils {
 
 	public static String verifyName(Page page, String name) {
 		Locator actualName = page.locator(NAME_XPATH.replace("{Name}", name));
-		AICorePageUtils.waitFor(actualName);
 		actualName.scrollIntoViewIfNeeded();
+		AICorePageUtils.waitFor(actualName);
 		return actualName.textContent().trim();
 	}
 
@@ -143,7 +149,12 @@ public class TeamPermissionsSettingsUtils {
 
 	// add engine to all catalog with different
 	public static void userClickOnCreatedTeamName(Page page, String teamName, String timestamp) {
-		Locator teamNameLocator = page.locator("//span[text()='" + teamName + " " + timestamp + "']");
+		Locator teamNameLocator = null;
+		if (timestamp != null && !timestamp.isEmpty()) {
+			teamNameLocator = page.locator("//span[text()='" + teamName + " " + timestamp + "']");
+		} else {
+			teamNameLocator = page.locator("//span[text()='" + teamName + "']");
+		}
 		AICorePageUtils.waitFor(teamNameLocator);
 		if (!teamNameLocator.isVisible()) {
 			throw new AssertionError("Team name: " + teamName + " with timestamp: " + timestamp + " is not visible.");
@@ -164,7 +175,10 @@ public class TeamPermissionsSettingsUtils {
 		dropdownLocator.press("Enter");
 		page.keyboard().type(catalogId);
 		AICorePageUtils.waitFor(dropdownLocator);
-		page.locator(CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_ENGINE_XPATH).click();
+//		page.locator(CLICK_ON_CHECKOBOX_TO_SELECT_CATALOG_FROM_ENGINE_XPATH).click();
+		Locator foundDbLocator = page.locator("div:has-text('" + catalogName + "') button[role='checkbox']");
+		AICorePageUtils.waitFor(foundDbLocator);
+		foundDbLocator.click();
 	}
 
 	public static void userSelectAppFromList(Page page, String catalogName, String selectCatalog) {

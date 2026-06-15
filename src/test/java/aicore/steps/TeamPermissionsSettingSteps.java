@@ -3,8 +3,8 @@ package aicore.steps;
 import org.junit.jupiter.api.Assertions;
 
 import aicore.hooks.SetupHooks;
-import aicore.pages.TeamPermissionsSettingsPage;
 import aicore.pages.app.CreateAppPopupPage;
+import aicore.pages.settings.TeamPermissionsSettingsPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

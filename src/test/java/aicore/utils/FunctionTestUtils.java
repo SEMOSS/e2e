@@ -13,9 +13,29 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
+import aicore.pages.function.GeneralFunctionPage;
+import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
 
 public class FunctionTestUtils {
+	
+	public static void addDefaultZipUploadFunction(Page page) {
+		MainMenuUtils.openMainMenu(page);
+		MainMenuUtils.clickOnOpenFunction(page);
+		GeneralFunctionPage.deleteFunctionIfExists(page, TestResources.WEATHER_FUNC_NAME);
+		AddFunctionPageUtils.clickOnAddFunctionButton(page);
+		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+		FunctionTestUtils.userUploadsFile(page, TestResources.WEATHER_FUNC_ZIP);
+		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
+		CatlogAccessPageUtility.getCatalogAndCopyId(page);
+		FunctionTestUtils.verifyUserSeesSuccessToastMessage(page, "Successfully Created Function Database");
+		FunctionTestUtils.userCanSeeCatalogTitle(page, TestResources.WEATHER_FUNC_NAME);
+	}
+	
+	public static void deleteDefaultZipUploadFunction(Page page) {
+		assertTrue(CommonUtils.navigateAndDeleteCatalog(page, TestResourceTrackerHelper.CATALOG_TYPE_FUNCTION, TestResources.WEATHER_FUNC_NAME));
+	}
+	
 	public static void verifyFunctionCreationFormWithSelectFields(Page page, List<Map<String, String>> formFields){
 		for (Map<String, String> row : formFields) {
 			String sectionName = row.get("SECTION_NAME");
