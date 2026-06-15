@@ -1,5 +1,7 @@
 package aicore.utils;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.microsoft.playwright.Page;
 
 import aicore.pages.home.MainMenuUtils;
@@ -21,6 +23,10 @@ public class AppTestUtils {
 		
 		// TODO should return appID
 		return appName;
+	}
+	
+	public static void deleteApp(Page page, String appName) {
+		assertTrue(CommonUtils.navigateAndDeleteApp(page, appName));
 	}
 
 }

@@ -19,6 +19,24 @@ import aicore.utils.page.model.ModelPageUtils;
 
 public class ModelTestUtils {
 	
+	
+	private static String catalog = TestResourceTrackerHelper.CATALOG_TYPE_MODEL;
+	
+	public static String addDefaultZipUploadModel(Page page) {
+		MainMenuUtils.openMainMenu(page);
+		CatalogCreationFromZipUtil.openCatalog(page, catalog);
+		AddFunctionPageUtils.deleteCatalog(page, catalog, TestResources.LLAMA3_70B_INSTRUCT_NAME);
+		CatalogCreationFromZipUtil.clickOnAddCatalogButton(page, catalog);		
+		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+		FunctionTestUtils.userUploadsFile(page, TestResources.LLAMA3_70B_INSTRUCT_ZIP);
+		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
+		return CatlogAccessPageUtility.getCatalogAndCopyId(page);
+	}
+
+	public static void deleteDefaultZipUploadModel(Page page) {
+		assertTrue(CommonUtils.navigateAndDeleteCatalog(page, catalog, TestResources.LLAMA3_70B_INSTRUCT_NAME));
+	}
+	
 	public static String addModel(Page page, String modelCatalogName) {
 		String modelType = "OpenAI";
 		String modelTypeName = "GPT-4.1";

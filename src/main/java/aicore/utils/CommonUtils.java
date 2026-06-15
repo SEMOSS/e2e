@@ -347,13 +347,7 @@ public class CommonUtils {
 			page.locator(THREE_DOT_ICON_XPATH).first().click();
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
 			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
-			Locator toasterMessage = page.getByTestId("notification-success-alert");
-			if (toasterMessage.isVisible()) {
-				page.locator(TOAST_CLOSE_XPATH).click();
-				toasterMessage.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
-				return true;
-			}
-			return false;
+			return page.locator(DELETE_TOAST_MESSAGE_XPATH).first().isVisible();
 		} catch (Exception e) {
 			logger.warn("App deletion failed due to an exception", e);
 			return false;
