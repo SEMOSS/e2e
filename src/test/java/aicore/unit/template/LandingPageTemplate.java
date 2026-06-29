@@ -36,7 +36,7 @@ public class LandingPageTemplate extends AbstractPlaywrightTestBase {
 		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.";
 	
 	
-@BeforeEach
+	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
 	}	
