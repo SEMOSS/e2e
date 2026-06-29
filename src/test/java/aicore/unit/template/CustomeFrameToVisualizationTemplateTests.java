@@ -22,13 +22,12 @@ public class CustomeFrameToVisualizationTemplateTests extends AbstractPlaywright
 	String timestamp = CommonUtils.getTimeStampName();
 	String appName = "Custome Frame to Visualization App using Template" + timestamp;
 	
-	String expectedDescription = """
-		    This is simply an app that shows you how to create a custom pandas frame in notebook.
-		    Use this as inspiration for the cool visualizations you can build off of this.
-		    Ask the LLM to create JSON out of data, manually import database engine data and
-		    construct a custom pandas frame off of that data (use imagination on how to interact
-		    that pulled data with the LLM).
-		    """.replace("\n", " ").trim();
+	String expectedDescription =
+		    "This is simply an app that shows you how to create a custom pandas frame in notebook.  "
+		  + "Use this as inspiration for the cool visualizations you can build off of this.  "
+		  + "Ask the LLM to create JSON out of data, manually import database engine data and construct "
+		  + "a custom pandas frame off of that data (use imagination on how to interact that pulled data "
+		  + "with the LLM).";
 
 	
 	@BeforeEach
@@ -64,13 +63,10 @@ public class CustomeFrameToVisualizationTemplateTests extends AbstractPlaywright
 		        "Create Pandas Frame Help Guide",
 		        AppTemplatePageUtils.userSeeTeamplatePageTitle(page),
 		        "Expected and Actual Block do not match");
-		
+				 
 		AppTemplatePageUtils.verifyDescriptionBelowTitle(expectedDescription,page);
-		
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);	
-		
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, "Area Chart");
-
 		Assertions.assertTrue(
 		        AppTemplatePageUtils.dropChartOnPage(page, "Create Pandas Frame Help Guide"),
 		        "Expected: Chart should be visible on the Page after drag-and-drop.");
