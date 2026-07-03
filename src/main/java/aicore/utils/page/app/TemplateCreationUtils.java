@@ -8,7 +8,7 @@ import aicore.utils.CommonUtils;
 
 public class TemplateCreationUtils {
 
-    public static void createAppFromTemplate(
+    public static String createAppFromTemplate(
             Page page,
             String templateName) {
     	
@@ -25,5 +25,7 @@ public class TemplateCreationUtils {
         CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");
         CreateAppPopupUtils.enterTags(page, "Test1, Test2");
         CreateAppPopupUtils.clickOnCreateButton(page);
+        
+        return appName;
     }
 }
