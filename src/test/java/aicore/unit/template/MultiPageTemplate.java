@@ -4,28 +4,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.microsoft.playwright.Page;
-
 import aicore.framework.UrlUtils;
-import aicore.pages.home.HomePageUtils;
-import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
-import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 	
-	
-	String timestamp = CommonUtils.getTimeStampName();
-	String appName = "Test app" + timestamp;
-	
 	String hyperlinkText = "Go to resources";
-	String expectedRelativeUrl = "e2e/SemossWeb/packages/client/dist/#/app/.*/view/resources";
+	private static final String RESOURCES_URL = "e2e/SemossWeb/packages/client/dist/#/app/.*/view/resources";
+	private static final String ABOUT_URL = "e2e/SemossWeb/packages/client/dist/#/app/.*/view/about";
+	private static final String LANDING_PAGE = "Landing Page";
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -36,21 +29,17 @@ public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 	    logout(page);
 	}
 	
+	private void verifyAppCreated(Page page) {
+	    String appName = CreateAppPopupUtils.userFetchAppName(page);
+	    Assertions.assertFalse(appName.isEmpty(), "Fetched App Name is Empty");
+	}
+	
 	@Test
     public void MultiPageTemplate_test(@PWPage Page page){
 		
-		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(page);	
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);	
-		AppTemplatePageUtils.selectTemplateFromList("Multi Page", page);
-		CreateAppPopupUtils.enterAppName(page, appName);				
-		CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");		
-		CreateAppPopupUtils.enterTags(page, "Test1, Test2");
-		CreateAppPopupUtils.clickOnCreateButton(page);		
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
-		
+		TemplateCreationUtils.createAppFromTemplate(page, "Multi Page");
+		verifyAppCreated(page);		
+
 		String actualText = AppTemplatePageUtils.userSeePage1(page);
 		Assertions.assertEquals(
 		        "page-1",
@@ -60,7 +49,7 @@ public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 		String actualBlock = AppTemplatePageUtils.userSeeTeamplatePageTitle(page);
 
 		Assertions.assertEquals(
-		        "Landing Page",
+				LANDING_PAGE,
 		        actualBlock,
 		        "Expected and Actual Block do not match");
 		
@@ -75,15 +64,15 @@ public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 		
 		AppTemplatePageUtils.verifyHyperlink(
 		        hyperlinkText,
-		        expectedRelativeUrl,
+		        RESOURCES_URL,
 		        page);
 
 		String actualRelativePath =
 		        UrlUtils.extractRelativePath(AppTemplatePageUtils.getCurrentUrl(page));
 
 		Assertions.assertTrue(
-		        actualRelativePath.matches(expectedRelativeUrl),
-		        "URL mismatch!\nExpected pattern: " + expectedRelativeUrl
+		        actualRelativePath.matches(RESOURCES_URL),
+		        "URL mismatch!\nExpected pattern: " + RESOURCES_URL
 		        + "\nActual URL: " + actualRelativePath);
 		
 		Assertions.assertEquals(
@@ -103,8 +92,8 @@ public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 		        UrlUtils.extractRelativePath(AppTemplatePageUtils.getCurrentUrl(page));
 
 		Assertions.assertTrue(
-		        actualPath.matches("e2e/SemossWeb/packages/client/dist/#/app/.*/view/about"),
-		        "URL mismatch!\nExpected pattern: e2e/SemossWeb/packages/client/dist/#/app/.*/view/about"
+		        actualPath.matches(ABOUT_URL),
+		        "URL mismatch!\nExpected pattern: "+ ABOUT_URL
 		        + "\nActual URL: " + actualPath);
 		
 		Assertions.assertEquals(
@@ -118,7 +107,7 @@ public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, "Area Chart");
 
 		Assertions.assertTrue(
-		        AppTemplatePageUtils.dropChartOnPage(page, "landing page"),
+		        AppTemplatePageUtils.dropChartOnPage(page, LANDING_PAGE),
 		        "Expected: Chart should be visible on the Page after drag-and-drop. But it was not found.");
 		
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);

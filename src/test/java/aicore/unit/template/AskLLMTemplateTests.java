@@ -15,6 +15,7 @@ import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class AskLLMTemplateTests extends AbstractPlaywrightTestBase {
 	
@@ -29,21 +30,17 @@ public class AskLLMTemplateTests extends AbstractPlaywrightTestBase {
 	void tearDown(@PWPage Page page) {
 	    logout(page);
 	}
+	
+	private void verifyAppCreated(Page page) {
+	    String appName = CreateAppPopupUtils.userFetchAppName(page);
+	    Assertions.assertFalse(appName.isEmpty(), "Fetched App Name is Empty");
+	}
 
 	@Test
 	public void askLLMtemplate_test (@PWPage Page page) {
 		
-		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(page);	
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);	
-		AppTemplatePageUtils.selectTemplateFromList("Ask LLM", page);
-		CreateAppPopupUtils.enterAppName(page, appName);				
-		CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");		
-		CreateAppPopupUtils.enterTags(page, "Test1, Test2");
-		CreateAppPopupUtils.clickOnCreateButton(page);
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");		
+		TemplateCreationUtils.createAppFromTemplate(page, "Ask LLM");
+		verifyAppCreated(page);		
 		AppTemplatePageUtils.verifyPageWithTitle("Ask LLM", page);
 		AppTemplatePageUtils.verifyDescription("Ask an LLM a question", page);
 		AppTemplatePageUtils.verifyInputFieldWithLabel("question", page);

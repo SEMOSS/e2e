@@ -4,15 +4,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
-import aicore.pages.home.HomePageUtils;
-import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.AppTemplatePageUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class AskCSVTemplateTests extends AbstractPlaywrightTestBase {
 	
@@ -32,15 +29,7 @@ public class AskCSVTemplateTests extends AbstractPlaywrightTestBase {
 	public void askCSVtemplate_test (@PWPage Page page) {
 	
 	
-		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(page);	
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);	
-		AppTemplatePageUtils.selectTemplateFromList("Ask CSV", page);
-		CreateAppPopupUtils.enterAppName(page, appName);				
-		CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");		
-		CreateAppPopupUtils.enterTags(page, "Test1, Test2");
-		CreateAppPopupUtils.clickOnCreateButton(page );	
+		TemplateCreationUtils.createAppFromTemplate(page, "Ask CSV");
 		AppTemplatePageUtils.verifyPageWithTitle("CSV Query", page);
 		AppTemplatePageUtils.clickOnQuestionBlock(page, "title");
 		AppTemplatePageUtils.changeAppPageTitle("CSV Query", "CSV Query - Edited", page);

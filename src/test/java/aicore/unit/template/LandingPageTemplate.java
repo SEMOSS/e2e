@@ -4,25 +4,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.microsoft.playwright.Page;
-
-import aicore.pages.home.HomePageUtils;
-import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
-import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class LandingPageTemplate extends AbstractPlaywrightTestBase {
 	
-	String timestamp = CommonUtils.getTimeStampName();
-	String appName = "Test app" + timestamp;
-	
-	String expectedDescription =
+	private static final String EXPECTED_DESCRIPTION =
 	        "Drag and drop your content below to start populating your page.  "
 	      + "Add images, text, and links to customize your landing page and make it your own.  "
 	      + "Whether you are setting up a portfolio, a business page, or a personal blog, "
@@ -30,11 +22,18 @@ public class LandingPageTemplate extends AbstractPlaywrightTestBase {
 	      + "Make your vision come to life!";
 
 	
-	String resourcesDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.";			 
+	private static final String RESOURCES_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.";			 
 	
 	private static final String RESOURCE_DESCRIPTION =
 		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.";
 	
+	private static final String APP_URL =
+	        "SemossWeb/packages/client/dist";
+
+	private static final String LOGIN_URL =
+	        "https://workshop.cfg.deloitte.com/cfg-ai-demo/SemossWeb/packages/client/dist/#/login";
+	
+	private static final String TEMPLATE_NAME = "Landing Page";
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -54,33 +53,31 @@ public class LandingPageTemplate extends AbstractPlaywrightTestBase {
 	    AppTemplatePageUtils.verifyHyperlinkText(
 	            "Navigate",
 	            resourceName,
-	            "SemossWeb/packages/client/dist",
+	            APP_URL,
 	            page);
 	    AppTemplatePageUtils.getBackPage(page);
+	}
+	
+	private void verifyAppCreated(Page page) {
+	    String appName = CreateAppPopupUtils.userFetchAppName(page);
+	    Assertions.assertFalse(appName.isEmpty(), "Fetched App Name is Empty");
 	}
 	
 	@Test
     public void LandingPageTemplate_test(@PWPage Page page){
 		
-		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(page);	
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);	
-		AppTemplatePageUtils.selectTemplateFromList("Landing Page", page);
-		CreateAppPopupUtils.enterAppName(page, appName);				
-		CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");		
-		CreateAppPopupUtils.enterTags(page, "Test1, Test2");
-		CreateAppPopupUtils.clickOnCreateButton(page);		
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
+		TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
+		
+		verifyAppCreated(page);		
+
 		
 		AppTemplatePageUtils.verifyPageWithtitleText("Landing Page Title", page);	
-		AppTemplatePageUtils.verifyDescriptionBelowTitle(expectedDescription, page);
-		AppTemplatePageUtils.verifyHyperlink("Explore", "SemossWeb/packages/client/dist", page);
+		AppTemplatePageUtils.verifyDescriptionBelowTitle(EXPECTED_DESCRIPTION, page);
+		AppTemplatePageUtils.verifyHyperlink("Explore", APP_URL, page);
 		AppTemplatePageUtils.getBackPage(page);
 		
 		AppTemplatePageUtils.verifyPageWithtitleText("Resources", page);
-		AppTemplatePageUtils.verifyDescriptionBelowTitle(resourcesDescription, page);
+		AppTemplatePageUtils.verifyDescriptionBelowTitle(RESOURCES_DESCRIPTION, page);
 
 		verifyResource(page, "Resource 1");
 		verifyResource(page, "Resource 2");
@@ -91,12 +88,12 @@ public class LandingPageTemplate extends AbstractPlaywrightTestBase {
 		
 		AppTemplatePageUtils.clickOnHyperlinkText("Explore", page);
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
-		AppTemplatePageUtils.fillDestinationUrl("https://workshop.cfg.deloitte.com/cfg-ai-demo/SemossWeb/packages/client/dist/#/login", page);
+		AppTemplatePageUtils.fillDestinationUrl(LOGIN_URL, page);
 		AppTemplatePageUtils.clickSaveButtonOfTheApp(page);
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
 		AppTemplatePageUtils.clickOnHyperlinkText("Explore", page);
 		Assertions.assertEquals(
-			    "https://workshop.cfg.deloitte.com/cfg-ai-demo/SemossWeb/packages/client/dist/#/login",
+				LOGIN_URL,
 			    AppTemplatePageUtils.getCurrentUrl(page),
 			    "Expected URL does not match the current page URL."
 			);

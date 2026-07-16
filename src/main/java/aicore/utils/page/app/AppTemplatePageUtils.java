@@ -51,7 +51,7 @@ public class AppTemplatePageUtils {
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_SIZE_XPATH = "//input[@type='number']";
 	private static final String VARIABLE_GUIDE_BLOCK_FONT_STYLE_XPATH = "//span[@data-slot='select-value']/parent::button";
 	private static final String TEAMPLATE_APP_TITLE_TEXT = "{title}";
-	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')] //div[@data-testid='model-user-1']";
+	private static final String SELECT_MODEL_FOR_NLP_QUERY_XPATH = "//div[contains(@id,'notebook-cell-{queryName}-card-content')]//button[@data-testid='model-user-1']";
 	private static final String TEMPLATE_APP_DESCRIPTION = "//*[@id='page-1']//p[text()='{description}']";
 	private static final String SAVE_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
 	private static final String PREVIEW_APP_CANCEL_BUTTON_XPATH = "//button[text()='Cancel']";
@@ -91,7 +91,7 @@ public class AppTemplatePageUtils {
 		page.locator(PREVIEWBUTTON_XPATH).click();
 		page.waitForLoadState(LoadState.LOAD);
 	}
-
+	
 	public static void selectTemplateFromList(String templateName, Page page) {
 		Locator isTemplateVisible = page.locator(SELECT_TEMPLATE_XPATH.replace("{templateName}", templateName));
 		isTemplateVisible.scrollIntoViewIfNeeded();
@@ -385,15 +385,16 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void enterQueryForNLPTemplate(Page page, String query) {
-		Locator inputBox = page.locator("//label[text()='Enter user query']").nth(0);
-		AICorePageUtils.waitFor(inputBox);
+		Locator inputBox = page.locator(
+				"div[role='dialog'] div[data-block='input--1'] textarea");
+	    AICorePageUtils.waitFor(inputBox);
 
-		String textArea = inputBox.inputValue();
-		if (!textArea.isEmpty()) {
-			inputBox.fill("");
-		}
-		inputBox.fill(query);
-	}
+	    String textArea = inputBox.inputValue();
+	    if (!textArea.isEmpty()) {
+	        inputBox.fill("");
+	    }
+	    inputBox.fill(query);
+	    }
 
 	public static boolean validateAges(Page page, String condition, int number) {
 
