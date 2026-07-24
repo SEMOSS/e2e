@@ -21,10 +21,13 @@ import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 public class BookmarkCodeAppTests extends AbstractPlaywrightTestBase {
 	private String testAppName = "";
 	
+	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
 		testAppName = "Code app " + timestamp; // catalog name
+		
+		
 		
 		loginNativeAdmin(page);
 		// create app
