@@ -162,7 +162,7 @@ public class AppPageUtils {
 	}
 
 	public static boolean isAppDisplayedOnPage(Page page, String appName, String timestamp) {
-		String expectedAppName = appName + " " + timestamp;
+		String expectedAppName = appName + "" + timestamp;
 		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
 		AICorePageUtils.waitFor(appCard);
 		return appCard.isVisible();

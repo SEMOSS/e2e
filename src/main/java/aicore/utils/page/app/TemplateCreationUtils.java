@@ -46,6 +46,35 @@ public class TemplateCreationUtils {
         return appName;
     }
 
+    
+    public static void createMultipleDragAndDropApps(
+            Page page,
+            int appCount,
+            String appType,
+            String appName,
+            String appDescription,
+            String appTags) {
+
+        HomePageUtils.navigateToHomePage(page);
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenAppLibrary(page);
+
+        for (int i = 0; i < appCount; i++) {
+
+            AppPageUtils.clickOnCreateNewAppButton(page);
+
+            CreateAppPopupUtils.clickOnGetStartedButton(page, appType);
+
+            String appNameWithTimestamp =
+                    appName + " " + CommonUtils.getTimeStampName();
+
+            CreateAppPopupUtils.enterAppName(page, appNameWithTimestamp);
+            CreateAppPopupUtils.enterAppDescription(page, appDescription);
+            CreateAppPopupUtils.enterTags(page, appTags);
+            CreateAppPopupUtils.clickOnCreateButton(page);
+        }
+    }
+    
     private static void completeAppCreation(Page page, String appName) {
 
         CreateAppPopupUtils.enterAppName(page, appName);
