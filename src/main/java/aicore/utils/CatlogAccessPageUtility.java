@@ -85,7 +85,7 @@ public class CatlogAccessPageUtility {
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
-		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
+		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).nth(1).fill(role);
 		page.waitForTimeout(1000);
 	}
 
