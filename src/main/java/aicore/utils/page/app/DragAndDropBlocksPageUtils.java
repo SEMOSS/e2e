@@ -104,7 +104,7 @@ public class DragAndDropBlocksPageUtils {
 	// Area Chart
 	private static final String AREA_CHART_DATA_TESTID = "blockMenuCardContent-card-Area-Chart";
 	private static final String DUPLICATE_ICON_XPATH = "//button[@aria-label='Duplicate']";
-	private static final String DELETE_ICON_XPATH = "//*[name()='svg'][contains(@class,'lucide-trash')]";
+	private static final String DELETE_ICON_XPATH = "//button[.//*[name()='svg' and contains(@class,'lucide-trash2')]]";
 	private static final String CLICK_ON_AREA_CHART_VIEW_OPTIONS = "//div[@aria-label='Vega visualization']";
 	private static final String DUPLICATE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Duplicate']";
 	private static final String DELETE_TOOLTIP_MESSAGE_XPATH = "//div[contains(@class, 'MuiTooltip-tooltip') and text()='Delete']";
