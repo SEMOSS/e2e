@@ -39,13 +39,6 @@ public class CreateAppReadUserPermission extends AbstractPlaywrightTestBase {
 		openAppLibrary(page);
 		AppPageUtils.searchApp(page, appName, "");
 		AppPageUtils.clickOnAppCard(page, appName, "");
-		
-
-		System.out.println("After opening app:");
-		System.out.println("URL: " + page.url());
-		System.out.println("Title: " + page.title());
-		
-		page.pause();
 	   
 	}
 	
@@ -135,39 +128,19 @@ public class CreateAppReadUserPermission extends AbstractPlaywrightTestBase {
 	    );
 	}
 	
-	@Test
+	@Test	
     public void ReadButtonDisabled_test (@PWPage Page page) {
 		
-		System.out.println("Test: ");
 		verifyEditOption(page, "Read", "Disable");
-		System.out.println("Step 1");
-
 		verifyWelcomePage(page);
-		System.out.println("Step 1");
-
 		verifySettingsVisibility(page, "Read", "not view");
-		System.out.println("Step 2");
-
 		verifyPrivateToggleNotVisible(page, "Read");
-		System.out.println("Step 3");
-
 		verifyNonDiscoverableToggleNotVisible(page, "Read");
-		System.out.println("Step 4");
-
 		verifyDeleteCatalogOptionNotVisible(page, "Read");
-		System.out.println("Step 5");
-
 	    logout(page);
 	    loginAuthor(page);
 		
-		
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	
 }
