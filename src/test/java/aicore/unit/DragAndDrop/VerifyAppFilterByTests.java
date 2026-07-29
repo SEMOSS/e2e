@@ -1,4 +1,4 @@
-package aicore.unit.app.DragAndDropApp;
+package aicore.unit.DragAndDrop;
 
 
 import java.util.LinkedHashMap;

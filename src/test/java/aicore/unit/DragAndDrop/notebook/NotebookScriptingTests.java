@@ -1,4 +1,4 @@
-package aicore.unit.app.DragAndDropApp.notebook;
+package aicore.unit.DragAndDrop.notebook;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

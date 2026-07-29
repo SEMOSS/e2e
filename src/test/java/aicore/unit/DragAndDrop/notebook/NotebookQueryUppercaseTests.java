@@ -1,4 +1,4 @@
-package aicore.unit.app.DragAndDropApp.notebook;
+package aicore.unit.DragAndDrop.notebook;
 
 import java.util.Arrays;
 import java.util.List;

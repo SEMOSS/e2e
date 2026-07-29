@@ -1,4 +1,4 @@
-package aicore.unit.app.DragAndDropApp;
+package aicore.unit.DragAndDrop;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
