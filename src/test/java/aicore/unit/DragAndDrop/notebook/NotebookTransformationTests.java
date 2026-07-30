@@ -1,6 +1,5 @@
 package aicore.unit.DragAndDrop.notebook;
 
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -107,7 +106,7 @@ public class NotebookTransformationTests extends AbstractPlaywrightTestBase {
 			}
 			LocalDateTime expected = LocalDateTime.now();
 			long diffSeconds = Math.abs(Duration.between(actual, expected).getSeconds());
-			Assertions.assertTrue(diffSeconds <= 5, "time differs by more than 10 seconds");
+			Assertions.assertTrue(diffSeconds <= 5, "time differs by more than 5 seconds");
 		}
 	}
 
@@ -197,4 +196,3 @@ public class NotebookTransformationTests extends AbstractPlaywrightTestBase {
 		verifyColumnValuesGreaterThanOrEqualTo(page, "DATE_DIFF_DAYS", "0");
 	}
 }
-
