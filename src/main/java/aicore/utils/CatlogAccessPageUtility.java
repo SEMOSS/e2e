@@ -266,11 +266,11 @@ public class CatlogAccessPageUtility {
 		Locator enableToggle = page.locator(PUBLISH_ENABLE_TOGGLE_XPATH);
 		AICorePageUtils.waitFor(enableToggle);
 		boolean shouldEnable = action.equalsIgnoreCase("enable");
-		boolean isCurrentlyEnabled = enableToggle.isVisible();
+		boolean isCurrentlyEnabled = enableToggle.isChecked();
 		if (isCurrentlyEnabled != shouldEnable) {
 			enableToggle.click();
 		}
-		return enableToggle.isVisible() == shouldEnable;
+		return enableToggle.isChecked() == shouldEnable;
 	}
 
 	public static boolean clickOnPublishPortalButton(Page page) {
@@ -302,6 +302,7 @@ public class CatlogAccessPageUtility {
 
 	public static String getToastMessage(Page page, String toastMessage) {
 		Locator toast = page.locator(TOASTER_MESSAGE_XPATH).first();
+		AICorePageUtils.waitFor(toast);
 		String actualToastMessage = toast.innerText().trim();
 		return actualToastMessage;
 	}
