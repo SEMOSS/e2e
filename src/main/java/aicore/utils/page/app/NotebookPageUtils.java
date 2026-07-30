@@ -235,6 +235,11 @@ public class NotebookPageUtils {
 		}
 
 		public static void duplicateNotebook(Page page, String notebookName) {
+			Locator notebookMenuButton = page
+					.locator(NOTEBOOK_MENU_BUTTON_XPATH.replace("{NOTEBOOK_NAME}", notebookName));
+			AICorePageUtils.waitFor(notebookMenuButton);
+			notebookMenuButton.click();
+
 			Locator notebookDuplicateButton = page
 					.locator(NOTEBOOK_MENU_DUPLICATE_BUTTON_XPATH.replace("{notebookName}", notebookName));
 			AICorePageUtils.waitFor(notebookDuplicateButton);
@@ -246,6 +251,11 @@ public class NotebookPageUtils {
 		}
 
 		public static void deleteNotebook(Page page, String notebookName) {
+			Locator notebookMenuButton = page
+					.locator(NOTEBOOK_MENU_BUTTON_XPATH.replace("{NOTEBOOK_NAME}", notebookName));
+			AICorePageUtils.waitFor(notebookMenuButton);
+			notebookMenuButton.click();
+
 			Locator notebookDeleteButton = page
 					.locator(NOTEBOOK_MENU_DELETE_BUTTON_XPATH.replace("{notebookName}", notebookName)).first();
 			AICorePageUtils.waitFor(notebookDeleteButton);
@@ -490,9 +500,6 @@ public class NotebookPageUtils {
 		}
 
 		public static void getPixelOutput(Page page, String output) {
-			// BUGFIX: previously called isVisible() and discarded the result, so a
-			// missing/incorrect Pixel output could never fail the test. Now mirrors
-			// getPythonOutput below and throws when the expected output isn't found.
 			Locator outputLocator = page.locator(OUTPUT_XPATH.replace("{Output}", output));
 			AICorePageUtils.waitFor(outputLocator);
 			if (!outputLocator.isVisible()) {
