@@ -142,13 +142,13 @@ public class AddModelPageTests extends AbstractPlaywrightTestBase {
 			EditMetadataPageUtils.enterDomainName(page, domainName);
 		}
 
-		String dataClassificationOptions = "IP, PHI, PII, Public";
+		String dataClassificationOptions = "IP, PHI, PII, PUBLIC";
 		String[] classificationOptions = dataClassificationOptions.split(", ");
 		for (String option : classificationOptions) {
 			EditMetadataPageUtils.selectDataClassificationOption(page, option);
 		}
 
-		String dataRestrictionOptions = "IP Allowed, PHI Allowed, FOUO Allowed";
+		String dataRestrictionOptions = "IP ALLOWED, PHI ALLOWED, FOUO ALLOWED";
 		String[] restrictionsOptions = dataRestrictionOptions.split(", ");
 		for (String option : restrictionsOptions) {
 			EditMetadataPageUtils.selectDataRestrictionsOption(page, option);

@@ -206,7 +206,14 @@ public class CatlogAccessPageUtility {
 			searchIcon.click();
 		}
 		// Get username from config file (same as addMember)
-		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
+		String usernameConfig = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME");
+		if (usernameConfig == null || usernameConfig.isBlank()) {
+			usernameConfig = ConfigUtils.getValue(role.toLowerCase() + "_username");
+		}
+		if (usernameConfig == null || usernameConfig.isBlank()) {
+			throw new IllegalArgumentException("Missing username config for role: " + role);
+		}
+		String username = usernameConfig.split("@")[0];
 		if (useDocker) {
 			username = username + " lastname";
 		}
