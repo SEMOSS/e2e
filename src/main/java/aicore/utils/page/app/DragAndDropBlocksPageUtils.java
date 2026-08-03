@@ -122,6 +122,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CREATED_APP_DISPLAY_DISCOVEABLE_SECTION_XPATH = "//div[contains(@data-testid,'appTileCard')]";
 	private static final String APP_SYSTEM_SECTION_DATATESTID = "appCatalogPage-systemApps-btn";
 	private static final String APP_DISPLAY_IN_SYSTEM_SECTION_DATATESTID = "appTileCard-{appName}-filler";
+	private static final String APP_BOOKMARK_FOR_APP_XPATH = "//div[contains(@data-testid,'appTileCard')][.//h3[contains(text(),'{appName}')]]//button[@aria-label='Add bookmark']";
+
 
 	// Bar Chart tool
 	private static final String BARCHART_ISVISIBLE_XPATH = "//div[@class='echarts-for-react ']";
@@ -162,7 +164,7 @@ public class DragAndDropBlocksPageUtils {
 	private static final String CHART_SHOW_TITLE_XPATH = "//span[@title='Show Title']//input";
 	private static final String RESIZING_HEIGHT_XPATH = "//p[normalize-space()='Height']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
 	private static final String RESIZING_WIDTH_XPATH = "//p[normalize-space()='Width']/ancestor::div[contains(@class,'base-setting-section')]//input[@type='text']";
-	private static final String BLOCK_SETTINGS_XPATH = "//div[contains(@class,'button--selected')]//div[text()='Block Settings']";
+	private static final String BLOCK_SETTINGS_XPATH = "//div[@class='flexlayout__border_button_content' and text()='Block Settings']/parent::div";
 	private static final String CONTAINER_SETTING_DATATESTID = "blockMenuCardContent-card-Container";
 	private static final String BLOCK_SECTION_XPATH = "//p[text()='{textName}'] | //div[text()='{textName}']";
 	private static final String DELETE_BLOCK_ON_PAGE_XPATH = "//button[@aria-label='Delete']";
@@ -191,6 +193,9 @@ public class DragAndDropBlocksPageUtils {
 		element.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		return element.isVisible();
 	}
+	
+	
+	
 
 	public static boolean verifyWelcomeTextboxIsVisible(Page page) {
 		boolean isWelcomeTextboxVisible = page.getByText(WELCOME_TEXT_BLOCK_TEXT).isVisible();
@@ -820,7 +825,7 @@ public class DragAndDropBlocksPageUtils {
 
 	// bookmarksection
 	public static void clickBookmarkIcon(Page page, String appName) {
-		Locator bookmarkIcon = page.locator(APP_BOOKMARK_XPATH).first();
+		Locator bookmarkIcon = page.locator(APP_BOOKMARK_FOR_APP_XPATH.replace("{appName}", appName)).first();
 		AICorePageUtils.waitFor(bookmarkIcon);
 		bookmarkIcon.scrollIntoViewIfNeeded();
 		bookmarkIcon.click();
