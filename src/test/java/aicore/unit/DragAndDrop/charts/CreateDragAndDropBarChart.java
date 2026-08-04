@@ -29,11 +29,12 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	private String BarStyleValues = "Bar Width= 13, Select Colour= blue";
 	private String ResizingValues = "Height=250, Width=350";
 	private String ChartTitleValues = "Show Title=true, Title Name=Bar Graph, Select Alignment=left, Text Size= 14, Select Font Weight=bold, Select Font Family=Calibri, Select Colour=black";
-	
+	private String appName;
+
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		String appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);
 		verifyWelcomePage(page);
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
@@ -91,6 +92,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	

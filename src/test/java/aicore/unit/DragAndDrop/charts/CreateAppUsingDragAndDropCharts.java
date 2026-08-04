@@ -41,6 +41,7 @@ public class CreateAppUsingDragAndDropCharts extends AbstractPlaywrightTestBase{
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	

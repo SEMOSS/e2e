@@ -11,6 +11,7 @@ import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -119,7 +120,8 @@ public class Appfilter extends AbstractPlaywrightTestBase{
 		verifyAppDisplayed(page, appName);
 	    logout(page);
 		loginNativeAdmin(page);
-		
+		CommonUtils.navigateAndDeleteApp(page, appName);
+
 	}
 	
 	
@@ -177,14 +179,15 @@ public class Appfilter extends AbstractPlaywrightTestBase{
 		
         
 		openAppLibrary(page);
-		TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
+		String appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);
 		openAppLibrary(page);
 		AppPageUtils.clickOnViewFilterButton(page, "List view");
 		verifyAppsInListView(page);
 		AppPageUtils.clickOnViewFilterButton(page, "Grid View");
 		verifyAppsInGridView(page);
-       
+		CommonUtils.navigateAndDeleteApp(page, appName);
+
 	}
 
 

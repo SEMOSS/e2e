@@ -12,6 +12,7 @@ import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -23,6 +24,7 @@ public class CreateAppEditorPermission extends AbstractPlaywrightTestBase{
 	
 	private String Editor = "Editor";
 	private String Read = "Read";
+	private String appName;
 
 
 	@BeforeEach
@@ -45,6 +47,7 @@ public class CreateAppEditorPermission extends AbstractPlaywrightTestBase{
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	

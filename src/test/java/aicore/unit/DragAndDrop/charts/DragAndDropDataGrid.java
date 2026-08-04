@@ -9,6 +9,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.DataBaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -17,6 +18,8 @@ import aicore.utils.page.app.NotebookPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
 public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 	
+	private String appName;
+
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
@@ -27,7 +30,7 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 			    "Database ZIP wasn't uploaded correctly.");
 		verifyCatalogTitle(page, "TestDatabase");
 		AddDatabasePageUtils.clickOnMetadataTab(page);
-		TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);
 		verifyWelcomePage(page);
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
@@ -69,6 +72,7 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	

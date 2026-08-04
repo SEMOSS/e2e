@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
@@ -13,20 +14,24 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class CreateAndValidateLayers extends AbstractPlaywrightTestBase {
 		
+	private String appName;
+
+	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);
 	}
 	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
 	private void verifyAppCreated(Page page) {
-	    String appName = CreateAppPopupUtils.userFetchAppName(page);
+	    appName = CreateAppPopupUtils.userFetchAppName(page);
 	    Assertions.assertFalse(appName.isEmpty(), "Fetched App Name is Empty");
 	}
 	
