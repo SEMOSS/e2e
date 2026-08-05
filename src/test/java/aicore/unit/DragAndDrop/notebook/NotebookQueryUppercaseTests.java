@@ -21,24 +21,23 @@ import aicore.utils.CatalogPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
+import aicore.utils.annotations.ResourceUploadLock;
+import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.NotebookPageUtils;
-
+import aicore.utils.page.app.TemplateCreationUtils;
+import aicore.utils.TestResources;
 
 public class NotebookQueryUppercaseTests extends AbstractPlaywrightTestBase {
 
-	private static final String APP_NAME = "Test app";
 	private static final String CATALOG_TYPE = "Database";
 	private static final String CATALOG_NAME = "TestDatabase";
 
-	private String timestamp = "";
+	private String appName = "";
 
 	@BeforeEach
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void setup(@PWPage Page page) {
-		timestamp = CommonUtils.getTimeStampName();
-
 		loginAdmin(page);
 
 		MainMenuUtils.openMainMenu(page);
@@ -46,30 +45,21 @@ public class NotebookQueryUppercaseTests extends AbstractPlaywrightTestBase {
 		AddFunctionPageUtils.deleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
-		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, "Database/TestDatabase.zip");
+		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, TestResources.TEST_DATABASE_ZIP);
 		Assertions.assertEquals("TestDatabase.zip", uploadedFileName, "file is not uploaded successfully");
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		boolean isTitleVisible = AddDatabasePageUtils.verifyDatabaseTitle(page, CATALOG_NAME);
-		Assertions.assertTrue(isTitleVisible, "Database title is not visible");
+		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, CATALOG_NAME),
+				"Database title is not visible");
 		CatalogPageUtils.clickOnMetadataTab(page);
 
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);
-		CreateAppPopupUtils.clickOnGetStartedButton(page, "Drag and Drop");
-		CreateAppPopupUtils.enterAppName(page, APP_NAME + timestamp);
-		CreateAppPopupUtils.clickOnCreateButton(page);
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
-		boolean isPage1Visible = DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
-		Assertions.assertTrue(isPage1Visible, "Page is not visible");
-		boolean isWelcomeTextboxVisible = DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page);
-		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
-		String actualWelcomeTextMessage = DragAndDropBlocksPageUtils.verifyWelcomeText(page);
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
+				"Welcome text box not visible");
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
-				actualWelcomeTextMessage, "Mismatch between the expected and actual message");
+				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		NotebookPageUtils.clickOnCreateNewNotebook(page);
@@ -83,14 +73,16 @@ public class NotebookQueryUppercaseTests extends AbstractPlaywrightTestBase {
 	}
 
 	@AfterEach
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void tearDown(@PWPage Page page) {
-		CommonUtils.navigateAndDeleteApp(page, APP_NAME + timestamp);
+		CommonUtils.navigateAndDeleteApp(page, appName);
 		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
 		logout(page);
 	}
+	
 
 	@Test
-	@DisplayName("Validate Uppercase function in Transformation")
+	@DisplayName("TC02_Validate Uppercase function in Transformation")
 	void testValidateUppercaseFunctionInTransformation(@PWPage Page page) {
 		NotebookPageUtils.writeQuery(page, "SELECT TASK_GROUP FROM DIABETES LIMIT 20");
 		NotebookPageUtils.clickOnRunCellButton(page);
@@ -99,7 +91,7 @@ public class NotebookQueryUppercaseTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Transformation");
 		NotebookPageUtils.selectTransformationOptionDropdown(page, "Uppercase");
-		aicore.utils.page.app.BlockSettingsUtils.selectFrame(page, frameID);
+		BlockSettingsUtils.selectFrame(page, frameID);
 		NotebookPageUtils.selectColumnForTransformation(page, "TASK_GROUP");
 		NotebookPageUtils.clickOnRunAllCellButton(page);
 
@@ -107,8 +99,7 @@ public class NotebookQueryUppercaseTests extends AbstractPlaywrightTestBase {
 		List<String> actualHeaderNames = NotebookPageUtils.getNotebookOutputTableHeader(page);
 		Assertions.assertEquals(expectedHeaderNames, actualHeaderNames, "Headers are not matching");
 
-		boolean isUppercase = NotebookPageUtils.isColumnDataInUppercase(page, "TASK_GROUP");
-		Assertions.assertTrue(isUppercase, "Column data is not in uppercase format for column: TASK_GROUP");
+		Assertions.assertTrue(NotebookPageUtils.isColumnDataInUppercase(page, "TASK_GROUP"),
+				"Column data is not in uppercase format for column: TASK_GROUP");
 	}
 }
-
