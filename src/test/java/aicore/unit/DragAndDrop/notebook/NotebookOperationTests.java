@@ -14,58 +14,43 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.NotebookPageUtils;
-
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class NotebookOperationTests extends AbstractPlaywrightTestBase {
 
-	private static final String APP_NAME = "Test app";
-	private String timestamp = "";
+	private String appName = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
-		timestamp = CommonUtils.getTimeStampName();
-
 		loginAdmin(page);
-
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);
-		CreateAppPopupUtils.clickOnGetStartedButton(page, "Drag and Drop");
-		CreateAppPopupUtils.enterAppName(page, APP_NAME + timestamp);
-		CreateAppPopupUtils.clickOnCreateButton(page);
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
-		CommonUtils.navigateAndDeleteApp(page, APP_NAME + timestamp);
+		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
 
-	
 	private void navigateToAppAndOpenEditor(Page page) {
 		HomePageUtils.navigateToHomePage(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.searchApp(page, APP_NAME, timestamp);
-		AppPageUtils.clickOnAppCard(page, APP_NAME, timestamp);
+		AppPageUtils.searchApp(page, appName, "");
+		AppPageUtils.clickOnAppCard(page, appName, "");
 		DragAndDropBlocksPageUtils.clickOnEditButton(page);
 
-		boolean isPage1Visible = DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
-		Assertions.assertTrue(isPage1Visible, "Page is not visible");
-		boolean isWelcomeTextboxVisible = DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page);
-		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
-		String actualWelcomeTextMessage = DragAndDropBlocksPageUtils.verifyWelcomeText(page);
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
+				"Welcome text box not visible");
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
-				actualWelcomeTextMessage, "Mismatch between the expected and actual message");
+				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 	}
 
 	@Test
-	@DisplayName("Verify creation and duplication of new Notebook")
+	@DisplayName("TC01_Verify creation and duplication of new Notebook")
 	void testCreationAndDuplicationOfNewNotebook(@PWPage Page page) {
 		navigateToAppAndOpenEditor(page);
 
@@ -80,7 +65,7 @@ public class NotebookOperationTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify deletion of new Notebook")
+	@DisplayName("TC02_Verify deletion of new Notebook")
 	void testDeletionOfNewNotebook(@PWPage Page page) {
 		navigateToAppAndOpenEditor(page);
 
@@ -94,7 +79,7 @@ public class NotebookOperationTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify Search functionality of new Notebook")
+	@DisplayName("TC03_Verify Search functionality of new Notebook")
 	void testSearchFunctionalityOfNewNotebook(@PWPage Page page) {
 		navigateToAppAndOpenEditor(page);
 
