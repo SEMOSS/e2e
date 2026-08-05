@@ -1,5 +1,7 @@
 package aicore.unit.DragAndDrop;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -19,47 +21,31 @@ import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.NotebookPageUtils;
-
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class BlocksTests extends AbstractPlaywrightTestBase {
 
-	private static final String APP_NAME = "Test app";
-
-	private String timestamp = "";
+	private String appName = "";
 	private String blockText = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
-		timestamp = CommonUtils.getTimeStampName();
-
 		loginAdmin(page);
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);
-		CreateAppPopupUtils.clickOnGetStartedButton(page, "Drag and Drop");
-		CreateAppPopupUtils.enterAppName(page, APP_NAME + timestamp);
-		CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");
-		CreateAppPopupUtils.enterTags(page, "Test1, Test2");
-		CreateAppPopupUtils.clickOnCreateButton(page);
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
-
-		boolean isPage1Visible = DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
-		Assertions.assertTrue(isPage1Visible, "Page is not visible");
-		boolean isWelcomeTextboxVisible = DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page);
-		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
-		String actualWelcomeTextMessage = DragAndDropBlocksPageUtils.verifyWelcomeText(page);
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
+				"Welcome text box not visible");
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
-				actualWelcomeTextMessage, "Mismatch between the expected and actual message");
+				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.searchApp(page, APP_NAME, timestamp);
-		AppPageUtils.clickOnAppCard(page, APP_NAME, timestamp);
+		AppPageUtils.searchApp(page, appName, "");
+		AppPageUtils.clickOnAppCard(page, appName, "");
+
 		DragAndDropBlocksPageUtils.clickOnEditButton(page);
 
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
@@ -68,12 +54,12 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
-		CommonUtils.navigateAndDeleteApp(page, APP_NAME + timestamp);
+		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
 
 	@Test
-	@DisplayName("Drag and Drop Heading 1 block")
+	@DisplayName("TC01_Drag and Drop Heading 1 block")
 	void testDragAndDropHeading1Block(@PWPage Page page) {
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, "Text (h1)");
 		DragAndDropBlocksPageUtils.blockDropPosition(page, "Text (h1)");
@@ -107,7 +93,7 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 	}
 
 	@ParameterizedTest(name = "Drag and Drop Text section {0} block")
-	@DisplayName("Drag and Drop Text section block - styling and destination")
+	@DisplayName("TC02_Drag and Drop Text section block - styling and destination")
 	void testDragAndDropTextSectionBlock(String blockName, String destination, String text, String styles,
 			String expectedStyles, String font, String hexColor, String textAlignment, @PWPage Page page) {
 
@@ -141,8 +127,8 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 
 		Locator textBlockLocator = DragAndDropBlocksPageUtils.textSectionDragAndDroppedBlockLocator(page, blockName,
 				blockText);
-		java.util.List<String> appliedTextStyles = java.util.Arrays.asList(expectedStyles.split(", "));
-		java.util.List<String> actualAppliedTextStyles = CommonUtils.getAppliedStyles(textBlockLocator);
+		List<String> appliedTextStyles = Arrays.asList(expectedStyles.split(", "));
+		List<String> actualAppliedTextStyles = CommonUtils.getAppliedStyles(textBlockLocator);
 		Assertions.assertEquals(appliedTextStyles, actualAppliedTextStyles,
 				"Mismatch between the expected and actual text styles");
 
@@ -167,7 +153,7 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Drag and Drop Text section Logs block")
+	@DisplayName("TC03_Drag and Drop Text section Logs block")
 	void testDragAndDropLogsBlock(@PWPage Page page) {
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		NotebookPageUtils.clickOnCreateNewNotebook(page);
