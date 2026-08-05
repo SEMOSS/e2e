@@ -383,13 +383,21 @@ public class NotebookPageUtils {
 	}
 
 	public static void selectDatabaseType(Page page, String databaseName) {
-		Locator selectDatabase = page.locator("//button//span[text()=" + databaseName + "]");
-		if (!selectDatabase.isVisible()) {
-			page.locator("//div[@class='flex flex-row items-center justify-between']//button[@role='combobox']")
-					.click();
-			page.getByText(databaseName).nth(1).click();
-		}
 
+	    Locator databaseDropdown = page.locator(
+	        "//span[normalize-space()='Database']/following-sibling::button[@role='combobox']"
+	    );
+
+	    Locator selectedDatabase = page.locator(
+	        "//span[normalize-space()='Database']" +
+	        "/following-sibling::button[@role='combobox']" +
+	        "[.//*[contains(normalize-space(),'" + databaseName + "')]]"
+	    );
+
+	    if (!selectedDatabase.isVisible()) {
+	        databaseDropdown.click();
+	        page.getByText(databaseName).click();
+	    }
 	}
 
 	public static void clickOnRunCellButton(Page page) {

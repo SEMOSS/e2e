@@ -1,12 +1,9 @@
 package aicore.unit.template;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.microsoft.playwright.Page;
-
 import aicore.pages.database.DataBaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
@@ -42,7 +39,7 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	
 	private void runNotebook(Page page) {
 	    NotebookPageUtils.clickOnNotebooksOption(page);
-	    NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);
+	    NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);	    
 	    NotebookPageUtils.selectDatabaseType(page, DATABASE_NAME);
 	    NotebookPageUtils.clickOnRunCellButtonDatabase(page);
 	    NotebookPageUtils.checkDatabaseOutput(page);
@@ -51,7 +48,6 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	private static final String TEMPLATE_NAME = "Delete Diabetes Record";
 	private static final String DATABASE_NAME = "TestDatabase";
 	private static final String QUERY_NAME = "on-page-load";
-	
 	
 	@Test
 	public void DeleteDiabetesRecordTemplate_test (@PWPage Page page) {
@@ -62,7 +58,6 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	}
 
 	
-
 	@Test
 	public void DeleteDiabetesRecordTemplateExist_test (@PWPage Page page) {
 		

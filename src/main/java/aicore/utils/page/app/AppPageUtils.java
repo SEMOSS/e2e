@@ -57,7 +57,7 @@ public class AppPageUtils {
 	public static void searchApp(Page page, String appName, String timestamp) {
 		page.getByLabel("Search apps").click();
 		if (timestamp != null && !timestamp.isEmpty()) {
-			page.getByLabel("Search apps").fill(appName + " " + timestamp);
+			page.getByLabel("Search apps").fill(appName + "" + timestamp);
 		} else {
 			page.getByLabel("Search apps").fill(appName);
 		}
