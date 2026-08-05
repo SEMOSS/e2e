@@ -138,7 +138,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify Unfilter Data in the app")
+	@DisplayName("TC01_Verify Unfilter Data in the app")
 	void testVerifyUnfilterDataInTheApp(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Unfilter Data");
 		NotebookPageUtils.deleteFirstCell(page);
@@ -158,7 +158,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify filter Data in the app")
+	@DisplayName("TC02_Verify filter Data in the app")
 	void testVerifyFilterDataInTheApp(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
@@ -173,7 +173,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify filter Data in the app with AND operator")
+	@DisplayName("TC03_Verify filter Data in the app with AND operator")
 	void testVerifyFilterDataWithAndOperator(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
@@ -187,7 +187,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify filter data with OR operator")
+	@DisplayName("TC04_Verify filter data with OR operator")
 	void testVerifyFilterDataWithOrOperator(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
@@ -206,7 +206,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify Nested Rule filter data with AND operator")
+	@DisplayName("TC05_Verify Nested Rule filter data with AND operator")
 	void testVerifyNestedRuleFilterDataWithAndOperator(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
@@ -222,7 +222,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify Nested Rule within Nested rule filter data")
+	@DisplayName("TC06_Verify Nested Rule within Nested rule filter data")
 	void testVerifyNestedRuleWithinNestedRuleFilterData(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
