@@ -9,6 +9,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.AppTemplatePageUtils;
@@ -18,12 +19,16 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class VisualizeCSVTemplate extends AbstractPlaywrightTestBase {
 	
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;	
+
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -35,12 +40,10 @@ public class VisualizeCSVTemplate extends AbstractPlaywrightTestBase {
 	@Test
     public void VisualizeCSVTemplate_test(@PWPage Page page){
 		
-		String appName = TemplateCreationUtils.createAppFromTemplate(page, "Visualize CSV");
-//		TemplateCreationUtils.createAppFromTemplate(page, "Visualize CSV");
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Visualize CSV");
 		AppTemplatePageUtils.verifyAppPageTitle(TITLE, page);
 		AppTemplatePageUtils.verifyAppPageSubTitle(SUBTITLE, page);
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
-		
         HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
         MainMenuUtils.clickOnOpenAppLibrary(page);
@@ -54,8 +57,6 @@ public class VisualizeCSVTemplate extends AbstractPlaywrightTestBase {
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
 		AppTemplatePageUtils.verifyAppPageTitle(TITLE_EDITED, page);
 	}
-	
-
 }
 
 

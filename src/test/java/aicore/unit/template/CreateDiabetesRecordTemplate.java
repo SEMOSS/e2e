@@ -11,6 +11,7 @@ import com.microsoft.playwright.Page;
 
 import aicore.pages.database.DataBaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
@@ -21,10 +22,12 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;
+	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-//	    DataBaseCreationUtils.createTestDatabase(page);
 		String uploaded = DataBaseCreationUtils.createTestDatabase(page);
 		Assertions.assertEquals(
 			    "TestDatabase.zip",
@@ -33,6 +36,7 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -58,8 +62,7 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	public void CreateDiabetesRecordTemplate_test (@PWPage Page page) {
 		
 
-		TemplateCreationUtils.createAppFromTemplate(page, "Create Diabetes Record");
-
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Create Diabetes Record");
 		verifyAppCreated(page);
 		BlockSettingsUtils.closeBlockSettings(page);
 		NotebookPageUtils.clickOnNotebooksOption(page);

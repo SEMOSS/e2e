@@ -26,7 +26,8 @@ import aicore.utils.page.model.ModelPageUtils;
 
 public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 	
-	
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;	
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -34,6 +35,7 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	

@@ -10,6 +10,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.DataBaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -18,8 +19,8 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	
-	
-
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;	
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -34,6 +35,7 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -61,8 +63,7 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	@Test
 	public void UpdateDiabetesRecordTemplate_test (@PWPage Page page) {
 		
-		
-		TemplateCreationUtils.createAppFromTemplate(page, "Update Diabetes Record");	
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Update Diabetes Record");	
 		verifyAppCreated(page);
 		openUpdateNotebook(page);
 	}
@@ -72,7 +73,7 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	public void UpdateDiabetesRecordTemplateExisting_test (@PWPage Page page) {
 		
 		String newQuery = "SELECT * from diabetes WHERE ID=16767 AND AGE=35 AND LOCATION='Pune' AND GENDER='Male'";
-		TemplateCreationUtils.createAppFromTemplate(page, "Update Diabetes Record");	
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Update Diabetes Record");	
 		verifyAppCreated(page);
 		AppTemplatePageUtils.clickPreviewButton(page);
 		NotebookPageUtils.selectValueFromDropdown(page, "4", "UNIQUE_ROW_ID");
@@ -86,17 +87,9 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		openUpdateNotebook(page);
 		NotebookPageUtils.modifySqlQuery(page, newQuery);
 		NotebookPageUtils.clickOnRunCellButtonDatabase(page);
-
-		
 		verifyQueryValue(page, "AGE", "35");
 		verifyQueryValue(page, "LOCATION", "Pune");
-		verifyQueryValue(page, "GENDER", "Male");
-		
-		
-		
-		
-		
-		
+		verifyQueryValue(page, "GENDER", "Male");	
 	}
 	
 	

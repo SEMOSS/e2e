@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 import aicore.framework.UrlUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -14,6 +15,9 @@ import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
 
 public class MultiPageTemplate extends AbstractPlaywrightTestBase {
+	
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;	
 	
 	String hyperlinkText = "Go to resources";
 	private static final String RESOURCES_URL = "e2e/SemossWeb/packages/client/dist/#/app/.*/view/resources";
@@ -26,6 +30,7 @@ public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -37,7 +42,7 @@ public class MultiPageTemplate extends AbstractPlaywrightTestBase {
 	@Test
     public void MultiPageTemplate_test(@PWPage Page page){
 		
-		TemplateCreationUtils.createAppFromTemplate(page, "Multi Page");
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Multi Page");
 		verifyAppCreated(page);		
 
 		String actualText = AppTemplatePageUtils.userSeePage1(page);

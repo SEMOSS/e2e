@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 
 import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -16,6 +17,8 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class VariableGuideTemplate extends AbstractPlaywrightTestBase {
 
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;	
 	
 	private static final String ARIAL = "Arial";
 	private static final String ARIAL_SIZE = "48";
@@ -38,6 +41,7 @@ public class VariableGuideTemplate extends AbstractPlaywrightTestBase {
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -72,7 +76,7 @@ public class VariableGuideTemplate extends AbstractPlaywrightTestBase {
 		
 		
 		
-		TemplateCreationUtils.createAppFromTemplate(page, "Variables Guide");	
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Variables Guide");	
 		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
 		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
 		
@@ -122,10 +126,5 @@ public class VariableGuideTemplate extends AbstractPlaywrightTestBase {
 	
 		
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
-
-		
 	}
-	
-	
-
 }

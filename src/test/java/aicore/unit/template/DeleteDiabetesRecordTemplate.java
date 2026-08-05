@@ -7,6 +7,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.DataBaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -15,6 +16,9 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	
+	
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;	
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -29,6 +33,7 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -61,7 +66,7 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	@Test
 	public void DeleteDiabetesRecordTemplateExist_test (@PWPage Page page) {
 		
-		TemplateCreationUtils.createAppFromTemplate(page, "Delete Diabetes Record");
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Delete Diabetes Record");
 		verifyAppCreated(page);		
 		AppTemplatePageUtils.clickPreviewButton(page);
 		NotebookPageUtils.selectValueFromDropdown(page, "4", "Select Unique ID");

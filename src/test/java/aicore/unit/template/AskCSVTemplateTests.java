@@ -22,6 +22,7 @@ public class AskCSVTemplateTests extends AbstractPlaywrightTestBase {
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -29,7 +30,7 @@ public class AskCSVTemplateTests extends AbstractPlaywrightTestBase {
 	public void askCSVtemplate_test (@PWPage Page page) {
 	
 	
-		TemplateCreationUtils.createAppFromTemplate(page, "Ask CSV");
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Ask CSV");
 		AppTemplatePageUtils.verifyPageWithTitle("CSV Query", page);
 		AppTemplatePageUtils.clickOnQuestionBlock(page, "title");
 		AppTemplatePageUtils.changeAppPageTitle("CSV Query", "CSV Query - Edited", page);

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -27,12 +28,17 @@ public class CustomeFrameToVisualizationTemplateTests extends AbstractPlaywright
 	private static final String BLOCK_NAME = "Create Pandas Frame Help Guide";
 	private static final String CHART_NAME = "Area Chart";
 	
+	
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;
+	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
