@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.PlaywrightException;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
@@ -53,16 +55,23 @@ public class AppPageUtils {
 		locator.click();
 	}
 
+	
 	@Step("Search app: {appName}")
 	public static void searchApp(Page page, String appName, String timestamp) {
-		page.getByLabel("Search apps").click();
+		Locator searchBox = page.getByLabel("Search apps");
+		searchBox.click();
+		searchBox.clear();
 		if (timestamp != null && !timestamp.isEmpty()) {
-			page.getByLabel("Search apps").fill(appName + " " + timestamp);
+			searchBox.fill(appName + " " + timestamp);
 		} else {
-			page.getByLabel("Search apps").fill(appName);
+			searchBox.fill(appName);
 		}
+		searchBox.press("Enter");
 		page.waitForTimeout(500);
 	}
+	
+	
+	
 
 	public static void selectAppCardsView(Page page, String view) {
 		page.locator(CARDS_VIEW_OPTIONS_XPATH.replace("{view}", view)).click();
@@ -87,16 +96,56 @@ public class AppPageUtils {
 		enterDomain.press("Enter");
 	}
 
+	private static final String[] DATA_CLASSIFICATION_ALL_OPTIONS = { "IP", "PHI", "PII", "Public" };
+	private static final String[] DATA_RESTRICTIONS_ALL_OPTIONS = { "IP Allowed", "PHI Allowed", "FOUO Allowed" };
+
+	/**
+	 * The Data Classification / Data Restrictions checkbox labels are rendered
+	 * fully UPPERCASE in the DOM (e.g. "PUBLIC", "IP ALLOWED"), regardless of the
+	 * case used in test data/feature files (e.g. "Public", "IP Allowed"). XPath
+	 * text() comparisons are case-sensitive, so the option text must be
+	 * normalized to uppercase before being used in a locator.
+	 */
+	private static String normalizeOptionText(String option) {
+		return option == null ? null : option.toUpperCase();
+	}
+
 	public static void selectDataClassificationOptioninAppSettings(Page page, String option) {
-		Locator selectCheckbox = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", option));
-		selectCheckbox.scrollIntoViewIfNeeded();
-		selectCheckbox.click();
+		Locator selectCheckbox = page
+				.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", normalizeOptionText(option)));
+		try {
+			selectCheckbox.scrollIntoViewIfNeeded();
+			selectCheckbox.click();
+		} catch (PlaywrightException e) {
+			logVisibleOptions(page, "Data Classification", DATA_CLASSIFICATION_ALL_OPTIONS);
+			throw new RuntimeException("Could not select Data Classification option '" + option
+					+ "' - see the logged 'currently visible options' above.", e);
+		}
 	}
 
 	public static void selectDataRestrictionsOptioninAppSettings(Page page, String option) {
-		Locator selectCheckbox = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", option));
-		selectCheckbox.scrollIntoViewIfNeeded();
-		selectCheckbox.click();
+		Locator selectCheckbox = page
+				.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", normalizeOptionText(option)));
+		try {
+			selectCheckbox.scrollIntoViewIfNeeded();
+			selectCheckbox.click();
+		} catch (PlaywrightException e) {
+			logVisibleOptions(page, "Data Restrictions", DATA_RESTRICTIONS_ALL_OPTIONS);
+			throw new RuntimeException("Could not select Data Restrictions option '" + option
+					+ "' - see the logged 'currently visible options' above.", e);
+		}
+	}
+
+	private static void logVisibleOptions(Page page, String groupName, String[] allOptions) {
+		StringBuilder visible = new StringBuilder();
+		StringBuilder missing = new StringBuilder();
+		for (String opt : allOptions) {
+			long count = page.locator(DATA_CLASSIFICATION_CHECKBOX_XPATH.replace("{option}", normalizeOptionText(opt)))
+					.count();
+			(count > 0 ? visible : missing).append(opt).append(", ");
+		}
+		logger.warn("{} - options currently visible in DOM: [{}] | options missing/not-rendered: [{}]", groupName,
+				visible, missing);
 	}
 
 	public static void clickOnSubmitButtoninAppSettings(Page page) {
@@ -235,7 +284,14 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnDiscoverableAppsButton(Page page) {
-		page.getByTestId("appCatalogPage-discoverable-btn").click();
+		// The App Library tabs (My Apps/Discoverable/Bookmarked) are only rendered
+		// once the initial app list/permissions calls complete, which can lag right
+		// after switching users. Wait for the page to settle before clicking to
+		// avoid a flaky 30s timeout on this locator.
+		page.waitForLoadState(LoadState.NETWORKIDLE);
+		Locator discoverableButton = page.getByTestId("appCatalogPage-discoverable-btn");
+		AICorePageUtils.waitFor(discoverableButton);
+		discoverableButton.click();
 	}
 
 	public static void clickOnFilterButton(Page page, String filterName) {
