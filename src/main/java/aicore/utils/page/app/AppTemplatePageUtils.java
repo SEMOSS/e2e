@@ -6,6 +6,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.Position;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
@@ -44,7 +45,8 @@ public class AppTemplatePageUtils {
 	private static final String AREA_CHART_SEE_ON_LANDING_PAGE_XPATH = "//div[@class='vega-embed']";
 	private static final String RESOURCE_TITLE_TEXT = "Resources";
 	private static final String ABOUT_TITLE_TEXT = "About";
-	private static final String PREVIEWBUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-eye')]";
+//	private static final String PREVIEWBUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-eye')]";
+	private static final String PREVIEWBUTTON_XPATH = "//button[.//*[name()='svg' and contains(concat(' ', normalize-space(@class), ' '), ' lucide-eye ')]]";
 
 	private static final String VARIABLE_GUIDE_BLOCKS_TITLE_XAPTH = "//h1[text()='{blockTitle}']";
 	private static final String FONT_STYLE_SIZE_BLOCK_XAPTH = "//div[@id='delete-duplicate-mask'][.//div[contains(@class,'flex items-center')]]";
@@ -56,6 +58,10 @@ public class AppTemplatePageUtils {
 	private static final String SAVE_BUTTON_XPATH = "//button//*[name()='svg'][contains(@class,'lucide-save')]";
 	private static final String PREVIEW_APP_CANCEL_BUTTON_XPATH = "//button[text()='Cancel']";
 
+	private static final String SELECT_UNIQUE_ID_DROPDOWN_BUTTON_XPATH = "//div[label[normalize-space()='Select Unique ID']]//button[@role='combobox']";
+	private static final String FETCH_DATA_BUTTON_XPATH = "//div[@data-block='page-1']//div[@data-block='button--1']//button[normalize-space(.)='Fetch Data']";
+	private static final String OVERLAY_XPATH = "//div[@data-slot='dialog-overlay' and @data-state='open' and @aria-hidden='true']";
+	
 	public static void verifyDescription(String description, Page page) {
 		Locator descriptionLocator = page.locator(DESCRIPTION_XPATH);
 		String actualDescription = descriptionLocator.textContent();
@@ -378,7 +384,8 @@ public class AppTemplatePageUtils {
 	}
 
 	public static void clickOnFetchDataButton(Page page) {
-		Locator fetchDataButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Fetch Data"));
+//		Locator fetchDataButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Fetch Data"));
+		Locator fetchDataButton = page.locator(FETCH_DATA_BUTTON_XPATH).nth(2);
 		AICorePageUtils.waitFor(fetchDataButton);
 		fetchDataButton.click();
 		page.waitForLoadState(LoadState.LOAD);
@@ -386,7 +393,7 @@ public class AppTemplatePageUtils {
 
 	public static void enterQueryForNLPTemplate(Page page, String query) {
 		Locator inputBox = page.locator(
-				"div[role='dialog'] div[data-block='input--1'] textarea");
+				"//label[normalize-space()='Enter user query']/following-sibling::div[1]//textarea").nth(1);
 	    AICorePageUtils.waitFor(inputBox);
 
 	    String textArea = inputBox.inputValue();
@@ -475,5 +482,23 @@ public class AppTemplatePageUtils {
 		}
 		page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).click();
 	}
+	
+	public static void clickSelectUniqueIDDropdownButton(Page page) {
+		
+//		Locator previewDialog = page.getByRole(AriaRole.DIALOG).filter(
+//			    new Locator.FilterOptions().setHas(page.getByRole(AriaRole.HEADING,
+//			        new Page.GetByRoleOptions().setName("Preview")))
+//			);
+//
+//			Locator dropdown = previewDialog.locator("div[data-block='page-1'] div[data-block='select--9490'] button[data-slot='select-trigger'][role='combobox']");
+//			dropdown.click();
+		
+		Locator dropdownButton = page.locator(SELECT_UNIQUE_ID_DROPDOWN_BUTTON_XPATH).nth(2);
+		dropdownButton.click();
+	}
 
+	public static void clickOutsideThePreviewPopup(Page page) {
+		Locator overlay = page.locator(OVERLAY_XPATH).nth(1);
+		overlay.click(new Locator.ClickOptions().setPosition(new Position(10, 10)));
+	}
 }
