@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
-import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.pages.model.settings.ModelAccessSettingsUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
@@ -19,173 +18,139 @@ import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
+import aicore.utils.page.app.TemplateCreationUtils;
 import aicore.utils.settings.JobPageUtils;
 
 public class CodeAppSettingsTests extends AbstractPlaywrightTestBase {
 
-		private String testAppName = "";
+	private String testAppName = "";
 
-		@BeforeEach
-		void setup(@PWPage Page page) {
-			String timestamp = CommonUtils.getTimeStampName();
-			testAppName = "Code app " + timestamp;
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		loginAdmin(page);
+		testAppName = TemplateCreationUtils.createCodeApp(page);
+	}
 
-			loginAdmin(page);
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, testAppName);
+		logout(page);
+	}
+	
+	
+	private void assertSectionVisible(Page page, String sectionName) {
+		Assertions.assertTrue(CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, sectionName),
+				sectionName + " section is not visible");
+	}
 
-			MainMenuUtils.openMainMenu(page);
-			MainMenuUtils.clickOnOpenAppLibrary(page);
-			AppPageUtils.clickOnCreateNewAppButton(page);
-			CreateAppPopupUtils.clickOnGetStartedButton(page, "Develop in code");
-			CreateAppPopupUtils.enterAppName(page, testAppName);
-			CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");
-			CreateAppPopupUtils.enterTags(page, "MCP");
-			CreateAppPopupUtils.clickOnCreateButton(page);
-			String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-			Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
-		}
+	private void assertToastMessage(Page page, String expectedToast) {
+		String actualToast = AddFunctionPageUtils.verifySuccessToastMessage(page, expectedToast);
+		Assertions.assertEquals(expectedToast, actualToast, "Toaster is not matching with expected");
+		AddFunctionPageUtils.closeToastMessage(page);
+	}
 
-		@AfterEach
-		void tearDown(@PWPage Page page) {
-			CommonUtils.navigateAndDeleteApp(page, testAppName);
-			logout(page);
-		}
+	private void addThenRemoveMember(Page page, String role) {
+		SettingsModelPageUtils.clickOnAddMembersButton(page);
+		SettingsModelPageUtils.addMember(page, role, GenericSetupUtils.useDocker());
+		CatlogAccessPageUtility.searchUser(page, role, GenericSetupUtils.useDocker());
+		SettingsModelPageUtils.deleteAddedMember(page, role);
+	}
 
-		
-		@Test
-		void testAccessControlTabValidateMemberOptionForCodeApp(@PWPage Page page) throws InterruptedException {
-			CatlogAccessPageUtility.clickOnSettings(page);
-			AddFunctionPageUtils.clickOnAccessControl(page);
+	private void assertToggleToastMatches(Page page, Runnable toggleAction, String expectedWord) {
+		toggleAction.run();
+		String message = CatlogAccessPageUtility.getToasterMessage(page);
+		Assertions.assertTrue(message.toLowerCase().matches("successfully made .* " + expectedWord),
+				"Expected pattern: 'Successfully made .* " + expectedWord + "', but got: " + message);
+	}
 
-			boolean isAccessSettingsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Access Settings");
-			Assertions.assertTrue(isAccessSettingsVisible, "Access Settings section is not visible");
+	@Test
+	void testAccessControlTabValidateMemberOptionForCodeApp(@PWPage Page page) {
+		CatlogAccessPageUtility.clickOnSettings(page);
+		AddFunctionPageUtils.clickOnAccessControl(page);
 
-			boolean isPendingRequestsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Pending Requests");
-			Assertions.assertTrue(isPendingRequestsVisible, "Pending Requests section is not visible");
+		assertSectionVisible(page, "Access Settings");
+		assertSectionVisible(page, "Pending Requests");
 
-			SettingsModelPageUtils.clickOnAddMembersButton(page);
-			SettingsModelPageUtils.addMember(page, "Editor", GenericSetupUtils.useDocker());
-			CatlogAccessPageUtility.searchUser(page, "Editor", GenericSetupUtils.useDocker());
-			SettingsModelPageUtils.deleteAddedMember(page, "Editor");
+		addThenRemoveMember(page, "Editor");
+		addThenRemoveMember(page, "Read");
+	}
 
-			SettingsModelPageUtils.clickOnAddMembersButton(page);
-			SettingsModelPageUtils.addMember(page, "Read", GenericSetupUtils.useDocker());
-			CatlogAccessPageUtility.searchUser(page, "Read", GenericSetupUtils.useDocker());
-			SettingsModelPageUtils.deleteAddedMember(page, "Read");
-		}
+	@Test
+	void testSettingsTabValidateAppsOptionForCodeApp(@PWPage Page page) {
+		CatlogAccessPageUtility.clickOnSettings(page);
+		CatlogAccessPageUtility.clickOnTab(page, "Settings");
 
-		
-		@Test
-		void testSettingsTabValidateAppsOptionForCodeApp(@PWPage Page page) throws Exception {
-			CatlogAccessPageUtility.clickOnSettings(page);
-			CatlogAccessPageUtility.clickOnTab(page, "Settings");
+		assertSectionVisible(page, "Portals");
+		Assertions.assertTrue(CatlogAccessPageUtility.isPortalToggleInExpectedState(page, "enable"),
+				"Failed to enable the Publish Portal toggle");
+		Assertions.assertTrue(CatlogAccessPageUtility.clickOnPublishPortalButton(page),
+				"Publish Portal button is not enabled");
+		assertToastMessage(page, "Successfully published");
 
-			boolean isPortalsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Portals");
-			Assertions.assertTrue(isPortalsVisible, "Portals section is not visible");
+		assertSectionVisible(page, "Reactors");
+		CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Compile Changes on This Instance");
+		assertToastMessage(page, "Successfully compiled");
 
-			boolean isPortalEnabled = CatlogAccessPageUtility.isPortalToggleInExpectedState(page, "enable");
-			Assertions.assertTrue(isPortalEnabled, "Failed to enable the Publish Portal toggle");
+		CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Deploy and Persist Changes");
+		assertToastMessage(page, "Successfully compiled and deployed");
 
-			boolean isPublishButtonEnabled = CatlogAccessPageUtility.clickOnPublishPortalButton(page);
-			Assertions.assertTrue(isPublishButtonEnabled, "Publish Portal button is not enabled");
+		assertSectionVisible(page, "Update Project");
+		String fileToUpload = "dummy-pdf.pdf";
+		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, fileToUpload);
+		Assertions.assertEquals(fileToUpload, uploadedFileName, "file is not uploaded successfully");
 
-			String expectedPublishToast = "Successfully published";
-			String actualPublishToast = AddFunctionPageUtils.verifySuccessToastMessage(page, expectedPublishToast);
-			Assertions.assertEquals(expectedPublishToast, actualPublishToast, "Toaster is not matching with expected");
+		CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Update");
+	}
+
+	@Test
+	void testAccessControlTabValidateGeneralOptionForCodeApp(@PWPage Page page) {
+		CatlogAccessPageUtility.clickOnSettings(page);
+		AddFunctionPageUtils.clickOnAccessControl(page);
+
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForPrivate(page), "public");
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForPrivate(page), "private");
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page),
+				"discoverable");
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page),
+				"undiscoverable");
+
+		Assertions.assertTrue(CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page, "Delete Project"),
+				"Delete Project section is not visible");
+
+		ModelAccessSettingsUtils.clickOnDeleteButton(page);
+		Assertions.assertTrue(SettingsModelPageUtils.isDeleteSuccessful(page),
+				"Admin user should be able to delete the catalog, but permission error appeared.");
+	}
+
+	@Test
+	void testMcpUsageTabSectionsAndCopyButtons(@PWPage Page page) {
+		CatlogAccessPageUtility.clickOnSettings(page);
+		JobPageUtils.clickOnTab(page, "MCP Usage");
+
+		assertSectionVisible(page, "Available Tools");
+
+		List<String> sections = List.of(
+				"VS Code (MCP Integration)",
+				"Claude Desktop (MCP Server Connection)",
+				"Claude with custom backend and MCP (Best for AI Tooling)",
+				"OpenAI Codex / CLI Tools (MCP Connection)",
+				"Terminal Command (npx mcp-remote)",
+				"cURL Command (Manual MCP JSON-RPC Request)",
+				"JavaScript (Node.js — fetch / axios)",
+				"Python (requests)");
+
+		String expectedToast = "Successfully copied to clipboard";
+		for (String section : sections) {
+			assertSectionVisible(page, section);
+
+			CatlogAccessPageUtility.clickOnCopyButtonForSection(page, section);
+			String actualToast = AddFunctionPageUtils.verifySuccessToastMessage(page, expectedToast);
+			Assertions.assertEquals(expectedToast, actualToast,
+					"Toast message mismatch for section: " + section);
 			AddFunctionPageUtils.closeToastMessage(page);
-
-			boolean isReactorsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Reactors");
-			Assertions.assertTrue(isReactorsVisible, "Reactors section is not visible");
-
-			CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Compile Changes on This Instance");
-			String expectedCompileToast = "Successfully compiled";
-			String actualCompileToast = AddFunctionPageUtils.verifySuccessToastMessage(page, expectedCompileToast);
-			Assertions.assertEquals(expectedCompileToast, actualCompileToast, "Toaster is not matching with expected");
-			AddFunctionPageUtils.closeToastMessage(page);
-
-			CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Deploy and Persist Changes");
-			String expectedDeployToast = "Successfully compiled and deployed";
-			String actualDeployToast = AddFunctionPageUtils.verifySuccessToastMessage(page, expectedDeployToast);
-			Assertions.assertEquals(expectedDeployToast, actualDeployToast, "Toaster is not matching with expected");
-			AddFunctionPageUtils.closeToastMessage(page);
-
-			boolean isUpdateProjectVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Update Project");
-			Assertions.assertTrue(isUpdateProjectVisible, "Update Project section is not visible");
-
-			String fileToUpload = "dummy-pdf.pdf";
-			String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, fileToUpload);
-			Assertions.assertEquals(fileToUpload, uploadedFileName, "file is not uploaded successfully");
-
-			CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Update");
-		}
-
-		
-		@Test
-		void testAccessControlTabValidateGeneralOptionForCodeApp(@PWPage Page page) {
-			CatlogAccessPageUtility.clickOnSettings(page);
-			AddFunctionPageUtils.clickOnAccessControl(page);
-
-			CatlogAccessPageUtility.setToggleStateForPrivate(page); // turn OFF Private
-			String publicToast = CatlogAccessPageUtility.getToasterMessage(page);
-			Assertions.assertTrue(publicToast.toLowerCase().matches("successfully made .* public"),
-					"Expected pattern: 'Successfully made .* public', but got: " + publicToast);
-
-			CatlogAccessPageUtility.setToggleStateForPrivate(page); // turn ON Private
-			String privateToast = CatlogAccessPageUtility.getToasterMessage(page);
-			Assertions.assertTrue(privateToast.toLowerCase().matches("successfully made .* private"),
-					"Expected pattern: 'Successfully made .* private', but got: " + privateToast);
-
-			CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page); // turn OFF Non Discoverable
-			String discoverableToast = CatlogAccessPageUtility.getToasterMessage(page);
-			Assertions.assertTrue(discoverableToast.toLowerCase().matches("successfully made .* discoverable"),
-					"Expected pattern: 'Successfully made .* discoverable', but got: " + discoverableToast);
-
-			CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page); // turn ON Non Discoverable
-			String undiscoverableToast = CatlogAccessPageUtility.getToasterMessage(page);
-			Assertions.assertTrue(undiscoverableToast.toLowerCase().matches("successfully made .* undiscoverable"),
-					"Expected pattern: 'Successfully made .* undiscoverable', but got: " + undiscoverableToast);
-
-			boolean isDeleteSectionVisible = CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page,
-					"Delete Project");
-			Assertions.assertTrue(isDeleteSectionVisible, "Delete Project section is not visible");
-
-			ModelAccessSettingsUtils.clickOnDeleteButton(page);
-			boolean isDeleteSuccessful = SettingsModelPageUtils.isDeleteSuccessful(page);
-			Assertions.assertTrue(isDeleteSuccessful,
-					"Admin user should be able to delete the catalog, but permission error appeared.");
-		}
-
-		
-		@Test
-		void testMcpUsageTabSectionsAndCopyButtons(@PWPage Page page) {
-			CatlogAccessPageUtility.clickOnSettings(page);
-			JobPageUtils.clickOnTab(page, "MCP Usage");
-
-			boolean isAvailableToolsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Available Tools");
-			Assertions.assertTrue(isAvailableToolsVisible, "Available Tools section is not visible");
-
-			List<String> sections = List.of(
-					"VS Code (MCP Integration)",
-					"Claude Desktop (MCP Server Connection)",
-					"Claude with custom backend and MCP (Best for AI Tooling)",
-					"OpenAI Codex / CLI Tools (MCP Connection)",
-					"Terminal Command (npx mcp-remote)",
-					"cURL Command (Manual MCP JSON-RPC Request)",
-					"JavaScript (Node.js — fetch / axios)",
-					"Python (requests)");
-
-			String expectedToast = "Successfully copied to clipboard";
-			for (String section : sections) {
-				boolean isSectionVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, section);
-				Assertions.assertTrue(isSectionVisible, section + " section is not visible");
-
-				CatlogAccessPageUtility.clickOnCopyButtonForSection(page, section);
-				String actualToast = AddFunctionPageUtils.verifySuccessToastMessage(page, expectedToast);
-				Assertions.assertEquals(expectedToast, actualToast,
-						"Toast message mismatch for section: " + section);
-				AddFunctionPageUtils.closeToastMessage(page);
-			}
 		}
 	}
+
+
+}
 

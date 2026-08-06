@@ -1,6 +1,5 @@
 package aicore.unit.DragAndDrop;
 
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,50 +11,34 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
+import aicore.pages.app.settings.AppAccessControlPageUtils;
 import aicore.pages.base.EditMetadataPageUtils;
-import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.pages.app.settings.AppAccessControlPageUtils;
 import aicore.utils.page.app.AppPageUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
-
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 
 	private static final String APP_NAME = "Test app";
 
-	private String timestamp = "";
+	private String appName = "";
 
-	
 	@BeforeEach
 	void setup(@PWPage Page page) {
-		timestamp = CommonUtils.getTimeStampName();
-
 		loginAdmin(page);
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
-		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);
-		CreateAppPopupUtils.clickOnGetStartedButton(page, "Drag and Drop");
-		CreateAppPopupUtils.enterAppName(page, APP_NAME + timestamp);
-		CreateAppPopupUtils.clickOnCreateButton(page);
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
-
-		boolean isPage1Visible = DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
-		Assertions.assertTrue(isPage1Visible, "Page is not visible");
-		boolean isWelcomeTextboxVisible = DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page);
-		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
-		String actualWelcomeTextMessage = DragAndDropBlocksPageUtils.verifyWelcomeText(page);
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
+				"Welcome text box not visible");
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
-				actualWelcomeTextMessage, "Mismatch between the expected and actual message");
+				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 
 		CatlogAccessPageUtility.clickOnSettings(page);
 		AppPageUtils.clickOnEditButtoninSettings(page);
@@ -74,22 +57,23 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 		for (String restriction : "IP Allowed, PHI Allowed, FOUO Allowed".split(", ")) {
 			AppPageUtils.selectDataRestrictionsOptioninAppSettings(page, restriction);
 		}
+
 		AppPageUtils.clickOnSubmitButtoninAppSettings(page);
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
-		CommonUtils.navigateAndDeleteApp(page, APP_NAME + timestamp);
+
+		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
 
-	
-	private void applyEachFilterAndValidateAppIsVisible(Page page, String appName, String timestamp) {
+	private void applyEachFilterAndValidateAppIsVisible(Page page, String appName) {
 		Map<String, String> filters = new LinkedHashMap<>();
 		filters.put("Tag", "embeddings, Test1");
 		filters.put("Domain", "SAP, AI");
-		filters.put("Data Classification", "IP, PHI, PII, Public");
-		filters.put("Data Restrictions", "IP Allowed, PHI Allowed, FOUO Allowed");
+		filters.put("Data Classification", "IP, PHI, PII, PUBLIC");
+		filters.put("Data Restrictions", "IP ALLOWED, PHI ALLOWED, FOUO ALLOWED");
 
 		for (Map.Entry<String, String> row : filters.entrySet()) {
 			String filterCategory = row.getKey();
@@ -97,9 +81,10 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 			for (String filterValue : filterValues) {
 				AppPageUtils.searchFilterValueOnAppPage(page, filterValue);
 				AppPageUtils.selectFilterValueOnAppPage(page, filterCategory, filterValue);
-				boolean isAppVisible = AppPageUtils.isAppDisplayedOnPage(page, appName, timestamp);
-				Assertions.assertTrue(isAppVisible,
+
+				Assertions.assertTrue(AppPageUtils.isAppDisplayedOnPage(page, appName, ""),
 						"App is not present in the list for ' " + filterValue + " ' filter value");
+
 				AppPageUtils.selectFilterValueOnAppPage(page, filterCategory, filterValue);
 			}
 		}
@@ -110,22 +95,29 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 	void testAppVisibleWhileApplyingFiltersInAppLibrary(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
-
-		applyEachFilterAndValidateAppIsVisible(page, APP_NAME, timestamp);
+		applyEachFilterAndValidateAppIsVisible(page, appName);
 	}
 
 	@Test
 	@DisplayName("Verify the discoverable app is visible while applying filters in the app library")
 	void testDiscoverableAppVisibleWhileApplyingFiltersInAppLibrary(@PWPage Page page) {
 		AddFunctionPageUtils.clickOnAccessControl(page);
-		AppAccessControlPageUtils.clickOnMakeDiscoverableButtoninSettings(page, APP_NAME + timestamp);
+		AppAccessControlPageUtils.clickOnMakeDiscoverableButtoninSettings(page, appName);
 		logout(page);
-		loginEditor(page);
 
-		MainMenuUtils.openMainMenu(page);
-		AppPageUtils.clickOnDiscoverableAppsButton(page);
+		try {
+			loginEditor(page);
+			MainMenuUtils.openMainMenu(page);
+			MainMenuUtils.clickOnOpenAppLibrary(page);
+			AppPageUtils.clickOnDiscoverableAppsButton(page);
 
-		applyEachFilterAndValidateAppIsVisible(page, APP_NAME, timestamp);
+			applyEachFilterAndValidateAppIsVisible(page, appName);
+		} finally {
+			// delete the app it created as ADMIN 
+			// Bug : reviewer steps 
+			logout(page);
+			loginAdmin(page);
+		}
 	}
 
 	@Test
@@ -133,11 +125,9 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 	void testBookmarkedAppVisibleWhileApplyingFiltersInAppLibrary(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.searchApp(page, APP_NAME, timestamp);
-		DragAndDropBlocksPageUtils.clickBookmarkIcon(page, APP_NAME);
+		AppPageUtils.searchApp(page, appName, "");
+		DragAndDropBlocksPageUtils.clickBookmarkIcon(page, appName);
 		DragAndDropBlocksPageUtils.clickOnBookmarkedAppTab(page);
-
-		applyEachFilterAndValidateAppIsVisible(page, APP_NAME, timestamp);
+		applyEachFilterAndValidateAppIsVisible(page, appName);
 	}
 }
-

@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
-import aicore.pages.home.HomePageUtils;
-import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.pages.model.settings.ModelAccessSettingsUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
@@ -22,159 +20,125 @@ import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
-
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 
-	private static final String APP_NAME = "Test app";
-
-	private String timestamp = "";
+	private String appName = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
-		timestamp = CommonUtils.getTimeStampName();
-
 		loginAdmin(page);
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
-		MainMenuUtils.openMainMenu(page);
-		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);
-		CreateAppPopupUtils.clickOnGetStartedButton(page, "Drag and Drop");
-		CreateAppPopupUtils.enterAppName(page, APP_NAME + timestamp);
-		CreateAppPopupUtils.clickOnCreateButton(page);
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
-
-		boolean isPage1Visible = DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
-		Assertions.assertTrue(isPage1Visible, "Page is not visible");
-		boolean isWelcomeTextboxVisible = DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page);
-		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
-		String actualWelcomeTextMessage = DragAndDropBlocksPageUtils.verifyWelcomeText(page);
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
+				"Welcome text box not visible");
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
-				actualWelcomeTextMessage, "Mismatch between the expected and actual message");
+				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
-		CommonUtils.navigateAndDeleteApp(page, APP_NAME + timestamp);
+		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
+	}
+	
+	private void assertSectionVisible(Page page, String sectionName) {
+		Assertions.assertTrue(CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, sectionName),
+				sectionName + " section is not visible");
+	}
+
+	private void assertToastMessage(Page page, String expectedToast) {
+		Assertions.assertEquals(expectedToast, CatlogAccessPageUtility.getToastMessage(page, expectedToast),
+				"Toaster is not matching with expected");
+	}
+
+	private void addThenRemoveMember(Page page, String role) {
+		SettingsModelPageUtils.clickOnAddMembersButton(page);
+		SettingsModelPageUtils.addMember(page, role, GenericSetupUtils.useDocker());
+		CatlogAccessPageUtility.searchUserBasedOnRole(page, role);
+		SettingsModelPageUtils.deleteAddedMember(page, role);
+	}
+
+	private void assertToggleToastMatches(Page page, Runnable toggleAction, String expectedWord) {
+		toggleAction.run();
+		String message = CatlogAccessPageUtility.getToasterMessage(page);
+		Assertions.assertTrue(message.toLowerCase().matches("successfully made .* " + expectedWord),
+				"Expected pattern: Successfully made .* " + expectedWord + ", but got: " + message);
 	}
 
 	@Test
-	@DisplayName("Setting page - Access Control Tab - validate the Member option for drag and drop app")
-	void testMemberOptionForDragAndDropApp(@PWPage Page page) throws InterruptedException {
+	@DisplayName("TC01_Setting page - Access Control Tab - validate the Member option for drag and drop app")
+	void testMemberOptionForDragAndDropApp(@PWPage Page page) {
 		CatlogAccessPageUtility.clickOnSettings(page);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 
-		boolean isAccessSettingsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page,
-				"Access Settings");
-		Assertions.assertTrue(isAccessSettingsVisible, "Access Settings section is not visible");
-		boolean isPendingRequestsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page,
-				"Pending Requests");
-		Assertions.assertTrue(isPendingRequestsVisible, "Pending Requests section is not visible");
+		assertSectionVisible(page, "Access Settings");
+		assertSectionVisible(page, "Pending Requests");
 
-		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		SettingsModelPageUtils.addMember(page, "Editor", GenericSetupUtils.useDocker());
-		CatlogAccessPageUtility.searchUserBasedOnRole(page, "Editor");
-		SettingsModelPageUtils.deleteAddedMember(page, "Editor");
-
-		SettingsModelPageUtils.clickOnAddMembersButton(page);
-		SettingsModelPageUtils.addMember(page, "Read", GenericSetupUtils.useDocker());
-		CatlogAccessPageUtility.searchUserBasedOnRole(page, "Read");
-		SettingsModelPageUtils.deleteAddedMember(page, "Read");
+		addThenRemoveMember(page, "Editor");
+		addThenRemoveMember(page, "Read");
 	}
+	
+	
 
 	@Test
-	@DisplayName("Settings page - Setting Tab validate the Apps option for drag and drop app")
+	@DisplayName("TC02_Settings page - Setting Tab validate the Apps option for drag and drop app")
 	void testAppsOptionForDragAndDropApp(@PWPage Page page) {
 		CatlogAccessPageUtility.clickOnSettings(page);
 		CatlogAccessPageUtility.clickOnTab(page, "Settings");
 
-		boolean isPortalsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Portals");
-		Assertions.assertTrue(isPortalsVisible, "Portals section is not visible");
+		assertSectionVisible(page, "Portals");
+		Assertions.assertTrue(CatlogAccessPageUtility.isPortalToggleInExpectedState(page, "enable"),
+				"Failed to enable the Publish Portal toggle");
+		Assertions.assertTrue(CatlogAccessPageUtility.clickOnPublishPortalButton(page),
+				"Publish Portal button is not enabled");
+		assertToastMessage(page, "Successfully published");
 
-		boolean isPortalEnabled = CatlogAccessPageUtility.isPortalToggleInExpectedState(page, "enable");
-		Assertions.assertTrue(isPortalEnabled, "Failed to enable the Publish Portal toggle");
-
-		boolean isPublishButtonEnabled = CatlogAccessPageUtility.clickOnPublishPortalButton(page);
-		Assertions.assertTrue(isPublishButtonEnabled, "Publish Portal button is not enabled");
-		String publishedToast = CatlogAccessPageUtility.getToastMessage(page, "Successfully published");
-		Assertions.assertEquals("Successfully published", publishedToast, "Toaster is not matching with expected");
-
-		boolean isReactorsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, "Reactors");
-		Assertions.assertTrue(isReactorsVisible, "Reactors section is not visible");
-
+		assertSectionVisible(page, "Reactors");
 		CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Compile Changes on This Instance");
-		String compiledToast = CatlogAccessPageUtility.getToastMessage(page, "Successfully compiled");
-		Assertions.assertEquals("Successfully compiled", compiledToast, "Toaster is not matching with expected");
+		assertToastMessage(page, "Successfully compiled");
 
 		CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Deploy and Persist Changes");
-		String deployedToast = CatlogAccessPageUtility.getToastMessage(page, "Successfully compiled and deployed");
-		Assertions.assertEquals("Successfully compiled and deployed", deployedToast,
-				"Toaster is not matching with expected");
+		assertToastMessage(page, "Successfully compiled and deployed");
 
-		boolean isUpdateProjectVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page,
-				"Update Project");
-		Assertions.assertTrue(isUpdateProjectVisible, "Update Project section is not visible");
-
+		assertSectionVisible(page, "Update Project");
 		CatalogCreationFromZipUtil.uploadFile(page, "dummy-pdf.pdf");
 		CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Update");
 	}
 
-	
 	@Test
-	@DisplayName("Setting page - Access Control Tab - validate the General option for drag and drop app")
+	@DisplayName("TC03_Setting page - Access Control Tab - validate the General option for drag and drop app")
 	void testGeneralOptionForDragAndDropApp(@PWPage Page page) {
 		CatlogAccessPageUtility.clickOnSettings(page);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 
-		CatlogAccessPageUtility.setToggleStateForPrivate(page);
-		String publicMessage = CatlogAccessPageUtility.getToasterMessage(page);
-		Assertions.assertTrue(publicMessage.toLowerCase().matches("successfully made .* public".toLowerCase()),
-				"Admin user - Expected pattern: Successfully made .* public, but got: " + publicMessage);
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForPrivate(page), "public");
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForPrivate(page), "private");
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page),
+				"discoverable");
+		assertToggleToastMatches(page, () -> CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page),
+				"undiscoverable");
 
-		CatlogAccessPageUtility.setToggleStateForPrivate(page);
-		String privateMessage = CatlogAccessPageUtility.getToasterMessage(page);
-		Assertions.assertTrue(privateMessage.toLowerCase().matches("successfully made .* private".toLowerCase()),
-				"Admin user - Expected pattern: Successfully made .* private, but got: " + privateMessage);
-
-		CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page);
-		String discoverableMessage = CatlogAccessPageUtility.getToasterMessage(page);
-		Assertions.assertTrue(
-				discoverableMessage.toLowerCase().matches("successfully made .* discoverable".toLowerCase()),
-				"Admin user - Expected pattern: Successfully made .* discoverable, but got: " + discoverableMessage);
-
-		CatlogAccessPageUtility.setToggleStateForNonDiscovrable(page);
-		String undiscoverableMessage = CatlogAccessPageUtility.getToasterMessage(page);
-		Assertions.assertTrue(
-				undiscoverableMessage.toLowerCase().matches("successfully made .* undiscoverable".toLowerCase()),
-				"Admin user - Expected pattern: Successfully made .* undiscoverable, but got: " + undiscoverableMessage);
-
-		boolean isDeleteProjectVisible = CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page,
-				"Delete Project");
-		Assertions.assertTrue(isDeleteProjectVisible, "Delete Project section is not visible on General setting page");
+		Assertions.assertTrue(CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page, "Delete Project"),
+				"Delete Project section is not visible on General setting page");
 
 		ModelAccessSettingsUtils.clickOnDeleteButton(page);
-		boolean isDeleteSuccessful = SettingsModelPageUtils.isDeleteSuccessful(page);
-		Assertions.assertTrue(isDeleteSuccessful,
+		Assertions.assertTrue(SettingsModelPageUtils.isDeleteSuccessful(page),
 				"Admin should be able to delete the catalog, but permission error appeared.");
 	}
 
 	@Test
-	@DisplayName("Verify the all section are display in MCP Tab along with their code and copy option for drag and drop app")
+	@DisplayName("TC04_Verify the all section are display in MCP Tab along with their code and copy option for drag and drop app")
 	void testMcpTabSectionsForDragAndDropApp(@PWPage Page page) {
 		CatlogAccessPageUtility.clickOnSettings(page);
 		CatlogAccessPageUtility.clickOnTab(page, "MCP Usage");
 
-		boolean isAvailableToolsVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page,
-				"Available Tools");
-		Assertions.assertTrue(isAvailableToolsVisible, "Available Tools section is not visible");
+		assertSectionVisible(page, "Available Tools");
 
 		String expectedToast = "Successfully copied to clipboard";
 		List<String> sectionNames = Arrays.asList(
@@ -188,8 +152,7 @@ public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 				"Python (requests)");
 
 		for (String section : sectionNames) {
-			boolean isSectionVisible = CatlogAccessPageUtility.userCanSeeSectionUnderSetting(page, section);
-			Assertions.assertTrue(isSectionVisible, section + " section is not visible");
+			assertSectionVisible(page, section);
 			CatlogAccessPageUtility.clickOnCopyButtonForSection(page, section);
 			String actualMessage = AddFunctionPageUtils.verifySuccessToastMessage(page, expectedToast);
 			Assertions.assertEquals(expectedToast, actualMessage, "Toast message mismatch for section: " + section
@@ -197,4 +160,6 @@ public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 			AddFunctionPageUtils.closeToastMessage(page);
 		}
 	}
+
+
 }

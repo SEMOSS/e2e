@@ -8,73 +8,52 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
-import aicore.pages.home.HomePageUtils;
-import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
-import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
-
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class DragAndDropCommitTests extends AbstractPlaywrightTestBase {
 
-	private static final String APP_NAME = "Test app";
-
-	private String timestamp = "";
+	private String appName = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
-		timestamp = CommonUtils.getTimeStampName();
-
 		loginAdmin(page);
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
-		MainMenuUtils.openMainMenu(page);
-		HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);
-		CreateAppPopupUtils.clickOnGetStartedButton(page, "Drag and Drop");
-		CreateAppPopupUtils.enterAppName(page, APP_NAME + timestamp);
-		CreateAppPopupUtils.clickOnCreateButton(page);
-		String fetchName = CreateAppPopupUtils.userFetchAppName(page);
-		Assertions.assertFalse(fetchName.isEmpty(), "Fetched App Name is Empty");
-
-		boolean isPage1Visible = DragAndDropBlocksPageUtils.verifyPage1IsVisible(page);
-		Assertions.assertTrue(isPage1Visible, "Page is not visible");
-		boolean isWelcomeTextboxVisible = DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page);
-		Assertions.assertTrue(isWelcomeTextboxVisible, "Welcome text box not visible");
-		String actualWelcomeTextMessage = DragAndDropBlocksPageUtils.verifyWelcomeText(page);
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
+		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
+				"Welcome text box not visible");
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
-				actualWelcomeTextMessage, "Mismatch between the expected and actual message");
+				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
-		CommonUtils.navigateAndDeleteApp(page, APP_NAME + timestamp);
+		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
 
 	@Test
-	@DisplayName("Setting page - Commit Tab - validate commit tab functionality")
+	@DisplayName("TC01_Setting page - Commit Tab - validate commit tab functionality")
 	void testCommitTabFunctionality(@PWPage Page page) {
 		CatlogAccessPageUtility.clickOnSettings(page);
 
-		boolean canSeeCommitsTab = CatlogAccessPageUtility.canSeeCommitsTab(page);
-		Assertions.assertTrue(canSeeCommitsTab, "Commits tab is not visible");
+		Assertions.assertTrue(CatlogAccessPageUtility.canSeeCommitsTab(page), "Commits tab is not visible");
 
 		CatlogAccessPageUtility.clickOnCommitsTab(page);
 
-		boolean isTitleVisible = CatlogAccessPageUtility.isCommitHistoryTitleVisible(page, "Commit History");
-		Assertions.assertTrue(isTitleVisible, "Expected title 'Commit History' is not visible");
+		Assertions.assertTrue(CatlogAccessPageUtility.isCommitHistoryTitleVisible(page, "Commit History"),
+				"Expected title 'Commit History' is not visible");
 
-		boolean isInitialCommitMessageVisible = CatlogAccessPageUtility.getCommitMessage(page,
-				"Initial creation of project");
-		Assertions.assertTrue(isInitialCommitMessageVisible,
+		Assertions.assertTrue(
+				CatlogAccessPageUtility.getCommitMessage(page, "Initial creation of project"),
 				"Expected commit message 'Initial creation of project' is not visible in Commits section");
 
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
@@ -88,8 +67,7 @@ public class DragAndDropCommitTests extends AbstractPlaywrightTestBase {
 		DragAndDropBlocksPageUtils.selectPage(page, "AppSettings");
 		CatlogAccessPageUtility.clickOnCommitsTab(page);
 
-		boolean isCommitedOnMessageVisible = CatlogAccessPageUtility.getCommitMessage(page, "Commited on");
-		Assertions.assertTrue(isCommitedOnMessageVisible,
+		Assertions.assertTrue(CatlogAccessPageUtility.getCommitMessage(page, "Commited on"),
 				"Expected commit message 'Commited on' is not visible in Commits section");
 	}
 }
