@@ -16,7 +16,9 @@ public class TemplateCreationUtils {
         HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
         MainMenuUtils.clickOnOpenAppLibrary(page);
-
+        // duplicating main menu utils method calls to prevent occasional instance of getting stuck on "App Clone" page
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenAppLibrary(page);
         AppPageUtils.clickOnCreateNewAppButton(page);
 
         AppTemplatePageUtils.selectTemplateFromList(templateName, page);
