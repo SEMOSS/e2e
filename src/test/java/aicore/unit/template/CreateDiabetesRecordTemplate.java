@@ -9,9 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
-import aicore.pages.database.DataBaseCreationUtils;
+import aicore.pages.database.DatabaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
@@ -22,21 +23,30 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	
-	String timestamp = CommonUtils.getTimeStampName();
-	String appName = "Test app " + timestamp;
+	String appName = "Default Name Test App";
+	
+	private static final String TEMPLATE_NAME = "Create Diabetes Record";
+	private static final String FILE_NAME = "TestDatabase.zip";
+	private static final String DATABASE_NAME = "TestDatabase";
+	private static final String QUERY_NAME = "insert-diabetes-record";
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		String uploaded = DataBaseCreationUtils.createTestDatabase(page);
+		String uploaded = DatabaseCreationUtils.createTestDatabase(page);
 		Assertions.assertEquals(
-			    "TestDatabase.zip",
+			    FILE_NAME,
 			    uploaded,
 			    "Database ZIP wasn't uploaded correctly.");
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteApp(page, appName);
+		CommonUtils.navigateAndDeleteCatalog(
+		        page,
+		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+		        DATABASE_NAME
+		    );
 	    logout(page);
 	}
 	
@@ -48,8 +58,9 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	}
 	
 	private void verifyAppCreated(Page page) {
-	    String appName = CreateAppPopupUtils.userFetchAppName(page);
-	    Assertions.assertFalse(appName.isEmpty(), "Fetched App Name is Empty");
+	    String name = CreateAppPopupUtils.userFetchAppName(page);
+	    Assertions.assertFalse(name.isEmpty(), "Fetched App Name is Empty");
+	    Assertions.assertEquals(appName, name);
 	}
 	
 	private void verifyQueryValue(Page page, String column, String value) {
@@ -61,13 +72,13 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	@Test
 	public void CreateDiabetesRecordTemplate_test (@PWPage Page page) {
 		
+		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
 
-		appName = TemplateCreationUtils.createAppFromTemplate(page, "Create Diabetes Record");
 		verifyAppCreated(page);
 		BlockSettingsUtils.closeBlockSettings(page);
 		NotebookPageUtils.clickOnNotebooksOption(page);
-		NotebookPageUtils.clickOnQueryName(page, "insert-diabetes-record");
-		NotebookPageUtils.selectDatabaseType(page, "TestDatabase");
+		NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);
+		NotebookPageUtils.selectDatabaseFromDropdown(page, DATABASE_NAME);
 		NotebookPageUtils.clickOnRunCellButton(page);
 		verifyHeaders(
 		        page,
@@ -93,7 +104,7 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	@Test
 	public void ValidateupdatedDiabetesRecord_test (@PWPage Page page) {
 		
-		TemplateCreationUtils.createAppFromTemplate(page, "Create Diabetes Record");
+		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
 
 		verifyAppCreated(page);
 		AppTemplatePageUtils.clickPreviewButton(page);
@@ -113,7 +124,7 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	public void CreateDiabetesRecordTemplateQueryValidation_test (@PWPage Page page) {
 		String query= "SELECT * from diabetes WHERE ID=16767 AND AGE=35 AND LOCATION='Pune' AND GENDER='Male'";
 		
-		TemplateCreationUtils.createAppFromTemplate(page, "Create Diabetes Record");
+		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
 
 		verifyAppCreated(page);
 		AppTemplatePageUtils.clickPreviewButton(page);
@@ -125,8 +136,8 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.checkSuccessMessage(page, "true");
 		AppTemplatePageUtils.closePreviewWindow(page);
 		NotebookPageUtils.clickOnNotebooksOption(page);
-		NotebookPageUtils.clickOnQueryName(page, "insert-diabetes-record");
-		NotebookPageUtils.selectDatabaseType(page, "TestDatabase");
+		NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);
+		NotebookPageUtils.selectDatabaseType(page, DATABASE_NAME);
 		NotebookPageUtils.clickOnRunCellButtonDatabase(page);
 		NotebookPageUtils.checkDatabaseOutput(page);
 		NotebookPageUtils.modifySqlQuery(page, query);
