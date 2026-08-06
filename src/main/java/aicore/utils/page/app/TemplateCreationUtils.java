@@ -46,6 +46,25 @@ public class TemplateCreationUtils {
         return appName;
     }
 
+    public static String createCodeApp(Page page) {
+
+        String appName = "Code app " + CommonUtils.getTimeStampName();
+
+        HomePageUtils.navigateToHomePage(page);
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenAppLibrary(page);
+
+        AppPageUtils.clickOnCreateNewAppButton(page);
+        CreateAppPopupUtils.clickOnGetStartedButton(page, "Develop in code");
+
+        CreateAppPopupUtils.enterAppName(page, appName);
+        CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");
+        CreateAppPopupUtils.enterTags(page, "MCP");
+        CreateAppPopupUtils.clickOnCreateButton(page);
+
+        return appName;
+    }
+
     
     public static void createMultipleDragAndDropApps(
             Page page,
