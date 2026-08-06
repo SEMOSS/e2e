@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
-import aicore.pages.database.DataBaseCreationUtils;
+import aicore.pages.database.DatabaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
@@ -24,8 +24,8 @@ public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-	    DataBaseCreationUtils.createTestDatabase(page);
-		String uploaded = DataBaseCreationUtils.createTestDatabase(page);
+	    DatabaseCreationUtils.createTestDatabase(page);
+		String uploaded = DatabaseCreationUtils.createTestDatabase(page);
 		Assertions.assertEquals(
 			    "TestDatabase.zip",
 			    uploaded,
