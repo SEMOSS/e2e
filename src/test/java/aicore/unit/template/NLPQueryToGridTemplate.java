@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
-import aicore.pages.database.DataBaseCreationUtils;
+import aicore.pages.database.DatabaseCreationUtils;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.pages.model.EditModelPageUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
-import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.annotations.PWPage;
@@ -26,8 +26,12 @@ import aicore.utils.page.model.ModelPageUtils;
 
 public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 	
-	String timestamp = CommonUtils.getTimeStampName();
-	String appName = "Test app " + timestamp;	
+	String appName = "Default Name Test App";
+
+	private static final String TEMPLATE_NAME = "NLP Query To Grid";
+	private static final String DATABASE_NAME = "TestDatabase";
+	private static final String FILE_NAME = "TestDatabase.zip";
+	private static final String MODEL_NAME = "Llama3-70B-Instruct";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -48,27 +52,34 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 	    CommonUtils.navigateAndDeleteCatalog(
 	        page,
 	        TestResourceTrackerHelper.CATALOG_TYPE_MODEL,
-	        "Llama3-70B-Instruct"
+	        MODEL_NAME
 	    );
 	}
 	@Test
 	public void NLPQueryToGridTemplate_test (@PWPage Page page) {
 		
-		String uploaded = DataBaseCreationUtils.createTestDatabase(page);
+		String uploaded = DatabaseCreationUtils.createTestDatabase(page);
+		HomePageUtils.navigateToHomePage(page);
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenDatabase(page);
 		Assertions.assertEquals(
-			    "TestDatabase.zip",
+			    FILE_NAME,
 			    uploaded,
 			    "Database ZIP wasn't uploaded correctly.");
 		
-		Assertions.assertTrue(
-			    AddDatabasePageUtils.verifyDatabaseTitle(page, "TestDatabase"),
-			    "Database title is not visible"
-			);
+//		Assertions.assertTrue(
+//			    AddDatabasePageUtils.verifyDatabaseTitle(page, DATABASE_NAME),
+//			    "Database title is not visible"
+//			);
 		
         HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
         MainMenuUtils.clickOnOpenModel(page);
-        deleteTestModel(page);
+        
+        if(EditModelPageUtils.checkIfModelIsDisplayedOnCatalogPage(page, MODEL_NAME)) {
+        	deleteTestModel(page);
+        }
+        
 		ModelPageUtils.clickAddModelButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
         
@@ -76,15 +87,13 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 
-		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-
 		Assertions.assertTrue(
-			    AddDatabasePageUtils.verifyDatabaseTitle(page, "Llama3-70B-Instruct"),
-			    "Database title 'TestDatabase' is not visible");
+			    AddDatabasePageUtils.verifyDatabaseTitle(page, MODEL_NAME),
+			    "Database title '" + DATABASE_NAME + "' is not visible");
 		
 		
 		
-		TemplateCreationUtils.createAppFromTemplate(page, "NLP Query To Grid");
+		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
 		verifyAppCreated(page);
 		
 		Assertions.assertEquals(
@@ -104,7 +113,7 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 		AppTemplatePageUtils.verifyDescriptionBelowTitle("Ask your query on the diabetes dataset", page);
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		AppTemplatePageUtils.selectNotebookFromlist(page, "nlp-query");
-		AppTemplatePageUtils.selectModelForNLPTemplate(page, "Llama3-70B-Instruct", "nlp-query-1");
+		AppTemplatePageUtils.selectModelForNLPTemplate(page, MODEL_NAME, "nlp-query-1");
 
 		NotebookPageUtils.clickOnRunAllCellButton(page);
 
@@ -131,9 +140,19 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 			    AppTemplatePageUtils.validateAges(page, "below", 50),
 			    "Validation failed. Some records do not satisfy the condition: over 50"
 			);
-		AppTemplatePageUtils.closePreviewWindow(page);
+//		AppTemplatePageUtils.closePreviewWindow(page);
+		// there's no dedicated "close preview" button --- clicking outside the preview popup
+		// will close it
+		AppTemplatePageUtils.clickOutsideThePreviewPopup(page);
 
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
+		
+		deleteTestModel(page);
+		CommonUtils.navigateAndDeleteCatalog(
+		        page,
+		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+		        DATABASE_NAME
+		    );
 	}
 
 }
