@@ -6,12 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.microsoft.playwright.Page;
-
-import aicore.pages.database.DatabaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
@@ -26,18 +24,19 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	String appName = "Default Name Test App";
 	
 	private static final String TEMPLATE_NAME = "Create Diabetes Record";
-	private static final String FILE_NAME = "TestDatabase.zip";
 	private static final String DATABASE_NAME = "TestDatabase";
 	private static final String QUERY_NAME = "insert-diabetes-record";
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		String uploaded = DatabaseCreationUtils.createTestDatabase(page);
-		Assertions.assertEquals(
-			    FILE_NAME,
-			    uploaded,
-			    "Database ZIP wasn't uploaded correctly.");
+		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		        page,
+		        "TestDatabase",
+		        "Database/TestDatabase.zip");
+
+		Assertions.assertNotNull(databaseId);
+		Assertions.assertFalse(databaseId.isBlank());
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {

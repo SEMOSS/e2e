@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
 
-import aicore.pages.database.DatabaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;

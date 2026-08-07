@@ -4,10 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.microsoft.playwright.Page;
-
-import aicore.pages.database.DatabaseCreationUtils;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.pages.model.EditModelPageUtils;
@@ -31,7 +28,6 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 
 	private static final String TEMPLATE_NAME = "NLP Query To Grid";
 	private static final String DATABASE_NAME = "TestDatabase";
-	private static final String FILE_NAME = "TestDatabase.zip";
 	private static final String MODEL_NAME = "Llama3-70B-Instruct";
 
 	@BeforeEach
@@ -70,11 +66,6 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
         MainMenuUtils.openMainMenu(page);
         MainMenuUtils.clickOnOpenDatabase(page);
 
-		
-//		Assertions.assertTrue(
-//			    AddDatabasePageUtils.verifyDatabaseTitle(page, DATABASE_NAME),
-//			    "Database title is not visible"
-//			);
 		
         HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
