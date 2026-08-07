@@ -15,6 +15,7 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
@@ -58,14 +59,17 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 	@Test
 	public void NLPQueryToGridTemplate_test (@PWPage Page page) {
 		
-		String uploaded = DatabaseCreationUtils.createTestDatabase(page);
+		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		        page,
+		        "TestDatabase",
+		        "Database/TestDatabase.zip");
+
+		Assertions.assertNotNull(databaseId);
+		Assertions.assertFalse(databaseId.isBlank());		
 		HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
         MainMenuUtils.clickOnOpenDatabase(page);
-		Assertions.assertEquals(
-			    FILE_NAME,
-			    uploaded,
-			    "Database ZIP wasn't uploaded correctly.");
+
 		
 //		Assertions.assertTrue(
 //			    AddDatabasePageUtils.verifyDatabaseTitle(page, DATABASE_NAME),

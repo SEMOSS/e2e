@@ -10,6 +10,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.DatabaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -25,11 +26,13 @@ public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
 	    DatabaseCreationUtils.createTestDatabase(page);
-		String uploaded = DatabaseCreationUtils.createTestDatabase(page);
-		Assertions.assertEquals(
-			    "TestDatabase.zip",
-			    uploaded,
-			    "Database ZIP wasn't uploaded correctly.");
+		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		        page,
+		        "TestDatabase",
+		        "Database/TestDatabase.zip");
+
+		Assertions.assertNotNull(databaseId);
+		Assertions.assertFalse(databaseId.isBlank());
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
