@@ -30,7 +30,7 @@ public class CreateAppEditorPermission extends AbstractPlaywrightTestBase{
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		String appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);
 		verifyWelcomePage(page);
 		CatlogAccessPageUtility.clickOnSettings(page);

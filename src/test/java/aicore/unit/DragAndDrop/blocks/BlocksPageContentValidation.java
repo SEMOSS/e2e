@@ -5,15 +5,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
-import aicore.pages.home.HomePageUtils;
-import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.VectorSettingPageUtils;
 import aicore.utils.annotations.PWPage;
-import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
+import aicore.utils.page.app.TemplateCreationUtils;
 
 public class BlocksPageContentValidation extends AbstractPlaywrightTestBase{
 	
@@ -23,6 +21,7 @@ public class BlocksPageContentValidation extends AbstractPlaywrightTestBase{
 	}	
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -72,21 +71,13 @@ public class BlocksPageContentValidation extends AbstractPlaywrightTestBase{
 	    }
 	}
 	
-	private final String appName =
+	private String appName =
 	        "Test app " + CommonUtils.getTimeStampName();
 	
 	@Test
     public void BlocksPageContentValidation_test(@PWPage Page page) {
 		
-        HomePageUtils.navigateToHomePage(page);
-		MainMenuUtils.openMainMenu(page);	
-        MainMenuUtils.clickOnOpenAppLibrary(page);
-		AppPageUtils.clickOnCreateNewAppButton(page);
-		CreateAppPopupUtils.clickOnGetStartedButton(page, "Drag and Drop");
-		CreateAppPopupUtils.enterAppName(page, appName);
-		CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");
-		CreateAppPopupUtils.enterTags(page, "Test1, Test2");
-		CreateAppPopupUtils.clickOnCreateButton(page);
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);	
 	    verifyWelcomePage(page);
 	    

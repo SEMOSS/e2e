@@ -142,7 +142,6 @@ public class CreateAppReadUserPermission extends AbstractPlaywrightTestBase {
 		verifyDeleteCatalogOptionNotVisible(page, "Read");
 	    logout(page);
 	    loginAuthor(page);
-		
 	}
 
 	

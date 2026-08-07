@@ -23,12 +23,18 @@ public class NotebookPageUtils {
 		private static final String CODE_ENTER_TEXTAREA = "//div[@class='view-lines monaco-mouse-cursor-text']";
 		private static final String QUERY_CODE_RUN_OUTPUT_XPATH = "//pre[text()='{codeOutput}']";
 		private static final String IMPORT_DATA_OPTIONS_XPATH = "//div[text()='{optionName}']";
-		private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//button//span[text()='Select Database']";
-		private static final String SELECT_ALL_COLUMNS_XPATH = "//span[text()='Fields']/ancestor::tr//button";
+		
+		
+		private static final String SELECT_DATABASE_DROPDOWN_XPATH = "//button[@role='combobox']";
+		private static final String SELECT_ALL_COLUMNS_XPATH = "//table[contains(@class,'caption-bottom')]//thead//button[@role='checkbox']";
+		
+		
 		private static final String EDIT_IMPORTED_DATA_CELL_BUTTON_XPATH = "//button[text()='Edit']";
 		private static final String UPDATE_CELL_BUTTON_XPATH = "//button[@type='submit']";
-		private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class, 'caption-bottom')]//tbody//tr[position()>1]//td[2]";
-		private static final String IMPORT_BUTTON_XPATH = "//button[text()='Import']";
+
+		private static final String LIST_OF_COLUMN_NAMES_XPATH = "//table[contains(@class,'caption-bottom')]//tbody//tr//td[1]//span";
+		
+		private static final String IMPORT_BUTTON_XPATH = "//button[@type='submit' and normalize-space()='Import']";
 		private static final String FRAME_CSS = "input[value*='FRAME_']";
 		private static final String DELETE_CELL_DATA_XAPTH = "//button[@title='Delete cell']";
 		private static final String OUTPUT_TABLE = "//table";
@@ -333,7 +339,7 @@ public class NotebookPageUtils {
 		}
 
 		public static void selectDatabaseFromDropdown(Page page, String databaseName) {
-			Locator selectDatabaseDropdown = page.locator(SELECT_DATABASE_DROPDOWN_XPATH);
+			Locator selectDatabaseDropdown = page.locator(SELECT_DATABASE_DROPDOWN_XPATH).last();
 			AICorePageUtils.waitFor(selectDatabaseDropdown);
 			selectDatabaseDropdown.click();
 			page.waitForTimeout(300);
@@ -347,8 +353,12 @@ public class NotebookPageUtils {
 			selectDatabaseDropdown.click();
 		}
 
+//		public static void selectAllColumns(Page page) {
+//			page.locator(SELECT_ALL_COLUMNS_XPATH).click();
+//		}
+
 		public static void selectAllColumns(Page page) {
-			page.locator(SELECT_ALL_COLUMNS_XPATH).click();
+			page.locator("button[role='checkbox']").first().click();
 		}
 
 		public static void clickOnImportButton(Page page) {
@@ -421,6 +431,12 @@ public class NotebookPageUtils {
 			Locator columnNames = page.locator(LIST_OF_COLUMN_NAMES_XPATH);
 			return columnNames.allTextContents();
 		}
+		
+//		public static List<String> checkColumnNamesOnUI(Page page) {
+//		    Locator columnNames = page.locator(LIST_OF_COLUMN_NAMES_XPATH);
+//		    columnNames.first().waitFor();
+//		    return columnNames.allTextContents();
+//		}
 
 		public static List<String> getNotebookOutputTableHeader(Page page) {
 			Locator tableHeader = page.locator(OUTPUT_TABLE).last().locator("th");

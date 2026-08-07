@@ -7,17 +7,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import aicore.pages.database.DataBaseCreationUtils;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
@@ -92,6 +90,7 @@ public class CreateAppUsingDragAndDropCharts extends AbstractPlaywrightTestBase{
 	            "Columns under the fields panel do not match.");
 	}
 	
+
 	private String fetchFrameId(Page page) {
 	    String frameID = NotebookPageUtils.getFrameID(page);
 	    Assertions.assertNotNull(frameID, "Frame ID was not fetched");
@@ -235,17 +234,19 @@ public class CreateAppUsingDragAndDropCharts extends AbstractPlaywrightTestBase{
 	                "Select Label, Select Latitude, Select Longitude, Select Size, Select Tooltip")
 	    );
 	}
-
 	@ParameterizedTest
 	@MethodSource("chartData")
     public void DragAndDropDataCharts_test( String blockName,String columnNames,String fieldNames, @PWPage Page page) {
+
 		
+		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		        page,
+		        "TestDatabase",
+		        "Database/TestDatabase.zip");
+
+		Assertions.assertNotNull(databaseId);
+		Assertions.assertFalse(databaseId.isBlank());
 		
-		String uploaded = DataBaseCreationUtils.createTestDatabase(page);
-		Assertions.assertEquals(
-			    "TestDatabase.zip",
-			    uploaded,
-			    "Database ZIP wasn't uploaded correctly.");
 		
 		verifyCatalogTitle(page, "TestDatabase");
 		AddDatabasePageUtils.clickOnMetadataTab(page);
@@ -262,12 +263,12 @@ public class CreateAppUsingDragAndDropCharts extends AbstractPlaywrightTestBase{
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
-		NotebookPageUtils.selectHiddenOptionDropdown(page, "From Data Catalog");
+		NotebookPageUtils.selectHiddenOptionDropdown(page, "Query Builder");
 		NotebookPageUtils.selectDatabaseFromDropdown(page, "TestDatabase");
 		verifyColumnsUnderFields(page,
 		        "Age, BloodPressure, BMI, DiabetesPedigreeFunction, DIABETES_UNIQUE_ROW_ID, End_Date, Glucose, Insulin, Milestone, Outcome, Pregnancies, SkinThickness, Start_Date, Task_Group, Task_Name, Tooltip");
+		
 		NotebookPageUtils.selectAllColumns(page);
-		NotebookPageUtils.clickOnImportButton(page);
 		NotebookPageUtils.deleteFirstCell(page);
 		NotebookPageUtils.enterDataLimit(page, "20");
 		NotebookPageUtils.clickOnRunCellButton(page);
@@ -283,7 +284,6 @@ public class CreateAppUsingDragAndDropCharts extends AbstractPlaywrightTestBase{
 	            fieldNames);	
 	}
 	
-
 	@Test
     public void DragAndDropDataMermaidChart_test(@PWPage Page page) {
 		String BlockName = "Mermaid Chart";

@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
-import aicore.pages.database.DataBaseCreationUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -23,11 +23,14 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		String uploaded = DataBaseCreationUtils.createTestDatabase(page);
-		Assertions.assertEquals(
-			    "TestDatabase.zip",
-			    uploaded,
-			    "Database ZIP wasn't uploaded correctly.");
+		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		        page,
+		        "TestDatabase",
+		        "Database/TestDatabase.zip");
+
+		Assertions.assertNotNull(databaseId);
+		Assertions.assertFalse(databaseId.isBlank());
+		
 		verifyCatalogTitle(page, "TestDatabase");
 		AddDatabasePageUtils.clickOnMetadataTab(page);
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
@@ -39,9 +42,9 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 		NotebookPageUtils.enterQueryName(page, "Test");
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
-		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
 
-		NotebookPageUtils.selectHiddenOptionDropdown(page, "From Data Catalog");
+		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
+		NotebookPageUtils.selectHiddenOptionDropdown(page, "Query Builder");
 		NotebookPageUtils.selectDatabaseFromDropdown(page, "TestDatabase");
 
 		verifyFieldsColumnNames(
@@ -181,7 +184,6 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 		DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
 		verifyColumnNotPresent(page, "AGE");   
 	}
-	
 	
 	@Test
     public void DragAndDropDataGridvalidatePagnation_test(@PWPage Page page) {

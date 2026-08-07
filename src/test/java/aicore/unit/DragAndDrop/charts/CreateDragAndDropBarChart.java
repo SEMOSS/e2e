@@ -1,18 +1,17 @@
 package aicore.unit.DragAndDrop.charts;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
-import aicore.pages.database.DataBaseCreationUtils;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
@@ -39,11 +38,14 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 		verifyWelcomePage(page);
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 
-		String uploaded = DataBaseCreationUtils.createTestDatabase(page);
-		Assertions.assertEquals(
-			    "TestDatabase.zip",
-			    uploaded,
-			    "Database ZIP wasn't uploaded correctly.");
+		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		        page,
+		        "TestDatabase",
+		        "Database/TestDatabase.zip");
+
+		Assertions.assertNotNull(databaseId);
+		Assertions.assertFalse(databaseId.isBlank());
+
 		verifyCatalogTitle(page, "TestDatabase");
 		AddDatabasePageUtils.clickOnMetadataTab(page);
         HomePageUtils.navigateToHomePage(page);
