@@ -35,25 +35,23 @@ import aicore.utils.TestResources;
 public class NotebookTransformationTests extends AbstractPlaywrightTestBase {
 
 	private static final String CATALOG_TYPE = "Database";
-	private static final String CATALOG_NAME = "TestDatabase";
 
 	private String appName = "";
 
 	@BeforeEach
-	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void setup(@PWPage Page page) {
 		loginAdmin(page);
 
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
-		AddFunctionPageUtils.deleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
+		AddFunctionPageUtils.deleteCatalog(page, CATALOG_TYPE, TestResources.TEST_DATABASE_ZIP);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, TestResources.TEST_DATABASE_ZIP);
 		Assertions.assertEquals("TestDatabase.zip", uploadedFileName, "file is not uploaded successfully");
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, CATALOG_NAME),
+		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, TestResources.TEST_DATABASE_ZIP),
 				"Database title is not visible");
 		CatalogPageUtils.clickOnMetadataTab(page);
 
@@ -73,14 +71,13 @@ public class NotebookTransformationTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
 		NotebookPageUtils.selectHiddenOptionDropdown(page, "Custom Import (SQL)");
 		NotebookPageUtils.deleteFirstCell(page);
-		NotebookPageUtils.selectDatabaseType(page, CATALOG_NAME);
+		NotebookPageUtils.selectDatabaseType(page, TestResources.TEST_DATABASE_ZIP);
 	}
 
 	@AfterEach
-	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteApp(page, appName);
-		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
+		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, TestResources.TEST_DATABASE_ZIP);
 		logout(page);
 	}
 
@@ -132,6 +129,7 @@ public class NotebookTransformationTests extends AbstractPlaywrightTestBase {
 
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC01_Validate Timestamp function in Transformation")
 	void testValidateTimestampFunctionInTransformation(@PWPage Page page) {
 		NotebookPageUtils.writeQuery(page, "SELECT BMI FROM DIABETES LIMIT 20");
@@ -164,6 +162,7 @@ public class NotebookTransformationTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC02_Validate Date Difference transformation using UI fields")
 	void testValidateDateDifferenceTransformationUsingUiFields(@PWPage Page page) {
 		NotebookPageUtils.writeQuery(page, "SELECT START_DATE, END_DATE FROM DIABETES LIMIT 20");
