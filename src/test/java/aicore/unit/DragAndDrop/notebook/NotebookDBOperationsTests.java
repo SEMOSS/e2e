@@ -50,7 +50,7 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 		HomePageUtils.navigateToHomePage(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
-		AddFunctionPageUtils.deleteCatalogIfExists(page, CATALOG_TYPE, CATALOG_NAME);
+		AddFunctionPageUtils.deleteCatalogIfExists(page, CATALOG_TYPE,  TestResources.TEST_DATABASE_ZIP );
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		
@@ -81,7 +81,7 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 	void tearDown(@PWPage Page page) {
 		logger.info("AFTER ALL: Deleting App and Catalog");
 		CommonUtils.navigateAndDeleteApp(page, appName);
-		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
+		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE,  TestResources.TEST_DATABASE_ZIP);
 		logout(page);
 	}
 
