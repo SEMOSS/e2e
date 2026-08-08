@@ -3,6 +3,8 @@ package aicore.unit.DragAndDrop.notebook;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +16,7 @@ import com.microsoft.playwright.Page;
 import aicore.pages.database.AddDatabaseFormUtils;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.unit.function.AddFunctionFromZipTests;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.AddFunctionPageUtils;
@@ -31,7 +34,7 @@ import aicore.utils.page.app.TemplateCreationUtils;
 import aicore.utils.TestResources;
 
 public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
-
+	private static final Logger logger = LogManager.getLogger(NotebookDBOperationsTests.class);
 	private static final String CATALOG_TYPE = "Database";
 	private static final String CATALOG_NAME = "TestDatabase";
 
@@ -39,23 +42,29 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 	private String frameID = "";
 
 	@BeforeEach
-	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void setup(@PWPage Page page) {
+		logger.info("BEFORE ALL: creating DataBase");
+
 		loginAdmin(page);
 
 		HomePageUtils.navigateToHomePage(page);
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
-		AddFunctionPageUtils.deleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
+		AddFunctionPageUtils.deleteCatalogIfExists(page, CATALOG_TYPE, CATALOG_NAME);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+		
 		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, TestResources.TEST_DATABASE_ZIP);
+		
 		Assertions.assertEquals("TestDatabase.zip", uploadedFileName, "file is not uploaded successfully");
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, CATALOG_NAME),
+		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, TestResources.TEST_DATABASE_ZIP),
 				"Database title is not visible");
 		CatalogPageUtils.clickOnMetadataTab(page);
+
+		
+		logger.info("BEFORE ALL: creating App");
 
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
@@ -69,8 +78,8 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 	}
 
 	@AfterEach
-	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void tearDown(@PWPage Page page) {
+		logger.info("AFTER ALL: Deleting App and Catalog");
 		CommonUtils.navigateAndDeleteApp(page, appName);
 		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
 		logout(page);
@@ -95,7 +104,7 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
 		NotebookPageUtils.selectHiddenOptionDropdown(page, "From Data Catalog");
-		NotebookPageUtils.selectDatabaseFromDropdown(page, CATALOG_NAME);
+		NotebookPageUtils.selectDatabaseFromDropdown(page, TestResources.TEST_DATABASE_ZIP);
 
 		List<String> expectedFieldColumns = Arrays.asList("Age", "BMI", "BloodPressure",
 				"DIABETES_UNIQUE_ROW_IDFK", "DiabetesPedigreeFunction", "End_Date", "Glucose", "Insulin", "Milestone",
@@ -134,6 +143,7 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 	
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC01_Validate import db query functionality")
 	void testValidateImportDbQueryFunctionality(@PWPage Page page) {
 		navigateToAppAndOpenNotebookTab(page);
@@ -144,7 +154,7 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
 		NotebookPageUtils.selectHiddenOptionDropdown(page, "Custom Import (SQL)");
-		NotebookPageUtils.selectDatabaseType(page, CATALOG_NAME);
+		NotebookPageUtils.selectDatabaseType(page, TestResources.TEST_DATABASE_ZIP);
 		NotebookPageUtils.deleteFirstCell(page);
 		NotebookPageUtils.writeQuery(page, "SELECT * FROM DIABETES where Age = 50 AND BloodPressure = 90");
 		NotebookPageUtils.clickOnRunCellButton(page);
@@ -155,6 +165,7 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 	
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC02_Import Data")
 	void testImportData(@PWPage Page page) {
 		navigateToAppAndOpenNotebookTab(page);
@@ -162,6 +173,7 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC03_Import Data - Edit button")
 	void testImportDataEditButton(@PWPage Page page) {
 		navigateToAppAndOpenNotebookTab(page);
