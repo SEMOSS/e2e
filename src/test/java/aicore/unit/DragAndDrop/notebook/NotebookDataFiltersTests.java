@@ -2,6 +2,9 @@ package aicore.unit.DragAndDrop.notebook;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,29 +31,33 @@ import aicore.utils.TestResources;
 public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 
 	private static final String CATALOG_TYPE = "Database";
-	private static final String CATALOG_NAME = "TestDatabase";
-
 	private String appName = "";
 	private String frameID = "";
+	private static final Logger logger = LogManager.getLogger(NotebookDataFiltersTests.class);
+
 
 	@BeforeEach
-	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void setup(@PWPage Page page) {
+		logger.info("BEFORE ALL: creating DataBase");
+
 		loginAdmin(page);
 
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenDatabase(page);
-		AddFunctionPageUtils.deleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
+		 // CatalogPageUtils 
+		AddFunctionPageUtils.deleteCatalogIfExists(page, CATALOG_TYPE, TestResources.TEST_DATABASE_ZIP);
 		AddDatabaseFormUtils.clickAddDatabaseButton(page);
+		
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, TestResources.TEST_DATABASE_ZIP);
 		Assertions.assertEquals("TestDatabase.zip", uploadedFileName, "file is not uploaded successfully");
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, CATALOG_NAME),
+		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, TestResources.TEST_DATABASE_ZIP),
 				"Database title is not visible");
 		CatalogPageUtils.clickOnMetadataTab(page);
-
+		
+		logger.info("BEFORE ALL: creating App");
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
 		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
@@ -66,7 +73,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
 		NotebookPageUtils.selectHiddenOptionDropdown(page, "From Data Catalog");
-		NotebookPageUtils.selectDatabaseFromDropdown(page, CATALOG_NAME);
+		NotebookPageUtils.selectDatabaseFromDropdown(page, TestResources.TEST_DATABASE_ZIP);
 
 		List<String> expectedFieldColumns = Arrays.asList("Age", "BMI", "BloodPressure", "DIABETES_UNIQUE_ROW_IDFK",
 				"DiabetesPedigreeFunction", "End_Date", "Glucose", "Insulin", "Milestone", "Outcome", "Pregnancies",
@@ -104,10 +111,10 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@AfterEach
-	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void tearDown(@PWPage Page page) {
+		logger.info("AFTER ALL: Deleting App and Catalog");
 		CommonUtils.navigateAndDeleteApp(page, appName);
-		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, CATALOG_NAME);
+		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, TestResources.TEST_DATABASE_ZIP );
 		logout(page);
 	}
 
@@ -138,6 +145,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC01_Verify Unfilter Data in the app")
 	void testVerifyUnfilterDataInTheApp(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Unfilter Data");
@@ -158,6 +166,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC02_Verify filter Data in the app")
 	void testVerifyFilterDataInTheApp(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
@@ -173,6 +182,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC03_Verify filter Data in the app with AND operator")
 	void testVerifyFilterDataWithAndOperator(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
@@ -187,6 +197,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC04_Verify filter data with OR operator")
 	void testVerifyFilterDataWithOrOperator(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
@@ -206,6 +217,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC05_Verify Nested Rule filter data with AND operator")
 	void testVerifyNestedRuleFilterDataWithAndOperator(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
@@ -222,6 +234,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC06_Verify Nested Rule within Nested rule filter data")
 	void testVerifyNestedRuleWithinNestedRuleFilterData(@PWPage Page page) {
 		openNotebookAndStartDataFilter(page, "Filter Data");
