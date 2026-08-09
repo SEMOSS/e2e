@@ -16,7 +16,9 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
@@ -235,6 +237,7 @@ public class CreateAppUsingDragAndDropCharts extends AbstractPlaywrightTestBase{
 	    );
 	}
 	@ParameterizedTest
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@MethodSource("chartData")
     public void DragAndDropDataCharts_test( String blockName,String columnNames,String fieldNames, @PWPage Page page) {
 
@@ -242,7 +245,7 @@ public class CreateAppUsingDragAndDropCharts extends AbstractPlaywrightTestBase{
 		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
 		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		         TestResources.TEST_DATABASE_ZIP);
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
