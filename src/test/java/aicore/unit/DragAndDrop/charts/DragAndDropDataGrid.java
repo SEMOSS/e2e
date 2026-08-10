@@ -10,7 +10,9 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
@@ -21,12 +23,13 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 	private String appName;
 
 	@BeforeEach
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
 		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
 		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_ZIP);
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
