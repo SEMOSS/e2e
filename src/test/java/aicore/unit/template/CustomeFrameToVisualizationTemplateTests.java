@@ -50,7 +50,7 @@ public class CustomeFrameToVisualizationTemplateTests extends AbstractPlaywright
     @Test
     public void customFrameToVisualizationTemplate_test(@PWPage Page page) {
     	
-		TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
+		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
 		verifyAppCreated(page);	
 		
 		String actualText = AppTemplatePageUtils.userSeePage1(page);

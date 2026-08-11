@@ -55,7 +55,7 @@ public class GmailTemplateTests extends AbstractPlaywrightTestBase {
 	@Test
     public void GmailTemplate_test(@PWPage Page page) {
 		
-		TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
+		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
 		verifyAppCreated(page);		
 		AppTemplatePageUtils.verifyAppTemplateTitle(TEMPLATE_NAME, page);
 		AppTemplatePageUtils.verifyDialogText(LOGGED_IN_TEXT, page);

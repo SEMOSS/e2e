@@ -58,14 +58,3 @@ public class VisualizeCSVTemplate extends AbstractPlaywrightTestBase {
 		AppTemplatePageUtils.verifyAppPageTitle(TITLE_EDITED, page);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
