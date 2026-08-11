@@ -15,7 +15,8 @@ import aicore.utils.CommonUtils;
 
 public class EditModelPageUtils {
 
-	private static final String SEARCHED_MODEL_XPATH = "//p[text()='{modelName}']";
+//	private static final String SEARCHED_MODEL_XPATH = "//p[text()='{modelName}']";
+	private static final String SEARCHED_MODEL_XPATH = "//p[@title='{modelName}']";
 	private static final String EDIT_BUTTON_XPATH = "//button[contains(@class, 'MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium ')]";
 	private static final String TAG_TEXTBOX = "Tag";
 	private static final String SUBMIT_BUTTON_XPATH = "//span[text()='Submit']";
@@ -66,6 +67,11 @@ public class EditModelPageUtils {
 	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName) {
 		Locator modelCard = page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName));
 		AICorePageUtils.waitFor(modelCard);
+		return modelCard.isVisible();
+	}
+	
+	public static boolean checkIfModelIsDisplayedOnCatalogPage(Page page, String modelName) {
+		Locator modelCard = page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName));
 		return modelCard.isVisible();
 	}
 

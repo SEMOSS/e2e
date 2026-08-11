@@ -7,6 +7,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.pages.base.AbstractBasePage;
 import aicore.pages.function.AddFunctionFormUtils;
@@ -139,16 +140,22 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
-		// TODO duplicate code in CommonUtils.navigateAndDeleteCatalog!!!!!!
-		Locator catalogLocator = searchForAndLocateCatalog(page, catalog, catalogName);
-		if (catalogLocator.isVisible()) {
-			catalogLocator.first().click();
-			clickOnAccessControl(page);
-			FunctionAccessSettingsUtils.clickOnDeleteButton(page);
-			FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
-		}
-	}
+	    Locator catalogLocator = searchForAndLocateCatalog(page, catalog, catalogName);
 
+	    if (catalogLocator.isVisible()) {
+	        catalogLocator.first().click();
+	        clickOnAccessControl(page);
+	        FunctionAccessSettingsUtils.clickOnDeleteButton(page);
+	        FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
+
+	        // Wait until the catalog disappears
+	        catalogLocator.waitFor(
+	            new Locator.WaitForOptions()
+	                .setState(WaitForSelectorState.HIDDEN)
+	                .setTimeout(60000)
+	        );
+	    }
+	}
 	public static Locator searchForAndLocateCatalog(Page page, String catalog, String catalogName) {
 		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);
 		searchBar.click();
