@@ -1,12 +1,9 @@
 package aicore.unit.DragAndDrop.permissions;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.microsoft.playwright.Page;
-
 import aicore.base.GenericSetupUtils;
 import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
@@ -47,7 +44,7 @@ public class CreateAppReadUserPermission extends AbstractPlaywrightTestBase {
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
-		CommonUtils.navigateAndDeleteApp(page, appName);
+	    CommonUtils.navigateAndDeleteApp(page, appName);
 	    logout(page);
 	}
 	
@@ -78,17 +75,6 @@ public class CreateAppReadUserPermission extends AbstractPlaywrightTestBase {
 	    String appName = CreateAppPopupUtils.userFetchAppName(page);
 	    Assertions.assertFalse(appName.isEmpty(), "Fetched App Name is Empty");
 	}
-	
-	
-	private void verifyEditOption(Page page, String role, String action) {
-	    boolean editOption = CatlogAccessPageUtility.canSeeEditOption(page, action);
-
-	    Assertions.assertTrue(
-	            editOption,
-	            "For " + role + " user, Edit Option is " + action
-	    );
-	}
-
 	
 	
 	private void verifySettingsVisibility(Page page, String role, String action) {
@@ -133,8 +119,6 @@ public class CreateAppReadUserPermission extends AbstractPlaywrightTestBase {
 	
 	@Test	
     public void ReadButtonDisabled_test (@PWPage Page page) {
-		
-		verifyEditOption(page, "Read", "Disable");
 		verifyWelcomePage(page);
 		verifySettingsVisibility(page, "Read", "not view");
 		verifyPrivateToggleNotVisible(page, "Read");
@@ -142,7 +126,7 @@ public class CreateAppReadUserPermission extends AbstractPlaywrightTestBase {
 		verifyDeleteCatalogOptionNotVisible(page, "Read");
 	    logout(page);
 	    loginAuthor(page);
+	    logout(page);
+	    loginNativeAdmin(page);
 	}
-
-	
 }

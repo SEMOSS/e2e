@@ -151,7 +151,7 @@ public class CatlogAccessPageUtility {
 
 	public static boolean canSeeEditOption(Page page, String action) {
 		Locator editButton = page.locator(SEE_EDIT_OPTION_XPATH);
-		AICorePageUtils.waitFor(editButton);
+		AICorePageUtils.waitFor(editButton);		
 		switch (action) {
 		case "Enable":
 			return editButton.isEnabled();
