@@ -4,9 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.microsoft.playwright.Page;
-
 import aicore.base.GenericSetupUtils;
 import aicore.pages.model.SettingsModelPageUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
@@ -22,11 +20,9 @@ public class CreateAppAuthorPermission extends AbstractPlaywrightTestBase {
 	
 	private String appName;
 
-
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);
 		verifyWelcomePage(page);
@@ -105,7 +101,7 @@ public class CreateAppAuthorPermission extends AbstractPlaywrightTestBase {
 		CatlogAccessPageUtility.searchUserBasedOnRole(page, "Viewer");
 		SettingsModelPageUtils.deleteAddedMember(page, "Viewer");
 	}
-		
+	
 	@Test
     public void ActionsOnPrivateToggleButton_test (@PWPage Page page) {
 		
@@ -114,7 +110,7 @@ public class CreateAppAuthorPermission extends AbstractPlaywrightTestBase {
 		CatlogAccessPageUtility.setToggleStateForPrivate(page);
 	
 	}
-	
+
 	@Test
     public void ActionsOnNonDiscoverableToggleButton_test (@PWPage Page page) {
 		
@@ -125,7 +121,6 @@ public class CreateAppAuthorPermission extends AbstractPlaywrightTestBase {
 
 	}
 	
-
 	@Test
     public void DeleteApp_test (@PWPage Page page) {
 		

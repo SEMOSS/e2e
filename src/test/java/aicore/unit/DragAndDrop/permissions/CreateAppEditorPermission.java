@@ -3,6 +3,7 @@ package aicore.unit.DragAndDrop.permissions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 import aicore.base.GenericSetupUtils;
@@ -110,23 +111,18 @@ public class CreateAppEditorPermission extends AbstractPlaywrightTestBase{
 	    );
 	}
 	
-	
-	
-	
 	@Test
     public void NonDiscoverableAndDeleteToggleEditorUser_test (@PWPage Page page) {
-		
 		DragAndDropBlocksPageUtils.clickOnEditButton(page);
 		CatlogAccessPageUtility.clickOnSettings(page);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		verifyPrivateToggleDisabled(page, Editor);
 		verifyNonDiscoverableToggleDisabled(page, Editor);
 		verifyDeleteCatalogOptionNotVisible(page, Editor);
-		logout(page);
-		loginAuthor(page);
+	    logout(page);
+		loginNativeAdmin(page);
+
 	}
-
-
 	@Test
     public void AddAndDeleteEditorAndReadUser_test (@PWPage Page page) {
 		
@@ -139,22 +135,22 @@ public class CreateAppEditorPermission extends AbstractPlaywrightTestBase{
 		SettingsModelPageUtils.deleteAddedMember(page, "Viewer");
 		logout(page);
 		loginAuthor(page);
-		openAppLibrary(page);
+	    logout(page);
+		loginNativeAdmin(page);
+
 	}
 		
 	
-
 	@Test
     public void DeleteModel_test (@PWPage Page page) {
-		
 		DragAndDropBlocksPageUtils.clickOnEditButton(page);
 		CatlogAccessPageUtility.clickOnSettings(page);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		verifyDeleteCatalogOptionNotVisible(page, Editor);
 		logout(page);
 		loginAuthor(page);
-	    HomePageUtils.navigateToHomePage(page);
-	    MainMenuUtils.openMainMenu(page);
+	    logout(page);
+		loginNativeAdmin(page);
 	}
 	
 	
