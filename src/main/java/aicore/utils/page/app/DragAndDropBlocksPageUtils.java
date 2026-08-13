@@ -641,11 +641,19 @@ public class DragAndDropBlocksPageUtils {
 		return page.locator(DUPLICATE_ICON_XPATH).isVisible();
 	}
 
+
 	public static void clickOnDuplicateIcon(Page page) {
-		Locator duplicateIcon = page.locator(DUPLICATE_ICON_XPATH);
-//		CommonUtils.moveMouseToCenter(page, duplicateIcon, 0);
-		duplicateIcon.click();
+	    Locator moreActionsButton = page.getByTitle("More actions");
+
+	    AICorePageUtils.waitFor(moreActionsButton);
+	    moreActionsButton.click();
+
+	    Locator duplicateOption = page.getByText("Duplicate", new Page.GetByTextOptions().setExact(true));
+
+	    AICorePageUtils.waitFor(duplicateOption);
+	    duplicateOption.click();
 	}
+
 
 	public static boolean duplicatedChartIsVisiable(Page page, int previousCount, String blockName) {
 		Locator droppedBlockLocator;

@@ -36,7 +36,14 @@ public class NotebookPageUtils {
 		
 		private static final String IMPORT_BUTTON_XPATH = "//button[@type='submit' and normalize-space()='Import']";
 		private static final String FRAME_CSS = "input[value*='FRAME_']";
-		private static final String DELETE_CELL_DATA_XAPTH = "//button[@title='Delete cell']";
+//		private static final String DELETE_CELL_DATA_XAPTH = "//button[@title='Delete cell']";
+		
+
+		private static final String DELETE_CELL_DATA_XAPTH =
+		        "//div[@role='menuitem' and normalize-space()='Delete cell']";
+		
+		private static final String MORE_ACTIONS_XPATH = "//button[@title='More actions']";
+				
 		private static final String OUTPUT_TABLE = "//table";
 		private static final String JSON_BODY_FIELD_VALUE_XPATH = "//div[contains(@class,'string-value MuiBox-root')]//span[text()='{fieldValue}']";
 		private static final String SELECT_TYPE_DROPDOWN_XPATH = "//button[span[text()='{type}']]";
@@ -390,12 +397,37 @@ public class NotebookPageUtils {
 			updateButton.click();
 		}
 
+//		public static void deleteFirstCell(Page page) {
+//			page.locator(CELL_XPATH).first().hover();
+//			
+//		    Locator moreActions = page.locator(CELL_XPATH).first()
+//		            .locator(MORE_ACTIONS_XPATH);
+//		    AICorePageUtils.waitFor(moreActions);
+//			moreActions.click();
+//			
+//			Locator deleteIcon = page.locator(DELETE_CELL_DATA_XAPTH);
+//			AICorePageUtils.waitFor(deleteIcon);
+//			deleteIcon.hover();
+//			deleteIcon.click(new Locator.ClickOptions().setForce(true));
+//		}
+		
+		
+		
+		
 		public static void deleteFirstCell(Page page) {
-			page.locator(CELL_XPATH).first().hover();
-			Locator deleteIcon = page.locator(DELETE_CELL_DATA_XAPTH);
-			AICorePageUtils.waitFor(deleteIcon);
-			deleteIcon.hover();
-			deleteIcon.click(new Locator.ClickOptions().setForce(true));
+		    Locator cell = page.locator(CELL_XPATH).first();
+		    cell.hover();
+
+		    Locator cellContainer = cell.locator("xpath=..");
+
+		    Locator moreActions = cellContainer.locator(MORE_ACTIONS_XPATH);
+		    AICorePageUtils.waitFor(moreActions);
+		    moreActions.click();
+
+		    Locator deleteIcon = page.locator(DELETE_CELL_DATA_XAPTH);
+		    AICorePageUtils.waitFor(deleteIcon);
+		    deleteIcon.hover();
+		    deleteIcon.click(new Locator.ClickOptions().setForce(true));
 		}
 
 		public static void selectDatabaseType(Page page, String databaseName) {
@@ -421,12 +453,20 @@ public class NotebookPageUtils {
 			checkCircle.isVisible();
 			page.waitForTimeout(500);
 		}
+//
+//		public static String getFrameID(Page page) {
+//			page.locator(FRAME_CSS).isVisible();
+//			return page.locator(FRAME_CSS).inputValue().trim();
+//		}
 
+		
 		public static String getFrameID(Page page) {
-			page.locator(FRAME_CSS).isVisible();
-			return page.locator(FRAME_CSS).inputValue().trim();
+		    Locator frameField = page.locator(FRAME_CSS);
+		    AICorePageUtils.waitFor(frameField);
+		    return frameField.inputValue().trim();
 		}
-
+		
+		
 		public static List<String> checkColumnNamesOnUI(Page page) {
 			Locator columnNames = page.locator(LIST_OF_COLUMN_NAMES_XPATH);
 			return columnNames.allTextContents();
@@ -738,7 +778,7 @@ public class NotebookPageUtils {
 		}
 
 		public static void enterDataLimit(Page page, String dataLimit) {
-			Locator dataLimitField = page.getByPlaceholder("Data Limit");
+			Locator dataLimitField = page.getByPlaceholder("No limit");
 			AICorePageUtils.waitFor(dataLimitField);
 			dataLimitField.fill(dataLimit);
 		}

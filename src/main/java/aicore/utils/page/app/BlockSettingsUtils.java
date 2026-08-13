@@ -21,10 +21,14 @@ public class BlockSettingsUtils {
 
 	// Block settings for charts
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
-	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
+	private static final String DRAG_COLUMN_NAME_XPATH = "//span[@title='{columnName}']";
+	
+	
 	private static final String DROP_FIELD_XPATH = "//span[normalize-space()= '{fieldName}']/parent::div/following-sibling::div";
 	private static final String SEARCH_FRAME_PLACEHOLDER = "Select frame";
-	private static final String SELECT_FRAME_IN_NOTEBOOK_XPATH = "//button[contains(@class,'items-center')]//span[text()='Select Frame']";
+	
+	private static final String SELECT_FRAME_IN_NOTEBOOK_XPATH = "//select[option[@value='Select frame'] or option[normalize-space()='Select frame']]";
+
 	private static final String DROPPED_COLUMN_IN_FIELD_XPATH = "//span[contains(normalize-space(), '{fieldName}')]/parent::div/following-sibling::div[contains(@id,'{columnName}')]";
 	private static final String OPTION_XPATH = "//p[text()='{optionName}']/../following-sibling::div//button";
 
@@ -113,23 +117,30 @@ public class BlockSettingsUtils {
 		dataTab.click();
 	}
 
+
 	public static void selectFrame(Page page, String frameId) {
-		Locator selectFrame = page.getByPlaceholder(SEARCH_FRAME_PLACEHOLDER);
-		Locator NotebookFrame = page.locator(SELECT_FRAME_IN_NOTEBOOK_XPATH);
-		if (selectFrame.isVisible()) {
-			selectFrame.scrollIntoViewIfNeeded();
-			selectFrame.click();
-			selectFrame.fill(frameId);
-			selectFrame.press("ArrowDown");
-			selectFrame.press("Enter");
-		} else {
-			NotebookFrame.scrollIntoViewIfNeeded();
-			NotebookFrame.click();
-			Locator frameOption = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(frameId));
-			frameOption.click();
-		}
-		page.waitForTimeout(1000);
+	    Locator selectFrame = page.locator("select").filter(
+	            new Locator.FilterOptions().setHasText("Select frame")
+	    );
+	    Locator NotebookFrame = page.locator(SELECT_FRAME_IN_NOTEBOOK_XPATH);
+
+	    if (selectFrame.isVisible()) {
+	        selectFrame.scrollIntoViewIfNeeded();
+	        selectFrame.selectOption(frameId);
+	    } else {
+	        NotebookFrame.scrollIntoViewIfNeeded();
+	        NotebookFrame.click();
+	        Locator frameOption = page.getByRole(
+	                AriaRole.OPTION,
+	                new Page.GetByRoleOptions().setName(frameId)
+	        );
+	        frameOption.click();
+	    }
+
+	    page.waitForTimeout(1000);
 	}
+
+
 
 	public static void dragColumnToTargetField(Page page, String columnName, String targetField) {
 		// scroll to column
