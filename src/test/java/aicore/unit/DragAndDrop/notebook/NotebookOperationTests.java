@@ -53,13 +53,11 @@ public class NotebookOperationTests extends AbstractPlaywrightTestBase {
 	@DisplayName("TC01_Verify creation and duplication of new Notebook")
 	void testCreationAndDuplicationOfNewNotebook(@PWPage Page page) {
 		navigateToAppAndOpenEditor(page);
-
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		NotebookPageUtils.clickOnCreateNewNotebook(page);
 		NotebookPageUtils.enterQueryName(page, "Test query");
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 		NotebookPageUtils.checkNotebookPresence(page, "Test query");
-
 		NotebookPageUtils.duplicateNotebook(page, "Test query");
 		NotebookPageUtils.checkNotebookPresence(page, "Test query copy");
 	}
