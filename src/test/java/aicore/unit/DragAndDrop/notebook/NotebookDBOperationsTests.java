@@ -42,7 +42,6 @@ public class NotebookDBOperationsTests extends AbstractPlaywrightTestBase {
 	
 	@BeforeEach
 	void setup(@PWPage Page page) {
-	    SoftAssertions softAssert = new SoftAssertions();
 
 	    logger.info("BEFORE ALL: creating DataBase");
 	    loginAdmin(page);
