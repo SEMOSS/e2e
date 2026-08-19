@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,10 +13,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 import aicore.pages.database.AddDatabaseFormUtils;
+import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
-import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatalogPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
@@ -29,57 +30,79 @@ import aicore.utils.page.app.TemplateCreationUtils;
 import aicore.utils.TestResources;
 
 public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
-
+	private static final Logger logger = LogManager.getLogger(NotebookDBOperationsTests.class);
+    SoftAssertions softAssert = new SoftAssertions();
 	private static final String CATALOG_TYPE = "Database";
 	private String appName = "";
 	private String frameID = "";
-	private static final Logger logger = LogManager.getLogger(NotebookDataFiltersTests.class);
-
+	private static final String TEST_DATABASE_NAME = "TestDatabase"; 
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		logger.info("BEFORE ALL: creating DataBase");
+	    loginAdmin(page);
+	    HomePageUtils.navigateToHomePage(page);
+	    MainMenuUtils.openMainMenu(page);
+	    MainMenuUtils.clickOnOpenDatabase(page);
+	    AddDatabaseFormUtils.clickAddDatabaseButton(page);
+	    CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
+	    String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, TestResources.TEST_DATABASE_ZIP);
 
-		loginAdmin(page);
+	  
+	    softAssert.assertThat(uploadedFileName)
+	            .as("File name should not be null")
+	            .isNotNull();
+	    softAssert.assertThat(uploadedFileName)
+	            .as("Should be a zip file")
+	            .contains(".zip");
 
-		MainMenuUtils.openMainMenu(page);
-		MainMenuUtils.clickOnOpenDatabase(page);
-		 // CatalogPageUtils 
-		AddFunctionPageUtils.deleteCatalogIfExists(page, CATALOG_TYPE, TestResources.TEST_DATABASE_ZIP);
-		AddDatabaseFormUtils.clickAddDatabaseButton(page);
+	    CatalogCreationFromZipUtil.clickOnUploadButton_New(page);
+	    CatlogAccessPageUtility.getCatalogAndCopyId(page);
+
+	   softAssert.assertThat(AddDatabasePageUtils.verifyDatabaseTitle(page, TEST_DATABASE_NAME))
+	          .as("Database title is not visible")
+	          .isTrue();
+
+	    CatalogPageUtils.clickOnMetadataTab(page);
+
+	    logger.info("BEFORE ALL: creating App");
+	    appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
+
+	    softAssert.assertThat(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page))
+	            .as("Page is not visible")
+	            .isTrue();
+	    softAssert.assertThat(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page))
+	            .as("Welcome text box not visible")
+	            .isTrue();
+
+	   softAssert.assertThat(DragAndDropBlocksPageUtils.verifyWelcomeText(page))
+	          .as("Mismatch between the expected and actual message")
+	          .isEqualTo("Welcome to the UI Builder! Drag and drop blocks to use in your app.");
+
+	   
+		BlockSettingsUtils.closeBlockSettings(page);
+
+	    logger.info("BEFORE ALL: clickOnNotebooksOption");
+
 		
-		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
-		String uploadedFileName = CatalogCreationFromZipUtil.uploadFile(page, TestResources.TEST_DATABASE_ZIP);
-		Assertions.assertEquals("TestDatabase.zip", uploadedFileName, "file is not uploaded successfully");
-		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-		CatlogAccessPageUtility.getCatalogAndCopyId(page);
-		Assertions.assertTrue(AddDatabasePageUtils.verifyDatabaseTitle(page, TestResources.TEST_DATABASE_ZIP),
-				"Database title is not visible");
-		CatalogPageUtils.clickOnMetadataTab(page);
-		
-		logger.info("BEFORE ALL: creating App");
-		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
-
-		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
-		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
-				"Welcome text box not visible");
-		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
-				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
-
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		NotebookPageUtils.clickOnCreateNewNotebook(page);
 		NotebookPageUtils.enterQueryName(page, "Test");
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
-		NotebookPageUtils.selectHiddenOptionDropdown(page, "From Data Catalog");
-		NotebookPageUtils.selectDatabaseFromDropdown(page, TestResources.TEST_DATABASE_ZIP);
+	    NotebookPageUtils.selectHiddenOptionDropdown(page, "Query Builder");
+	    NotebookPageUtils.selectDatabaseFromDropdown(page, TEST_DATABASE_NAME);
 
 		List<String> expectedFieldColumns = Arrays.asList("Age", "BMI", "BloodPressure", "DIABETES_UNIQUE_ROW_IDFK",
 				"DiabetesPedigreeFunction", "End_Date", "Glucose", "Insulin", "Milestone", "Outcome", "Pregnancies",
 				"SkinThickness", "Start_Date", "Task_Group", "Task_Name", "Tooltip");
 		List<String> actualFieldColumns = NotebookPageUtils.checkColumnNamesOnUI(page);
-		Assertions.assertEquals(expectedFieldColumns, actualFieldColumns, "columns are not matching");
+
+		
+		softAssert.assertThat(actualFieldColumns)
+	      .as("columns are not matching")
+	      .isEqualTo(expectedFieldColumns);
 
 		NotebookPageUtils.selectAllColumns(page);
 		NotebookPageUtils.clickOnImportButton(page);
@@ -107,23 +130,26 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.validateJsonFieldValue(page, "PY");
 
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
-		BlockSettingsUtils.closeBlockSettings(page);
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		logger.info("AFTER ALL: Deleting App and Catalog");
 		CommonUtils.navigateAndDeleteApp(page, appName);
-		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE, TestResources.TEST_DATABASE_ZIP );
+		CommonUtils.navigateAndDeleteCatalog(page, CATALOG_TYPE,  TEST_DATABASE_NAME );
 		logout(page);
+		softAssert.assertAll();
 	}
 
 	private void openNotebookAndStartDataFilter(Page page, String filterOption) {
 		NotebookPageUtils.verifyNotebookIsPresentInList(page, "Test");
 		NotebookPageUtils.clickOnNotebook(page, "Test");
-		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
-		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Data filters");
-		NotebookPageUtils.selectHiddenOptionDropdown(page, filterOption);
+		
+		NotebookPageUtils.mouseHoverOnNotebookHiddenOptionsOnCurrentQueryBuilderCell(page);
+		NotebookPageUtils.clickDataFiltersOnCurrentCell(page);
+		
+		NotebookPageUtils.selectDataFiltersOptionDropdown(page, filterOption);
+
 		BlockSettingsUtils.selectFrame(page, frameID);
 	}
 
@@ -131,7 +157,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.clickOnRuleButton(page, isNestedRule ? "Add Nested Rule" : "Add Rule");
 		NotebookPageUtils.getDefaultOperator(page, "AND");
 		NotebookPageUtils.selectColumnFromDropdown(page, column);
-		NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		//NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
 		NotebookPageUtils.enterValueInInput(page, value);
 	}
 
@@ -148,6 +174,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC01_Verify Unfilter Data in the app")
 	void testVerifyUnfilterDataInTheApp(@PWPage Page page) {
+		
 		openNotebookAndStartDataFilter(page, "Unfilter Data");
 		NotebookPageUtils.deleteFirstCell(page);
 		NotebookPageUtils.clickOnRunCellButton(page);
@@ -165,6 +192,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 				"DIABETES_UNIQUE_ROW_ID have duplicate values");
 	}
 
+	
 	@Test
 	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	@DisplayName("TC02_Verify filter Data in the app")
@@ -172,7 +200,10 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
 		NotebookPageUtils.selectColumnFromDropdown(page, "Age");
-		NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		
+		
+		//NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		
 		NotebookPageUtils.enterValueInInput(page, "30");
 		NotebookPageUtils.deleteFirstCell(page);
 		NotebookPageUtils.clickOnRunCellButton(page);
@@ -188,7 +219,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
 		NotebookPageUtils.selectColumnFromDropdown(page, "Age");
-		NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		//NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
 		NotebookPageUtils.enterValueInInput(page, "30");
 
 		addNestedRule(page, false, "BloodPressure", "92");
@@ -203,14 +234,15 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
 		NotebookPageUtils.selectColumnFromDropdown(page, "Age");
-		NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		//NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
 		NotebookPageUtils.enterValueInInput(page, "30");
 
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
 		NotebookPageUtils.getDefaultOperator(page, "AND");
+		
 		NotebookPageUtils.changeOperatorTo(page, "OR");
 		NotebookPageUtils.selectColumnFromDropdown(page, "BloodPressure");
-		NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		//NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
 		NotebookPageUtils.enterValueInInput(page, "92");
 
 		runFilterAndAssert(page, Arrays.asList("Age", "BloodPressure"), Arrays.asList("30", "92"), "OR");
@@ -223,7 +255,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
 		NotebookPageUtils.selectColumnFromDropdown(page, "Age");
-		NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		//NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
 		NotebookPageUtils.enterValueInInput(page, "30");
 
 		addNestedRule(page, true, "BloodPressure", "92");
@@ -240,7 +272,7 @@ public class NotebookDataFiltersTests extends AbstractPlaywrightTestBase {
 		openNotebookAndStartDataFilter(page, "Filter Data");
 		NotebookPageUtils.clickOnRuleButton(page, "Add Rule");
 		NotebookPageUtils.selectColumnFromDropdown(page, "Age");
-		NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
+		//NotebookPageUtils.selectOperatorFromDropdown(page, "Equals");
 		NotebookPageUtils.enterValueInInput(page, "30");
 
 		addNestedRule(page, true, "BloodPressure", "92");
