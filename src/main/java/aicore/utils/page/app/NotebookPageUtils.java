@@ -36,11 +36,9 @@ public class NotebookPageUtils {
 		
 		private static final String IMPORT_BUTTON_XPATH = "//button[@type='submit' and normalize-space()='Import']";
 		private static final String FRAME_CSS = "input[value*='FRAME_']";
-//		private static final String DELETE_CELL_DATA_XAPTH = "//button[@title='Delete cell']";
 		
 
-		private static final String DELETE_CELL_DATA_XAPTH =
-		        "//div[@role='menuitem' and normalize-space()='Delete cell']";
+		private static final String DELETE_CELL_DATA_XAPTH = "//div[@role='menuitem' and normalize-space()='Delete cell']";
 		
 		private static final String MORE_ACTIONS_XPATH = "//button[@title='More actions']";
 				
@@ -360,9 +358,7 @@ public class NotebookPageUtils {
 			selectDatabaseDropdown.click();
 		}
 
-//		public static void selectAllColumns(Page page) {
-//			page.locator(SELECT_ALL_COLUMNS_XPATH).click();
-//		}
+
 
 		public static void selectAllColumns(Page page) {
 			page.locator("button[role='checkbox']").first().click();
@@ -397,21 +393,6 @@ public class NotebookPageUtils {
 			updateButton.click();
 		}
 
-//		public static void deleteFirstCell(Page page) {
-//			page.locator(CELL_XPATH).first().hover();
-//			
-//		    Locator moreActions = page.locator(CELL_XPATH).first()
-//		            .locator(MORE_ACTIONS_XPATH);
-//		    AICorePageUtils.waitFor(moreActions);
-//			moreActions.click();
-//			
-//			Locator deleteIcon = page.locator(DELETE_CELL_DATA_XAPTH);
-//			AICorePageUtils.waitFor(deleteIcon);
-//			deleteIcon.hover();
-//			deleteIcon.click(new Locator.ClickOptions().setForce(true));
-//		}
-		
-		
 		
 		
 		public static void deleteFirstCell(Page page) {
@@ -453,11 +434,6 @@ public class NotebookPageUtils {
 			checkCircle.isVisible();
 			page.waitForTimeout(500);
 		}
-//
-//		public static String getFrameID(Page page) {
-//			page.locator(FRAME_CSS).isVisible();
-//			return page.locator(FRAME_CSS).inputValue().trim();
-//		}
 
 		
 		public static String getFrameID(Page page) {
@@ -472,11 +448,6 @@ public class NotebookPageUtils {
 			return columnNames.allTextContents();
 		}
 		
-//		public static List<String> checkColumnNamesOnUI(Page page) {
-//		    Locator columnNames = page.locator(LIST_OF_COLUMN_NAMES_XPATH);
-//		    columnNames.first().waitFor();
-//		    return columnNames.allTextContents();
-//		}
 
 		public static List<String> getNotebookOutputTableHeader(Page page) {
 			Locator tableHeader = page.locator(OUTPUT_TABLE).last().locator("th");

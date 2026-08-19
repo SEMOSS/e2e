@@ -61,7 +61,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
-		NotebookPageUtils.selectHiddenOptionDropdown(page, "From Data Catalog");
+		NotebookPageUtils.selectHiddenOptionDropdown(page, "Query Builder");
 		NotebookPageUtils.selectDatabaseFromDropdown(page, "TestDatabase");
 
 		verifyFieldsColumnNames(
@@ -82,12 +82,13 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 		        "Task_Group",
 		        "Task_Name",
 		        "Tooltip");
+		
 		NotebookPageUtils.selectAllColumns(page);
 		NotebookPageUtils.clickOnImportButton(page);
 		NotebookPageUtils.deleteFirstCell(page);
-		NotebookPageUtils.enterDataLimit(page, "20");
+		NotebookPageUtils.enterDataLimit(page, "20");		
 		NotebookPageUtils.clickOnRunCellButton(page);
-		frameId = fetchFrameId(null);
+		frameId = fetchFrameId(page);
 		DragAndDropBlocksPageUtils.selectPage(page, "page-1");
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 	}
@@ -143,6 +144,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	    return frameID;
 	}
 	
+
 	private void dragColumnToField(Page page, String columnName, String fieldName) {
 
 	    BlockSettingsUtils.dragColumnToTargetField(page, columnName, fieldName);
@@ -204,7 +206,17 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	    String diffImagePath = basePath + "diffChart.png";
 
 	    DragAndDropBlocksPageUtils.closeBlocksOption(page);
+	    
+
 	    DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath, toolName);
+
+    	System.out.println("Actual screenshot: " + actualImagePath);
+    	System.out.println("Expected screenshot: " + expectedImagePath);
+    	System.out.println("Diff screenshot: " + diffImagePath);
+	    
+//	    page.pause();
+
+	    
 	    try {
 	    Assertions.assertTrue(
 	            CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath),
@@ -223,19 +235,21 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	}
 	@Test
     public void DragAndDropDataBarChart_test(@PWPage Page page) {
-		
+		page.pause();
 		dragAndSelectBlock(page, "Bar Chart");
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
 		BlockSettingsUtils.clickOnDataTab(page);
 		BlockSettingsUtils.selectFrame(page, frameId);
-		dragColumnToField(page, "AGE", "Select X Axis");
-		dragColumnToField(page, "GLUCOSE", "Select Y Axis");
+		dragColumnToField(page, "Age", "Select X Axis");
+		dragColumnToField(page, "Glucose", "Select Y Axis");
 		DragAndDropBlocksPageUtils.clickOnToolTab(page);
 		DragAndDropBlocksPageUtils.clickOnToolOption(page, "Conditional");
-		verifyConditional(page, false, true);
+		verifyConditional(page, false, true);		
 		DragAndDropBlocksPageUtils.clickOnToolOption(page, "Color Palette");
 		verifyColorPalette(page, "Add Color");
-		verifyColorPalette(page, "Change Color");		
+		verifyColorPalette(page, "Change Color");
+		
+		page.pause();
 		verifyToolMatchesBaseline(page, "Color_Palette_Tool", "Bar Chart");
 		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, "Bar Chart");
 		DragAndDropBlocksPageUtils.clickOnToolTab(page);
