@@ -23,7 +23,6 @@ import aicore.pages.home.HomePageUtils;
 import aicore.pages.home.MainMenuUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
-import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CatalogPageUtils;
 import aicore.utils.CatlogAccessPageUtility;
