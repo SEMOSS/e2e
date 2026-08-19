@@ -1,5 +1,8 @@
 package aicore.unit.DragAndDrop.notebook;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,22 +17,26 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
+import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.NotebookPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
 
 public class NotebookScriptingTests extends AbstractPlaywrightTestBase {
-
+	private static final Logger logger = LogManager.getLogger(NotebookScriptingTests.class);
+    SoftAssertions softAssert = new SoftAssertions();
 	private String appName = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginAdmin(page);
+		logger.info("BEFORE ALL: creating App");
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		logger.info("AFTER ALL: Deleting App ");
 		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
@@ -41,6 +48,10 @@ public class NotebookScriptingTests extends AbstractPlaywrightTestBase {
 		AppPageUtils.searchApp(page, appName, "");
 		AppPageUtils.clickOnAppCard(page, appName, "");
 		DragAndDropBlocksPageUtils.clickOnEditButton(page);
+		
+		
+	    BlockSettingsUtils.closeBlockSettings(page);
+
 
 		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
 		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyWelcomeTextboxIsVisible(page),
@@ -63,13 +74,16 @@ public class NotebookScriptingTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.checkPythonAsDefaultLanguage(page);
 
 		NotebookPageUtils.changeToLanguage(page, "Pixel");
+		
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.hoverAndClickOnCell(page);
 		NotebookPageUtils.deleteFirstCell(page);
-		NotebookPageUtils.enterCodeInQuery(page, "Hello");
-		NotebookPageUtils.clickOnRunAllButton(page);
+		NotebookPageUtils.enterCodeInQuery(page, "HelloWorld();");
+		
+		//NotebookPageUtils.clickOnRunAllButton(page);
+		NotebookPageUtils.clickOnRunAllCellButton(page);
 
-		NotebookPageUtils.getPixelOutput(page, "Hello");
+		NotebookPageUtils.getPixelOutput(page, "HelloWorld();");
 	}
 
 	@Test
@@ -88,7 +102,7 @@ public class NotebookScriptingTests extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.hoverAndClickOnCell(page);
 		NotebookPageUtils.deleteFirstCell(page);
 		NotebookPageUtils.enterCodeInQuery(page, "1+1");
-		NotebookPageUtils.clickOnRunAllButton(page);
+		NotebookPageUtils.clickOnRunAllCellButton(page);
 
 		NotebookPageUtils.getPythonOutput(page, "2");
 	}
