@@ -125,8 +125,7 @@ public class CreateAppPopupUtils {
         Locator createButton = page.getByTestId(CREATE_BUTTON_DATATESTID);
         Waits.waitForElementClickable(createButton);
         createButton.click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.waitForTimeout(2000);
+        Waits.waitForElementHidden(createButton);
         logger.info("Create button clicked successfully");
     }
     
