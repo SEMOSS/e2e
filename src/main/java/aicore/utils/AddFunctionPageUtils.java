@@ -11,6 +11,7 @@ import com.microsoft.playwright.options.BoundingBox;
 import aicore.pages.base.AbstractBasePage;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
+import aicore.utils.waitLayer.Waits;
 import io.qameta.allure.Step;
 
 
@@ -22,7 +23,7 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 	private static final String CATALOG_FUNCTION = "{FunctionName}";
 	private static final String CATALOG_FUNCTION_XPATH = "//div[contains(@data-testid,'genericEngineCards')]//p[(text()='{FunctionName}')]";
 	public static final String OPEN_FUNCTIONS_XPATH = "SwitchAccessShortcutOutlinedIcon";
-	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
+	public static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
 	private static final String FILE_TAB_XPATH = "//button[text()='Files']";
 	private static final String SETTINGS_TAB_XPATH = "//button[text()='Settings']";
 
@@ -91,11 +92,14 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 	}
 
 	public static void clickOnAccessControl(Page page) {
+		logger.info("Starting: clickOnAccessControl ");
 		Locator btn = page.locator(ACCESS_CONTROL_XPATH);
 		if (!btn.isVisible()) {
-			AICorePageUtils.waitFor(btn);
+			//AICorePageUtils.waitFor(btn);
+			Waits.waitForElementVisible(btn);
 		}
 		page.locator(ACCESS_CONTROL_XPATH).click();
+		logger.info("Completed: clickOnAccessControl ");
 	}
 
 	public static void clickOnSettings(Page page) {
@@ -153,20 +157,6 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 			FunctionAccessSettingsUtils.clickOnDeleteButton(page);
 			FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
 		}
-	}
-	
-	@Step("Check if '{catalogType}' catalog '{catalogName}' exists and delete it")
-	public static void deleteCatalogIfExists(Page page, String catalogType, String catalogName) {
-		logger.info("CHECK IF " + catalogType + " CATALOG '" + catalogName + "' EXISTS");
-		page.getByTestId(SEARCH_BAR_DATATESTID).fill(catalogName);
-		Locator catalogCard = page.locator(CATALOG_CARD_XPATH.replace("{catalogName}", catalogName));
-		if (catalogCard.count() == 0 || !catalogCard.isVisible()) {
-			logger.info(catalogType + " catalog '" + catalogName + "' does not exist — nothing to delete");
-			return;
-		}
-		logger.info("DELETING " + catalogType + " CATALOG: " + catalogName);
-		catalogCard.getByTestId(CATALOG_DELETE_OPTION).click();
-		page.getByTestId(CONFIRM_DELETE_BUTTON).click();
 	}
 
 
