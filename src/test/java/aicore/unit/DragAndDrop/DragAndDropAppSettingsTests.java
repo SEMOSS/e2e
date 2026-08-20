@@ -3,6 +3,8 @@ package aicore.unit.DragAndDrop;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +15,6 @@ import com.microsoft.playwright.Page;
 
 import aicore.base.GenericSetupUtils;
 import aicore.pages.model.SettingsModelPageUtils;
-import aicore.pages.model.settings.ModelAccessSettingsUtils;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddFunctionPageUtils;
 import aicore.utils.CatalogCreationFromZipUtil;
@@ -24,12 +25,15 @@ import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
 
 public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
-
+	private static final Logger logger = LogManager.getLogger(DragAndDropAppSettingsTests.class);
 	private String appName = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginAdmin(page);
+		
+		logger.info("BEFORE ALL: creating App");
+
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
 		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
@@ -38,11 +42,16 @@ public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
 				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 
+		// BlockSettingsUtils.closeBlockSettings(page);
+
+		
 		DragAndDropBlocksPageUtils.clickOnBlockSettingsOption(page);
+
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		logger.info("After ALL: Delete App");
 		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
@@ -63,6 +72,8 @@ public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 		CatlogAccessPageUtility.searchUserBasedOnRole(page, role);
 		SettingsModelPageUtils.deleteAddedMember(page, role);
 	}
+	
+	
 
 	private void assertToggleToastMatches(Page page, Runnable toggleAction, String expectedWord) {
 		toggleAction.run();
@@ -74,6 +85,7 @@ public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 	@Test
 	@DisplayName("TC01_Setting page - Access Control Tab - validate the Member option for drag and drop app")
 	void testMemberOptionForDragAndDropApp(@PWPage Page page) {
+		
 		CatlogAccessPageUtility.clickOnSettings(page);
 		AddFunctionPageUtils.clickOnAccessControl(page);
 
@@ -107,6 +119,7 @@ public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 		assertToastMessage(page, "Successfully compiled and deployed");
 
 		assertSectionVisible(page, "Update Project");
+		//review and add to test data 
 		CatalogCreationFromZipUtil.uploadFile(page, "dummy-pdf.pdf");
 		CatlogAccessPageUtility.clickOnAppSettingsOption(page, "Update");
 	}
@@ -127,9 +140,10 @@ public class DragAndDropAppSettingsTests extends AbstractPlaywrightTestBase {
 		Assertions.assertTrue(CatlogAccessPageUtility.userCanSeeSectionUnderGeneralSetting(page, "Delete Project"),
 				"Delete Project section is not visible on General setting page");
 
-		ModelAccessSettingsUtils.clickOnDeleteButton(page);
-		Assertions.assertTrue(SettingsModelPageUtils.isDeleteSuccessful(page),
-				"Admin should be able to delete the catalog, but permission error appeared.");
+		// Is Already in aftermethod
+		//ModelAccessSettingsUtils.clickOnDeleteButton(page);
+		//Assertions.assertTrue(SettingsModelPageUtils.isDeleteSuccessful(page),
+				//"Admin should be able to delete the catalog, but permission error appeared.");
 	}
 
 	@Test
