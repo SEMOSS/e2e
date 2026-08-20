@@ -3,15 +3,22 @@ package aicore.pages.model;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
+import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 
 public class SettingsModelPageUtils {
+
+	
+	private static final Logger logger = LogManager.getLogger(SettingsModelPageUtils.class);
 
 	private static final String MODEL_GROUP_TAB_XPATH = "//span[text()='{groupTabName}']";
 	private static final String MODELS_OPTIONS_XPATH = "//p[text()='{modelOptionName}']";
@@ -33,8 +40,9 @@ public class SettingsModelPageUtils {
 	private static final String SELECT_ROLE_XPTAH = "//div[text()='{role}']";
 	private static final String ADD_BUTTON_XPATH = "//button[contains(text(),'Add')]";
 	private static final String DELETE_SUCCESS_TOAST_XPATH = "//li[@data-type='success']";
-	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//li[@data-type='error']";
-	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//td//*[contains(@class,'lucide-trash')]";
+	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//li[@data-type='error']";	
+	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//tr[.//*[normalize-space(text())='{role}']]//button[.//*[contains(@class,'lucide-trash')]]";
+	
 	private static final String CONFIRM_DELETE_BUTTON_XPATH = "//h2[text()='Delete Member']/parent::div//button[text()='Delete']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
@@ -154,13 +162,15 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void clickOnAddMembersButton(Page page) {
+		logger.info("Starting: clickOnAddMembersButton ");
 		Locator locator = page.locator(ADD_MEMBERS_BUTTON_XPATH).first();
 		locator.waitFor();
 		locator.scrollIntoViewIfNeeded();
 		locator.click();
+		logger.info("Completed: clickOnAddMembersButton ");
 	}
 
-	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
+	public static void addMember(Page page, String role, boolean useDocker) {
 		page.locator(SEARCH_USER_XPATH).click();
 		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME").split("@")[0];
 		if (useDocker) {
@@ -201,14 +211,54 @@ public class SettingsModelPageUtils {
 	public static boolean isAddMemberButtonVisible(Page page) {
 		return page.locator(ADD_MEMBERS_BUTTON_XPATH).first().isVisible();
 	}
-
+	
 	public static void deleteAddedMember(Page page, String role) {
-		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH);
-		deleteIcon.scrollIntoViewIfNeeded();
-		deleteIcon.hover();
-		deleteIcon.click();
-		page.locator(CONFIRM_DELETE_BUTTON_XPATH).click();
+	    logger.info("Starting: deleteAddedMember for role: {}", role);
+	    String displayRole = role;
+	    switch (role.toLowerCase()) {
+	        case "author":
+	            displayRole = "Owner";
+	            break;
+	        case "editor":
+	            displayRole = "Editor";
+	            break;
+	        case "read":
+	            displayRole = "Viewer";
+	            break;
+	    }
+	    Locator searchInput = page.locator("input[placeholder='Search']").first();
+	    if (searchInput.isVisible()) {
+	        searchInput.fill("");
+	        page.waitForTimeout(800);
+	    }
+	    Locator row = page.locator("tr")
+	            .filter(new Locator.FilterOptions().setHas(
+	                    page.locator("button").filter(new Locator.FilterOptions().setHasText(displayRole))
+	            ))
+	            .filter(new Locator.FilterOptions().setHasNotText("Owner")) // احتياطي
+	            .first();
+	    Locator deleteIcon = row.locator("button:has(svg[class*='lucide-trash'])").first();
+
+	    deleteIcon.waitFor(new Locator.WaitForOptions()
+	            .setState(WaitForSelectorState.VISIBLE)
+	            .setTimeout(15000));
+	    deleteIcon.scrollIntoViewIfNeeded();
+	    deleteIcon.hover();
+	    deleteIcon.click();
+	    Locator confirmDelete = page.locator("div[role='dialog']")
+	            .locator("button:has-text('Delete')")
+	            .first();
+	    confirmDelete.waitFor(new Locator.WaitForOptions()
+	            .setState(WaitForSelectorState.VISIBLE)
+	            .setTimeout(10000));
+	    confirmDelete.click();
+	    page.waitForTimeout(1500);
+	    logger.info("Completed: deleteAddedMember for role: {}", role);
 	}
+
+	
+
+
 
 	public static void clickOnUsageTab(Page page) {
 		page.click(USAGE_TAB_XPATH);

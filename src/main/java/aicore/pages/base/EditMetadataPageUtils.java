@@ -46,8 +46,9 @@ public class EditMetadataPageUtils {
 
 	@Step("Enter description: {descriptionText}")
 	public static void enterDescription(Page page, String descriptionText) {
-		logger.info("Enter description: " + descriptionText);
+		logger.info("Starting: Enter description: " + descriptionText);
 		page.getByLabel(DESCRIPTION_TEXTBOX_LABEL).fill(descriptionText);
+		logger.info("Completed : Enter description: " );
 	}
 
 	@Step("Enter tag name: {tagName}")

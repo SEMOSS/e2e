@@ -8,6 +8,8 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.framework.ConfigUtils;
+import aicore.utils.waitLayer.Waits;
+import io.qameta.allure.Step;
 
 public class CatlogAccessPageUtility {
 	private static final Logger logger = LogManager.getLogger(CatlogAccessPageUtility.class);
@@ -24,7 +26,7 @@ public class CatlogAccessPageUtility {
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//li[@data-type='error']";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_XPATH = "//button[@data-testid='workspace-Settings-image']/../..";
+	private static final String CLICK_ON_SETTINGS_XPATH = "//div[@title='Settings' and contains(@class,'flexlayout__border_button')]";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
 	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
@@ -35,8 +37,6 @@ public class CatlogAccessPageUtility {
 	private static final String TOASTER_MEASSAGE_XAPTH = "//li[@data-type='success']";
 	private static final String SEE_EDIT_OPTION_XPATH = "//span[normalize-space(text())='Edit']/ancestor::a[1]";
 	private static final String CATALOG_TYPE_XPATH = "//a[@data-slot='breadcrumb-link']";
-	private static final String DISCOVERABLE_TOGGLE_OPTION_XPATH = "//button[contains(@data-testid,'makeDiscoverable-switch')]";
-	private static final String PRIVATE_TOOGLE_OPTION_XPATH = "//p[text()='Private']/../../following-sibling::div//button[contains(@data-testid,'settingsTiles')]";
 	private static final String APP_SETTING_OPTION_XPATH = "//span[text()='Settings']";
 	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
 	private static final String PENDING_REQUEST_ACCEPT_DATA_TESTID = "approve-pending-member-btn";
@@ -54,6 +54,13 @@ public class CatlogAccessPageUtility {
 	private static final String COMMITS_TAB_XPATH = "//button[normalize-space()='Commits']";
 	private static final String COMMIT_TAB_TITLE_XPATH = "//h4[normalize-space()='{title}']";
 	private static final String COMMIT_MESSAGE_XPATH = "//h4[text()='Commit History']/ancestor::div//span[contains(text(),'{message}')]";
+
+	
+	private static final String PRIVATE_TOGGLE_XPATH = 
+		    "//button[contains(@data-testid,'public-private-switch') or contains(@title,'public') or contains(@title,'private')]";
+
+		private static final String DISCOVERABLE_TOGGLE_XPATH = 
+		    "//button[contains(@data-testid,'makeDiscoverable-switch') or contains(@title,'discoverable') or contains(@title,'non-discoverable') or contains(@title,'undiscoverable')]";
 
 	public static boolean canViewOverview(Page page) {
 		return page.getByTestId(VIEW_OVERVIEW_TAB_XPATH).isVisible();
@@ -81,13 +88,22 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void searchUserBasedOnRole(Page page, String role) {
-		Locator searchIcon = page.getByTestId(CLICK_ON_SEARCH_ICON_DATATESTID);
-		if (searchIcon.isVisible()) {
-			searchIcon.click();
-		}
-		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
-		page.waitForTimeout(1000);
+	    logger.info("Starting: searchUserBasedOnRole ");
+	    Locator searchIcon = page.getByTestId("pending-members-search-btn");
+	    if (searchIcon.isVisible()) {
+	        searchIcon.click();
+	        page.waitForTimeout(500);
+	    }
+	    Locator searchInput = page.locator("input[placeholder='Search']")
+	                              .filter(new Locator.FilterOptions().setVisible(true))
+	                              .first();
+	    searchInput.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+	    searchInput.fill(role);
+	    page.waitForTimeout(1000);
+
+	    logger.info("Completed: searchUserBasedOnRole ");
 	}
+
 
 	public static boolean canViewExportOption(Page page) {
 		page.waitForSelector(EXPORT_OPTION_TEXT);
@@ -130,9 +146,17 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void setToggleStateForPrivate(Page page) {
-		Locator toggleCheckboxForPrivate = page.locator(PRIVATE_TOOGLE_OPTION_XPATH);
-		toggleCheckboxForPrivate.click();
+	    logger.info("Starting: setToggleStateForPrivate");
+	    Locator toggle = page.locator(PRIVATE_TOGGLE_XPATH).first();
+	    toggle.waitFor(new Locator.WaitForOptions()
+	            .setState(WaitForSelectorState.VISIBLE)
+	            .setTimeout(10000));
+	    toggle.scrollIntoViewIfNeeded();
+	    toggle.click();
+	    page.waitForTimeout(800); 
+	    logger.info("Completed: setToggleStateForPrivate");
 	}
+
 
 	public static String getToasterMessage(Page page) {
 		Locator toasterMessage = page.locator(TOASTER_MEASSAGE_XAPTH).first();
@@ -145,13 +169,21 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void setToggleStateForNonDiscovrable(Page page) {
-		Locator toggleCheckbox = page.locator(DISCOVERABLE_TOGGLE_OPTION_XPATH);
-		toggleCheckbox.click();
+	    logger.info("Starting: setToggleStateForNonDiscovrable");
+	    Locator toggle = page.locator(DISCOVERABLE_TOGGLE_XPATH).first();
+	    toggle.waitFor(new Locator.WaitForOptions()
+	            .setState(WaitForSelectorState.VISIBLE)
+	            .setTimeout(10000));
+	    toggle.scrollIntoViewIfNeeded();
+	    toggle.click();
+	    page.waitForTimeout(800);
+	    logger.info("Completed: setToggleStateForNonDiscovrable");
 	}
+
 
 	public static boolean canSeeEditOption(Page page, String action) {
 		Locator editButton = page.locator(SEE_EDIT_OPTION_XPATH);
-		AICorePageUtils.waitFor(editButton);
+		AICorePageUtils.waitFor(editButton);		
 		switch (action) {
 		case "Enable":
 			return editButton.isEnabled();
@@ -178,16 +210,23 @@ public class CatlogAccessPageUtility {
 		page.locator(CLICK_ON_CANCEL_BUTTON_XPATH).click();
 		return toasterMessage;
 	}
-
+	
+	@Step("Get Catalog ID and copy it for type")
 	public static String getCatalogAndCopyId(Page page) {
-		Locator id = page.locator(CATALOG_ID_XPATH);
-		id.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(60000));
-		String copiedId = id.innerText();
-		String catalogTypeText = page.innerText(CATALOG_TYPE_XPATH);
-		String catalogType = catalogTypeText.trim().split("\\s+")[0];
-		TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
-		return copiedId;
+	    logger.info("To get catalog ID and copy it");
+	        Waits.waitForPageLoad(page);
+	        Locator idLocator = page.locator(CATALOG_ID_XPATH);
+	        Waits.waitForElementVisible(idLocator, 60000);
+	        String copiedId = idLocator.innerText();
+	        Locator typeLocator = page.locator(CATALOG_TYPE_XPATH);
+	        Waits.waitForElementVisible(typeLocator, 30000);
+	        String catalogTypeText = typeLocator.innerText();
+	        String catalogType = catalogTypeText.trim().split("\\s+")[0];
+	        TestResourceTrackerHelper.getInstance().setCatalogId(catalogType, copiedId);
+	        logger.info("Successfully retrieved and stored catalog ID: {} )", copiedId, catalogType);
+	        return copiedId;
 	}
+
 
 	// as per new UI of setting page
 	public static void clickOnMemberSettingOption(Page page) {
@@ -205,17 +244,12 @@ public class CatlogAccessPageUtility {
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
-		// Get username from config file (same as addMember)
 		String username = ConfigUtils.getValue(role.toLowerCase() + "_username").split("@")[0];
 		if (useDocker) {
 			username = username + " lastname";
 		}
-
-		// Fill the search input
 		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).first().fill(username);
 		page.waitForTimeout(1000);
-
-		// Optional: click the matching result if needed
 		try {
 			if (useDocker) {
 				page.getByTitle("Name: " + username).click();
@@ -254,23 +288,26 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean userCanSeeSectionUnderSetting(Page page, String section) {
+		logger.info("Starting: userCanSeeSectionUnderSetting ");
 		Locator sectionLocator = page.locator(SETTING_SECTION_XPATH.replace("{section}", section));
 		sectionLocator.scrollIntoViewIfNeeded();
 		if (!sectionLocator.isVisible()) {
 			sectionLocator = page.locator("//h6[normalize-space()='" + section + "']");
 		}
+		logger.info("Completed: userCanSeeSectionUnderSetting ");
 		return sectionLocator.isVisible();
+		
 	}
 
 	public static boolean isPortalToggleInExpectedState(Page page, String action) {
 		Locator enableToggle = page.locator(PUBLISH_ENABLE_TOGGLE_XPATH);
 		AICorePageUtils.waitFor(enableToggle);
 		boolean shouldEnable = action.equalsIgnoreCase("enable");
-		boolean isCurrentlyEnabled = enableToggle.isVisible();
+		boolean isCurrentlyEnabled = enableToggle.isChecked();
 		if (isCurrentlyEnabled != shouldEnable) {
 			enableToggle.click();
 		}
-		return enableToggle.isVisible() == shouldEnable;
+		return enableToggle.isChecked() == shouldEnable;
 	}
 
 	public static boolean clickOnPublishPortalButton(Page page) {
@@ -292,9 +329,15 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static boolean userCanSeeSectionUnderGeneralSetting(Page page, String sectionName) {
-		Locator sectionLocator = page.locator(GENERAL_SETTING_SECTION_XPATH.replace("{section}", sectionName));
-		return sectionLocator.isVisible();
+        logger.info("Starting: userCanSeeSectionUnderGeneralSetting ");
+	    Locator sectionLocator = page.locator(
+	            "//h2[normalize-space()='" + sectionName + "'] | //p[normalize-space()='" + sectionName + "'] | //h4[normalize-space()='" + sectionName + "']"
+	    ).first();
+	    sectionLocator.scrollIntoViewIfNeeded();
+		logger.info("Completed: userCanSeeSectionUnderGeneralSetting ");
+	    return sectionLocator.isVisible();
 	}
+
 
 	public static void changeBrowserWindowSize(Page page, int width, int height) {
 		page.setViewportSize(width, height);
@@ -302,6 +345,7 @@ public class CatlogAccessPageUtility {
 
 	public static String getToastMessage(Page page, String toastMessage) {
 		Locator toast = page.locator(TOASTER_MESSAGE_XPATH).first();
+		AICorePageUtils.waitFor(toast);
 		String actualToastMessage = toast.innerText().trim();
 		return actualToastMessage;
 	}
@@ -311,9 +355,12 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void clickOnCopyButtonForSection(Page page, String sectionName) {
+        logger.info("Starting: clickOnCopyButtonForSection ");
 		Locator copyButton = page.getByTestId(MCP_USAGE_COPY_BUTTON_DATATESTID.replace("{sectionName}", sectionName));
 		copyButton.hover();
 		copyButton.click();
+		logger.info("Completed: clickOnCopyButtonForSection ");
+
 	}
 
 	public static boolean canSeeCommitsTab(Page page) {
@@ -322,12 +369,16 @@ public class CatlogAccessPageUtility {
 	}
 
 	public static void clickOnCommitsTab(Page page) {
+        logger.info("Starting: clickOnCommitsTab ");
 		Locator commitsTab = page.locator(COMMITS_TAB_XPATH);
-		commitsTab.click();
+		commitsTab.click();		
+		logger.info("Completed: clickOnCommitsTab ");
 	}
 
 	public static boolean getCommitMessage(Page page, String expectedMessage) {
+		logger.info("Starting: getCommitMessage ");
 		Locator commitMessageLocator = page.locator(COMMIT_MESSAGE_XPATH.replace("{message}", expectedMessage));
+		logger.info("Completed: getCommitMessage ");
 		return commitMessageLocator.isVisible();
 	}
 
