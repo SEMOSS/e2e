@@ -6,7 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import io.qameta.allure.Step;
 
-
+/**
+ * Every Catalog shares same behavior need to move similar utils here
+ */
 public class CatalogPageUtils {
     
     private static final Logger logger = LogManager.getLogger(CatalogPageUtils.class);
