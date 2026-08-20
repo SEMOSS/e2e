@@ -21,6 +21,8 @@ import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.waitLayer.Waits;
+import io.qameta.allure.Step;
 
 public class DragAndDropBlocksPageUtils {
 
@@ -214,18 +216,28 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(APP_LOGO_ON_EDIT_PAGE_XPATH.replace("{appName}", appNameWithLogo)).click();
 	}
 
-	public static void clickOnEditButton(Page page) {
-		page.getByTestId(EDIT_BUTTON_DATATESTID)
-				.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		page.getByTestId(EDIT_BUTTON_DATATESTID).click();
-	}
+    @Step("Click on Edit button")
+    public static void clickOnEditButton(Page page) {
+        logger.info("Starting: Attempting to click on Edit button");
+        Locator editButton = page.getByTestId(EDIT_BUTTON_DATATESTID);
+        Waits.waitForElementClickable(editButton);
+        editButton.click();
+        Waits.waitForPageLoad(page);
+        logger.info("Completed :Successfully clicked on Edit button");
+    }
+    
+    public static void clickOnBlocksOption(Page page) {
+        logger.info("Starting: clickOnBlocksOption");
+        Locator blocksOption = page.locator(BLOCKS_OPTION_XPATH);
+        Waits.waitForElementVisible(blocksOption);
+        String classAttr = blocksOption.getAttribute("class");
+        if (classAttr == null || !classAttr.contains("flexlayout__border_button--selected")) {
+            blocksOption.click();
+            page.waitForTimeout(300); 
+        }
+        logger.info("Completed: clickOnBlocksOption");
+    }
 
-	public static void clickOnBlocksOption(Page page) {
-		Locator blocksOption = page.locator(BLOCKS_OPTION_XPATH);
-		if (!blocksOption.getAttribute("class").contains("flexlayout__border_button--selected")) {
-			blocksOption.click();
-		}
-	}
 
 	public static void clickOnBlocksFilterOption(Page page) {
 		Locator blockFilterOption = page.locator(BLOCKS_FILTER_OPTION_XPATH);
@@ -262,28 +274,39 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void blockDropPosition(Page page, String blockName) {
-		switch (blockName) {
-		case "Container":
-			Locator targetBox = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
-			CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 35);
-			page.mouse().up();
-			break;
-		case "Markdown":
-			if (page.getByText("Add Content").isVisible()) {
-				Locator targetBox1 = page.getByText("Add Content");
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, -5, 20);
-				page.mouse().up();
-			} else {
-				Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
-				CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 20);
-				page.mouse().up();
-			}
-		default:
-			Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
-			CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 20);
-			page.mouse().up();
-		}
+	    logger.info("Starting: blockDropPosition for block '{}'", blockName);
+	    switch (blockName) {
+	    case "Container":
+	        Locator targetBox = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
+	        Waits.waitForElementVisible(targetBox);
+	        CommonUtils.moveMouseToCenterWithMargin(page, targetBox, 0, 35);
+	        page.mouse().up();
+	        break;
+	    case "Markdown":
+	        Locator addContent = page.getByText("Add Content");
+	        if (addContent.isVisible()) {
+	            CommonUtils.moveMouseToCenterWithMargin(page, addContent, -5, 20);
+	            page.mouse().up();
+	        } else {
+	            Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
+	            Waits.waitForElementVisible(targetBox1);
+	            CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 20);
+	            page.mouse().up();
+	        }
+	        break; // <-- كان ناقص! ده كان bug تاني: من غير break كان بيقع في الـ default case كمان
+	    default:
+	        Locator targetBox1 = page.getByText(WELCOME_TEXT_BLOCK_TEXT);
+	        Waits.waitForElementVisible(targetBox1); // <-- الإصلاح الأساسي: استنى العنصر قبل ما تتفاعل معاه
+	        if (!targetBox1.isVisible()) {
+	            logger.error("Drop target (welcome textbox / canvas) is not visible");
+	            throw new AssertionError("Drop target is not visible - canvas may not be rendered");
+	        }
+	        CommonUtils.moveMouseToCenterWithMargin(page, targetBox1, 0, 20);
+	        page.mouse().up();
+	    }
+	    logger.info("Completed: blockDropPosition for block '{}'", blockName);
 	}
+
 
 	public static void enterTextInTextField(Page page, String text) {
 		page.getByRole(AriaRole.REGION).filter(new Locator.FilterOptions().setHasText("TextEnable Typewriting"))
@@ -366,119 +389,126 @@ public class DragAndDropBlocksPageUtils {
 			DroppedBlockLocator.click();
 		}
 	}
-
+	
 	public static void mouseHoverOnBlock(Page page, String blockName) {
-		boolean isValidBlock = true;
-		Locator blockLocator = null;
-		switch (blockName) {
-		case "Text (h1)":
-			blockLocator = page.getByTestId(HEADING_1_BLOCK_DATA_TESTID);
-			break;
-		case "Text (h2)":
-			blockLocator = page.getByTestId(HEADING_2_BLOCK_DATA_TESTID);
-			break;
-		case "Text (h3)":
-			blockLocator = page.getByTestId(HEADING_3_BLOCK_DATA_TESTID);
-			break;
-		case "Text (h4)":
-			blockLocator = page.getByTestId(HEADING_4_BLOCK_DATA_TESTID);
-			break;
-		case "Text (h5)":
-			blockLocator = page.getByTestId(HEADING_5_BLOCK_DATA_TESTID);
-			break;
-		case "Text (h6)":
-			blockLocator = page.getByTestId(HEADING_6_BLOCK_DATA_TESTID);
-			break;
-		case "Text":
-			blockLocator = page.getByTestId(TEXT_BLOCK_DATA_TESTID);
-			break;
-		case "Link":
-			blockLocator = page.getByTestId(LINK_BLOCK_DATA_TESTID);
-			break;
-		case "Markdown":
-			blockLocator = page.getByTestId(MARKDOWN_BLOCK_DATA_TESTID);
-			break;
-		case "Logs":
-			blockLocator = page.getByTestId(LOGS_BLOCK_DATA_TESTID);
-			break;
-		case "Scatter Plot":
-			blockLocator = page.getByTestId(SCATTER_PLOT_BLOCK_DATA_TESTID);
-			break;
-		case "Line Chart":
-			blockLocator = page.getByTestId(LINE_CHART_BLOCK_DATA_TESTID);
-			break;
-		case "Bar Chart":
-			blockLocator = page.getByTestId(BAR_CHART_BLOCK_DATA_TESTID);
-			break;
-		case "Bar Chart - Stacked":
-			blockLocator = page.getByTestId(BAR_CHART_STACKED_BLOCK_DATA_TESTID);
-			break;
-		case "Pie Chart":
-			blockLocator = page.getByTestId(PIE_CHART_BLOCK_DATA_TESTID);
-			break;
-		case "Gantt Chart":
-			blockLocator = page.getByTestId(GANTT_CHART_BLOCK_DATA_TESTID);
-			break;
-		case "Area Chart":
-			blockLocator = page.getByTestId(AREA_CHART_DATA_TESTID);
-			break;
-		case "Data Grid":
-			blockLocator = page.getByTestId(DATA_GRID_DATA_TESTID);
-			break;
-		case "Input":
-			blockLocator = page.getByTestId(INPUT_BLOCK_DATA_TESTID);
-			break;
-		case "Dendrogram Chart":
-			blockLocator = page.getByTestId(DENDROGRAM_CHART_DATA_TESTID);
-			break;
-		case "Mermaid Chart":
-			blockLocator = page.getByTestId(MERMAID_CHART_DATA_TESTID);
-			break;
-		case "World Map Chart":
-			blockLocator = page.getByTestId(WORLD_MAP_CHART_DATA_TESTID);
-			break;
-		case "Accordion":
-			blockLocator = page.getByTestId(ACCORDION_BLOCK_DATA_TESTID);
-			break;
-		case "Container":
-			blockLocator = page.getByTestId(CONTAINER_SETTING_DATATESTID);
-			break;
-		case "HTML":
-			blockLocator = page.getByTestId(HTML_BLOCK_DATA_TESTID);
-			break;
-		case "Theme Block":
-			blockLocator = page.getByTestId(THEME_BLOCK_DATA_TESTID);
-			break;
-		case "Button":
-			blockLocator = page.getByTestId(BUTTON_BLOCK_DATA_TESTID);
-			break;
-		case "Chip":
-			blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
-			break;
-		case "Icon":
-			blockLocator = page.getByTestId(ICON_BLOCK_DATA_TESTID);
-			break;
-		case "Iframe":
-			blockLocator = page.getByTestId(IFRAME_BLOCK_DATA_TESTID);
-			break;
-		case "Image":
-			blockLocator = page.getByTestId(IMAGE_BLOCK_DATA_TESTID);
-			break;
-		case "Progress":
-			blockLocator = page.getByTestId(PROGRESS_BLOCK_DATA_TESTID);
-			break;
-		default:
-			isValidBlock = false;
-			logger.error("Invalid block name: " + blockName);
-			throw new IllegalArgumentException("Invalid block name: " + blockName);
-		}
-		blockLocator.scrollIntoViewIfNeeded();
-		blockLocator.isVisible();
-		blockLocator.hover();
-		if (isValidBlock) {
-			page.mouse().down();
-		}
+	    logger.info("Starting: mouseHoverOnBlock for block '{}'", blockName);
+	    boolean isValidBlock = true;
+	    Locator blockLocator = null;
+	    switch (blockName) {
+	    case "Text (h1)":
+	        blockLocator = page.getByTestId(HEADING_1_BLOCK_DATA_TESTID);
+	        break;
+	    case "Text (h2)":
+	        blockLocator = page.getByTestId(HEADING_2_BLOCK_DATA_TESTID);
+	        break;
+	    case "Text (h3)":
+	        blockLocator = page.getByTestId(HEADING_3_BLOCK_DATA_TESTID);
+	        break;
+	    case "Text (h4)":
+	        blockLocator = page.getByTestId(HEADING_4_BLOCK_DATA_TESTID);
+	        break;
+	    case "Text (h5)":
+	        blockLocator = page.getByTestId(HEADING_5_BLOCK_DATA_TESTID);
+	        break;
+	    case "Text (h6)":
+	        blockLocator = page.getByTestId(HEADING_6_BLOCK_DATA_TESTID);
+	        break;
+	    case "Text":
+	        blockLocator = page.getByTestId(TEXT_BLOCK_DATA_TESTID);
+	        break;
+	    case "Link":
+	        blockLocator = page.getByTestId(LINK_BLOCK_DATA_TESTID);
+	        break;
+	    case "Markdown":
+	        blockLocator = page.getByTestId(MARKDOWN_BLOCK_DATA_TESTID);
+	        break;
+	    case "Logs":
+	        blockLocator = page.getByTestId(LOGS_BLOCK_DATA_TESTID);
+	        break;
+	    case "Scatter Plot":
+	        blockLocator = page.getByTestId(SCATTER_PLOT_BLOCK_DATA_TESTID);
+	        break;
+	    case "Line Chart":
+	        blockLocator = page.getByTestId(LINE_CHART_BLOCK_DATA_TESTID);
+	        break;
+	    case "Bar Chart":
+	        blockLocator = page.getByTestId(BAR_CHART_BLOCK_DATA_TESTID);
+	        break;
+	    case "Bar Chart - Stacked":
+	        blockLocator = page.getByTestId(BAR_CHART_STACKED_BLOCK_DATA_TESTID);
+	        break;
+	    case "Pie Chart":
+	        blockLocator = page.getByTestId(PIE_CHART_BLOCK_DATA_TESTID);
+	        break;
+	    case "Gantt Chart":
+	        blockLocator = page.getByTestId(GANTT_CHART_BLOCK_DATA_TESTID);
+	        break;
+	    case "Area Chart":
+	        blockLocator = page.getByTestId(AREA_CHART_DATA_TESTID);
+	        break;
+	    case "Data Grid":
+	        blockLocator = page.getByTestId(DATA_GRID_DATA_TESTID);
+	        break;
+	    case "Input":
+	        blockLocator = page.getByTestId(INPUT_BLOCK_DATA_TESTID);
+	        break;
+	    case "Dendrogram Chart":
+	        blockLocator = page.getByTestId(DENDROGRAM_CHART_DATA_TESTID);
+	        break;
+	    case "Mermaid Chart":
+	        blockLocator = page.getByTestId(MERMAID_CHART_DATA_TESTID);
+	        break;
+	    case "World Map Chart":
+	        blockLocator = page.getByTestId(WORLD_MAP_CHART_DATA_TESTID);
+	        break;
+	    case "Accordion":
+	        blockLocator = page.getByTestId(ACCORDION_BLOCK_DATA_TESTID);
+	        break;
+	    case "Container":
+	        blockLocator = page.getByTestId(CONTAINER_SETTING_DATATESTID);
+	        break;
+	    case "HTML":
+	        blockLocator = page.getByTestId(HTML_BLOCK_DATA_TESTID);
+	        break;
+	    case "Theme Block":
+	        blockLocator = page.getByTestId(THEME_BLOCK_DATA_TESTID);
+	        break;
+	    case "Button":
+	        blockLocator = page.getByTestId(BUTTON_BLOCK_DATA_TESTID);
+	        break;
+	    case "Chip":
+	        blockLocator = page.getByTestId(CHIP_BLOCK_DATA_TESTID);
+	        break;
+	    case "Icon":
+	        blockLocator = page.getByTestId(ICON_BLOCK_DATA_TESTID);
+	        break;
+	    case "Iframe":
+	        blockLocator = page.getByTestId(IFRAME_BLOCK_DATA_TESTID);
+	        break;
+	    case "Image":
+	        blockLocator = page.getByTestId(IMAGE_BLOCK_DATA_TESTID);
+	        break;
+	    case "Progress":
+	        blockLocator = page.getByTestId(PROGRESS_BLOCK_DATA_TESTID);
+	        break;
+	    default:
+	        isValidBlock = false;
+	        logger.error("Invalid block name: " + blockName);
+	        throw new IllegalArgumentException("Invalid block name: " + blockName);
+	    }
+	    Waits.waitForElementVisible(blockLocator);
+	    blockLocator.scrollIntoViewIfNeeded();
+	    if (!blockLocator.isVisible()) {
+	        logger.error("Block '{}' is not visible after scrollIntoView", blockName);
+	        throw new AssertionError("Block '" + blockName + "' is not visible on the Blocks panel");
+	    }
+	    blockLocator.hover();
+	    if (isValidBlock) {
+	        page.mouse().down();
+	    }
+	    logger.info("Completed: mouseHoverOnBlock for block '{}'", blockName);
 	}
+
 
 	public static String verifyHeadingBlockTextMessage(Page page) {
 		String headingBlockTextMessage = page.locator(HEADING_BLOCK_HELLO_WORLD_XPATH).textContent().trim();
@@ -486,7 +516,10 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnSaveAppButton(Page page) {
+        logger.info("Starting: clickOnSaveAppButton ");
 		page.locator(SAVE_APP_BUTTON_XPATH).click();
+		logger.info("Completed: clickOnSaveAppButton ");
+
 	}
 
 	public static void clickOnSaveQueryButton(Page page) {
@@ -528,6 +561,7 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static String getBlockTextFont(Page page, String blockName, String blockText) {
+		logger.info("Starting: getBlockTextFont ");
 		return textSectionDragAndDroppedBlockLocator(page, blockName, blockText)
 				.evaluate("el => el.style.fontFamily || getComputedStyle(el).fontFamily").toString()
 				.replaceAll("^\"|\"$", "");
@@ -539,19 +573,23 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static String getBlockTextColor(Page page, String blockName, String blockText) {
+		logger.info("Starting: getBlockTextColor ");
 		return textSectionDragAndDroppedBlockLocator(page, blockName, blockText)
 				.evaluate("el => getComputedStyle(el).color").toString().trim();
 	}
 
 	public static String getBlockTextAlign(Page page, String blockName, String blockText) {
+		logger.info("Starting: getBlockTextAlign ");
 		return textSectionDragAndDroppedBlockLocator(page, blockName, blockText)
 				.evaluate("el => getComputedStyle(el).textAlign").toString();
 	}
 
 	public static void clickOnLink(Page page, String blockText) {
+		logger.info("Starting: clickOnLink ");
 		Locator link = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(blockText));
 		link.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 		link.click();
+		logger.info("Completed: clickOnLink ");
 	}
 
 	public static String getDestinationUrl(Page page, String url) {
@@ -560,12 +598,16 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void navigateToPreviosPage(Page page) {
+		logger.info("Starting: navigateToPreviosPage ");
 		page.goBack();
 		page.waitForLoadState(LoadState.LOAD);
+		logger.info("Completed: navigateToPreviosPage ");
 	}
 
 	public static void selectPage(Page page, String pageName) {
+        logger.info("Starting: selectPage ");
 		page.locator(PAGE_SELECTION_XPATH.replace("{pageName}", pageName)).first().click();
+		logger.info("Completed: selectPage ");
 	}
 
 	public static void searchBlock(Page page, String blockName) {
@@ -1112,11 +1154,13 @@ public class DragAndDropBlocksPageUtils {
 	}
 
 	public static void clickOnBlockSettingsOption(Page page) {
+		logger.info("Starting: clickOnBlockSettingsOption");
 		Locator blockSetting = page.locator(BLOCK_SETTINGS_XPATH);
-		AICorePageUtils.waitFor(blockSetting);
+		Waits.waitForElementVisible(blockSetting);
 		if (blockSetting.isVisible()) {
 			blockSetting.click(new Locator.ClickOptions().setForce(true));
 		}
+		logger.info("Completed : clickOnBlockSettingsOption ");
 	}
 
 	public static void deleteBlockOnPage(Page page, String blockName) {
