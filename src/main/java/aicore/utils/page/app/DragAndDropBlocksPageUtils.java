@@ -89,7 +89,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_MARKDOWN_BLOCK_XPATH = "//p[strong[text()='Hello world']]";
 	private static final String DROPPED_LOGS_BLOCK_XPATH = "//div[text()='Attach Query']";
 	private static final String DROPPED_INPUT_BLOCK_XPATH = "//label[text()='Example Input']";
-	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//td[text()='No rows']";
+	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//div[./span[normalize-space()='grid--1']]";
+
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
