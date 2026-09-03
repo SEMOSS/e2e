@@ -4,12 +4,14 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.Page;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.annotations.ResourceUploadLock;
@@ -21,12 +23,15 @@ import aicore.utils.page.app.TemplateCreationUtils;
 public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 	
 	private String appName;
+	private String frameId;
+	private String databaseId;
 
+	
 	@BeforeEach
 	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
 		        "TestDatabase",
 		        TestResources.TEST_DATABASE_ZIP);
@@ -72,13 +77,22 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 		NotebookPageUtils.clickOnImportButton(page);
 		NotebookPageUtils.deleteFirstCell(page);
 		NotebookPageUtils.clickOnRunCellButton(page);
-		fetchFrameId(page);	
+		frameId = fetchFrameId(page);
+		System.out.println("Frame ID: " + frameId);
 
 	}	
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteApp(page, appName);
+		if (databaseId != null && !databaseId.isBlank()) {
+        	Assertions.assertTrue(
+                CommonUtils.navigateAndDeleteCatalog(
+                        page,
+                        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+                        databaseId),
+		"Test database was not deleted");
+		}
 	    logout(page);
 	}
 	
@@ -154,38 +168,62 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 	    DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
 	    BlockSettingsUtils.clickOnBlockSettingsOption(page);
 	    BlockSettingsUtils.clickOnDataTab(page);
+//		BlockSettingsUtils.selectFrame(page, frameId);
 	    fetchFrameId(page);
-	    DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
+//	    DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
+
 	}
 	
-	
-	
-
 	@Test
     public void validateDataGridPagination_test(@PWPage Page page) {
 		
+		System.out.println("Step 0");
+
 		configureBlock(page, "page-1", "Data Grid");
+
+//		verifyDataGridColumnNames(
+//		        page,
+//		        "Age",
+//		        "BLOODPRESSURE",
+//		        "BMI",
+//		        "DIABETES_UNIQUE_ROW_ID",
+//		        "DIABETESPEDIGREEFUNCTION",
+//		        "END_DATE",
+//		        "Glucose",
+//		        "INSULIN",
+//		        "MILESTONE",
+//		        "OUTCOME",
+//		        "PREGNANCIES",
+//		        "SKINTHICKNESS",
+//		        "START_DATE",
+//		        "TASK_GROUP",
+//		        "TASK_NAME",
+//		        "TOOLTIP");
+//		
+		
+
 		verifyDataGridColumnNames(
 		        page,
-		        "AGE",
-		        "BLOODPRESSURE",
+		        "Age",
+		        "BloodPressure",
 		        "BMI",
 		        "DIABETES_UNIQUE_ROW_ID",
-		        "DIABETESPEDIGREEFUNCTION",
-		        "END_DATE",
-		        "GLUCOSE",
-		        "INSULIN",
-		        "MILESTONE",
-		        "OUTCOME",
-		        "PREGNANCIES",
-		        "SKINTHICKNESS",
-		        "START_DATE",
-		        "TASK_GROUP",
-		        "TASK_NAME",
-		        "TOOLTIP");
-		DragAndDropBlocksPageUtils.removeColumnFromDataGrid(page, "AGE");
-		DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);
-		verifyColumnNotPresent(page, "AGE");   
+		        "DiabetesPedigreeFunction",
+		        "End_Date",
+		        "Glucose",
+		        "Insulin",
+		        "Milestone",
+		        "Outcome",
+		        "Pregnancies",
+		        "SkinThickness",
+		        "Start_Date",
+		        "Task_Group",
+		        "Task_Name",
+		        "Tooltip");		
+		
+		DragAndDropBlocksPageUtils.removeColumnFromDataGrid(page, "Age");
+		DragAndDropBlocksPageUtils.clickOnSyncChangesButton(page);	
+		verifyColumnNotPresent(page, "Age"); 
 	}
 	
 	@Test

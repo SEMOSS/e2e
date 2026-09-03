@@ -12,6 +12,7 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
@@ -29,6 +30,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	private String ResizingValues = "Height=250, Width=350";
 	private String ChartTitleValues = "Show Title=true, Title Name=Bar Graph, Select Alignment=left, Text Size= 14, Select Font Weight=bold, Select Font Family=Calibri, Select Colour=black";
 	private String appName;
+	private String databaseId;
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -38,7 +40,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 		verifyWelcomePage(page);
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 
-		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
 		        "TestDatabase",
 		        "Database/TestDatabase.zip");
@@ -96,6 +98,14 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteApp(page, appName);
+		if (databaseId != null && !databaseId.isBlank()) {
+        	Assertions.assertTrue(
+                CommonUtils.navigateAndDeleteCatalog(
+                        page,
+                        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+                        databaseId),
+        "Test database was not deleted");
+    }
 	    logout(page);
 	}
 	
