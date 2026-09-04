@@ -27,8 +27,7 @@ public class DatabaseTestUtils {
 
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
 		CatalogCreationFromZipUtil.uploadFile(page, fileName);
-		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
-
+		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");		
 		return getDatabaseID(page, dbName);
 	}
 	
