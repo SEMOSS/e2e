@@ -20,6 +20,9 @@ import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.NotebookPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
+import aicore.utils.annotations.ResourceUploadLock;
+import aicore.utils.TestResources; 
+
 
 public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	private String frameId;
@@ -42,13 +45,12 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 
 		databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
-		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
-
-		verifyCatalogTitle(page, "TestDatabase");
+		verifyCatalogTitle(page, TestResources.TEST_DATABASE_NAME);
 		AddDatabasePageUtils.clickOnMetadataTab(page);
         HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
@@ -243,7 +245,9 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	    DragAndDropBlocksPageUtils.blockDropPosition(page, blockName);
 	    DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
 	}
+	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
     public void DragAndDropDataBarChart_test(@PWPage Page page) {
 		page.pause();
 		dragAndSelectBlock(page, "Bar Chart");

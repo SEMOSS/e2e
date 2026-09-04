@@ -28,13 +28,12 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 
 	
 	@BeforeEach
-	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
-		databaseId = DatabaseTestUtils.uploadDatabaseZip(
-		        page,
-		        "TestDatabase",
-		        TestResources.TEST_DATABASE_ZIP);
+	    databaseId = DatabaseTestUtils.uploadDatabaseZip(
+	            page,
+	            "TestDatabase",
+	             TestResources.TEST_DATABASE_ZIP);
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
@@ -175,6 +174,7 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 	}
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
     public void validateDataGridPagination_test(@PWPage Page page) {
 		
 		System.out.println("Step 0");
@@ -227,6 +227,7 @@ public class DragAndDropDataGrid extends AbstractPlaywrightTestBase{
 	}
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
     public void DragAndDropDataGridvalidatePagnation_test(@PWPage Page page) {
 		
 		configureBlock(page, "page-1", "Data Grid");
