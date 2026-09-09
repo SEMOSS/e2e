@@ -102,6 +102,7 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 						"#ffcc00", "Left"));
 	}
 
+
 	@ParameterizedTest(name = "Drag and Drop Text section {0} block")
 	@DisplayName("TC02_Drag and Drop Text section block - styling and destination")
 	void testDragAndDropTextSectionBlock(String blockName, String destination, String text, String styles,
@@ -177,9 +178,11 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 		DragAndDropBlocksPageUtils.selectPage(page, "page-1");
+		
+		
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, "Logs");
 		DragAndDropBlocksPageUtils.blockDropPosition(page, "Logs");
-		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, "Logs");
+		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, "Logs");   
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
 		BlockSettingsUtils.selectQueryFromList(page, "Test query");
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);
