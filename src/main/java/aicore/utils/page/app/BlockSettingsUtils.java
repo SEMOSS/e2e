@@ -22,7 +22,7 @@ public class BlockSettingsUtils {
 	private static final String FONT_LIST_XPATH = "//p[text()='Font']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
 	private static final String COLOR_BOX_XPATH = "//input[@type='color']";
 	private static final String MARKDOWN_TEXTBOX_XPATH = "//p[text()='Markdown']/parent::div/following-sibling::div//div[contains(@class,'MuiInputBase-root')]//input[@type='text']";
-	private static final String QUERY_DROPDOWN_XPATH = "//input[@placeholder='Query']";
+	private static final String QUERY_DROPDOWN_XPATH = "//span[@data-slot='select-value' and text()='Query']/ancestor::button[@role='combobox']";
 
 	private static final String DATA_TAB_XPATH = "//button[normalize-space()='Data']";
 	private static final String DRAG_COLUMN_NAME_XPATH = "//div[@data-rbd-draggable-id='{columnName}']";
@@ -143,14 +143,17 @@ public class BlockSettingsUtils {
 		logger.info("Completed: selectTextAlign with textAlign '{}'", textAlign);
 	}
 
+	
+
 	public static void selectQueryFromList(Page page, String queryName) {
-		logger.info("Starting: selectQueryFromList with queryName '{}'", queryName);
-		Locator queryDropdown = page.locator(QUERY_DROPDOWN_XPATH);
-		Waits.waitForElementVisible(queryDropdown);
-		queryDropdown.fill(queryName);
-		queryDropdown.press("ArrowDown");
-		queryDropdown.press("Enter");
-		logger.info("Completed: selectQueryFromList with queryName '{}'", queryName);
+	    logger.info("Starting: selectQueryFromList with queryName '{}'", queryName);
+	    Locator queryDropdown = page.locator(QUERY_DROPDOWN_XPATH);
+	    Waits.waitForElementVisible(queryDropdown);
+	    queryDropdown.click();
+	    Locator option = page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(queryName));
+	    Waits.waitForElementClickable(option);
+	    option.click();
+	    logger.info("Completed: selectQueryFromList with queryName '{}'", queryName);
 	}
 
 
