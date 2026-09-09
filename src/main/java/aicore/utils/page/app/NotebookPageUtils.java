@@ -143,22 +143,16 @@ public class NotebookPageUtils {
 	    logger.info("Completed: clickOnQuerySubmitButton");
 	}
 
+	
 	public static void enterCodeInQuery(Page page, String code) {
-		logger.info("Starting: enterCodeInQuery");
-		code = code.replace("\\n", "\n");
-		Locator cell = page.locator(CODE_ENTER_TEXTAREA).first();
-		Waits.waitForElementVisible(cell);
-		cell.scrollIntoViewIfNeeded();
-		cell.click(new Locator.ClickOptions().setForce(true));
-		for (int i = 0; i < code.length(); i++) {
-			char c = code.charAt(i);
-			if (c == '\n') {
-				page.keyboard().press("Enter");
-			} else {
-				page.keyboard().type(String.valueOf(c));
-			}
-		}
-		logger.info("Completed: enterCodeInQuery");
+	    logger.info("Starting: enterCodeInQuery");
+	    code = code.replace("\\n", "\n");
+	    Locator cell = page.locator(CODE_ENTER_TEXTAREA).first();
+	    Waits.waitForElementVisible(cell);
+	    cell.scrollIntoViewIfNeeded();
+	    cell.click(new Locator.ClickOptions().setForce(true));
+	    page.keyboard().insertText(code);
+	    logger.info("Completed: enterCodeInQuery");
 	}
 
 
