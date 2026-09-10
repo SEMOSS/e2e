@@ -30,7 +30,7 @@ public class EditModelPageUtils {
 	private static final String DATA_RESTRICTIONS_OPTIONS_UNDER_OVERVIEW_XPATH = "//h4[contains(text(), 'Data Restrictions')]/parent::section//div";
 	private static final String MODEL_CARD_XPATH = "//p[contains(text(),'{modelName}')]";
 
-	private static final String ENGINE_ACCESS_STATUS_ICON_XPATH = "//*[contains(@class,'lucide lucide-lock-keyhole')]";
+	private static final String ENGINE_ACCESS_STATUS_ICON_XPATH = "button[title*='engine']:visible";
 	private static final String CATALOG_ID_ON_CARD_XPATH = "//p[contains(text(),'{modelId}')]";
 	private static final String CATALOG_ID_XPATH = "//span[contains(@data-testid,'engineHeader')]";
 	private static final String TAGS_DISPLAYED_ON_CARD_XPATH = "//div[contains(@data-testid,'genericEngineCards-{catalogName}')]//div[@class='flex items-center justify-center']/div/span";
@@ -48,14 +48,17 @@ public class EditModelPageUtils {
 	private static final String REQUEST_ACCESS_BUTTON = "//button[text()='Request Access']";
 
 	public static void searchModelCatalog(Page page, String modelName) {
-		page.getByTestId("search-bar").click();
-		page.getByTestId("search-bar").fill(modelName);
+		Locator searchInput = page.getByTestId("search-bar");
+		AICorePageUtils.waitFor(searchInput);
+		searchInput.click();
+		searchInput.fill(modelName);
 		page.waitForTimeout(300);
 	}
 
 	public static void selectModelFromSearchOptions(Page page, String modelName) {
-		page.locator((SEARCHED_MODEL_XPATH.replace("{modelName}", modelName))).isVisible();
-		page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName)).click();
+		Locator modelCard = page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName)).first();
+		AICorePageUtils.waitFor(modelCard);
+		modelCard.click();
 	}
 
 	public static void addedModelCard(Page page, String modelName) {
@@ -64,9 +67,19 @@ public class EditModelPageUtils {
 	}
 
 	public static boolean verifyModelIsDisplayedOnCatalogPage(Page page, String modelName) {
-		Locator modelCard = page.locator(SEARCHED_MODEL_XPATH.replace("{modelName}", modelName));
-		AICorePageUtils.waitFor(modelCard);
-		return modelCard.isVisible();
+		Locator modelCard = page.locator(MODEL_CARD_XPATH.replace("{modelName}", modelName));
+		try {
+			AICorePageUtils.waitFor(modelCard);
+		} catch (Exception e) {
+			System.out.println("FAIL: Model card not found for '" + modelName + "' | current URL: " + page.url()
+					+ " | matching elements count: " + modelCard.count());
+			return false;
+		}
+		boolean isDisplayed = modelCard.first().isVisible();
+		if (!isDisplayed) {
+			System.out.println("FAIL: Model card located but not visible for '" + modelName + "'");
+		}
+		return isDisplayed;
 	}
 
 	public static void clickOnEditButton(Page page) {
@@ -144,7 +157,7 @@ public class EditModelPageUtils {
 	}
 
 	public static void mouseHoverOnEngineAccessStatusIcon(Page page) {
-		Locator lockIcon = page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).nth(1);
+		Locator lockIcon = page.locator(ENGINE_ACCESS_STATUS_ICON_XPATH).first();
 		AICorePageUtils.waitFor(lockIcon);
 		lockIcon.hover(new Locator.HoverOptions().setForce(true));
 	}
