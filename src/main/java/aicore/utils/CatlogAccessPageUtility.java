@@ -85,7 +85,9 @@ public class CatlogAccessPageUtility {
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
-		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
+		// scope to the members-table search row (unique via its Tailwind h-[36px] class) to avoid matching the catalog-level search box
+		Locator searchInput = page.locator("div[class*='h-[36px]']").getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT);
+		searchInput.fill(role);
 		page.waitForTimeout(1000);
 	}
 
@@ -211,8 +213,9 @@ public class CatlogAccessPageUtility {
 			username = username + " lastname";
 		}
 
-		// Fill the search input
-		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).first().fill(username);
+		// Fill the search input, scoped to the members-table search row (unique via its Tailwind h-[36px] class) to avoid matching the catalog-level search box
+		Locator searchInput = page.locator("div[class*='h-[36px]']").getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT);
+		searchInput.fill(username);
 		page.waitForTimeout(1000);
 
 		// Optional: click the matching result if needed
