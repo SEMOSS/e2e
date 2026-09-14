@@ -12,11 +12,13 @@ import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.NotebookPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
+import aicore.utils.TestResources;
 
 
 public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
@@ -24,7 +26,6 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	String appName = "Default Name Test App";
 	
 	private static final String TEMPLATE_NAME = "Create Diabetes Record";
-	private static final String DATABASE_NAME = "TestDatabase";
 	private static final String QUERY_NAME = "insert-diabetes-record";
 	
 	@BeforeEach
@@ -32,8 +33,8 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		loginNativeAdmin(page);
 		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
-		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
@@ -44,7 +45,7 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		CommonUtils.navigateAndDeleteCatalog(
 		        page,
 		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
-		        DATABASE_NAME
+		        TestResources.TEST_DATABASE_NAME
 		    );
 	    logout(page);
 	}
@@ -69,15 +70,15 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	}
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void CreateDiabetesRecordTemplate_test (@PWPage Page page) {
 		
 		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
-
 		verifyAppCreated(page);
 		BlockSettingsUtils.closeBlockSettings(page);
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);
-		NotebookPageUtils.selectDatabaseFromDropdown(page, DATABASE_NAME);
+		NotebookPageUtils.selectDatabaseFromDropdown(page, TestResources.TEST_DATABASE_NAME);
 		NotebookPageUtils.clickOnRunCellButton(page);
 		verifyHeaders(
 		        page,
@@ -99,8 +100,8 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		        "TOOLTIP");
 	}
 	
-
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void ValidateupdatedDiabetesRecord_test (@PWPage Page page) {
 		
 		appName = TemplateCreationUtils.createAppFromTemplate(page, TEMPLATE_NAME);
@@ -120,6 +121,7 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	
 	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void CreateDiabetesRecordTemplateQueryValidation_test (@PWPage Page page) {
 		String query= "SELECT * from diabetes WHERE ID=16767 AND AGE=35 AND LOCATION='Pune' AND GENDER='Male'";
 		
@@ -136,12 +138,11 @@ public class CreateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		AppTemplatePageUtils.closePreviewWindow(page);
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);
-		NotebookPageUtils.selectDatabaseType(page, DATABASE_NAME);
+		NotebookPageUtils.selectDatabaseType(page, TestResources.TEST_DATABASE_NAME);
 		NotebookPageUtils.clickOnRunCellButtonDatabase(page);
 		NotebookPageUtils.checkDatabaseOutput(page);
 		NotebookPageUtils.modifySqlQuery(page, query);
 		NotebookPageUtils.clickOnRunCellButton(page);
-		
 		verifyQueryValue(page, "AGE", "35");
 		verifyQueryValue(page, "LOCATION", "Pune");
 		verifyQueryValue(page, "GENDER", "Male");

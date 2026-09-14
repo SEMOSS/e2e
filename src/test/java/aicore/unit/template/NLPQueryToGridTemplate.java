@@ -14,7 +14,9 @@ import aicore.utils.CatalogCreationFromZipUtil;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
@@ -27,8 +29,6 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 	String appName = "Default Name Test App";
 
 	private static final String TEMPLATE_NAME = "NLP Query To Grid";
-	private static final String DATABASE_NAME = "TestDatabase";
-	private static final String MODEL_NAME = "Llama3-70B-Instruct";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -49,16 +49,20 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 	    CommonUtils.navigateAndDeleteCatalog(
 	        page,
 	        TestResourceTrackerHelper.CATALOG_TYPE_MODEL,
-	        MODEL_NAME
+	        TestResources.LLAMA3_70B_INSTRUCT_NAME
 	    );
 	}
+	
+	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	@ResourceUploadLock(TestResources.MODEL_ZIP)
 	public void NLPQueryToGridTemplate_test (@PWPage Page page) {
 		
 		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
-		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());		
@@ -71,20 +75,20 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
         MainMenuUtils.openMainMenu(page);
         MainMenuUtils.clickOnOpenModel(page);
         
-        if(EditModelPageUtils.checkIfModelIsDisplayedOnCatalogPage(page, MODEL_NAME)) {
+        if(EditModelPageUtils.checkIfModelIsDisplayedOnCatalogPage(page, TestResources.LLAMA3_70B_INSTRUCT_NAME)) {
         	deleteTestModel(page);
         }
         
 		ModelPageUtils.clickAddModelButton(page);
 		CatalogCreationFromZipUtil.clickOnFileUploadIcon(page);
         
-        CatalogCreationFromZipUtil.uploadFile(page, "Model/ModelZIP.zip");
+        CatalogCreationFromZipUtil.uploadFile(page, TestResources.MODEL_ZIP);
 
 		CatalogCreationFromZipUtil.clickOnUploadButton(page, "Upload");
 
 		Assertions.assertTrue(
-			    AddDatabasePageUtils.verifyDatabaseTitle(page, MODEL_NAME),
-			    "Database title '" + DATABASE_NAME + "' is not visible");
+			    AddDatabasePageUtils.verifyDatabaseTitle(page, TestResources.LLAMA3_70B_INSTRUCT_NAME),
+			    "Database title '" + TestResources.TEST_DATABASE_NAME + "' is not visible");
 		
 		
 		
@@ -108,7 +112,7 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 		AppTemplatePageUtils.verifyDescriptionBelowTitle("Ask your query on the diabetes dataset", page);
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		AppTemplatePageUtils.selectNotebookFromlist(page, "nlp-query");
-		AppTemplatePageUtils.selectModelForNLPTemplate(page, MODEL_NAME, "nlp-query-1");
+		AppTemplatePageUtils.selectModelForNLPTemplate(page, TestResources.LLAMA3_70B_INSTRUCT_NAME, "nlp-query-1");
 
 		NotebookPageUtils.clickOnRunAllCellButton(page);
 
@@ -146,7 +150,7 @@ public class NLPQueryToGridTemplate extends AbstractPlaywrightTestBase {
 		CommonUtils.navigateAndDeleteCatalog(
 		        page,
 		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
-		        DATABASE_NAME
+		        TestResources.TEST_DATABASE_NAME
 		    );
 	}
 

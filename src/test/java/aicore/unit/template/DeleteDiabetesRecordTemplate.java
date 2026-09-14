@@ -12,7 +12,9 @@ import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.NotebookPageUtils;
@@ -23,7 +25,6 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	String appName = "Default Name Test App";
 	
 	private static final String TEMPLATE_NAME = "Delete Diabetes Record";
-	private static final String DATABASE_NAME = "TestDatabase";
 	private static final String QUERY_NAME = "on-page-load";
 	
 	@BeforeEach
@@ -31,8 +32,8 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 		loginNativeAdmin(page);
 		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
-		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
@@ -48,7 +49,7 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 		CommonUtils.navigateAndDeleteCatalog(
 		        page,
 		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
-		        DATABASE_NAME
+		        TestResources.TEST_DATABASE_NAME
 		    );
 	    logout(page);
 	}
@@ -61,21 +62,21 @@ public class DeleteDiabetesRecordTemplate extends AbstractPlaywrightTestBase{
 	private void runNotebook(Page page) {
 	    NotebookPageUtils.clickOnNotebooksOption(page);
 	    NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);
-	    NotebookPageUtils.selectDatabaseType(page, DATABASE_NAME);
+	    NotebookPageUtils.selectDatabaseType(page, TestResources.TEST_DATABASE_NAME);
 	    NotebookPageUtils.clickOnRunCellButtonDatabase(page);
 	    NotebookPageUtils.checkDatabaseOutput(page);
 	}
 	
-	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void DeleteDiabetesRecordTemplate_test (@PWPage Page page) {
 		
 		runNotebook(page);	
 	}
 
 	
-
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void DeleteDiabetesRecordTemplateExist_test (@PWPage Page page) {
 		
 		AppTemplatePageUtils.clickPreviewButton(page);

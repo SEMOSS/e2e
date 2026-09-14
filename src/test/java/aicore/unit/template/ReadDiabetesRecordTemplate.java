@@ -7,7 +7,9 @@ import com.microsoft.playwright.Page;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.NotebookPageUtils;
@@ -23,8 +25,8 @@ public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		loginNativeAdmin(page);
 		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
-		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
@@ -41,8 +43,8 @@ public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	}
 	
 	
-
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void CreateAppUsingReadDiabetesRecordTemplate_test (@PWPage Page page) {
 		
 		appName = TemplateCreationUtils.createAppFromTemplate(page, "Read Diabetes Record");	
@@ -55,8 +57,8 @@ public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	}
 
 	
-	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void CreateAppUsingReadDiabetesRecordTemplateExisting_test (@PWPage Page page) {
 		
 		appName = TemplateCreationUtils.createAppFromTemplate(page, "Read Diabetes Record");	

@@ -9,7 +9,9 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
 import aicore.utils.page.app.AppTemplatePageUtils;
 import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.NotebookPageUtils;
@@ -25,8 +27,8 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		loginNativeAdmin(page);
 		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
-		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
@@ -52,15 +54,15 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	private void openUpdateNotebook(Page page) {
 	    NotebookPageUtils.clickOnNotebooksOption(page);
 	    NotebookPageUtils.clickOnQueryName(page, QUERY_NAME);
-	    NotebookPageUtils.selectDatabaseType(page, DATABASE_NAME);
+	    NotebookPageUtils.selectDatabaseType(page, TestResources.TEST_DATABASE_NAME);
 	    NotebookPageUtils.clickOnRunCellButtonDatabase(page);
 	    NotebookPageUtils.checkDatabaseOutput(page);
 	}
 	
 	private static final String QUERY_NAME = "update-diabetes-record";
-	private static final String DATABASE_NAME = "TestDatabase";
 
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void UpdateDiabetesRecordTemplate_test (@PWPage Page page) {
 		
 		appName = TemplateCreationUtils.createAppFromTemplate(page, "Update Diabetes Record");	
@@ -68,8 +70,8 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		openUpdateNotebook(page);
 	}
 
-	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
 	public void UpdateDiabetesRecordTemplateExisting_test (@PWPage Page page) {
 		
 		String newQuery = "SELECT * from diabetes WHERE ID=16767 AND AGE=35 AND LOCATION='Pune' AND GENDER='Male'";
