@@ -24,7 +24,7 @@ public class CatlogAccessPageUtility {
 	private static final String EDITOR_SEE_TOASTER_MESSAGE_XPATH = "//li[@data-type='error']";
 	private static final String CLICK_ON_CANCEL_BUTTON_XPATH = "//button[contains(@data-testid,'confirmCancel-btn')]";
 	// create app variable declaration
-	private static final String CLICK_ON_SETTINGS_XPATH = "//button[@data-testid='workspace-Settings-image']/../..";
+	private static final String CLICK_ON_SETTINGS_XPATH = "//div[@title='Settings' and contains(@class,'flexlayout__border_button')]";
 	private static final String CLICK_ON_DELETE_BUTTON_XPATH = "//button[text()='Delete']";
 	private static final String CLICK_ON_MEMBER_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'Member')]";
 	private static final String CIICK_ON_GENERAL_XPATH = "//span[contains(@class, 'MuiTypography-root') and contains(text(), 'General')]";
@@ -85,7 +85,7 @@ public class CatlogAccessPageUtility {
 		if (searchIcon.isVisible()) {
 			searchIcon.click();
 		}
-		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).fill(role);
+		page.getByPlaceholder(SEARCH_MEMBER_PLACEHOLDER_TEXT).nth(1).fill(role);
 		page.waitForTimeout(1000);
 	}
 
@@ -151,7 +151,7 @@ public class CatlogAccessPageUtility {
 
 	public static boolean canSeeEditOption(Page page, String action) {
 		Locator editButton = page.locator(SEE_EDIT_OPTION_XPATH);
-		AICorePageUtils.waitFor(editButton);
+		AICorePageUtils.waitFor(editButton);		
 		switch (action) {
 		case "Enable":
 			return editButton.isEnabled();
@@ -266,11 +266,11 @@ public class CatlogAccessPageUtility {
 		Locator enableToggle = page.locator(PUBLISH_ENABLE_TOGGLE_XPATH);
 		AICorePageUtils.waitFor(enableToggle);
 		boolean shouldEnable = action.equalsIgnoreCase("enable");
-		boolean isCurrentlyEnabled = enableToggle.isVisible();
+		boolean isCurrentlyEnabled = enableToggle.isChecked();
 		if (isCurrentlyEnabled != shouldEnable) {
 			enableToggle.click();
 		}
-		return enableToggle.isVisible() == shouldEnable;
+		return enableToggle.isChecked() == shouldEnable;
 	}
 
 	public static boolean clickOnPublishPortalButton(Page page) {
@@ -302,6 +302,7 @@ public class CatlogAccessPageUtility {
 
 	public static String getToastMessage(Page page, String toastMessage) {
 		Locator toast = page.locator(TOASTER_MESSAGE_XPATH).first();
+		AICorePageUtils.waitFor(toast);
 		String actualToastMessage = toast.innerText().trim();
 		return actualToastMessage;
 	}

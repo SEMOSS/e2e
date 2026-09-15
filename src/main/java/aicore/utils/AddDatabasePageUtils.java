@@ -172,6 +172,7 @@ public class AddDatabasePageUtils {
 		page.getByText(dbName).click();
 	}
 
+
 	public static void clickOnMetadataTab(Page page) {
 		CatalogPageUtils.clickOnMetadataTab(page);
 	}
