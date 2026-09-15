@@ -3,6 +3,7 @@ package aicore.utils.extensions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
+
+import aicore.utils.reporting.TestLogCapture;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -71,6 +77,9 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 	private static final String BROWSER_KEY = "BROWSER";
 	private static final String CONTEXT_KEY = "CONTEXT";
 	private static final String PAGE_KEY = "PAGE";
+
+	private static final Path SCREENSHOT_DIR = Paths.get("target", "test-artifacts", "screenshots");
+	private static final Path TRACE_DIR = Paths.get("target", "test-artifacts", "traces");
 
 	private static boolean useDocker = false;
 	private static boolean useVideo = false;
@@ -178,11 +187,10 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 		BrowserContext browserContext = browser.newContext(newContextOptions);
 		browserContext.grantPermissions(Arrays.asList("clipboard-read", "clipboard-write"));
 
-		// setup tracing
-//		if (Boolean.parseBoolean(ConfigUtils.getValue(AICoreTestConstants.USE_TRACE))) {
-//			Tracing.StartOptions startOptions = GenericSetupUtils.getStartOptions();
-//			browserContext.tracing().start(startOptions);
-//		}
+		if (useTrace) {
+			browserContext.tracing().start(getStartOptions());
+		}
+		TestLogCapture.start();
 
 		Page page = browserContext.newPage();
 		page.setDefaultTimeout(Double.parseDouble(ConfigUtils.getValue(AICoreTestConstants.TIMEOUT)));
@@ -239,6 +247,22 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 		BrowserContext ctx = store.remove(CONTEXT_KEY, BrowserContext.class);
 		Browser browser = store.remove(BROWSER_KEY, Browser.class);
 
+		boolean failed = context.getExecutionException().isPresent();
+		String testName = sanitize(context.getRequiredTestClass().getSimpleName() + "_" + context.getDisplayName());
+
+		if (failed && page != null) {
+			captureScreenshot(page, testName);
+		}
+
+		if (useTrace && ctx != null) {
+			captureTrace(ctx, testName, failed);
+		}
+
+		String logs = TestLogCapture.stop();
+		if (failed && logs != null && !logs.isBlank()) {
+			Allure.addAttachment("Test Logs - " + testName, "text/plain", logs, ".log");
+		}
+
 //		try {
 //			if (GenericSetupUtils.useVideo() && page != null) {
 //				Path og = page.video().path();
@@ -253,6 +277,38 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 			ctx.close();
 		if (browser != null)
 			browser.close();
+	}
+
+	private static String sanitize(String raw) {
+		return raw.replaceAll("[^a-zA-Z0-9-_]", "_");
+	}
+
+	private static void captureScreenshot(Page page, String testName) {
+		try {
+			Files.createDirectories(SCREENSHOT_DIR);
+			Path path = SCREENSHOT_DIR.resolve(testName + ".png");
+			byte[] png = page.screenshot(new Page.ScreenshotOptions().setPath(path).setFullPage(true));
+			Allure.addAttachment("Screenshot - " + testName, "image/png", new ByteArrayInputStream(png), ".png");
+			logger.error("Screenshot saved to: {}", path.toAbsolutePath());
+		} catch (Exception e) {
+			logger.warn("Failed to capture screenshot for {}: {}", testName, e.getMessage());
+		}
+	}
+
+	private static void captureTrace(BrowserContext ctx, String testName, boolean failed) {
+		try {
+			Files.createDirectories(TRACE_DIR);
+			Path path = TRACE_DIR.resolve(testName + ".zip");
+			ctx.tracing().stop(new Tracing.StopOptions().setPath(path));
+			if (failed) {
+				Allure.addAttachment("Trace - " + testName, "application/zip", Files.newInputStream(path), ".zip");
+				logger.error("Trace saved to: {}", path.toAbsolutePath());
+			} else {
+				Files.deleteIfExists(path);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to stop/save trace for {}: {}", testName, e.getMessage());
+		}
 	}
 
 // ParameterResolver: support injection of Page, BrowserContext, Browser
@@ -304,6 +360,7 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 		JunitUrlUtils.setURL(s);
 	}
 
+	@Step("Login as user type: {1}")
 	public void login(Page page, UserType userType) {
 		if (!alreadyLoggedIn) {
 			logger.info("Logging in as: " + userType);
@@ -377,6 +434,7 @@ public class PlaywrightExtension implements BeforeAllCallback, AfterAllCallback,
 		return "Login Successful";
 	}
 
+	@Step("Logout current user")
 	public void logout(Page page) {
 		if (alreadyLoggedIn) {
 			MainMenuUtils.openMainMenu(page);
