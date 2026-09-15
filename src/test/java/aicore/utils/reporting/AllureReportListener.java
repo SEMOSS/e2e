@@ -10,25 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestPlan;
 
-/**
- * Auto-generates the Allure HTML report after ANY test run finishes -
- * whether that's the full Cucumber suite, a single JUnit5 class, or a subset
- * selected via -Dtest. Registered via ServiceLoader
- * (META-INF/services/org.junit.platform.launcher.TestExecutionListener), so
- * it fires regardless of how tests are launched (IDE, mvn/mvnw, or the JUnit
- * Platform Console launcher directly - no Maven required for this step).
- *
- * Uses the standalone Allure commandline ("allure" on PATH) so it works the
- * same way locally and in CI. If the CLI isn't installed, this logs a
- * warning and does nothing further - it never fails the build/test run.
- *
- * Locally, the report is also auto-opened in the default browser after the
- * run finishes (pass or fail). Under CI (detected via the CI/GITHUB_ACTIONS
- * env vars, which GitHub Actions sets automatically) the report is still
- * generated but the browser-open step is skipped, since there's no display
- * to open it on - no CI-specific code change needed to add CI support later,
- * only wiring the actual pipeline steps (install CLI, upload artifact).
- */
 public class AllureReportListener implements TestExecutionListener {
 	private static final Logger logger = LogManager.getLogger(AllureReportListener.class);
 
