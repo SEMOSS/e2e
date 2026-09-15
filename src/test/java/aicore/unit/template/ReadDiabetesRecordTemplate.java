@@ -1,0 +1,77 @@
+package aicore.unit.template;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import com.microsoft.playwright.Page;
+import aicore.utils.AbstractPlaywrightTestBase;
+import aicore.utils.CommonUtils;
+import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
+import aicore.utils.annotations.PWPage;
+import aicore.utils.annotations.ResourceUploadLock;
+import aicore.utils.page.app.AppTemplatePageUtils;
+import aicore.utils.page.app.CreateAppPopupUtils;
+import aicore.utils.page.app.NotebookPageUtils;
+import aicore.utils.page.app.TemplateCreationUtils;
+
+public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
+	
+	String timestamp = CommonUtils.getTimeStampName();
+	String appName = "Test app " + timestamp;	
+
+	@BeforeEach
+	void setup(@PWPage Page page) {
+		loginNativeAdmin(page);
+		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		        page,
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
+
+		Assertions.assertNotNull(databaseId);
+		Assertions.assertFalse(databaseId.isBlank());
+	}	
+	@AfterEach
+	void tearDown(@PWPage Page page) {
+		CommonUtils.navigateAndDeleteApp(page, appName);
+		CommonUtils.navigateAndDeleteCatalog(
+		        page,
+		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+		        TestResources.TEST_DATABASE_NAME
+		    );
+	    logout(page);
+	}
+	
+	private void verifyAppCreated(Page page) {
+	    String appName = CreateAppPopupUtils.userFetchAppName(page);
+	    Assertions.assertFalse(appName.isEmpty(), "Fetched App Name is Empty");
+	}
+	
+	
+	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	public void CreateAppUsingReadDiabetesRecordTemplate_test (@PWPage Page page) {
+		
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Read Diabetes Record");	
+		verifyAppCreated(page);
+		NotebookPageUtils.clickOnNotebooksOption(page);
+		NotebookPageUtils.clickOnQueryName(page, "on-page-load");
+		NotebookPageUtils.selectDatabaseType(page, TestResources.TEST_DATABASE_NAME);
+		NotebookPageUtils.clickOnRunCellButtonDatabase(page);
+		NotebookPageUtils.checkDatabaseOutput(page);
+	}
+
+	
+	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
+	public void CreateAppUsingReadDiabetesRecordTemplateExisting_test (@PWPage Page page) {
+		
+		appName = TemplateCreationUtils.createAppFromTemplate(page, "Read Diabetes Record");	
+		verifyAppCreated(page);
+		AppTemplatePageUtils.clickPreviewButton(page);
+		NotebookPageUtils.selectValueFromDropdown(page, "4", "Select Unique ID");
+		NotebookPageUtils.checkRecordWithUniqueId(page, "4");
+		}
+	
+}

@@ -14,6 +14,26 @@ public class TemplateCreationUtils {
     public static String createAppFromTemplate(
             Page page,
             String templateName) {
+    	
+        String appName = "Test app " + CommonUtils.getTimeStampName();
+        HomePageUtils.navigateToHomePage(page);
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenAppLibrary(page);
+        // duplicating main menu utils method calls to prevent occasional instance of getting stuck on "App Clone" page
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenAppLibrary(page);
+        AppPageUtils.clickOnCreateNewAppButton(page);
+
+        AppTemplatePageUtils.selectTemplateFromList(templateName, page);
+
+        CreateAppPopupUtils.enterAppName(page, appName);
+        CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");
+        CreateAppPopupUtils.enterTags(page, "Test1, Test2");
+        CreateAppPopupUtils.clickOnCreateButton(page);
+        
+        return appName;
+    }
+}
 
         String appName = "Test app " + CommonUtils.getTimeStampName();
 

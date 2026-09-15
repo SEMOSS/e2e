@@ -384,6 +384,23 @@ public class NotebookPageUtils {
 			page.locator("#checkbox-" + columnName + "-0").click();
 		}
 
+	public static void selectDatabaseType(Page page, String databaseName) {
+
+	    Locator databaseDropdown = page.locator(
+	        "//span[normalize-space()='Database']/following-sibling::button[@role='combobox']"
+	    );
+
+	    Locator selectedDatabase = page.locator(
+	        "//span[normalize-space()='Database']" +
+	        "/following-sibling::button[@role='combobox']" +
+	        "[.//*[contains(normalize-space(),'" + databaseName + "')]]"
+	    );
+
+	    if (!selectedDatabase.isVisible()) {
+	        databaseDropdown.click();
+	        page.getByText(databaseName).click();
+	    }
+	}
 		public static void clickOnUpdateCellButton(Page page) {
 			Locator updateButton = page.locator(UPDATE_CELL_BUTTON_XPATH);
 			AICorePageUtils.waitFor(updateButton);

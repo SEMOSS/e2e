@@ -62,7 +62,7 @@ public class AppPageUtils {
 		searchBox.click();
 		searchBox.clear();
 		if (timestamp != null && !timestamp.isEmpty()) {
-			searchBox.fill(appName + " " + timestamp);
+			page.getByLabel("Search apps").fill(appName + "" + timestamp);
 		} else {
 			searchBox.fill(appName);
 		}
