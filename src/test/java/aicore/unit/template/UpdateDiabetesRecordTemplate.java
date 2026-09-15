@@ -9,6 +9,7 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.annotations.ResourceUploadLock;
@@ -38,6 +39,11 @@ public class UpdateDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteApp(page, appName);
+		CommonUtils.navigateAndDeleteCatalog(
+		        page,
+		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+		        TestResources.TEST_DATABASE_NAME
+		    );
 	    logout(page);
 	}
 	

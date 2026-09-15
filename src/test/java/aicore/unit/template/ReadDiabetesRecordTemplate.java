@@ -7,6 +7,7 @@ import com.microsoft.playwright.Page;
 import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.annotations.ResourceUploadLock;
@@ -34,6 +35,11 @@ public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteApp(page, appName);
+		CommonUtils.navigateAndDeleteCatalog(
+		        page,
+		        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+		        TestResources.TEST_DATABASE_NAME
+		    );
 	    logout(page);
 	}
 	
@@ -51,7 +57,7 @@ public class ReadDiabetesRecordTemplate extends AbstractPlaywrightTestBase {
 		verifyAppCreated(page);
 		NotebookPageUtils.clickOnNotebooksOption(page);
 		NotebookPageUtils.clickOnQueryName(page, "on-page-load");
-		NotebookPageUtils.selectDatabaseType(page, "TestDatabase");
+		NotebookPageUtils.selectDatabaseType(page, TestResources.TEST_DATABASE_NAME);
 		NotebookPageUtils.clickOnRunCellButtonDatabase(page);
 		NotebookPageUtils.checkDatabaseOutput(page);
 	}
