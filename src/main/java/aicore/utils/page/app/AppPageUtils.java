@@ -15,6 +15,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.utils.AICorePageUtils;
 import aicore.utils.CommonUtils;
+import aicore.utils.waitLayer.Waits;
 import io.qameta.allure.Step;
 
 public class AppPageUtils {
@@ -47,28 +48,37 @@ public class AppPageUtils {
 	private static final String APP_GRID_VIEW = "Open";
 	private static final String DATE_CREATED_XPATH = "//button[@title='Private engine']/../../../div[1]//div[2]//span[contains(text(),'2026')]";
 	private static final String CREATED_BY_ME_FILTER_BUTTON_XPATH = "//label[text()='Created by me']/parent::div//button";
+	public static final String APP_SEARCH_BY_LABEL = "Search apps";
+
 
 	@Step("Click on Create New App button")
 	public static void clickOnCreateNewAppButton(Page page) {
-		Locator locator = page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID);
-		AICorePageUtils.waitFor(locator);
-		locator.click();
+	    logger.info("Attempting to click on 'Create New App' button with testId: {}");
+	        Locator locator = page.getByTestId(CREATE_NEW_APP_DATA_TEST_ID);
+	        Waits.waitForElementClickable(locator);
+	        locator.click();
+	        logger.info("Successfully clicked on 'Create New App' button");
 	}
 
 	
-	@Step("Search app: {appName}")
-	public static void searchApp(Page page, String appName, String timestamp) {
-		Locator searchBox = page.getByLabel("Search apps");
-		searchBox.click();
-		searchBox.clear();
-		if (timestamp != null && !timestamp.isEmpty()) {
-			page.getByLabel("Search apps").fill(appName + "" + timestamp);
-		} else {
-			searchBox.fill(appName);
-		}
-		searchBox.press("Enter");
-		page.waitForTimeout(500);
-	}
+
+	
+    @Step("Search for app: {appName}")
+    public static void searchApp(Page page, String appName, String timestamp) {
+        logger.info("Starting: Searching for app: {} with timestamp: {}", appName, timestamp);
+        Locator searchBox = page.getByLabel(APP_SEARCH_BY_LABEL);
+        Waits.waitForElementVisible(searchBox);
+        searchBox.click();
+        searchBox.clear();
+        String searchTerm = (timestamp != null && !timestamp.isEmpty()) 
+            ? appName + " " + timestamp 
+            : appName;
+        searchBox.fill(searchTerm);
+        searchBox.press("Enter");
+        page.waitForTimeout(500);
+        logger.info("Starting: Search completed for: {}", searchTerm);
+    }
+
 	
 	
 	
@@ -99,13 +109,7 @@ public class AppPageUtils {
 	private static final String[] DATA_CLASSIFICATION_ALL_OPTIONS = { "IP", "PHI", "PII", "Public" };
 	private static final String[] DATA_RESTRICTIONS_ALL_OPTIONS = { "IP Allowed", "PHI Allowed", "FOUO Allowed" };
 
-	/**
-	 * The Data Classification / Data Restrictions checkbox labels are rendered
-	 * fully UPPERCASE in the DOM (e.g. "PUBLIC", "IP ALLOWED"), regardless of the
-	 * case used in test data/feature files (e.g. "Public", "IP Allowed"). XPath
-	 * text() comparisons are case-sensitive, so the option text must be
-	 * normalized to uppercase before being used in a locator.
-	 */
+	
 	private static String normalizeOptionText(String option) {
 		return option == null ? null : option.toUpperCase();
 	}
@@ -149,22 +153,30 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnSubmitButtoninAppSettings(Page page) {
+        logger.info("Starting: clickOnSubmitButtoninAppSettings ");
 		Locator submitButton = page.getByTestId(APP_SETTINGS_SUBMIT_TESTID);
 		submitButton.scrollIntoViewIfNeeded();
 		submitButton.click();
+		logger.info("Completed: clickOnSubmitButtoninAppSettings ");
+
 	}
 
 	public static void searchAppId(Page page, String appId) {
 		page.getByLabel("Search apps").click();
 		page.getByLabel("Search apps").fill(appId);
 	}
+	
+	
+    @Step("Click on App Card: {appName}")
+    public static void clickOnAppCard(Page page, String appName, String timestamp) {
+        logger.info("Starting:Clicking on app card: {}", appName);
+        String expectedAppName = appName + "" + timestamp;
+        Locator appCard = page.locator(APP_CARD_XPATH.replace("{appName}", expectedAppName));
+        Waits.waitForElementVisible(appCard);
+        appCard.click();
+        logger.info("Completed :App card clicked: {}", expectedAppName);
+    }
 
-	public static void clickOnAppCard(Page page, String appName, String timestamp) {
-		String expectedAppName = appName + "" + timestamp;
-		Locator appCard = page.locator((APP_CARD_XPATH.replace("{appName}", expectedAppName)));
-		AICorePageUtils.waitFor(appCard);
-		appCard.click();
-	}
 
 	public static void clickOnMoreVertIcon(Page page, String appName, String timestamp) {
 		page.waitForTimeout(200);
@@ -217,9 +229,10 @@ public class AppPageUtils {
 		return appCard.isVisible();
 	}
 
+	
+	//** delete method **//
 	public static boolean isContentVisibleOnAppCard(Page page, String contentName, String contentValue,
 			String timestamp) {
-		// Expected formatted date (e.g., "October 22, 2025")
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
 		String expectedDate = LocalDate.now().format(formatter);
 		Locator locator = null;
@@ -269,14 +282,18 @@ public class AppPageUtils {
 	}
 
 	public static void searchFilterValueOnAppPage(Page page, String filterValue) {
+        logger.info("Starting: searchFilterValueOnAppPage ");
 		page.getByPlaceholder("Search filters...").fill(filterValue);
+		logger.info("Completed: searchFilterValueOnAppPage ");
 	}
 
 	public static void selectFilterValueOnAppPage(Page page, String filterCategory, String filterValue) {
+        logger.info("Starting: searchFilterValueOnAppPage ");
 		Locator filterValueLocator = page.locator(SELECT_FILTER_VALUE_XPATH.replace("{filterCategory}", filterCategory)
 				.replace("{filterValue}", filterValue));
 		filterValueLocator.waitFor();
 		filterValueLocator.click();
+		logger.info("Completed: searchFilterValueOnAppPage ");
 	}
 
 	public static void clickOnInfoButton(Page page, String buttonName) {
@@ -284,10 +301,6 @@ public class AppPageUtils {
 	}
 
 	public static void clickOnDiscoverableAppsButton(Page page) {
-		// The App Library tabs (My Apps/Discoverable/Bookmarked) are only rendered
-		// once the initial app list/permissions calls complete, which can lag right
-		// after switching users. Wait for the page to settle before clicking to
-		// avoid a flaky 30s timeout on this locator.
 		page.waitForLoadState(LoadState.NETWORKIDLE);
 		Locator discoverableButton = page.getByTestId("appCatalogPage-discoverable-btn");
 		AICorePageUtils.waitFor(discoverableButton);
@@ -350,11 +363,7 @@ public class AppPageUtils {
 		return verifyAppsSortedByUpdatedAgo(page, false);
 	}
 
-	/**
-	 * Verifies that the apps are sorted by the 'Updated ... ago' format
-	 * (descending: most recent first). Handles 'Updated today', 'Updated X days
-	 * ago', 'Updated X month(s) ago'
-	 */
+	
 	public static boolean verifyAppsSortedByUpdatedAgo(Page page, boolean descending) {
 		Locator dateLocators = page.locator("//p[contains(text(),'Updated')]");
 		int appCount = dateLocators.count();
@@ -382,9 +391,9 @@ public class AppPageUtils {
 		} else if (dateText.contains("day")) {
 			return extractNumber(dateText);
 		} else if (dateText.contains("month")) {
-			return extractNumber(dateText) * 30; // Approximate a month as 30 days
+			return extractNumber(dateText) * 30; 
 		}
-		return Integer.MAX_VALUE; // fallback for unknown format
+		return Integer.MAX_VALUE;
 	}
 
 	private static int extractNumber(String text) {
@@ -392,7 +401,7 @@ public class AppPageUtils {
 		if (matcher.find()) {
 			return Integer.parseInt(matcher.group());
 		}
-		return 0; // Default if no number found
+		return 0;
 	}
 
 	public static void selectSortByOption(Page page, String optionName) {

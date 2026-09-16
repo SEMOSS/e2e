@@ -14,6 +14,6 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = "cucumber.filter.tags", value = "(@Regression or @Documentation) and not @LoginWithSSO")
 //@ConfigurationParameter(key = "cucumber.filter.tags", value = "@Documentation")
 // @ConfigurationParameter(key = "cucumber.filter.tags", value = "@Smoke")
-@ConfigurationParameter(key = "cucumber.plugin", value = "pretty,html:target/cucumber-report.html")
+@ConfigurationParameter(key = "cucumber.plugin", value = "pretty,html:target/cucumber-report.html,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm")
 public class FullSuite {
 }

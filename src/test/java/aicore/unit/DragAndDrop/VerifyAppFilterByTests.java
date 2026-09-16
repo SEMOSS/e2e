@@ -3,6 +3,8 @@ package aicore.unit.DragAndDrop;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,12 +28,13 @@ import aicore.utils.page.app.TemplateCreationUtils;
 public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 
 	private static final String APP_NAME = "Test app";
-
+	private static final Logger logger = LogManager.getLogger(VerifyAppFilterByTests.class);
 	private String appName = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginAdmin(page);
+		logger.info("BEFORE ALL: creating App");
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
 		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
@@ -40,6 +43,8 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 		Assertions.assertEquals("Welcome to the UI Builder! Drag and drop blocks to use in your app.",
 				DragAndDropBlocksPageUtils.verifyWelcomeText(page), "Mismatch between the expected and actual message");
 
+		
+		logger.info("BEFORE ALL: setting ");
 		CatlogAccessPageUtility.clickOnSettings(page);
 		AppPageUtils.clickOnEditButtoninSettings(page);
 		EditMetadataPageUtils.enterDetails(page, APP_NAME);
@@ -63,7 +68,7 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
-
+		logger.info("After ALL: delete App");
 		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
@@ -91,7 +96,7 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify the app is visible while applying filters in the app library")
+	@DisplayName("TC0_1 :Verify the app is visible while applying filters in the app library")
 	void testAppVisibleWhileApplyingFiltersInAppLibrary(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);
@@ -99,7 +104,7 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
-	@DisplayName("Verify the discoverable app is visible while applying filters in the app library")
+	@DisplayName("TC02_Verify the discoverable app is visible while applying filters in the app library")
 	void testDiscoverableAppVisibleWhileApplyingFiltersInAppLibrary(@PWPage Page page) {
 		AddFunctionPageUtils.clickOnAccessControl(page);
 		AppAccessControlPageUtils.clickOnMakeDiscoverableButtoninSettings(page, appName);
@@ -113,15 +118,13 @@ public class VerifyAppFilterByTests extends AbstractPlaywrightTestBase {
 
 			applyEachFilterAndValidateAppIsVisible(page, appName);
 		} finally {
-			// delete the app it created as ADMIN 
-			// Bug : reviewer steps 
 			logout(page);
 			loginAdmin(page);
 		}
 	}
 
 	@Test
-	@DisplayName("Verify the Bookmarked app is visible while applying filters in the app library")
+	@DisplayName("TC03_Verify the Bookmarked app is visible while applying filters in the app library")
 	void testBookmarkedAppVisibleWhileApplyingFiltersInAppLibrary(@PWPage Page page) {
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenAppLibrary(page);

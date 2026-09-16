@@ -35,6 +35,7 @@ public class UserManagementPageUtils {
 	private static final String CONFIGERATION_KEY_VALUE_XPATH = "//input[@value='access_keys_allowed']/../../div//label[text()='Value']/following-sibling::input";
 	private static final String SAVE_BUTTON_ADFS_XPATH = "//button[.//span[text()='Save']]";
 	private static final String ADFS_TOAST_MESSAGE_XPATH = "//span[text()='{message}']";
+	public static final String  TOASTER_ALERT_MESSAGE_TEXT = "notification-success-alert";
 
 	public static void checkAddMemberButton(Page page) {
 		page.locator(ADD_MEMBER_XPATH).isVisible();
@@ -88,9 +89,11 @@ public class UserManagementPageUtils {
 		saveButton.hover();
 		saveButton.click();
 	}
+	
+	
 
 	public static String userCreationToastMessage(Page page) {
-		Locator toasterMessage = page.getByTestId("notification-success-alert");
+		Locator toasterMessage = page.getByTestId(TOASTER_ALERT_MESSAGE_TEXT);
 		AICorePageUtils.waitFor(toasterMessage);
 		String toastMessage = toasterMessage.textContent().trim();
 		return toastMessage;

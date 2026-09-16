@@ -25,7 +25,7 @@ public class AddDatabasePageUtils {
 	private static final String EDIT_BTN_XPATH = "//button[text()='Edit']";
 	private static final String EXPORT_BTN_DATATESTID = "engineHeader-Database-export-btn";
 	private static final String EDIT_POPUP_XPATH = "//div//h2[contains(text(),'Edit')]";
-	private static final String DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID = "search-bar";
+	public static final String DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID = "search-bar";
 	private static final String SEARCHED_DATABASE_XPATH = "//p[text()='{catalogName}']";
 	private static final String DATABASE_ID_XPATH = "//button[@aria-label=\"copy Database ID\"]/parent::span";
 	private static final String DATABASE_DESCRIPTION_XPATH = "//h6[text()='{DatabaseDescription}']";
