@@ -82,15 +82,19 @@ public class CatalogCreationFromZipUtil extends AbstractBasePage {
 	}
 
 	public static void clickOnUploadButton(Page page, String label) {
-		Locator buttonLocator = page.locator(UPLOAD_FILE_BUTTON_XPATH);
-		buttonLocator.scrollIntoViewIfNeeded();
-		buttonLocator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-		buttonLocator.click();
-		Locator loadingSpinner = page.locator("//span[@role='progressbar']").first();
-		if (loadingSpinner.isVisible()) {
-			loadingSpinner
-					.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(120000));
-		}
+	    Locator buttonLocator = page.locator(UPLOAD_FILE_BUTTON_XPATH);
+
+	    buttonLocator.scrollIntoViewIfNeeded();
+	    buttonLocator.waitFor(new Locator.WaitForOptions()
+	            .setState(WaitForSelectorState.VISIBLE));
+	    buttonLocator.click();
+	    Locator loadingSpinner = page.locator("//span[@role='progressbar']").first();
+	    if (loadingSpinner.isVisible()) {
+	        loadingSpinner.waitFor(
+	                new Locator.WaitForOptions()
+	                        .setState(WaitForSelectorState.HIDDEN)
+	                        .setTimeout(120000));
+	    }
 	}
 
 	// alternative to CodeAppPAgeUtils.userCanSeeFolder

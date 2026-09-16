@@ -7,10 +7,13 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 import aicore.pages.base.AbstractBasePage;
 import aicore.pages.function.AddFunctionFormUtils;
 import aicore.pages.function.FunctionAccessSettingsUtils;
+import io.qameta.allure.Step;
+
 
 public class AddFunctionPageUtils extends AbstractBasePage {
 	private static final Logger logger = LogManager.getLogger(AddFunctionPageUtils.class);
@@ -33,6 +36,10 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 	private static final String TOASTER_MESSAGE_XPATH = "//*[text()='{toastMessage}']";
 	private static final String DISCOVERABLE_FUNCTIONS_BUTTON_TESTID = "engineIndexPage-Functions-discoverable-switch";
 	private static final String CHANGE_ACCESS_BUTTON_XPATH = "//span[text()='{ChangeAccessButton}']";
+
+	private static final String CATALOG_CARD_XPATH = "//div[@data-testid='engineIndex-card-{catalogName}']";
+	private static final String CATALOG_DELETE_OPTION = "engineIndex-card-delete-btn";
+	private static final String CONFIRM_DELETE_BUTTON = "confirm-delete-btn";
 
 	public static boolean userCanSeeFunctionsGridOfOptions(Page page) {
 		Locator locator = page.getByTestId(FUNCTION_OPTIONS_GRID_TEST_ID);
@@ -139,15 +146,37 @@ public class AddFunctionPageUtils extends AbstractBasePage {
 	}
 
 	public static void deleteCatalog(Page page, String catalog, String catalogName) {
-		// TODO duplicate code in CommonUtils.navigateAndDeleteCatalog!!!!!!
-		Locator catalogLocator = searchForAndLocateCatalog(page, catalog, catalogName);
-		if (catalogLocator.isVisible()) {
-			catalogLocator.first().click();
-			clickOnAccessControl(page);
-			FunctionAccessSettingsUtils.clickOnDeleteButton(page);
-			FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
-		}
+	    Locator catalogLocator = searchForAndLocateCatalog(page, catalog, catalogName);
+
+	    if (catalogLocator.isVisible()) {
+	        catalogLocator.first().click();
+	        clickOnAccessControl(page);
+	        FunctionAccessSettingsUtils.clickOnDeleteButton(page);
+	        FunctionAccessSettingsUtils.clickOnDeleteConfirmationButton(page);
+
+	        // Wait until the catalog disappears
+	        catalogLocator.waitFor(
+	            new Locator.WaitForOptions()
+	                .setState(WaitForSelectorState.HIDDEN)
+	                .setTimeout(60000)
+	        );
+	    }
 	}
+	
+	@Step("Check if '{catalogType}' catalog '{catalogName}' exists and delete it")
+	public static void deleteCatalogIfExists(Page page, String catalogType, String catalogName) {
+		logger.info("CHECK IF " + catalogType + " CATALOG '" + catalogName + "' EXISTS");
+		page.getByTestId(SEARCH_BAR_DATATESTID).fill(catalogName);
+		Locator catalogCard = page.locator(CATALOG_CARD_XPATH.replace("{catalogName}", catalogName));
+		if (catalogCard.count() == 0 || !catalogCard.isVisible()) {
+			logger.info(catalogType + " catalog '" + catalogName + "' does not exist — nothing to delete");
+			return;
+		}
+		logger.info("DELETING " + catalogType + " CATALOG: " + catalogName);
+		catalogCard.getByTestId(CATALOG_DELETE_OPTION).click();
+		page.getByTestId(CONFIRM_DELETE_BUTTON).click();
+	}
+
 
 	public static Locator searchForAndLocateCatalog(Page page, String catalog, String catalogName) {
 		Locator searchBar = page.getByTestId(SEARCH_BAR_DATATESTID);

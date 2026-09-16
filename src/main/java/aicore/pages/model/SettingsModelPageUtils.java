@@ -33,8 +33,9 @@ public class SettingsModelPageUtils {
 	private static final String SELECT_ROLE_XPTAH = "//div[text()='{role}']";
 	private static final String ADD_BUTTON_XPATH = "//button[contains(text(),'Add')]";
 	private static final String DELETE_SUCCESS_TOAST_XPATH = "//li[@data-type='success']";
-	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//li[@data-type='error']";
-	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//td//*[contains(@class,'lucide-trash')]";
+	private static final String DELETE_PERMISSION_ERROR_TOAST_XPATH = "//li[@data-type='error']";	
+	private static final String ADDED_MEMBER_DELETE_ICON_XPATH = "//tr[.//*[normalize-space(text())='{role}']]//button[.//*[contains(@class,'lucide-trash')]]";
+	
 	private static final String CONFIRM_DELETE_BUTTON_XPATH = "//h2[text()='Delete Member']/parent::div//button[text()='Delete']";
 	private static final String USAGE_TAB_XPATH = "//button[text()='Usage']";
 	private static final String MODEL_ID_COPY_OPTION = "//button[@aria-label='copy Model ID']";
@@ -160,7 +161,7 @@ public class SettingsModelPageUtils {
 		locator.click();
 	}
 
-	public static void addMember(Page page, String role, boolean useDocker) throws InterruptedException {
+	public static void addMember(Page page, String role, boolean useDocker) {
 		page.locator(SEARCH_USER_XPATH).click();
 		String username = ConfigUtils.getValue(role.toUpperCase() + "_USERNAME").split("@")[0];
 		if (useDocker) {
@@ -203,8 +204,12 @@ public class SettingsModelPageUtils {
 	}
 
 	public static void deleteAddedMember(Page page, String role) {
-		Locator deleteIcon = page.locator(ADDED_MEMBER_DELETE_ICON_XPATH);
-		deleteIcon.scrollIntoViewIfNeeded();
+				
+	    Locator deleteIcon = page.locator(
+	            ADDED_MEMBER_DELETE_ICON_XPATH.replace("{role}", role)
+	        );
+	    
+	    deleteIcon.scrollIntoViewIfNeeded();
 		deleteIcon.hover();
 		deleteIcon.click();
 		page.locator(CONFIRM_DELETE_BUTTON_XPATH).click();
