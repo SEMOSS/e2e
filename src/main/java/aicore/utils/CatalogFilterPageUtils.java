@@ -2,7 +2,7 @@ package aicore.utils;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 
 public class CatalogFilterPageUtils {
 
@@ -21,20 +21,39 @@ public class CatalogFilterPageUtils {
 		Locator filterValueLocator = page.getByTestId(SELECT_FILTER_VALUE_XPATH.replace("{FilterValue}", filterValue));
 		AICorePageUtils.waitFor(filterValueLocator);
 		filterValueLocator.click();
+		try {
+			PlaywrightAssertions.assertThat(filterValueLocator).hasAttribute("aria-pressed", "true");
+		} catch (AssertionError e) {
+			filterValueLocator.click();
+			PlaywrightAssertions.assertThat(filterValueLocator).hasAttribute("aria-pressed", "true");
+		}
 	}
+
+	public static boolean isFilterValueSelected(Page page, String filterValue) {
+		if (filterValue.contains(" ")) {
+			filterValue = filterValue.replace(" ", "-");
+		}
+		Locator filterValueLocator = page.getByTestId(SELECT_FILTER_VALUE_XPATH.replace("{FilterValue}", filterValue));
+		return "true".equals(filterValueLocator.getAttribute("aria-pressed"));
+	}
+
 
 	public static boolean verifyCatalogIsVisibleOnCatalogPage(Page page, String catalogName) {
 		Locator catalogLocator = page.getByText(CATALOG_NAME.replace("{CatalogName}", catalogName));
-		AICorePageUtils.waitFor(catalogLocator);
+		try {
+			AICorePageUtils.waitFor(catalogLocator);
+		} catch (com.microsoft.playwright.TimeoutError e) {
+			return false;
+		}
 		return catalogLocator.isVisible();
 	}
 
 	public static void clickOnBookmark(Page page, String catalogName) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Bookmark " + catalogName)).click();
+		page.getByTitle("Bookmark " + catalogName).click();
 	}
 
 	public static void clickOnUnbookmark(Page page, String catalogName) {
-		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Unbookmark " + catalogName)).click();
+		page.getByTitle("Unbookmark " + catalogName).click();
 	}
 
 	public static boolean verifyCatalogDisplayedUnderBookmarkedSection(Page page, String catalogName) {
