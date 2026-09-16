@@ -3,7 +3,10 @@ package aicore.unit.DragAndDrop.permissions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
 import com.microsoft.playwright.Page;
 import aicore.pages.app.settings.AppAccessControlPageUtils;
 import aicore.pages.home.HomePageUtils;
@@ -20,7 +23,9 @@ import aicore.utils.page.app.TemplateCreationUtils;
 
 public class Appfilter extends AbstractPlaywrightTestBase{
 	
-
+	private String appName;
+	private List<String> multiApps = new ArrayList<>();
+	
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginNativeAdmin(page);
@@ -30,6 +35,9 @@ public class Appfilter extends AbstractPlaywrightTestBase{
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		for (String createdAppName : multiApps) {
+			CommonUtils.navigateAndDeleteApp(page, createdAppName);
+		}
 	    logout(page);
 	}
 	
@@ -102,11 +110,10 @@ public class Appfilter extends AbstractPlaywrightTestBase{
 	}
 	
 
-	
 	@Test
     public void ValidateDiscoverableOption_test(@PWPage Page page) {
 		
-		String appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
+		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);
 		verifyWelcomePage(page);		
 		CatlogAccessPageUtility.clickOnSettings(page);
@@ -124,60 +131,56 @@ public class Appfilter extends AbstractPlaywrightTestBase{
 
 	}
 	
-	
 	@Test
     public void validateAscendingAndDescendingFilter_test(@PWPage Page page) {
 		
-		TemplateCreationUtils.createMultipleDragAndDropApps(
+		multiApps.addAll(TemplateCreationUtils.createMultipleDragAndDropApps(
 		        page,
 		        1,
 		        "Drag and Drop",
 		        "Descending filter test App",
 		        "Pagination Test Description",
 		        "Pagination, Test"
-		);
+		));
 		
 		openAppLibrary(page);
-		TemplateCreationUtils.createMultipleDragAndDropApps(
+		multiApps.addAll(TemplateCreationUtils.createMultipleDragAndDropApps(
 		        page,
 		        1,
 		        "Drag and Drop",
 		        "Descending filter test App",
 		        "Pagination Test Description",
 		        "Pagination, Test"
-		);
+		));
         
 		openAppLibrary(page);
 		AppPageUtils.clickOnFilterButton(page, "Ascending");
 		verifySortedInAscendingOrder(page, "Ascending");
 		AppPageUtils.clickOnFilterButton(page, "Descending");
-		verifySortedInDescendingOrder(page, "Descending");   
+		verifySortedInDescendingOrder(page, "Descending");
+
 	}
-	
-	
 	
 	@Test
     public void validateDateModifiedFilter_test(@PWPage Page page) {
 		
-		TemplateCreationUtils.createMultipleDragAndDropApps(
+		multiApps.addAll(TemplateCreationUtils.createMultipleDragAndDropApps(
 		        page,
 		        1,
 		        "Drag and Drop",
 		        "Descending filter test App",
 		        "Pagination Test Description",
 		        "Pagination, Test"
-		);
+		));
 		
 		openAppLibrary(page);
 		AppPageUtils.selectSortByOption(page, "Date Last Edited");
 		verifyAppsSortedByDateLastEdited(page);
 	}
-	
-	
+
 	@Test
     public void validateViewFilter_test(@PWPage Page page) {
-		
-        
+		  
 		openAppLibrary(page);
 		String appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 		verifyAppCreated(page);

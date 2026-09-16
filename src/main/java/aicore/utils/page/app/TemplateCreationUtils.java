@@ -1,5 +1,8 @@
 package aicore.utils.page.app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.microsoft.playwright.Page;
 
 import aicore.pages.home.HomePageUtils;
@@ -11,6 +14,26 @@ public class TemplateCreationUtils {
     public static String createAppFromTemplate(
             Page page,
             String templateName) {
+    	
+        String appName = "Test app " + CommonUtils.getTimeStampName();
+        HomePageUtils.navigateToHomePage(page);
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenAppLibrary(page);
+        // duplicating main menu utils method calls to prevent occasional instance of getting stuck on "App Clone" page
+        MainMenuUtils.openMainMenu(page);
+        MainMenuUtils.clickOnOpenAppLibrary(page);
+        AppPageUtils.clickOnCreateNewAppButton(page);
+
+        AppTemplatePageUtils.selectTemplateFromList(templateName, page);
+
+        CreateAppPopupUtils.enterAppName(page, appName);
+        CreateAppPopupUtils.enterAppDescription(page, "Created by automation script");
+        CreateAppPopupUtils.enterTags(page, "Test1, Test2");
+        CreateAppPopupUtils.clickOnCreateButton(page);
+        
+        return appName;
+    }
+}
 
         String appName = "Test app " + CommonUtils.getTimeStampName();
 
@@ -66,7 +89,7 @@ public class TemplateCreationUtils {
     }
 
     
-    public static void createMultipleDragAndDropApps(
+    public static List<String> createMultipleDragAndDropApps(
             Page page,
             int appCount,
             String appType,
@@ -77,6 +100,8 @@ public class TemplateCreationUtils {
         HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
         MainMenuUtils.clickOnOpenAppLibrary(page);
+
+        List<String> createdAppNames = new ArrayList<>();
 
         for (int i = 0; i < appCount; i++) {
 
@@ -91,7 +116,11 @@ public class TemplateCreationUtils {
             CreateAppPopupUtils.enterAppDescription(page, appDescription);
             CreateAppPopupUtils.enterTags(page, appTags);
             CreateAppPopupUtils.clickOnCreateButton(page);
+
+            createdAppNames.add(appNameWithTimestamp);
         }
+
+        return createdAppNames;
     }
     
     private static void completeAppCreation(Page page, String appName) {

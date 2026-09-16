@@ -91,7 +91,8 @@ public class DragAndDropBlocksPageUtils {
 	private static final String DROPPED_MARKDOWN_BLOCK_XPATH = "//p[strong[text()='Hello world']]";
 	private static final String DROPPED_LOGS_BLOCK_XPATH = "//div[text()='Attach Query']";
 	private static final String DROPPED_INPUT_BLOCK_XPATH = "//label[text()='Example Input']";
-	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//td[text()='No rows']";
+	private static final String DROPPED_DATA_GRID_BLOCK_XPATH = "//div[./span[normalize-space()='grid--1']]";
+
 	private static final String DROPPED_AREA_CHART_XPATH = "//div[@class='vega-embed']";
 	private static final String DROPPED_MERMAID_CHART_XPATH = "//pre[@class='mermaid']";
 	private static final String DROPPED_ACCORDION_BLOCK_XPATH = "//div[@data-block='accordion--1']";
@@ -127,11 +128,11 @@ public class DragAndDropBlocksPageUtils {
 
 
 	// Bar Chart tool
-	private static final String BARCHART_ISVISIBLE_XPATH = "//div[@class='echarts-for-react ']";
-	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//span[text()='+ Add Custom Color Palette']";
-	private static final String COLOR_PALETTE_ICON_XPATH = "//*[name()='svg'][@data-testid='FormatColorFillIcon']";
-	private static final String COLOR_CHECK_ICON_XPATH = "//*[name()='svg'][@data-testid='CheckIcon']";
-	private static final String ADD_COLOR_XPATH = "//span[text()='Add']";
+	private static final String BARCHART_ISVISIBLE_XPATH = "//div[@class='echarts-for-react ']";	
+	private static final String ADD_CUSTOME_COLOR_PALETTE_XPATH = "//button[text()='+ Add Custom Color Palette']";
+	private static final String COLOR_PALETTE_ICON_XPATH = "//button[@aria-label='select colour']";
+	private static final String COLOR_CHECK_ICON_XPATH = "//button[.//*[contains(@class,'lucide-check')]]";	
+	private static final String ADD_COLOR_XPATH ="//button[normalize-space()='Add']";
 	private static final String ADDED_COLOR_PALETTE_XPATH = "//div[normalize-space()='MyPalette']";
 	private static final String LEGEND_OPTION_XPATH = "//span[text()='Legend']";
 	private static final String LEGEND_OPTION_CHECKBOX_XPATH = "//p[normalize-space()='Show Legend']/preceding-sibling::span//input[@type='checkbox']";
@@ -644,7 +645,7 @@ public class DragAndDropBlocksPageUtils {
 		page.waitForTimeout(4000);
 		chartLocator.screenshot(new Locator.ScreenshotOptions().setPath(path));
 	}
-
+	
 	// Duplicate and delete Area Chart
 	public static void clickOnAreaChartTOViewOptions(Page page) {
 		page.locator(CLICK_ON_AREA_CHART_VIEW_OPTIONS).click();
@@ -683,11 +684,19 @@ public class DragAndDropBlocksPageUtils {
 		return page.locator(DUPLICATE_ICON_XPATH).isVisible();
 	}
 
+
 	public static void clickOnDuplicateIcon(Page page) {
-		Locator duplicateIcon = page.locator(DUPLICATE_ICON_XPATH);
-//		CommonUtils.moveMouseToCenter(page, duplicateIcon, 0);
-		duplicateIcon.click();
+	    Locator moreActionsButton = page.getByTitle("More actions");
+
+	    AICorePageUtils.waitFor(moreActionsButton);
+	    moreActionsButton.click();
+
+	    Locator duplicateOption = page.getByText("Duplicate", new Page.GetByTextOptions().setExact(true));
+
+	    AICorePageUtils.waitFor(duplicateOption);
+	    duplicateOption.click();
 	}
+
 
 	public static boolean duplicatedChartIsVisiable(Page page, int previousCount, String blockName) {
 		Locator droppedBlockLocator;
@@ -943,10 +952,11 @@ public class DragAndDropBlocksPageUtils {
 		page.locator(COLOR_PALETTE_ICON_XPATH).click();
 		page.locator("//input[@type='color']").fill("#d30d11");
 		page.locator(COLOR_CHECK_ICON_XPATH).click();
-		page.locator("//input[@type='color']").fill("#0d14d3");
-		page.locator(COLOR_CHECK_ICON_XPATH).click();
+		page.locator("//input[@type='color']").fill("#0d14d3");		
+		page.locator(COLOR_CHECK_ICON_XPATH).click();		
 		page.locator(ADD_COLOR_XPATH).click();
 		return page.locator(ADDED_COLOR_PALETTE_XPATH).first().isVisible();
+		
 	}
 
 	public static void performCheckColor(Page page) {

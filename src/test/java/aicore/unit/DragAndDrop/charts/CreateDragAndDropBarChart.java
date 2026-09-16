@@ -12,6 +12,7 @@ import aicore.utils.AbstractPlaywrightTestBase;
 import aicore.utils.AddDatabasePageUtils;
 import aicore.utils.CommonUtils;
 import aicore.utils.DatabaseTestUtils;
+import aicore.utils.TestResourceTrackerHelper;
 import aicore.utils.annotations.PWPage;
 import aicore.utils.page.app.AppPageUtils;
 import aicore.utils.page.app.BlockSettingsUtils;
@@ -19,6 +20,9 @@ import aicore.utils.page.app.CreateAppPopupUtils;
 import aicore.utils.page.app.DragAndDropBlocksPageUtils;
 import aicore.utils.page.app.NotebookPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
+import aicore.utils.annotations.ResourceUploadLock;
+import aicore.utils.TestResources; 
+
 
 public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	private String frameId;
@@ -29,6 +33,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	private String ResizingValues = "Height=250, Width=350";
 	private String ChartTitleValues = "Show Title=true, Title Name=Bar Graph, Select Alignment=left, Text Size= 14, Select Font Weight=bold, Select Font Family=Calibri, Select Colour=black";
 	private String appName;
+	private String databaseId;
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
@@ -38,15 +43,14 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 		verifyWelcomePage(page);
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 
-		String databaseId = DatabaseTestUtils.uploadDatabaseZip(
+		databaseId = DatabaseTestUtils.uploadDatabaseZip(
 		        page,
-		        "TestDatabase",
-		        "Database/TestDatabase.zip");
+		        TestResources.TEST_DATABASE_NAME, 
+		        TestResources.TEST_DATABASE_ZIP);   
 
 		Assertions.assertNotNull(databaseId);
 		Assertions.assertFalse(databaseId.isBlank());
-
-		verifyCatalogTitle(page, "TestDatabase");
+		verifyCatalogTitle(page, TestResources.TEST_DATABASE_NAME);
 		AddDatabasePageUtils.clickOnMetadataTab(page);
         HomePageUtils.navigateToHomePage(page);
         MainMenuUtils.openMainMenu(page);
@@ -61,7 +65,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 		NotebookPageUtils.clickOnQuerySubmitButton(page);
 		NotebookPageUtils.mouseHoverOnNotebookHiddenOptions(page);
 		NotebookPageUtils.clickOnHiddenNotebookOption(page, "Import Data");
-		NotebookPageUtils.selectHiddenOptionDropdown(page, "From Data Catalog");
+		NotebookPageUtils.selectHiddenOptionDropdown(page, "Query Builder");
 		NotebookPageUtils.selectDatabaseFromDropdown(page, "TestDatabase");
 
 		verifyFieldsColumnNames(
@@ -82,12 +86,13 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 		        "Task_Group",
 		        "Task_Name",
 		        "Tooltip");
+		
 		NotebookPageUtils.selectAllColumns(page);
 		NotebookPageUtils.clickOnImportButton(page);
 		NotebookPageUtils.deleteFirstCell(page);
-		NotebookPageUtils.enterDataLimit(page, "20");
+		NotebookPageUtils.enterDataLimit(page, "20");		
 		NotebookPageUtils.clickOnRunCellButton(page);
-		frameId = fetchFrameId(null);
+		frameId = fetchFrameId(page);
 		DragAndDropBlocksPageUtils.selectPage(page, "page-1");
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 	}
@@ -95,6 +100,14 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	@AfterEach
 	void tearDown(@PWPage Page page) {
 		CommonUtils.navigateAndDeleteApp(page, appName);
+		if (databaseId != null && !databaseId.isBlank()) {
+        	Assertions.assertTrue(
+                CommonUtils.navigateAndDeleteCatalog(
+                        page,
+                        TestResourceTrackerHelper.CATALOG_TYPE_DATABASE,
+                        databaseId),
+        "Test database was not deleted");
+    }
 	    logout(page);
 	}
 	
@@ -143,6 +156,7 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	    return frameID;
 	}
 	
+
 	private void dragColumnToField(Page page, String columnName, String fieldName) {
 
 	    BlockSettingsUtils.dragColumnToTargetField(page, columnName, fieldName);
@@ -204,7 +218,17 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	    String diffImagePath = basePath + "diffChart.png";
 
 	    DragAndDropBlocksPageUtils.closeBlocksOption(page);
+	    
+
 	    DragAndDropBlocksPageUtils.takeChartScreenshot(page, actualImagePath, toolName);
+
+    	System.out.println("Actual screenshot: " + actualImagePath);
+    	System.out.println("Expected screenshot: " + expectedImagePath);
+    	System.out.println("Diff screenshot: " + diffImagePath);
+	    
+//	    page.pause();
+
+	    
 	    try {
 	    Assertions.assertTrue(
 	            CommonUtils.compareImages(actualImagePath, expectedImagePath, diffImagePath),
@@ -221,21 +245,25 @@ public class CreateDragAndDropBarChart extends AbstractPlaywrightTestBase {
 	    DragAndDropBlocksPageUtils.blockDropPosition(page, blockName);
 	    DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, blockName);
 	}
+	
 	@Test
+	@ResourceUploadLock(TestResources.TEST_DATABASE_ZIP)
     public void DragAndDropDataBarChart_test(@PWPage Page page) {
-		
+		page.pause();
 		dragAndSelectBlock(page, "Bar Chart");
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
 		BlockSettingsUtils.clickOnDataTab(page);
 		BlockSettingsUtils.selectFrame(page, frameId);
-		dragColumnToField(page, "AGE", "Select X Axis");
-		dragColumnToField(page, "GLUCOSE", "Select Y Axis");
+		dragColumnToField(page, "Age", "Select X Axis");
+		dragColumnToField(page, "Glucose", "Select Y Axis");
 		DragAndDropBlocksPageUtils.clickOnToolTab(page);
 		DragAndDropBlocksPageUtils.clickOnToolOption(page, "Conditional");
-		verifyConditional(page, false, true);
+		verifyConditional(page, false, true);		
 		DragAndDropBlocksPageUtils.clickOnToolOption(page, "Color Palette");
 		verifyColorPalette(page, "Add Color");
-		verifyColorPalette(page, "Change Color");		
+		verifyColorPalette(page, "Change Color");
+		
+		page.pause();
 		verifyToolMatchesBaseline(page, "Color_Palette_Tool", "Bar Chart");
 		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, "Bar Chart");
 		DragAndDropBlocksPageUtils.clickOnToolTab(page);
