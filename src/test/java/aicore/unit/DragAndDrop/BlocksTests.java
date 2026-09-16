@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,13 +29,15 @@ import aicore.utils.page.app.NotebookPageUtils;
 import aicore.utils.page.app.TemplateCreationUtils;
 
 public class BlocksTests extends AbstractPlaywrightTestBase {
-
+	private static final Logger logger = LogManager.getLogger(BlocksTests.class);
+    SoftAssertions softAssert = new SoftAssertions();
 	private String appName = "";
 	private String blockText = "";
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginAdmin(page);
+		logger.info("BEFORE ALL: creating App");
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
 		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
@@ -49,11 +54,16 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 		DragAndDropBlocksPageUtils.clickOnEditButton(page);
 
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
+		
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
+		
+		//BlockSettingsUtils.closeBlockSettings(page);
+
 	}
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		logger.info("After ALL: creating App");
 		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}
@@ -91,6 +101,7 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 				Arguments.of("Markdown", "", "**Markdown** block", "Bold, Italic", "Bold, Italic", "Times New Roman",
 						"#ffcc00", "Left"));
 	}
+
 
 	@ParameterizedTest(name = "Drag and Drop Text section {0} block")
 	@DisplayName("TC02_Drag and Drop Text section block - styling and destination")
@@ -167,9 +178,11 @@ public class BlocksTests extends AbstractPlaywrightTestBase {
 
 		DragAndDropBlocksPageUtils.clickOnBlocksOption(page);
 		DragAndDropBlocksPageUtils.selectPage(page, "page-1");
+		
+		
 		DragAndDropBlocksPageUtils.mouseHoverOnBlock(page, "Logs");
 		DragAndDropBlocksPageUtils.blockDropPosition(page, "Logs");
-		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, "Logs");
+		DragAndDropBlocksPageUtils.clickOnDroppedBlock(page, "Logs");   
 		BlockSettingsUtils.clickOnBlockSettingsOption(page);
 		BlockSettingsUtils.selectQueryFromList(page, "Test query");
 		DragAndDropBlocksPageUtils.clickOnSaveAppButton(page);

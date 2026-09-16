@@ -1,5 +1,7 @@
 package aicore.unit.DragAndDrop;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +21,14 @@ import aicore.utils.page.app.TemplateCreationUtils;
 public class DragAndDropCommitTests extends AbstractPlaywrightTestBase {
 
 	private String appName = "";
+	private static final Logger logger = LogManager.getLogger(DragAndDropCommitTests.class);
 
 	@BeforeEach
 	void setup(@PWPage Page page) {
 		loginAdmin(page);
+		
+		logger.info("BEFORE ALL: creating App");
+
 		appName = TemplateCreationUtils.createDragAndDropApp(page, "Drag and Drop");
 
 		Assertions.assertTrue(DragAndDropBlocksPageUtils.verifyPage1IsVisible(page), "Page is not visible");
@@ -36,6 +42,7 @@ public class DragAndDropCommitTests extends AbstractPlaywrightTestBase {
 
 	@AfterEach
 	void tearDown(@PWPage Page page) {
+		logger.info("After ALL: Delete App");
 		CommonUtils.navigateAndDeleteApp(page, appName);
 		logout(page);
 	}

@@ -44,24 +44,19 @@ import aicore.framework.AICoreTestConstants;
 import aicore.framework.ConfigUtils;
 import aicore.framework.UrlUtils;
 import aicore.pages.home.MainMenuUtils;
+import aicore.utils.page.app.AppPageUtils;
+import aicore.utils.page.model.ModelPageUtils;
 
 public class CommonUtils {
 	private static final Logger logger = LogManager.getLogger(CommonUtils.class);
 	private static final String NAME_TIMESTAMP_FORMAT = "ddHHmmss";
-
-	private static final String SEARCH_APP_LABEL = "Search apps";
-	private static final String SEARCH_CATALOG_DATATESTID = "search-bar";
 	private static final String CLICK_ON_CATALOG_XPATH = "//div[@data-slot='card']";
-	private static final String ACCESS_CONTROL_XPATH = "//button[text()='Access Control']";
-
 	private static final String APP_DELETE_BUTTON_XPATH = "//div[text()='Delete App']";
 	private static final String DELETE_CONFIRMATION_POPUP_BUTTON_XPATH = "//button[normalize-space()='Delete']";
-
 	private static final String THREE_DOT_ICON_XPATH = "//button[@aria-label='More options']";
 	private static final String DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'-delete-btn')]";
 	private static final String CONFIRMATION_POPUP_DELETE_BUTTON_XPATH = "//button[contains(@data-testid,'confirmDelete-btn')]";
 	private static final String DELETE_TOAST_MESSAGE_XPATH = "//div[contains(text(),'Successfully deleted')]";
-	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
 	private static final String TEAM_PERMISSION_DATATESTID = "settingsIndexPage-Team-Permissions-card";
 	private static final String SEARCH_TEAM_PLACEHOLDER_TEXT = "Search teams by name";
@@ -321,12 +316,12 @@ public class CommonUtils {
 			case TestResourceTrackerHelper.CATALOG_TYPE_GUARDRAIL -> MainMenuUtils.clickOnGuardrail(page);
 			default -> throw new IllegalArgumentException("Invalid catalog type: " + catalogType);
 			}
-			page.getByTestId(SEARCH_CATALOG_DATATESTID).click();
-			page.getByTestId(SEARCH_CATALOG_DATATESTID).fill(catalogId);
+			page.getByTestId(AddDatabasePageUtils.DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID).click();
+			page.getByTestId(AddDatabasePageUtils.DATABASE_CATALOG_SEARCH_TEXTBOX_DATATESTID).fill(catalogId);
 			page.waitForTimeout(1000);
 			page.locator(CLICK_ON_CATALOG_XPATH).click();
-			page.locator(ACCESS_CONTROL_XPATH).isVisible();
-			page.locator(ACCESS_CONTROL_XPATH).click();
+			page.locator(AddFunctionPageUtils.ACCESS_CONTROL_XPATH).isVisible();
+			page.locator(AddFunctionPageUtils.ACCESS_CONTROL_XPATH).click();
 			page.locator(DELETE_BUTTON_XPATH).click();
 			page.locator(CONFIRMATION_POPUP_DELETE_BUTTON_XPATH).click();
 			return page.locator(DELETE_TOAST_MESSAGE_XPATH).first().isVisible();
@@ -336,20 +331,21 @@ public class CommonUtils {
 		}
 	}
 
+	
 	public static boolean navigateAndDeleteApp(Page page, String appName) {
 		try {
 			page.navigate(UrlUtils.getUrl("#/"));
 			MainMenuUtils.openMainMenu(page);
 			MainMenuUtils.clickOnOpenAppLibrary(page);
 			page.waitForTimeout(200);
-			page.getByLabel(SEARCH_APP_LABEL).fill(appName);
+			page.getByLabel(AppPageUtils.APP_SEARCH_BY_LABEL).fill(appName);  
 			page.waitForTimeout(500);
-			page.locator(THREE_DOT_ICON_XPATH).first().click();
+			page.locator(AppPageUtils.MORE_VERTICAL_OPTIONS_ICON_XPATH).first().click();  
 			page.locator(APP_DELETE_BUTTON_XPATH).click();
 			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
-			Locator toasterMessage = page.getByTestId("notification-success-alert");
+			Locator toasterMessage = page.getByTestId(UserManagementPageUtils.TOASTER_ALERT_MESSAGE_TEXT);
 			if (toasterMessage.isVisible()) {
-				page.locator(TOAST_CLOSE_XPATH).click();
+				page.locator(AICorePageUtils.TOAST_CLOSE_XPATH).click();
 				toasterMessage.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
 				return true;
 			}
@@ -359,6 +355,8 @@ public class CommonUtils {
 			return false;
 		}
 	}
+
+
 
 	public static String getCurrentUtcTime() {
 		return LocalDateTime.now(ZoneOffset.UTC).withNano(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -377,7 +375,7 @@ public class CommonUtils {
 			page.locator(DELETE_CONFIRMATION_POPUP_BUTTON_XPATH).click();
 			Locator toasterMessage = page.getByTestId("notification-success-alert");
 			if (toasterMessage.isVisible()) {
-				page.locator(TOAST_CLOSE_XPATH).click();
+				page.locator(AICorePageUtils.TOAST_CLOSE_XPATH).click();
 				toasterMessage.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED));
 				return true;
 			}

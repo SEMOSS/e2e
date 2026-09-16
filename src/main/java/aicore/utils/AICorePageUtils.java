@@ -20,7 +20,7 @@ import io.qameta.allure.Allure;
  * Main AI Core Home page utils
  */
 public class AICorePageUtils {
-	private static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
+	public static final String TOAST_CLOSE_XPATH = "//div[@data-testid='notification-success-alert']//button[@aria-label='Close']";
 
 	public static String verifySuccessToastMessage(Page page, Locator locator) {
 		locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(20000));
