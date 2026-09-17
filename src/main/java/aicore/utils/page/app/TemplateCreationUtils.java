@@ -33,22 +33,6 @@ public class TemplateCreationUtils {
         
         return appName;
     }
-}
-
-        String appName = "Test app " + CommonUtils.getTimeStampName();
-
-        HomePageUtils.navigateToHomePage(page);
-        MainMenuUtils.openMainMenu(page);
-        MainMenuUtils.clickOnOpenAppLibrary(page);
-
-        AppPageUtils.clickOnCreateNewAppButton(page);
-
-        AppTemplatePageUtils.selectTemplateFromList(templateName, page);
-
-        completeAppCreation(page, appName);
-
-        return appName;
-    }
 
     public static String createDragAndDropApp(
             Page page,
