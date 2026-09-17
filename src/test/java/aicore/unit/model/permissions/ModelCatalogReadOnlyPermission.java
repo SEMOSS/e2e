@@ -62,11 +62,7 @@ public class ModelCatalogReadOnlyPermission  extends AbstractPlaywrightTestBase 
 	
 	
     private void addMember(Page page, String role) {
-        try {
-            SettingsModelPageUtils.addMember(page, role, GenericSetupUtils.useDocker());
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        SettingsModelPageUtils.addMember(page, role, GenericSetupUtils.useDocker());
     }
 
 	private void openModelPage(Page page) {
