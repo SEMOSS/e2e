@@ -37,6 +37,30 @@ public class TestResources {
 	public static final String FUNC_GOOGLE_SPEECH_TO_TXT = "Google Speech To Text";
 	public static final String FUNC_GOOGLE_OCR = "Google OCR";
 
+	// function catalog names (addNewFunction test cases)
+	public static final String FUNC_AWS_COMPREHEND_CATALOG = "AWS-Comprehend";
+	public static final String FUNC_AWS_IMG_TXT_EXTRACTION_CATALOG = "AWS-Image-Text-Extraction";
+	public static final String FUNC_AWS_POLLY_CATALOG = "AWS-Polly";
+	public static final String FUNC_AWS_TRANSCRIBE_CATALOG = "AWS-Transcribe";
+	public static final String FUNC_AWS_DOC_INTEL_CATALOG = "Azure-Document-Intelligence";
+	public static final String FUNC_AWS_SPEECH_TO_TXT_CATALOG = "Azure-Speech-To-Text";
+	public static final String FUNC_GOOGLE_OCR_CATALOG = "Google-OCR";
+	public static final String FUNC_GOOGLE_SPEECH_TO_TXT_CATALOG = "Google-Speech-To-Text";
+	public static final String FUNC_LOCAL_PYTHON_CATALOG = "Local-Python-Function";
+	public static final String FUNC_REST_CATALOG = "REST-Function";
+
+	// function form fields (addNewFunction test cases, excludes "Catalog Name")
+	public static final String FUNC_AWS_COMPREHEND_FORM_FIELDS = "Access Key=Test123, Secret Key=Test@123, Region=Asia";
+	public static final String FUNC_AWS_IMG_TXT_EXTRACTION_FORM_FIELDS = "Access Key=a123456789, Secret Key=test22, Region=us-east-1, S3 Bucket Engine Id=a123456789";
+	public static final String FUNC_AWS_POLLY_FORM_FIELDS = "Access Key=Test123, Secret Key=Test@123, Region=Asia";
+	public static final String FUNC_AWS_TRANSCRIBE_FORM_FIELDS = "Access Key=a123456789, Secret Key=test22, Region=us-east-1, S3 Bucket Engine Id=a123456789";
+	public static final String FUNC_AWS_DOC_INTEL_FORM_FIELDS = "URL=https://test.cognitiveservices.azure.com, API Key=Test123";
+	public static final String FUNC_AWS_SPEECH_TO_TXT_FORM_FIELDS = "Speech Key=Test123, Speech region=Asia";
+	public static final String FUNC_GOOGLE_OCR_FORM_FIELDS = "Project Id=test-project-123, Processor Id=abc123, Region=us-east-1, Google Bucket Engine Id=a123456789";
+	public static final String FUNC_GOOGLE_SPEECH_TO_TXT_FORM_FIELDS = "Google Bucket Engine Id=a123456789";
+	public static final String FUNC_LOCAL_PYTHON_FORM_FIELDS = "Python File Name=test_function.py, Function Name (metadata)=TestFunction, Function Description (metadata)=Test Description";
+	public static final String FUNC_REST_FORM_FIELDS = "URL=https://example.com/api, Http Method=POST, POST Message Body Type=json, Function Name (metadata)=TestFunction, Function Description (metadata)=Test Description";
+
 	/** STORAGES */
 	public static final String LOCAL_MINIO_ZIP = "Storage/Localminio.zip";
 	public static final String LOCAL_MINIO_NAME = "localminio";
