@@ -1,5 +1,6 @@
 package aicore.pages.function;
 
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class AddFunctionFormUtils extends AbstractBasePage{
 	private static final String URL_DATA_TESTID = "function-form-input-URL";
 	private static final String PYTHON_FILE_INPUT_TESTID = "function-form-input-PYTHON_FILE_NAME";
 	private static final String CONNECT_BUTTON_DATA_TESTID = "function-form-submit";
+	private static final String FILE_UPLOAD_DATA_TESTID = "function-form-input-FILE";
 
 	private static final String FIELDS_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='{section}']]/following-sibling::div//*[@data-testid='function-form-input-{fieldName}']";
 	private static final String FILE_FIELD_UNDER_SECTION_XPATH = "//div[//h4[normalize-space()='{section}']]/following-sibling::div[@data-testid='function-form-field-{fieldName}']";
@@ -54,6 +56,11 @@ public class AddFunctionFormUtils extends AbstractBasePage{
 	public static void enterUrl(Page page, String url) {
 		page.getByTestId(URL_DATA_TESTID).click();
 		page.getByTestId(URL_DATA_TESTID).fill(url);
+	}
+
+	public static void uploadFile(Page page, String fileName) {
+		String fullPath = "src/test/resources/data/" + fileName;
+		page.getByTestId(FILE_UPLOAD_DATA_TESTID).setInputFiles(Paths.get(fullPath));
 	}
 
 	public static void selectHttpMethod(Page page, String httpMethod) {
@@ -211,6 +218,9 @@ public class AddFunctionFormUtils extends AbstractBasePage{
 //		}
 //		return false;
 	}
+	
+	
+	
 
 	public static void fillFunctionCreationForm(Page page, String fieldName, String fieldValue, String timestamp) {
 		String fieldNameForTestId = getFieldNameForTestId(fieldName);
