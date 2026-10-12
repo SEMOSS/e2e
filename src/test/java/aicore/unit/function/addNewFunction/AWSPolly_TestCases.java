@@ -3,6 +3,7 @@ package aicore.unit.function.addNewFunction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
@@ -15,6 +16,7 @@ import aicore.utils.CatlogAccessPageUtility;
 import aicore.utils.CommonUtils;
 import aicore.utils.FunctionTestUtils;
 import aicore.utils.TestResourceTrackerHelper;
+import aicore.utils.TestResources;
 import aicore.utils.annotations.PWPage;
 
 public class AWSPolly_TestCases extends AbstractPlaywrightTestBase {
@@ -30,15 +32,15 @@ public class AWSPolly_TestCases extends AbstractPlaywrightTestBase {
 	}
 
 	@Test
+	@DisplayName("TC01_Verify connection of AWS Polly function")
 	void testConnectAWSPollyFunction(@PWPage Page page) {
 		String timestamp = CommonUtils.getTimeStampName();
-		String catalogName = "AWS-Polly";
-		String formFields = "Catalog Name=" + catalogName
-				+ ", Access Key=Test123, Secret Key=Test@123, Region=Asia";
+		String catalogName = TestResources.FUNC_AWS_POLLY_CATALOG;
+		String formFields = "Catalog Name=" + catalogName + ", " + TestResources.FUNC_AWS_POLLY_FORM_FIELDS;
 		MainMenuUtils.openMainMenu(page);
 		MainMenuUtils.clickOnOpenFunction(page);
 		AddFunctionPageUtils.clickOnAddFunctionButton(page);
-		AddFunctionFormUtils.selectFunction(page, "AWS Polly");
+		AddFunctionFormUtils.selectFunction(page, TestResources.FUNC_AWS_POLLY);
 		FunctionTestUtils.verifyUserFilledFunctionCreationFormFields(page, formFields, timestamp);
 		boolean isConnectEnabled = AddFunctionFormUtils.validateConnectButtonEnabled(page);
 		Assertions.assertTrue(isConnectEnabled, "'Connect' button is not enabled after filling all required fields");
