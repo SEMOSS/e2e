@@ -23,6 +23,16 @@ public class AICoreTestConstants {
 	public static final String PINECONE_HOST_NAME = "pinecone_host_name";
 	public static final String PINECONE_API_KEY = "pinecone_api_key";
 
+	// addNewFunction test cases - 
+	public static final String AWS_FUNCTION_ACCESS_KEY = "aws_function_access_key";
+	public static final String AWS_FUNCTION_SECRET_KEY = "aws_function_secret_key";
+	public static final String AZURE_DOC_INTEL_API_KEY = "azure_doc_intel_api_key";
+	public static final String AZURE_SPEECH_KEY = "azure_speech_key";
+	public static final String GOOGLE_FUNCTION_SERVICE_ACCOUNT_FILE = "google_function_service_account_file";
+	public static final String GOOGLE_OCR_PROJECT_ID = "google_ocr_project_id";
+	public static final String GOOGLE_OCR_PROCESSOR_ID = "google_ocr_processor_id";
+	public static final String REST_FUNCTION_URL = "rest_function_url";
+
 	// boolean flag settings
 	public static final String USE_DOCKER = "use_docker";
 	public static final String USE_VIDEO = "use_video";
